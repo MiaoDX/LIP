@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'LIP — Learn In Public',
   description: '记录从 0 到 1 搭建 AI Agent 团队的进化过程',
   lang: 'zh-CN',
+  base: '/LIP/',
   ignoreDeadLinks: true,
 
   themeConfig: {
