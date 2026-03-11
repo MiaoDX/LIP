@@ -32,9 +32,11 @@
 ## 阅读推荐顺序
 
 1. [now/2026-03.md](now/2026-03.md) — 本月概述（快速浏览）
-2. [stories/2026-03-dual-agent-start.md](stories/2026-03-dual-agent-start.md) — 完整踩坑日志
-3. [stories/openclaw-01-deployment.md](stories/openclaw-01-deployment.md) → [Part 2](stories/openclaw-02-configuration.md) → [Part 3](stories/openclaw-03-best-practices.md) → [Part 4](stories/openclaw-04-practical-cases.md) — OpenClaw 完整指南
-4. [lessons/cross-instance-collaboration.md](lessons/cross-instance-collaboration.md) — 协作模式
+2. [stories/gateway-6hour-outage.md](stories/gateway-6hour-outage.md) — 最戏剧化的事故案例（6 小时宕机）
+3. [stories/wechat-scraping-war.md](stories/wechat-scraping-war.md) — 失败案例（微信反爬攻防，读者共鸣度高）
+4. [lessons/error-to-skill-evolution.md](lessons/error-to-skill-evolution.md) — 方法论（错误→Skill 自进化）
+5. [stories/openclaw-01-deployment.md](stories/openclaw-01-deployment.md) → [Part 2](stories/openclaw-02-configuration.md) → [Part 3](stories/openclaw-03-best-practices.md) → [Part 4](stories/openclaw-04-practical-cases.md) — OpenClaw 完整指南
+6. [lessons/cross-instance-collaboration.md](lessons/cross-instance-collaboration.md) — 协作模式
 
 ## 相关
 
