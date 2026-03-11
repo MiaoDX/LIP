@@ -1,0 +1,21 @@
+{
+  "name": "lip",
+  "version": "1.0.0",
+  "description": "> \"记录我从 0 到 1 搭建 AI Agent 团队的进化过程。 > 不是教程，是真实踩坑日志。\"",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:36611/git/MiaoDX/LIP"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}
