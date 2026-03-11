@@ -62,8 +62,8 @@
 
 | 优先级 | 文件 | 内容 | 来源 | 建议执行者 | 状态 |
 |--------|------|------|------|-----------|------|
-| P1 ⭐ | `lessons/cron-anti-hallucination.md` | Cron 防幻觉最佳实践（傅盛"先复述再执行"） | 傅盛实验 + 经验 | GSD | ⏳ |
-| P1 ⭐ | `stories/azure-config-incident.md` | Azure 配置事故深度复盘（已脱敏，独立成篇） | 03-09 事故 | GSD | ⏳ |
+| P1 ⭐ | `lessons/cron-anti-hallucination.md` | Cron 防幻觉最佳实践（傅盛"先复述再执行"） | 傅盛实验 + 经验 | GSD | ✅ 2026-03-11 |
+| P1 ⭐ | `lessons/azure-config-incident.md` | Azure 配置事故深度复盘（已脱敏，独立成篇） | 03-09 事故 | GSD | ✅ 2026-03-11 |
 | P1 | `lessons/model-selection-guide.md` | 模型选择决策树 | Part 2 配置优化 | GSD | ⏳ |
 | P1 | `lessons/web-search-three-layers.md` | Web 搜索三层架构 | L1/L2/L3 策略 | WLB | ⏳ |
 | P1 | `stories/identity-crisis.md` | 身份混淆危机（WLB/GSD 文件系统隔离） | 03-07 解决 | WLB | ⏳ |
