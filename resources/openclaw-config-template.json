@@ -1,0 +1,31 @@
+{
+  "agents": {
+    "defaults": {
+      "model": "anthropic_aliyun/kimi-k2.5",
+      "fallbacks": ["anthropic_aliyun/glm-5"],
+      "subagents": {
+        "model": "anthropic_aliyun/glm-5",
+        "maxConcurrent": 1
+      }
+    }
+  },
+  "channels": {
+    "slack": {
+      "enabled": true,
+      "token": "${SLACK_BOT_TOKEN}"
+    }
+  },
+  "tools": {
+    "web_search": {
+      "brave_api_key": "${BRAVE_API_KEY}"
+    },
+    "browser": {
+      "cdp_enabled": false,
+      "cdp_endpoint": "http://localhost:9222"
+    }
+  },
+  "cron": {
+    "timezone": "Asia/Shanghai",
+    "jobs": []
+  }
+}
