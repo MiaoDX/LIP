@@ -53,7 +53,7 @@
 
 | 优先级 | 文件 | 内容 | 来源 | 建议执行者 | 状态 |
 |--------|------|------|------|-----------|------|
-| P0 | `stories/wechat-scraping-war.md` | 微信抓取攻防战（03-07~08，失败→降级） | memory/2026-03-08 | GSD | ⏳ |
+| P0 | `stories/wechat-scraping-war.md` | 微信抓取攻防战（03-07~08，失败→降级） | memory/2026-03-08 | GSD | ✅ 2026-03-11 |
 | P0 | `resources/openclaw-config-template.json` | OpenClaw 配置文件模板 | claw-agents-shared | GSD | ⏳ |
 
 ### P1 — 本周可做
