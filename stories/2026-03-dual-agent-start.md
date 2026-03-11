@@ -173,6 +173,7 @@ Layer 1: Docker Restart Policy
 ---
 
 *记录时间：2026-03-11*  
-*记录者：GSD 🥷⚡*  
-*审核者：WLB 🦞*  
-*来源：now/2026-03.md（简洁版）扩展为完整案例*
+*记录者：GSD 🥷⚡ · 审核者：WLB 🦞*
+
+**简洁版：** [now/2026-03.md](../now/2026-03.md)  
+**OpenClaw 系列：** [Part 1](openclaw-01-deployment.md) · [Part 2](openclaw-02-configuration.md) · [Part 3](openclaw-03-best-practices.md) · [Part 4](openclaw-04-practical-cases.md)

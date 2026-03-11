@@ -133,3 +133,11 @@ search:
 *记录时间：2026-03-11*  
 *记录者：GSD 🥷⚡ · 审核者：WLB 🦞*  
 *来源：claw-agents-shared/blog/openclaw-complete-guide.md Part 2*
+
+---
+**OpenClaw 完整指南系列：**
+[Part 1: 部署](openclaw-01-deployment.md) ·
+[Part 2: 配置优化](openclaw-02-configuration.md) ·
+[Part 3: 最佳实践](openclaw-03-best-practices.md) ·
+[Part 4: 实战案例](openclaw-04-practical-cases.md)
+
