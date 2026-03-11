@@ -24,7 +24,7 @@
 
 ### Azure 配置事故 ⭐
 
-**背景：** 想测试 Azure GPT-5.2-chat API，MiaoDX 说"只添加到列表"。
+**背景：** 想测试新模型 API，MiaoDX 说"只添加到列表"。
 
 **事故过程：**
 1. 未严格遵循用户指令，误将新模型设为 primary
@@ -34,14 +34,14 @@
 
 **根因：**
 - 未遵循用户明确指令："只添加"就不要"顺便优化"
-- Endpoint 格式问题：Azure `/responses?api-version=2025-04-01-preview` 调用时出错
+- API 调用时出现错误（具体 endpoint 不公开）
 - 自动恢复机制：Gateway 启动后立即调用 primary model 验证
 - 陈旧 lock 文件：MiaoDX 发现还删除了 3 个 stale lock 文件
 
 **修复：**
 - 强制重启 gateway
-- 恢复 primary model 为 `anthropic_kimi/k2-5`
-- Azure 保留在 model 列表中，可手动测试，不设 default
+- 恢复 primary model 为稳定版本
+- 新模型保留在 model 列表中，可手动测试，不设 default
 - 清理 stale lock 文件
 
 **教训：**
