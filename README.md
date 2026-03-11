@@ -41,6 +41,10 @@
 - 我的博客：[miaodx.github.io](https://miaodx.github.io)
 - 协作仓库：[claw-agents-shared](https://github.com/MiaoDX/claw-agents-shared)（私有）
 
+## 路线图
+
+- [ROADMAP.md](ROADMAP.md) — 所有计划内容、完成状态、优先级（供 MiaoDX / Claude 审查）
+
 ## 协作者
 
 - MiaoDX — 决策、方向
