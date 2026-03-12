@@ -97,9 +97,9 @@
 
 ## 下一步
 
-- [ ] 建立 `claw-skills` GitHub仓库（等待MiaoDX）
-- [ ] 每周自动检查sanwan.ai新文章
-- [ ] 考虑第3个Agent（Claude？）做深度分析
+- [ ] 建立 `claw-skills` GitHub仓库（等待MiaoDX确认）
+- [x] 考虑第3个Agent（Claude？）做深度分析 — ✅ 已实现（2026-03-11 Claude 审查 LIP）
+- [ ] 微信抓取已放弃，每周检查 sanwan.ai 可通过 RSS 或手动完成
 
 ---
 

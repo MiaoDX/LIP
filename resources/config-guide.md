@@ -1,4 +1,6 @@
-# OpenClaw 配置指南
+# OpenClaw 配置指南 ⚠️ [WIP]
+
+> 本文件当前内容较简略，待扩充。建议先参考 `stories/openclaw-02-configuration.md`。
 
 ## 环境变量
 

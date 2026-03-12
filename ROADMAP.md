@@ -56,26 +56,35 @@
 | P0 | `stories/wechat-scraping-war.md` | 微信抓取攻防战（03-07~08，失败→降级） | memory/2026-03-08 | GSD | ✅ 2026-03-11 |
 | P0 | `resources/openclaw-config-template.json` + `config-guide.md` | OpenClaw 配置模板 + 指南 | claw-agents-shared | GSD | ✅ 2026-03-11 |
 
-### P1 — 本周可做
+### P1 — 本周可做（按 Claude 审查建议调整）
+
+**推荐本周完成（高价值）：**
 
 | 优先级 | 文件 | 内容 | 来源 | 建议执行者 | 状态 |
 |--------|------|------|------|-----------|------|
-| P1 | `lessons/cron-anti-hallucination.md` | Cron 防幻觉最佳实践 | 傅盛实验 + 经验 | GSD | ⏳ |
+| P1 ⭐ | `lessons/cron-anti-hallucination.md` | Cron 防幻觉最佳实践（傅盛"先复述再执行"） | 傅盛实验 + 经验 | GSD | ✅ 2026-03-11 |
+| P1 ⭐ | `lessons/azure-config-incident.md` | Azure 配置事故深度复盘（已脱敏，独立成篇） | 03-09 事故 | GSD | ✅ 2026-03-11 |
 | P1 | `lessons/model-selection-guide.md` | 模型选择决策树 | Part 2 配置优化 | GSD | ⏳ |
 | P1 | `lessons/web-search-three-layers.md` | Web 搜索三层架构 | L1/L2/L3 策略 | WLB | ⏳ |
-| P1 | `stories/azure-config-incident.md` | Azure 配置事故深度复盘（已脱敏） | 03-09 事故 | GSD | ⏳ |
 | P1 | `stories/identity-crisis.md` | 身份混淆危机（WLB/GSD 文件系统隔离） | 03-07 解决 | WLB | ⏳ |
-| P1 | `discussions/2026-03-08-langhanwei-deep-dive.md` | 郎瀚威文章讨论 | memory/2026-03-08 | GSD | ⏳ |
-| P1 | `discussions/2026-03-09-sanwan-analysis.md` | sanwan.ai 深度分析 | memory/2026-03-09 | GSD | ⏳ |
+
+**可延后到 P2（当前价值不高）：**
+
+| 优先级 | 文件 | 内容 | 来源 | 状态 |
+|--------|------|------|------|------|
+| P2 | `discussions/2026-03-08-langhanwei-deep-dive.md` | 郎瀚威文章讨论 | memory/2026-03-08 | ⏳ |
+| P2 | `discussions/2026-03-09-sanwan-analysis.md` | sanwan.ai 深度分析 | memory/2026-03-09 | ⏳ |
 
 ### P2 — 后续优化
 
 | 优先级 | 文件 | 内容 | 来源 | 建议执行者 | 状态 |
 |--------|------|------|------|-----------|------|
+| P2 | `resources/config-guide.md` 扩充 | 当前仅 35 行，标 WIP 或合并到 openclaw-02 | Claude 建议 | WLB | ⏳ |
 | P2 | `resources/skill-template.md` | Skill 文档模板 | AGENTS.md | WLB | ⏳ |
 | P2 | `resources/cron-job-template.json` | Cron 任务模板 | TOOLS.md | GSD | ⏳ |
 | P2 | `discussions/meta/style-guide.md` | LIP 写作风格指南 | Claude 建议 | WLB | ⏳ |
-| P2 | 更新 now/2026-03.md | 每月滚动更新 | 持续 | WLB | ⏳ |
+| P2 | 更新 now/2026-03.md | 每月滚动更新（P0 完成里程碑已加） | 持续 | WLB | ✅ 03-11 |
+| P2 | 更新 README 阅读顺序 | 按 Claude 建议调整 | Claude 建议 | WLB | ✅ 03-11 |
 
 ---
 
