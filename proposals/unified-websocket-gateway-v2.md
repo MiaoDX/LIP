@@ -215,53 +215,175 @@ const missed = gateway.sync({
 }
 ```
 
-## Security Design (WLB Added — 2026-03-13)
+## Security Design (WLB + GSD — 2026-03-13)
 
-### 5.1 Authentication
-**Problem**: Gateway connects to multiple platforms with sensitive bot tokens.
+### 5.1 Threat Model & Assumptions
 
-**Solution**:
-- **Agent ↔ Gateway**: Token-based auth (OpenClaw secrets, not hardcoded)
-- **Gateway ↔ Platforms**: Per-platform credentials stored in encrypted vault
-- **Token rotation**: Automatic 30-day rotation, manual trigger available
-- **Revocation**: Immediate token revocation via admin API
+**Threats addressed:**
+- Message tampering in transit (MITM)
+- Unauthorized agent impersonation
+- Platform token leakage
+- Replay attacks on signed messages
+- Unauthorized access to persistent storage
 
+**Assumptions:**
+- OpenClaw Gateway runs on a trusted host (or container with controlled network)
+- jj-mailbox repo is on a private GitHub org with restricted access
+- Platform APIs (Slack, Discord, Feishu, Telegram) are trusted endpoints
+- Agent instances (WLB, GSD) are independently secured
+
+### 5.2 Token Storage Strategy (Confirmed)
+
+**Principle:** `.env` 本地存储，jj-mailbox 零敏感
+
+| 存储位置 | 内容 | 敏感数据 | 同步方式 |
+|----------|------|----------|----------|
+| `.env` (本地) | API keys, tokens, secrets | ✅ 是 | ❌ 不同步 |
+| `jj-mailbox` | Messages, mappings, configs | ❌ 否 | ✅ Git 同步 |
+
+**Rationale:**
+- Git 历史不可变，敏感数据一旦提交无法彻底清除
+- `.env` 本地存储，各 Agent 独立管理自己的凭证
+- jj-mailbox 只存储业务数据（消息、映射、配置），零敏感信息
+
+**Implementation:**
+```bash
+# .env (本地，.gitignore)
+GITHUB_TOKEN=ghp_xxx
+SLACK_BOT_TOKEN=xoxb-xxx
+FEISHU_APP_SECRET=xxx
+
+# jj-mailbox (Git 同步，无敏感数据)
+shared/mappings/threads.json      # 线程映射
+shared/mappings/identities.json   # 身份映射
+inbox/                            # 消息队列
+```
+
+### 5.3 Agent ↔ Gateway Authentication
+
+**Phase P0 (Basic):**
+- Token-based auth using OpenClaw secrets
+- Shared secret for message signing
+
+**Phase P2 (mTLS):**
+- **Certificate Authority (CA):** Self-signed root CA per deployment
+- **Agent Certificates:** Each agent gets unique client cert
+- **Gateway Certificate:** Server cert signed by same CA
+- **Rotation:** 90-day lifecycle, auto-regenerate 7 days before expiry
+
+**Certificate Flow:**
+```
+1. Root CA generated once (stored in OpenClaw secrets)
+2. Agent requests cert → Gateway issues signed cert
+3. Agent stores cert + key in secure location
+4. mTLS handshake: mutual verification
+5. Revoked certs immediately blocked via CRL
+```
+
+### 5.4 Platform Token Management
+
+**Secrets Structure (OpenClaw):**
+```yaml
+secrets:
+  platforms:
+    slack:
+      bot_token: "!secret:slack-bot-token"
+      app_token: "!secret:slack-app-token"
+      rotate_every_days: 30
+    feishu:
+      app_id: "!secret:feishu-app-id"
+      app_secret: "!secret:feishu-app-secret"
+      rotate_every_days: 90
+    discord:
+      bot_token: "!secret:discord-bot-token"
+      rotate_every_days: 30
+    telegram:
+      bot_token: "!secret:telegram-bot-token"
+      rotate_every_days: 30
+  agents:
+    wlb:
+      gateway_token: "!secret:wlb-gateway-token"
+    gsd:
+      gateway_token: "!secret:gsd-gateway-token"
+```
+
+**Rotation Strategy:**
+- Platform tokens: 30 days (Slack/Discord/Telegram), 90 days (Feishu)
+- Agent tokens: 30 days, auto-issued by Gateway
+- Grace period: 24h overlap during rotation
+- Immediate revocation on compromise
+
+### 5.5 Transport Encryption
+- **WSS (WebSocket Secure)** / TLS 1.3 for all connections
+- Certificate pinning for platform connections
+- No plaintext transmission of tokens or message content
+
+### 5.6 Message Integrity & Anti-Replay
+
+**Signing (Phase P2):**
+- Agent → Gateway: signed with agent's private key
+- Gateway → Agent: signed with Gateway's key
+- Signature includes: message ID, timestamp, content hash
+
+**Anti-Replay:**
+- Unique message ID (UUID) + timestamp per message
+- Gateway maintains seen-message cache (TTL: 1 hour)
+- Duplicate IDs rejected
+
+### 5.7 Audit Trail & Compliance
+
+**jj-mailbox as Immutable Log:**
+- All messages stored as files in git-backed repo
+- Git history = tamper-proof audit trail
+- Every commit signed (GPG or SSH) for provenance
+
+**Audit Fields:**
 ```json
 {
-  "auth": {
-    "agent": {
-      "method": "token",
-      "token": "from-openclaw-secrets",
-      "rotation": "30d"
-    },
-    "platforms": {
-      "slack": { "type": "bot_token", "vault": "encrypted" },
-      "feishu": { "type": "app_credentials", "vault": "encrypted" }
-    }
+  "audit": {
+    "processedBy": "gateway",
+    "processedAt": "2026-03-13T02:04:01Z",
+    "signatureVerified": true,
+    "agentCertFingerprint": "sha256:abc123...",
+    "platformVerified": true,
+    "gatewayVersion": "v2.0.0"
   }
 }
 ```
 
-### 5.2 Transport Encryption
-- All connections use **WSS (WebSocket Secure)** / TLS 1.3
-- Certificate pinning for platform connections
-- No plaintext transmission of tokens or message content
+**Query Interface:**
+- `jj-mailbox audit --since <date>` — All messages since date
+- `jj-mailbox audit --agent <id>` — Messages for specific agent
+- `jj-mailbox audit --platform <name>` — Platform-specific audit
 
-### 5.3 Agent Authentication Flow
-1. Agent connects to Gateway with token
-2. Gateway validates against OpenClaw secrets
-3. If valid → establish session, subscribe to channels
-4. If invalid → reject connection, log attempt
-5. Token expiry → reconnect with new token
+### 5.8 Security Boundaries
 
-### 5.4 Threat Model
-| Threat | Mitigation |
-|--------|------------|
-| Token theft | Vault storage, rotation, immediate revocation |
-| Man-in-the-middle | WSS + cert pinning |
-| Replay attacks | Timestamp + nonce per message |
-| Gateway compromise | No plaintext tokens in memory, vault-only |
-| DDoS | Rate limiting per agent, per platform |
+| Boundary | Controls |
+|----------|----------|
+| Agent ↔ Gateway | mTLS (P2), signed messages, token auth (P0) |
+| Gateway ↔ Platform | OAuth tokens, HTTPS, platform-specific auth |
+| Gateway ↔ jj-mailbox | File I/O, git signing, repo ACL |
+| jj-mailbox ↔ Agent | File I/O, read-only cursor, no cross-agent write |
+| Host ↔ External | Firewall, rate limiting |
+
+### 5.9 Incident Response
+
+**Detection:**
+- Failed mTLS handshakes → immediate alert
+- Signature verification failures → alert + quarantine
+- Token usage anomalies → alert
+
+**Response:**
+1. Revoke compromised token/cert immediately
+2. Rotate all related secrets
+3. Review audit log for breach scope
+4. Notify affected agents
+5. Re-issue credentials
+
+**Recovery:**
+- Automated token rotation on detection
+- Audit log review for impact assessment
+- Post-incident report stored in jj-mailbox `security/incidents/`
 
 ---
 
@@ -317,14 +439,19 @@ const missed = gateway.sync({
 
 ## Implementation Phases (Revised)
 
-| Phase | Scope | Timeline | Notes |
-|-------|-------|----------|-------|
-| P0 MVP | Slack adapter → jj-mailbox → inotify → agent | 3-4 weeks | Minimal closed loop |
-| P1 | Feishu adapter, message ordering | 2-3 weeks | Second platform |
-| P2 | Security hardening, identity mapping | 2-3 weeks | mTLS, vault, mapping |
-| P3 | Discord + Telegram, documentation | 2-3 weeks | Full coverage |
+| Phase | Scope | Timeline | Deliverable |
+|-------|-------|----------|-------------|
+| **P0** | Slack adapter + jj-mailbox inbox + basic token auth | 1-2 weeks | Minimal viable loop: Slack → jj-mailbox → Agent |
+| **P1** | Feishu adapter + thread mapping + message ordering | 2-3 weeks | Cross-platform thread support |
+| **P2** | mTLS + full security + token rotation automation | 2-3 weeks | Production-ready security |
+| **P3** | Discord + Telegram + documentation | 2-3 weeks | Full platform coverage |
 
-**Total**: ~10-13 weeks for full implementation
+**Total**: ~7-11 weeks for full implementation
+
+**Security Phasing:**
+- P0: Basic token auth (OpenClaw secrets), WSS transport
+- P1: Message signing with shared secret
+- P2: Full mTLS, certificate management, automated rotation
 
 ---
 
@@ -335,8 +462,9 @@ const missed = gateway.sync({
 | 1 | Gateway vs jj-mailbox relationship? | **Complementary** — Gateway real-time, jj-mailbox persistence | ✅ Addressed |
 | 2 | Cross-platform thread ID — how? | `shared/mappings/threads.json` + Git versioning | ✅ Addressed |
 | 3 | Offline queue duplicates jj-mailbox? | Yes, use jj-mailbox inbox directly, no custom queue | ✅ Addressed |
-| 4 | Missing security design? | mTLS, token vault, rotation, WSS, threat model | ✅ Addressed |
-| 5 | Timeline too optimistic? | Revised P0 → 3-4 weeks, MVP first | ✅ Addressed |
+| 4 | Missing security design? | mTLS, token vault, rotation, WSS, threat model, audit trail | ✅ Addressed |
+| 5 | Timeline too optimistic? | Revised P0 → 1-2 weeks (MVP), full security in P2 | ✅ Addressed |
+| 6 | Token storage strategy? | `.env` local, jj-mailbox zero-sensitive | ✅ Addressed |
 
 ---
 
@@ -362,6 +490,5 @@ const missed = gateway.sync({
 
 ---
 *Drafted by GSD, 2026-03-12*  
-*Revised by GSD + WLB, 2026-03-13*  
-*Addresses Claude review feedback*  
-*Pending GSD push commit `2ddc1c3`*
+*Revised v2 by GSD + WLB, 2026-03-13*  
+*Addresses Claude review feedback + detailed security design + token storage strategy*
