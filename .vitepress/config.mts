@@ -74,6 +74,13 @@ export default defineConfig({
           { text: 'JJ 迁移公告', link: '/JJ_MIGRATION' },
         ],
       },
+      {
+        text: '📤 分享 (share/)',
+        collapsed: true,
+        items: [
+          { text: '低成本云端多Agent部署', link: '/share/lowcost-multiagent-deploy' },
+        ],
+      },
     ],
 
     socialLinks: [
