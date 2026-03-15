@@ -5,51 +5,73 @@
 
 — MiaoDX, 2026
 
-## 最新进展
+## 团队
 
-- [双 Agent 协作系统上线（WLB + GSD）](stories/2026-03-dual-agent-start.md) — 从 0 到 1 的完整踩坑日志
-- [6小时离线事故 → 三层防护架构](stories/2026-03-dual-agent-start.md#week-3稳定性建设) — stale lock 引发全面停摆
-- [Azure 配置踩坑记](stories/2026-03-dual-agent-start.md#azure-配置事故-) — "只添加"变成了"顺便优化"
-- [OpenClaw 完整指南（4 部分）](stories/openclaw-01-deployment.md) — 部署、配置、最佳实践、实战案例
+```
+MiaoDX (人类主理人) — 方向、审批、社区出席
+  ├── GSD  🥷⚡  — 执行、技术实现、内容制作
+  ├── WLB  🦞    — 决策分析、协调分工、质量把关
+  └── Coach 🎯   — 观察全局、反馈改进、追踪目标
+```
 
 ## 目录
 
-- [`now/`](now/) — 时间线叙事，每月一篇 → [2026 年 3 月](now/2026-03.md)
-- [`lessons/`](lessons/) — 可复用协作模式 → [跨实例协作](lessons/cross-instance-collaboration.md)
-- [`stories/`](stories/) — 精选案例，失败优先 → [双 Agent 启动日志](stories/2026-03-dual-agent-start.md)
-- [`discussions/`](discussions/) — AI 讨论上下文留存 → [2026-03-11 规划](discussions/2026-03-11-lip-structure/)
-- [`resources/`](resources/) — 工具/配置模板
+| 目录 | 内容 | 更新频率 |
+|------|------|---------|
+| [`now/`](now/) | 月度时间线叙事 | 每月 |
+| [`stories/`](stories/) | 案例故事，失败优先 | 按事件 |
+| [`lessons/`](lessons/) | 可复用经验与模式 | 按沉淀 |
+| [`discussions/`](discussions/) | AI 讨论上下文留存 | 按讨论 |
+| [`presentations/`](presentations/) | 演讲 HTML（完整版） | 按活动 |
+| [`share/`](share/) | 演讲发布版 + 站点入口 | 按活动 |
+| [`slides/`](slides/) | Marp/Slidev 幻灯片源 | 按活动 |
+| [`resources/`](resources/) | 工具/配置模板 | 按需 |
+| [`proposals/`](proposals/) | 技术提案 | 按需 |
+
+## 阅读推荐
+
+**快速了解**：
+1. [now/2026-03.md](now/2026-03.md) — 本月概述
+
+**精选故事**（按推荐度排序）：
+2. [gateway-6hour-outage.md](stories/gateway-6hour-outage.md) — 最戏剧化：6 小时宕机
+3. [wechat-scraping-war.md](stories/wechat-scraping-war.md) — 失败案例：微信反爬攻防
+4. [2026-03-dual-agent-start.md](stories/2026-03-dual-agent-start.md) — 从 0 到 1 的完整踩坑日志
+
+**经验提炼**：
+5. [error-to-skill-evolution.md](lessons/error-to-skill-evolution.md) — 错误→Skill 自进化
+6. [azure-config-incident.md](lessons/azure-config-incident.md) — "只添加"变成了"顺便优化"
+7. [cron-anti-hallucination.md](lessons/cron-anti-hallucination.md) — 傅盛"先复述再执行"
+
+**OpenClaw 系列**（4 部分）：
+8. [Part 1: 部署](stories/openclaw-01-deployment.md) → [Part 2: 配置](stories/openclaw-02-configuration.md) → [Part 3: 最佳实践](stories/openclaw-03-best-practices.md) → [Part 4: 实战案例](stories/openclaw-04-practical-cases.md)
 
 ## 背景
 
 2026 目标：从打工人到一人公司（OPC）。我在探索如何用 AI Agent 扩展职业边界。
+
+**三个核心方向**：
+- **G1 社区声望** — AI coding / OpenClaw / Agent 社区
+- **G2 技术宣讲变现** — 演讲 → 咨询/收入
+- **G3 个人网站** — miaodx.com 展示进化过程
+
 这是公开的学习过程，欢迎围观/指正/复刻。
-
-### Why follow
-
-看一个工程师如何用 AI Agent 搭建自己的第二大脑——真实踩坑，公开进化。
-
-## 阅读推荐顺序
-
-1. [now/2026-03.md](now/2026-03.md) — 本月概述（快速浏览）
-2. [stories/gateway-6hour-outage.md](stories/gateway-6hour-outage.md) — 最戏剧化的事故案例（6 小时宕机）
-3. [stories/wechat-scraping-war.md](stories/wechat-scraping-war.md) — 失败案例（微信反爬攻防，读者共鸣度高）
-4. [lessons/error-to-skill-evolution.md](lessons/error-to-skill-evolution.md) — 方法论（错误→Skill 自进化）
-5. [stories/openclaw-01-deployment.md](stories/openclaw-01-deployment.md) → [Part 2](stories/openclaw-02-configuration.md) → [Part 3](stories/openclaw-03-best-practices.md) → [Part 4](stories/openclaw-04-practical-cases.md) — OpenClaw 完整指南
-6. [lessons/cross-instance-collaboration.md](lessons/cross-instance-collaboration.md) — 协作模式
 
 ## 相关
 
-- 我的博客：[miaodx.github.io](https://miaodx.github.io)
-- 协作仓库：[claw-agents-shared](https://github.com/MiaoDX/claw-agents-shared)（私有）
+- 个人博客：[miaodx.github.io](https://miaodx.github.io)
+- 路线图：[ROADMAP.md](ROADMAP.md)
 
-## 路线图
+## 给 Agent 的说明
 
-- [ROADMAP.md](ROADMAP.md) — 所有计划内容、完成状态、优先级（供 MiaoDX / Claude 审查）
+本仓库是 `claw-agents-shared` 的 submodule（路径 `LIP/`）。
 
-## 协作者
+**写入规则**：
+- stories/ 和 lessons/ 内容不应大段重复 — 用"一句话摘要 + 链接到完整版"
+- 新内容先写到 `claw-agents-shared/drafts/`，MiaoDX review 后再发布到这里
+- 推送方式见 `claw-agents-shared/CLAUDE.md` 中"LIP 子模块操作"章节
 
-- MiaoDX — 决策、方向
-- WLB (Work-Life Balance) — 决策分析、架构审核
-- GSD (Get Stuff Done) — 执行、文档、落地
-- Claude — 第三方审查（2026-03-11）
+**分工**：
+- GSD 负责执行：制作内容、格式化、发布
+- WLB 负责决策：审核质量、规划结构
+- Coach 负责审计：定期检查内容质量和漏斗转化率
