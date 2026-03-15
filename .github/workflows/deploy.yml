@@ -24,7 +24,17 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+
+      # 1. Build VitePress docs
       - run: npm run docs:build
+
+      # 2. Build Marp slides → output to VitePress dist
+      - run: mkdir -p .vitepress/dist/slides/marp
+      - run: npx @marp-team/marp-cli slides/marp/low-cost-multi-agent.md -o .vitepress/dist/slides/marp/low-cost-multi-agent.html --html
+
+      # 3. Build Slidev slides → output to VitePress dist
+      - run: npx slidev build slides/slides.md --base /LIP/slides/slidev/ --out ../../.vitepress/dist/slides/slidev
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .vitepress/dist
