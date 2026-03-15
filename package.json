@@ -23,7 +23,7 @@
   "devDependencies": {
     "@marp-team/marp-cli": "^4.1.0",
     "@slidev/cli": "^0.50.0",
-    "@slidev/theme-default": "latest",
+    "@slidev/theme-default": "^0.25.0",
     "vitepress": "^1.6.4"
   }
 }
