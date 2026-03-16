@@ -46,8 +46,29 @@
   box-shadow: 0 8px 24px rgba(20, 20, 20, 0.16);
 }
 
-.vp-doc img[alt='缪东旭微信二维码'] {
-  width: 220px;
+
+
+.lip-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 240px));
+  gap: 1rem;
+  align-items: start;
+}
+
+.lip-contact-grid h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 16px;
+}
+
+.lip-contact-grid img {
+  width: 100%;
   border-radius: 12px;
   border: 1px solid var(--vp-c-divider);
+}
+
+@media (max-width: 760px) {
+  .lip-contact-grid {
+    grid-template-columns: 1fr;
+    max-width: 240px;
+  }
 }
