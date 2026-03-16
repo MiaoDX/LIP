@@ -72,11 +72,11 @@ features:
 <div class="lip-contact-grid">
   <div>
     <h3>微信</h3>
-    <img src="./images/wechat-qr.jpg" alt="缪东旭微信二维码" />
+    <img src="./images/wechat-official-qr.jpg" alt="缪东旭微信二维码" />
   </div>
   <div>
     <h3>公众号</h3>
-    <img src="./images/wechat-official-qr.jpg" alt="缪东旭公众号二维码" />
+    <img src="./images/wechat-qr.jpg" alt="缪东旭公众号二维码" />
   </div>
 </div>
 
