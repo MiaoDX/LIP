@@ -452,7 +452,7 @@ A: 安装 git-lfs：`apt-get install -y git-lfs && git lfs install --local`
 A: 检查模型名称是否正确。旧名称（如 `mimo-claw-0301`）可能已下线。
 
 **Q: 两个 Agent 怎么聊天？**  
-A: 需要满足三个条件：
+A: 需要满足四个条件：
 1. 两个 Agent 的 Slack Bot 都在同一个频道内
 2. 频道设置 `requireMention: false`（Agent 自动读取所有消息）
 3. 两个 Bot 都有读取频道消息的权限（`channels:history` scope）
