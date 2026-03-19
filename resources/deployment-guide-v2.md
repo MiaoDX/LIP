@@ -84,7 +84,8 @@ node:22-bookworm (runtime stage)
 - Control UI 在 `/openclaw` — 日常管理界面
 - CDP 在 `localhost:9222` — Agent 可操控浏览器
 
-[SCREENSHOT: Docker 模板 GitHub 仓库页面]
+![Docker 模板 GitHub 仓库页面](/LIP/images/screenshots/github-template.jpg)
+*图：社区模板 clawdbot-railway-template，985 stars，支持 Railway 和 ClawCloud Run 一键部署*
 
 ---
 
@@ -140,7 +141,8 @@ Railway 会自动注入 `PORT` 变量，不要手动设置。
    - 输入 API key
    - 配置渠道（Slack/Discord/Telegram）
 
-[SCREENSHOT: Setup Wizard 页面]
+![OpenClaw Control UI — Chat 界面](/LIP/images/screenshots/openclaw-chat-ui.png)
+*图：OpenClaw Control UI 对话界面，左侧显示会话、Cron、Subagent 等管理入口*
 
 ---
 
@@ -188,6 +190,9 @@ Railway 会自动注入 `PORT` 变量，不要手动设置。
 ## 配置模型
 
 [易变层] 以下模型选择随时间变化，2026 年 3 月有效。
+
+![OpenClaw Agents & Models — 模型配置管理界面](/LIP/images/screenshots/openclaw-agents-models.png)
+*图：OpenClaw 模型配置页面，显示 Provider Health、模型列表、上下文窗口等信息*
 
 ### 推荐：通过 OpenRouter 接入
 
