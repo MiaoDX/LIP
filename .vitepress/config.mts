@@ -11,7 +11,7 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: 'AI Coding', link: '/stories/2026-03-dual-agent-start' },
-      { text: 'OpenClaw', link: '/stories/openclaw-01-deployment' },
+      { text: 'OpenClaw', link: '/resources/deployment-guide-v2' },
       { text: '月报', link: '/now/2026-03' },
       { text: '分享', link: '/share/' },
       { text: '个人主页', link: 'https://miaodx.com/' },
@@ -39,10 +39,7 @@ export default defineConfig({
         text: 'Part B · OpenClaw',
         collapsed: false,
         items: [
-          { text: 'Part 1 — 部署', link: '/stories/openclaw-01-deployment' },
-          { text: 'Part 2 — 配置', link: '/stories/openclaw-02-configuration' },
-          { text: 'Part 3 — 最佳实践', link: '/stories/openclaw-03-best-practices' },
-          { text: 'Part 4 — 实战案例', link: '/stories/openclaw-04-practical-cases' },
+          { text: '部署指南（Docker + 双平台）', link: '/resources/deployment-guide-v2' },
         ],
       },
       {
