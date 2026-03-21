@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tailscale + Claude Code 远程开发完全指南</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--indigo:#6366f1;--violet:#8b5cf6;--cyan:#06b6d4;--emerald:#10b981;--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--text-muted:#94a3b8;--border:#334155}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+/* Hero */
+.hero{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%);position:relative;overflow:hidden;padding:60px 20px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(99,102,241,.15) 0%,transparent 50%),radial-gradient(circle at 70% 60%,rgba(139,92,246,.1) 0%,transparent 50%);pointer-events:none}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--indigo),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px}
+.hero p{font-size:1.2rem;color:var(--text-muted);max-width:600px}
+.hero-svg{width:min(500px,90vw);height:auto;margin-bottom:40px}
+.hero-svg .pulse{animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+/* Sections */
+section{padding:80px 0}
+section h2{font-size:2rem;font-weight:700;margin-bottom:40px;text-align:center;background:linear-gradient(135deg,var(--indigo),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+section h3{font-size:1.3rem;font-weight:600;color:var(--cyan);margin-bottom:12px}
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:24px;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(99,102,241,.15)}
+.card-header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.card-header svg{flex-shrink:0}
+.card-header h3{margin-bottom:0}
+.card ul{list-style:none;padding:0}
+.card li{padding:6px 0;padding-left:20px;position:relative;color:var(--text-muted)}
+.card li::before{content:'▸';position:absolute;left:0;color:var(--indigo)}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.75rem;font-weight:600;margin-left:8px}
+.badge-free{background:rgba(16,185,129,.15);color:var(--emerald)}
+.badge-paid{background:rgba(139,92,246,.15);color:var(--violet)}
+/* Code */
+code{background:#0d1117;color:var(--cyan);padding:2px 8px;border-radius:6px;font-size:.9em;font-family:"SF Mono",Consolas,"Courier New",monospace}
+.code-block{background:#0d1117;border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0;overflow-x:auto;font-family:"SF Mono",Consolas,"Courier New",monospace;font-size:.85rem;color:#c9d1d9;line-height:1.6}
+.code-block .comment{color:#8b949e}
+.code-block .cmd{color:var(--cyan)}
+.steps{counter-reset:step;margin:16px 0}
+.steps li{counter-increment:step;list-style:none;padding:8px 0 8px 36px;position:relative;color:var(--text-muted)}
+.steps li::before{content:counter(step);position:absolute;left:0;width:24px;height:24px;background:var(--indigo);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;top:10px}
+/* Table */
+.table-wrap{overflow-x:auto;margin:20px 0}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
+th{background:rgba(99,102,241,.15);color:var(--indigo);padding:14px 16px;text-align:left;font-weight:600;font-size:.9rem}
+td{padding:12px 16px;border-top:1px solid var(--border);color:var(--text-muted);font-size:.9rem}
+tr:hover td{background:rgba(99,102,241,.04)}
+/* Tool grid */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.tool-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.tool-card h4{color:var(--text);margin:12px 0 8px;font-size:1rem}
+.tool-card p{color:var(--text-muted);font-size:.85rem}
+/* Security */
+.security-list{display:grid;gap:12px}
+.security-item{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.security-item svg{flex-shrink:0;margin-top:2px}
+.security-item p{color:var(--text-muted);font-size:.9rem}
+/* Footer */
+footer{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:.85rem;border-top:1px solid var(--border)}
+footer a{color:var(--indigo);text-decoration:none}
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;background:rgba(15,23,42,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100;padding:12px 0}
+nav .container{display:flex;align-items:center;justify-content:space-between}
+nav a{color:var(--text-muted);text-decoration:none;font-size:.85rem;transition:color .2s}
+nav a:hover{color:var(--text)}
+.nav-links{display:flex;gap:20px}
+.nav-brand{font-weight:700;color:var(--text);font-size:1rem}
+@media(max-width:640px){.nav-links{display:none}.hero{min-height:60vh;padding:40px 20px}.card{padding:20px}section{padding:40px 0}}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="container">
+<span class="nav-brand">Tailscale + Claude Code</span>
+<div class="nav-links">
+<a href="#what">什么是 Tailscale</a>
+<a href="#methods">四种玩法</a>
+<a href="#compare">对比</a>
+<a href="#tools">工具</a>
+<a href="#security">安全</a>
+</div>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+<svg class="hero-svg" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Mesh network lines -->
+<line x1="150" y1="100" x2="350" y2="100" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6 4" class="pulse"/>
+<line x1="150" y1="100" x2="250" y2="220" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="6 4" class="pulse"/>
+<line x1="350" y1="100" x2="250" y2="220" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="6 4" class="pulse"/>
+<line x1="80" y1="180" x2="150" y2="100" stroke="#10b981" stroke-width="1" stroke-dasharray="4 4" class="pulse"/>
+<line x1="80" y1="180" x2="250" y2="220" stroke="#10b981" stroke-width="1" stroke-dasharray="4 4" class="pulse"/>
+<line x1="420" y1="180" x2="350" y2="100" stroke="#6366f1" stroke-width="1" stroke-dasharray="4 4" class="pulse"/>
+<line x1="420" y1="180" x2="250" y2="220" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4 4" class="pulse"/>
+<!-- Laptop -->
+<rect x="120" y="72" width="60" height="40" rx="4" stroke="#6366f1" stroke-width="2" fill="rgba(99,102,241,.1)"/>
+<rect x="112" y="112" width="76" height="6" rx="2" stroke="#6366f1" stroke-width="1.5" fill="rgba(99,102,241,.05)"/>
+<text x="150" y="96" text-anchor="middle" fill="#6366f1" font-size="10" font-weight="600">Laptop</text>
+<!-- Server -->
+<rect x="320" y="72" width="60" height="40" rx="4" stroke="#06b6d4" stroke-width="2" fill="rgba(6,182,212,.1)"/>
+<line x1="330" y1="85" x2="370" y2="85" stroke="#06b6d4" stroke-width="1"/>
+<line x1="330" y1="95" x2="370" y2="95" stroke="#06b6d4" stroke-width="1"/>
+<line x1="330" y1="105" x2="370" y2="105" stroke="#06b6d4" stroke-width="1"/>
+<circle cx="368" cy="85" r="2" fill="#06b6d4"/>
+<circle cx="368" cy="95" r="2" fill="#10b981"/>
+<text x="350" y="128" text-anchor="middle" fill="#06b6d4" font-size="10" font-weight="600">Server</text>
+<!-- Phone -->
+<rect x="234" y="195" width="32" height="50" rx="6" stroke="#8b5cf6" stroke-width="2" fill="rgba(139,92,246,.1)"/>
+<circle cx="250" cy="237" r="3" stroke="#8b5cf6" stroke-width="1" fill="none"/>
+<text x="250" y="260" text-anchor="middle" fill="#8b5cf6" font-size="10" font-weight="600">Phone</text>
+<!-- Tablet -->
+<rect x="56" y="162" width="48" height="36" rx="4" stroke="#10b981" stroke-width="2" fill="rgba(16,185,129,.1)"/>
+<text x="80" y="212" text-anchor="middle" fill="#10b981" font-size="10" font-weight="600">Tablet</text>
+<!-- Desktop -->
+<rect x="398" y="162" width="44" height="32" rx="3" stroke="#6366f1" stroke-width="2" fill="rgba(99,102,241,.1)"/>
+<rect x="412" y="194" width="16" height="8" rx="1" stroke="#6366f1" stroke-width="1" fill="none"/>
+<text x="420" y="216" text-anchor="middle" fill="#6366f1" font-size="10" font-weight="600">Desktop</text>
+<!-- Center label -->
+<text x="250" y="28" text-anchor="middle" fill="#94a3b8" font-size="12">Tailscale Mesh Network (WireGuard)</text>
+<!-- Data packets -->
+<circle cx="200" cy="100" r="3" fill="#6366f1" class="pulse"/>
+<circle cx="300" cy="160" r="3" fill="#8b5cf6" class="pulse"/>
+<circle cx="165" cy="160" r="3" fill="#10b981" class="pulse"/>
+</svg>
+<h1>Tailscale + Claude Code<br>远程开发完全指南</h1>
+<p>随时随地，用任何设备连接你的开发环境</p>
+</section>
+
+<!-- Section 1: What is Tailscale -->
+<section id="what">
+<div class="container">
+<h2>什么是 Tailscale？</h2>
+<div class="card">
+<div class="card-header">
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+<circle cx="24" cy="24" r="22" stroke="#6366f1" stroke-width="2" fill="rgba(99,102,241,.08)"/>
+<circle cx="16" cy="18" r="4" stroke="#06b6d4" stroke-width="1.5" fill="rgba(6,182,212,.15)"/>
+<circle cx="32" cy="18" r="4" stroke="#8b5cf6" stroke-width="1.5" fill="rgba(139,92,246,.15)"/>
+<circle cx="24" cy="33" r="4" stroke="#10b981" stroke-width="1.5" fill="rgba(16,185,129,.15)"/>
+<line x1="16" y1="18" x2="32" y2="18" stroke="#6366f1" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="16" y1="18" x2="24" y2="33" stroke="#6366f1" stroke-width="1" stroke-dasharray="3 2"/>
+<line x1="32" y1="18" x2="24" y2="33" stroke="#6366f1" stroke-width="1" stroke-dasharray="3 2"/>
+</svg>
+<h3>零配置的私有网络</h3>
+</div>
+<ul>
+<li>Tailscale 是基于 <strong>WireGuard</strong> 协议的零配置 VPN</li>
+<li>自动创建加密的私有网络 (<strong>tailnet</strong>)，让你所有设备互联互通</li>
+<li>无需端口转发、无需公网 IP、无需复杂配置</li>
+<li>设备之间直接点对点连接，延迟极低</li>
+<li>支持 macOS / Windows / Linux / iOS / Android</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- Section 2: Four Methods -->
+<section id="methods">
+<div class="container">
+<h2>四种玩法</h2>
+
+<!-- Method 1 -->
+<div class="card">
+<div class="card-header">
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+<rect x="4" y="8" width="24" height="16" rx="2" stroke="#06b6d4" stroke-width="2" fill="rgba(6,182,212,.08)"/>
+<rect x="8" y="24" width="16" height="3" rx="1" stroke="#06b6d4" stroke-width="1"/>
+<text x="16" y="19" text-anchor="middle" fill="#06b6d4" font-size="7" font-family="monospace">&gt;_</text>
+<rect x="33" y="12" width="12" height="20" rx="3" stroke="#8b5cf6" stroke-width="2" fill="rgba(139,92,246,.08)"/>
+<circle cx="39" cy="28" r="1.5" stroke="#8b5cf6" stroke-width="1" fill="none"/>
+<path d="M28 18 L33 18" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2 2"/>
+</svg>
+<div>
+<h3>方法一：SSH + Tailscale + tmux <span class="badge badge-free">Free</span></h3>
+<p style="color:var(--text-muted);font-size:.9rem">经典方案 — 完整开发环境</p>
+</div>
+</div>
+<ul>
+<li>在桌面电脑运行 Claude Code，拥有完整本地环境</li>
+<li>Tailscale 创建私有网络，设备自动互联</li>
+<li>手机/平板通过 SSH 远程连接</li>
+<li>tmux 保持会话活跃，断连后可恢复</li>
+</ul>
+<h3 style="margin-top:20px">操作步骤</h3>
+<ol class="steps">
+<li>两台设备都安装 Tailscale 并登录同一账号</li>
+<li>在服务器上启用 Tailscale SSH：<code>tailscale up --ssh</code></li>
+<li>从移动设备连接：<code>ssh user@machine-name</code></li>
+<li>启动 tmux 并运行 Claude Code</li>
+</ol>
+<div class="code-block">
+<span class="comment"># 服务器端</span><br>
+<span class="cmd">tailscale up --ssh</span><br>
+<span class="cmd">tmux new -s claude</span><br>
+<span class="cmd">claude</span><br><br>
+<span class="comment"># 客户端（从手机/平板）</span><br>
+<span class="cmd">ssh user@my-desktop</span><br>
+<span class="cmd">tmux attach -t claude</span>
+</div>
+</div>
+
+<!-- Method 2 -->
+<div class="card">
+<div class="card-header">
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+<ellipse cx="24" cy="14" rx="14" ry="8" stroke="#8b5cf6" stroke-width="2" fill="rgba(139,92,246,.08)"/>
+<path d="M14 14 C14 22 24 26 24 26 C24 26 34 22 34 14" stroke="#8b5cf6" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+<rect x="8" y="32" width="10" height="7" rx="1.5" stroke="#06b6d4" stroke-width="1.5" fill="rgba(6,182,212,.08)"/>
+<rect x="20" y="32" width="8" height="12" rx="2" stroke="#10b981" stroke-width="1.5" fill="rgba(16,185,129,.08)"/>
+<rect x="32" y="32" width="10" height="7" rx="1.5" stroke="#6366f1" stroke-width="1.5" fill="rgba(99,102,241,.08)"/>
+<line x1="13" y1="32" x2="20" y2="22" stroke="#06b6d4" stroke-width="1" stroke-dasharray="2 2"/>
+<line x1="24" y1="32" x2="24" y2="22" stroke="#10b981" stroke-width="1" stroke-dasharray="2 2"/>
+<line x1="37" y1="32" x2="28" y2="22" stroke="#6366f1" stroke-width="1" stroke-dasharray="2 2"/>
+</svg>
+<div>
+<h3>方法二：Claude Code Remote Control <span class="badge badge-paid">Pro/Max</span></h3>
+<p style="color:var(--text-muted);font-size:.9rem">官方方案 — 最佳移动体验</p>
+</div>
+</div>
+<ul>
+<li>2026 年 2 月推出的 Research Preview</li>
+<li>将本地 Claude Code 桥接到 claude.ai/code、iOS、Android 应用</li>
+<li>完整本地环境可用，包括文件系统和工具</li>
+<li>需要 Claude Pro 或 Max 订阅</li>
+</ul>
+<h3 style="margin-top:20px">操作步骤</h3>
+<ol class="steps">
+<li>在本地启动远程模式：<code>claude --remote</code></li>
+<li>打开 claude.ai/code 或移动应用</li>
+<li>自动连接到本地环境</li>
+</ol>
+<div class="code-block">
+<span class="comment"># 在开发机器上</span><br>
+<span class="cmd">claude --remote</span><br><br>
+<span class="comment"># 然后在任何浏览器或移动设备上</span><br>
+<span class="comment"># 访问 claude.ai/code 即可连接</span>
+</div>
+</div>
+
+<!-- Method 3 -->
+<div class="card">
+<div class="card-header">
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+<circle cx="24" cy="20" r="10" stroke="#6366f1" stroke-width="2" fill="rgba(99,102,241,.08)"/>
+<text x="24" y="24" text-anchor="middle" fill="#6366f1" font-size="10" font-weight="700">MCP</text>
+<line x1="14" y1="20" x2="6" y2="14" stroke="#06b6d4" stroke-width="1.5"/>
+<line x1="14" y1="24" x2="4" y2="30" stroke="#8b5cf6" stroke-width="1.5"/>
+<line x1="34" y1="20" x2="42" y2="14" stroke="#10b981" stroke-width="1.5"/>
+<line x1="34" y1="24" x2="44" y2="30" stroke="#06b6d4" stroke-width="1.5"/>
+<line x1="24" y1="30" x2="24" y2="40" stroke="#8b5cf6" stroke-width="1.5"/>
+<circle cx="6" cy="14" r="3" stroke="#06b6d4" stroke-width="1" fill="rgba(6,182,212,.15)"/>
+<circle cx="4" cy="30" r="3" stroke="#8b5cf6" stroke-width="1" fill="rgba(139,92,246,.15)"/>
+<circle cx="42" cy="14" r="3" stroke="#10b981" stroke-width="1" fill="rgba(16,185,129,.15)"/>
+<circle cx="44" cy="30" r="3" stroke="#06b6d4" stroke-width="1" fill="rgba(6,182,212,.15)"/>
+<circle cx="24" cy="42" r="3" stroke="#8b5cf6" stroke-width="1" fill="rgba(139,92,246,.15)"/>
+</svg>
+<div>
+<h3>方法三：claude-code-tailscale MCP 插件 <span class="badge badge-free">Free</span></h3>
+<p style="color:var(--text-muted);font-size:.9rem">多 Agent 协作 — 内网资源访问</p>
+</div>
+</div>
+<ul>
+<li>通过 tailnet 访问内部 API、Dashboard 等资源</li>
+<li>支持多 Agent 协调工作</li>
+<li>一键安装，即装即用</li>
+</ul>
+<div class="code-block">
+<span class="comment"># 安装并使用</span><br>
+<span class="cmd">npx -y claude-code-tailscale</span>
+</div>
+</div>
+
+<!-- Method 4 -->
+<div class="card">
+<div class="card-header">
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+<rect x="8" y="8" width="32" height="32" rx="6" stroke="#10b981" stroke-width="2" fill="rgba(16,185,129,.05)"/>
+<path d="M24 16 L24 28 M20 22 L24 16 L28 22" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="16" y="30" width="16" height="4" rx="2" stroke="#10b981" stroke-width="1.5" fill="rgba(16,185,129,.1)"/>
+<circle cx="24" cy="24" r="14" stroke="#10b981" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+</svg>
+<div>
+<h3>方法四：Tailscale + MCP Proxy <span class="badge badge-free">Free</span></h3>
+<p style="color:var(--text-muted);font-size:.9rem">安全远程 MCP — 高级用法</p>
+</div>
+</div>
+<ul>
+<li>在远程机器上托管 MCP Server</li>
+<li>MCP Client 指向 Tailscale 地址</li>
+<li>零公网暴露，完全通过 tailnet 加密传输</li>
+<li>适合需要访问生产环境数据的场景</li>
+</ul>
+<div class="code-block">
+<span class="comment"># 远程机器（运行 MCP Server）</span><br>
+<span class="cmd">tailscale up</span><br>
+<span class="cmd">mcp-server --bind 0.0.0.0:8080</span><br><br>
+<span class="comment"># 本地（配置 Claude Code MCP Client）</span><br>
+<span class="comment"># 在 .claude/settings.json 中指向 tailscale 地址</span><br>
+<span class="cmd">"mcpServers": { "remote": { "url": "http://my-server:8080" } }</span>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- Section 3: Comparison Table -->
+<section id="compare" style="background:rgba(99,102,241,.03)">
+<div class="container">
+<h2>快速对比</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>最适合</th>
+<th>费用</th>
+<th>难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SSH + Tailscale + tmux</strong></td>
+<td>完整开发环境</td>
+<td><span class="badge badge-free">Free</span></td>
+<td>中等</td>
+</tr>
+<tr>
+<td><strong>Remote Control</strong></td>
+<td>移动端体验、极简配置</td>
+<td><span class="badge badge-paid">Pro/Max</span></td>
+<td>简单</td>
+</tr>
+<tr>
+<td><strong>claude-code-tailscale MCP</strong></td>
+<td>多 Agent 协作、内网 API</td>
+<td><span class="badge badge-free">Free</span></td>
+<td>中等</td>
+</tr>
+<tr>
+<td><strong>Tailscale + MCP Proxy</strong></td>
+<td>安全远程 MCP</td>
+<td><span class="badge badge-free">Free</span></td>
+<td>高级</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- Section 4: Recommended Tools -->
+<section id="tools">
+<div class="container">
+<h2>推荐工具组合</h2>
+<div class="tool-grid">
+<div class="tool-card">
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+<rect x="10" y="4" width="20" height="32" rx="5" stroke="#8b5cf6" stroke-width="2" fill="rgba(139,92,246,.08)"/>
+<circle cx="20" cy="31" r="2" stroke="#8b5cf6" stroke-width="1" fill="none"/>
+<rect x="14" y="8" width="12" height="18" rx="1" stroke="#8b5cf6" stroke-width="1" fill="rgba(139,92,246,.05)"/>
+</svg>
+<h4>iPhone</h4>
+<p>Blink Shell + Mosh + Tailscale</p>
+</div>
+<div class="tool-card">
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+<rect x="10" y="4" width="20" height="32" rx="4" stroke="#10b981" stroke-width="2" fill="rgba(16,185,129,.08)"/>
+<rect x="14" y="8" width="12" height="20" rx="1" stroke="#10b981" stroke-width="1" fill="rgba(16,185,129,.05)"/>
+<circle cx="17" cy="32" r="1.5" fill="#10b981"/>
+<rect x="21" y="31" width="5" height="3" rx="1" fill="#10b981"/>
+</svg>
+<h4>Android</h4>
+<p>Termux + SSH + Tailscale</p>
+</div>
+<div class="tool-card">
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+<rect x="4" y="8" width="32" height="22" rx="3" stroke="#06b6d4" stroke-width="2" fill="rgba(6,182,212,.08)"/>
+<circle cx="20" cy="26" r="2" stroke="#06b6d4" stroke-width="1" fill="none"/>
+<rect x="8" y="12" width="24" height="10" rx="1" stroke="#06b6d4" stroke-width="1" fill="rgba(6,182,212,.05)"/>
+</svg>
+<h4>iPad</h4>
+<p>Blink Shell / Termius + Tailscale</p>
+</div>
+<div class="tool-card">
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+<rect x="4" y="6" width="32" height="20" rx="2" stroke="#6366f1" stroke-width="2" fill="rgba(99,102,241,.08)"/>
+<rect x="8" y="10" width="24" height="12" rx="1" stroke="#6366f1" stroke-width="1" fill="rgba(99,102,241,.05)"/>
+<text x="20" y="19" text-anchor="middle" fill="#6366f1" font-size="7" font-family="monospace">&gt;_</text>
+<rect x="12" y="28" width="16" height="3" rx="1" stroke="#6366f1" stroke-width="1" fill="none"/>
+<rect x="16" y="31" width="8" height="3" rx="1" stroke="#6366f1" stroke-width="1" fill="none"/>
+</svg>
+<h4>通用方案</h4>
+<p>tmux 保持会话持久化</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Section 5: Security -->
+<section id="security" style="background:rgba(99,102,241,.03)">
+<div class="container">
+<h2>安全提示</h2>
+<div class="security-list">
+<div class="security-item">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+<path d="M12 2 L4 6 L4 12 C4 17 8 21 12 22 C16 21 20 17 20 12 L20 6 Z" stroke="#10b981" stroke-width="2" fill="rgba(16,185,129,.1)"/>
+<path d="M9 12 L11 14 L15 10" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<div>
+<h3>使用 Tailscale ACLs 控制访问</h3>
+<p>配置访问控制列表，精确控制哪些设备可以访问哪些服务。只开放必要的端口和服务。</p>
+</div>
+</div>
+<div class="security-item">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+<rect x="5" y="10" width="14" height="10" rx="2" stroke="#8b5cf6" stroke-width="2" fill="rgba(139,92,246,.1)"/>
+<path d="M8 10 L8 7 C8 4.8 9.8 3 12 3 C14.2 3 16 4.8 16 7 L16 10" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+<circle cx="12" cy="15" r="1.5" fill="#8b5cf6"/>
+</svg>
+<div>
+<h3>Auth Keys 设置过期时间</h3>
+<p>使用带过期时间的认证密钥。避免永久有效的 auth key，定期轮换提高安全性。</p>
+</div>
+</div>
+<div class="security-item">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+<circle cx="12" cy="12" r="9" stroke="#f43f5e" stroke-width="2" fill="rgba(244,63,94,.08)"/>
+<line x1="8" y1="8" x2="16" y2="16" stroke="#f43f5e" stroke-width="2" stroke-linecap="round"/>
+<line x1="16" y1="8" x2="8" y2="16" stroke="#f43f5e" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<div>
+<h3>不要将 Claude Code 暴露到公网</h3>
+<p>Claude Code 应只通过 Tailscale 私有网络或本地访问，绝不应直接暴露到公共互联网。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+<p>Made with care by <a href="https://miaodx.com/LIP/">OpenClaw / MiaoDX</a></p>
+<p style="margin-top:8px">2026 · Tailscale + Claude Code 远程开发指南</p>
+</footer>
+
+</body>
+</html>
