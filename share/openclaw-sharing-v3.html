@@ -137,7 +137,6 @@
       <p style="margin-top: 20px; font-size: 16px; color: var(--text-dim);">和张和老师是自驾初期的老同事。<br>张和老师带 TPM 团队，把<strong style="color: var(--text);">数据闭环、评测体系</strong>从零趟了出来。</p>
     </div>
     <div>
-      <div style="text-align: center;"><img src="qr-personal.jpg" style="width: 150px; height: 150px; border-radius: 12px; border: 2px solid var(--border);"><div style="margin-top: 8px; color: var(--text-dim); font-size: 13px;">扫码加微信</div></div>
       <div style="margin-top: 16px;"><p style="font-size: 15px; color: var(--text-dim);">🌐 miaodx.com<br>📝 公众号：直觉机器漫谈<br>🐙 GitHub：MiaoDX</p></div>
     </div>
   </div>
@@ -194,7 +193,7 @@
     <tr><td><strong>Railway</strong></td><td>4核8G</td><td><span class="tag tag-cheap">$5~10/月</span></td><td>容器化部署，性价比高</td></tr>
     <tr style="background: rgba(78, 205, 196, 0.05) !important;"><td><strong style="color: var(--accent3);">ClawCloud Run ⭐</strong></td><td>4核8G</td><td><span class="tag tag-free">$0（送$5）</span></td><td>GitHub ≥ 180 天送 $5/月，基本花不完</td></tr>
   </table>
-  <img src="task1-price-comparison.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+  <img src="task1-price-comparison.png" style="width: 100%; max-height: 55vh; object-fit: contain; border-radius: 4px; border: 1px solid var(--border);">
   <div class="speaker-note">详细讲一下 ClawCloud Run——这个平台名字和 OpenClaw 有些莫名缘分，但比 OpenClaw 出来早很多年。GitHub 超过 180 天，每月送 5 美金，4 核 8G 配置花不完。独立 VPS 的价格大家可以看截图，同等配置会贵不少。</div>
 </section>
 
@@ -235,7 +234,7 @@
         <li style="padding: 12px 0; font-size: 17px;">✅ 支持 Anthropic API 格式 + 浏览器</li>
       </ul>
     </div>
-    <div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;"><img src="original-setup-wizard.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"><img src="original-config-editor.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"></div><img src="original-custom-provider.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"></div>
+    <div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;"><img src="original-setup-wizard.png" style="width: 100%; max-height: 35vh; object-fit: contain; border-radius: 4px; border: 1px solid var(--border);"><img src="original-config-editor.png" style="width: 100%; max-height: 35vh; object-fit: contain; border-radius: 4px; border: 1px solid var(--border);"></div><img src="original-custom-provider.png" style="width: 100%; max-height: 30vh; object-fit: contain; border-radius: 4px; border: 1px solid var(--border);"></div>
   </div>
   <div class="speaker-note">OpenClaw 难免会崩——不是说可能，是一定会崩。所以网页 restart 很重要。我也给这个开源项目贡献了 Anthropic API 格式支持以及浏览器支持，我觉得这两个非常重要。</div>
 </section>
@@ -639,6 +638,7 @@ document.addEventListener('keydown', (e) => {
   const current = [...slides].findIndex(s => { const rect = s.getBoundingClientRect(); return rect.top >= -100 && rect.top <= window.innerHeight / 2; });
   if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); if (current < slides.length - 1) slides[current + 1].scrollIntoView({ behavior: 'smooth' }); }
   if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); if (current > 0) slides[current - 1].scrollIntoView({ behavior: 'smooth' }); }
+  if (e.key === 'f' || e.key === 'F') { e.preventDefault(); if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
 });
 </script>
 </body>
