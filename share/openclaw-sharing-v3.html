@@ -3,110 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenClaw 使用及协作方案分享 — 缪东旭</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<title>OpenClaw 使用及协作方案分享 — 缪东旭 (杂志编辑)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700;900&family=Space+Mono:wght@400;700&family=DM+Serif+Display&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --bg-card: #12121a;
-    --bg-highlight: #1a1a2e;
-    --text: #e8e6e3;
-    --text-dim: #8a8a9a;
-    --accent: #ff6b35;
-    --accent2: #f7c948;
-    --accent3: #4ecdc4;
-    --accent4: #a78bfa;
-    --border: #2a2a3a;
-    --code-bg: #1e1e2e;
-    --lobster: #e74c3c;
+    --bg: #f5f0eb;
+    --bg-card: #fff;
+    --bg-highlight: #ebe5de;
+    --text: #1a1a1a;
+    --text-dim: #777;
+    --accent: #c0392b;
+    --accent2: #d4a017;
+    --accent3: #2c7a7b;
+    --accent4: #6b46c1;
+    --border: #d4cdc4;
+    --code-bg: #f8f4ef;
+    --lobster: #c0392b;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
-  body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+  body { font-family: 'Outfit', 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
 
   .slide { min-height: 100vh; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; padding: 60px 80px; position: relative; overflow: hidden; }
-  .slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.03) 0%, transparent 60%); pointer-events: none; }
+  .slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
 
   .nav-dots { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 10px; }
-  .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all 0.3s; border: none; }
-  .nav-dot:hover, .nav-dot.active { background: var(--accent); transform: scale(1.4); }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all 0.3s; border: none; }
+  .nav-dot:hover, .nav-dot.active { background: var(--accent); transform: scale(1.5); }
 
-  .notes-toggle { position: fixed; bottom: 20px; left: 20px; z-index: 200; background: var(--bg-highlight); border: 1px solid var(--border); color: var(--text-dim); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit; transition: all 0.3s; }
+  .notes-toggle { position: fixed; bottom: 20px; left: 20px; z-index: 200; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-dim); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: inherit; transition: all 0.3s; }
   .notes-toggle:hover { border-color: var(--accent); color: var(--text); }
 
-  .speaker-note { display: none; background: rgba(255, 107, 53, 0.05); border: 1px solid rgba(255, 107, 53, 0.2); border-radius: 12px; padding: 20px 24px; margin-top: 24px; font-size: 14px; color: var(--accent2); line-height: 1.8; max-width: 700px; }
-  .speaker-note::before { content: '🎤 口播提示'; display: block; font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+  .speaker-note { display: none; background: rgba(192, 57, 43, 0.04); border: 1px solid rgba(192, 57, 43, 0.15); border-radius: 4px; padding: 20px 24px; margin-top: 24px; font-size: 14px; color: #8b4513; line-height: 1.8; max-width: 700px; }
+  .speaker-note::before { content: '🎤 口播提示'; display: block; font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; font-family: 'Space Mono', monospace; }
   body.show-notes .speaker-note { display: block; }
 
-  .slide-number { font-family: 'Playfair Display', serif; font-size: 120px; font-weight: 900; color: var(--accent); opacity: 0.08; position: absolute; top: 40px; right: 80px; line-height: 1; }
+  .slide-number { font-family: 'DM Serif Display', serif; font-size: 140px; font-weight: 400; color: var(--accent); opacity: 0.06; position: absolute; top: 30px; right: 80px; line-height: 1; }
 
-  h1 { font-size: 56px; font-weight: 900; line-height: 1.2; margin-bottom: 24px; letter-spacing: -1px; }
-  h2 { font-size: 40px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
-  h3 { font-size: 24px; font-weight: 500; color: var(--accent); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 2px; }
-  .subtitle { font-size: 22px; color: var(--text-dim); font-weight: 300; max-width: 700px; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: 56px; font-weight: 400; line-height: 1.15; margin-bottom: 24px; letter-spacing: -0.5px; color: #1a1a1a; }
+  h2 { font-family: 'DM Serif Display', serif; font-size: 42px; font-weight: 400; line-height: 1.2; margin-bottom: 20px; color: #1a1a1a; }
+  h3 { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 4px; }
+  .subtitle { font-size: 20px; color: var(--text-dim); font-weight: 300; max-width: 700px; font-family: 'Outfit', sans-serif; }
 
   .highlight { color: var(--accent); }
   .highlight2 { color: var(--accent2); }
   .highlight3 { color: var(--accent3); }
   .highlight4 { color: var(--accent4); }
 
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 32px; }
-  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s; position: relative; overflow: hidden; }
-  .card:hover { border-color: var(--accent); transform: translateY(-4px); }
-  .card-icon { font-size: 36px; margin-bottom: 16px; display: block; }
-  .card-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-  .card-desc { font-size: 15px; color: var(--text-dim); line-height: 1.6; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
+  .card { background: var(--bg); padding: 28px; transition: all 0.3s; position: relative; overflow: hidden; border-radius: 0; border: none; }
+  .card:hover { background: var(--bg-highlight); }
+  .card-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+  .card-title { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; margin-bottom: 8px; color: #1a1a1a; }
+  .card-desc { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
 
-  .compare-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 32px; border-radius: 16px; overflow: hidden; }
-  .compare-table th { background: var(--bg-highlight); padding: 16px 24px; text-align: left; font-weight: 500; color: var(--accent); font-size: 15px; letter-spacing: 1px; }
-  .compare-table td { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 16px; }
+  .compare-table { width: 100%; border-collapse: collapse; margin-top: 32px; }
+  .compare-table th { background: transparent; padding: 14px 20px; text-align: left; font-family: 'Space Mono', monospace; font-weight: 700; color: var(--accent); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid #1a1a1a; }
+  .compare-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); font-size: 15px; }
   .compare-table tr:last-child td { border-bottom: none; }
-  .compare-table tr:nth-child(even) { background: var(--bg-card); }
 
-  .tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; }
-  .tag-free { background: rgba(78, 205, 196, 0.15); color: var(--accent3); }
-  .tag-cheap { background: rgba(247, 201, 72, 0.15); color: var(--accent2); }
-  .tag-expensive { background: rgba(255, 107, 53, 0.15); color: var(--accent); }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 2px; font-size: 12px; font-weight: 600; font-family: 'Space Mono', monospace; }
+  .tag-free { background: rgba(44, 122, 123, 0.1); color: var(--accent3); }
+  .tag-cheap { background: rgba(212, 160, 23, 0.1); color: var(--accent2); }
+  .tag-expensive { background: rgba(192, 57, 43, 0.1); color: var(--accent); }
 
-  .quote { border-left: 4px solid var(--accent); padding: 24px 32px; background: var(--bg-card); border-radius: 0 16px 16px 0; margin: 24px 0; font-size: 20px; font-weight: 300; font-style: italic; max-width: 800px; }
+  .quote { border-left: 3px solid var(--accent); padding: 20px 28px; background: transparent; border-radius: 0; margin: 24px 0; font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; font-style: italic; max-width: 800px; color: #333; }
 
-  .img-placeholder { background: var(--bg-highlight); border: 2px dashed var(--border); border-radius: 16px; padding: 48px; text-align: center; color: var(--text-dim); font-size: 15px; margin: 24px 0; position: relative; }
-  .img-placeholder::before { content: '🖼️'; font-size: 32px; display: block; margin-bottom: 12px; }
-  .img-placeholder .img-note { font-size: 13px; color: var(--accent); margin-top: 8px; font-style: italic; }
+  .img-placeholder { background: var(--bg-highlight); border: 1px solid var(--border); border-radius: 4px; padding: 48px; text-align: center; color: var(--text-dim); font-size: 14px; margin: 24px 0; }
+  .img-placeholder::before { content: '🖼️'; font-size: 28px; display: block; margin-bottom: 10px; }
+  .img-placeholder .img-note { font-size: 12px; color: var(--accent); margin-top: 8px; font-style: italic; }
 
   .flow { display: flex; align-items: center; gap: 16px; margin: 32px 0; flex-wrap: wrap; }
-  .flow-step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; font-size: 16px; font-weight: 500; text-align: center; min-width: 140px; }
-  .flow-arrow { color: var(--accent); font-size: 24px; font-weight: 700; }
+  .flow-step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 16px 24px; font-size: 15px; font-weight: 500; text-align: center; min-width: 140px; }
+  .flow-arrow { color: var(--accent); font-size: 20px; font-weight: 700; }
 
   .vs-container { display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: center; margin: 40px 0; }
-  .vs-side { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
-  .vs-badge { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: var(--accent); text-align: center; }
+  .vs-side { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 32px; }
+  .vs-badge { font-family: 'DM Serif Display', serif; font-size: 48px; font-weight: 400; color: var(--accent); text-align: center; }
 
-  .lobster-bg { position: absolute; font-size: 200px; opacity: 0.04; bottom: -40px; right: -20px; transform: rotate(-15deg); pointer-events: none; }
+  .lobster-bg { position: absolute; font-size: 200px; opacity: 0.03; bottom: -40px; right: -20px; transform: rotate(-15deg); pointer-events: none; }
 
   .timeline { margin: 32px 0; position: relative; padding-left: 32px; }
-  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent3)); }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 1px; background: var(--border); }
   .timeline-item { position: relative; margin-bottom: 28px; padding-left: 24px; }
-  .timeline-item::before { content: ''; position: absolute; left: -28px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
-  .timeline-time { font-size: 13px; color: var(--accent); font-weight: 600; letter-spacing: 1px; }
-  .timeline-text { font-size: 17px; margin-top: 4px; }
+  .timeline-item::before { content: ''; position: absolute; left: -28px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+  .timeline-time { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
+  .timeline-text { font-size: 16px; margin-top: 4px; }
 
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-  .divider-line { width: 60px; height: 3px; background: var(--accent); margin-bottom: 32px; border-radius: 2px; }
+  .divider-line { width: 100%; height: 1px; background: #1a1a1a; margin-bottom: 32px; }
 
   .action-step { display: flex; align-items: flex-start; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
   .action-step:last-child { border-bottom: none; }
-  .action-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--accent); line-height: 1; min-width: 48px; }
+  .action-num { font-family: 'DM Serif Display', serif; font-size: 36px; font-weight: 400; color: var(--accent); line-height: 1; min-width: 48px; }
   .action-content { font-size: 18px; }
-  .action-detail { font-size: 14px; color: var(--text-dim); margin-top: 4px; }
+  .action-detail { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
 
-  @media (max-width: 900px) {
-    .slide { padding: 40px 32px; }
-    h1 { font-size: 36px; } h2 { font-size: 28px; }
-    .two-col, .vs-container { grid-template-columns: 1fr; }
-    .nav-dots { display: none; }
-    .slide-number { font-size: 80px; right: 32px; }
-  }
+  @media (max-width: 900px) { .slide { padding: 40px 32px; } h1 { font-size: 36px; } h2 { font-size: 30px; } .two-col, .vs-container { grid-template-columns: 1fr; } .nav-dots { display: none; } .slide-number { font-size: 80px; right: 32px; } }
   @media print { .slide { page-break-after: always; min-height: auto; padding: 40px; } .nav-dots, .notes-toggle { display: none; } }
 </style>
 </head>
@@ -201,7 +194,7 @@
     <tr><td><strong>Railway</strong></td><td>4核8G</td><td><span class="tag tag-cheap">$5~10/月</span></td><td>容器化部署，性价比高</td></tr>
     <tr style="background: rgba(78, 205, 196, 0.05) !important;"><td><strong style="color: var(--accent3);">ClawCloud Run ⭐</strong></td><td>4核8G</td><td><span class="tag tag-free">$0（送$5）</span></td><td>GitHub ≥ 180 天送 $5/月，基本花不完</td></tr>
   </table>
-  <img src="task1-price-comparison.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+  <img src="task1-price-comparison.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
   <div class="speaker-note">详细讲一下 ClawCloud Run——这个平台名字和 OpenClaw 有些莫名缘分，但比 OpenClaw 出来早很多年。GitHub 超过 180 天，每月送 5 美金，4 核 8G 配置花不完。独立 VPS 的价格大家可以看截图，同等配置会贵不少。</div>
 </section>
 
@@ -219,7 +212,7 @@
       <div class="card" style="border-left: 3px solid var(--accent4);"><div class="card-title">💬 GPT-5.4 / 其他</div><div class="card-desc">有 access 当然好，初步体验不需要上最好的</div></div>
     </div>
     <div>
-      <img src="task6-mimo-ranking.jpg" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+      <img src="task6-mimo-ranking.jpg" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
       <div class="quote" style="margin-top: 16px; font-size: 16px;">零成本部署 + 免费顶尖模型 =<br><strong style="color: var(--accent3); font-size: 20px; font-style: normal;">完全零成本使用 OpenClaw</strong></div>
     </div>
   </div>
@@ -242,11 +235,7 @@
         <li style="padding: 12px 0; font-size: 17px;">✅ 支持 Anthropic API 格式 + 浏览器</li>
       </ul>
     </div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-      <img src="original-setup-wizard.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-      <img src="original-config-editor.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-    </div>
-    <div style="margin-top: 12px;"><img src="original-custom-provider.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);"></div>
+    <div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;"><img src="original-setup-wizard.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"><img src="original-config-editor.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"></div><img src="original-custom-provider.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"></div>
   </div>
   <div class="speaker-note">OpenClaw 难免会崩——不是说可能，是一定会崩。所以网页 restart 很重要。我也给这个开源项目贡献了 Anthropic API 格式支持以及浏览器支持，我觉得这两个非常重要。</div>
 </section>
@@ -348,7 +337,7 @@
         <div class="timeline-item"><div class="timeline-time">Step 4</div><div class="timeline-text">提示它们自己判断是否需要回复</div></div>
       </div>
     </div>
-    <div><img src="task2-slack-collaboration-real.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);"></div>
+    <div><img src="task2-slack-collaboration-real.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"></div>
   </div>
   <div class="speaker-note">飞书据说在做 bot-to-bot 支持，做好了我可能会切过去——飞书文档、妙记等生态更好。但目前 Slack 是唯一能用的。搭建其实很简单，Slack 已经做了 bot 交互支持，我只做了一点调整让它们免 @ 就能回复。</div>
 </section>
@@ -361,7 +350,7 @@
   <h2>协作效果：<span class="highlight">1 + 1 > 2</span></h2>
   <div class="two-col" style="margin-top: 32px;">
     <div>
-      <img src="task2-collaboration-case.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+      <img src="task2-collaboration-case.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
     </div>
     <div>
       <h3 style="font-size: 18px; color: var(--accent2); margin-bottom: 20px;">为什么比一只 Claw 强？</h3>
@@ -396,10 +385,7 @@
       </div>
       <p style="font-size: 18px; margin-top: 24px;">定时任务触发<br><span style="color: var(--text-dim);">就像人类去茶水间闲聊</span></p>
     </div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-      <img src="original-watercooler-1.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-      <img src="original-watercooler-2.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-    </div>
+    <div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><img src="original-watercooler-1.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"><img src="original-watercooler-2.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);"></div></div>
   </div>
 </section>
 
@@ -432,7 +418,7 @@
       <p style="font-size: 14px; color: var(--text-dim); margin-top: 12px;">memory · tools · SOUL.md — 它自己决定存在哪里</p>
     </div>
     <div>
-      <img src="task8-wlb-skills.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+      <img src="task8-wlb-skills.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
       <div class="img-placeholder" style="min-height: 200px;">问 Claw "你固化了哪些经验" 的回复<div class="img-note">→ 可以现场演示</div></div>
     </div>
   </div>
@@ -527,7 +513,7 @@
       </div>
     </div>
     <div>
-<img src="task5-coach-assignment.png" style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+      <img src="task5-coach-assignment.png" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
     </div>
   </div>
   <div class="speaker-note">我主要时间都在工作，能抽出来的时间就是周末。所以让 Coach 方案是让我尽可能少参与。包括今天来张和老师这里做分享——其实就是 Coach 给我的建议之一，稍微夸张了一点。</div>
@@ -620,10 +606,10 @@
   <span class="slide-number">24</span>
   <div class="lobster-bg">🦞</div>
   <h2 style="margin-bottom: 40px;">谢谢大家</h2>
-  <div class="card-grid" style="grid-template-columns: 1fr 1fr; max-width: 600px; margin: 0 auto;">
-    <div style="text-align: center;"><img src="qr-personal.jpg" style="width: 160px; height: 160px; border-radius: 12px; border: 2px solid var(--border);"><div style="margin-top: 8px; color: var(--text-dim); font-size: 13px;">个人微信 · 缪东旭</div></div>
-    <div style="text-align: center;"><img src="qr-gzh.jpg" style="width: 160px; height: 160px; border-radius: 12px; border: 2px solid var(--border);"><div style="margin-top: 8px; color: var(--text-dim); font-size: 13px;">公众号 · 直觉机器漫谈</div></div>
-    <div style="text-align: center;"><img src="qr-zhanghe.jpg" style="width: 160px; height: 160px; border-radius: 12px; border: 2px solid var(--border);"><div style="margin-top: 8px; color: var(--text-dim); font-size: 13px;">张和 All in AI</div></div>
+  <div style="display: flex; gap: 24px; justify-content: center; margin: 0 auto; flex-wrap: wrap;">
+    <div style="text-align: center;"><img src="qr-personal.jpg" style="width: 150px; height: 150px; border-radius: 4px; border: 1px solid var(--border);"><div style="margin-top: 8px; color: var(--text-dim); font-size: 13px;">个人微信 · 缪东旭</div></div>
+    <div style="text-align: center;"><img src="qr-gzh.jpg" style="width: 150px; height: 150px; border-radius: 4px; border: 1px solid var(--border);"><div style="margin-top: 8px; color: var(--text-dim); font-size: 13px;">公众号 · 直觉机器漫谈</div></div>
+    <div style="text-align: center;"><img src="qr-zhanghe.jpg" style="width: 150px; height: 150px; border-radius: 4px; border: 1px solid var(--border);"><div style="margin-top: 8px; color: var(--text-dim); font-size: 13px;">张和 All in AI</div></div>
   </div>
   <div style="margin-top: 40px; font-size: 15px; color: var(--text-dim);">🌐 miaodx.com &nbsp;&nbsp; 📝 公众号：直觉机器漫谈 &nbsp;&nbsp; 🐙 GitHub：MiaoDX</div>
   <div class="speaker-note">大家可以在群里继续交流，也可以扫个人微信。接下来把话筒给张和老师，然后做大概十分钟的 QA。大家可以先在对话框里提问。</div>
