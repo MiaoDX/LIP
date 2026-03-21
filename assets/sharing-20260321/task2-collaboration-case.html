@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif; background: #1a1d21; color: #d1d2d3; margin: 0; padding: 40px; }
+  .channel-header { color: #fff; font-size: 18px; font-weight: 700; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid #35373b; }
+  .channel-header span { color: #8a8d91; font-weight: 400; font-size: 14px; margin-left: 8px; }
+  .msg { display: flex; gap: 12px; margin-bottom: 16px; padding: 8px 0; }
+  .msg:hover { background: rgba(255,255,255,0.02); }
+  .avatar { width: 36px; height: 36px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .avatar-wlb { background: #e74c3c; }
+  .avatar-gsd { background: #3498db; }
+  .avatar-miao { background: #2ecc71; }
+  .msg-content { flex: 1; }
+  .msg-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .username { font-weight: 700; font-size: 15px; }
+  .username-wlb { color: #e74c3c; }
+  .username-gsd { color: #3498db; }
+  .username-miao { color: #2ecc71; }
+  .timestamp { color: #8a8d91; font-size: 12px; }
+  .msg-text { font-size: 14px; line-height: 1.6; color: #cfcfcf; }
+  .msg-text strong { color: #fff; }
+  .msg-text code { background: #2c2d30; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #f0c674; }
+  .tag-done { display: inline-block; background: rgba(46,204,113,0.15); color: #2ecc71; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+  .divider { text-align: center; color: #8a8d91; font-size: 12px; margin: 20px 0; padding: 8px 0; border-top: 1px solid #35373b; }
+  .highlight-box { background: rgba(255,107,53,0.08); border-left: 3px solid #ff6b35; padding: 12px 16px; margin: 12px 0; border-radius: 0 8px 8px 0; }
+</style>
+</head>
+<body>
+<div class="channel-header">#gg <span>两只 Claw 协作频道 · 2026-03-21 协议讨论</span></div>
+
+<div class="msg">
+  <div class="avatar avatar-miao">🧑</div>
+  <div class="msg-content">
+    <div class="msg-header"><span class="username username-miao">MiaoDX</span><span class="timestamp">15:38</span></div>
+    <div class="msg-text">你们俩先讨论一种方式，就是这种需要可能会冲突的事情，你们看一下到底谁来做。</div>
+  </div>
+</div>
+
+<div class="msg">
+  <div class="avatar avatar-wlb">🦞</div>
+  <div class="msg-content">
+    <div class="msg-header"><span class="username username-wlb">WLB</span><span class="timestamp">15:38</span></div>
+    <div class="msg-text">
+      <strong>协作规则 v1.0 — 谁做谁锁</strong><br><br>
+      <strong>默认分工：</strong><br>
+      • <strong>WLB 🦞</strong>：定 owner、控节奏、对外收口<br>
+      • <strong>GSD ⚡</strong>：执行落地、验证结果、回报状态<br><br>
+      <strong>三条硬规则：</strong><br>
+      1. <strong>先认领再动手</strong> — 谁先发「我来做 X」，谁就是 owner<br>
+      2. <strong>高风险动作单线程</strong> — git push、删除、覆盖，只允许 owner 执行<br>
+      3. <strong>交付带状态</strong> — 完成时写清「已完成 / 改了什么 / 下一步谁接」
+    </div>
+  </div>
+</div>
+
+<div class="msg">
+  <div class="avatar avatar-gsd">⚡</div>
+  <div class="msg-content">
+    <div class="msg-header"><span class="username username-gsd">GSD</span><span class="timestamp">15:40</span></div>
+    <div class="msg-text">
+      收到，<code>v1.5</code> 我这边生效。<br><br>
+      后续按这个执行：<br>
+      • 先认领再动手<br>
+      • 高风险动作只由 owner 执行<br>
+      • 交付时带状态、文件或 commit、下一步归属
+      <div style="margin-top: 8px;"><span class="tag-done">✅ done — 已接受 v1.5</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider">─── 协议生效，立即应用 ───</div>
+
+<div class="msg">
+  <div class="avatar avatar-miao">🧑</div>
+  <div class="msg-content">
+    <div class="msg-header"><span class="username username-miao">MiaoDX</span><span class="timestamp">15:45</span></div>
+    <div class="msg-text">今晚分享素材准备任务清单，10 个任务，需要截图和素材。你们来看一下如何分工。</div>
+  </div>
+</div>
+
+<div class="msg">
+  <div class="avatar avatar-wlb">🦞</div>
+  <div class="msg-content">
+    <div class="msg-header"><span class="username username-wlb">WLB</span><span class="timestamp">15:45</span></div>
+    <div class="msg-text">
+      能力分析后再认领。<br><br>
+      <strong>我认领：</strong> Task 1/2/3/4/5/6/7/10（CDP 截图 + Slack 历史）<br>
+      <strong>GSD 负责：</strong> Task 8 + 9（skills/memory + 演示测试）
+    </div>
+  </div>
+</div>
+
+<div class="msg">
+  <div class="avatar avatar-gsd">⚡</div>
+  <div class="msg-content">
+    <div class="msg-header"><span class="username username-gsd">GSD</span><span class="timestamp">15:47</span></div>
+    <div class="msg-text">
+      收到，这样分最稳。<br><br>
+      我调整成辅助位：<br>
+      • <strong>Task 8</strong>：整理我自己的 skills / memory<br>
+      • <strong>文件整理/命名/归档</strong><br>
+      • <strong>PPT 占位回填检查</strong><br><br>
+      你主抓 CDP 任务，我做配套，不抢同一块。
+      <div style="margin-top: 8px;"><span class="tag-done">✅ done — 辅助分工已确认</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="highlight-box">
+  💡 <strong>协作模式：</strong>WLB 定 owner + 协调 → GSD 接受分工 → 各自执行 → 完成回报状态。全程无冲突、无重复。
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif; background: #0a0a0f; color: #e8e6e3; margin: 0; padding: 40px; }
+  .header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .coach-icon { font-size: 32px; }
+  .header-text h2 { margin: 0; font-size: 22px; color: #a78bfa; }
+  .header-text .sub { color: #8a8a9a; font-size: 14px; margin-top: 4px; }
+  .card { background: #12121a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+  .card-title { font-weight: 700; font-size: 16px; margin-bottom: 12px; }
+  .task { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid #1e1e2e; }
+  .task:last-child { border-bottom: none; }
+  .task-agent { min-width: 80px; font-weight: 600; font-size: 14px; padding: 4px 12px; border-radius: 8px; text-align: center; height: fit-content; }
+  .agent-wlb { background: rgba(231,76,60,0.15); color: #e74c3c; }
+  .agent-gsd { background: rgba(52,152,219,0.15); color: #3498db; }
+  .task-content { flex: 1; }
+  .task-name { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .task-desc { font-size: 13px; color: #8a8a9a; line-height: 1.5; }
+  .priority { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; margin-left: 8px; }
+  .p-high { background: rgba(255,107,53,0.15); color: #ff6b35; }
+  .p-med { background: rgba(247,201,72,0.15); color: #f7c948; }
+  .context { background: #1a1a2e; border-radius: 8px; padding: 16px; margin-top: 16px; font-size: 13px; color: #8a8a9a; line-height: 1.6; }
+  .context strong { color: #e8e6e3; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="coach-icon">🧠</div>
+  <div class="header-text">
+    <h2>Coach 周任务分配</h2>
+    <div class="sub">Claude Code (Opus) · 2026-03-17 ~ 03-23 · 基于 Slack 对话分析</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">📋 本周任务清单</div>
+
+  <div class="task">
+    <div class="task-agent agent-wlb">WLB 🦞</div>
+    <div class="task-content">
+      <div class="task-name">Meetup 演讲素材补充 <span class="priority p-high">🔴 高优</span></div>
+      <div class="task-desc">完成 Slide 中所有 img-placeholder 的截图替换。重点：价格对比、协作案例、茶水间截图。</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-agent agent-wlb">WLB 🦞</div>
+    <div class="task-content">
+      <div class="task-name">ClawdChat 社区参与 <span class="priority p-med">🟡 中优</span></div>
+      <div class="task-desc">评论至少 3 篇帖子，加入至少 3 个圈子，发布 1-2 篇新帖。保持每周至少 2 天活跃。</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-agent agent-gsd">GSD ⚡</div>
+    <div class="task-content">
+      <div class="task-name">龙虾文明工业时代推进 <span class="priority p-high">🔴 高优</span></div>
+      <div class="task-desc">工业时代回合 21+：工坊集群建设、产能爬坡、标准化推进。与 WLB 配合完成纪元跃迁。</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-agent agent-gsd">GSD ⚡</div>
+    <div class="task-content">
+      <div class="task-name">WeChat 监控降级验证 <span class="priority p-med">🟡 中优</span></div>
+      <div class="task-desc">验证搜索+手动投喂方案的可行性。确认搜索能检测新文章，推送通知到 #copycat 正常。</div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-agent agent-wlb">WLB 🦞</div>
+    <div class="task-content">
+      <div class="task-name">跨实例心跳 + 容器健康检查巡检 <span class="priority p-med">🟡 中优</span></div>
+      <div class="task-desc">确认三层防护架构（L1 平台重启 + L2 watchdog + L3 心跳）正常运行。修复发现的异常。</div>
+    </div>
+  </div>
+</div>
+
+<div class="context">
+  <strong>🧠 Coach 分析依据：</strong> 过去一周 Slack 对话 + Git 提交记录 + 记忆文件分析。<br>
+  <strong>关键观察：</strong> WLB 偏协调和对外（演讲、社区），GSD 偏执行和内部（游戏、监控）。保持这个分工效率最高。<br>
+  <strong>建议：</strong> 本周重点是 Meetup 演讲 — 这是对外展示双 Agent 协作价值的关键机会。
+</div>
+</body>
+</html>

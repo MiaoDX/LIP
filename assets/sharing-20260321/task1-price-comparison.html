@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e8e6e3; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+  .container { max-width: 900px; padding: 40px; }
+  h2 { text-align: center; font-size: 28px; margin-bottom: 8px; color: #e8e6e3; }
+  .subtitle { text-align: center; color: #8a8a9a; font-size: 16px; margin-bottom: 32px; }
+  table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; }
+  th { background: #1a1a2e; padding: 14px 20px; text-align: left; font-weight: 500; color: #ff6b35; font-size: 14px; letter-spacing: 1px; }
+  td { padding: 14px 20px; border-bottom: 1px solid #2a2a3a; font-size: 16px; background: #12121a; }
+  tr:last-child td { border-bottom: none; }
+  .price { font-weight: 700; font-size: 20px; }
+  .free { color: #4ecdc4; }
+  .cheap { color: #f7c948; }
+  .mid { color: #ff6b35; }
+  .expensive { color: #e74c3c; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 8px; }
+  .tag-free { background: rgba(78,205,196,0.15); color: #4ecdc4; }
+  .tag-best { background: rgba(255,107,53,0.15); color: #ff6b35; }
+  .config { color: #8a8a9a; font-size: 13px; display: block; margin-top: 4px; }
+  .note { text-align: center; color: #8a8a9a; font-size: 13px; margin-top: 20px; font-style: italic; }
+  .highlight-row td { background: rgba(78,205,196,0.05) !important; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>云服务器价格对比</h2>
+  <p class="subtitle">4 核 8G 配置 · 月付价格 · 2026.03</p>
+  <table>
+    <tr>
+      <th>平台</th>
+      <th>月付价格</th>
+      <th>特点</th>
+    </tr>
+    <tr>
+      <td><strong>ClawCloud Run</strong><span class="config">4C 8G 容器</span></td>
+      <td><span class="price free">~$5/月</span> <span class="tag tag-free">送$5/月</span></td>
+      <td>GitHub ≥ 180 天送 $5/月，花不完</td>
+    </tr>
+    <tr>
+      <td><strong>Railway</strong><span class="config">4C 8G 容器</span></td>
+      <td><span class="price cheap">~$5-10/月</span></td>
+      <td>订阅服务含 $20/月额度</td>
+    </tr>
+    <tr>
+      <td><strong>阿里云 ECS</strong><span class="config">u1 实例 4C 8G</span></td>
+      <td><span class="price cheap">¥80/月</span> <span class="config">≈ $11/月 · 年付 ¥955</span></td>
+      <td>国内最低门槛</td>
+    </tr>
+    <tr>
+      <td><strong>腾讯云</strong><span class="config">轻量 4C 8G 10M</span></td>
+      <td><span class="price cheap">¥52/月</span> <span class="config">≈ $7/月 · 年付 ¥630</span></td>
+      <td>轻量应用服务器，有流量限制</td>
+    </tr>
+    <tr class="highlight-row">
+      <td><strong>Google Cloud</strong><span class="config">e2-standard-4</span></td>
+      <td><span class="price expensive">$98-156/月</span></td>
+      <td>按需无折扣，1Y CUD 打 6 折</td>
+    </tr>
+  </table>
+  <p class="note">* 价格为公开标价，实际可能因促销/地区/带宽配置有所不同</p>
+</div>
+</body>
+</html>

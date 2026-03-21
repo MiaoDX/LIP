@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4核8G 云服务器价格对比</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e8e6e3; padding: 40px; }
+  h2 { text-align: center; font-size: 28px; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #8a8a9a; font-size: 16px; margin-bottom: 32px; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+  th { background: #1a1a2e; padding: 16px 20px; text-align: left; font-weight: 600; color: #ff6b35; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
+  td { padding: 18px 20px; border-bottom: 1px solid #2a2a3a; font-size: 16px; background: #12121a; }
+  tr:last-child td { border-bottom: none; }
+  .provider { font-weight: 700; font-size: 17px; }
+  .price { font-weight: 700; font-size: 22px; }
+  .price-free { color: #4ecdc4; }
+  .price-cheap { color: #f7c948; }
+  .price-mid { color: #ff6b35; }
+  .price-high { color: #e74c3c; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 8px; }
+  .tag-best { background: rgba(78,205,196,0.15); color: #4ecdc4; }
+  .tag-note { color: #8a8a9a; font-size: 13px; display: block; margin-top: 4px; }
+  .highlight-row td { background: rgba(78,205,196,0.08) !important; }
+  .star { color: #ff6b35; }
+  .config { color: #8a8a9a; font-size: 14px; }
+</style>
+</head>
+<body>
+<h2>4核 8G 云服务器月付价格对比</h2>
+<p class="subtitle">2026.03 数据 · 同等配置横向比较</p>
+<table>
+  <tr>
+    <th>平台</th>
+    <th>配置</th>
+    <th>月付价格</th>
+    <th>备注</th>
+  </tr>
+  <tr>
+    <td class="provider">阿里云 ECS</td>
+    <td>4核 8G<span class="config"><br>u1 实例 · ESSD</span></td>
+    <td><span class="price price-mid">¥216/月</span><span class="tag-note">年付 ¥955（≈¥80/月）</span></td>
+    <td>按月付 216 元起，年付更划算</td>
+  </tr>
+  <tr>
+    <td class="provider">腾讯云 CVM</td>
+    <td>4核 8G<span class="config"><br>标准型 S5</span></td>
+    <td><span class="price price-mid">¥290/月</span><span class="tag-note">年付 ¥630（≈¥53/月）轻量</span></td>
+    <td>包年约 290/月，轻量 630/年</td>
+  </tr>
+  <tr>
+    <td class="provider">Google Cloud</td>
+    <td>4vCPU 8GB<span class="config"><br>e2-standard-4</span></td>
+    <td><span class="price price-high">$97/月</span><span class="tag-note">≈ ¥700/月</span></td>
+    <td>按需价格，C2 实例更贵</td>
+  </tr>
+  <tr class="highlight-row">
+    <td class="provider">⭐ ClawCloud Run</td>
+    <td>4核 8G<span class="config"><br>容器 · 40G SSD</span></td>
+    <td><span class="price price-cheap">$10/月</span><span class="tag tag-best">送 $5 后 ≈ $0</span><span class="tag-note">GitHub ≥ 180天送 $5/月</span></td>
+    <td>基本花不完，免费用</td>
+  </tr>
+  <tr>
+    <td class="provider">Railway</td>
+    <td>4核 8G<span class="config"><br>Docker 容器</span></td>
+    <td><span class="price price-cheap">$5~10/月</span><span class="tag-note">含在订阅额度内</span></td>
+    <td>容器化部署，性价比高</td>
+  </tr>
+</table>
+</body>
+</html>

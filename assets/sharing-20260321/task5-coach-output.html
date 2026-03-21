@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: 'JetBrains Mono', 'Noto Sans SC', monospace; background: #0d1117; color: #c9d1d9; margin: 0; padding: 40px; }
+  .header { color: #58a6ff; font-size: 13px; margin-bottom: 16px; opacity: 0.7; }
+  .title { color: #f0f6fc; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .subtitle { color: #8b949e; font-size: 14px; margin-bottom: 32px; }
+  .section { margin-bottom: 28px; }
+  .section-title { color: #58a6ff; font-size: 15px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .task-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .task-card.lobster { border-left: 3px solid #e74c3c; }
+  .task-card.thunder { border-left: 3px solid #3498db; }
+  .task-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .task-title { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+  .task-owner { font-size: 12px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .owner-wlb { background: rgba(231,76,60,0.15); color: #e74c3c; }
+  .owner-gsd { background: rgba(52,152,219,0.15); color: #3498db; }
+  .task-desc { font-size: 13px; color: #8b949e; line-height: 1.5; }
+  .task-desc strong { color: #c9d1d9; }
+  .task-meta { display: flex; gap: 16px; margin-top: 8px; font-size: 12px; color: #484f58; }
+  .priority-high { color: #f85149; }
+  .priority-med { color: #d29922; }
+  .priority-low { color: #3fb950; }
+  .timeline { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; }
+  .timeline-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid #21262d; font-size: 13px; }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-week { color: #58a6ff; font-weight: 600; min-width: 80px; }
+  .timeline-text { color: #8b949e; }
+  .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #21262d; }
+</style>
+</head>
+<body>
+<div class="header">~/coach $ claude --model opus --system-prompt coach.md</div>
+<div class="title">🎯 Coach 周任务分配</div>
+<div class="subtitle">2026-03-21 · 基于本周 Slack 对话分析 + 半年目标拆解</div>
+
+<div class="section">
+  <div class="section-title">📋 本周任务</div>
+  
+  <div class="task-card lobster">
+    <div class="task-header">
+      <div class="task-title">准备 OpenClaw 使用分享 PPT</div>
+      <div class="task-owner owner-wlb">🦞 WLB</div>
+    </div>
+    <div class="task-desc">
+      为张和老师 AI 课程准备分享材料。主题：<strong>零成本部署 + 双 Claw 协作 + 组合拳</strong>。<br>
+      框架已就绪，需要补充截图素材和口播提示。
+    </div>
+    <div class="task-meta">
+      <span class="priority-high">🔴 截止：今天</span>
+      <span>📊 半年目标：技术分享</span>
+      <span>🔗 slides/openclaw-sharing-v3.html</span>
+    </div>
+  </div>
+
+  <div class="task-card thunder">
+    <div class="task-header">
+      <div class="task-title">GitHub 仓库文档更新</div>
+      <div class="task-owner owner-gsd">⚡ GSD</div>
+    </div>
+    <div class="task-desc">
+      更新 claw-agents-shared 的 README，加入<strong>三层防护架构</strong>说明和<strong>部署指南 v2</strong> 链接。<br>
+      参考 memory/2026-03-20.md 的 daily exchange 内容。
+    </div>
+    <div class="task-meta">
+      <span class="priority-med">🟡 截止：本周三</span>
+      <span>📊 半年目标：开源影响力</span>
+    </div>
+  </div>
+
+  <div class="task-card lobster">
+    <div class="task-header">
+      <div class="task-title">虾聊社区评论互动</div>
+      <div class="task-owner owner-wlb">🦞 WLB</div>
+    </div>
+    <div class="task-desc">
+      在 ClawdChat 至少评论 3 篇帖子，保持社区活跃度。<br>
+      风格：<strong>务实分析型</strong>，不灌水，每条评论有观点。
+    </div>
+    <div class="task-meta">
+      <span class="priority-low">🟢 持续进行</span>
+      <span>📊 半年目标：AI 社区影响力</span>
+    </div>
+  </div>
+
+  <div class="task-card thunder">
+    <div class="task-header">
+      <div class="task-title">Slack 归档系统恢复验证</div>
+      <div class="task-owner owner-gsd">⚡ GSD</div>
+    </div>
+    <div class="task-desc">
+      验证 slackdump 增量归档是否恢复正常（上次停在 03-20）。<br>
+      确认 <strong>CRS provider</strong> 配置正确性。
+    </div>
+    <div class="task-meta">
+      <span class="priority-high">🔴 阻塞：等 token</span>
+      <span>📊 基础设施</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">📅 未来 4 周路线图</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-week">Week 12</div>
+      <div class="timeline-text">分享完成 → 收集反馈 → 迭代材料</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 13</div>
+      <div class="timeline-text">个人网站 v1 上线 + 公众号重启</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 14</div>
+      <div class="timeline-text">Coach 系统自动化：周报自动生成</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 15</div>
+      <div class="timeline-text">第二次技术分享（线下/线上）</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by Coach (Claude Code Opus) · Read 2,847 Slack messages + MEMORY.md + daily notes · 2026-03-21 15:00 CST
+</div>
+</body>
+</html>
