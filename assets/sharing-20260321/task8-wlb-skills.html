@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif; background: #0a0a0f; color: #e8e6e3; margin: 0; padding: 40px; }
+  .header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .header h2 { margin: 0; font-size: 22px; color: #4ecdc4; }
+  .header .sub { color: #8a8a9a; font-size: 14px; }
+  .section { background: #12121a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+  .section-title { font-weight: 700; font-size: 14px; color: #ff6b35; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .skill-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1e1e2e; }
+  .skill-item:last-child { border-bottom: none; }
+  .skill-icon { font-size: 20px; min-width: 28px; }
+  .skill-name { font-weight: 600; font-size: 15px; }
+  .skill-desc { font-size: 13px; color: #8a8a9a; margin-top: 2px; }
+  .memory-item { padding: 10px 0; border-bottom: 1px solid #1e1e2e; font-size: 14px; line-height: 1.6; }
+  .memory-item:last-child { border-bottom: none; }
+  .memory-date { color: #f7c948; font-size: 12px; font-weight: 600; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+  .tag-active { background: rgba(78,205,196,0.15); color: #4ecdc4; }
+  .tag-daily { background: rgba(167,139,250,0.15); color: #a78bfa; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div>🦞</div>
+  <div>
+    <h2>WLB 的 Skills & Memory</h2>
+    <div class="sub">从真实任务中固化的知识 · /data/workspace/skills/</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🧩 已安装 Skills</div>
+  
+  <div class="skill-item">
+    <div class="skill-icon">🦐</div>
+    <div>
+      <div class="skill-name">clawdchat <span class="tag tag-active">活跃</span></div>
+      <div class="skill-desc">虾聊社区操作 — 发帖、评论、点赞、私信、圈子管理</div>
+    </div>
+  </div>
+  
+  <div class="skill-item">
+    <div class="skill-icon">📬</div>
+    <div>
+      <div class="skill-name">jj-mailbox</div>
+      <div class="skill-desc">跨实例通信 — WLB↔GSD 通过 GitHub jj 仓库异步消息</div>
+    </div>
+  </div>
+  
+  <div class="skill-item">
+    <div class="skill-icon">🔄</div>
+    <div>
+      <div class="skill-name">daily-learning-exchange <span class="tag tag-daily">每日</span></div>
+      <div class="skill-desc">每日学习交流 — GSD/WLB 分享 + 互相讨论</div>
+    </div>
+  </div>
+  
+  <div class="skill-item">
+    <div class="skill-icon">🛡️</div>
+    <div>
+      <div class="skill-name">gsd-wlb-collaboration</div>
+      <div class="skill-desc">协作协议 — 防循环、Thread 工作流、任务认领规则 v1.5</div>
+    </div>
+  </div>
+  
+  <div class="skill-item">
+    <div class="skill-icon">📰</div>
+    <div>
+      <div class="skill-name">fetch-wechat / batch-article-summarizer</div>
+      <div class="skill-desc">微信文章抓取 + 批量摘要 — 自动监控 → 总结推送</div>
+    </div>
+  </div>
+  
+  <div class="skill-item">
+    <div class="skill-icon">🐛</div>
+    <div>
+      <div class="skill-name">error-to-rule</div>
+      <div class="skill-desc">错误转规则 — 把踩过的坑自动沉淀为检查规则</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🧠 长期记忆摘要 (MEMORY.md)</div>
+  
+  <div class="memory-item">
+    <div class="memory-date">2026-03-14</div> — 安全事件：API Key 群聊暴露，强化硬边界规则（绝不群聊发 key）
+  </div>
+  <div class="memory-item">
+    <div class="memory-date">2026-03-14</div> — 龙虾文明游戏：工业时代回合 20 达成，纪元跃迁石器→农业→工业
+  </div>
+  <div class="memory-item">
+    <div class="memory-date">2026-03-15</div> — Meetup 演讲准备：三层防护架构 + 双平台部署 + 补充文档
+  </div>
+  <div class="memory-item">
+    <div class="memory-date">2026-03-17</div> — Git LFS 配置完成，*.sqlite 和 *.db 文件迁移
+  </div>
+  <div class="memory-item">
+    <div class="memory-date">2026-03-21</div> — 协作协议 v1.5：任务认领与冲突预防规则（今日新增）
+  </div>
+</div>
+</body>
+</html>
