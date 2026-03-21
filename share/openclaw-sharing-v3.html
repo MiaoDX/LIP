@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 使用及协作方案分享 — 缪东旭</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-highlight: #1a1a2e;
+    --text: #e8e6e3;
+    --text-dim: #8a8a9a;
+    --accent: #ff6b35;
+    --accent2: #f7c948;
+    --accent3: #4ecdc4;
+    --accent4: #a78bfa;
+    --border: #2a2a3a;
+    --code-bg: #1e1e2e;
+    --lobster: #e74c3c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+
+  .slide { min-height: 100vh; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; padding: 60px 80px; position: relative; overflow: hidden; }
+  .slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.03) 0%, transparent 60%); pointer-events: none; }
+
+  .nav-dots { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 10px; }
+  .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all 0.3s; border: none; }
+  .nav-dot:hover, .nav-dot.active { background: var(--accent); transform: scale(1.4); }
+
+  .notes-toggle { position: fixed; bottom: 20px; left: 20px; z-index: 200; background: var(--bg-highlight); border: 1px solid var(--border); color: var(--text-dim); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit; transition: all 0.3s; }
+  .notes-toggle:hover { border-color: var(--accent); color: var(--text); }
+
+  .speaker-note { display: none; background: rgba(255, 107, 53, 0.05); border: 1px solid rgba(255, 107, 53, 0.2); border-radius: 12px; padding: 20px 24px; margin-top: 24px; font-size: 14px; color: var(--accent2); line-height: 1.8; max-width: 700px; }
+  .speaker-note::before { content: '🎤 口播提示'; display: block; font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+  body.show-notes .speaker-note { display: block; }
+
+  .slide-number { font-family: 'Playfair Display', serif; font-size: 120px; font-weight: 900; color: var(--accent); opacity: 0.08; position: absolute; top: 40px; right: 80px; line-height: 1; }
+
+  h1 { font-size: 56px; font-weight: 900; line-height: 1.2; margin-bottom: 24px; letter-spacing: -1px; }
+  h2 { font-size: 40px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
+  h3 { font-size: 24px; font-weight: 500; color: var(--accent); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 2px; }
+  .subtitle { font-size: 22px; color: var(--text-dim); font-weight: 300; max-width: 700px; }
+
+  .highlight { color: var(--accent); }
+  .highlight2 { color: var(--accent2); }
+  .highlight3 { color: var(--accent3); }
+  .highlight4 { color: var(--accent4); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 32px; }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .card-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+  .card-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .card-desc { font-size: 15px; color: var(--text-dim); line-height: 1.6; }
+
+  .compare-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 32px; border-radius: 16px; overflow: hidden; }
+  .compare-table th { background: var(--bg-highlight); padding: 16px 24px; text-align: left; font-weight: 500; color: var(--accent); font-size: 15px; letter-spacing: 1px; }
+  .compare-table td { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 16px; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) { background: var(--bg-card); }
+
+  .tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+  .tag-free { background: rgba(78, 205, 196, 0.15); color: var(--accent3); }
+  .tag-cheap { background: rgba(247, 201, 72, 0.15); color: var(--accent2); }
+  .tag-expensive { background: rgba(255, 107, 53, 0.15); color: var(--accent); }
+
+  .quote { border-left: 4px solid var(--accent); padding: 24px 32px; background: var(--bg-card); border-radius: 0 16px 16px 0; margin: 24px 0; font-size: 20px; font-weight: 300; font-style: italic; max-width: 800px; }
+
+  .img-placeholder { background: var(--bg-highlight); border: 2px dashed var(--border); border-radius: 16px; padding: 48px; text-align: center; color: var(--text-dim); font-size: 15px; margin: 24px 0; position: relative; }
+  .img-placeholder::before { content: '🖼️'; font-size: 32px; display: block; margin-bottom: 12px; }
+  .img-placeholder .img-note { font-size: 13px; color: var(--accent); margin-top: 8px; font-style: italic; }
+
+  .flow { display: flex; align-items: center; gap: 16px; margin: 32px 0; flex-wrap: wrap; }
+  .flow-step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; font-size: 16px; font-weight: 500; text-align: center; min-width: 140px; }
+  .flow-arrow { color: var(--accent); font-size: 24px; font-weight: 700; }
+
+  .vs-container { display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: center; margin: 40px 0; }
+  .vs-side { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
+  .vs-badge { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: var(--accent); text-align: center; }
+
+  .lobster-bg { position: absolute; font-size: 200px; opacity: 0.04; bottom: -40px; right: -20px; transform: rotate(-15deg); pointer-events: none; }
+
+  .timeline { margin: 32px 0; position: relative; padding-left: 32px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent3)); }
+  .timeline-item { position: relative; margin-bottom: 28px; padding-left: 24px; }
+  .timeline-item::before { content: ''; position: absolute; left: -28px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+  .timeline-time { font-size: 13px; color: var(--accent); font-weight: 600; letter-spacing: 1px; }
+  .timeline-text { font-size: 17px; margin-top: 4px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .divider-line { width: 60px; height: 3px; background: var(--accent); margin-bottom: 32px; border-radius: 2px; }
+
+  .action-step { display: flex; align-items: flex-start; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .action-step:last-child { border-bottom: none; }
+  .action-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--accent); line-height: 1; min-width: 48px; }
+  .action-content { font-size: 18px; }
+  .action-detail { font-size: 14px; color: var(--text-dim); margin-top: 4px; }
+
+  @media (max-width: 900px) {
+    .slide { padding: 40px 32px; }
+    h1 { font-size: 36px; } h2 { font-size: 28px; }
+    .two-col, .vs-container { grid-template-columns: 1fr; }
+    .nav-dots { display: none; }
+    .slide-number { font-size: 80px; right: 32px; }
+  }
+  @media print { .slide { page-break-after: always; min-height: auto; padding: 40px; } .nav-dots, .notes-toggle { display: none; } }
+</style>
+</head>
+<body>
+
+<nav class="nav-dots" id="navDots"></nav>
+<button class="notes-toggle" onclick="document.body.classList.toggle('show-notes'); this.textContent = document.body.classList.contains('show-notes') ? '🎤 隐藏口播提示' : '🎤 显示口播提示'">🎤 显示口播提示</button>
+
+<!-- ═══ S0: COVER ═══ -->
+<section class="slide" id="s0" style="justify-content: center; align-items: center; text-align: center;">
+  <div class="lobster-bg">🦞</div>
+  <h3 style="letter-spacing: 4px; margin-bottom: 8px;">线上分享</h3>
+  <h1 style="font-size: 64px; max-width: 900px;">OpenClaw 使用<br>及<span class="highlight">协作方案</span>分享</h1>
+  <p class="subtitle" style="text-align: center; margin: 0 auto; margin-top: 16px;">零成本部署 · 两只 Claw 协作 · OpenClaw + Claude Code 组合拳</p>
+  <div style="margin-top: 48px; color: var(--text-dim); font-size: 16px;">
+    <strong style="color: var(--text);">缪东旭（MiaoDX）</strong><br>
+    <span style="font-size: 14px; opacity: 0.6;">2026.03.21</span>
+  </div>
+  <div class="speaker-note">张和老师先开场引导。我做简短自我介绍，张和老师会帮忙介绍背景。互相介绍一下。</div>
+</section>
+
+<!-- ═══ S1: 关于我 ═══ -->
+<section class="slide" id="s1">
+  <span class="slide-number">01</span>
+  <h3>关于我</h3>
+  <div class="divider-line"></div>
+  <div class="two-col">
+    <div>
+      <h2>缪东旭 <span style="font-size: 22px; color: var(--text-dim); font-weight: 300;">(MiaoDX)</span></h2>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-time">2019 - 2021</div><div class="timeline-text">自动驾驶，算法 + 系统工程师</div></div>
+        <div class="timeline-item"><div class="timeline-time">2021 - 2025</div><div class="timeline-text"><strong>自动驾驶</strong>，感知系统组负责人<br><span style="color: var(--text-dim); font-size: 15px;">初始团队成员 · SU7 量产交付</span></div></div>
+        <div class="timeline-item"><div class="timeline-time">2025 - Now</div><div class="timeline-text"><strong>机器人</strong>，导航规划<br><span style="color: var(--text-dim); font-size: 15px;">从自驾转岗机器人</span></div></div>
+      </div>
+      <p style="margin-top: 20px; font-size: 16px; color: var(--text-dim);">和张和老师是自驾初期的老同事。<br>张和老师带 TPM 团队，把<strong style="color: var(--text);">数据闭环、评测体系</strong>从零趟了出来。</p>
+    </div>
+    <div>
+      <div class="img-placeholder">个人照片或微信二维码<div class="img-note">→ 放个人照片或个人微信二维码</div></div>
+      <div style="margin-top: 16px;"><p style="font-size: 15px; color: var(--text-dim);">🌐 miaodx.com<br>📝 公众号：直觉机器漫谈<br>🐙 GitHub：MiaoDX</p></div>
+    </div>
+  </div>
+  <div class="speaker-note">张和老师当时带着 TPM 团队，把整个数据闭环趟了很多坑，搭起初始版本。张和老师在课上也讲了很多数据相关以及评测相关的内容，大家应该也都了解了。今天不讲自驾也不讲机器人，给大家分享我过年以来一直在折腾的东西。</div>
+</section>
+
+<!-- ═══ S2: 今天聊什么 ═══ -->
+<section class="slide" id="s2">
+  <span class="slide-number">02</span>
+  <h3>今天聊什么</h3>
+  <div class="divider-line"></div>
+  <h2>三件事</h2>
+  <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 40px;">
+    <div class="card" style="border-top: 3px solid var(--accent);"><span class="card-icon">🚀</span><div class="card-title">Part 1</div><div class="card-desc" style="font-size: 18px; color: var(--text); margin-top: 8px;"><strong>零成本</strong>用上 OpenClaw</div><p style="margin-top: 12px; font-size: 14px; color: var(--text-dim);">部署方案 · 模型选择 · 一键部署</p></div>
+    <div class="card" style="border-top: 3px solid var(--accent2);"><span class="card-icon">🦞🦞</span><div class="card-title">Part 2</div><div class="card-desc" style="font-size: 18px; color: var(--text); margin-top: 8px;"><strong>两只 Claw</strong> 一起协作</div><p style="margin-top: 12px; font-size: 14px; color: var(--text-dim);">单 Claude 多 agents vs. 多 Claw · 茶水间</p></div>
+    <div class="card" style="border-top: 3px solid var(--accent3);"><span class="card-icon">🔧</span><div class="card-title">Part 3 & 4</div><div class="card-desc" style="font-size: 18px; color: var(--text); margin-top: 8px;">养龙虾 + <strong>组合拳</strong></div><p style="margin-top: 12px; font-size: 14px; color: var(--text-dim);">Skills 积累 · OpenClaw + Claude Code · Coach 系统</p></div>
+  </div>
+</section>
+
+<!-- ═══ S3: Part 1 开篇 ═══ -->
+<section class="slide" id="s3" style="text-align: center; justify-content: center; align-items: center;">
+  <span class="slide-number">03</span>
+  <div class="lobster-bg" style="top: 40px; right: 100px; transform: rotate(10deg);">🦞</div>
+  <h3>Part 1</h3>
+  <div class="divider-line" style="margin: 0 auto 32px;"></div>
+  <h1 style="font-size: 52px;">零成本用上 <span class="highlight">OpenClaw</span></h1>
+  <p class="subtitle" style="text-align: center; margin: 24px auto 0;">部署环境 · 模型选择 · 一键部署方案</p>
+  <div class="speaker-note" style="margin: 24px auto 0;">先做个小互动：大家有安装 OpenClaw 的吗？有的话可以扣个 1。这个安装比例其实不低了，因为安装确实没那么简便。大家在张和老师课上应该也用过 Claude Code 这些，遇到问题也可以让他们协助解决。另外国内大厂们也都出了自己的产品，大家也可以试试。</div>
+</section>
+
+<!-- ═══ S4: 为什么选云服务器 ═══ -->
+<section class="slide" id="s4">
+  <span class="slide-number">04</span>
+  <h3>Part 1</h3>
+  <div class="divider-line"></div>
+  <h2>为什么选择云服务器？</h2>
+  <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 32px;">
+    <div class="card"><span class="card-icon">🔒</span><div class="card-title">内网合规要求</div><div class="card-desc">有内网访问权限的电脑上不允许安装外部工具</div></div>
+    <div class="card"><span class="card-icon">🌐</span><div class="card-title">外部网络更友好</div><div class="card-desc">OpenClaw 需要访问各种 API 和网站，云端网络更顺畅</div></div>
+  </div>
+  <div class="speaker-note">年前年假期间腾出时间想体验一下 OpenClaw。公司有明确要求不允许安装，加上外部服务器网络更友好，所以选择了云上部署。</div>
+</section>
+
+<!-- ═══ S5: 部署方案对比 ═══ -->
+<section class="slide" id="s5">
+  <span class="slide-number">05</span>
+  <h3>Part 1</h3>
+  <div class="divider-line"></div>
+  <h2>部署方案对比</h2>
+  <table class="compare-table">
+    <tr><th style="width: 22%;">方案</th><th style="width: 18%;">典型配置</th><th style="width: 18%;">月成本</th><th style="width: 42%;">特点</th></tr>
+    <tr><td><strong>国内云</strong><br><span style="font-size: 13px; color: var(--text-dim);">阿里云 / 腾讯云</span></td><td>1核2G ~ 2核4G</td><td><span class="tag tag-cheap">年付低价</span></td><td>配置偏低，跑浏览器等重任务吃力</td></tr>
+    <tr><td><strong>独立 VPS</strong></td><td>按需</td><td>—</td><td>配置灵活，同等配置成本更高</td></tr>
+    <tr><td><strong>Railway</strong></td><td>4核8G</td><td><span class="tag tag-cheap">$5~10/月</span></td><td>容器化部署，性价比高</td></tr>
+    <tr style="background: rgba(78, 205, 196, 0.05) !important;"><td><strong style="color: var(--accent3);">ClawCloud Run ⭐</strong></td><td>4核8G</td><td><span class="tag tag-free">$0（送$5）</span></td><td>GitHub ≥ 180 天送 $5/月，基本花不完</td></tr>
+  </table>
+  <div class="img-placeholder" style="margin-top: 24px;">各平台同配置（4核8G）实时价格截图<div class="img-note">→ 让 Claw 现场去各平台查价格，贴截图对比更直观</div></div>
+  <div class="speaker-note">详细讲一下 ClawCloud Run——这个平台名字和 OpenClaw 有些莫名缘分，但比 OpenClaw 出来早很多年。GitHub 超过 180 天，每月送 5 美金，4 核 8G 配置花不完。独立 VPS 的价格大家可以看截图，同等配置会贵不少。</div>
+</section>
+
+<!-- ═══ S6: 模型选择 ═══ -->
+<section class="slide" id="s6">
+  <span class="slide-number">06</span>
+  <h3>Part 1</h3>
+  <div class="divider-line"></div>
+  <h2>模型选择：<span class="highlight2">善用免费窗口</span></h2>
+  <div class="two-col" style="margin-top: 32px;">
+    <div>
+      <p style="font-size: 18px; margin-bottom: 24px;">各家模型刚出来时通常有<strong>免费试用期</strong>：</p>
+      <div class="card" style="margin-bottom: 16px; border-left: 3px solid var(--accent3);"><div class="card-title">🐲 MIMO v2 Pro</div><div class="card-desc">通过 OpenRouter 直接使用，评测排名仅次于国外御三家</div></div>
+      <div class="card" style="margin-bottom: 16px; border-left: 3px solid var(--accent2);"><div class="card-title">🌙 Kimi</div><div class="card-desc">Coding Plan 性价比高，免费期结束后的平替之选</div></div>
+      <div class="card" style="border-left: 3px solid var(--accent4);"><div class="card-title">💬 GPT-5.4 / 其他</div><div class="card-desc">有 access 当然好，初步体验不需要上最好的</div></div>
+    </div>
+    <div>
+      <div class="img-placeholder">模型评测排名截图 / OpenRouter 界面<div class="img-note">→ MIMO v2 Pro 在评测集上的排名</div></div>
+      <div class="quote" style="margin-top: 16px; font-size: 16px;">零成本部署 + 免费顶尖模型 =<br><strong style="color: var(--accent3); font-size: 20px; font-style: normal;">完全零成本使用 OpenClaw</strong></div>
+    </div>
+  </div>
+  <div class="speaker-note">MIMO v2 Pro 在各种正式评测集上基本只排在国外三家后面，甚至比国内一些知名模型排名还高。当然评测集和真实场景总有差别，大家可以自己体验。等免费期结束可以切到 Kimi，Coding Plan 基本上也可以一直用。</div>
+</section>
+
+<!-- ═══ S7: 一键部署 ═══ -->
+<section class="slide" id="s7">
+  <span class="slide-number">07</span>
+  <h3>Part 1</h3>
+  <div class="divider-line"></div>
+  <h2>一键部署：网页界面管理一切</h2>
+  <div class="two-col" style="margin-top: 32px;">
+    <div>
+      <p style="font-size: 18px; margin-bottom: 20px;">社区开源方案，完全不需要命令行：</p>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 17px;">✅ 网页界面配置模型</li>
+        <li style="padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 17px;">✅ 网页界面直接 restart</li>
+        <li style="padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 17px;">✅ 不需要登录服务器</li>
+        <li style="padding: 12px 0; font-size: 17px;">✅ 支持 Anthropic API 格式 + 浏览器</li>
+      </ul>
+    </div>
+    <div><div class="img-placeholder" style="min-height: 300px;">一键部署方案的网页管理界面截图<div class="img-note">→ 展示模型配置 + restart 按钮</div></div></div>
+  </div>
+  <div class="speaker-note">OpenClaw 难免会崩——不是说可能，是一定会崩。所以网页 restart 很重要。我也给这个开源项目贡献了 Anthropic API 格式支持以及浏览器支持，我觉得这两个非常重要。</div>
+</section>
+
+<!-- ═══ S8: Part 1 小结 + 过渡 ═══ -->
+<section class="slide" id="s8" style="text-align: center; justify-content: center; align-items: center;">
+  <span class="slide-number">08</span>
+  <h3>Part 1 小结</h3>
+  <div class="divider-line" style="margin: 0 auto 40px;"></div>
+  <div class="flow" style="justify-content: center;">
+    <div class="flow-step" style="border-color: var(--accent3);"><span style="font-size: 28px;">🆓</span><br>ClawCloud Run<br><small style="color: var(--text-dim);">$5/月（送的）</small></div>
+    <span class="flow-arrow">+</span>
+    <div class="flow-step" style="border-color: var(--accent2);"><span style="font-size: 28px;">🤖</span><br>免费顶尖模型<br><small style="color: var(--text-dim);">MIMO / Kimi</small></div>
+    <span class="flow-arrow">+</span>
+    <div class="flow-step" style="border-color: var(--accent4);"><span style="font-size: 28px;">📦</span><br>开源一键部署<br><small style="color: var(--text-dim);">网页管理</small></div>
+    <span class="flow-arrow">=</span>
+    <div class="flow-step" style="border-color: var(--accent); background: rgba(255,107,53,0.1);"><span style="font-size: 36px;">🦞</span><br><strong style="color: var(--accent); font-size: 20px;">零成本<br>极简配置</strong></div>
+  </div>
+  <p style="margin-top: 48px; font-size: 20px; color: var(--text-dim);">
+    有了第一只之后，自然会想：<strong style="color: var(--text); font-size: 22px;">能不能再来一只？</strong>
+  </p>
+  <div class="speaker-note">总结完之后自然过渡到 Part 2。我就是这么走过来的——有了第一只之后发现还有其他免费平台，就又部署了一只。大家遇到问题可以在群里和我以及张和老师团队交流。</div>
+</section>
+
+<!-- ═══ S9: Part 2 开篇 ═══ -->
+<section class="slide" id="s9" style="text-align: center; justify-content: center; align-items: center;">
+  <span class="slide-number">09</span>
+  <div class="lobster-bg" style="font-size: 300px; opacity: 0.03; bottom: -60px; left: -40px;">🦞</div>
+  <div class="lobster-bg" style="font-size: 250px; opacity: 0.03; top: -30px; right: -30px; transform: rotate(20deg);">🦞</div>
+  <h3>Part 2</h3>
+  <div class="divider-line" style="margin: 0 auto 32px;"></div>
+  <h1>两只 <span class="highlight">Claw</span> 协作</h1>
+  <p class="subtitle" style="text-align: center; margin: 24px auto 0; font-size: 24px;">多个独立 Claw = 一个真正的团队</p>
+</section>
+
+<!-- ═══ S10: 为什么有两只 ═══ -->
+<section class="slide" id="s10">
+  <span class="slide-number">10</span>
+  <h3>Part 2</h3>
+  <div class="divider-line"></div>
+  <h2>我为什么有<span class="highlight2">两只免费的 Claw</span></h2>
+  <div class="card-grid" style="grid-template-columns: 1fr 1fr; margin-top: 32px;">
+    <div class="card" style="border-top: 3px solid var(--accent3);"><span class="card-icon">☁️</span><div class="card-title">ClawCloud Run</div><div class="card-desc" style="font-size: 17px; color: var(--text);">GitHub ≥ 180 天 → <strong>每月 $5 免费额度</strong><br><span style="color: var(--text-dim);">4 核 8G，花不完</span></div></div>
+    <div class="card" style="border-top: 3px solid var(--accent4);"><span class="card-icon">🚂</span><div class="card-title">Railway（via 订阅服务）</div><div class="card-desc" style="font-size: 17px; color: var(--text);">订阅中包含 <strong>每月 $20 Railway 额度</strong><br><span style="color: var(--text-dim);">不用也是浪费</span></div></div>
+  </div>
+  <div class="quote" style="margin-top: 40px;">两个平台，各部署一只 Claw，都是免费的。<br><span style="font-size: 18px; font-style: normal; color: var(--accent2);">不用就浪费——这是最朴素的原因。</span></div>
+  <div class="speaker-note">张和老师之前推荐过 1X 的产品，有 $200 或 $350 的订阅，里面包含很多不错的东西，其中 Railway 每月有 $20 额度。我想着不用也是浪费，所以在两个平台各部署了一只 Claw。后来发现它们协作起来特别有趣，完全做到了一个 Claw 做不到的事情。</div>
+</section>
+
+<!-- ═══ S11: 单 vs 多 ═══ -->
+<section class="slide" id="s11">
+  <span class="slide-number">11</span>
+  <h3>Part 2</h3>
+  <div class="divider-line"></div>
+  <h2>单 Claude 多 agents <span class="highlight2">vs.</span> 多个独立 Claw</h2>
+  <div class="vs-container">
+    <div class="vs-side">
+      <h3 style="color: var(--text-dim); font-size: 16px;">社区流行</h3>
+      <div style="font-size: 22px; font-weight: 700; margin-bottom: 16px;">单 Claude 多 agents</div>
+      <p style="color: var(--text-dim); font-size: 15px; margin-bottom: 12px;">例如"三省六部制"</p>
+      <ul style="list-style: none; padding: 0; font-size: 16px;">
+        <li style="padding: 8px 0;">共享上下文</li>
+        <li style="padding: 8px 0;">共享 memory</li>
+        <li style="padding: 8px 0;">共享算力上限</li>
+        <li style="padding: 8px 0; color: var(--accent2);">≈ <strong>一个人的多重人格</strong></li>
+      </ul>
+    </div>
+    <div class="vs-badge">VS</div>
+    <div class="vs-side" style="border-color: var(--accent3);">
+      <h3 style="color: var(--accent3); font-size: 16px;">我的路径</h3>
+      <div style="font-size: 22px; font-weight: 700; margin-bottom: 16px;">多个独立 Claw</div>
+      <p style="color: var(--text-dim); font-size: 15px; margin-bottom: 12px;">各自独立部署</p>
+      <ul style="list-style: none; padding: 0; font-size: 16px;">
+        <li style="padding: 8px 0;">独立上下文</li>
+        <li style="padding: 8px 0;">独立 memory</li>
+        <li style="padding: 8px 0;">独立算力</li>
+        <li style="padding: 8px 0; color: var(--accent3);">≈ <strong>一个真正的团队</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote" style="max-width: 100%; text-align: center;">"OpenAI is nothing without its people."<br><span style="font-size: 16px; font-style: normal;">一个人再强，上限也是一个人。真正强的是团队。</span></div>
+  <div class="speaker-note">社区里三省六部制大家可以自己去体验。但多 agent 本质上共享上下文和 memory，发散性有限。就像人有多重人格，能力再强也是一个人。多个独立 Claw 是完全不同的人，资源独立，能力独立。两个就够了，三个通信成本会上来。</div>
+</section>
+
+<!-- ═══ S12: Slack bot-to-bot ═══ -->
+<section class="slide" id="s12">
+  <span class="slide-number">12</span>
+  <h3>Part 2</h3>
+  <div class="divider-line"></div>
+  <h2>实现方式：Slack <span class="highlight3">bot-to-bot</span></h2>
+  <div class="two-col" style="margin-top: 32px;">
+    <div>
+      <p style="font-size: 18px; margin-bottom: 20px;">目前开放平台里，<strong>Slack 原生支持 bot-to-bot 交互</strong></p>
+      <h3 style="font-size: 16px; margin-bottom: 16px;">搭建步骤</h3>
+      <div class="timeline" style="margin-top: 0;">
+        <div class="timeline-item"><div class="timeline-time">Step 1</div><div class="timeline-text">两只 Claw 各自部署完成</div></div>
+        <div class="timeline-item"><div class="timeline-time">Step 2</div><div class="timeline-text">拉到同一个 Slack 频道</div></div>
+        <div class="timeline-item"><div class="timeline-time">Step 3</div><div class="timeline-text">设置免 @ 即可回复</div></div>
+        <div class="timeline-item"><div class="timeline-time">Step 4</div><div class="timeline-text">提示它们自己判断是否需要回复</div></div>
+      </div>
+    </div>
+    <div><div class="img-placeholder" style="min-height: 350px;">两只 Claw 在 Slack 里交互的截图<div class="img-note">→ 给一个任务让它们讨论的实际截图</div></div></div>
+  </div>
+  <div class="speaker-note">飞书据说在做 bot-to-bot 支持，做好了我可能会切过去——飞书文档、妙记等生态更好。但目前 Slack 是唯一能用的。搭建其实很简单，Slack 已经做了 bot 交互支持，我只做了一点调整让它们免 @ 就能回复。</div>
+</section>
+
+<!-- ═══ S13: 协作实际效果 ═══ -->
+<section class="slide" id="s13">
+  <span class="slide-number">13</span>
+  <h3>Part 2</h3>
+  <div class="divider-line"></div>
+  <h2>协作效果：<span class="highlight">1 + 1 > 2</span></h2>
+  <div class="two-col" style="margin-top: 32px;">
+    <div>
+      <div class="img-placeholder" style="min-height: 360px;">
+        两只 Claw 协作完成一个任务的对话截图
+        <div class="img-note">→ 选一个好例子：你给了任务，两只 Claw 各自贡献了不同视角，最终输出比单只 Claw 好的结果</div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size: 18px; color: var(--accent2); margin-bottom: 20px;">为什么比一只 Claw 强？</h3>
+      <div class="card" style="margin-bottom: 16px; border-left: 3px solid var(--accent3);">
+        <div class="card-title">不同视角</div>
+        <div class="card-desc" style="color: var(--text);">独立上下文意味着不同的思考路径，互相补盲区</div>
+      </div>
+      <div class="card" style="margin-bottom: 16px; border-left: 3px solid var(--accent2);">
+        <div class="card-title">互相质疑</div>
+        <div class="card-desc" style="color: var(--text);">一个提方案，另一个 review，天然的 peer review</div>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--accent4);">
+        <div class="card-title">并行执行</div>
+        <div class="card-desc" style="color: var(--text);">各自独立算力，可以同时做不同的事</div>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-note">这里要选一个好的实际例子展示。比如给一个任务让两只 Claw 讨论，A 提了一个方案，B 发现了 A 没考虑到的问题，最终输出比单独问任何一只都好。重点让听众感受到"这真的有用"而不只是"好玩"。</div>
+</section>
+
+<!-- ═══ S14: 茶水间 ═══ -->
+<section class="slide" id="s14">
+  <span class="slide-number">14</span>
+  <h3>Part 2</h3>
+  <div class="divider-line"></div>
+  <h2>🫖 茶水间 <span style="color: var(--text-dim); font-size: 24px; font-weight: 300;">Water Cooler</span></h2>
+  <div class="two-col" style="margin-top: 32px;">
+    <div>
+      <div class="card" style="border-left: 3px solid var(--accent2); margin-bottom: 16px;">
+        <div class="card-title" style="font-size: 24px;">每 3 小时</div>
+        <div class="card-desc" style="font-size: 17px; color: var(--text);">两只 Claw 自动去茶水间频道，聊聊过去做了什么，互相启发和提升</div>
+      </div>
+      <p style="font-size: 18px; margin-top: 24px;">定时任务触发<br><span style="color: var(--text-dim);">就像人类去茶水间闲聊</span></p>
+    </div>
+    <div><div class="img-placeholder" style="min-height: 350px;">茶水间频道的对话截图<div class="img-note">→ 两只 Claw 自发交流、互相学习的截图</div></div></div>
+  </div>
+</section>
+
+<!-- ═══ S15: 现场演示 ═══ -->
+<section class="slide" id="s15" style="text-align: center; justify-content: center; align-items: center;">
+  <span class="slide-number">15</span>
+  <h1 style="font-size: 48px;">⚡ 现场演示</h1>
+  <p class="subtitle" style="text-align: center; margin: 24px auto 0;">把 <strong style="color: var(--text);">YC 掌门使用 Claude Code 的分享</strong>（via 刘小排）<br>丢给两只 Claw，看它们现场讨论、提取有价值的 skills</p>
+  <div class="img-placeholder" style="max-width: 700px; margin: 40px auto;">现场演示——切到 Slack 窗口<div class="img-note">→ 下午提前测试两只 Claw 是否在线<br>→ 准备 TXT 备份以防抓取失败<br>→ 备用：提前录好的屏幕录制</div></div>
+  <div class="speaker-note">现场把刘小排前两天分享的文章丢给两只 Claw。如果抓取不了就直接贴准备好的 TXT。它们会现场分析里面的 skills，找一两个觉得不错的形成自己的 skills 存下来。等几分钟看输出。万一现场崩了就播提前录好的视频。</div>
+</section>
+
+<!-- ═══ S16: Part 3 养龙虾 ═══ -->
+<section class="slide" id="s16">
+  <span class="slide-number">16</span>
+  <h3>Part 3 · 让 Claw 越来越强</h3>
+  <div class="divider-line"></div>
+  <h2>养龙虾 🦞</h2>
+  <div class="two-col" style="margin-top: 32px;">
+    <div>
+      <h3 style="font-size: 18px; color: var(--accent2);">初始启动：喂社区大佬的分享</h3>
+      <p style="font-size: 17px; margin-bottom: 24px;">把觉得不错的分享直接丢给 Claw，让它们分析哪些 skills 值得用<br><br>给了 Skills Hub（上万个 skills）让它们自己筛选<br><strong>结论：不需要那么多，一两个真正好的就够</strong></p>
+      <h3 style="font-size: 18px; color: var(--accent3);">持续提升：真实任务驱动</h3>
+      <div class="flow" style="margin-top: 16px;">
+        <div class="flow-step" style="font-size: 14px;">真实任务</div><span class="flow-arrow">→</span>
+        <div class="flow-step" style="font-size: 14px;">一起做</div><span class="flow-arrow">→</span>
+        <div class="flow-step" style="font-size: 14px;">解决问题</div><span class="flow-arrow">→</span>
+        <div class="flow-step" style="font-size: 14px; border-color: var(--accent);">固化知识</div>
+      </div>
+      <p style="font-size: 14px; color: var(--text-dim); margin-top: 12px;">memory · tools · SOUL.md — 它自己决定存在哪里</p>
+    </div>
+    <div>
+      <div class="img-placeholder" style="min-height: 200px;">Claw 的 skills 或 memory 文件截图<div class="img-note">→ 展示它固化下来的知识</div></div>
+      <div class="img-placeholder" style="min-height: 200px;">问 Claw "你固化了哪些经验" 的回复<div class="img-note">→ 可以现场演示</div></div>
+    </div>
+  </div>
+  <div class="speaker-note">养龙虾真的像带实习生——拿真实任务练，练的过程中帮它积累经验。我看了傅盛、刘小排、Will、天润等人的分享直接丢给 Claw 分析。也可以现场问它们过去固化了哪些经验。</div>
+</section>
+
+<!-- ═══ S17: Part 4 开篇 ═══ -->
+<section class="slide" id="s17" style="text-align: center; justify-content: center; align-items: center;">
+  <span class="slide-number">17</span>
+  <h3>Part 4</h3>
+  <div class="divider-line" style="margin: 0 auto 32px;"></div>
+  <h1 style="font-size: 48px;">OpenClaw + Claude Code<br><span class="highlight">组合拳</span></h1>
+  <p class="subtitle" style="text-align: center; margin: 24px auto 0;">两者互补，组合使用发挥最大价值</p>
+</section>
+
+<!-- ═══ S18: Claw 能做什么 ═══ -->
+<section class="slide" id="s18">
+  <span class="slide-number">18</span>
+  <h3>Part 4</h3>
+  <div class="divider-line"></div>
+  <h2>OpenClaw <span class="highlight3">能做什么</span></h2>
+  <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 28px;">
+    <div class="card"><span class="card-icon">🌐</span><div class="card-title">CDP 浏览器控制</div><div class="card-desc">通过 Chrome DevTools Protocol 直接操作浏览器——打开网页、点击、填表、截图、导出 PDF</div></div>
+    <div class="card"><span class="card-icon">🔌</span><div class="card-title">调用 Codex & Claude Code</div><div class="card-desc">通过 ACP 调起专业编码 agent，作为 meta-agent 编排专业工具</div></div>
+    <div class="card"><span class="card-icon">💬</span><div class="card-title">多平台 24h 在线</div><div class="card-desc">Slack · 飞书 · Telegram · Discord · 微信</div></div>
+    <div class="card"><span class="card-icon">⏰</span><div class="card-title">定时任务 & 自动化</div><div class="card-desc">Cron · Webhook · 心跳检查——持续运行</div></div>
+    <div class="card"><span class="card-icon">🧠</span><div class="card-title">长期记忆</div><div class="card-desc">所有对话沉淀，交互越多越了解你的上下文</div></div>
+    <div class="card"><span class="card-icon">🔍</span><div class="card-title">多源搜索</div><div class="card-desc">带置信度评分的信息搜索和分析</div></div>
+  </div>
+</section>
+
+<!-- ═══ S19: 两者配合 ═══ -->
+<section class="slide" id="s19">
+  <span class="slide-number">19</span>
+  <h3>Part 4</h3>
+  <div class="divider-line"></div>
+  <h2>两者怎么配合</h2>
+  <div class="vs-container" style="margin-top: 24px;">
+    <div class="vs-side" style="border-top: 3px solid var(--accent3);">
+      <div style="font-size: 28px; margin-bottom: 8px;">🦞</div>
+      <div style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">OpenClaw</div>
+      <div style="font-size: 15px; color: var(--accent3); margin-bottom: 16px;">日常伙伴</div>
+      <ul style="list-style: none; padding: 0; font-size: 16px; color: var(--text-dim);">
+        <li style="padding: 6px 0;">长时间交互 & 日常对话</li>
+        <li style="padding: 6px 0;">信息搜集 & 浏览器自动化</li>
+        <li style="padding: 6px 0;">多平台沟通</li>
+        <li style="padding: 6px 0;">上下文积累 & 素材沉淀</li>
+      </ul>
+    </div>
+    <div style="text-align: center;"><div style="font-size: 32px; color: var(--accent); margin-bottom: 8px;">⚡</div><div style="font-size: 14px; color: var(--text-dim);">互补协作</div></div>
+    <div class="vs-side" style="border-top: 3px solid var(--accent4);">
+      <div style="font-size: 28px; margin-bottom: 8px;">💻</div>
+      <div style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">Claude Code</div>
+      <div style="font-size: 15px; color: var(--accent4); margin-bottom: 16px;">高效执行者</div>
+      <ul style="list-style: none; padding: 0; font-size: 16px; color: var(--text-dim);">
+        <li style="padding: 6px 0;">明确任务 & 快速产出</li>
+        <li style="padding: 6px 0;">代码生成 & 文档制作</li>
+        <li style="padding: 6px 0;">Skills · Subagents · Worktrees</li>
+        <li style="padding: 6px 0;">目前最强编码 agent</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top: 24px; border-left: 3px solid var(--accent2);">
+    <div class="card-title">📌 比如今天这个分享</div>
+    <div class="card-desc" style="font-size: 16px; color: var(--text);">PPT 文稿 & 代码：<strong>Claude Code</strong> 生成 &nbsp;·&nbsp; 截图 & 素材：<strong>OpenClaw</strong> 通过 CDP 浏览器抓取 &nbsp;·&nbsp; 内容来源：两只 Claw 日常对话的积累</div>
+  </div>
+  <div class="speaker-note">OpenClaw 可以和它更随意地对话，特别是如果把所有对话都存下来，它相当于一个很好的素材库。Claude Code 做明确任务效果最好。比如今天这个 PPT 就是 Claude Code 做的，所有需要的图都是 OpenClaw 帮我去抓取过来的。</div>
+</section>
+
+<!-- ═══ S20: Coach 思路 ═══ -->
+<section class="slide" id="s20">
+  <span class="slide-number">20</span>
+  <h3>Part 4</h3>
+  <div class="divider-line"></div>
+  <h2>Coach 系统：<span class="highlight4">用更强的模型做教练</span></h2>
+  <div class="two-col" style="margin-top: 32px;">
+    <div>
+      <p style="font-size: 20px; margin-bottom: 24px;">
+        核心思路很简单：
+      </p>
+      <div class="card" style="border-left: 3px solid var(--accent4); margin-bottom: 20px;">
+        <div class="card-title" style="font-size: 22px;">两只 Claw 负责执行</div>
+        <div class="card-desc" style="font-size: 16px; color: var(--text);">日常对话、任务执行、信息搜集……它们干活</div>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--accent); margin-bottom: 20px;">
+        <div class="card-title" style="font-size: 22px;">Claude Code 做教练</div>
+        <div class="card-desc" style="font-size: 16px; color: var(--text);">读所有对话记录，了解每只 Claw 的能力，给它们分配任务、规划方向</div>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--accent2);">
+        <div class="card-title" style="font-size: 22px;">我设定目标就行</div>
+        <div class="card-desc" style="font-size: 16px; color: var(--text);">半年目标：技术分享 + 个人网站。Coach 给出具体建议和任务规划</div>
+      </div>
+    </div>
+    <div>
+      <div class="img-placeholder" style="min-height: 350px;">
+        Coach 给两只 Claw 的任务分配截图
+        <div class="img-note">→ 展示 Coach 实际产出的周任务列表</div>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-note">我主要时间都在工作，能抽出来的时间就是周末。所以让 Coach 方案是让我尽可能少参与。包括今天来张和老师这里做分享——其实就是 Coach 给我的建议之一，稍微夸张了一点。</div>
+</section>
+
+<!-- ═══ S21: Coach 技术链路 ═══ -->
+<section class="slide" id="s21">
+  <span class="slide-number">21</span>
+  <h3>Part 4</h3>
+  <div class="divider-line"></div>
+  <h2>Coach 技术链路</h2>
+  <div class="flow" style="flex-direction: column; align-items: stretch; gap: 12px; max-width: 700px; margin-top: 32px;">
+    <div class="flow-step" style="text-align: left; font-size: 17px; border-color: var(--accent3); display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 28px; min-width: 40px;">💬</span>
+      <div>两只 Claw 所有 Slack 对话 → 自动存到<strong>私有 Git 仓库</strong></div>
+    </div>
+    <span class="flow-arrow" style="align-self: center;">↓</span>
+    <div class="flow-step" style="text-align: left; font-size: 17px; border-color: var(--accent4); display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 28px; min-width: 40px;">🧠</span>
+      <div>Claude Code（Opus）读 Git 仓库 → 以 <strong>Coach 角色</strong>分析</div>
+    </div>
+    <span class="flow-arrow" style="align-self: center;">↓</span>
+    <div class="flow-step" style="text-align: left; font-size: 17px; border-color: var(--accent2); display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 28px; min-width: 40px;">📋</span>
+      <div>Coach 根据能力 + 时间 → <strong>给两只 Claw 分配任务</strong>，推到 Git</div>
+    </div>
+    <span class="flow-arrow" style="align-self: center;">↓</span>
+    <div class="flow-step" style="text-align: left; font-size: 17px; border-color: var(--accent); display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 28px; min-width: 40px;">🦞</span>
+      <div>Claw 从 Git 拉取任务 → <strong>自动执行</strong></div>
+    </div>
+  </div>
+  <p style="margin-top: 32px; font-size: 16px; color: var(--text-dim);">Git 仓库是中枢——所有信息汇聚在这里，Coach 和 Claw 都通过它来通信</p>
+  <div class="speaker-note">这页是给感兴趣的同学看技术细节的。Slack 的平台比较开放，所以我让两只 Claw 把所有对话都存下来。我目前没有很好的方式把 Opus 模型直接接入 Claw，但订阅了 Max Plan，可以在 Claude Code 里访问 Git 仓库来做 Coach。</div>
+</section>
+
+<!-- ═══ S22: 今天就能试 ═══ -->
+<section class="slide" id="s22">
+  <span class="slide-number">22</span>
+  <h3>动手试试</h3>
+  <div class="divider-line"></div>
+  <h2>今天就能开始 🚀</h2>
+  <div style="max-width: 700px; margin-top: 40px;">
+    <div class="action-step">
+      <div class="action-num">1</div>
+      <div>
+        <div class="action-content">注册 <strong style="color: var(--accent3);">ClawCloud Run</strong></div>
+        <div class="action-detail">用 GitHub 账号登录，≥ 180 天自动获得 $5/月额度</div>
+      </div>
+    </div>
+    <div class="action-step">
+      <div class="action-num">2</div>
+      <div>
+        <div class="action-content">申请 <strong style="color: var(--accent2);">OpenRouter</strong> key</div>
+        <div class="action-detail">选一个免费模型（MIMO v2 Pro / Kimi / 其他当前免费的）</div>
+      </div>
+    </div>
+    <div class="action-step">
+      <div class="action-num">3</div>
+      <div>
+        <div class="action-content">用开源方案 <strong style="color: var(--accent4);">一键部署</strong></div>
+        <div class="action-detail">网页界面配置好模型 key，点击部署，不需要命令行</div>
+      </div>
+    </div>
+    <div class="action-step">
+      <div class="action-num">4</div>
+      <div>
+        <div class="action-content">在 Slack / 飞书 / Telegram 上 <strong style="color: var(--accent);">开始对话</strong></div>
+        <div class="action-detail">给它一个真实任务，开始养你的第一只龙虾 🦞</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S23: 总结 ═══ -->
+<section class="slide" id="s23" style="justify-content: center;">
+  <span class="slide-number">23</span>
+  <h3>总结</h3>
+  <div class="divider-line"></div>
+  <h2 style="margin-bottom: 40px;">三件事</h2>
+  <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="card" style="border-top: 3px solid var(--accent); text-align: center;"><div style="font-size: 48px; margin-bottom: 16px;">🆓</div><div class="card-title" style="font-size: 22px;">门槛很低了</div><div class="card-desc" style="font-size: 16px; margin-top: 12px;">零成本就能跑起来</div></div>
+    <div class="card" style="border-top: 3px solid var(--accent2); text-align: center;"><div style="font-size: 48px; margin-bottom: 16px;">🦞🦞</div><div class="card-title" style="font-size: 22px;">多 Claw 上限更高</div><div class="card-desc" style="font-size: 16px; margin-top: 12px;">独立 Claw 协作 > 单 Claude 多 agents</div></div>
+    <div class="card" style="border-top: 3px solid var(--accent3); text-align: center;"><div style="font-size: 48px; margin-bottom: 16px;">🔧⚡</div><div class="card-title" style="font-size: 22px;">组合拳最强</div><div class="card-desc" style="font-size: 16px; margin-top: 12px;">OpenClaw + Claude Code + Coach</div></div>
+  </div>
+</section>
+
+<!-- ═══ S24: 谢谢 ═══ -->
+<section class="slide" id="s24" style="text-align: center; justify-content: center; align-items: center;">
+  <span class="slide-number">24</span>
+  <div class="lobster-bg">🦞</div>
+  <h2 style="margin-bottom: 40px;">谢谢大家</h2>
+  <div class="card-grid" style="grid-template-columns: 1fr 1fr; max-width: 600px; margin: 0 auto;">
+    <div class="img-placeholder" style="min-height: 200px;">个人微信二维码<div class="img-note">→ 个人微信</div></div>
+    <div class="img-placeholder" style="min-height: 200px;">群二维码<div class="img-note">→ 交流群</div></div>
+  </div>
+  <div style="margin-top: 40px; font-size: 15px; color: var(--text-dim);">🌐 miaodx.com &nbsp;&nbsp; 📝 公众号：直觉机器漫谈 &nbsp;&nbsp; 🐙 GitHub：MiaoDX</div>
+  <div class="speaker-note">大家可以在群里继续交流，也可以扫个人微信。接下来把话筒给张和老师，然后做大概十分钟的 QA。大家可以先在对话框里提问。</div>
+</section>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+const slides = document.querySelectorAll('.slide');
+const navContainer = document.getElementById('navDots');
+slides.forEach((slide, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.setAttribute('aria-label', `Slide ${i + 1}`);
+  dot.addEventListener('click', () => slide.scrollIntoView({ behavior: 'smooth' }));
+  navContainer.appendChild(dot);
+});
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const index = [...slides].indexOf(entry.target);
+      document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+  });
+}, { threshold: 0.5 });
+slides.forEach(s => observer.observe(s));
+document.addEventListener('keydown', (e) => {
+  const current = [...slides].findIndex(s => { const rect = s.getBoundingClientRect(); return rect.top >= -100 && rect.top <= window.innerHeight / 2; });
+  if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); if (current < slides.length - 1) slides[current + 1].scrollIntoView({ behavior: 'smooth' }); }
+  if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); if (current > 0) slides[current - 1].scrollIntoView({ behavior: 'smooth' }); }
+});
+</script>
+</body>
+</html>
