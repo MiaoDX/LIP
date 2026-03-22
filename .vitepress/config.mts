@@ -57,6 +57,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: '分享入口', link: '/share/' },
+          { text: 'Tailscale + Claude Code 配置实战', link: '/share/tailscale-claude-code-setup' },
           { text: '低成本多 Agent 部署', link: '/share/lowcost-multiplatform-multiagent-deploy.html' },
           { text: 'Claws Civilization', link: '/share/claws-civilization.html' },
         ],
