@@ -71,6 +71,20 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 - 新内容先写到 `claw-agents-shared/drafts/`，MiaoDX review 后再发布到这里
 - 推送方式见 `claw-agents-shared/CLAUDE.md` 中"LIP 子模块操作"章节
 
+**share/ 目录规则**：
+
+share/ 下有两种文件类型，用途不同：
+
+| 类型 | 放哪里 | 渲染方式 | 适合 |
+|------|--------|----------|------|
+| `.md` | `share/` 根目录 | VitePress 自动渲染 | 教程、配置指南、博客文章 |
+| `.html` | `share/presentations/` | 独立文件，GitHub Actions 直接复制 | 演讲稿、Slide、需要离线分享的内容 |
+
+- **写文章/教程** → `share/your-article.md`
+- **做演讲/Slide** → `share/presentations/your-talk.html`（配套图片放同目录）
+- 新增 Markdown 文章时，同步更新 `.vitepress/config.mts` 的 sidebar
+- 详见 `share/README.md`
+
 **分工**：
 - GSD 负责执行：制作内容、格式化、发布
 - WLB 负责决策：审核质量、规划结构
