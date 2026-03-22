@@ -28,8 +28,8 @@ jobs:
       # 1. Build VitePress docs
       - run: npm run docs:build
 
-      # 2. Copy standalone HTML from share/ → output
-      - run: mkdir -p .vitepress/dist/share && cp share/*.html share/*.png share/*.jpg .vitepress/dist/share/ 2>/dev/null || true
+      # 2. Copy standalone HTML + assets from share/presentations/ → output
+      - run: mkdir -p .vitepress/dist/share && cp share/presentations/*.html share/presentations/*.png share/presentations/*.jpg .vitepress/dist/share/ 2>/dev/null || true
 
       # 3. Build Marp slides → output to VitePress dist
       - run: mkdir -p .vitepress/dist/slides/marp
