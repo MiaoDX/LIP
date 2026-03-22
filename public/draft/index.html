@@ -28,10 +28,10 @@ h1 { font-size: 24px; margin-bottom: 8px; color: #1a1a1a; }
 .content pre code { background: none; color: inherit; padding: 0; }
 .content blockquote { border-left: 3px solid #e8913a; padding-left: 16px; color: #666; margin: 12px 0; }
 .content hr { border: none; border-top: 1px solid #eee; margin: 20px 0; }
-.content em { color: #888; }
 .github-link { display: inline-block; margin-top: 16px; font-size: 13px; color: #888; text-decoration: none; }
 .github-link:hover { color: #333; }
 .loading { color: #888; padding: 40px; text-align: center; }
+.error { color: #c00; padding: 20px; background: #fff0f0; border-radius: 6px; margin: 12px 0; }
 </style>
 </head>
 <body>
@@ -49,15 +49,38 @@ const articles = [
   { file: 'part1-deployment-rewrite-draft.md', label: '部署篇重写' },
 ];
 
-const BASE = 'https://raw.githubusercontent.com/MiaoDX/claw-agents-shared/main/drafts/blog/';
+// 优先用 GitHub API（支持私有仓库，浏览器登录 GitHub 即可）
+// fallback 到 raw.githubusercontent.com（公开仓库可用）
+const API_BASE = 'https://api.github.com/repos/MiaoDX/claw-agents-shared/contents/drafts/blog/';
+const RAW_BASE = 'https://raw.githubusercontent.com/MiaoDX/claw-agents-shared/main/drafts/blog/';
 
 async function loadArticle(file) {
   const content = document.getElementById('content');
   content.innerHTML = '<p class="loading">加载中...</p>';
+  
+  let md = null;
+  
+  // 尝试 1: GitHub API（私有仓库可用，靠浏览器 cookie 认证）
   try {
-    const resp = await fetch(BASE + file);
-    if (!resp.ok) throw new Error(resp.status);
-    const md = await resp.text();
+    const resp = await fetch(API_BASE + file, {
+      headers: { 'Accept': 'application/vnd.github.v3.raw' }
+    });
+    if (resp.ok) {
+      md = await resp.text();
+    }
+  } catch(e) {}
+  
+  // 尝试 2: raw.githubusercontent.com（公开仓库 fallback）
+  if (!md) {
+    try {
+      const resp = await fetch(RAW_BASE + file);
+      if (resp.ok) {
+        md = await resp.text();
+      }
+    } catch(e) {}
+  }
+  
+  if (md) {
     content.innerHTML = marked.parse(md);
     const link = document.createElement('a');
     link.href = `https://github.com/MiaoDX/claw-agents-shared/blob/main/drafts/blog/${file}`;
@@ -65,8 +88,15 @@ async function loadArticle(file) {
     link.className = 'github-link';
     link.textContent = '🔗 在 GitHub 上查看源文件';
     content.appendChild(link);
-  } catch(e) {
-    content.innerHTML = `<p style="color:red">加载失败: ${e.message}</p>`;
+  } else {
+    content.innerHTML = `
+      <div class="error">
+        <p><strong>加载失败</strong> — 可能原因：</p>
+        <ul style="margin:8px 0 0 20px">
+          <li>请确认你已在浏览器中登录 GitHub（私有仓库需要认证）</li>
+          <li>或者直接在 GitHub 上查看：<a href="https://github.com/MiaoDX/claw-agents-shared/blob/main/drafts/blog/${file}" target="_blank">${file}</a></li>
+        </ul>
+      </div>`;
   }
 }
 
