@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft Review — claw-agents-shared</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif; background: #fafaf8; color: #333; }
+.container { max-width: 800px; margin: 0 auto; padding: 24px; }
+h1 { font-size: 24px; margin-bottom: 8px; color: #1a1a1a; }
+.subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; border-bottom: 1px solid #eee; padding-bottom: 12px; }
+.tab { padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; border: 1px solid #ddd; background: #fff; color: #555; transition: all 0.15s; }
+.tab:hover { background: #f0f0f0; }
+.tab.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.content { background: #fff; border-radius: 8px; padding: 32px; border: 1px solid #eee; line-height: 1.8; }
+.content h1 { font-size: 22px; margin: 24px 0 12px; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; }
+.content h2 { font-size: 18px; margin: 20px 0 8px; color: #444; }
+.content h3 { font-size: 16px; margin: 16px 0 8px; color: #555; }
+.content p { margin: 8px 0; }
+.content table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+.content th, .content td { border: 1px solid #eee; padding: 8px 12px; text-align: left; font-size: 14px; }
+.content th { background: #f8f8f6; font-weight: 600; }
+.content code { background: #f4f4f2; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+.content pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 6px; overflow-x: auto; margin: 12px 0; }
+.content pre code { background: none; color: inherit; padding: 0; }
+.content blockquote { border-left: 3px solid #e8913a; padding-left: 16px; color: #666; margin: 12px 0; }
+.content hr { border: none; border-top: 1px solid #eee; margin: 20px 0; }
+.content em { color: #888; }
+.github-link { display: inline-block; margin-top: 16px; font-size: 13px; color: #888; text-decoration: none; }
+.github-link:hover { color: #333; }
+.loading { color: #888; padding: 40px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📝 Draft Review</h1>
+  <p class="subtitle">claw-agents-shared/drafts/blog/ — 点击切换文章</p>
+  <div class="tabs" id="tabs"></div>
+  <div class="content" id="content"><p class="loading">加载中...</p></div>
+</div>
+<script>
+// 文章列表 — 添加新文章时在这里加一行
+const articles = [
+  { file: 'gateway-outage-wechat.md', label: '宕机6小时' },
+  { file: 'openclaw-complete-guide.md', label: 'OpenClaw 完整指南' },
+  { file: 'part1-deployment-rewrite-draft.md', label: '部署篇重写' },
+];
+
+const BASE = 'https://raw.githubusercontent.com/MiaoDX/claw-agents-shared/main/drafts/blog/';
+
+async function loadArticle(file) {
+  const content = document.getElementById('content');
+  content.innerHTML = '<p class="loading">加载中...</p>';
+  try {
+    const resp = await fetch(BASE + file);
+    if (!resp.ok) throw new Error(resp.status);
+    const md = await resp.text();
+    content.innerHTML = marked.parse(md);
+    const link = document.createElement('a');
+    link.href = `https://github.com/MiaoDX/claw-agents-shared/blob/main/drafts/blog/${file}`;
+    link.target = '_blank';
+    link.className = 'github-link';
+    link.textContent = '🔗 在 GitHub 上查看源文件';
+    content.appendChild(link);
+  } catch(e) {
+    content.innerHTML = `<p style="color:red">加载失败: ${e.message}</p>`;
+  }
+}
+
+function init() {
+  const tabs = document.getElementById('tabs');
+  articles.forEach((a, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (i === 0 ? ' active' : '');
+    btn.textContent = a.label;
+    btn.onclick = () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      loadArticle(a.file);
+    };
+    tabs.appendChild(btn);
+  });
+  loadArticle(articles[0].file);
+}
+
+init();
+</script>
+</body>
+</html>
