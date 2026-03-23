@@ -8,13 +8,23 @@ export default defineConfig({
   ignoreDeadLinks: true,
 
   themeConfig: {
+    authorBio: {
+      name: 'MiaoDX × AI Agents',
+      desc: '小米机器人工程师，OPC 实践者 — One Person, (plus multi) Claws。白天做机器人，业余时间让 AI Agent 帮我做更多的事。',
+      links: [
+        { text: 'GitHub ↗', url: 'https://github.com/MiaoDX' },
+        { text: '博客 ↗', url: 'https://miaodx.com' },
+        { text: '所有案例 →', url: 'https://miaodx.com/LIP/' }
+      ]
+    },
+
     nav: [
-      { text: '首页', link: '/' },
-      { text: 'AI Coding', link: '/stories/2026-03-dual-agent-start' },
-      { text: 'OpenClaw', link: '/resources/deployment-guide-v2' },
-      { text: '月报', link: '/now/2026-03' },
-      { text: '分享', link: '/share/' },
-      { text: '个人主页', link: 'https://miaodx.com/' },
+      { text: '首页', link: '/LIP/' },
+      { text: '月报', link: '/LIP/now/2026-03.html' },
+      { text: '案例', link: '/LIP/stories/2026-03-dual-agent-start.html' },
+      { text: '经验', link: '/LIP/lessons/error-to-skill-evolution.html' },
+      { text: '分享', link: '/LIP/share/' },
+      { text: '个人主页', link: '/' }
     ],
 
     sidebar: [
@@ -66,19 +76,5 @@ export default defineConfig({
     ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/MiaoDX/LIP' }],
-
-    search: {
-      provider: 'local',
-    },
-
-    outline: {
-      level: [2, 3],
-      label: '目录',
-    },
-
-    docFooter: {
-      prev: '上一篇',
-      next: '下一篇',
-    },
   },
 })
