@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>京拍档 AI电商操作系统 — BP讨论稿</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* 京拍档品牌色：深海军蓝 + 金黄 */
+  --bg: #111833;
+  --bg2: #151d3a;
+  --card: rgba(255,255,255,0.04);
+  --card-h: rgba(255,255,255,0.07);
+  --y: #f5c518;
+  --y2: rgba(245,197,24,0.12);
+  --y3: rgba(245,197,24,0.25);
+  --t1: #eaeaea;
+  --t2: #8a90a4;
+  --t3: #4a5068;
+  --bd: rgba(255,255,255,0.07);
+  --red: #ff6b6b;
+  --green: #51cf66;
+  --blue: #74c0fc;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--t1);overflow:hidden;}
+/* 品牌元素：顶部金色线条（复刻原版PDF风格） */
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:3px;background:var(--y);z-index:300;}
+body::after{content:'';position:fixed;bottom:52px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--y),transparent 60%);z-index:99;opacity:.4;}
+
+.deck{width:100%;height:100%;position:relative;}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:44px 56px 64px;opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s;pointer-events:none;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--t3) transparent;}
+.slide.active{opacity:1;transform:none;pointer-events:auto;}
+
+/* NAV */
+.nav{position:fixed;bottom:0;left:0;right:0;height:52px;background:rgba(8,12,24,.94);backdrop-filter:blur(14px);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:100;font-size:12px;}
+.nav .pg{color:var(--t3);font-family:'DM Mono',monospace;}
+.nav .tt{color:var(--t3);max-width:360px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.nav .btns{display:flex;gap:6px;}
+.nav button{background:var(--card);border:1px solid var(--bd);color:var(--t1);padding:5px 14px;border-radius:5px;cursor:pointer;font-family:inherit;font-size:11px;transition:.2s;}
+.nav button:hover{background:var(--y2);border-color:var(--y);color:var(--y);}
+
+.draft{position:fixed;top:14px;right:20px;z-index:200;background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.25);color:var(--red);font-size:10px;padding:3px 10px;border-radius:16px;font-family:'DM Mono',monospace;letter-spacing:1px;}
+
+/* TYPO */
+.sn{font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+h1{font-size:40px;font-weight:900;line-height:1.15;margin-bottom:14px;}
+h1 .a{color:var(--y);}
+h2{font-size:26px;font-weight:700;line-height:1.25;margin-bottom:16px;}
+h2 .a{color:var(--y);}
+h3{font-size:14px;font-weight:700;color:var(--y);margin-bottom:6px;}
+p,li{font-size:13.5px;line-height:1.65;color:var(--t2);}
+.sub{font-size:16px;color:var(--t2);font-weight:300;line-height:1.55;max-width:680px;}
+.sep{width:40px;height:2px;background:var(--y);margin:12px 0;border-radius:2px;}
+
+/* CARDS */
+.cg{display:grid;gap:14px;margin-top:16px;}
+.c2{grid-template-columns:1fr 1fr;} .c3{grid-template-columns:1fr 1fr 1fr;} .c4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.cd{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:20px;transition:.25s;}
+.cd:hover{background:var(--card-h);border-color:rgba(245,197,24,.15);}
+.cd h3{font-size:13px;} .cd p{font-size:12.5px;line-height:1.55;}
+
+/* STATS */
+.sr{display:flex;gap:28px;margin:20px 0;flex-wrap:wrap;}
+.st .n{font-size:42px;font-weight:900;color:var(--y);line-height:1;font-family:'DM Mono',monospace;}
+.st .l{font-size:11px;color:var(--t3);margin-top:3px;}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px;}
+th{text-align:left;padding:8px 12px;background:var(--y2);color:var(--y);font-weight:500;font-size:11px;letter-spacing:.3px;border-bottom:1px solid var(--bd);}
+td{padding:8px 12px;border-bottom:1px solid var(--bd);color:var(--t2);vertical-align:top;}
+
+/* TAGS */
+.tag{display:inline-block;padding:2px 8px;border-radius:14px;font-size:10px;font-weight:500;}
+.tag.td{background:rgba(255,107,107,.12);color:var(--red);border:1px solid rgba(255,107,107,.25);}
+.tag.ok{background:rgba(81,207,102,.12);color:var(--green);border:1px solid rgba(81,207,102,.25);}
+.tag.inf{background:rgba(116,192,252,.12);color:var(--blue);border:1px solid rgba(116,192,252,.25);}
+
+/* CALLOUT */
+.co{background:var(--y2);border:1px solid rgba(245,197,24,.18);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:13px;color:var(--t1);line-height:1.55;}
+.co.w{background:rgba(255,107,107,.06);border-color:rgba(255,107,107,.2);}
+.co .ct{font-weight:700;color:var(--y);font-size:12px;margin-bottom:3px;letter-spacing:.3px;}
+.co.w .ct{color:var(--red);}
+
+/* LAYOUT */
+.tw{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:14px;}
+.tw.r46{grid-template-columns:2fr 3fr;} .tw.r64{grid-template-columns:3fr 2fr;}
+
+/* PERSON */
+.ps{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start;}
+.pa{width:42px;height:42px;border-radius:50%;background:var(--y2);border:2px solid var(--y);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:var(--y);flex-shrink:0;}
+.pi h3{margin-bottom:1px;font-size:14px;} .pi .rl{font-size:11px;color:var(--t3);margin-bottom:3px;} .pi p{font-size:12px;}
+
+/* COVER */
+.cover{justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;}
+.cover h1{font-size:52px;margin-bottom:20px;position:relative;z-index:2;}
+.cover .sub{max-width:600px;margin:0 auto;position:relative;z-index:2;}
+.cover .ct-info{margin-top:36px;font-size:12px;color:var(--t3);font-family:'DM Mono',monospace;position:relative;z-index:2;}
+.cover .bg-svg{position:absolute;inset:0;z-index:1;opacity:.6;}
+
+/* ARCH LAYER */
+.al{background:var(--card);border:1px solid var(--bd);border-left:3px solid var(--y);padding:14px 18px;margin-bottom:6px;border-radius:0 8px 8px 0;}
+.al .an{font-weight:700;color:var(--y);font-size:13px;margin-bottom:2px;}
+.al .ad{font-size:12px;color:var(--t2);}
+
+/* SVG shared */
+svg text{font-family:'Noto Sans SC',sans-serif;}
+
+@media(max-width:1024px){
+  .slide{padding:28px 24px 72px;}
+  h1{font-size:30px;} .cover h1{font-size:36px;}
+  .c3,.c4{grid-template-columns:1fr 1fr;}
+  .tw{grid-template-columns:1fr;}
+  .st .n{font-size:32px;}
+}
+</style>
+</head>
+<body>
+
+<!-- 密码保护层 -->
+<div id="pwd-overlay" style="position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+  <div style="text-align:center;max-width:360px;padding:40px;">
+    <svg width="56" height="56" viewBox="0 0 56 56" style="margin-bottom:24px;" xmlns="http://www.w3.org/2000/svg">
+      <rect x="12" y="12" width="32" height="32" rx="4" fill="#f5c518"/>
+      <rect x="18" y="18" width="20" height="20" rx="2" fill="#111833"/>
+      <rect x="22" y="22" width="12" height="12" rx="1" fill="#f5c518" opacity=".6"/>
+      <rect x="20" y="6" width="4" height="8" rx="1" fill="#f5c518" opacity=".8"/>
+      <rect x="32" y="6" width="4" height="8" rx="1" fill="#f5c518" opacity=".8"/>
+      <rect x="20" y="42" width="4" height="8" rx="1" fill="#f5c518" opacity=".8"/>
+      <rect x="32" y="42" width="4" height="8" rx="1" fill="#f5c518" opacity=".8"/>
+      <rect x="6" y="20" width="8" height="4" rx="1" fill="#f5c518" opacity=".8"/>
+      <rect x="6" y="32" width="8" height="4" rx="1" fill="#f5c518" opacity=".8"/>
+      <rect x="42" y="20" width="8" height="4" rx="1" fill="#f5c518" opacity=".8"/>
+      <rect x="42" y="32" width="8" height="4" rx="1" fill="#f5c518" opacity=".8"/>
+    </svg>
+    <h2 style="color:var(--y);margin-bottom:8px;">京拍档 BP</h2>
+    <p style="color:var(--t2);font-size:13px;margin-bottom:24px;">请输入密码访问</p>
+    <input type="password" id="pwd-input" placeholder="密码" style="width:100%;padding:12px 16px;background:var(--card);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-size:14px;text-align:center;outline:none;transition:.2s;" onkeydown="if(event.key==='Enter')checkPwd()">
+    <button onclick="checkPwd()" style="width:100%;margin-top:12px;padding:12px;background:var(--y);border:none;border-radius:8px;color:#111833;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;">进入</button>
+    <p id="pwd-error" style="color:var(--red);font-size:12px;margin-top:12px;opacity:0;transition:.2s;">密码错误</p>
+  </div>
+</div>
+
+<div class="draft">DRAFT v2 · 讨论稿</div>
+<div class="deck" id="deck">
+
+<!-- ===== P1 COVER ===== -->
+<div class="slide cover active" data-title="封面">
+  <svg class="bg-svg" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="g1" cx="30%" cy="25%" r="55%"><stop offset="0%" stop-color="#f5c518" stop-opacity=".07"/><stop offset="100%" stop-color="#f5c518" stop-opacity="0"/></radialGradient>
+      <radialGradient id="g2" cx="75%" cy="70%" r="45%"><stop offset="0%" stop-color="#74c0fc" stop-opacity=".04"/><stop offset="100%" stop-color="#74c0fc" stop-opacity="0"/></radialGradient>
+      <linearGradient id="lg1" x1="0" y1="0" x2="1200" y2="700" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f5c518" stop-opacity=".08"/><stop offset="100%" stop-color="#74c0fc" stop-opacity=".03"/></linearGradient>
+    </defs>
+    <rect fill="url(#g1)" width="1200" height="700"/>
+    <rect fill="url(#g2)" width="1200" height="700"/>
+    <!-- grid dots -->
+    <g fill="#f5c518" opacity=".06">
+      <circle cx="100" cy="100" r="1.5"/><circle cx="200" cy="100" r="1.5"/><circle cx="300" cy="100" r="1.5"/><circle cx="400" cy="100" r="1.5"/><circle cx="500" cy="100" r="1.5"/><circle cx="600" cy="100" r="1.5"/><circle cx="700" cy="100" r="1.5"/><circle cx="800" cy="100" r="1.5"/><circle cx="900" cy="100" r="1.5"/><circle cx="1000" cy="100" r="1.5"/><circle cx="1100" cy="100" r="1.5"/>
+      <circle cx="100" cy="200" r="1.5"/><circle cx="200" cy="200" r="1.5"/><circle cx="300" cy="200" r="1.5"/><circle cx="400" cy="200" r="1.5"/><circle cx="500" cy="200" r="1.5"/><circle cx="600" cy="200" r="1.5"/><circle cx="700" cy="200" r="1.5"/><circle cx="800" cy="200" r="1.5"/><circle cx="900" cy="200" r="1.5"/><circle cx="1000" cy="200" r="1.5"/><circle cx="1100" cy="200" r="1.5"/>
+      <circle cx="100" cy="300" r="1.5"/><circle cx="200" cy="300" r="1.5"/><circle cx="300" cy="300" r="1.5"/><circle cx="400" cy="300" r="1.5"/><circle cx="500" cy="300" r="1.5"/><circle cx="600" cy="300" r="1.5"/><circle cx="700" cy="300" r="1.5"/><circle cx="800" cy="300" r="1.5"/><circle cx="900" cy="300" r="1.5"/><circle cx="1000" cy="300" r="1.5"/><circle cx="1100" cy="300" r="1.5"/>
+      <circle cx="100" cy="400" r="1.5"/><circle cx="200" cy="400" r="1.5"/><circle cx="300" cy="400" r="1.5"/><circle cx="400" cy="400" r="1.5"/><circle cx="500" cy="400" r="1.5"/><circle cx="600" cy="400" r="1.5"/><circle cx="700" cy="400" r="1.5"/><circle cx="800" cy="400" r="1.5"/><circle cx="900" cy="400" r="1.5"/><circle cx="1000" cy="400" r="1.5"/><circle cx="1100" cy="400" r="1.5"/>
+      <circle cx="100" cy="500" r="1.5"/><circle cx="200" cy="500" r="1.5"/><circle cx="300" cy="500" r="1.5"/><circle cx="400" cy="500" r="1.5"/><circle cx="500" cy="500" r="1.5"/><circle cx="600" cy="500" r="1.5"/><circle cx="700" cy="500" r="1.5"/><circle cx="800" cy="500" r="1.5"/><circle cx="900" cy="500" r="1.5"/><circle cx="1000" cy="500" r="1.5"/><circle cx="1100" cy="500" r="1.5"/>
+      <circle cx="100" cy="600" r="1.5"/><circle cx="200" cy="600" r="1.5"/><circle cx="300" cy="600" r="1.5"/><circle cx="400" cy="600" r="1.5"/><circle cx="500" cy="600" r="1.5"/><circle cx="600" cy="600" r="1.5"/><circle cx="700" cy="600" r="1.5"/><circle cx="800" cy="600" r="1.5"/><circle cx="900" cy="600" r="1.5"/><circle cx="1000" cy="600" r="1.5"/><circle cx="1100" cy="600" r="1.5"/>
+    </g>
+    <!-- abstract circuit lines -->
+    <g stroke="url(#lg1)" stroke-width="1" fill="none" opacity=".5">
+      <path d="M0,350 H200 L260,290 H500 L540,350 H800 L860,280 H1200"/>
+      <path d="M0,420 H150 L200,380 H450 L500,420 H750 L810,360 H1200"/>
+      <circle cx="260" cy="290" r="4" fill="#f5c518" opacity=".3"/>
+      <circle cx="540" cy="350" r="4" fill="#f5c518" opacity=".3"/>
+      <circle cx="860" cy="280" r="4" fill="#f5c518" opacity=".3"/>
+    </g>
+  </svg>
+  <div class="sn">京拍档 · 2026年3月</div>
+  <!-- 品牌Logo SVG (芯片图标 - 复刻原PDF) -->
+  <svg width="56" height="56" viewBox="0 0 56 56" style="margin-bottom:18px;position:relative;z-index:2;" xmlns="http://www.w3.org/2000/svg">
+    <rect x="12" y="12" width="32" height="32" rx="4" fill="#f5c518"/>
+    <rect x="18" y="18" width="20" height="20" rx="2" fill="#111833"/>
+    <rect x="22" y="22" width="12" height="12" rx="1" fill="#f5c518" opacity=".6"/>
+    <!-- pins -->
+    <rect x="20" y="6" width="4" height="8" rx="1" fill="#f5c518" opacity=".8"/>
+    <rect x="32" y="6" width="4" height="8" rx="1" fill="#f5c518" opacity=".8"/>
+    <rect x="20" y="42" width="4" height="8" rx="1" fill="#f5c518" opacity=".8"/>
+    <rect x="32" y="42" width="4" height="8" rx="1" fill="#f5c518" opacity=".8"/>
+    <rect x="6" y="20" width="8" height="4" rx="1" fill="#f5c518" opacity=".8"/>
+    <rect x="6" y="32" width="8" height="4" rx="1" fill="#f5c518" opacity=".8"/>
+    <rect x="42" y="20" width="8" height="4" rx="1" fill="#f5c518" opacity=".8"/>
+    <rect x="42" y="32" width="8" height="4" rx="1" fill="#f5c518" opacity=".8"/>
+  </svg>
+  <h1><span class="a">京拍档</span><br>AI电商运营系统</h1>
+  <div class="sep" style="margin:0 auto 16px;"></div>
+  <p class="sub">把十多年电商运营经验，升级为可执行、可复制、可规模化的AI系统</p>
+  <div class="ct-info">wwf25@mails.tsinghua.edu.cn · jingpaidang.com</div>
+</div>
+
+<!-- ===== P2 TEAM ===== -->
+<div class="slide" data-title="核心团队">
+  <div class="sn">PAGE 02</div>
+  <h2>核心团队：14年电商老兵 × AI技术</h2><div class="sep"></div>
+  <div class="tw">
+    <div>
+      <div class="ps"><div class="pa">王</div><div class="pi"><h3>王文峰</h3><div class="rl">创始人 · 法定代表人</div><p>前<b>京东搜索部门高级经理</b>（搜索/排名/大数据）<br>原<b>淘宝搜索部门主管</b> · 清华大学校友<br>2012年创立京拍档，从0到1打造京东最大代运营服务商</p></div></div>
+      <div class="ps"><div class="pa">李</div><div class="pi"><h3>李慧娟</h3><div class="rl">联合创始人 · CEO</div><p>14年电商一线操盘，品牌月销从数十万做到百万级<br>主导近300家品牌代运营业务<br>2022-2023连续获"创客北京"京东专项赛荣誉</p></div></div>
+    </div>
+    <div>
+      <div class="ps"><div class="pa">许</div><div class="pi"><h3>许干帆</h3><div class="rl">CTO</div><p>新加坡星展银行(DBS)支付公司大数据平台负责人<br>6年以上支付/网站/网络安全经验</p></div></div>
+      <div class="ps"><div class="pa">李</div><div class="pi"><h3>李一臻</h3><div class="rl">COO</div><p>电商行业多年深耕，日本电商方法论系统训练<br>品牌从0到百万级增长体系搭建</p></div></div>
+      <!-- SVG: team composition -->
+      <svg viewBox="0 0 440 100" style="width:100%;margin-top:12px;" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="100" rx="10" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.15)" stroke-width="1"/>
+        <text x="20" y="28" font-size="11" fill="#f5c518" font-weight="700">团队基因</text>
+        <g transform="translate(20,42)">
+          <rect width="120" height="22" rx="4" fill="rgba(245,197,24,.15)"/><text x="60" y="15" font-size="10" fill="#f5c518" text-anchor="middle">京东/淘宝搜索</text>
+        </g>
+        <g transform="translate(150,42)">
+          <rect width="100" height="22" rx="4" fill="rgba(116,192,252,.15)"/><text x="50" y="15" font-size="10" fill="#74c0fc" text-anchor="middle">星展银行大数据</text>
+        </g>
+        <g transform="translate(260,42)">
+          <rect width="80" height="22" rx="4" fill="rgba(81,207,102,.15)"/><text x="40" y="15" font-size="10" fill="#51cf66" text-anchor="middle">百度凤巢</text>
+        </g>
+        <g transform="translate(350,42)">
+          <rect width="70" height="22" rx="4" fill="rgba(200,160,255,.15)"/><text x="35" y="15" font-size="10" fill="#c8a0ff" text-anchor="middle">WPP/电通</text>
+        </g>
+        <text x="20" y="86" font-size="10" fill="#4a5068">搜索算法 + 电商运营 + 大数据 + 国际广告 = 复合型AI电商团队</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P3 TRACTION ===== -->
+<div class="slide" data-title="已有成绩">
+  <div class="sn">PAGE 03</div>
+  <h2>我们已经做到的</h2><div class="sep"></div>
+  <div class="sr">
+    <div class="st"><div class="n">300+</div><div class="l">品牌客户</div></div>
+    <div class="st"><div class="n">2.2亿</div><div class="l">用户数据</div></div>
+    <div class="st"><div class="n">3.5万</div><div class="l">供应商</div></div>
+    <div class="st"><div class="n">13年</div><div class="l">电商运营</div></div>
+  </div>
+
+  <div class="tw">
+    <div>
+      <!-- SVG: Double 11 performance bars -->
+      <h3 style="margin-bottom:10px;">2025年双11实战成绩</h3>
+      <svg viewBox="0 0 480 200" style="width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="bar1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f5c518"/><stop offset="100%" stop-color="#f5c518" stop-opacity=".6"/></linearGradient></defs>
+        <!-- bars -->
+        <g transform="translate(0,10)">
+          <text x="0" y="14" font-size="11" fill="#8a90a4">整体GMV</text>
+          <rect x="130" y="2" width="250" height="18" rx="3" fill="url(#bar1)" opacity=".9"/>
+          <text x="390" y="15" font-size="12" fill="#f5c518" font-weight="700">+125%</text>
+        </g>
+        <g transform="translate(0,46)">
+          <text x="0" y="14" font-size="11" fill="#8a90a4">代运营客户均值</text>
+          <rect x="130" y="2" width="380" height="18" rx="3" fill="url(#bar1)" opacity=".85"/>
+          <text x="390" y="15" font-size="12" fill="#f5c518" font-weight="700">+206%</text>
+        </g>
+        <g transform="translate(0,82)">
+          <text x="0" y="14" font-size="11" fill="#8a90a4">AI驱动服务量</text>
+          <rect x="130" y="2" width="440" height="18" rx="3" fill="url(#bar1)" opacity=".8"/>
+          <text x="390" y="15" font-size="12" fill="#f5c518" font-weight="700">+300%</text>
+        </g>
+        <g transform="translate(0,118)">
+          <text x="0" y="14" font-size="11" fill="#8a90a4">分销品牌GMV</text>
+          <rect x="130" y="2" width="300" height="18" rx="3" fill="url(#bar1)" opacity=".6"/>
+          <text x="390" y="15" font-size="11" fill="#8a90a4">+166%</text>
+        </g>
+        <g transform="translate(0,154)">
+          <text x="0" y="14" font-size="11" fill="#8a90a4">自有品牌GMV</text>
+          <rect x="130" y="2" width="230" height="18" rx="3" fill="url(#bar1)" opacity=".5"/>
+          <text x="390" y="15" font-size="11" fill="#8a90a4">+135%</text>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <h3>代表客户</h3>
+      <p style="font-size:13px;line-height:2;">鲁花 · 王老吉 · 中粮 · 海尔 · 英特尔 · 飞利浦 · 京东方 · 同仁堂 · JBL · 微星 · 百度小度 · 阿迪达斯 · 丝塔芙 · 华为 · 尼康 · 戴尔</p>
+      <h3 style="margin-top:14px;">荣誉</h3>
+      <p style="font-size:12px;">连续多年京东金牌服务商 · 京卓越 · 创客北京优胜奖</p>
+      <div class="co w" style="margin-top:12px;font-size:11px;">
+        <div class="ct">⚠️ 待补充</div>当前年营收量级？代运营 vs AI产品收入结构？
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P4 PAIN POINTS ===== -->
+<div class="slide" data-title="行业痛点">
+  <div class="sn">PAGE 04</div>
+  <h2>来自12年一线的<span class="a">真实痛点</span></h2><div class="sep"></div>
+
+  <!-- SVG: Pain point illustration -->
+  <svg viewBox="0 0 960 120" style="width:100%;margin-bottom:18px;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="chain" x1="0" y1="0" x2="960" y2="0" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#f5c518" stop-opacity=".8"/>
+        <stop offset="50%" stop-color="#ff6b6b" stop-opacity=".6"/>
+        <stop offset="100%" stop-color="#f5c518" stop-opacity=".8"/>
+      </linearGradient>
+    </defs>
+    <text x="480" y="16" font-size="11" fill="#4a5068" text-anchor="middle" letter-spacing="4">电商运营"十节甘蔗" — 每一节都是效率黑洞</text>
+    <!-- chain blocks -->
+    <g transform="translate(15,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">选品</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">凭经验</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">试错率高</text>
+    </g>
+    <g transform="translate(110,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">内容</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">占时40%</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">人力密集</text>
+    </g>
+    <g transform="translate(205,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">上架</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">重复操作</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">效率低</text>
+    </g>
+    <g transform="translate(300,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">营销</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">碎片化</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">难协同</text>
+    </g>
+    <g transform="translate(395,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">投放</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">凭感觉</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">ROI低</text>
+    </g>
+    <g transform="translate(490,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">获客</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">成本攀升</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">增长难</text>
+    </g>
+    <g transform="translate(585,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">转化</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">数据断</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">黑箱</text>
+    </g>
+    <g transform="translate(680,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">客服</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">3min+响应</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">人力重</text>
+    </g>
+    <g transform="translate(775,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">订单</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">跨平台</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">割裂</text>
+    </g>
+    <g transform="translate(870,30)">
+      <rect width="80" height="70" rx="6" fill="rgba(245,197,24,.08)" stroke="rgba(245,197,24,.2)" stroke-width="1"/><text x="40" y="30" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">分析</text><text x="40" y="48" font-size="9" fill="#4a5068" text-anchor="middle">耗时数天</text><text x="40" y="62" font-size="9" fill="#ff6b6b" text-anchor="middle">滞后</text>
+    </g>
+    <!-- connecting line -->
+    <line x1="95" y1="65" x2="870" y2="65" stroke="url(#chain)" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+  </svg>
+
+  <div class="cg c3">
+    <div class="cd"><h3>💰 人力成本 = GMV的8-12%</h3><p>中型店铺5-8名运营，60%+时间花在重复操作</p></div>
+    <div class="cd"><h3>📊 90%商家凭感觉决策</h3><p>数据分析从"拉数据"到"出结论"需数小时甚至数天</p></div>
+    <div class="cd"><h3>🧩 同时用5-8个工具</h3><p>工具碎片化严重，数据不互通，无法协同</p></div>
+  </div>
+  <div class="co"><b>核心矛盾：</b>商家需要的不是更多工具，而是一套能贯穿经营链条、替团队执行关键动作的系统。</div>
+</div>
+
+<!-- ===== P5 WHY NOW ===== -->
+<div class="slide" data-title="市场时机">
+  <div class="sn">PAGE 05</div>
+  <h2>为什么是<span class="a">现在</span></h2><div class="sep"></div>
+
+  <!-- SVG: Market size -->
+  <svg viewBox="0 0 700 160" style="width:100%;max-width:700px;margin-bottom:16px;" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="mkt" x1="0" y1="160" x2="0" y2="0"><stop offset="0%" stop-color="#f5c518" stop-opacity="0"/><stop offset="100%" stop-color="#f5c518" stop-opacity=".25"/></linearGradient></defs>
+    <text x="0" y="14" font-size="11" fill="#4a5068" letter-spacing="1">中国AI电商服务市场规模（亿元）</text>
+    <!-- area -->
+    <path d="M60,140 L180,128 L300,110 L420,85 L540,55 L660,20 L660,150 L60,150 Z" fill="url(#mkt)"/>
+    <polyline points="60,140 180,128 300,110 420,85 540,55 660,20" fill="none" stroke="#f5c518" stroke-width="2"/>
+    <!-- dots & labels -->
+    <circle cx="60" cy="140" r="4" fill="#f5c518"/><text x="60" y="156" font-size="9" fill="#4a5068" text-anchor="middle">2023</text><text x="60" y="134" font-size="10" fill="#8a90a4" text-anchor="middle">200</text>
+    <circle cx="180" cy="128" r="4" fill="#f5c518"/><text x="180" y="156" font-size="9" fill="#4a5068" text-anchor="middle">2024</text><text x="180" y="122" font-size="10" fill="#8a90a4" text-anchor="middle">350</text>
+    <circle cx="300" cy="110" r="4" fill="#f5c518"/><text x="300" y="156" font-size="9" fill="#4a5068" text-anchor="middle">2025</text><text x="300" y="104" font-size="11" fill="#f5c518" text-anchor="middle" font-weight="700">638</text>
+    <circle cx="420" cy="85" r="4" fill="#f5c518"/><text x="420" y="156" font-size="9" fill="#4a5068" text-anchor="middle">2026E</text><text x="420" y="79" font-size="10" fill="#8a90a4" text-anchor="middle">1,000</text>
+    <circle cx="540" cy="55" r="4" fill="#f5c518"/><text x="540" y="156" font-size="9" fill="#4a5068" text-anchor="middle">2027E</text><text x="540" y="49" font-size="10" fill="#8a90a4" text-anchor="middle">1,500</text>
+    <circle cx="660" cy="20" r="4" fill="#f5c518"/><text x="660" y="156" font-size="9" fill="#4a5068" text-anchor="middle">2029E</text><text x="660" y="14" font-size="11" fill="#f5c518" text-anchor="middle" font-weight="700">1.38万亿</text>
+    <text x="690" y="86" font-size="10" fill="#4a5068" text-anchor="end">CAGR 21%+</text>
+  </svg>
+
+  <div class="cg c2">
+    <div class="cd"><h3>🔧 技术窗口打开</h3><p>大模型商用成本断崖下降。AIGC将内容制作成本从200元/图降至20元/图。AI客服准确率达98%。</p></div>
+    <div class="cd"><h3>🏛️ 政策史无前例</h3><p>国务院"人工智能+"行动：2027年渗透率>70%。600亿国家AI基金。企业补贴最高50万。</p></div>
+    <div class="cd"><h3>💡 商家认知转变</h3><p>从"免费够用"到"愿为效果付费"。天猫2025双11商家调用AI工具超<b style="color:var(--y)">15亿次</b>。</p></div>
+    <div class="cd"><h3>⏰ 竞争窗口期</h3><p>平台AI工具还在通用化阶段。市场未出现绝对领导者。第三方有差异化空间。</p></div>
+  </div>
+</div>
+
+<!-- ===== P6 PRODUCT ARCHITECTURE ===== -->
+<div class="slide" data-title="产品架构">
+  <div class="sn">PAGE 06</div>
+  <h2>产品架构</h2><div class="sep"></div>
+
+  <!-- SVG: Architecture diagram -->
+  <svg viewBox="0 0 800 340" style="width:100%;max-width:800px;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="ly4" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f5c518" stop-opacity=".12"/><stop offset="100%" stop-color="#f5c518" stop-opacity=".04"/></linearGradient>
+      <linearGradient id="ly3" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f5c518" stop-opacity=".2"/><stop offset="100%" stop-color="#f5c518" stop-opacity=".08"/></linearGradient>
+    </defs>
+    <!-- Layer 4: Feedback -->
+    <rect x="0" y="0" width="800" height="68" rx="8" fill="url(#ly4)" stroke="rgba(245,197,24,.2)" stroke-width="1"/>
+    <text x="20" y="28" font-size="12" fill="#f5c518" font-weight="700">④ 效果反馈层</text>
+    <text x="20" y="48" font-size="11" fill="#8a90a4">执行结果 → 沉淀经营知识 → 持续优化策略/话术/素材/预算/SOP</text>
+    <text x="760" y="40" font-size="20" fill="#f5c518" opacity=".3" text-anchor="end">↻</text>
+    <!-- Layer 3: Agent -->
+    <rect x="0" y="78" width="800" height="100" rx="8" fill="url(#ly3)" stroke="rgba(245,197,24,.35)" stroke-width="1.5"/>
+    <text x="20" y="104" font-size="12" fill="#f5c518" font-weight="700">③ Agent 执行层（DEEPBUY）</text>
+    <!-- agent boxes -->
+    <g transform="translate(20,116)">
+      <rect width="145" height="48" rx="6" fill="rgba(245,197,24,.1)" stroke="rgba(245,197,24,.3)" stroke-width="1"/><text x="72" y="20" font-size="11" fill="#f5c518" text-anchor="middle" font-weight="500">📝 内容Agent</text><text x="72" y="38" font-size="9" fill="#4a5068" text-anchor="middle">标题/描述/图/视频</text>
+    </g>
+    <g transform="translate(180,116)">
+      <rect width="145" height="48" rx="6" fill="rgba(245,197,24,.1)" stroke="rgba(245,197,24,.3)" stroke-width="1"/><text x="72" y="20" font-size="11" fill="#f5c518" text-anchor="middle" font-weight="500">📊 投放Agent</text><text x="72" y="38" font-size="9" fill="#4a5068" text-anchor="middle">出价/定向/素材/预算</text>
+    </g>
+    <g transform="translate(340,116)">
+      <rect width="145" height="48" rx="6" fill="rgba(245,197,24,.1)" stroke="rgba(245,197,24,.3)" stroke-width="1"/><text x="72" y="20" font-size="11" fill="#f5c518" text-anchor="middle" font-weight="500">🎧 客服Agent</text><text x="72" y="38" font-size="9" fill="#4a5068" text-anchor="middle">问答/多轮/情绪/工单</text>
+    </g>
+    <g transform="translate(500,116)">
+      <rect width="145" height="48" rx="6" fill="rgba(245,197,24,.1)" stroke="rgba(245,197,24,.3)" stroke-width="1"/><text x="72" y="20" font-size="11" fill="#f5c518" text-anchor="middle" font-weight="500">📈 分析Agent</text><text x="72" y="38" font-size="9" fill="#4a5068" text-anchor="middle">日报/趋势/决策建议</text>
+    </g>
+    <g transform="translate(660,116)">
+      <rect width="120" height="48" rx="6" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.15)" stroke-width="1" stroke-dasharray="4 3"/><text x="60" y="20" font-size="11" fill="#4a5068" text-anchor="middle">🎯 选品Agent</text><text x="60" y="38" font-size="9" fill="#4a5068" text-anchor="middle">规划中</text>
+    </g>
+    <!-- Layer 2: Decision -->
+    <rect x="0" y="188" width="800" height="68" rx="8" fill="url(#ly4)" stroke="rgba(245,197,24,.2)" stroke-width="1"/>
+    <text x="20" y="216" font-size="12" fill="#f5c518" font-weight="700">② 决策与编排层</text>
+    <text x="20" y="238" font-size="11" fill="#8a90a4">规则引擎 + 行业知识库 + 任务编排 → 判断该做什么、先做什么、由谁做</text>
+    <!-- Layer 1: Data -->
+    <rect x="0" y="266" width="800" height="68" rx="8" fill="url(#ly4)" stroke="rgba(245,197,24,.2)" stroke-width="1"/>
+    <text x="20" y="294" font-size="12" fill="#f5c518" font-weight="700">① 数据接入层（智能鱼缸）</text>
+    <text x="20" y="316" font-size="11" fill="#8a90a4">🐠 店铺交易 · 广告 · 内容 · 客服 · 用户行为 → 实时经营看板 | 2.2亿用户 + 3.5万供应商</text>
+    <!-- arrows -->
+    <g stroke="#f5c518" stroke-width="1" opacity=".3" fill="none">
+      <line x1="400" y1="68" x2="400" y2="78"/><line x1="400" y1="178" x2="400" y2="188"/><line x1="400" y1="256" x2="400" y2="266"/>
+    </g>
+  </svg>
+
+  <div class="co" style="margin-top:14px;font-size:12px;">
+    <div class="ct">技术路线（坦诚版）</div>
+    <b>不自研基座大模型。</b>调用主流大模型API（DeepSeek/通义千问等）+ 电商领域fine-tuning + 行业RAG + 13年运营数据垂直微调。
+  </div>
+</div>
+
+<!-- ===== P7 HERO SCENARIO ===== -->
+<div class="slide" data-title="核心场景">
+  <div class="sn">PAGE 07</div>
+  <h2>一个新品从发现到复盘的<span class="a">完整闭环</span></h2><div class="sep"></div>
+
+  <!-- SVG: Flow diagram -->
+  <svg viewBox="0 0 920 200" style="width:100%;margin:10px 0;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <!-- Step boxes -->
+    <g transform="translate(0,30)">
+      <rect width="160" height="130" rx="10" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.25)" stroke-width="1"/>
+      <circle cx="80" cy="32" r="16" fill="rgba(245,197,24,.15)" stroke="#f5c518" stroke-width="1.5"/><text x="80" y="37" font-size="12" fill="#f5c518" text-anchor="middle" font-weight="700">01</text>
+      <text x="80" y="68" font-size="13" fill="#eaeaea" text-anchor="middle" font-weight="700">机会识别</text>
+      <text x="80" y="88" font-size="10" fill="#8a90a4" text-anchor="middle">选品Agent</text>
+      <text x="80" y="106" font-size="9" fill="#4a5068" text-anchor="middle">趋势·竞品·预测</text>
+    </g>
+    <g transform="translate(190,30)">
+      <rect width="160" height="130" rx="10" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.25)" stroke-width="1"/>
+      <circle cx="80" cy="32" r="16" fill="rgba(245,197,24,.15)" stroke="#f5c518" stroke-width="1.5"/><text x="80" y="37" font-size="12" fill="#f5c518" text-anchor="middle" font-weight="700">02</text>
+      <text x="80" y="68" font-size="13" fill="#eaeaea" text-anchor="middle" font-weight="700">内容生产</text>
+      <text x="80" y="88" font-size="10" fill="#8a90a4" text-anchor="middle">内容Agent</text>
+      <text x="80" y="106" font-size="9" fill="#4a5068" text-anchor="middle">标题·卖点·视频·主图</text>
+    </g>
+    <g transform="translate(380,30)">
+      <rect width="160" height="130" rx="10" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.25)" stroke-width="1"/>
+      <circle cx="80" cy="32" r="16" fill="rgba(245,197,24,.15)" stroke="#f5c518" stroke-width="1.5"/><text x="80" y="37" font-size="12" fill="#f5c518" text-anchor="middle" font-weight="700">03</text>
+      <text x="80" y="68" font-size="13" fill="#eaeaea" text-anchor="middle" font-weight="700">投放启动</text>
+      <text x="80" y="88" font-size="10" fill="#8a90a4" text-anchor="middle">投放Agent</text>
+      <text x="80" y="106" font-size="9" fill="#4a5068" text-anchor="middle">出价·定向·预算·测试</text>
+    </g>
+    <g transform="translate(570,30)">
+      <rect width="160" height="130" rx="10" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.25)" stroke-width="1"/>
+      <circle cx="80" cy="32" r="16" fill="rgba(245,197,24,.15)" stroke="#f5c518" stroke-width="1.5"/><text x="80" y="37" font-size="12" fill="#f5c518" text-anchor="middle" font-weight="700">04</text>
+      <text x="80" y="68" font-size="13" fill="#eaeaea" text-anchor="middle" font-weight="700">客服承接</text>
+      <text x="80" y="88" font-size="10" fill="#8a90a4" text-anchor="middle">客服Agent</text>
+      <text x="80" y="106" font-size="9" fill="#4a5068" text-anchor="middle">问答·导购·售后·工单</text>
+    </g>
+    <g transform="translate(760,30)">
+      <rect width="160" height="130" rx="10" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.25)" stroke-width="1"/>
+      <circle cx="80" cy="32" r="16" fill="rgba(245,197,24,.15)" stroke="#f5c518" stroke-width="1.5"/><text x="80" y="37" font-size="12" fill="#f5c518" text-anchor="middle" font-weight="700">05</text>
+      <text x="80" y="68" font-size="13" fill="#eaeaea" text-anchor="middle" font-weight="700">经营复盘</text>
+      <text x="80" y="88" font-size="10" fill="#8a90a4" text-anchor="middle">分析Agent</text>
+      <text x="80" y="106" font-size="9" fill="#4a5068" text-anchor="middle">日报·识别·优化建议</text>
+    </g>
+    <!-- arrows -->
+    <g fill="#f5c518" opacity=".6">
+      <polygon points="168,95 182,90 182,100"/>
+      <polygon points="358,95 372,90 372,100"/>
+      <polygon points="548,95 562,90 562,100"/>
+      <polygon points="738,95 752,90 752,100"/>
+    </g>
+    <!-- loop arrow -->
+    <path d="M880,170 Q920,95 880,30" fill="none" stroke="#f5c518" stroke-width="1" opacity=".3" stroke-dasharray="4 3"/>
+    <polygon points="878,30 884,22 872,22" fill="#f5c518" opacity=".3"/>
+    <text x="910" y="100" font-size="9" fill="#4a5068" transform="rotate(90,910,100)">反馈循环</text>
+  </svg>
+
+  <div class="co"><b>不再是5个岗位松散串联，而是一套系统协同执行。</b></div>
+</div>
+
+<!-- ===== P8 EXISTING PRODUCTS ===== -->
+<div class="slide" data-title="已有产品矩阵">
+  <div class="sn">PAGE 08</div>
+  <h2>已有产品矩阵 <span style="color:var(--t3);font-size:14px;font-weight:400;">— 不是从零开始</span></h2><div class="sep"></div>
+
+  <!-- SVG: Product ecosystem map -->
+  <svg viewBox="0 0 860 280" style="width:100%;margin-bottom:14px;" xmlns="http://www.w3.org/2000/svg">
+    <!-- center hub -->
+    <circle cx="430" cy="140" r="52" fill="rgba(245,197,24,.1)" stroke="#f5c518" stroke-width="2"/>
+    <text x="430" y="133" font-size="12" fill="#f5c518" text-anchor="middle" font-weight="900">京拍档</text>
+    <text x="430" y="150" font-size="10" fill="#f5c518" text-anchor="middle">AI产品矩阵</text>
+
+    <!-- Product 1: 智能鱼缸 -->
+    <line x1="380" y1="120" x2="160" y2="55" stroke="#f5c518" stroke-width="1" opacity=".3"/>
+    <rect x="40" y="20" width="200" height="70" rx="10" fill="rgba(245,197,24,.08)" stroke="#f5c518" stroke-width="1.5"/>
+    <circle cx="70" cy="55" r="16" fill="rgba(245,197,24,.15)"/><text x="70" y="59" font-size="14" text-anchor="middle">🐠</text>
+    <text x="95" y="45" font-size="13" fill="#f5c518" font-weight="700">智能鱼缸</text>
+    <text x="95" y="62" font-size="10" fill="#8a90a4">实时数据监控看板</text>
+    <text x="95" y="76" font-size="9" fill="#51cf66">● 已上线运营</text>
+
+    <!-- Product 2: DEEPBUY -->
+    <line x1="380" y1="150" x2="160" y2="180" stroke="#f5c518" stroke-width="1" opacity=".3"/>
+    <rect x="40" y="140" width="200" height="70" rx="10" fill="rgba(245,197,24,.08)" stroke="#f5c518" stroke-width="1.5"/>
+    <circle cx="70" cy="175" r="16" fill="rgba(245,197,24,.15)"/><text x="70" y="179" font-size="14" text-anchor="middle">🤖</text>
+    <text x="95" y="165" font-size="13" fill="#f5c518" font-weight="700">DEEPBUY 智能体</text>
+    <text x="95" y="182" font-size="10" fill="#8a90a4">AI电商运营Agent平台</text>
+    <text x="95" y="196" font-size="9" fill="#74c0fc">● 实战验证中</text>
+
+    <!-- Product 3: AI数字人 -->
+    <line x1="480" y1="120" x2="700" y2="55" stroke="#f5c518" stroke-width="1" opacity=".3"/>
+    <rect x="620" y="20" width="200" height="70" rx="10" fill="rgba(245,197,24,.08)" stroke="#f5c518" stroke-width="1.5"/>
+    <circle cx="650" cy="55" r="16" fill="rgba(245,197,24,.15)"/><text x="650" y="59" font-size="14" text-anchor="middle">👤</text>
+    <text x="675" y="45" font-size="13" fill="#f5c518" font-weight="700">AI数字人直播</text>
+    <text x="675" y="62" font-size="10" fill="#8a90a4">虚拟主播 · 7×24直播</text>
+    <text x="675" y="76" font-size="9" fill="#51cf66">● 已上线 · 已创收</text>
+
+    <!-- Product 4: AI内容生成 -->
+    <line x1="480" y1="150" x2="700" y2="180" stroke="#f5c518" stroke-width="1" opacity=".3"/>
+    <rect x="620" y="140" width="200" height="70" rx="10" fill="rgba(245,197,24,.08)" stroke="#f5c518" stroke-width="1.5"/>
+    <circle cx="650" cy="175" r="16" fill="rgba(245,197,24,.15)"/><text x="650" y="179" font-size="14" text-anchor="middle">✍️</text>
+    <text x="675" y="165" font-size="13" fill="#f5c518" font-weight="700">AI内容生成</text>
+    <text x="675" y="182" font-size="10" fill="#8a90a4">标题/描述/图片/视频</text>
+    <text x="675" y="196" font-size="9" fill="#74c0fc">● 内测中</text>
+
+    <!-- Bottom: additional capabilities -->
+    <line x1="430" y1="192" x2="430" y2="230" stroke="#f5c518" stroke-width="1" opacity=".3"/>
+    <rect x="240" y="230" width="380" height="40" rx="8" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+    <text x="430" y="256" font-size="10" fill="#4a5068" text-anchor="middle">电商培训体系 · 县域电商服务 · 代运营SOP · 广告投放优化 · 跨境电商</text>
+  </svg>
+
+  <div class="tw">
+    <div class="cd" style="border-color:var(--green);">
+      <span class="tag ok">已上线 · 已创收</span>
+      <h3 style="margin-top:10px;">🐠 智能鱼缸 — 经营数据实时看板</h3>
+      <p style="margin-top:6px;">实时监控店铺核心经营指标：流量、转化率、销售额、广告ROI<br>多维数据可视化，异常指标自动预警<br>支持多店铺、多平台数据汇聚<br><b>像鱼缸一样透明——一眼看清生意全局</b></p>
+    </div>
+    <div class="cd" style="border-color:var(--green);">
+      <span class="tag ok">已上线 · 已创收</span>
+      <h3 style="margin-top:10px;">👤 AI数字人直播</h3>
+      <p style="margin-top:6px;"><b>100+</b> 虚拟形象，成本节约 <b style="color:var(--y)">95%</b><br>"峰哥说国补"5分钟 <b style="color:var(--y)">13,189单</b><br>湘潭、重庆直播基地已部署<br>2022-2023"创客北京"京东专项赛荣誉</p>
+    </div>
+  </div>
+  <div class="tw" style="margin-top:10px;">
+    <div class="cd" style="border-color:var(--blue);">
+      <span class="tag inf">实战验证中</span>
+      <h3 style="margin-top:10px;">🤖 DEEPBUY 电商运营智能体</h3>
+      <p style="margin-top:6px;">2025双11驱动客户服务量 <b style="color:var(--y)">+300%</b><br><b>95%</b> 商家效率提升 · 覆盖选品/广告/活动全链路</p>
+    </div>
+    <div class="cd" style="border-color:var(--blue);">
+      <span class="tag inf">内测中</span>
+      <h3 style="margin-top:10px;">✍️ AI内容生成 + 📊 AI投放优化</h3>
+      <p style="margin-top:6px;">商品标题/描述/详情一键生成<br>智能出价+精准定向+素材自动优化<br>专针对京东京准通体系优化</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P9 CASES ===== -->
+<div class="slide" data-title="客户案例">
+  <div class="sn">PAGE 09</div>
+  <h2>客户案例 <span class="tag td" style="font-size:11px;vertical-align:middle;">待补充真实数据</span></h2><div class="sep"></div>
+  <div class="cg c3">
+    <div class="cd"><h3>案例一：AI内容生成</h3><p><b>背景：</b>月均500+商品图<br><b>方案：</b>AI内容引擎<br><b>效果：</b>制作周期5天→半天<br>人力成本↓ <span class="tag td">___%</span></p></div>
+    <div class="cd"><h3>案例二：AI智能投放</h3><p><b>背景：</b>月广告50万，ROI≈1.5<br><b>方案：</b>AI投放系统<br><b>效果：</b>ROI <span class="tag td">___</span> → <span class="tag td">___</span></p></div>
+    <div class="cd"><h3>案例三：AI数字人直播</h3><p><b>背景：</b>7×24直播需求<br><b>方案：</b>AI数字人<br><b>效果：</b>成本↓95%，GMV↑ <span class="tag td">___%</span></p></div>
+  </div>
+  <div class="co w" style="margin-top:16px;"><div class="ct">⚠️ 关键提醒</div>这是整份BP最重要的证据页。建议选取鲁花/王老吉/中粮等客户的脱敏数据。<b>没有真数据就不要强行写大词。</b></div>
+</div>
+
+<!-- ===== P10 COMPETITION ===== -->
+<div class="slide" data-title="竞争格局">
+  <div class="sn">PAGE 10</div>
+  <h2>竞争格局</h2><div class="sep"></div>
+
+  <!-- SVG: Positioning chart -->
+  <svg viewBox="0 0 520 360" style="width:100%;max-width:520px;float:right;margin-left:24px;" xmlns="http://www.w3.org/2000/svg">
+    <!-- axes -->
+    <line x1="60" y1="320" x2="500" y2="320" stroke="#4a5068" stroke-width="1"/>
+    <line x1="60" y1="320" x2="60" y2="20" stroke="#4a5068" stroke-width="1"/>
+    <text x="280" y="352" font-size="10" fill="#4a5068" text-anchor="middle">AI能力 →</text>
+    <text x="16" y="170" font-size="10" fill="#4a5068" text-anchor="middle" transform="rotate(-90,16,170)">运营深度 →</text>
+    <!-- quadrant labels -->
+    <text x="140" y="50" font-size="9" fill="#4a5068" opacity=".5">深运营 + 弱AI</text>
+    <text x="400" y="50" font-size="9" fill="#4a5068" opacity=".5">深运营 + 强AI</text>
+    <text x="140" y="308" font-size="9" fill="#4a5068" opacity=".5">浅运营 + 弱AI</text>
+    <text x="400" y="308" font-size="9" fill="#4a5068" opacity=".5">浅运营 + 强AI</text>
+    <!-- dashed mid lines -->
+    <line x1="60" y1="170" x2="500" y2="170" stroke="#4a5068" stroke-width="0.5" stroke-dasharray="4 4" opacity=".3"/>
+    <line x1="280" y1="20" x2="280" y2="320" stroke="#4a5068" stroke-width="0.5" stroke-dasharray="4 4" opacity=".3"/>
+    <!-- Competitors -->
+    <circle cx="180" cy="80" r="22" fill="rgba(138,144,164,.15)" stroke="#8a90a4" stroke-width="1"/><text x="180" y="84" font-size="9" fill="#8a90a4" text-anchor="middle">宝尊</text>
+    <circle cx="340" cy="230" r="18" fill="rgba(116,192,252,.15)" stroke="#74c0fc" stroke-width="1"/><text x="340" y="234" font-size="9" fill="#74c0fc" text-anchor="middle">有赞</text>
+    <circle cx="380" cy="250" r="16" fill="rgba(116,192,252,.1)" stroke="#74c0fc" stroke-width="1" opacity=".7"/><text x="380" y="254" font-size="9" fill="#74c0fc" text-anchor="middle">微盟</text>
+    <circle cx="430" cy="280" r="14" fill="rgba(200,160,255,.1)" stroke="#c8a0ff" stroke-width="1"/><text x="430" y="284" font-size="8" fill="#c8a0ff" text-anchor="middle">通用AI</text>
+    <circle cx="320" cy="120" r="16" fill="rgba(138,144,164,.1)" stroke="#8a90a4" stroke-width="1" opacity=".7"/><text x="320" y="124" font-size="8" fill="#8a90a4" text-anchor="middle">平台AI</text>
+    <!-- Jingpaidang - highlighted -->
+    <circle cx="400" cy="70" r="28" fill="rgba(245,197,24,.15)" stroke="#f5c518" stroke-width="2" filter="url(#glow)"/>
+    <text x="400" y="66" font-size="11" fill="#f5c518" text-anchor="middle" font-weight="700">京拍档</text>
+    <text x="400" y="82" font-size="8" fill="#f5c518" text-anchor="middle">目标位置</text>
+  </svg>
+
+  <div style="max-width:440px;">
+    <h3 style="font-size:13px;margin-bottom:6px;">上市竞品</h3>
+    <table>
+      <tr><th>竞品</th><th>规模</th><th>短板</th></tr>
+      <tr><td>宝尊</td><td>94亿营收</td><td>重人力，连亏13季度</td></tr>
+      <tr><td>有赞</td><td>14.4亿</td><td>SaaS但浅运营</td></tr>
+      <tr><td>微盟</td><td>收入下降</td><td>京东深度不够</td></tr>
+      <tr><td>光云科技</td><td>120万客户</td><td>单点工具为主</td></tr>
+    </table>
+    <h3 style="font-size:13px;margin-top:14px;margin-bottom:6px;">平台威胁</h3>
+    <table>
+      <tr><th>平台</th><th>动作</th></tr>
+      <tr><td>阿里遨虾</td><td>免费AI Agent，但通用不深入</td></tr>
+      <tr><td>京东</td><td>4000+直播间AI，但不跨平台</td></tr>
+      <tr><td>天猫</td><td>双11调用15亿次，但无定制化</td></tr>
+    </table>
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<!-- ===== P11 DATA MOAT ===== -->
+<div class="slide" data-title="数据壁垒">
+  <div class="sn">PAGE 11</div>
+  <h2>数据壁垒</h2><div class="sep"></div>
+
+  <div class="tw">
+    <div>
+      <!-- SVG: Flywheel -->
+      <svg viewBox="0 0 400 400" style="width:100%;max-width:380px;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f5c518" stop-opacity=".2"/><stop offset="100%" stop-color="#f5c518" stop-opacity=".05"/></linearGradient>
+        </defs>
+        <!-- outer ring -->
+        <circle cx="200" cy="200" r="170" fill="none" stroke="rgba(245,197,24,.12)" stroke-width="2"/>
+        <!-- rotating arrows (static representation) -->
+        <path d="M200,35 A165,165 0 0,1 365,200" fill="none" stroke="#f5c518" stroke-width="2.5" opacity=".5"/>
+        <polygon points="360,195 370,205 355,205" fill="#f5c518" opacity=".5"/>
+        <path d="M365,200 A165,165 0 0,1 200,365" fill="none" stroke="#f5c518" stroke-width="2.5" opacity=".4"/>
+        <polygon points="205,360 195,370 195,355" fill="#f5c518" opacity=".4"/>
+        <path d="M200,365 A165,165 0 0,1 35,200" fill="none" stroke="#f5c518" stroke-width="2.5" opacity=".3"/>
+        <polygon points="40,205 30,195 45,195" fill="#f5c518" opacity=".3"/>
+        <path d="M35,200 A165,165 0 0,1 200,35" fill="none" stroke="#f5c518" stroke-width="2.5" opacity=".4"/>
+        <polygon points="195,40 205,30 205,45" fill="#f5c518" opacity=".4"/>
+        <!-- nodes -->
+        <g transform="translate(200,30)">
+          <circle r="32" fill="rgba(245,197,24,.12)" stroke="#f5c518" stroke-width="1.5"/><text y="4" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">更多品牌</text><text y="18" font-size="8" fill="#f5c518" text-anchor="middle">使用系统</text>
+        </g>
+        <g transform="translate(370,200)">
+          <circle r="32" fill="rgba(245,197,24,.12)" stroke="#f5c518" stroke-width="1.5"/><text y="4" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">更多数据</text><text y="18" font-size="8" fill="#f5c518" text-anchor="middle">回流沉淀</text>
+        </g>
+        <g transform="translate(200,370)">
+          <circle r="32" fill="rgba(245,197,24,.12)" stroke="#f5c518" stroke-width="1.5"/><text y="4" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">模型更精准</text><text y="18" font-size="8" fill="#f5c518" text-anchor="middle">策略更优</text>
+        </g>
+        <g transform="translate(30,200)">
+          <circle r="32" fill="rgba(245,197,24,.12)" stroke="#f5c518" stroke-width="1.5"/><text y="4" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">效果更好</text><text y="18" font-size="8" fill="#f5c518" text-anchor="middle">口碑传播</text>
+        </g>
+        <!-- center -->
+        <circle cx="200" cy="200" r="50" fill="url(#fw)" stroke="#f5c518" stroke-width="1.5"/>
+        <text x="200" y="195" font-size="13" fill="#f5c518" text-anchor="middle" font-weight="900">数据</text>
+        <text x="200" y="213" font-size="13" fill="#f5c518" text-anchor="middle" font-weight="900">飞轮</text>
+      </svg>
+    </div>
+    <div>
+      <div class="cd" style="margin-bottom:12px;">
+        <h3>🔐 运营决策数据（独特）</h3>
+        <p>我们拥有的不是交易数据（那是平台的），而是<b>运营决策数据</b>：什么品类在什么季节怎么推、广告怎么投、话术怎么优化。13年×300+品牌实战积累。</p>
+      </div>
+      <div class="cd" style="margin-bottom:12px;">
+        <h3>🧠 垂直模型训练原材料</h3>
+        <p>2.2亿用户画像 + 3.5万供应商，覆盖3C/食品/个护/家电。用于垂直微调，通用大模型无法替代。</p>
+      </div>
+      <div class="cd">
+        <h3>🔄 网络效应</h3>
+        <p>飞轮一旦转起来，后来者难追赶。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P12 BUSINESS MODEL ===== -->
+<div class="slide" data-title="商业模式">
+  <div class="sn">PAGE 12</div>
+  <h2>商业模式</h2><div class="sep"></div>
+  <div class="cg c3">
+    <div class="cd" style="text-align:center;">
+      <h3>基础层 · SaaS订阅</h3>
+      <div style="font-size:36px;font-weight:900;color:var(--y);margin:10px 0;">¥999-4,999<span style="font-size:14px;font-weight:400;">/月</span></div>
+      <p>标准化产品，按模块收费<br>面向中小商家<br>稳定经常性收入</p>
+    </div>
+    <div class="cd" style="text-align:center;">
+      <h3>增值层 · 效果付费</h3>
+      <div style="font-size:36px;font-weight:900;color:var(--y);margin:10px 0;">1-3%<span style="font-size:14px;font-weight:400;"> GMV提成</span></div>
+      <p>基础费+提成<br>与商家利益绑定<br>风险共担收益共享</p>
+    </div>
+    <div class="cd" style="text-align:center;">
+      <h3>服务层 · 代运营+AI</h3>
+      <div style="font-size:36px;font-weight:900;color:var(--y);margin:10px 0;">按项目<span style="font-size:14px;font-weight:400;">定制</span></div>
+      <p>深度服务大品牌<br>代运营现金流<br>养AI产品开发</p>
+    </div>
+  </div>
+  <div class="co" style="margin-top:16px;">
+    <b>首年目标：</b>100家付费客户 × ¥2,000/月 = <b style="color:var(--y)">240万ARR</b> · LTV > 3× CAC · 毛利率从30-50%（代运营）→ 70-80%（SaaS）
+  </div>
+</div>
+
+<!-- ===== P13 MILESTONES ===== -->
+<div class="slide" data-title="里程碑">
+  <div class="sn">PAGE 13</div>
+  <h2>增长路径与里程碑</h2><div class="sep"></div>
+
+  <!-- SVG: Timeline -->
+  <svg viewBox="0 0 900 220" style="width:100%;margin:10px 0;" xmlns="http://www.w3.org/2000/svg">
+    <!-- timeline line -->
+    <line x1="40" y1="50" x2="860" y2="50" stroke="rgba(245,197,24,.3)" stroke-width="2"/>
+    <!-- nodes -->
+    <g transform="translate(60,50)">
+      <circle r="8" fill="#f5c518"/><circle r="12" fill="none" stroke="#f5c518" stroke-width="1" opacity=".4"/>
+      <text y="-22" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">2026 Q2</text>
+      <rect x="-60" y="20" width="120" height="60" rx="6" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.15)" stroke-width="1"/>
+      <text x="0" y="42" font-size="10" fill="#eaeaea" text-anchor="middle" font-weight="500">SaaS公测</text>
+      <text x="0" y="58" font-size="9" fill="#4a5068" text-anchor="middle">50家种子用户</text>
+    </g>
+    <g transform="translate(220,50)">
+      <circle r="6" fill="#f5c518" opacity=".8"/>
+      <text y="-22" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">2026 Q3</text>
+      <rect x="-60" y="20" width="120" height="60" rx="6" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.15)" stroke-width="1"/>
+      <text x="0" y="42" font-size="10" fill="#eaeaea" text-anchor="middle" font-weight="500">首批付费</text>
+      <text x="0" y="58" font-size="9" fill="#4a5068" text-anchor="middle">MRR > 30万</text>
+    </g>
+    <g transform="translate(380,50)">
+      <circle r="6" fill="#f5c518" opacity=".7"/>
+      <text y="-22" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="700">2026 Q4</text>
+      <rect x="-60" y="20" width="120" height="60" rx="6" fill="rgba(245,197,24,.06)" stroke="rgba(245,197,24,.15)" stroke-width="1"/>
+      <text x="0" y="42" font-size="10" fill="#eaeaea" text-anchor="middle" font-weight="500">正式发布</text>
+      <text x="0" y="58" font-size="9" fill="#4a5068" text-anchor="middle">100客户 · 双11验证</text>
+    </g>
+    <g transform="translate(540,50)">
+      <circle r="6" fill="#f5c518" opacity=".6"/>
+      <text y="-22" font-size="10" fill="#8a90a4" text-anchor="middle">2027 Q2</text>
+      <rect x="-60" y="20" width="120" height="60" rx="6" fill="rgba(245,197,24,.04)" stroke="rgba(245,197,24,.1)" stroke-width="1"/>
+      <text x="0" y="42" font-size="10" fill="#8a90a4" text-anchor="middle">下轮融资</text>
+      <text x="0" y="58" font-size="9" fill="#4a5068" text-anchor="middle">MRR>100万</text>
+    </g>
+    <g transform="translate(700,50)">
+      <circle r="6" fill="#f5c518" opacity=".5"/>
+      <text y="-22" font-size="10" fill="#8a90a4" text-anchor="middle">2027 Q4</text>
+      <rect x="-60" y="20" width="120" height="60" rx="6" fill="rgba(245,197,24,.04)" stroke="rgba(245,197,24,.1)" stroke-width="1"/>
+      <text x="0" y="42" font-size="10" fill="#8a90a4" text-anchor="middle">全功能上线</text>
+      <text x="0" y="58" font-size="9" fill="#4a5068" text-anchor="middle">300+客户</text>
+    </g>
+    <g transform="translate(840,50)">
+      <circle r="6" fill="#f5c518" opacity=".4"/>
+      <text y="-22" font-size="10" fill="#8a90a4" text-anchor="middle">2028</text>
+      <rect x="-50" y="20" width="100" height="60" rx="6" fill="rgba(245,197,24,.04)" stroke="rgba(245,197,24,.1)" stroke-width="1"/>
+      <text x="0" y="42" font-size="10" fill="#8a90a4" text-anchor="middle">开放平台</text>
+      <text x="0" y="58" font-size="9" fill="#4a5068" text-anchor="middle">1000+ · ARR>2000万</text>
+    </g>
+    <!-- growth bar -->
+    <rect x="40" y="170" width="820" height="28" rx="6" fill="rgba(245,197,24,.04)" stroke="rgba(245,197,24,.1)" stroke-width="1"/>
+    <rect x="40" y="170" width="260" height="28" rx="6" fill="rgba(245,197,24,.12)"/>
+    <text x="170" y="188" font-size="10" fill="#f5c518" text-anchor="middle" font-weight="500">90天标杆 → 180天可复制 → 12个月飞轮</text>
+    <text x="560" y="188" font-size="10" fill="#4a5068" text-anchor="middle">多平台 → 行业模板 → 生态协同</text>
+  </svg>
+</div>
+
+<!-- ===== P14 FUNDING ===== -->
+<div class="slide" data-title="融资计划">
+  <div class="sn">PAGE 14</div>
+  <h2>融资计划</h2><div class="sep"></div>
+  <div class="tw">
+    <div>
+      <h3>融资历史</h3>
+      <table>
+        <tr><th>轮次</th><th>时间</th><th>金额</th><th>投资方</th></tr>
+        <tr><td>天使轮</td><td>2015.11</td><td>1,000万</td><td>星火金融</td></tr>
+        <tr><td>Pre-A</td><td>2016.07</td><td>未披露</td><td>金葵花资本</td></tr>
+      </table>
+      <h3 style="margin-top:18px;">本轮</h3>
+      <div class="sr" style="margin:10px 0;">
+        <div class="st"><div class="n" style="font-size:32px;">2-3千万</div><div class="l">融资金额</div></div>
+      </div>
+      <div class="co w" style="font-size:11px;">
+        <div class="ct">⚠️ 轮次需修正</div>原版写"寻天使轮"，实际天使+Pre-A已完成。本轮应为<b>A轮</b>。
+      </div>
+    </div>
+    <div>
+      <h3>资金用途</h3>
+      <!-- SVG: Fund allocation -->
+      <svg viewBox="0 0 400 240" style="width:100%;" xmlns="http://www.w3.org/2000/svg">
+        <!-- donut chart -->
+        <g transform="translate(100,120)">
+          <!-- 40% R&D -->
+          <circle r="80" fill="none" stroke="rgba(245,197,24,.2)" stroke-width="24"/>
+          <circle r="80" fill="none" stroke="#f5c518" stroke-width="24" stroke-dasharray="201 302" stroke-dashoffset="0" transform="rotate(-90)"/>
+          <!-- 30% Marketing -->
+          <circle r="80" fill="none" stroke="#74c0fc" stroke-width="24" stroke-dasharray="151 352" stroke-dashoffset="-201" transform="rotate(-90)"/>
+          <!-- 20% Team -->
+          <circle r="80" fill="none" stroke="#51cf66" stroke-width="24" stroke-dasharray="100 402" stroke-dashoffset="-352" transform="rotate(-90)"/>
+          <!-- 10% Ops -->
+          <circle r="80" fill="none" stroke="#c8a0ff" stroke-width="24" stroke-dasharray="50 452" stroke-dashoffset="-452" transform="rotate(-90)"/>
+          <text y="0" font-size="20" fill="#f5c518" text-anchor="middle" font-weight="900">40%</text>
+          <text y="18" font-size="10" fill="#8a90a4" text-anchor="middle">产品研发</text>
+        </g>
+        <!-- legend -->
+        <g transform="translate(220,40)">
+          <rect width="10" height="10" rx="2" fill="#f5c518"/><text x="16" y="10" font-size="11" fill="#eaeaea">产品研发 40%</text>
+          <text x="16" y="24" font-size="9" fill="#4a5068">AI工程+DEEPBUY SaaS化</text>
+        </g>
+        <g transform="translate(220,80)">
+          <rect width="10" height="10" rx="2" fill="#74c0fc"/><text x="16" y="10" font-size="11" fill="#eaeaea">市场推广 30%</text>
+          <text x="16" y="24" font-size="9" fill="#4a5068">老客转化+新客+渠道</text>
+        </g>
+        <g transform="translate(220,120)">
+          <rect width="10" height="10" rx="2" fill="#51cf66"/><text x="16" y="10" font-size="11" fill="#eaeaea">团队建设 20%</text>
+          <text x="16" y="24" font-size="9" fill="#4a5068">AI人才招募</text>
+        </g>
+        <g transform="translate(220,160)">
+          <rect width="10" height="10" rx="2" fill="#c8a0ff"/><text x="16" y="10" font-size="11" fill="#eaeaea">运营储备 10%</text>
+          <text x="16" y="24" font-size="9" fill="#4a5068">日常+备用</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P15 CHECKLIST ===== -->
+<div class="slide" data-title="待确认清单">
+  <div class="sn">PAGE 15 · 内部讨论用</div>
+  <h2>正式版前<span class="a">必须确认</span></h2><div class="sep"></div>
+  <div class="tw">
+    <div>
+      <h3>🔴 管理层口径</h3>
+      <table><tr><td>王文峰正式头衔</td><td><span class="tag td">待确认</span></td></tr><tr><td>李慧娟正式头衔</td><td><span class="tag td">待确认</span></td></tr><tr><td>清华背景学历</td><td><span class="tag td">待确认</span></td></tr><tr><td>两人分工</td><td><span class="tag td">待确认</span></td></tr></table>
+      <h3 style="margin-top:14px;">🔴 产品进度</h3>
+      <table><tr><td>DEEPBUY独立付费客户？</td><td><span class="tag td">待确认</span></td></tr><tr><td>AI收入占比</td><td><span class="tag td">待确认</span></td></tr><tr><td>AI团队人数</td><td><span class="tag td">待确认</span></td></tr><tr><td>各模块完成度</td><td><span class="tag td">待确认</span></td></tr></table>
+    </div>
+    <div>
+      <h3>🟡 财务数据</h3>
+      <table><tr><td>年营收量级</td><td><span class="tag td">待确认</span></td></tr><tr><td>收入结构拆分</td><td><span class="tag td">待确认</span></td></tr><tr><td>毛利率</td><td><span class="tag td">待确认</span></td></tr><tr><td>是否已盈利</td><td><span class="tag td">待确认</span></td></tr></table>
+      <h3 style="margin-top:14px;">🟡 融资口径</h3>
+      <table><tr><td>本轮定义</td><td><span class="tag td">A轮？</span></td></tr><tr><td>金额</td><td>2000-3000万</td></tr><tr><td>出让比例</td><td><span class="tag td">待确认</span></td></tr><tr><td>投后估值</td><td><span class="tag td">待确认</span></td></tr></table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P16 CLOSING ===== -->
+<div class="slide cover" data-title="结尾" style="position:relative;overflow:hidden;">
+  <svg class="bg-svg" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+    <defs><radialGradient id="gc" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5c518" stop-opacity=".08"/><stop offset="100%" stop-color="#f5c518" stop-opacity="0"/></radialGradient></defs>
+    <rect fill="url(#gc)" width="1200" height="700"/>
+    <g stroke="#f5c518" stroke-width=".5" opacity=".06">
+      <circle cx="600" cy="350" r="100"/><circle cx="600" cy="350" r="200"/><circle cx="600" cy="350" r="300"/>
+    </g>
+  </svg>
+  <div class="sn" style="position:relative;z-index:2;">PAGE 16</div>
+  <h1 style="position:relative;z-index:2;">让AI参与经营<br><span class="a">创造结果</span></h1>
+  <div class="sep" style="margin:0 auto 20px;position:relative;z-index:2;"></div>
+  <p class="sub" style="position:relative;z-index:2;">
+    未来电商行业的分水岭，不是"谁更会用AI说话"<br>
+    而是"谁更能让AI参与经营、创造结果"<br><br>
+    京拍档要做的，就是站在这个分水岭上<br>
+    把13年真实运营经验升级为真正可执行的系统能力
+  </p>
+  <div class="ct-info" style="margin-top:40px;position:relative;z-index:2;">
+    王文峰 · wwf25@mails.tsinghua.edu.cn<br>
+    jingpaidang.com
+  </div>
+</div>
+
+</div>
+
+<div class="nav">
+  <span class="pg" id="pi">1 / 16</span>
+  <span class="tt" id="tt">封面</span>
+  <div class="btns">
+    <button onclick="go(-1)">← 上一页</button>
+    <button onclick="go(1)">下一页 →</button>
+  </div>
+</div>
+
+<script>
+// 密码验证
+const CORRECT_PWD = 'jingpaidang';
+const pwdOverlay = document.getElementById('pwd-overlay');
+const pwdInput = document.getElementById('pwd-input');
+const pwdError = document.getElementById('pwd-error');
+
+function checkPwd() {
+  if (pwdInput.value === CORRECT_PWD) {
+    pwdOverlay.style.opacity = '0';
+    setTimeout(() => {
+      pwdOverlay.style.display = 'none';
+    }, 300);
+  } else {
+    pwdError.style.opacity = '1';
+    pwdInput.style.borderColor = 'var(--red)';
+    setTimeout(() => {
+      pwdError.style.opacity = '0';
+      pwdInput.style.borderColor = 'var(--bd)';
+    }, 2000);
+  }
+}
+
+const S = document.querySelectorAll('.slide');
+let c = 0;
+
+function show(n) {
+  if (n < 0 || n >= S.length) return;
+  S.forEach(function(s, i) {
+    s.classList.remove('active');
+    if (i === n) {
+      s.classList.add('active');
+      s.scrollTop = 0;
+    }
+  });
+  c = n;
+  document.getElementById('pi').textContent = (c + 1) + ' / ' + S.length;
+  document.getElementById('tt').textContent = S[c].dataset.title || '';
+}
+
+function go(d) { show(c + d); }
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+});
+
+var tx = 0;
+document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+document.addEventListener('touchend', function(e) {
+  var d = tx - e.changedTouches[0].clientX;
+  if (Math.abs(d) > 50) { d > 0 ? go(1) : go(-1); }
+});
+</script>
+</body>
+</html>
