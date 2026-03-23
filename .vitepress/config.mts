@@ -10,7 +10,7 @@ export default defineConfig({
   themeConfig: {
     authorBio: {
       name: 'MiaoDX × AI Agents',
-      desc: '小米机器人工程师，OPC 实践者 — One Person, (plus multi) Claws。白天做机器人，业余时间让 AI Agent 帮我做更多的事。',
+      desc: '机器人研发工程师，OPC 实践者 — One Person, plus multi Claws。白天给机器人写 bug，其他时间和 AI Agents 一起做更多的事。',
       links: [
         { text: 'GitHub ↗', url: 'https://github.com/MiaoDX' },
         { text: '博客 ↗', url: 'https://miaodx.com' },
