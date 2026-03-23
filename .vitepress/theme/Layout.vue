@@ -1,5 +1,5 @@
 <script setup>
-import { useData, useRoute } from 'vitepress'
+import { useData, useRoute, withBase } from 'vitepress'
 import { computed } from 'vue'
 
 const { page, frontmatter, theme } = useData()
@@ -28,12 +28,12 @@ const authorBio = computed(() => frontmatter.value.authorBio || theme.value.auth
 
 // 导航（可在 themeConfig.nav 里配置，也可硬编码）
 const navItems = computed(() => theme.value.nav || [
-  { text: '首页', link: '/LIP/' },
-  { text: '月报', link: '/LIP/now/2026-03.html' },
-  { text: '案例', link: '/LIP/stories/2026-03-dual-agent-start.html' },
-  { text: '经验', link: '/LIP/lessons/error-to-skill-evolution.html' },
-  { text: '分享', link: '/LIP/share/' },
-  { text: '个人主页', link: '/' }
+  { text: '首页', link: '/' },
+  { text: '月报', link: '/now/2026-03' },
+  { text: '案例', link: '/stories/2026-03-dual-agent-start' },
+  { text: '经验', link: '/lessons/error-to-skill-evolution' },
+  { text: '分享', link: '/share/' },
+  { text: '个人主页', link: 'https://miaodx.com/' }
 ])
 
 // 侧边栏
@@ -64,8 +64,8 @@ const showAuthor = computed(() => frontmatter.value.showAuthor !== false)
         <a
           v-for="item in navItems"
           :key="item.link"
-          :href="item.link"
-          :class="{ active: route.path === item.link }"
+          :href="withBase(item.link)"
+          :class="{ active: route.path === withBase(item.link) }"
         >{{ item.text }}</a>
       </nav>
     </header>
@@ -78,9 +78,9 @@ const showAuthor = computed(() => frontmatter.value.showAuthor !== false)
           <a
             v-for="item in group.items"
             :key="item.link"
-            :href="item.link"
+            :href="withBase(item.link)"
             class="te-sb-link"
-            :class="{ active: route.path === item.link }"
+            :class="{ active: route.path === withBase(item.link) }"
           >{{ item.text }}</a>
         </div>
       </aside>
@@ -97,7 +97,7 @@ const showAuthor = computed(() => frontmatter.value.showAuthor !== false)
               <a
                 v-for="action in frontmatter.hero.actions"
                 :key="action.link"
-                :href="action.link"
+                :href="withBase(action.link)"
                 class="te-home-btn"
                 :class="action.theme"
               >{{ action.text }}</a>
@@ -106,7 +106,7 @@ const showAuthor = computed(() => frontmatter.value.showAuthor !== false)
 
           <div class="te-features" v-if="frontmatter.features">
             <div class="te-feature" v-for="f in frontmatter.features" :key="f.title">
-              <h3><a v-if="f.link" :href="f.link">{{ f.title }}</a><span v-else>{{ f.title }}</span></h3>
+              <h3><a v-if="f.link" :href="withBase(f.link)">{{ f.title }}</a><span v-else>{{ f.title }}</span></h3>
               <p>{{ f.details }}</p>
             </div>
           </div>

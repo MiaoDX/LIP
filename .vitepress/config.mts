@@ -19,12 +19,12 @@ export default defineConfig({
     },
 
     nav: [
-      { text: '首页', link: '/LIP/' },
-      { text: '月报', link: '/LIP/now/2026-03.html' },
-      { text: '案例', link: '/LIP/stories/2026-03-dual-agent-start.html' },
-      { text: '经验', link: '/LIP/lessons/error-to-skill-evolution.html' },
-      { text: '分享', link: '/LIP/share/' },
-      { text: '个人主页', link: '/' }
+      { text: '首页', link: '/' },
+      { text: '月报', link: '/now/2026-03' },
+      { text: '案例', link: '/stories/2026-03-dual-agent-start' },
+      { text: '经验', link: '/lessons/error-to-skill-evolution' },
+      { text: '分享', link: '/share/' },
+      { text: '个人主页', link: 'https://miaodx.com/' }
     ],
 
     sidebar: [
@@ -68,9 +68,9 @@ export default defineConfig({
         items: [
           { text: '分享入口', link: '/share/' },
           { text: 'Tailscale + Claude Code 配置实战', link: '/share/tailscale-claude-code-setup' },
-          { text: '低成本多 Agent 部署', link: '/share/lowcost-multiplatform-multiagent-deploy.html' },
-          { text: 'Claws Civilization', link: '/share/claws-civilization.html' },
-          { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3.html' },
+          { text: '低成本多 Agent 部署', link: '/share/lowcost-multiplatform-multiagent-deploy' },
+          { text: 'Claws Civilization', link: '/share/claws-civilization' },
+          { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3' },
         ],
       },
     ],
