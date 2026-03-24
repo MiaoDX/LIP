@@ -49,17 +49,22 @@ features:
 
 ## 两大内容主线
 
-### Part A — AI Coding
+### [Part A — AI Coding](/ai-coding)
 
 - 围绕 Agent 真实生产力持续追热点，快速产出可验证案例
 - 从每次事故和偏差中提炼规则，迭代出更可靠的协作模式
 - 推荐入口：[`双 Agent 启动日志`](/stories/2026-03-dual-agent-start) → [`微信抓取攻防战`](/stories/wechat-scraping-war)
 
-### Part B — OpenClaw
+### [Part B — OpenClaw](/openclaw)
 
 - 聚焦部署、配置、最佳实践、实战案例四条线
 - 目标是让个人或小团队低成本搭建可持续运行的 Agent 体系
 - 推荐入口：[`Part 1 部署`](/stories/openclaw-01-deployment) → [`Part 4 实战`](/stories/openclaw-04-practical-cases)
+
+### [规则 (Lessons)](/lessons/)
+
+- 从事故和实践中提炼的可复用规则
+- 把 incident 沉淀成 rules，再沉淀成 skills
 
 ## 如何阅读这两个站点
 
