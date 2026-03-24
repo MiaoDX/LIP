@@ -11,4 +11,4 @@
 
 ## 公众号文章
 
-- [开发者如何稳定使用 Claude Code / ChatGPT — Tailscale 全平台配置实战](https://mp.weixin.qq.com/s/6PcKetQ0s1XNS6pnsrUChQ) — 2026-03-22
+- [开发者如何稳定使用 Claude Code / ChatGPT — Tailscale 全平台配置实战](/share/tailscale-claude-code-setup.html) — 2026-03-22
