@@ -48,7 +48,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 
 ## 背景
 
-2026 目标：从打工人到一人公司（OPC）。我在探索如何用 AI Agent 扩展职业边界。
+2026 目标：新 OPC — One Person + multi Claws。我在探索如何用 AI Agent 扩展职业边界。
 
 **三个核心方向**：
 - **G1 社区声望** — AI coding / OpenClaw / Agent 社区

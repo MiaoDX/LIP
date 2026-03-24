@@ -35,7 +35,7 @@ features:
 
 ![缪东旭现场演讲照片](./images/miaodx-profile.jpg)
 
-**缪东旭（MiaoDX）**，目前在北京，长期在工程一线做 AI 与自动驾驶相关系统，正在把个人实践升级为「一人公司 + 多 Agent 协作」能力  
+**缪东旭（MiaoDX）**，目前在北京，长期在工程一线做 AI 与自动驾驶相关系统，正在把个人实践升级为新 OPC：「One Person + multi Claws」  
 我希望把做事过程透明化，让更多人看到：AI Agent 不只是 demo，而是能真实创造交付价值的生产系统
 
 ## 学习与工作经历
