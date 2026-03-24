@@ -10,6 +10,16 @@
 | [Gateway 宕机 6 小时](/stories/gateway-6hour-outage) | 2026-03 | 从事故到架构升级的真实复盘 |
 | [微信抓取攻防战](/stories/wechat-scraping-war) | 2026-03 | 自动化抓取踩坑与降级方案 |
 
+## 分享材料
+
+| 材料 | 日期 | 简介 |
+|------|------|------|
+| [OpenClaw 分享 v3](/share/openclaw-sharing-v3.html) | 2026-03-21 | 25页 Slide，完整的 OpenClaw 部署与协作分享 |
+| [低成本云端多平台多Agent部署](/share/lowcost-multiplatform-multiagent-deploy.html) | 2026-03-15 | 12页 Slide，龙虾蜕壳 Meetup 分享 |
+| [Claws Civilization](/share/claws-civilization.html) | 2026-03-14 | 龙虾文明游戏演示，OpenClaw 大会 |
+| [AI Coding for Research](/share/AICodingRaiseLab.html) | 2026-03-24 | Raise Lab 分享，25页 Slide |
+| [Tailscale + Claude Code 配置实战](/share/tailscale-claude-code-setup.html) | 2026-03-22 | 开发者如何稳定使用 Claude Code / ChatGPT |
+
 ## 相关
 
 - [分享材料](/share/) — 演讲 HTML，可直接使用

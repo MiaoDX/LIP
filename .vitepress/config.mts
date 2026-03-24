@@ -62,9 +62,6 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: 'AI Coding 总览', link: '/ai-coding/' },
-          { text: '双 Agent 启动日志', link: '/stories/2026-03-dual-agent-start' },
-          { text: '微信抓取攻防战', link: '/stories/wechat-scraping-war' },
-          { text: 'Gateway 宕机 6 小时', link: '/stories/gateway-6hour-outage' },
         ],
       },
       {
@@ -72,6 +69,9 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: 'OpenClaw 总览', link: '/openclaw/' },
+          { text: '双 Agent 启动日志', link: '/stories/2026-03-dual-agent-start' },
+          { text: '微信抓取攻防战', link: '/stories/wechat-scraping-war' },
+          { text: 'Gateway 宕机 6 小时', link: '/stories/gateway-6hour-outage' },
           { text: '部署指南（Docker + 双平台）', link: '/resources/deployment-guide-v2' },
         ],
       },
