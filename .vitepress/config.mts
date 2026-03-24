@@ -95,6 +95,7 @@ export default defineConfig({
           { text: '低成本多 Agent 部署', link: '/share/lowcost-multiplatform-multiagent-deploy' },
           { text: 'Claws Civilization', link: '/share/claws-civilization' },
           { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3' },
+          { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab' },
         ],
       },
     ],
