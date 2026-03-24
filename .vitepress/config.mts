@@ -7,6 +7,26 @@ export default defineConfig({
   base: '/LIP/',
   ignoreDeadLinks: true,
 
+  head: [
+    ['script', {}, `
+      // Force external nav links to open in new tab (bypass SPA router)
+      if (typeof window !== 'undefined') {
+        window.addEventListener('DOMContentLoaded', () => {
+          const fixLinks = () => {
+            document.querySelectorAll('.te-nav a[href^="https://"]').forEach(a => {
+              a.setAttribute('target', '_blank');
+              a.setAttribute('rel', 'noopener');
+            });
+          };
+          fixLinks();
+          // Re-apply after VitePress SPA navigation
+          const observer = new MutationObserver(fixLinks);
+          observer.observe(document.body, { childList: true, subtree: true });
+        });
+      }
+    `]
+  ],
+
   themeConfig: {
     authorBio: {
       name: 'MiaoDX × AI Agents',
