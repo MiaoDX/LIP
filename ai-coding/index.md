@@ -1,15 +1,11 @@
-# Part A · AI Coding
+# AI Coding
 
-围绕 Agent 真实生产力持续追热点，快速产出可验证案例。从每次事故和偏差中提炼规则，迭代出更可靠的协作模式。
+用 AI 辅助编程的真实实践记录。
 
-## 核心内容
+> ⚠️ 这部分还在积累中。目前的案例主要集中在 [OpenClaw](/openclaw/) 方向。
 
-| 文章 | 日期 | 简介 |
-|------|------|------|
-| [双 Agent 启动日志](/stories/2026-03-dual-agent-start) | 2026-03 | GSD + WLB 双 Agent 启动过程记录 |
-| [微信抓取攻防战](/stories/wechat-scraping-war) | 2026-03 | 微信数据抓取的踩坑与解决方案 |
+## 即将推出
 
-## 相关规则
-
-- [错误到 Skill 的演化](/lessons/error-to-skill-evolution)
-- [Cron 防幻觉机制](/lessons/cron-anti-hallucination)
+- Claude Code 实战踩坑
+- Cursor / Copilot 对比体验
+- AI 辅助重构案例
