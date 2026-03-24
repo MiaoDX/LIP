@@ -91,11 +91,11 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: '分享入口', link: '/share/' },
+          { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab' },
           { text: 'Tailscale + Claude Code 配置实战', link: '/share/tailscale-claude-code-setup' },
+          { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3' },
           { text: '低成本多 Agent 部署', link: '/share/lowcost-multiplatform-multiagent-deploy' },
           { text: 'Claws Civilization', link: '/share/claws-civilization' },
-          { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3' },
-          { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab' },
         ],
       },
     ],
