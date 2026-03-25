@@ -52,7 +52,7 @@
 
 ## Docker 镜像从哪来
 
-我们用的是 [clawdbot-railway-template](https://github.com/MiaoDX/clawdbot-railway-template)，Fork 自社区模板。
+我们用的是 [clawdbot-railway-template](https://github.com/ChaptersOfFloatingLife/clawdbot-railway-template)，Fork 自社区模板。
 
 **镜像做了什么**：
 
@@ -93,7 +93,7 @@ node:22-bookworm (runtime stage)
 
 ### 步骤 1：创建项目
 
-1. 打开 [clawdbot-railway-template](https://github.com/MiaoDX/clawdbot-railway-template)
+1. 打开 [clawdbot-railway-template](https://github.com/ChaptersOfFloatingLife/clawdbot-railway-template)
 2. 点击 "Deploy on Railway" 或在 Railway Dashboard → New Project → Deploy from GitHub Repo
 3. 选择你 Fork 的仓库
 
