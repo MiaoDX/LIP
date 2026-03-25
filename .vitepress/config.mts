@@ -69,13 +69,22 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: 'OpenClaw 总览', link: '/openclaw/' },
+          { text: '案例故事 →', link: '/stories/' },
+          { text: '部署指南（Docker + 双平台）', link: '/resources/deployment-guide-v2' },
+        ],
+      },
+      {
+        text: '📖 案例故事',
+        collapsed: true,
+        items: [
+          { text: '所有故事', link: '/stories/' },
           { text: '双 Agent 启动日志', link: '/stories/2026-03-dual-agent-start' },
-          { text: '微信抓取攻防战', link: '/stories/wechat-scraping-war' },
-          { text: 'Gateway 宕机 6 小时', link: '/stories/gateway-6hour-outage' },
           { text: 'API Key 安全事故复盘', link: '/stories/api-key-exposure-incident' },
           { text: '双 Agent 协作协议', link: '/stories/dual-agent-collaboration-protocol' },
           { text: '龙虾文明 RPG 沙盒', link: '/stories/lobster-civilization-sandbox' },
-          { text: '部署指南（Docker + 双平台）', link: '/resources/deployment-guide-v2' },
+          { text: 'Gateway 宕机 6 小时', link: '/stories/gateway-6hour-outage' },
+          { text: '微信抓取攻防战', link: '/stories/wechat-scraping-war' },
+          { text: '富生龙虾实验', link: '/stories/fusheng-lobster-experiment' },
         ],
       },
       {
