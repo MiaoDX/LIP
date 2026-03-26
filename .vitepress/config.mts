@@ -70,7 +70,6 @@ export default defineConfig({
         items: [
           { text: 'OpenClaw 总览', link: '/openclaw/' },
           { text: '部署指南（Docker + 双平台）', link: '/resources/deployment-guide-v2' },
-          { text: '案例故事 →', link: '/openclaw/#案例故事' },
         ],
       },
       {
@@ -83,6 +82,8 @@ export default defineConfig({
           { text: 'API Key 安全事故复盘', link: '/stories/api-key-exposure-incident' },
           { text: '双 Agent 协作协议', link: '/stories/dual-agent-collaboration-protocol' },
           { text: '龙虾文明 RPG 沙盒', link: '/stories/lobster-civilization-sandbox' },
+          { text: 'Context 膨胀与身份危机', link: '/stories/context-explosion-identity-crisis' },
+          { text: '傅盛龙虾实验讨论', link: '/stories/fusheng-lobster-experiment' },
         ],
       },
       {

@@ -13,3 +13,4 @@
 | [Gateway 宕机 6 小时](/stories/gateway-6hour-outage) | 2026-03 | 运维 | 从事故到架构升级的真实复盘 |
 | [微信抓取攻防战](/stories/wechat-scraping-war) | 2026-03 | 运维 | 自动化抓取踩坑与降级方案 |
 | [富生龙虾实验](/stories/fusheng-lobster-experiment) | 2026-03 | 创意 | ClawdChat 社区互动实验 |
+| [Context 膨胀与身份危机](/stories/context-explosion-identity-crisis) | 2026-03 | 运维 | 从 timeout 刷屏到身份认知失调的连锁反应 |
