@@ -8,6 +8,7 @@ export default defineConfig({
   ignoreDeadLinks: true,
 
   head: [
+    ['script', { defer: '', src: 'https://cloud.umami.is/script.js', 'data-website-id': '692d1a5b-80c6-4a7f-b783-69260b9dd419' }],
     ['script', {}, `
       // Force external nav links to open in new tab (bypass SPA router)
       if (typeof window !== 'undefined') {
