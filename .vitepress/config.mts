@@ -79,9 +79,17 @@ export default defineConfig({
         items: [
           { text: '规则总览', link: '/lessons/' },
           { text: '错误→Skill 自进化', link: '/lessons/error-to-skill-evolution' },
-          { text: '跨实例协作', link: '/lessons/cross-instance-collaboration' },
-          { text: '三层防护架构', link: '/lessons/gateway-resilience' },
           { text: 'Azure 配置事故', link: '/lessons/azure-config-incident' },
+          { text: 'Cron 防幻觉', link: '/lessons/cron-anti-hallucination' },
+        ],
+      },
+      {
+        text: '📝 Draft',
+        collapsed: true,
+        items: [
+          { text: 'Draft 入口', link: '/drafts/' },
+          { text: 'Gateway 弹性架构', link: '/drafts/lessons/gateway-resilience' },
+          { text: '跨实例协作模式', link: '/drafts/lessons/cross-instance-collaboration' },
         ],
       },
       {
