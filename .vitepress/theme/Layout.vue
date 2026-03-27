@@ -44,20 +44,11 @@ const sidebarItems = computed(() => {
   if (!sb) return []
   if (Array.isArray(sb)) return sb
   
-  // 根据当前路径判断语言，优先匹配 /en/ 路径
-  const isEnPath = route.path.startsWith('/en/') || route.path === '/en'
-  
-  const keys = Object.keys(sb)
-  // 优先匹配精确路径前缀
+  const keys = Object.keys(sb).sort((a, b) => b.length - a.length)
   for (const k of keys) {
     if (route.path.startsWith(k)) return sb[k]
   }
-  
-  // 如果没有精确匹配，根据语言返回默认侧边栏
-  if (isEnPath) {
-    return sb['/en/'] || sb[keys[0]] || []
-  }
-  return sb['/'] || sb[keys[0]] || []
+  return sb[keys[0]] || []
 })
 
 // 是否显示作者卡片
