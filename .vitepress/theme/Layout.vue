@@ -38,16 +38,26 @@ const navItems = computed(() => theme.value.nav || [
   { text: '个人主页', link: 'https://miaodx.com/' }
 ])
 
-// 侧边栏
+// 侧边栏 - 根据当前语言选择对应的侧边栏配置
 const sidebarItems = computed(() => {
   const sb = theme.value.sidebar
   if (!sb) return []
   if (Array.isArray(sb)) return sb
+  
+  // 根据当前路径判断语言，优先匹配 /en/ 路径
+  const isEnPath = route.path.startsWith('/en/') || route.path === '/en'
+  
   const keys = Object.keys(sb)
+  // 优先匹配精确路径前缀
   for (const k of keys) {
     if (route.path.startsWith(k)) return sb[k]
   }
-  return sb[keys[0]] || []
+  
+  // 如果没有精确匹配，根据语言返回默认侧边栏
+  if (isEnPath) {
+    return sb['/en/'] || sb[keys[0]] || []
+  }
+  return sb['/'] || sb[keys[0]] || []
 })
 
 // 是否显示作者卡片
