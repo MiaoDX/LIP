@@ -57,12 +57,21 @@ const showAuthor = computed(() => frontmatter.value.showAuthor !== false)
 const isEnglish = computed(() => lang.value === 'en-US' || route.path.startsWith('/en/'))
 const switchLang = () => {
   const currentPath = route.path
+  // 移除 base 路径前缀，获取相对路径
+  const base = '/LIP'
+  let relativePath = currentPath
+  if (relativePath.startsWith(base)) {
+    relativePath = relativePath.slice(base.length)
+  }
+  
   if (isEnglish.value) {
-    // 从英文切换到中文
-    window.location.href = withBase(currentPath.replace(/^\/en/, '') || '/')
+    // 从英文切换到中文：移除 /en 前缀
+    const newPath = relativePath.replace(/^\/en/, '') || '/'
+    window.location.href = base + newPath
   } else {
-    // 从中文切换到英文
-    window.location.href = withBase('/en' + currentPath)
+    // 从中文切换到英文：添加 /en 前缀
+    const newPath = '/en' + relativePath
+    window.location.href = base + newPath
   }
 }
 </script>
