@@ -1,8 +1,10 @@
 <script setup>
 import { useData, useRoute, withBase } from 'vitepress'
 import { computed } from 'vue'
+import DefaultTheme from 'vitepress/theme'
 
-const { page, frontmatter, theme } = useData()
+const { Layout } = DefaultTheme
+const { page, frontmatter, theme, lang } = useData()
 const route = useRoute()
 
 const isHome = computed(() => frontmatter.value.layout === 'home')
@@ -15,7 +17,7 @@ const category = computed(() => frontmatter.value.category || '')
 const tags = computed(() => frontmatter.value.tags || [])
 const dropCap = computed(() => frontmatter.value.dropCap !== false)
 
-// 作者信息（可在 frontmatter 或 themeConfig 里配置）
+// 作者信息
 const authorBio = computed(() => frontmatter.value.authorBio || theme.value.authorBio || {
   name: 'MiaoDX × AI Agents',
   desc: '机器人研发工程师，OPC 实践者 — One Person, plus multi Claws。白天给机器人写 bug，其他时间和 AI Agents 一起做更多的事。',
@@ -26,7 +28,7 @@ const authorBio = computed(() => frontmatter.value.authorBio || theme.value.auth
   ]
 })
 
-// 导航（可在 themeConfig.nav 里配置，也可硬编码）
+// 导航
 const navItems = computed(() => theme.value.nav || [
   { text: '首页', link: '/' },
   { text: '月报', link: '/now/2026-03' },
@@ -50,6 +52,19 @@ const sidebarItems = computed(() => {
 
 // 是否显示作者卡片
 const showAuthor = computed(() => frontmatter.value.showAuthor !== false)
+
+// 语言切换
+const isEnglish = computed(() => lang.value === 'en-US' || route.path.startsWith('/en/'))
+const switchLang = () => {
+  const currentPath = route.path
+  if (isEnglish.value) {
+    // 从英文切换到中文
+    window.location.href = withBase(currentPath.replace(/^\/en/, '') || '/')
+  } else {
+    // 从中文切换到英文
+    window.location.href = withBase('/en' + currentPath)
+  }
+}
 </script>
 
 <template>
@@ -59,6 +74,10 @@ const showAuthor = computed(() => frontmatter.value.showAuthor !== false)
       <div class="te-header-top">
         <div class="te-logo">LIP</div>
         <div class="te-dateline">Learn In Public // 2026</div>
+        <!-- 语言切换按钮 -->
+        <button class="lang-switcher" @click="switchLang">
+          {{ isEnglish ? '中文' : 'English' }}
+        </button>
       </div>
       <nav class="te-nav">
         <a
@@ -158,3 +177,29 @@ const showAuthor = computed(() => frontmatter.value.showAuthor !== false)
     </div>
   </div>
 </template>
+
+<style>
+/* 语言切换按钮样式 */
+.lang-switcher {
+  margin-left: auto;
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--vp-c-text-1, #213547);
+  transition: all 0.2s;
+}
+
+.lang-switcher:hover {
+  background: var(--vp-c-bg-soft, #f6f6f7);
+  border-color: var(--vp-c-brand, #3451b2);
+}
+
+.te-header-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+</style>
