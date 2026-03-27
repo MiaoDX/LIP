@@ -1,14 +1,14 @@
 # Lessons
 
-Reusable rules distilled from incidents and real practice, forming long-term assets.
+Reusable rules distilled from incidents and practices, forming long-term assets.
 
-## Rules List
+## Lesson List
 
-| Rule | Date | Summary |
-|------|------|---------|
-| [Error to Skill Evolution](/en/lessons/error-to-skill-evolution) | 2026-03 | How to distill incidents into skills |
-| [Cron Anti-Hallucination](/en/lessons/cron-anti-hallucination) | 2026-03 | Practical experience preventing cron task hallucinations |
-| [Azure Config Incident](/en/lessons/azure-config-incident) | 2026-03 | Azure configuration failure postmortem |
+| Lesson | Date | Summary |
+|--------|------|---------|
+| [Error to Skill Evolution](/en/lessons/error-to-skill-evolution) | March 2026 | How to transform incidents into skills |
+| [Cron Anti-Hallucination](/en/lessons/cron-anti-hallucination) | March 2026 | Practical experience preventing scheduled task hallucinations |
+| [Azure Config Incident](/en/lessons/azure-config-incident) | March 2026 | Post-mortem of Azure configuration failure |
 
 ---
 

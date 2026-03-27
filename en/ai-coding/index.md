@@ -1,15 +1,15 @@
 # AI Coding
 
-Real-world records of AI-assisted coding practices.
+Real-world practices of AI-assisted programming.
 
-> ⚠️ This section is still being built. Current cases are mainly focused on [OpenClaw](/en/openclaw/).
+> ⚠️ This section is still accumulating content. Current cases focus primarily on the [OpenClaw](/en/openclaw/) direction.
 
-## Sharing Materials
+## Shared Materials
 
-- [AI Coding for Research — From Tools to Workflows](/share/AICodingRaiseLab.html) — 2026-03-24, Raise Lab sharing, 25 slides
+- [AI Coding for Research — From Tools to Workflow](/en/share/AICodingRaiseLab.html) — March 24, 2026, Raise Lab sharing, 25 slides
 
 ## Coming Soon
 
-- Claude Code real-world troubleshooting
+- Claude Code practical pitfalls
 - Claude Code vs Codex comparison
 - AI-assisted refactoring cases
