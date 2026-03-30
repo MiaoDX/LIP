@@ -121,4 +121,4 @@ Multi-agent → 成功（分解为子任务并行搜索）
 
 ---
 
-*下一篇: [Context Engineering 深度分析 →](/LIP/bestpractice/anthropic-context-engineering)*
+*下一篇: [Context Engineering 深度分析 →](/bestpractice/anthropic-context-engineering)*

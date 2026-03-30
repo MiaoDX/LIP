@@ -142,4 +142,4 @@ Context engineering 正在从"艺术"变成"工程" — 需要系统化的方法
 
 ---
 
-*上一篇: [Multi-Agent Research System 分析 ←](/LIP/bestpractice/anthropic-multi-agent-research)*
+*上一篇: [Multi-Agent Research System 分析 ←](/bestpractice/anthropic-multi-agent-research)*

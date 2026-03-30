@@ -127,6 +127,7 @@ export default defineConfig({
             { text: '专栏入口', link: '/bestpractice/' },
             { text: 'Multi-Agent Research System', link: '/bestpractice/anthropic-multi-agent-research' },
             { text: 'Context Engineering', link: '/bestpractice/anthropic-context-engineering' },
+            { text: 'Harness 设计', link: '/bestpractice/anthropic-harness-design' },
           ],
         },
         {
