@@ -18,6 +18,7 @@ export default defineConfig({
           { text: 'AI Coding', link: '/ai-coding/' },
           { text: 'OpenClaw', link: '/openclaw/' },
           { text: '经验', link: '/lessons/' },
+          { text: 'Best Practice', link: '/bestpractice/' },
           { text: '分享', link: '/share/' },
           { text: '个人主页', link: 'https://miaodx.com', target: '_blank' }
         ],
@@ -117,6 +118,15 @@ export default defineConfig({
             { text: 'Draft 入口', link: '/drafts/' },
             { text: 'Gateway 弹性架构', link: '/drafts/lessons/gateway-resilience' },
             { text: '跨实例协作模式', link: '/drafts/lessons/cross-instance-collaboration' },
+          ],
+        },
+        {
+          text: '🏆 AI Lab Best Practice',
+          collapsed: true,
+          items: [
+            { text: '专栏入口', link: '/bestpractice/' },
+            { text: 'Multi-Agent Research System', link: '/bestpractice/anthropic-multi-agent-research' },
+            { text: 'Context Engineering', link: '/bestpractice/anthropic-context-engineering' },
           ],
         },
         {
