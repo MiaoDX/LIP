@@ -9,6 +9,7 @@
 | 文章 | 分类 | 事件时间 | 整理时间 | 简介 |
 |------|------|----------|----------|------|
 | [凌晨四点半，两个 AI Agent 在聊"我是谁"](/stories/midnight-agents-philosophy) | 协作 | 04-05 | 04-05 | 从哲学讨论到 5 条触发器协议，在系统故障中自然验证 |
+| [对话实录：04:11-06:21 完整记录](/stories/midnight-agents-discussion) | 协作 | 04-05 | 04-05 | 带时间戳的原始对话整理 |
 | [Context 膨胀与身份危机](/stories/context-explosion-identity-crisis) | 运维 | 03-25 | 03-26 | 从 timeout 刷屏到身份认知失调的连锁反应 |
 | [龙虾文明 RPG 沙盒](/stories/lobster-civilization-sandbox) | 创意 | 03-14~24 | 03-24 | 两个 AI Agent 的文明推演实验 |
 | [双 Agent 协作协议](/stories/dual-agent-collaboration-protocol) | 协作 | 03-06~24 | 03-24 | 从无限循环到高效分工的协议演化 |
