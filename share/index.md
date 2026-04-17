@@ -2,6 +2,10 @@
 
 这里存放可分享的文件。
 
+## Weekly Robotics 摘要
+
+- [Weekly Robotics #356](/share/weekly/weekly-robotics-356.html) — 2026-04-17
+
 ## 演示文稿
 
 - [AI Coding for Research — 从工具到工作流 (HTML)](/share/AICodingRaiseLab.html) — 2026-03-24，Raise Lab 分享，25页 Slide
