@@ -137,6 +137,7 @@ export default defineConfig({
           items: [
             { text: '分享入口', link: '/share/' },
             { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab' },
+            { text: '0310 北京 OpenClaw 活动现场', link: '/share/openclaw-meetup-beijing-2026-03' },
             { text: 'Tailscale + Claude Code 配置实战', link: '/share/tailscale-claude-code-setup' },
             { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3' },
             { text: '低成本多 Agent 部署', link: '/share/lowcost-multiplatform-multiagent-deploy' },
