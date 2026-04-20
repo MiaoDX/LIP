@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif">
+  <style>
+    .node { fill: #fff; stroke: #333; stroke-width: 1.5; }
+    .auto_pr { fill: #dbeafe; stroke: #1d4ed8; }
+    .issue_label { fill: #e0e7ff; stroke: #4338ca; }
+    .daily { fill: #fee2e2; stroke: #b91c1c; }
+    .pr_again { fill: #fce7f3; stroke: #be185d; }
+    .bus-area { fill: #f9fafb; stroke: #9ca3af; stroke-width: 1; stroke-dasharray: 4 3; }
+    .title { font-size: 14px; font-weight: 600; fill: #111; }
+    .subtitle { font-size: 11px; fill: #4b5563; }
+    .branch { font-family: 'SF Mono', Consolas, monospace; font-size: 11px; fill: #1f2937; }
+    .tag { font-family: 'SF Mono', Consolas, monospace; font-size: 11px; font-weight: 600; }
+    .arrow { fill: none; stroke: #6b7280; stroke-width: 1.5; }
+    .section-title { font-size: 13px; font-weight: 600; fill: #111; }
+    .note { font-size: 11px; fill: #4b5563; font-style: italic; }
+  </style>
+  <defs>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- SECTION 1: Branch Namespace Isolation -->
+  <text x="30" y="30" class="section-title">一、分支命名空间隔离：每个 routine 有自己的 playground</text>
+
+  <!-- Four routines each with their branch prefix -->
+  <rect x="30" y="50" width="195" height="100" rx="6" class="node auto_pr"/>
+  <text x="128" y="75" text-anchor="middle" class="title">auto_pr</text>
+  <rect x="45" y="90" width="165" height="22" rx="3" fill="#fff" stroke="#1d4ed8" stroke-width="1"/>
+  <text x="128" y="106" text-anchor="middle" class="branch">claude-issue-*</text>
+  <text x="128" y="135" text-anchor="middle" class="subtitle">写代码、推 PR</text>
+
+  <rect x="245" y="50" width="195" height="100" rx="6" class="node issue_label"/>
+  <text x="342" y="75" text-anchor="middle" class="title">issue_label</text>
+  <rect x="260" y="90" width="165" height="22" rx="3" fill="#fff" stroke="#4338ca" stroke-width="1"/>
+  <text x="342" y="106" text-anchor="middle" class="branch">（不碰任何分支）</text>
+  <text x="342" y="135" text-anchor="middle" class="subtitle">只读 + 打 label</text>
+
+  <rect x="460" y="50" width="195" height="100" rx="6" class="node pr_again"/>
+  <text x="558" y="75" text-anchor="middle" class="title">pr_again</text>
+  <rect x="475" y="90" width="165" height="22" rx="3" fill="#fff" stroke="#be185d" stroke-width="1"/>
+  <text x="558" y="106" text-anchor="middle" class="branch">claude-cleanup-*</text>
+  <text x="558" y="135" text-anchor="middle" class="subtitle">孤儿分支救援</text>
+
+  <rect x="675" y="50" width="195" height="100" rx="6" class="node daily"/>
+  <text x="772" y="75" text-anchor="middle" class="title">daily_duty</text>
+  <rect x="690" y="83" width="165" height="22" rx="3" fill="#fff" stroke="#b91c1c" stroke-width="1"/>
+  <text x="772" y="99" text-anchor="middle" class="branch">claude-health-*</text>
+  <rect x="690" y="108" width="165" height="22" rx="3" fill="#fff" stroke="#b91c1c" stroke-width="1"/>
+  <text x="772" y="124" text-anchor="middle" class="branch">claude-ci-fix-*</text>
+  <text x="772" y="145" text-anchor="middle" class="subtitle">健康检查 + CI 修复</text>
+
+  <!-- Barrier note -->
+  <text x="450" y="180" text-anchor="middle" class="note">
+    四个 routine 物理上不会互相踩脚 — 碰不到对方的分支，state 天然隔离
+  </text>
+
+  <!-- SECTION 2: Message Protocol via Comments -->
+  <text x="30" y="225" class="section-title">二、GitHub comment 作为异步消息协议</text>
+
+  <!-- Message bus -->
+  <rect x="200" y="300" width="500" height="80" rx="6" class="bus-area"/>
+  <text x="450" y="325" text-anchor="middle" class="title" fill="#4b5563">GitHub issue / PR comments</text>
+  <text x="450" y="345" text-anchor="middle" class="subtitle">每条 comment = 一条消息，tag 前缀 = 消息类型</text>
+  <text x="450" y="365" text-anchor="middle" class="note">没有消息队列、没有 orchestrator — GitHub 就是总线</text>
+
+  <!-- auto_pr emits [auto-pr] -->
+  <rect x="30" y="410" width="195" height="48" rx="6" class="node auto_pr"/>
+  <text x="128" y="438" text-anchor="middle" class="title">auto_pr 失败时</text>
+  <path d="M 128 410 L 300 380" class="arrow" marker-end="url(#arrow3)"/>
+  <rect x="55" y="470" width="140" height="26" rx="13" fill="#dbeafe" stroke="#1d4ed8"/>
+  <text x="125" y="488" text-anchor="middle" class="tag" fill="#1d4ed8">[auto-pr]</text>
+
+  <!-- pr_again consumes & emits -->
+  <rect x="245" y="410" width="195" height="48" rx="6" class="node pr_again"/>
+  <text x="342" y="438" text-anchor="middle" class="title">pr_again 处理后</text>
+  <path d="M 342 410 L 400 380" class="arrow" marker-end="url(#arrow3)"/>
+  <path d="M 310 380 L 342 410" class="arrow" stroke-dasharray="3 3" marker-end="url(#arrow3)"/>
+  <rect x="250" y="470" width="90" height="26" rx="13" fill="#fce7f3" stroke="#be185d"/>
+  <text x="295" y="488" text-anchor="middle" class="tag" fill="#be185d">[conflict]</text>
+  <rect x="345" y="470" width="90" height="26" rx="13" fill="#fce7f3" stroke="#be185d"/>
+  <text x="390" y="488" text-anchor="middle" class="tag" fill="#be185d">[ci-fail]</text>
+
+  <!-- daily_duty -->
+  <rect x="460" y="410" width="195" height="48" rx="6" class="node daily"/>
+  <text x="558" y="438" text-anchor="middle" class="title">daily_duty 卡住时</text>
+  <path d="M 558 410 L 510 380" class="arrow" marker-end="url(#arrow3)"/>
+  <rect x="490" y="470" width="140" height="26" rx="13" fill="#fee2e2" stroke="#b91c1c"/>
+  <text x="560" y="488" text-anchor="middle" class="tag" fill="#b91c1c">[deferred]</text>
+
+  <!-- Next run (any routine) consuming -->
+  <rect x="675" y="410" width="195" height="48" rx="6" class="node"/>
+  <text x="772" y="438" text-anchor="middle" class="title">下一轮任一 routine</text>
+  <path d="M 700 410 L 650 380" class="arrow" stroke-dasharray="3 3" marker-end="url(#arrow3)"/>
+  <text x="772" y="482" text-anchor="middle" class="subtitle">扫 tag → 接手</text>
+
+  <!-- Arrow labels next to bus -->
+  <text x="145" y="375" class="note" fill="#1d4ed8">↑ 发布</text>
+  <text x="320" y="375" class="note" fill="#be185d">↑↓ 收 + 发</text>
+  <text x="493" y="375" class="note" fill="#b91c1c">↑ 发布</text>
+  <text x="695" y="375" class="note" fill="#4b5563">↓ 订阅</text>
+
+  <!-- Bottom note -->
+  <text x="450" y="525" text-anchor="middle" class="subtitle" style="font-size:11.5px;">
+    agent 间独立失败、通过消息协作 — Erlang actor model 的 GitHub 版本
+  </text>
+</svg>
