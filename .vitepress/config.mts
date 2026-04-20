@@ -126,6 +126,7 @@ export default defineConfig({
           items: [
             { text: '专栏入口', link: '/bestpractice/' },
             { text: '🌍 25 家公司全景图', link: '/bestpractice/panorama' },
+            { text: 'Claude Code Auto Mode', link: '/bestpractice/anthropic-claude-code-auto-mode' },
             { text: 'Harness 设计', link: '/bestpractice/anthropic-harness-design' },
             { text: 'Context Engineering', link: '/bestpractice/anthropic-context-engineering' },
             { text: 'Multi-Agent Research', link: '/bestpractice/anthropic-multi-agent-research' },
