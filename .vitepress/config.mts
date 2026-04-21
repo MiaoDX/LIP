@@ -5,6 +5,7 @@ export default defineConfig({
   description: '缪东旭（MiaoDX）的 Learn in Public：AI Coding 与 OpenClaw 的公开进化日志',
   lang: 'zh-CN',
   base: '/LIP/',
+  ignoreDeadLinks: true,
   cleanUrls: true,
 
   locales: {
