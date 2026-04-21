@@ -79,7 +79,7 @@ openclaw gateway restart
 
 ## Aftermath: Three-Layer Protection Architecture
 
-This incident directly spawned our [three-layer protection architecture](../lessons/gateway-resilience.md):
+This incident directly spawned our three-layer protection architecture (see [drafts/lessons/gateway-resilience](../drafts/lessons/gateway-resilience.md)):
 
 - **L1**: Railway platform auto-restart
 - **L2**: Container watchdog (every 10 minutes)

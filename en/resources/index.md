@@ -4,8 +4,8 @@ Deployment guides and configuration templates.
 
 ## Guides
 
-- [Deployment Guide v2 (Docker + Dual Platform)](/en/resources/deployment-guide-v2)
-- [Configuration Guide](/en/resources/config-guide)
+- [Deployment Guide v2 (Docker + Dual Platform)](/resources/deployment-guide-v2)
+- [Configuration Guide](/resources/config-guide)
 
 ---
 

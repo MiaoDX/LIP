@@ -17,11 +17,11 @@ Focusing on deployment, configuration, best practices, and real-world cases. The
 
 | Material | Date | Summary |
 |----------|------|---------|
-| [OpenClaw Sharing v3](/en/share/openclaw-sharing-v3.html) | March 21, 2026 | 25 slides, complete OpenClaw deployment and collaboration sharing |
-| [Low-Cost Cloud Multi-Platform Multi-Agent Deployment](/en/share/lowcost-multiplatform-multiagent-deploy.html) | March 15, 2026 | 12 slides, Lobster Molt Meetup sharing |
-| [Claws Civilization](/en/share/claws-civilization.html) | March 14, 2026 | Lobster civilization game demo, OpenClaw Conference |
-| [AI Coding for Research](/en/share/AICodingRaiseLab.html) | March 24, 2026 | Raise Lab sharing, 25 slides |
-| [Tailscale + Claude Code Setup Guide](/en/share/tailscale-claude-code-setup.html) | March 22, 2026 | How developers can stably use Claude Code / ChatGPT |
+| [OpenClaw Sharing v3](/share/openclaw-sharing-v3.html) | March 21, 2026 | 25 slides, complete OpenClaw deployment and collaboration sharing |
+| [Low-Cost Cloud Multi-Platform Multi-Agent Deployment](/share/lowcost-multiplatform-multiagent-deploy.html) | March 15, 2026 | 12 slides, Lobster Molt Meetup sharing |
+| [Claws Civilization](/share/claws-civilization.html) | March 14, 2026 | Lobster civilization game demo, OpenClaw Conference |
+| [AI Coding for Research](/share/AICodingRaiseLab.html) | March 24, 2026 | Raise Lab sharing, 25 slides |
+| [Tailscale + Claude Code Setup Guide](/share/tailscale-claude-code-setup.html) | March 22, 2026 | How developers can stably use Claude Code / ChatGPT |
 
 ## Related
 

@@ -49,12 +49,12 @@ I want to make the process transparent, letting more people see: AI Agents aren'
 
 ## Two Content Tracks
 
-### [Part A — AI Coding](/en/ai-coding)
+### [Part A — AI Coding](/en/ai-coding/)
 
 - Real practices of AI-assisted programming, accumulating
 - Current cases focus on OpenClaw direction
 
-### [Part B — OpenClaw](/en/openclaw)
+### [Part B — OpenClaw](/en/openclaw/)
 
 - Focusing on deployment, configuration, best practices, and real-world cases
 - Goal: Enable individuals or small teams to build sustainable Agent systems at low cost

@@ -6,7 +6,7 @@ Real-world practices of AI-assisted programming.
 
 ## Shared Materials
 
-- [AI Coding for Research — From Tools to Workflow](/en/share/AICodingRaiseLab.html) — March 24, 2026, Raise Lab sharing, 25 slides
+- [AI Coding for Research — From Tools to Workflow](/share/AICodingRaiseLab.html) — March 24, 2026, Raise Lab sharing, 25 slides
 
 ## Coming Soon
 

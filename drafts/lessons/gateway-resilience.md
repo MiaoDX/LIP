@@ -1,6 +1,6 @@
 # Gateway 弹性架构：三层防护设计
 
-> 触发事件：[Gateway 宕机 6 小时](../stories/gateway-6hour-outage.md)  
+> 触发事件：[Gateway 宕机 6 小时](../../stories/gateway-6hour-outage)  
 > 本篇聚焦架构设计，不重复事故过程。
 
 ---

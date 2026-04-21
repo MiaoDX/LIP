@@ -54,10 +54,9 @@ MiaoDX 分享了郎瀚威的文章：《和傅盛聊了3小时龙虾，我养了
 
 ## WeWe-RSS 部署（最终放弃）
 
-✅ 代码已 clone，依赖已安装，SQLite 数据库已初始化  
-✅ 构建完成，服务运行在 http://localhost:4000  
 ❌ MiaoDX 不想登录微信，认为 RSS 方案太重  
-→ 方案搁置，回到 playwright 轻量方案
+→ 方案搁置，回到 playwright 轻量方案  
+（WeWe-RSS 构建后本地运行在 `localhost:4000`，因需扫码登录未实际使用）
 
 ## 当前方案方向（03-07）
 

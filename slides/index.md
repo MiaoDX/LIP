@@ -5,7 +5,7 @@
 | 版本 | 格式 | 链接 |
 |------|------|------|
 | Marp 版 | 单页 HTML，简洁 | [打开](/slides/marp/low-cost-multi-agent.html) |
-| Slidev 版 | SPA，丰富动画 | [打开](/slides/slidev/) |
+| Slidev 版 | SPA，丰富动画 | [打开](/slides/slidev/index.html) |
 | 原始 SVG 版 | 手工 SVG | [打开](/share/lowcost-multiplatform-multiagent-deploy.html) |
 
 ## 源文件
