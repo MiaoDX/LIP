@@ -25,8 +25,31 @@ jobs:
           cache: npm
       - run: npm ci
 
+      # 0. Deploy Guard — 防止覆盖根目录 index.html
+      - name: Run deploy guard
+        run: |
+          curl -sL https://raw.githubusercontent.com/miaodx/claw-agents-shared/main/scripts/deploy-guard.py -o /tmp/deploy-guard.py
+          python3 /tmp/deploy-guard.py
+        working-directory: .
+        env:
+          # 在 LIP 仓库运行时，guard 会检测到不在 miaodx.github.io 仓库
+          # 但仍会检查构建输出结构
+          GUARD_MODE: strict
+
       # 1. Build VitePress docs
       - run: npm run docs:build
+
+      # 1.5 Post-build guard — 验证构建产物结构
+      - name: Verify build output structure
+        run: |
+          # 确保构建产物都在预期子目录下
+          if [ -f .vitepress/dist/index.html ]; then
+            echo "Build output has dist/index.html (expected for VitePress)"
+          fi
+          # 检查是否有不应该出现的文件
+          if [ -f .vitepress/dist/CNAME ] || [ -f .vitepress/dist/.nojekyll ]; then
+            echo "Warning: Build output contains repo-level files"
+          fi
 
       # 2. Copy standalone HTML + assets from share/presentations/ → output
       - run: mkdir -p .vitepress/dist/share && cp share/presentations/*.html share/presentations/*.png share/presentations/*.jpg .vitepress/dist/share/ 2>/dev/null || true
