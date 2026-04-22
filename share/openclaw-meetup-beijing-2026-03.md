@@ -72,11 +72,11 @@
 
 ### 活动主视觉
 
-![0310 OpenClaw 活动海报](/images/share/openclaw-meetup-poster-20260310.jpg)
+![0410 OpenClaw 活动海报](/images/share/openclaw-meetup-poster-20260310.jpg)
 
 ### 现场讲解照片
 
-![0310 OpenClaw 活动现场](/images/share/openclaw-meetup-scene-20260310.jpg)
+![0410 OpenClaw 活动现场](/images/share/openclaw-meetup-scene-20260310.jpg)
 
 ## 延伸阅读
 
