@@ -15,9 +15,9 @@ _原始来源: <https://weeklyrobotics.com/weekly-robotics-356>_
 
 ## Executive Summary
 
-This issue highlights the continued convergence of **perception, planning, and control** in embodied systems. Key developments include GPS-denied navigation frameworks, production-ready sensor fusion SDKs, and safety-critical fault-tolerant architectures — all directly relevant to Xiaomi's robotics roadmap.
+This week's most useful signal for embodied AI is not a single flashy model, but steady maturation across the robotics stack: navigation without GPS, production-grade ROS 2 sensor fusion, more efficient trajectory generation, and more explicit safety-oriented computer architecture. For Xiaomi Robotics, the two most actionable items are HUNT and FusionCore, because they map directly to indoor navigation and deployable state-estimation infrastructure.
 
-**Focus areas this week:** Navigation without absolute positioning, multi-sensor state estimation, and trajectory optimization for agile flight.
+**Focus areas this week:** Navigation without absolute positioning, multi-sensor state estimation, trajectory optimization, safety-critical design.
 
 ---
 
@@ -41,22 +41,25 @@ This issue highlights the continued convergence of **perception, planning, and c
 ### Navigation & Mobile Robotics
 • **HUNT** — GPS-denied drone navigation using instantaneous relative frames rebuilt from onboard signals (inertial, barometric, visual) ([VLN] [High Relevance])
   → _原始来源: <https://www.weeklyrobotics.com/articles/2026_04_07_rethinking_drone_autonomy_gps_denied/>_
-• **MIGHTY** — Hermite spline trajectory planner with spatiotemporal optimization for agile multirotor flight ([Planning] [Medium Relevance])
-  → _原始来源: <https://github.com/mit-acl/mighty> | ArXiv: <https://arxiv.org/abs/2511.10822> | Video: <https://www.youtube.com/watch?v=Pvb-VPUdLvg>_
-
+  → _Why it matters to Xiaomi:_ Highly relevant to indoor VLN and embodied navigation where absolute positioning is weak or unavailable.
+• **MIGHTY** — Hermite spline-based efficient trajectory planning with spatiotemporal optimization ([Planning] [Medium Relevance])
+  → _原始来源: <https://aeroastro.mit.edu/news-impact/mighty-hermite-spline-based-efficient-trajectory-planning/> | 论文: <https://arxiv.org/abs/2511.10822> | 视频: <https://www.youtube.com/watch?v=Pvb-VPUdLvg>_
+  → _Why it matters to Xiaomi:_ Useful reference for manipulator and mobile robot motion planning where smoothness and efficiency both matter.
 ### Manipulation
 • *No notable manipulation-specific tools this week*
 
 ### AI Integration
-• **NASA Artemis II Fault-Tolerant Computer** — "Fail silent" architecture design for safety-critical systems ([Safety] [Medium Relevance])
+• **NASA Artemis II Fault-Tolerant Computer** — "Fail silent" redundant architecture for deep-space reliability ([Safety] [Medium Relevance])
   → _原始来源: <https://cacm.acm.org/news/how-nasa-built-artemis-iis-fault-tolerant-computer/>_
+  → _Why it matters to Xiaomi:_ Strong systems-design reference for humanoid robots and any robotics system operating close to people, where fault containment matters more than raw performance.
 
 ### Simulation
 • *No notable simulation-specific tools this week*
 
 ### Other Notable Tools
-• **FusionCore** — ROS 2 UKF-based sensor-fusion SDK with 3D, GNSS, IMU, wheel encoder support, production-ready ([Localization] [Very High Relevance])
-  → _原始来源: <https://github.com/manankharwar/fusioncore>_
+• **FusionCore** — ROS 2 UKF-based sensor-fusion SDK with support for 3D, GNSS, IMU, wheel encoders, and more ([Localization] [Very High Relevance])
+  → _原始来源: <https://discourse.openrobotics.org/t/fusioncore-which-is-a-ros-2-jazzy-sensor-fusion-package-robot-localization-replacement/53502> | 代码: <https://github.com/manankharwar/fusioncore>_
+  → _Why it matters to Xiaomi:_ Closest to immediate engineering reuse, especially for CyberOne-style ROS 2 systems and state estimation pipelines.
 • **What I learned from making my own drone (Part I)** — Practical lessons on IMUs, DShot, and PID implementation from a drone builder ([DIY] [Low Relevance])
   → _原始来源: <https://nbelakovski.substack.com/p/what-i-learned-from-making-my-own>_
 • **LS3 Boston Dynamics Mini Resin Printing** — Community project building a tiny replica of Boston Dynamics' AlphaDog with moving parts ([Community] [Low Relevance])
@@ -83,7 +86,7 @@ This issue highlights the continued convergence of **perception, planning, and c
 
 ## 💡 Quick Take
 
-HUNT's GPS-denied approach and FusionCore's sensor fusion capabilities are particularly relevant as we build more autonomous robots for unstructured environments. The emphasis on safety-critical design (Artemis II) and efficient trajectory optimization (MIGHTY) reflects industry priorities that align with Xiaomi's robotics roadmap.
+The strongest signal this week is convergence. Navigation, fusion, planning, and safety are all becoming less academic and more deployable. That is exactly the phase where a robotics team should pay attention, because the best gains now often come not from a brand-new model, but from stitching together a tighter and more reliable system.
 
 **Action items:**
 1. Evaluate FusionCore for CyberOne state estimation integration
