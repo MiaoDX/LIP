@@ -9,35 +9,62 @@ tags: [robotics, embodied-ai, vln, ros2, drone, sensor-fusion]
 
 *April 13, 2026 | Curated for Xiaomi Robotics Embodied Intelligence Team*
 
----
-
-## 🔑 Top Picks This Week
-
-### **HUNT** — GPS-Denied Drone Navigation (9/10)
-A drone autonomy framework for GPS-denied, unstructured environments that replaces persistent global localization with **instantaneous relative frames** rebuilt from directly observable onboard signals (inertial attitude, barometric altitude, visual motion cues, target geometry).
-
-**Relevance to Xiaomi:** Directly applicable to indoor VLN scenarios where GPS is unavailable. The relative frame reconstruction approach aligns with our embodied AI research on navigation without absolute positioning.
+_原始来源: <https://weeklyrobotics.com/weekly-robotics-356>_
 
 ---
 
-### **FusionCore** — ROS 2 Sensor Fusion SDK (10/10)
-Open-source ROS 2 UKF-based sensor-fusion SDK with native support for 3D, GNSS, IMUs, wheel encoders, and more. Production-ready implementation.
+## Executive Summary
 
-**Relevance to Xiaomi:** Immediate applicability for CyberOne and other robotics projects. The UKF-based approach with multi-sensor support matches our ROS 2 architecture needs for state estimation.
+This week's most useful signal for embodied AI is not a single flashy model, but steady maturation across the robotics stack: navigation without GPS, production-grade ROS 2 sensor fusion, more efficient trajectory generation, and more explicit safety-oriented computer architecture. For Xiaomi Robotics, the two most actionable items are HUNT and FusionCore, because they map directly to indoor navigation and deployable state-estimation infrastructure.
 
----
-
-### **MIGHTY** — Hermite Spline Trajectory Planning (8/10)
-Hermite spline-based planner performing spatiotemporal optimization while fully leveraging the continuous search space of a spline. Enables highly agile multirotor flight with reduced travel time and computation vs. state-of-the-art.
-
-**Relevance to Xiaomi:** Transferable to manipulator and mobile robot trajectory planning. The spline-based continuous optimization approach could enhance our motion planning stack.
+**Focus areas this week:** Navigation without absolute positioning, multi-sensor state estimation, trajectory optimization, safety-critical design.
 
 ---
 
-### **NASA Artemis II Fault-Tolerant Computer** (7/10)
-Design write-up of a fault-tolerant computer using "fail silent" architecture — if any redundant system has an issue, it remains silent, and the system always takes the available output.
+## 🔥 Critical Deadlines
 
-**Relevance to Xiaomi:** Interesting reference for safety-critical systems design, especially for humanoid robots operating near humans.
+• **Apr 15**: Robotics & Physical AI day (Mashup) — Malmö, Sweden
+• **Apr 23**: Actuate Global — San Francisco: Industry Night
+• **Apr 30**: Hands-on Workshop: Scaling VLA Models with Ray — Pittsburgh
+• **Apr 30**: Actuate Global — London: Community Meetup
+• **May 4**: Actuate Global — Paris: Community Meetup
+• **May 6**: NextGen Robotics LIVE — Odense, Denmark
+• **May 6**: Actuate Global — Zurich: Field Session
+• **May 7**: Actuate Global — Munich: Community Meetup
+• **May 22-23**: Open Hardware Summit — Berlin, Germany
+• **May 27-28**: Robotics Summit & Expo 2026 — Boston
+• **Jun 1-5**: ICRA 2026 — Vienna
+
+---
+
+## 🎯 Key Highlights for Embodied AI Teams
+
+### Navigation & Mobile Robotics
+• **HUNT** — GPS-denied drone navigation using instantaneous relative frames rebuilt from onboard signals (inertial, barometric, visual) ([VLN] [High Relevance])
+  → _原始来源: <https://www.weeklyrobotics.com/articles/2026_04_07_rethinking_drone_autonomy_gps_denied/>_
+  → _Why it matters to Xiaomi:_ Highly relevant to indoor VLN and embodied navigation where absolute positioning is weak or unavailable.
+
+### AI Infrastructure / State Estimation
+• **FusionCore** — ROS 2 UKF-based sensor-fusion SDK with support for 3D, GNSS, IMU, wheel encoders, and more ([Localization] [Very High Relevance])
+  → _原始来源: <https://discourse.openrobotics.org/t/fusioncore-which-is-a-ros-2-jazzy-sensor-fusion-package-robot-localization-replacement/53502> | 代码: <https://github.com/manankharwar/fusioncore>_
+  → _Why it matters to Xiaomi:_ Closest to immediate engineering reuse, especially for CyberOne-style ROS 2 systems and state estimation pipelines.
+
+### Planning & Control
+• **MIGHTY** — Hermite spline-based efficient trajectory planning with spatiotemporal optimization ([Planning] [Medium Relevance])
+  → _原始来源: <https://aeroastro.mit.edu/news-impact/mighty-hermite-spline-based-efficient-trajectory-planning/> | 论文: <https://arxiv.org/abs/2511.10822> | 视频: <https://www.youtube.com/watch?v=Pvb-VPUdLvg>_
+  → _Why it matters to Xiaomi:_ Useful reference for manipulator and mobile robot motion planning where smoothness and efficiency both matter.
+
+### Safety-Critical Systems
+• **NASA Artemis II Fault-Tolerant Computer** — "Fail silent" redundant architecture for deep-space reliability ([Safety] [Medium Relevance])
+  → _原始来源: <https://cacm.acm.org/news/how-nasa-built-artemis-iis-fault-tolerant-computer/>_
+  → _Why it matters to Xiaomi:_ Strong systems-design reference for humanoid robots and any robotics system operating close to people, where fault containment matters more than raw performance.
+
+### Other Notable Tools
+• **What I learned from making my own drone (Part I)** — Practical lessons on IMUs, DShot, and PID implementation from a drone builder ([DIY] [Low Relevance])
+  → _原始来源: <https://nbelakovski.substack.com/p/what-i-learned-from-making-my-own>_
+
+• **LS3 Boston Dynamics Mini Resin Printing** — Community project building a tiny replica of Boston Dynamics' AlphaDog with moving parts ([Community] [Low Relevance])
+  → _原始来源: <https://www.reddit.com/r/robotics/comments/1sj8q52/ls3_boston_dynamics_mini_resin_printing/>_
 
 ---
 
@@ -45,17 +72,28 @@ Design write-up of a fault-tolerant computer using "fail silent" architecture �
 
 | Event | Date | Location | Relevance |
 |-------|------|----------|-----------|
-| **Hands-on Workshop: Scaling VLA Models with Ray** | Apr 30 | Pittsburgh | High — VLA scaling directly relevant to our embodied AI work |
-| **Robotics Summit & Expo 2026** | May 27-28 | Boston | High — major industry event |
-| **ICRA 2026** | Jun 1-5 | Vienna | Very High — flagship robotics conference |
+| **Robotics & Physical AI day (Mashup)** | Apr 15 | Malmö, Sweden | Medium — Physical AI focus |
+| **Actuate Global — San Francisco: Industry Night** | Apr 23 | San Francisco | Medium — Industry networking |
+| **Actuate Global — London: Community Meetup** | Apr 30 | London | Medium — Community event |
+| **Hands-on Workshop: Scaling VLA Models with Ray** | Apr 30 | Pittsburgh | High — VLA scaling directly relevant to embodied AI |
+| **Actuate Global — Paris: Community Meetup** | May 4 | Paris | Medium — Community event |
+| **NextGen Robotics LIVE** | May 6 | Odense, Denmark | Medium — Robotics event |
+| **Actuate Global — Zurich: Field Session** | May 6 | Zurich | Medium — Field session |
+| **Actuate Global — Munich: Community Meetup** | May 7 | Munich | Medium — Community event |
+| **Open Hardware Summit** | May 22-23 | Berlin | Medium — Open hardware focus |
+| **Robotics Summit & Expo 2026** | May 27-28 | Boston | High — Major industry event |
+| **ICRA 2026** | Jun 1-5 | Vienna | Very High — Flagship robotics conference |
 
 ---
 
 ## 💡 Quick Take
 
-This issue highlights the continued convergence of **perception, planning, and control** in embodied systems. HUNT's GPS-denied approach and FusionCore's sensor fusion capabilities are particularly relevant as we build more autonomous robots for unstructured environments.
+The strongest signal this week is convergence. Navigation, fusion, planning, and safety are all becoming less academic and more deployable. That is exactly the phase where a robotics team should pay attention, because the best gains now often come not from a brand-new model, but from stitching together a tighter and more reliable system.
 
-The emphasis on **safety-critical design** (Artemis II) and **efficient trajectory optimization** (MIGHTY) reflects industry priorities that align with Xiaomi's robotics roadmap.
+**Action items:**
+1. Evaluate FusionCore for CyberOne state estimation integration
+2. Study HUNT's relative frame approach for indoor VLN scenarios
+3. Monitor ICRA 2026 program for embodied AI sessions
 
 ---
 
