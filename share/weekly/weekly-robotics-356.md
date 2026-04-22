@@ -9,6 +9,8 @@ tags: [robotics, embodied-ai, vln, ros2, drone, sensor-fusion]
 
 *April 13, 2026 | Curated for Xiaomi Robotics Embodied Intelligence Team*
 
+_原始来源: <https://weeklyrobotics.com/weekly-robotics-356>_
+
 ---
 
 ## Executive Summary
@@ -21,9 +23,16 @@ This issue highlights the continued convergence of **perception, planning, and c
 
 ## 🔥 Critical Deadlines
 
+• **Apr 15**: Robotics & Physical AI day (Mashup) — Malmö, Sweden
+• **Apr 23**: Actuate Global — San Francisco: Industry Night
 • **Apr 30**: Hands-on Workshop: Scaling VLA Models with Ray — Pittsburgh, high relevance for embodied AI work
+• **Apr 30**: Actuate Global — London: Community Meetup
+• **May 4**: Actuate Global — Paris: Community Meetup
+• **May 6**: NextGen Robotics LIVE — Odense, Denmark
+• **May 6**: Actuate Global — Zurich: Field Session
+• **May 7**: Actuate Global — Munich: Community Meetup
+• **May 22-23**: Open Hardware Summit — Berlin, Germany
 • **May 27-28**: Robotics Summit & Expo 2026 — Boston, major industry event
-• **Jun 1-5**: ICRA 2026 — Vienna, flagship robotics conference
 
 ---
 
@@ -31,17 +40,27 @@ This issue highlights the continued convergence of **perception, planning, and c
 
 ### Navigation & Mobile Robotics
 • **HUNT** — GPS-denied drone navigation using instantaneous relative frames rebuilt from onboard signals (inertial, barometric, visual) ([VLN] [High Relevance])
-• **FusionCore** — ROS 2 UKF-based sensor-fusion SDK with 3D, GNSS, IMU, wheel encoder support, production-ready ([Localization] [Very High Relevance])
+  → _原始来源: <https://www.weeklyrobotics.com/articles/2026_04_07_rethinking_drone_autonomy_gps_denied/>_
 • **MIGHTY** — Hermite spline trajectory planner with spatiotemporal optimization for agile multirotor flight ([Planning] [Medium Relevance])
+  → _原始来源: <https://github.com/mit-acl/mighty> | ArXiv: <https://arxiv.org/abs/2511.10822> | Video: <https://www.youtube.com/watch?v=Pvb-VPUdLvg>_
 
 ### Manipulation
 • *No notable manipulation-specific tools this week*
 
 ### AI Integration
 • **NASA Artemis II Fault-Tolerant Computer** — "Fail silent" architecture design for safety-critical systems ([Safety] [Medium Relevance])
+  → _原始来源: <https://cacm.acm.org/news/how-nasa-built-artemis-iis-fault-tolerant-computer/>_
 
 ### Simulation
 • *No notable simulation-specific tools this week*
+
+### Other Notable Tools
+• **FusionCore** — ROS 2 UKF-based sensor-fusion SDK with 3D, GNSS, IMU, wheel encoder support, production-ready ([Localization] [Very High Relevance])
+  → _原始来源: <https://github.com/manankharwar/fusioncore>_
+• **What I learned from making my own drone (Part I)** — Practical lessons on IMUs, DShot, and PID implementation from a drone builder ([DIY] [Low Relevance])
+  → _原始来源: <https://nbelakovski.substack.com/p/what-i-learned-from-making-my-own>_
+• **LS3 Boston Dynamics Mini Resin Printing** — Community project building a tiny replica of Boston Dynamics' AlphaDog with moving parts ([Community] [Low Relevance])
+  → _原始来源: <https://www.reddit.com/r/robotics/comments/1sj8q52/ls3_boston_dynamics_mini_resin_printing/>_
 
 ---
 
@@ -49,9 +68,16 @@ This issue highlights the continued convergence of **perception, planning, and c
 
 | Event | Date | Location | Relevance |
 |-------|------|----------|-----------|
+| **Robotics & Physical AI day (Mashup)** | Apr 15 | Malmö, Sweden | Medium — Physical AI focus |
+| **Actuate Global — San Francisco: Industry Night** | Apr 23 | San Francisco | Medium — Industry networking |
+| **Actuate Global — London: Community Meetup** | Apr 30 | London | Medium — Community event |
 | **Hands-on Workshop: Scaling VLA Models with Ray** | Apr 30 | Pittsburgh | High — VLA scaling directly relevant to our embodied AI work |
-| **Robotics Summit & Expo 2026** | May 27-28 | Boston | High — major industry event |
-| **ICRA 2026** | Jun 1-5 | Vienna | Very High — flagship robotics conference |
+| **Actuate Global — Paris: Community Meetup** | May 4 | Paris | Medium — Community event |
+| **NextGen Robotics LIVE** | May 6 | Odense, Denmark | Medium — Robotics event |
+| **Actuate Global — Zurich: Field Session** | May 6 | Zurich | Medium — Field session |
+| **Actuate Global — Munich: Community Meetup** | May 7 | Munich | Medium — Community event |
+| **Open Hardware Summit** | May 22-23 | Berlin | Medium — Open hardware focus |
+| **Robotics Summit & Expo 2026** | May 27-28 | Boston | High — Major industry event |
 
 ---
 
