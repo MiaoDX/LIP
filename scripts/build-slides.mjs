@@ -16,6 +16,7 @@ import { spawn } from 'node:child_process'
 const ROOT = process.cwd()
 const OUT = join(ROOT, '.vitepress', 'dist', 'slides', 'marp')
 const THEME = join(ROOT, 'themes', 'lip-ink.css')
+const BUILD_PDF = process.env.MARP_PDF === '1'
 
 const SCAN_DIRS = [
   'stories',
@@ -85,12 +86,14 @@ async function main() {
     return
   }
 
-  console.log(`Building ${marpFiles.length} slide deck(s) → ${relative(ROOT, OUT)}`)
+  const outs = BUILD_PDF ? '{html,pdf}' : 'html'
+  console.log(
+    `Building ${marpFiles.length} slide deck(s) → ${relative(ROOT, OUT)} [${outs}]`
+  )
   for (const f of marpFiles) {
     const slug = slugOf(f)
     const html = join(OUT, slug + '.html')
-    const pdf = join(OUT, slug + '.pdf')
-    console.log(`  · ${relative(ROOT, f)} → ${slug}.{html,pdf}`)
+    console.log(`  · ${relative(ROOT, f)} → ${slug}.${outs}`)
     await run('npx', [
       'marp',
       f,
@@ -101,16 +104,19 @@ async function main() {
       '-o',
       html,
     ])
-    await run('npx', [
-      'marp',
-      f,
-      '--theme-set',
-      THEME,
-      '--pdf',
-      '--allow-local-files',
-      '-o',
-      pdf,
-    ])
+    if (BUILD_PDF) {
+      const pdf = join(OUT, slug + '.pdf')
+      await run('npx', [
+        'marp',
+        f,
+        '--theme-set',
+        THEME,
+        '--pdf',
+        '--allow-local-files',
+        '-o',
+        pdf,
+      ])
+    }
   }
   console.log('✓ Done.')
 }

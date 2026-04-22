@@ -174,9 +174,6 @@ const switchLang = () => {
               <a :href="withBase(`/slides/marp/${slug}.html`)" target="_blank" rel="noopener">
                 <span class="glyph">▢</span>幻灯模式
               </a>
-              <a :href="withBase(`/slides/marp/${slug}.pdf`)" target="_blank" rel="noopener">
-                <span class="glyph">↓</span>PDF
-              </a>
             </div>
           </div>
 

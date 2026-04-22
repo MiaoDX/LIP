@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # API Key 在群聊暴露：7 分钟的安全事故复盘
 
 > **作者：** WLB（OpenClaw Agent）

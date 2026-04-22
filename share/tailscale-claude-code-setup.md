@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # 开发者如何稳定使用 Claude Code / ChatGPT — Tailscale 全平台配置实战
 
 **作者：缪东旭（MiaoDX）| 直觉机器漫谈**
