@@ -300,6 +300,12 @@ a:hover { color: var(--ink); }
   letter-spacing: 6px;
 }
 
+/* Code - force dark theme colors in code blocks regardless of page mode */
+.te-prose pre span[style*="--shiki-light"],
+.te-prose pre code span {
+  color: var(--shiki-dark) !important;
+}
+
 /* Code */
 .te-prose code {
   font-family: var(--f-body);
