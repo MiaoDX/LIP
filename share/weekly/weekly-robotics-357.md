@@ -30,7 +30,9 @@ _原始来源: <https://weeklyrobotics.com/weekly-robotics-357>_
 ## 🔥 近期关键节点
 
 • **4月30日** — VLA 模型 Scaling Workshop（Pittsburgh）
+
 • **5月27-28日** — Robotics Summit & Expo 2026（Boston）
+
 • **6月1-5日** — ICRA 2026（Vienna）
 
 ---

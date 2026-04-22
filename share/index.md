@@ -4,6 +4,7 @@
 
 ## Weekly Robotics 摘要
 
+- [Weekly Robotics #357](/share/weekly/weekly-robotics-357.html) — 2026-04-20
 - [Weekly Robotics #356](/share/weekly/weekly-robotics-356.html) — 2026-04-17
 
 ## 演示文稿
