@@ -308,4 +308,4 @@ issue_label 不写代码。daily_duty 不碰 auto_pr 的分支。pr_again 不开
 
 - [Introducing routines in Claude Code](https://claude.com/blog/introducing-routines-in-claude-code) — 官方发布公告，2026-04-14
 - [Routines 文档（中文）](https://code.claude.com/docs/zh-CN/scheduled-tasks)
-- [四个 routine 的完整 prompt](./prompts/README) — 可以直接复制使用
+- [四个 routine 的完整 prompt](./prompts/) — 可以直接复制使用

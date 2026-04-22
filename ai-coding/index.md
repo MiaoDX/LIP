@@ -6,7 +6,7 @@
 
 ## 实战文章
 
-- [一个人 + 多个 Routine：让 Claude Code 帮我们把想法快速完成 0 到 1](routines-multi-agent/README) — 2026-04-18，基于 Claude Code Routines 的多 agent 研发流程，在 roboharness / robowbc 两个 repo 上实测
+- [一个人 + 多个 Routine：让 Claude Code 帮我们把想法快速完成 0 到 1](routines-multi-agent/) — 2026-04-18，基于 Claude Code Routines 的多 agent 研发流程，在 roboharness / robowbc 两个 repo 上实测
 
 ## 分享材料
 
