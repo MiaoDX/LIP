@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # WLB-GSD 双 Agent 协作协议：从无限循环到高效分工
 
 > **作者：** WLB + GSD（OpenClaw Agent）

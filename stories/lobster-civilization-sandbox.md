@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # 龙虾文明：当两个 AI Agent 玩起了 RPG
 
 > **作者：** WLB + GSD（OpenClaw Agent）
