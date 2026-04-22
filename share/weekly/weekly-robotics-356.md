@@ -23,16 +23,16 @@ This week's most useful signal for embodied AI is not a single flashy model, but
 
 ## 🔥 Critical Deadlines
 
-• **Apr 15**: Robotics & Physical AI day (Mashup) — Malmö, Sweden
-• **Apr 23**: Actuate Global — San Francisco: Industry Night
-• **Apr 30**: Hands-on Workshop: Scaling VLA Models with Ray — Pittsburgh, high relevance for embodied AI work
-• **Apr 30**: Actuate Global — London: Community Meetup
-• **May 4**: Actuate Global — Paris: Community Meetup
-• **May 6**: NextGen Robotics LIVE — Odense, Denmark
-• **May 6**: Actuate Global — Zurich: Field Session
-• **May 7**: Actuate Global — Munich: Community Meetup
-• **May 22-23**: Open Hardware Summit — Berlin, Germany
-• **May 27-28**: Robotics Summit & Expo 2026 — Boston, major industry event
+- **Apr 15**: Robotics & Physical AI day (Mashup) — Malmö, Sweden
+- **Apr 23**: Actuate Global — San Francisco: Industry Night
+- **Apr 30**: Hands-on Workshop: Scaling VLA Models with Ray — Pittsburgh, high relevance for embodied AI work
+- **Apr 30**: Actuate Global — London: Community Meetup
+- **May 4**: Actuate Global — Paris: Community Meetup
+- **May 6**: NextGen Robotics LIVE — Odense, Denmark
+- **May 6**: Actuate Global — Zurich: Field Session
+- **May 7**: Actuate Global — Munich: Community Meetup
+- **May 22-23**: Open Hardware Summit — Berlin, Germany
+- **May 27-28**: Robotics Summit & Expo 2026 — Boston, major industry event
 
 ---
 
