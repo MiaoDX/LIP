@@ -17,6 +17,12 @@ const category = computed(() => frontmatter.value.category || '')
 const tags = computed(() => frontmatter.value.tags || [])
 const dropCap = computed(() => frontmatter.value.dropCap !== false)
 
+const hasMarp = computed(() => frontmatter.value.marp === true)
+const slug = computed(() => {
+  const p = route.path.replace(/\/$/, '')
+  return p.split('/').pop() || ''
+})
+
 // 作者信息
 const authorBio = computed(() => frontmatter.value.authorBio || theme.value.authorBio || {
   name: 'MiaoDX × AI Agents',
@@ -163,6 +169,15 @@ const switchLang = () => {
             <div class="te-tags" v-if="tags.length">
               <span class="te-tag" v-for="tag in tags" :key="tag">{{ tag }}</span>
             </div>
+            <div v-if="hasMarp" class="te-marp-stamp">
+              <span class="te-marp-label">双渲</span>
+              <a :href="withBase(`/slides/marp/${slug}.html`)" target="_blank" rel="noopener">
+                <span class="glyph">▢</span>幻灯模式
+              </a>
+              <a :href="withBase(`/slides/marp/${slug}.pdf`)" target="_blank" rel="noopener">
+                <span class="glyph">↓</span>PDF
+              </a>
+            </div>
           </div>
 
           <!-- Content -->
@@ -211,5 +226,52 @@ const switchLang = () => {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.te-marp-stamp {
+  display: inline-flex;
+  margin: 8px 0 32px;
+  border: 1px solid var(--vp-c-text-1, #222);
+  background: #f2ede4;
+}
+.te-marp-stamp .te-marp-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  background: var(--vp-c-text-1, #222);
+  color: var(--vp-c-bg, #f8f5ef);
+  border-right: 1px solid var(--vp-c-text-1, #222);
+  display: inline-flex;
+  align-items: center;
+}
+.te-marp-stamp a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--vp-c-text-1, #222);
+  text-decoration: none;
+  padding: 10px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-right: 1px solid var(--vp-c-text-1, #222);
+  transition: background 0.15s, color 0.15s;
+}
+.te-marp-stamp a:last-child {
+  border-right: none;
+}
+.te-marp-stamp a:hover {
+  background: rgba(139, 69, 19, 0.08);
+  color: #8b4513;
+}
+.te-marp-stamp .glyph {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 14px;
+  font-weight: 900;
 }
 </style>
