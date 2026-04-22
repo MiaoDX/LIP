@@ -8,6 +8,13 @@ export default defineConfig({
   ignoreDeadLinks: true,
   cleanUrls: true,
 
+  markdown: {
+    theme: {
+      light: 'github-light',
+      dark: 'github-dark'
+    }
+  },
+
   locales: {
     root: {
       label: '中文',
