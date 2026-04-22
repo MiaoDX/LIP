@@ -1,36 +1,39 @@
+---
+title: "Weekly Robotics #356 — Digest for Xiaomi Robotics EI Team"
+date: 2026-04-17
+issue: 356
+tags: [robotics, embodied-ai, vln, ros2, drone, sensor-fusion]
+---
+
 # Weekly Robotics #356
 
 *April 13, 2026 | Curated for Xiaomi Robotics Embodied Intelligence Team*
 
 ---
 
-## 🔑 Top Picks This Week
+## Executive Summary
 
-### **HUNT** — GPS-Denied Drone Navigation (9/10)
-A drone autonomy framework for GPS-denied, unstructured environments that replaces persistent global localization with **instantaneous relative frames** rebuilt from directly observable onboard signals (inertial attitude, barometric altitude, visual motion cues, target geometry).
-
-**Relevance to Xiaomi:** Directly applicable to indoor VLN scenarios where GPS is unavailable. The relative frame reconstruction approach aligns with our embodied AI research on navigation without absolute positioning.
+This issue highlights the continued convergence of **perception, planning, and control** in embodied systems. Key developments include GPS-denied navigation frameworks, production-ready sensor fusion SDKs, and safety-critical fault-tolerant architectures — all directly relevant to Xiaomi's robotics roadmap.
 
 ---
 
-### **FusionCore** — ROS 2 Sensor Fusion SDK (10/10)
-Open-source ROS 2 UKF-based sensor-fusion SDK with native support for 3D, GNSS, IMUs, wheel encoders, and more. Production-ready implementation.
+## 🔥 Critical Deadlines
 
-**Relevance to Xiaomi:** Immediate applicability for CyberOne and other robotics projects. The UKF-based approach with multi-sensor support matches our ROS 2 architecture needs for state estimation.
-
----
-
-### **MIGHTY** — Hermite Spline Trajectory Planning (8/10)
-Hermite spline-based planner performing spatiotemporal optimization while fully leveraging the continuous search space of a spline. Enables highly agile multirotor flight with reduced travel time and computation vs. state-of-the-art.
-
-**Relevance to Xiaomi:** Transferable to manipulator and mobile robot trajectory planning. The spline-based continuous optimization approach could enhance our motion planning stack.
+• **Apr 30**: Hands-on Workshop: Scaling VLA Models with Ray — Pittsburgh, high relevance for embodied AI work
+• **May 27-28**: Robotics Summit & Expo 2026 — Boston, major industry event
+• **Jun 1-5**: ICRA 2026 — Vienna, flagship robotics conference
 
 ---
 
-### **NASA Artemis II Fault-Tolerant Computer** (7/10)
-Design write-up of a fault-tolerant computer using "fail silent" architecture — if any redundant system has an issue, it remains silent, and the system always takes the available output.
+## 🎯 Key Highlights for Embodied AI Teams
 
-**Relevance to Xiaomi:** Interesting reference for safety-critical systems design, especially for humanoid robots operating near humans.
+### Navigation & Mobile Robotics
+• **HUNT** — GPS-denied drone navigation using instantaneous relative frames rebuilt from onboard signals (inertial, barometric, visual) ([VLN] [High Relevance])
+• **FusionCore** — ROS 2 UKF-based sensor-fusion SDK with 3D, GNSS, IMU, wheel encoder support, production-ready ([Localization] [Very High Relevance])
+• **MIGHTY** — Hermite spline trajectory planner with spatiotemporal optimization for agile multirotor flight ([Planning] [Medium Relevance])
+
+### AI Integration
+• **NASA Artemis II Fault-Tolerant Computer** — "Fail silent" architecture design for safety-critical systems ([Safety] [Medium Relevance])
 
 ---
 
@@ -46,9 +49,7 @@ Design write-up of a fault-tolerant computer using "fail silent" architecture �
 
 ## 💡 Quick Take
 
-This issue highlights the continued convergence of **perception, planning, and control** in embodied systems. HUNT's GPS-denied approach and FusionCore's sensor fusion capabilities are particularly relevant as we build more autonomous robots for unstructured environments.
-
-The emphasis on **safety-critical design** (Artemis II) and **efficient trajectory optimization** (MIGHTY) reflects industry priorities that align with Xiaomi's robotics roadmap.
+HUNT's GPS-denied approach and FusionCore's sensor fusion capabilities are particularly relevant as we build more autonomous robots for unstructured environments. The emphasis on safety-critical design (Artemis II) and efficient trajectory optimization (MIGHTY) reflects industry priorities that align with Xiaomi's robotics roadmap.
 
 ---
 
