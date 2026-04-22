@@ -1,0 +1,148 @@
+/* ════════════════════════════════════════════════════════
+   LIP Ink · Marp theme
+   Matches the VitePress site — typewriter × editorial.
+   Usage in markdown frontmatter:
+     ---
+     marp: true
+     theme: lip-ink
+     paginate: true
+     ---
+   ════════════════════════════════════════════════════════ */
+
+/* @theme lip-ink */
+
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900&family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css');
+
+:root {
+  --paper:        #f8f5ef;
+  --paper-warm:   #f2ede4;
+  --ink:          #222;
+  --ink-body:     #333;
+  --ink-light:    #555;
+  --ink-muted:    #999;
+  --border:       #ddd;
+  --accent:       #8b4513;
+  --accent-bg:    rgba(139, 69, 19, 0.08);
+  --accent-green: #5a7a50;
+  --code-inline-bg:     #f0ece4;
+  --code-inline-fg:     #8b4513;
+  --code-inline-border: #e0d8cc;
+
+  --f-body: 'Courier Prime', 'Courier New', 'LXGW WenKai', 'PingFang SC', 'Noto Sans SC', monospace;
+  --f-head: 'Playfair Display', Georgia, 'Noto Serif SC', 'Songti SC', serif;
+  --f-ui:   'DM Sans', -apple-system, 'Noto Sans SC', 'PingFang SC', sans-serif;
+}
+
+section {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 28px;
+  line-height: 1.7;
+  padding: 72px 96px;
+  position: relative;
+}
+
+/* Top ink bar — newspaper masthead rule */
+section::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 10px;
+  background: var(--ink);
+}
+
+/* Page number */
+section::after {
+  font-family: var(--f-ui); font-size: 16px;
+  color: var(--ink-muted); letter-spacing: 2px;
+}
+
+/* ─── Headings ─── */
+h1, h2, h3, h4 { font-family: var(--f-head); color: var(--ink); }
+h1 { font-size: 92px; font-weight: 900; line-height: 1.05; margin: 0 0 20px; }
+h2 { font-size: 54px; font-weight: 900; border-bottom: 3px solid var(--ink);
+     padding-bottom: 14px; margin: 0 0 36px; }
+h3 { font-size: 44px; font-weight: 700; margin: 0 0 18px; }
+h4 { font-size: 28px; font-weight: 700; color: var(--ink-light); }
+
+/* ─── Text ─── */
+p { margin: 0 0 14px; }
+strong { color: var(--ink); font-weight: 700; }
+em { font-style: italic; color: var(--ink-light); }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+ul, ol { padding-left: 32px; margin: 0 0 14px; }
+li { font-size: 26px; line-height: 1.75; margin: 6px 0; }
+li::marker { color: var(--ink-muted); }
+
+code {
+  font-family: var(--f-body);
+  background: var(--code-inline-bg);
+  color: var(--code-inline-fg);
+  border: 1px solid var(--code-inline-border);
+  padding: 2px 8px; border-radius: 4px;
+}
+
+pre {
+  background: #1e1e2e; color: #cdd6f4;
+  border: 1px solid #313244; border-radius: 6px;
+  padding: 20px 24px; font-size: 20px; line-height: 1.6;
+  overflow: auto;
+}
+pre code { background: transparent; color: inherit; border: none; padding: 0; }
+
+blockquote {
+  font-family: var(--f-head); font-size: 56px; font-weight: 700;
+  text-align: center; font-style: normal;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 36px 0; margin: 40px 0;
+  color: var(--ink);
+}
+
+/* ════════════════════════════════════════════════
+   Slide variants — via <!-- _class: x --> directive
+   ════════════════════════════════════════════════ */
+
+section.title {
+  display: flex; flex-direction: column; justify-content: center;
+}
+section.title .cat {
+  align-self: flex-start;
+  font-family: var(--f-ui); font-size: 18px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--accent); background: var(--accent-bg);
+  padding: 6px 18px; margin-bottom: 28px;
+}
+section.title .meta {
+  font-family: var(--f-ui); font-size: 18px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ink-muted);
+  border-top: 3px solid var(--ink);
+  padding-top: 20px; margin-top: 48px;
+  max-width: 800px;
+}
+
+section.incident .card {
+  background: var(--paper-warm);
+  border: 1px solid var(--border);
+  padding: 48px 56px; position: relative;
+  margin-top: 64px;
+}
+section.incident .card::before {
+  content: '事故'; position: absolute;
+  top: -18px; left: 48px;
+  background: var(--accent); color: #fff;
+  padding: 6px 22px;
+  font-family: var(--f-ui); font-size: 18px;
+  font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+}
+
+section.quote {
+  text-align: center; padding: 180px 160px;
+}
+section.quote .mark {
+  font-family: var(--f-head); font-size: 140px;
+  font-weight: 900; color: var(--accent);
+  line-height: 0.6;
+}
