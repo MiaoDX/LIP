@@ -49,16 +49,16 @@ features:
 
 ## 两大内容主线
 
-### [Part A — AI Coding](/ai-coding/)
+### [Part A — AI Coding](/ai-coding)
 
 - 用 AI 辅助编程的真实实践，正在积累中
 - 目前案例集中在 OpenClaw 方向
 
-### [Part B — OpenClaw](/openclaw/)
+### [Part B — OpenClaw](/openclaw)
 
 - 聚焦部署、配置、最佳实践、实战案例四条线
 - 目标是让个人或小团队低成本搭建可持续运行的 Agent 体系
-- 推荐入口：[双 Agent 启动日志](/stories/2026-03-dual-agent-start) → [Gateway 宕机复盘](/stories/gateway-6hour-outage)
+- 推荐入口：[`双 Agent 启动日志`](/stories/2026-03-dual-agent-start) → [`Gateway 宕机复盘`](/stories/gateway-6hour-outage)
 
 ### [规则 (Lessons)](/lessons/)
 

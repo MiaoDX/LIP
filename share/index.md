@@ -4,7 +4,6 @@
 
 ## Weekly Robotics 摘要
 
-- [Weekly Robotics #357](/share/weekly/weekly-robotics-357.html) — 2026-04-20
 - [Weekly Robotics #356](/share/weekly/weekly-robotics-356.html) — 2026-04-17
 
 ## 演示文稿
@@ -16,6 +15,5 @@
 
 ## 在线文章
 
-- [0410 北京，OpenClaw 线下活动现场](/share/openclaw-meetup-beijing-2026-03) — 2026-04-10，活动介绍与现场图片
-- [两个 AI Agent、两个平台、一杯咖啡的成本 —— 我们的多 Agent 协作实践](/share/meetup-multiagent-practice) — 2026-03-15，OpenClaw Meetup 北京站分享整理
+- [两个 AI Agent、两个平台、一杯咖啡的成本 —— 我们的多 Agent 协作实践](/share/meetup-beijing-2026-03) — 2026-03-15，OpenClaw Meetup 北京站分享整理
 - [开发者如何稳定使用 Claude Code / ChatGPT — Tailscale 全平台配置实战](/share/tailscale-claude-code-setup.html) — 2026-03-22

@@ -6,14 +6,6 @@ export default defineConfig({
   lang: 'zh-CN',
   base: '/LIP/',
   ignoreDeadLinks: true,
-  cleanUrls: true,
-
-  markdown: {
-    theme: {
-      light: 'github-light',
-      dark: 'github-dark'
-    }
-  },
 
   locales: {
     root: {
@@ -22,7 +14,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '首页', link: '/' },
-          { text: '月报', link: '/now/2026-04' },
+          { text: '月报', link: '/now/2026-03' },
           { text: 'AI Coding', link: '/ai-coding/' },
           { text: 'OpenClaw', link: '/openclaw/' },
           { text: '经验', link: '/lessons/' },
@@ -89,7 +81,6 @@ export default defineConfig({
           text: '快速开始',
           items: [
             { text: '首页（总览）', link: '/' },
-          { text: '2026 年 4 月月报', link: '/now/2026-04' },
             { text: '2026 年 3 月月报', link: '/now/2026-03' },
             { text: '路线图', link: '/ROADMAP' },
           ],
@@ -135,7 +126,6 @@ export default defineConfig({
           items: [
             { text: '专栏入口', link: '/bestpractice/' },
             { text: '🌍 25 家公司全景图', link: '/bestpractice/panorama' },
-            { text: 'Claude Code Auto Mode', link: '/bestpractice/anthropic-claude-code-auto-mode' },
             { text: 'Harness 设计', link: '/bestpractice/anthropic-harness-design' },
             { text: 'Context Engineering', link: '/bestpractice/anthropic-context-engineering' },
             { text: 'Multi-Agent Research', link: '/bestpractice/anthropic-multi-agent-research' },
@@ -146,12 +136,11 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: '分享入口', link: '/share/' },
-            { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab.html' },
-            { text: '0410 北京 OpenClaw 活动现场', link: '/share/openclaw-meetup-beijing-2026-03' },
+            { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab' },
             { text: 'Tailscale + Claude Code 配置实战', link: '/share/tailscale-claude-code-setup' },
-            { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3.html' },
-            { text: '低成本多 Agent 部署', link: '/share/lowcost-multiplatform-multiagent-deploy.html' },
-            { text: 'Claws Civilization', link: '/share/claws-civilization.html' },
+            { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3' },
+            { text: '低成本多 Agent 部署', link: '/share/lowcost-multiplatform-multiagent-deploy' },
+            { text: 'Claws Civilization', link: '/share/claws-civilization' },
           ],
         },
       ],
@@ -176,7 +165,7 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'OpenClaw Overview', link: '/en/openclaw/' },
-            { text: 'Deployment Guide', link: '/resources/deployment-guide-v2' },
+            { text: 'Deployment Guide', link: '/en/resources/deployment-guide-v2' },
             { text: '📖 Stories', link: '/en/stories/' },
           ],
         },
@@ -204,11 +193,11 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'Share Index', link: '/en/share/' },
-            { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab.html' },
-            { text: 'Tailscale + Claude Code Setup', link: '/share/tailscale-claude-code-setup.html' },
-            { text: 'OpenClaw Sharing v3', link: '/share/openclaw-sharing-v3.html' },
-            { text: 'Low-Cost Multi-Agent Deploy', link: '/share/lowcost-multiplatform-multiagent-deploy.html' },
-            { text: 'Claws Civilization', link: '/share/claws-civilization.html' },
+            { text: 'AI Coding for Research', link: '/en/share/AICodingRaiseLab' },
+            { text: 'Tailscale + Claude Code Setup', link: '/en/share/tailscale-claude-code-setup' },
+            { text: 'OpenClaw Sharing v3', link: '/en/share/openclaw-sharing-v3' },
+            { text: 'Low-Cost Multi-Agent Deploy', link: '/en/share/lowcost-multiplatform-multiagent-deploy' },
+            { text: 'Claws Civilization', link: '/en/share/claws-civilization' },
           ],
         },
       ],

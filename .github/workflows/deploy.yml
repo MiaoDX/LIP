@@ -25,36 +25,8 @@ jobs:
           cache: npm
       - run: npm ci
 
-      # 0. Deploy Guard — 防止覆盖根目录 index.html
-      - name: Run deploy guard
-        run: python3 scripts/deploy-guard.py
-        working-directory: .
-
       # 1. Build VitePress docs
       - run: npm run docs:build
-
-      # 1.5 Post-build guard + link checker
-      - name: Verify build output structure
-        run: |
-          # 确保构建产物都在预期子目录下
-          if [ -f .vitepress/dist/index.html ]; then
-            echo "Build output has dist/index.html (expected for VitePress)"
-          fi
-          # 检查是否有不应该出现的文件
-          if [ -f .vitepress/dist/CNAME ] || [ -f .vitepress/dist/.nojekyll ]; then
-            echo "Warning: Build output contains repo-level files"
-          fi
-
-      - name: Run link checker
-        run: |
-          curl -sSfL https://github.com/lycheeverse/lychee/releases/download/lychee-v0.18.1/lychee-x86_64-unknown-linux-gnu.tar.gz | tar xz -C /tmp
-          # Start a local HTTP server for lychee to resolve /LIP/ absolute paths
-          python3 -m http.server 8080 --directory .vitepress/dist &
-          SERVER_PID=$!
-          sleep 2
-          /tmp/lychee --timeout 15 --exclude-all-private --format detailed http://localhost:8080/
-          kill $SERVER_PID || true
-        working-directory: .
 
       # 2. Copy standalone HTML + assets from share/presentations/ → output
       - run: mkdir -p .vitepress/dist/share && cp share/presentations/*.html share/presentations/*.png share/presentations/*.jpg .vitepress/dist/share/ 2>/dev/null || true

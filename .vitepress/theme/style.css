@@ -300,39 +300,29 @@ a:hover { color: var(--ink); }
   letter-spacing: 6px;
 }
 
-/* Code - force dark theme colors in code blocks regardless of page mode */
-.te-prose pre span[style*="--shiki-light"],
-.te-prose pre code span {
-  color: var(--shiki-dark) !important;
-}
-
 /* Code */
 .te-prose code {
   font-family: var(--f-body);
-  font-size: 0.9em;
-  background: #f0ece4;
+  font-size: 15px;
+  background: var(--paper-warm);
   padding: 2px 6px;
-  border-radius: 4px;
-  color: #8b4513;
-  border: 1px solid #e0d8cc;
+  border-radius: 2px;
+  color: var(--accent);
 }
 .te-prose pre {
-  background: #1e1e2e;
-  color: #cdd6f4;
-  padding: 20px 24px;
-  margin: 24px 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 22px 24px;
+  margin: 24px -16px;
   font-size: 14px;
   line-height: 1.7;
   overflow-x: auto;
-  border-radius: 8px;
-  border: 1px solid #313244;
+  border-left: 4px solid var(--accent);
 }
 .te-prose pre code {
   background: none;
   padding: 0;
   color: inherit;
-  border: none;
-  font-size: inherit;
 }
 
 /* Table */

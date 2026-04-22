@@ -43,9 +43,8 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 6. [azure-config-incident.md](lessons/azure-config-incident.md) — "只添加"变成了"顺便优化"
 7. [cron-anti-hallucination.md](lessons/cron-anti-hallucination.md) — 傅盛"先复述再执行"
 
-**OpenClaw 系列**（4 部分，待撰写）：
-- 部署、配置、最佳实践、实战案例
-- 相关资源：[部署指南](resources/deployment-guide-v2.md) · [配置模板](resources/config-guide.md) · [OpenClaw 总览](openclaw/index.md)
+**OpenClaw 系列**（4 部分）：
+8. [Part 1: 部署](stories/openclaw-01-deployment.md) → [Part 2: 配置](stories/openclaw-02-configuration.md) → [Part 3: 最佳实践](stories/openclaw-03-best-practices.md) → [Part 4: 实战案例](stories/openclaw-04-practical-cases.md)
 
 ## 背景
 

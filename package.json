@@ -4,9 +4,9 @@
   "description": "> \"记录我从 0 到 1 搭建 AI Agent 团队的进化过程。 > 不是教程，是真实踩坑日志。\"",
   "main": "index.js",
   "scripts": {
-    "docs:dev": "npx vitepress dev",
-    "docs:build": "npx vitepress build",
-    "docs:preview": "npx vitepress preview",
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview",
     "slides:dev": "slidev slides/slides.md --open",
     "slides:build": "slidev build slides/slides.md --base /LIP/slides/slidev/ --out ../../.vitepress/dist/slides/slidev",
     "slides:export": "slidev export slides/slides.md",
