@@ -15,6 +15,8 @@ tags: [robotics, embodied-ai, vln, ros2, drone, sensor-fusion]
 
 This issue highlights the continued convergence of **perception, planning, and control** in embodied systems. Key developments include GPS-denied navigation frameworks, production-ready sensor fusion SDKs, and safety-critical fault-tolerant architectures — all directly relevant to Xiaomi's robotics roadmap.
 
+**Focus areas this week:** Navigation without absolute positioning, multi-sensor state estimation, and trajectory optimization for agile flight.
+
 ---
 
 ## 🔥 Critical Deadlines
@@ -32,8 +34,14 @@ This issue highlights the continued convergence of **perception, planning, and c
 • **FusionCore** — ROS 2 UKF-based sensor-fusion SDK with 3D, GNSS, IMU, wheel encoder support, production-ready ([Localization] [Very High Relevance])
 • **MIGHTY** — Hermite spline trajectory planner with spatiotemporal optimization for agile multirotor flight ([Planning] [Medium Relevance])
 
+### Manipulation
+• *No notable manipulation-specific tools this week*
+
 ### AI Integration
 • **NASA Artemis II Fault-Tolerant Computer** — "Fail silent" architecture design for safety-critical systems ([Safety] [Medium Relevance])
+
+### Simulation
+• *No notable simulation-specific tools this week*
 
 ---
 
@@ -50,6 +58,11 @@ This issue highlights the continued convergence of **perception, planning, and c
 ## 💡 Quick Take
 
 HUNT's GPS-denied approach and FusionCore's sensor fusion capabilities are particularly relevant as we build more autonomous robots for unstructured environments. The emphasis on safety-critical design (Artemis II) and efficient trajectory optimization (MIGHTY) reflects industry priorities that align with Xiaomi's robotics roadmap.
+
+**Action items:**
+1. Evaluate FusionCore for CyberOne state estimation integration
+2. Study HUNT's relative frame approach for indoor VLN scenarios
+3. Monitor ICRA 2026 program for embodied AI sessions
 
 ---
 
