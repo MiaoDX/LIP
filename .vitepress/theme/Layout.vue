@@ -19,7 +19,7 @@ const dropCap = computed(() => frontmatter.value.dropCap !== false)
 
 const hasMarp = computed(() => frontmatter.value.marp === true)
 const slug = computed(() => {
-  const p = route.path.replace(/\/$/, '')
+  const p = route.path.replace(/\/$/, '').replace(/\.html$/, '')
   return p.split('/').pop() || ''
 })
 
