@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif">
+  <style>
+    .node { fill: #fff; stroke: #333; stroke-width: 1.5; }
+    .start { fill: #dbeafe; stroke: #1d4ed8; }
+    .decision { fill: #fef3c7; stroke: #b45309; }
+    .end-good { fill: #dcfce7; stroke: #15803d; }
+    .end-partial { fill: #fef9c3; stroke: #a16207; }
+    .end-stuck { fill: #fee2e2; stroke: #b91c1c; }
+    .title { font-size: 14px; font-weight: 600; fill: #111; }
+    .subtitle { font-size: 11px; fill: #4b5563; }
+    .state-tag { font-size: 11px; font-weight: 600; font-family: 'SF Mono', Consolas, monospace; }
+    .action { font-size: 11px; fill: #374151; }
+    .arrow { fill: none; stroke: #6b7280; stroke-width: 1.5; }
+    .arrow-label { font-size: 12px; fill: #6b7280; font-weight: 600; }
+  </style>
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- Start: PR pushed -->
+  <rect x="300" y="20" width="220" height="50" rx="6" class="node start"/>
+  <text x="410" y="42" text-anchor="middle" class="title">auto_pr 推完 PR</text>
+  <text x="410" y="60" text-anchor="middle" class="subtitle">进入自评阶段</text>
+
+  <path d="M 410 70 L 410 110" class="arrow" marker-end="url(#arrow2)"/>
+
+  <!-- Decision diamond -->
+  <polygon points="410,115 620,200 410,285 200,200" class="node decision"/>
+  <text x="410" y="190" text-anchor="middle" class="title">完成度如何？</text>
+  <text x="410" y="210" text-anchor="middle" class="subtitle">对照 issue 描述自检</text>
+
+  <!-- Three branches -->
+  <path d="M 200 200 L 125 330" class="arrow" marker-end="url(#arrow2)"/>
+  <text x="130" y="260" class="arrow-label">做完</text>
+
+  <path d="M 410 285 L 410 330" class="arrow" marker-end="url(#arrow2)"/>
+  <text x="425" y="310" class="arrow-label">做一半</text>
+
+  <path d="M 620 200 L 695 330" class="arrow" marker-end="url(#arrow2)"/>
+  <text x="660" y="260" class="arrow-label">卡住</text>
+
+  <!-- End states -->
+  <!-- FULLY RESOLVED -->
+  <rect x="20" y="335" width="220" height="110" rx="6" class="node end-good"/>
+  <text x="130" y="360" text-anchor="middle" class="state-tag" fill="#15803d">FULLY RESOLVED</text>
+  <line x1="40" y1="370" x2="220" y2="370" stroke="#15803d" stroke-width="0.8"/>
+  <text x="130" y="392" text-anchor="middle" class="action">✓ 合入 PR</text>
+  <text x="130" y="410" text-anchor="middle" class="action">✓ 关 issue</text>
+  <text x="130" y="430" text-anchor="middle" class="subtitle">下一轮挑下一个 issue</text>
+
+  <!-- PARTIALLY DONE -->
+  <rect x="300" y="335" width="220" height="110" rx="6" class="node end-partial"/>
+  <text x="410" y="360" text-anchor="middle" class="state-tag" fill="#a16207">PARTIALLY DONE</text>
+  <line x1="320" y1="370" x2="500" y2="370" stroke="#a16207" stroke-width="0.8"/>
+  <text x="410" y="392" text-anchor="middle" class="action">✓ 合入 PR</text>
+  <text x="410" y="410" text-anchor="middle" class="action">✓ issue 下留 checklist</text>
+  <text x="410" y="430" text-anchor="middle" class="subtitle">不关 issue — 下轮继续</text>
+
+  <!-- DIMINISHING RETURNS -->
+  <rect x="580" y="335" width="220" height="110" rx="6" class="node end-stuck"/>
+  <text x="690" y="360" text-anchor="middle" class="state-tag" fill="#b91c1c">DIMINISHING RETURNS</text>
+  <line x1="600" y1="370" x2="780" y2="370" stroke="#b91c1c" stroke-width="0.8"/>
+  <text x="690" y="392" text-anchor="middle" class="action">✗ 不合入</text>
+  <text x="690" y="410" text-anchor="middle" class="action">留 [deferred] comment</text>
+  <text x="690" y="430" text-anchor="middle" class="subtitle">等人介入或下轮重试</text>
+
+  <!-- Footer note -->
+  <text x="410" y="470" text-anchor="middle" class="subtitle" style="font-size:11px;">
+    三态自评的核心：给 agent 一个"做一半也 OK"的出口 — 它反而会诚实汇报
+  </text>
+</svg>
