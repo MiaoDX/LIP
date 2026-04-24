@@ -1,5 +1,5 @@
 ---
-title: "Weekly Robotics #357 — Digest for Xiaomi Robotics Engineering Infrastructure Team"
+title: "Weekly Robotics #357 — Digest for Xiaomi Autonomous Driving and Robotics Team"
 date: 2026-04-24
 issue: 357
 tags: [robotics, embodied-ai, vla, vln, ros2, humanoid, simulation]
@@ -7,7 +7,7 @@ tags: [robotics, embodied-ai, vla, vln, ros2, humanoid, simulation]
 
 # Weekly Robotics #357
 
-*April 20, 2026 | Curated for Xiaomi Robotics Engineering Infrastructure Team*
+*April 20, 2026 | Curated for Xiaomi Autonomous Driving and Robotics Team*
 
 ---
 
@@ -77,7 +77,7 @@ A Chinese humanoid robot completed a 13-mile half-marathon in 50 minutes and 26 
 
 This issue marks a **pivot point in embodied AI architecture**. Three of the top stories (mimic-video, Gemini ER 1.6, Pi0.7) represent different approaches to the same problem: moving beyond static VLA paradigms toward more dynamic, video-conditioned, and compositional reasoning.
 
-**For Xiaomi Engineering Infrastructure Team, the key signals are:**
+**For Xiaomi Autonomous Driving and Robotics Team, the key signals are:**
 
 1. **Video-Action Models are the next VLA** — mimic-video's 10× efficiency gain suggests the field is ready for a generational shift. Our research roadmap should evaluate VAM architectures alongside continued VLA investment.
 
