@@ -21,7 +21,7 @@
 - [x] `openclaw-01-deployment.md` — 部署踩坑
 - [x] `openclaw-02-configuration.md` — 配置优化
 - [x] `openclaw-03-best-practices.md` — 最佳实践
-- [x] `openclaw-04-practical-cases.md` — 实战案例
+- [x] `openclaw-01-deployment.md` → `openclaw-02-configuration.md` → `openclaw-03-best-practices.md` → `openclaw-04-practical-cases.md` — 已整合到 [openclaw/](/openclaw/)
 - [x] `fusheng-lobster-experiment.md` — 傅盛龙虾实验
 - [x] `gateway-6hour-outage.md` — 6 小时宕机复盘
 - [x] `wechat-scraping-war.md` — 微信抓取攻防战
