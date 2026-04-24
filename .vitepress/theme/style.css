@@ -349,6 +349,11 @@ a:hover { color: var(--ink); }
 .te-prose td { color: var(--ink-light); }
 .te-prose tr:hover td { color: var(--ink); }
 
+/* 日期列不换行 */
+.te-prose td:first-child {
+  white-space: nowrap;
+}
+
 /* Images */
 .te-prose img {
   max-width: 100%;
