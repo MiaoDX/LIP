@@ -1,5 +1,7 @@
 # Meetup 分享大纲（初版）
 
+**分享题目：借助 Claude Code Routine 把想法快速完成 0 到 1**
+
 > 基于公众号文章 [`index.md`](./index.md) 扩充。
 > 时长目标：18–20 min（不紧）。
 > 现场 demo：用电脑。
