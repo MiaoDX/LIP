@@ -24,8 +24,8 @@
 | 6   | docfit 4 个 milestone 走到哪了 | 4 min  | 5       | （主要用新截图）                 |
 | 7   | 翻过的车                   | 1 min  | 1       | "翻车"列表（用文章原图）           |
 | 8   | 现场 demo                 | 2 min  | 0（切电脑）| —                              |
-| 9   | What's next + 收尾         | 1 min  | 1       | "What's Next"                  |
-|     | **合计**                  | 22 min | ~19 张  |                                 |
+| 9   | 边界 + 收尾                | 2 min  | 2       | "适用边界" + 结尾                |
+|     | **合计**                  | 23 min | ~20 张  |                                 |
 
 ---
 
@@ -248,23 +248,36 @@
 
 ---
 
-## 9. What's next + 收尾（1 min, 1 slide）
+## 9. 边界 + 收尾（2 min, 2 slides）
 
-> 复用：文章"What's Next"（第 263–281 行）+ 结尾（第 287–298 行）。
+> 复用：文章"适用边界"（第 243–259 行）+ 结尾（第 287–298 行）。
 >
-> **适用边界**这一节暂时不放，等大纲锁定之后再决定要不要补回。
+> 注：本次先不讲 What's next（OpenClaw / meta-scheduler 那块）；详细资源链接列表也暂不放，等大纲锁定后再补。
 
-**Slide 18 — What's next + 收尾**
+**Slide 18 — 适用边界**
 
-- 一句话 What's next（第 269–279 行压缩）：把调度权也交给 agent——OpenClaw 当 meta-scheduler，自然语言指令进、routine 自动触发
+直接列原文：
+
+适合的场景：
+
+- 产出**可视化强**的项目
+- **新想法到原型阶段**（60–70 分目标）
+- 工具类、SDK 类、有明确 spec 的功能
+- **独立模块较多**的 repo
+
+不适合的场景：
+
+- 深度调试 / 硬件交互 / 主观审美 / 复杂线上状态
+
+收一句（第 259 行原文）：**把 routine 当 senior intern 用，不是当 senior engineer 用。**
+
+**Slide 19 — 收尾**
+
 - 一句话总结（第 287 行原文）：
 
   > Opus 聊方向 → 拆 issue → auto_pr 每小时干一点 → daily routines 每天兜底 → 人只做 review 和方向把控
 
-- 资源链接：
-  - 公众号文章（在 LIP 仓库 ai-coding/routines-multi-agent/index.md）
-  - 4 个 routine 的完整 prompt
-  - docfit：private 中，跑稳后开源
+- 公众号文章可以提一下：[`ai-coding/routines-multi-agent/index.md`](./index.md)
 - 二维码（slide 右下角并排）：
   - 公众号 · 直觉机器漫谈：复用 [`public/share/qr-gzh.jpg`](../../public/share/qr-gzh.jpg)
   - 个人微信 · 缪东旭：复用 [`public/share/qr-personal.jpg`](../../public/share/qr-personal.jpg)
