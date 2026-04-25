@@ -19,10 +19,11 @@
 | 3   | 为什么必须是云端          | 2 min  | 1–2     | "为什么必须是云端"段（原样）   |
 | 4   | 4 routine 架构            | 3 min  | 3       | "架构总览" + "四个 routine 细节" 压缩 |
 | 5   | 暗线：4 个 agent 怎么不打架 | 3 min  | 2       | "暗线"段（基本原样）            |
-| 6   | 实测 + 翻过的车            | 2 min  | 2       | "实测"段 + 翻车列表             |
-| 7   | 现场 demo                 | 2 min  | 0（切电脑）| —                              |
-| 8   | 边界 + What's next + 收尾  | 2 min  | 2       | "适用边界" + "What's Next"      |
-|     | **合计**                  | 20 min | ~16 张  |                                 |
+| 6   | docfit 4 个 milestone 走到哪了 | 4 min  | 5       | （主要用新截图）                 |
+| 7   | 翻过的车                   | 1 min  | 1       | "翻车"列表（用文章原图）           |
+| 8   | 现场 demo                 | 2 min  | 0（切电脑）| —                              |
+| 9   | 边界 + What's next + 收尾  | 2 min  | 2       | "适用边界" + "What's Next"      |
+|     | **合计**                  | 23 min | ~20 张  |                                 |
 
 ---
 
@@ -172,31 +173,61 @@
 
 ---
 
-## 6. 实测 + 翻过的车（2 min, 2 slides）
+## 6. docfit 4 个 milestone 走到哪了（4 min, 5 slides）
 
-> 复用：文章"实测"段（第 213–239 行）。
+> 这一节几乎全部用新截图。逐 phase 走，让大家看到一个真实项目"拆开来每一段在干什么"。
 
-**Slide 12 — docfit 在跑**
+**Slide 12 — 进度看板**
 
-- 截图：`08-pr-list-merged.jpg`（PR list 几乎全 merged）
-- 截图：`01-todos-phase1-complete.jpg`（Phase 1 落地完毕）
-- 一句"诚实话"（第 225 行原文）：**这套东西目前还在调试期。**
+- 截图：`21-status-overview-table.jpg`
+- 一张图说清楚：4 个 milestone, 16 个 issue, 12 个已合, M4 进行中, 429 个测试
+- 一句话过渡："下面挨个 milestone 看一眼实际产出。"
 
-**Slide 13 — 翻过的车 + harness 思维**
+**Slide 13 — M0 + M1：脚手架 + 学校配置（北航当种子）**
 
-文章原文（第 227–233 行）三条直接念：
+- 截图：`01-todos-phase1-complete.jpg`（Phase 1 完整 todos checklist——`apply_to_range`、`build_seeds.py`、BUAA seed corpus 都在）
+- 一句话：M0 是项目骨架 + CI；M1 是把"北航毕业论文格式 spec"沉淀成可对比的种子 + 特征提取
+- **关键点**：每个 todo 都对应一个具体 PR——这就是 agent 能跑的颗粒度
 
-- auto_pr 曾经把同一个 issue 重复处理两遍 → 加"检查是否已有 `claude-issue-{number}` 分支"
-- daily_duty 曾经去合 auto_pr 的分支撞车 → 加"不碰 `claude-issue-*` 分支"
-- issue_label 曾经"顺手"修了 bug 提了 PR → 加"ONLY labels/closes issues"禁令
+**Slide 14 — M2：端到端 pipeline 跑通**
 
-收一句（第 233 行原文）：
+- 截图：`08-pr-list-merged.jpg`（merged PR 列表，能看到 `feat: #10 — End-to-end M2 pipeline`、`feat: #8 — SectionStage`）
+- 一句话：M2 把 docx → 分段 → 检测 → 输出走通——之后所有事情都建立在这个 pipeline 上
 
-> 每一次翻车都变成 prompt 里多一行约束。这就是 harness 的日常迭代。
+**Slide 15 — M3：识别引擎 + 回归测试**
+
+- 截图：`10-issue-detail-perturb.jpg`（一个 issue 长什么样：清晰的 What / Scope / 支持的扰动类型）
+- 截图：`09-issue-depends-on.jpg`（连依赖关系都用 GitHub 原生原语承载）
+- 一句话：M3 加扰动工具 + 回归测试，让"识别准不准"有客观数字衡量；同时这两张图也回答了"什么样的 issue 才能让 agent 跑得动"——细节够厚 + 依赖关系明确
+
+**Slide 16 — M4：第二所学校 onboard + alpha 距离**
+
+- 截图：`11-commits-claude-coauthor.jpg`（高亮 `feat: #16 — Onboard Tsinghua (second school)`——commits 大部分都是 "MiaoDX 和 claude 撰写"）
+- 截图：`22-alpha-blockers-list.jpg`（必须 vs 可选 blockers——真实剩下的事）
+- 一句话：M4 验证"换一所学校能不能复用"——这是这类工具最重要的 generalization 验证；alpha 还差的事很具体（≥20 份脱敏样本 + 5 人 alpha 测试），不是空话
+
+> 这一节的"诚实话"（沿用文章第 225 行思路）：**这套东西目前还在调试期，docfit 也还没到 alpha**——但每一步进展都看得见。
 
 ---
 
-## 7. 现场 demo（2 min, 切电脑）
+## 7. 翻过的车（1 min, 1 slide）
+
+> 这一节用文章原图打底，docfit 不再单独举例。三条翻车直接念。
+
+**Slide 17 — 翻车 + harness 思维**
+
+- 背景图：复用文章里的 `images/05-daily-duty-runs.png`（daily_duty 稳定运行的图——和"翻车"形成对比）
+- 文章原文（第 227–233 行）三条直接列：
+  - auto_pr 曾经把同一个 issue 重复处理两遍 → 加"检查是否已有 `claude-issue-{number}` 分支"
+  - daily_duty 曾经去合 auto_pr 的分支撞车 → 加"不碰 `claude-issue-*` 分支"
+  - issue_label 曾经"顺手"修了 bug 提了 PR → 加"ONLY labels/closes issues"禁令
+- 收一句（第 233 行原文）：
+
+  > 每一次翻车都变成 prompt 里多一行约束。这就是 harness 的日常迭代。
+
+---
+
+## 8. 现场 demo（2 min, 切电脑）
 
 **演示路径建议**（实际现场可微调）：
 
@@ -213,11 +244,11 @@
 
 ---
 
-## 8. 边界 + What's next + 收尾（2 min, 2 slides）
+## 9. 边界 + What's next + 收尾（2 min, 2 slides）
 
 > 复用：文章"适用边界"（第 243–259 行）+ "What's Next"（第 263–281 行）+ 结尾（第 287–298 行）。
 
-**Slide 14 — 适用边界**
+**Slide 18 — 适用边界**
 
 直接列原文：
 
@@ -234,7 +265,7 @@
 
 收一句（第 259 行原文）：**把 routine 当 senior intern 用，不是当 senior engineer 用。**
 
-**Slide 15 — What's next + 收尾**
+**Slide 19 — What's next + 收尾**
 
 - 一句话 What's next（第 269–279 行压缩）：把调度权也交给 agent——OpenClaw 当 meta-scheduler，自然语言指令进、routine 自动触发
 - 一句话总结（第 287 行原文）：
