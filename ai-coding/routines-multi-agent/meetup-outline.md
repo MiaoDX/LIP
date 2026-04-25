@@ -44,15 +44,15 @@
 **Slide 1 — docfit 是什么**
 
 - 一句话项目定义：把毕业生的 Word 文档按学校模板要求自动校正格式
-- 起源：朋友毕业季踩坑 → 我两周前开了这个 repo
+- 起源：朋友毕业季踩坑 → 这周五（2 天前）才开了这个 repo
 - 现状：private，跑稳之后会开源
 - 用途：先做 alpha 给身边几个学校的同学测，再考虑公开
 
-**Slide 2 — 两周后的样子**
+**Slide 2 — 两天后的样子**
 
 - 截图：`21-status-overview-table.jpg`（4 milestone / 16 issue / 12 已合 / 429 个测试）
 - 截图：`11-commits-claude-coauthor.jpg`（commits 大部分是 "MiaoDX 和 claude 撰写"）
-- 反差点（讲一句即可）：**这两周我没坐过电脑，全部用手机操作**
+- 反差点（讲一句即可）：**这两天我没坐过电脑，全部用手机操作**
   - 截图：`19-claude-web-sidebar.jpg`（Claude web 移动端 sidebar）
 - 留钩子："这是怎么做到的？"
 
