@@ -104,9 +104,11 @@
 - **持续性**：本地合上电脑就停 → 云上人睡觉时它在干活
 - **设备解耦**：操作迁移到手机 → agent 工作周期和人的工作周期彻底解耦
 
-引用 Anthropic 的类比（直接念，第 59 行）：
+引用 Anthropic 的类比（出自官方 engineering 博客 [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)，文章第 59 行）：
 
 > **"一个软件项目由一群轮班工程师维护，每个人来的时候都没有上一班的记忆"**
+>
+> 原文："Imagine a software project staffed by engineers working in shifts, where each new engineer arrives with no memory of what happened on the previous shift."
 
 延伸一句（第 63 行）：
 
