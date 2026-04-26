@@ -11,7 +11,7 @@
 | 文件 | 重复程度 |
 |------|---------|
 | `stories/wechat-scraping-war.md` | 完整版（保留） |
-| `stories/openclaw-04-practical-cases.md` 案例1 | 80% 重复 → 改为一句话+链接 |
+| `stories/openclaw-04-practical-cases.md` (已整合到 openclaw/) 案例1 | 80% 重复 → 改为一句话+链接 |
 | `discussions/2026-03-07-gsd-launch.md` "公众号监控尝试" | 70% 重复 → 改为链接 |
 | `stories/2026-03-dual-agent-start.md` "微信抓取被封" | 50% 重复 → 改为链接 |
 

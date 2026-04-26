@@ -69,7 +69,7 @@
 stories/openclaw-deployment-railway-vs-clawcloud.md → stories/openclaw-01-deployment.md
 stories/openclaw-configuration-optimization.md      → stories/openclaw-02-configuration.md
 stories/openclaw-best-practices.md                  → stories/openclaw-03-best-practices.md
-stories/openclaw-practical-cases.md                 → stories/openclaw-04-practical-cases.md
+stories/openclaw-practical-cases.md                 → stories/openclaw-04-practical-cases.md (已整合到 openclaw/)
 ```
 
 **为什么不用索引文件？** 只有 4 个文件，编号前缀就足够了，不需要额外维护一个索引。符合"避免归档陷阱"原则。
@@ -114,10 +114,7 @@ stories/openclaw-practical-cases.md                 → stories/openclaw-04-prac
 ```markdown
 ---
 **OpenClaw 完整指南系列：**
-[Part 1: 部署](openclaw-01-deployment.md) ·
-[Part 2: 配置优化](openclaw-02-configuration.md) ·
-[Part 3: 最佳实践](openclaw-03-best-practices.md) ·
-[Part 4: 实战案例](openclaw-04-practical-cases.md)
+Part 1: 部署 · Part 2: 配置优化 · Part 3: 最佳实践 · Part 4: 实战案例 (已整合到 openclaw/)
 ```
 
 ---
