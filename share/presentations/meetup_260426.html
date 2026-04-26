@@ -191,9 +191,56 @@
   <div class="speaker-note">用一句话定义项目：把毕业生 Word 文档按学校模板要求自动校正。起源是朋友毕业季踩了坑。这周五才开的 repo，目前 private，跑稳后开源。先做 alpha 给身边几个学校的同学测——别让大家觉得"已经准备好了"，要诚实。</div>
 </section>
 
-<!-- ═══ S2: 钩子-第二天的样子 ═══ -->
+<!-- ═══ S2: 钩子 · 实际效果(spec → 原稿 → 改后) ═══ -->
 <section class="slide" id="s2">
   <span class="slide-number">02</span>
+  <h3>钩子 · 这玩意到底产出啥</h3>
+  <div class="divider-line"></div>
+  <h2>讲了一路过程,看一眼<span class="highlight">产物</span></h2>
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 24px;">
+    <div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; margin-bottom: 8px;">① 原始要求</div>
+      <div class="img-wrap" style="border: 2px dashed var(--border); padding: 18px 10px; background: rgba(45, 58, 140, 0.03); text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
+        <div style="font-size: 36px; opacity: 0.4; margin-bottom: 10px;">📑</div>
+        <div style="font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--text-dim); margin-bottom: 6px; line-height: 1.4;">学校模板红蓝批注</div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px;">
+          [ images/0426-template-spec.jpg ]
+        </div>
+      </div>
+      <div class="img-caption">三号黑体居中 / 四号黑体居左 / 小四宋体首行缩进 ……</div>
+    </div>
+    <div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent2); letter-spacing: 2px; margin-bottom: 8px;">② 原始输入</div>
+      <div class="img-wrap" style="border: 2px dashed var(--border); padding: 18px 10px; background: rgba(217, 119, 6, 0.04); text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
+        <div style="font-size: 36px; opacity: 0.4; margin-bottom: 10px;">📝</div>
+        <div style="font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--text-dim); margin-bottom: 6px; line-height: 1.4;">学生原稿(红圈标问题)</div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px;">
+          [ images/0426-docfit-input.jpg ]
+        </div>
+      </div>
+      <div class="img-caption">"第一章文献综述" 没空格 · "1" 该是 "1.1" · "1." 该是 "1.1.1"</div>
+    </div>
+    <div>
+      <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent3); letter-spacing: 2px; margin-bottom: 8px;">③ 改后效果</div>
+      <div class="img-wrap" style="border: 2px dashed var(--border); padding: 18px 10px; background: rgba(22, 101, 52, 0.04); text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
+        <div style="font-size: 36px; opacity: 0.4; margin-bottom: 10px;">✓</div>
+        <div style="font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--text-dim); margin-bottom: 6px; line-height: 1.4;">docfit 跑完后</div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px;">
+          [ images/0426-docfit-output.jpg ]
+        </div>
+      </div>
+      <div class="img-caption">章号空格补齐 · 1.1 / 1.1.1 编号对齐 · 字体字号符合模板</div>
+    </div>
+  </div>
+  <p style="margin-top: 22px; font-size: 15px; color: var(--text-dim); max-width: 1100px; line-height: 1.6;">
+    左→中→右,讲完三件事:学校<strong style="color: var(--accent);">怎么要求</strong>、学生<strong style="color: var(--accent2);">实际写成什么样</strong>、docfit 跑完<strong style="color: var(--accent3);">能恢复成什么样</strong>。一图胜千言。
+  </p>
+  <div class="speaker-note">把整场分享的"产物"直接拍出来。左边是模板红蓝批注 spec——学校的硬要求;中间是真实学生原稿,红圈标了几个典型踩坑(章节号缺空格、缺小数点、层级写错);右边是 docfit 跑完后的版本,章号、编号、字体全部对上模板。讲的时候只要顺着 ①②③ 念就行,听众一眼看到价值。如果对方还想看更多 case,提一句"这只是一个章首,模板里还有摘要、参考文献、图表标题等等都覆盖到了"。</div>
+</section>
+
+<!-- ═══ S2: 钩子-第二天的样子 ═══ -->
+<section class="slide" id="s3">
+  <span class="slide-number">03</span>
   <h3>钩子 · 第二天的样子</h3>
   <div class="divider-line"></div>
   <h2>两天后的状态</h2>
@@ -218,8 +265,8 @@
 </section>
 
 <!-- ═══ S3: 三步骤 ═══ -->
-<section class="slide" id="s3">
-  <span class="slide-number">03</span>
+<section class="slide" id="s4">
+  <span class="slide-number">04</span>
   <h3>核心 Pattern</h3>
   <div class="divider-line"></div>
   <h2>从想法到 issue 到 agent 接手</h2>
@@ -251,8 +298,8 @@
 </section>
 
 <!-- ═══ S4: Opus 是反问者 ═══ -->
-<section class="slide" id="s4">
-  <span class="slide-number">04</span>
+<section class="slide" id="s5">
+  <span class="slide-number">05</span>
   <h3>核心 Pattern · 第 1 步</h3>
   <div class="divider-line"></div>
   <h2>Opus 不是搜索框，是 <span class="highlight2">反问者</span></h2>
@@ -271,8 +318,8 @@
 </section>
 
 <!-- ═══ S5: 拆 issue 颗粒度 ═══ -->
-<section class="slide" id="s5">
-  <span class="slide-number">05</span>
+<section class="slide" id="s6">
+  <span class="slide-number">06</span>
   <h3>核心 Pattern · 第 2 步</h3>
   <div class="divider-line"></div>
   <h2>拆 issue 的颗粒度</h2>
@@ -291,8 +338,8 @@
 </section>
 
 <!-- ═══ S6: 为什么选择云端 ═══ -->
-<section class="slide" id="s6">
-  <span class="slide-number">06</span>
+<section class="slide" id="s7">
+  <span class="slide-number">07</span>
   <h3>哲学锚点</h3>
   <div class="divider-line"></div>
   <h2>为什么<span class="highlight">选择</span>云端</h2>
@@ -323,8 +370,8 @@
 </section>
 
 <!-- ═══ S7: 四 routine 一张图 ═══ -->
-<section class="slide" id="s7">
-  <span class="slide-number">07</span>
+<section class="slide" id="s8">
+  <span class="slide-number">08</span>
   <h3>架构总览</h3>
   <div class="divider-line"></div>
   <h2>四个 Routine · 一主三辅</h2>
@@ -362,8 +409,8 @@
 </section>
 
 <!-- ═══ S8: auto_pr 主力 ═══ -->
-<section class="slide" id="s8">
-  <span class="slide-number">08</span>
+<section class="slide" id="s9">
+  <span class="slide-number">09</span>
   <h3>auto_pr · 主力</h3>
   <div class="divider-line"></div>
   <h2>每小时一次的核心引擎</h2>
@@ -391,8 +438,8 @@
 </section>
 
 <!-- ═══ S9 (NEW): 证据链 PR + Session 回放 ═══ -->
-<section class="slide" id="s9">
-  <span class="slide-number">09</span>
+<section class="slide" id="s10">
+  <span class="slide-number">10</span>
   <h3>auto_pr · 证据链</h3>
   <div class="divider-line"></div>
   <h2>PR + Session 链接 = <span class="highlight">可回放的工作记录</span></h2>
@@ -411,8 +458,8 @@
 </section>
 
 <!-- ═══ S9: 三个辅助 routine 一句话 ═══ -->
-<section class="slide" id="s10">
-  <span class="slide-number">10</span>
+<section class="slide" id="s11">
+  <span class="slide-number">11</span>
   <h3>辅助 Routines</h3>
   <div class="divider-line"></div>
   <h2>三个辅助 · 各司其职</h2>
@@ -441,8 +488,8 @@
 </section>
 
 <!-- ═══ S10: 暗线 - 两条隐性协议 ═══ -->
-<section class="slide" id="s11">
-  <span class="slide-number">11</span>
+<section class="slide" id="s12">
+  <span class="slide-number">12</span>
   <h3>暗线 · 协作协议</h3>
   <div class="divider-line"></div>
   <h2>4 个 agent 怎么<span class="highlight2">不打架</span></h2>
@@ -477,8 +524,8 @@
 </section>
 
 <!-- ═══ S11: GitHub 作为协作基底 ═══ -->
-<section class="slide" id="s12">
-  <span class="slide-number">12</span>
+<section class="slide" id="s13">
+  <span class="slide-number">13</span>
   <h3>暗线 · 为什么 GitHub 就够</h3>
   <div class="divider-line"></div>
   <h2>GitHub 已经是消息总线</h2>
@@ -498,8 +545,8 @@
 </section>
 
 <!-- ═══ S12: 进度看板 ═══ -->
-<section class="slide" id="s13">
-  <span class="slide-number">13</span>
+<section class="slide" id="s14">
+  <span class="slide-number">14</span>
   <h3>docfit 实战 · 桌面视角</h3>
   <div class="divider-line"></div>
   <h2>2 天里 docfit 的 GitHub <span class="highlight">长什么样</span></h2>
@@ -512,8 +559,8 @@
 </section>
 
 <!-- ═══ S13 (merged): M0 → M2 · 立骨架到 pipeline ═══ -->
-<section class="slide" id="s14">
-  <span class="slide-number">14</span>
+<section class="slide" id="s15">
+  <span class="slide-number">15</span>
   <h3>Milestone · 阶段一</h3>
   <div class="divider-line"></div>
   <h2>M0 → M2 · 立骨架 → 跑通 pipeline</h2>
@@ -542,8 +589,8 @@
 </section>
 
 <!-- ═══ S14 (merged): M3 → M4 · 加测试 → 换学校验证 ═══ -->
-<section class="slide" id="s15">
-  <span class="slide-number">15</span>
+<section class="slide" id="s16">
+  <span class="slide-number">16</span>
   <h3>Milestone · 阶段二</h3>
   <div class="divider-line"></div>
   <h2>M3 → M4 · 加测试 → 换学校验证</h2>
@@ -571,8 +618,8 @@
 </section>
 
 <!-- ═══ S15: 翻车 + harness 思维 ═══ -->
-<section class="slide" id="s16">
-  <span class="slide-number">16</span>
+<section class="slide" id="s17">
+  <span class="slide-number">17</span>
   <h3>翻过的车</h3>
   <div class="divider-line"></div>
   <h2>翻车 = harness 多一行约束</h2>
@@ -604,8 +651,8 @@
 </section>
 
 <!-- ═══ S16: 现场 demo ═══ -->
-<section class="slide" id="s17" style="text-align: center; justify-content: center; align-items: center;">
-  <span class="slide-number">17</span>
+<section class="slide" id="s18" style="text-align: center; justify-content: center; align-items: center;">
+  <span class="slide-number">18</span>
   <div class="clock-bg" style="font-size: 280px; opacity: 0.04; bottom: -50px; left: -30px; transform: rotate(20deg);">⏰</div>
   <h3 style="letter-spacing: 4px;">切电脑</h3>
   <div class="divider-line" style="margin: 0 auto 32px; max-width: 200px;"></div>
@@ -618,8 +665,8 @@
 </section>
 
 <!-- ═══ S17: 适用边界 ═══ -->
-<section class="slide" id="s18">
-  <span class="slide-number">18</span>
+<section class="slide" id="s19">
+  <span class="slide-number">19</span>
   <h3>适用边界</h3>
   <div class="divider-line"></div>
   <h2>不是<span class="highlight2">银弹</span></h2>
@@ -648,8 +695,8 @@
 </section>
 
 <!-- ═══ S19: ChatGPT Pro · 架构第二意见 ═══ -->
-<section class="slide" id="s19">
-  <span class="slide-number">19</span>
+<section class="slide" id="s20">
+  <span class="slide-number">20</span>
   <h3>组合拳 · 第一招</h3>
   <div class="divider-line"></div>
   <h2>云端走不动了,先换<span class="highlight4">脑子</span></h2>
@@ -686,8 +733,8 @@
 </section>
 
 <!-- ═══ S20: 切回本地 · intro ═══ -->
-<section class="slide" id="s20">
-  <span class="slide-number">20</span>
+<section class="slide" id="s21">
+  <span class="slide-number">21</span>
   <h3>组合拳 · 第二招</h3>
   <div class="divider-line"></div>
   <h2>调到第 N 轮,不如<span class="highlight">切回本地</span></h2>
@@ -719,8 +766,8 @@
 </section>
 
 <!-- ═══ S21: 本地深挖样例 · 模板审计 ═══ -->
-<section class="slide" id="s21">
-  <span class="slide-number">21</span>
+<section class="slide" id="s22">
+  <span class="slide-number">22</span>
   <h3>组合拳 · 真实例子</h3>
   <div class="divider-line"></div>
   <h2>南农模板格式审计 · <span class="highlight">本地一晚撸完</span></h2>
@@ -760,26 +807,6 @@
   <div class="speaker-note">真实例子。docfit 要支持南农本科模板,我得拿模板正文规范、styles.xml、当前 school.yaml、生成的 reference.docx 四份东西交叉对齐——每条规则都要看四遍。这种活如果丢给云端 routine,每轮一小时,改完一处又要重审一遍,周期受不了。我直接切到本地,Codex / Claude Code 带着我一晚把整张审计表 + 修正 plan 拉通。第二天上班直接照着 plan 改。这就是云端铺宽度、本地下深度的真实分工。</div>
 </section>
 
-<!-- ═══ S22: 实际效果 placeholder ═══ -->
-<section class="slide" id="s22">
-  <span class="slide-number">22</span>
-  <h3>工具实际效果</h3>
-  <div class="divider-line"></div>
-  <h2>讲了一路过程,看一眼<span class="highlight">产物</span></h2>
-  <div style="margin-top: 32px; padding: 60px 40px; background: rgba(45, 58, 140, 0.03); border: 2px dashed var(--border); border-radius: 8px; text-align: center; max-width: 1000px;">
-    <div style="font-size: 48px; opacity: 0.4; margin-bottom: 16px;">📄 → 📄</div>
-    <div style="font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text-dim); margin-bottom: 12px;">
-      docfit 修改前 / 修改后对比
-    </div>
-    <div style="font-family: 'Space Mono', monospace; font-size: 12px; color: var(--text-dim); letter-spacing: 1px;">
-      [ 待补充截图 ]
-    </div>
-  </div>
-  <p style="margin-top: 24px; font-size: 15px; color: var(--text-dim); max-width: 1000px; line-height: 1.6;">
-    一份"格式乱七八糟的毕设 Word"在 docfit 跑完之后，对照学校模板自动校正——这才是这个工具最终对用户的意义。
-  </p>
-  <div class="speaker-note">这一页是 placeholder。等用户补充实际的修改前后对比截图（或者真的现场跑一份样本对比）。建议截图选一个对比鲜明的 case：标题字号错的、行距不对的、图表序号断裂的——修改后整齐对齐的版本。一图胜千言。</div>
-</section>
 
 <!-- ═══ S23: What's Next API + OpenClaw 触发 ═══ -->
 <section class="slide" id="s23">
@@ -813,9 +840,45 @@
   <div class="speaker-note">这一节是个钩子，不展开。重点：Routines 已经开放 API 和 Webhook 触发，所以 routine 不只是 cron 任务，是可编程节点。下一步想试让 OpenClaw 当 meta-scheduler——这个方向走通的话，人的工作从"配 schedule + review PR"简化成"发几句话 + review PR"。这个方向还没做，但能力已经在那里。</div>
 </section>
 
-<!-- ═══ S24: 收尾 ═══ -->
-<section class="slide" id="s24" style="justify-content: center;">
+<!-- ═══ S24: callback · 改后 + review 文档 ═══ -->
+<section class="slide" id="s24">
   <span class="slide-number">24</span>
+  <h3>开头那张图 · 这里 callback</h3>
+  <div class="divider-line"></div>
+  <h2>改完不是黑盒——<span class="highlight">每一处都附 review</span></h2>
+  <div class="two-col" style="margin-top: 24px;">
+    <div>
+      <p style="font-size: 16px; line-height: 1.7; margin-bottom: 14px;">
+        docfit 跑完,产出<strong>不是一个新文件就甩给你</strong>:
+      </p>
+      <ul style="list-style: none; padding: 0; margin-bottom: 18px;">
+        <li style="padding: 9px 0; border-bottom: 1px dashed var(--border); font-size: 15px;">→ 新版 docx + <strong>每一处改动的 Word 批注</strong></li>
+        <li style="padding: 9px 0; border-bottom: 1px dashed var(--border); font-size: 15px;">→ 批注里写清:<code>原文 / 现文 / 说明</code></li>
+        <li style="padding: 9px 0; font-size: 15px;">→ 学生打开 Word,逐条 <strong>review / 接受 / 拒绝</strong></li>
+      </ul>
+      <div class="quote" style="margin: 0; font-size: 18px; line-height: 1.55;">
+        <strong>开头</strong>给你看「我们要做啥」,<br>
+        <strong>结尾</strong>给你看「我们不会乱改」。
+      </div>
+    </div>
+    <div>
+      <div class="img-wrap" style="border: 2px dashed var(--border); padding: 22px 12px; background: rgba(22, 101, 52, 0.04); text-align: center;">
+        <div style="font-size: 36px; opacity: 0.4; margin-bottom: 10px;">💬</div>
+        <div style="font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text-dim); margin-bottom: 6px;">改后版 + Word 批注</div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px; line-height: 1.8;">
+          [ images/0426-docfit-output.jpg ]<br>
+          [ images/0426-docfit-review-comment.jpg ]
+        </div>
+      </div>
+      <div class="img-caption">改后稿 · 每条修改都挂一条 docfit 批注:原文 → 现文 → 说明</div>
+    </div>
+  </div>
+  <div class="speaker-note">这页和开头那张视觉 hook 是 callback。开头那张图说"我们要做啥",这一页说"我们不会乱改"。docfit 不是把学生稿子直接覆盖——每一处自动改动都会挂一条 Word 批注,写清楚"原文 / 现文 / 说明"。学生打开 docx,Word 自带的批注侧栏就是 review 界面,逐条接受或拒绝。这其实是这套方案能落地的关键:agent 写的东西必须可审计、可回退,用户才敢用。讲完这个再切到最后一页收尾。</div>
+</section>
+
+<!-- ═══ S25: 收尾 ═══ -->
+<section class="slide" id="s25" style="justify-content: center;">
+  <span class="slide-number">25</span>
   <h3>收尾</h3>
   <div class="divider-line"></div>
   <h2 style="margin-bottom: 28px;">一句话总结</h2>
