@@ -647,9 +647,122 @@
   <div class="speaker-note">直接念边界。重点是收尾那句心态——把 routine 当 senior intern 用，不是当 senior engineer 用。能干很多活，但需要设计好它的工作环境、兜底机制、明确的"我干完了"信号。</div>
 </section>
 
-<!-- ═══ S_NEW_EFFECT: 实际效果 placeholder ═══ -->
+<!-- ═══ S19: ChatGPT Pro · 架构第二意见 ═══ -->
 <section class="slide" id="s19">
   <span class="slide-number">19</span>
+  <h3>组合拳 · 第一招</h3>
+  <div class="divider-line"></div>
+  <h2>云端走不动了,先换<span class="highlight4">脑子</span></h2>
+  <div class="two-col-asym" style="margin-top: 24px;">
+    <div>
+      <p class="subtitle" style="margin-bottom: 18px;">
+        Routine 在跑,但架构层面的判断需要<strong style="color: var(--text);">另一个模型的视角</strong>。
+      </p>
+      <div class="card-grid" style="grid-template-columns: 1fr;">
+        <div class="card">
+          <span class="card-icon">🧠</span>
+          <div class="card-title">ChatGPT Pro · 接 GitHub</div>
+          <div class="card-desc">把整个 repo 喂进去,问"如果重新设计这套 pipeline,你会怎么拆?"。Pro 模型在<strong>大跨度结构提议</strong>上比 Routine 更敢下手。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🔁</span>
+          <div class="card-title">不是替代,是对照</div>
+          <div class="card-desc">Claude 给一版,ChatGPT 给一版,我自己拍板。两边吵架的地方,就是真正值得想清楚的地方。</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="img-wrap phone" style="border: 2px dashed var(--border); padding: 40px 16px; background: rgba(45, 58, 140, 0.03); text-align: center;">
+        <div style="font-size: 44px; opacity: 0.4; margin-bottom: 12px;">💬</div>
+        <div style="font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--text-dim); margin-bottom: 8px;">ChatGPT Pro · 架构调整建议</div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 1px;">
+          [ images/0426-chatgpt-pro-pipeline.jpg ]
+        </div>
+      </div>
+      <div class="img-caption">把 Parse → Detect → Rewrite → Output 重新拆成 7 个明确 stage 的提议</div>
+    </div>
+  </div>
+  <div class="speaker-note">这一页讲的是组合拳。Routine 适合"按既定方向往前推",但当我开始怀疑"这个方向本身对不对"的时候,不再问 Claude——而是把整个 repo 给 ChatGPT Pro,问它"你会怎么重新设计这条 pipeline?"。Pro 在大跨度结构提议上更敢下手。两个模型给两版,差异本身就是信息。</div>
+</section>
+
+<!-- ═══ S20: 切回本地 · intro ═══ -->
+<section class="slide" id="s20">
+  <span class="slide-number">20</span>
+  <h3>组合拳 · 第二招</h3>
+  <div class="divider-line"></div>
+  <h2>调到第 N 轮,不如<span class="highlight">切回本地</span></h2>
+  <p class="subtitle" style="margin-bottom: 28px;">
+    Routine 的反馈周期是"小时级"。有些事它扛不住——
+  </p>
+  <div class="scenario-grid">
+    <div class="scenario scenario-bad">
+      <h4>↳ Routine 撑不住的场景</h4>
+      <ul>
+        <li>一个改动要跑 <strong>10+ 轮</strong>才能收敛</li>
+        <li>需要边跑边看 <strong>本地文件 / 渲染产物</strong></li>
+        <li>问题在<strong>多份文档之间交叉对照</strong>(spec / code / 输出三方对齐)</li>
+        <li>调试需要<strong>断点 / profiler / 反复手测</strong></li>
+      </ul>
+    </div>
+    <div class="scenario scenario-good">
+      <h4>↳ 本地 Claude Code / Codex 的优势</h4>
+      <ul>
+        <li>反馈周期从<strong>小时</strong>压到<strong>秒</strong></li>
+        <li>可以直接 <code>open</code> 文件、跑脚本、看真实产物</li>
+        <li>多轮 prompt 共享同一份<strong>活的上下文</strong></li>
+        <li>翻车成本低——不用等 PR、不污染历史</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote" style="margin-top: 28px;">云端管"宽度",本地管"深度"。</div>
+  <div class="speaker-note">这页是"为什么要切回本地"。Routine 异步、按小时调度,适合横向铺开;但碰到一个需要 10+ 轮收敛、要看本地产物、要对照多份 spec 的活,异步就太重了。这时候切回本地 Claude Code 或 Codex,反馈周期从小时变成秒。下一页给一个真实例子。</div>
+</section>
+
+<!-- ═══ S21: 本地深挖样例 · 模板审计 ═══ -->
+<section class="slide" id="s21">
+  <span class="slide-number">21</span>
+  <h3>组合拳 · 真实例子</h3>
+  <div class="divider-line"></div>
+  <h2>南农模板格式审计 · <span class="highlight">本地一晚撸完</span></h2>
+  <div class="two-col-asym" style="margin-top: 20px;">
+    <div>
+      <p style="font-size: 16px; line-height: 1.7; color: var(--text-dim); margin-bottom: 18px;">
+        要交叉对照 <strong style="color: var(--text);">4 份资料</strong>:
+      </p>
+      <div class="flow" style="margin: 0 0 16px;">
+        <div class="flow-step"><strong>nannong_template</strong>正文规范</div>
+        <span class="flow-arrow">×</span>
+        <div class="flow-step"><strong>styles.xml</strong>OOXML 声明</div>
+      </div>
+      <div class="flow" style="margin: 0 0 18px;">
+        <div class="flow-step"><strong>school.yaml</strong>当前配置</div>
+        <span class="flow-arrow">×</span>
+        <div class="flow-step"><strong>reference.docx</strong>真实产物</div>
+      </div>
+      <p style="font-size: 15px; line-height: 1.7; margin-top: 14px;">
+        每条规则都要去四个地方各看一眼,逐项 diff。<br>
+        <strong>云端 PR 跑这种活</strong>:每轮 1 小时,要 10 轮以上;<br>
+        <strong>本地 Codex / Claude Code</strong>:一晚拉通,带着审计表 + 修正 plan 出门。
+      </p>
+    </div>
+    <div>
+      <div class="img-wrap" style="border: 2px dashed var(--border); padding: 36px 16px; background: rgba(45, 58, 140, 0.03); text-align: center;">
+        <div style="font-size: 44px; opacity: 0.4; margin-bottom: 12px;">📋</div>
+        <div style="font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--text-dim); margin-bottom: 8px;">本地 audit 表 + 修正 plan</div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 1px; line-height: 1.8;">
+          [ images/0426-template-audit-table.jpg ]<br>
+          [ images/0426-template-fix-plan.jpg ]
+        </div>
+      </div>
+      <div class="img-caption">逐项对比表 + Summary / Key Changes / Test Plan</div>
+    </div>
+  </div>
+  <div class="speaker-note">真实例子。docfit 要支持南农本科模板,我得拿模板正文规范、styles.xml、当前 school.yaml、生成的 reference.docx 四份东西交叉对齐——每条规则都要看四遍。这种活如果丢给云端 routine,每轮一小时,改完一处又要重审一遍,周期受不了。我直接切到本地,Codex / Claude Code 带着我一晚把整张审计表 + 修正 plan 拉通。第二天上班直接照着 plan 改。这就是云端铺宽度、本地下深度的真实分工。</div>
+</section>
+
+<!-- ═══ S22: 实际效果 placeholder ═══ -->
+<section class="slide" id="s22">
+  <span class="slide-number">22</span>
   <h3>工具实际效果</h3>
   <div class="divider-line"></div>
   <h2>讲了一路过程,看一眼<span class="highlight">产物</span></h2>
@@ -668,9 +781,9 @@
   <div class="speaker-note">这一页是 placeholder。等用户补充实际的修改前后对比截图（或者真的现场跑一份样本对比）。建议截图选一个对比鲜明的 case：标题字号错的、行距不对的、图表序号断裂的——修改后整齐对齐的版本。一图胜千言。</div>
 </section>
 
-<!-- ═══ S_NEW_WHATSNEXT: What's Next API + OpenClaw 触发 ═══ -->
-<section class="slide" id="s20">
-  <span class="slide-number">20</span>
+<!-- ═══ S23: What's Next API + OpenClaw 触发 ═══ -->
+<section class="slide" id="s23">
+  <span class="slide-number">23</span>
   <h3>What's Next</h3>
   <div class="divider-line"></div>
   <h2>把<span class="highlight">调度权</span>也交出去</h2>
@@ -700,9 +813,9 @@
   <div class="speaker-note">这一节是个钩子，不展开。重点：Routines 已经开放 API 和 Webhook 触发，所以 routine 不只是 cron 任务，是可编程节点。下一步想试让 OpenClaw 当 meta-scheduler——这个方向走通的话，人的工作从"配 schedule + review PR"简化成"发几句话 + review PR"。这个方向还没做，但能力已经在那里。</div>
 </section>
 
-<!-- ═══ S18: 收尾 ═══ -->
-<section class="slide" id="s21" style="justify-content: center;">
-  <span class="slide-number">21</span>
+<!-- ═══ S24: 收尾 ═══ -->
+<section class="slide" id="s24" style="justify-content: center;">
+  <span class="slide-number">24</span>
   <h3>收尾</h3>
   <div class="divider-line"></div>
   <h2 style="margin-bottom: 28px;">一句话总结</h2>
