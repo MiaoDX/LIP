@@ -8,7 +8,7 @@
 
 ## 演示文稿
 
-- [借助 Claude Code Routine 把想法快速完成 0 到 1 (HTML)](/share/meetup_260425.html) — 2026-04-25，Routines 四 Agent 协作实战 + docfit case，22 页 Slide
+- [借助 Claude Code Routine 把想法快速完成 0 到 1 (HTML)](/share/meetup_260426.html) — 2026-04-26，Routines 四 Agent 协作实战 + docfit case，26 页 Slide
 - [AI Coding for Research — 从工具到工作流 (HTML)](/share/AICodingRaiseLab.html) — 2026-03-24，Raise Lab 分享，25页 Slide
 - [OpenClaw 分享 v3 (HTML)](/share/openclaw-sharing-v3.html) — 2026-03-21，25页 Slide，完整的 OpenClaw 部署与协作分享
 - [低成本云端多平台多Agent部署 (HTML)](/share/lowcost-multiplatform-multiagent-deploy.html) — 2026-03-15，12页 Slide，龙虾蜕壳 Meetup 分享
