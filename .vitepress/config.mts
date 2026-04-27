@@ -130,6 +130,7 @@ export default defineConfig({
             { text: 'Harness 设计', link: '/bestpractice/anthropic-harness-design' },
             { text: 'Context Engineering', link: '/bestpractice/anthropic-context-engineering' },
             { text: 'Multi-Agent Research', link: '/bestpractice/anthropic-multi-agent-research' },
+            { text: 'Agent-Assisted Coding', link: '/bestpractice/nvidia-kaggle-agent-assisted-coding' },
           ],
         },
         {
