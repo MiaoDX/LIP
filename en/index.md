@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: See This Month's Progress
-      link: /en/now/2026-03
+      link: /en/now/2026-04
     - theme: alt
       text: AI Coding Track
       link: /en/stories/2026-03-dual-agent-start
