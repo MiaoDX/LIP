@@ -21,7 +21,7 @@
 - [x] `openclaw-01-deployment.md` — Deployment pitfalls
 - [x] `openclaw-02-configuration.md` — Configuration optimization
 - [x] `openclaw-03-best-practices.md` — Best practices
-- [x] `openclaw-01-deployment.md` → `openclaw-02-configuration.md` → `openclaw-03-best-practices.md` — Consolidated into [openclaw/](/openclaw/)
+- [x] `openclaw-01-deployment.md` → `openclaw-02-configuration.md` → `openclaw-03-best-practices.md` — Consolidated into [openclaw/](/openclaw/) (Part 4 was never a standalone file)
 - [x] `fusheng-lobster-experiment.md` — Fu Sheng's lobster experiment
 - [x] `gateway-6hour-outage.md` — 6-hour outage post-mortem
 - [x] `wechat-scraping-war.md` — WeChat scraping battle
