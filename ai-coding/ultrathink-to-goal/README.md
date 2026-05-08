@@ -4,16 +4,19 @@
 
 - **时长**:50 min(单人讲)
 - **听众**:α 类有实践的开发者为主,γ 类和非研发同事旁听
-- **状态**:大纲已定稿,讲稿和 slide 还在制作
+- **状态**:大纲已定稿,fact-check 已完成,讲稿和 slide 还在制作(目标 ≤40 张)
 
 ## 目录
 
 - [`outline.md`](./outline.md) — 完整大纲(v1,定稿)
 - [`poster-content.md`](./poster-content.md) — 海报文字稿
-- [`research/`](./research/) — 准备过程中的三轮 deep research
+- [`research/`](./research/) — 准备过程中的 deep research + fact-check 记录
   - [`01-harness-engineering-landscape.md`](./research/01-harness-engineering-landscape.md) — Codex `/goal`、GSD、第三方实践案例
   - [`02-key-figures-and-blogs.md`](./research/02-key-figures-and-blogs.md) — Sam Altman / Greg Brockman / Boris Cherny 近期发言 + 官方 blog 索引
   - [`03-dimensions-beyond-skill-context.md`](./research/03-dimensions-beyond-skill-context.md) — Skill / Context 之外的工程维度评估,最终选定三轴
+  - [`04-fact-check-log.md`](./research/04-fact-check-log.md) — outline 引语逐条核对状态(✓ / ⚠ / ✗),含口径修正建议
+- [`screenshots/`](./screenshots/) — 引用源截图(tweet 卡片、blog 截屏、YouTube thumbnail 等)
+- [`scripts/`](./scripts/) — 截图工作流,含批量截图 + YouTube 视频帧抽取
 
 ## 核心信息
 

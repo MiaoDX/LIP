@@ -1,0 +1,67 @@
+[
+  {
+    "kind": "tweet",
+    "url": "https://x.com/gdb/status/2050194039077495089",
+    "name": "tweet_brockman_ralphloop.png",
+    "comment": "Greg Brockman 'codex now has a built in Ralph loop++' — outline 6 节副线终点"
+  },
+  {
+    "kind": "yt-thumb",
+    "id": "kwSVtQ7dziU",
+    "name": "yt_thumbnail_karpathy.jpg",
+    "comment": "No Priors podcast Karpathy 集 — outline 0 节钩子;'YOU ARE THE BOTTLENECK'"
+  },
+  {
+    "kind": "page",
+    "url": "https://www.endorlabs.com/research/ai-code-security-benchmark",
+    "name": "endorlabs_leaderboard.png",
+    "width": 1280, "height": 1600,
+    "comment": "实证立柱 0.5 节;91.1 / 87.2 / 23.5 全展示"
+  },
+  {
+    "kind": "page",
+    "url": "https://www.endorlabs.com/learn/gpt-5-5-sets-a-new-code-security-record-with-cursor-not-codex-in-agent-security-league",
+    "name": "endorlabs_blog.png",
+    "width": 1280, "height": 1600
+  },
+  {
+    "kind": "page",
+    "url": "https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents",
+    "name": "humanlayer_blog.png",
+    "width": 1280, "height": 1600,
+    "comment": "三轴框架 4.1 节引语来源;作者署名 Kyle 可见"
+  },
+  {
+    "kind": "page",
+    "url": "https://arxiv.org/abs/2603.28052",
+    "name": "arxiv_metaharness.png",
+    "width": 1280, "height": 1400
+  },
+  {
+    "kind": "page",
+    "url": "https://claude.com/blog/new-in-claude-managed-agents",
+    "name": "anthropic_managed_agents.png",
+    "width": 1280, "height": 1600,
+    "comment": "Verification 轴 4.2 节 +10pp +8.4% +10.1% 数据"
+  },
+  {
+    "kind": "page",
+    "url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+    "name": "anthropic_harness_design.png",
+    "width": 1280, "height": 1600
+  },
+  {
+    "kind": "page",
+    "url": "https://ghuntley.com/loop/",
+    "name": "ghuntley_ralph_loop.png",
+    "width": 1280, "height": 1600,
+    "comment": "Ralph loop 一手源"
+  },
+  {
+    "kind": "page",
+    "url": "https://simonwillison.net/2026/May/6/code-w-claude-2026/",
+    "name": "simonw_cwc_keynote.png",
+    "width": 1280, "height": 1800,
+    "comment": "Boris Cherny 'higher-order prompts' 现场记录"
+  }
+]
