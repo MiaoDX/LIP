@@ -34,6 +34,7 @@ Some pages are standalone HTML apps/decks and are copied into the built VitePres
 
 ### Path rules
 
+- Shared standalone deck behavior lives in `assets/deck-runtime.js`. From an AI Coding deck, load it with `../../assets/deck-runtime.js`; from a `presentations/` deck, load it with `../assets/deck-runtime.js`.
 - In `ai-coding/<slug>/index.html`, prefer relative asset paths like `images/slide-1.png`.
 - Do not reference sibling project folders, such as `../other-talk/images/foo.png`, from a standalone deck. Copy the asset into the deck's own asset folder instead.
 - Avoid `raw.githubusercontent.com` for deck images unless the external dependency is intentional. Local repo assets are more reliable for GitHub Pages and offline rehearsal.

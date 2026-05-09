@@ -27,6 +27,7 @@ GitHub Pages is built by `.github/workflows/deploy.yml`. VitePress handles Markd
 
 ### Path rules
 
+- Shared standalone deck behavior lives in `assets/deck-runtime.js`. From an AI Coding deck, load it with `../../assets/deck-runtime.js`; from a `presentations/` deck, load it with `../assets/deck-runtime.js`.
 - Keep deck assets inside the deck's own source directory, usually `images/`.
 - Use relative paths from the HTML file, for example `images/slide-1.png`.
 - Do not depend on sibling folders or `raw.githubusercontent.com` for presentation images unless that dependency is intentional.

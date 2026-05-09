@@ -38,6 +38,12 @@ export const publishRules = [
     outDir: 'consult',
     fileExtensions: ['.html'],
   },
+  {
+    name: 'shared standalone runtime assets',
+    sourceDir: 'assets',
+    outDir: 'assets',
+    fileExtensions: ['.js'],
+  },
 ]
 
 async function exists(path) {
