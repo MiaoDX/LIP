@@ -181,6 +181,10 @@ p { font-size: clamp(14px, 1.5vw, 18px); line-height: 1.65; color: var(--text-se
 .hl { color: var(--accent); }
 .dim { color: var(--text-dim); }
 strong { color: var(--text); font-weight: 600; }
+img { max-width: 100%; }
+h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-text {
+  overflow-wrap: anywhere;
+}
 
 /* TITLE slide */
 .title {
@@ -218,6 +222,20 @@ strong { color: var(--text); font-weight: 600; }
 .section h1 .hash { color: var(--accent); margin-right: 16px; opacity: 0.7; }
 .section .section-blurb { font-family: var(--font-display); font-style: italic; font-size: clamp(20px, 2.4vw, 30px); color: var(--text-sec); max-width: 70ch; line-height: 1.5; }
 .section .duration { position: absolute; bottom: 80px; left: 88px; font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: 1px; }
+.section-metric {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(120px, 18vw, 240px);
+  color: var(--accent);
+  line-height: 0.9;
+  letter-spacing: 0;
+  margin: 8px 0 24px;
+}
+.section-metric .unit {
+  font-size: 0.32em;
+  color: var(--text-sec);
+  margin-left: 8px;
+}
 
 /* Quote — generous scale, restrained chrome */
 .quote {
@@ -251,6 +269,7 @@ strong { color: var(--text); font-weight: 600; }
   font-size: clamp(36px, 4.5vw, 56px); color: var(--accent);
   line-height: 1; margin-bottom: 12px; letter-spacing: 0;
 }
+.data-cell .data-unit { font-size: 0.5em; }
 .data-cell .data-label {
   font-family: var(--font-body); font-size: 14px; font-weight: 500;
   color: var(--text); margin-bottom: 6px; line-height: 1.4;
@@ -259,6 +278,9 @@ strong { color: var(--text); font-weight: 600; }
   font-family: var(--font-mono); font-size: 11px;
   color: var(--text-dim); line-height: 1.5;
 }
+.evidence-row { margin-top: 14px; }
+.evidence-row .screenshot { max-width: 100%; }
+.evidence-row .ss-frame { max-height: 180px; }
 
 /* Three-axis matrix figure */
 .axis-grid {
@@ -292,6 +314,9 @@ strong { color: var(--text); font-weight: 600; }
 /* Cards / numbered items */
 .cards { display: flex; gap: 16px; margin-top: 24px; max-width: 1100px; }
 .card { flex: 1; background: var(--bg-card); border: 1px solid var(--border); padding: 22px 24px; }
+.card.accent-card { border-color: var(--accent); }
+.card.accent-card .card-tag,
+.card.accent-card .card-title { color: var(--accent); }
 .card .card-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
 .card .card-title { font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
 .card .card-desc { font-size: 13.5px; color: var(--text-sec); line-height: 1.6; }
@@ -372,6 +397,46 @@ strong { color: var(--text); font-weight: 600; }
 }
 .callback-box .ref { color: var(--accent); font-weight: 600; letter-spacing: 1.5px; }
 .callback-box .arrow { color: var(--accent); opacity: 0.6; }
+
+.table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.table-wrap.spaced { margin-top: 22px; }
+.compare-table {
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.compare-table th,
+.compare-table td {
+  text-align: left;
+  padding: 10px 14px;
+}
+.compare-table th {
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.compare-table tr {
+  border-bottom: 1px solid var(--border-light);
+}
+.compare-table thead tr {
+  border-bottom: 1.5px solid var(--border);
+}
+.compare-table tbody tr:last-child {
+  border-bottom: none;
+}
+.compare-table .entity {
+  color: var(--text);
+}
+.compare-table .muted {
+  color: var(--text-sec);
+}
 
 /* Inline screenshot */
 .screenshot { 
@@ -501,6 +566,24 @@ strong { color: var(--text); font-weight: 600; }
   line-height: 1.55;
   color: var(--text-sec);
 }
+.goal-visual {
+  display: grid;
+  grid-template-columns: minmax(420px, 540px) minmax(280px, 1fr);
+  gap: 22px;
+  align-items: stretch;
+  max-width: 1120px;
+  margin-top: 20px;
+}
+.goal-visual .screenshot {
+  margin-top: 0;
+  max-width: 100%;
+}
+.goal-visual .fact-row {
+  background: var(--accent-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .method-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -536,6 +619,134 @@ strong { color: var(--text); font-weight: 600; }
   font-size: 13px;
   color: var(--text-sec);
   line-height: 1.6;
+}
+.context-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.context-node {
+  border-top: 2px solid var(--node-color, var(--text-dim));
+  padding-top: 10px;
+  min-width: 0;
+}
+.context-node .node-tag {
+  color: var(--node-color, var(--text-dim));
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.context-node .node-title {
+  color: var(--text);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.context-node .node-copy {
+  color: var(--text-sec);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.context-node.emphasis .node-title {
+  font-weight: 600;
+}
+.flow-strip {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.flow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  min-width: 0;
+}
+.flow-card.accented {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  border-width: 1.5px;
+}
+.flow-card .flow-tag {
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+.flow-card .flow-title {
+  color: var(--text);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.flow-card.accented .flow-title {
+  font-weight: 600;
+}
+.flow-card .flow-copy {
+  color: var(--text-sec);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.tool-matrix {
+  margin-top: 28px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tool-matrix-grid {
+  display: grid;
+  grid-template-columns: minmax(42px, auto) repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto 1fr 1fr;
+  gap: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.matrix-axis-x,
+.matrix-axis-y {
+  text-align: center;
+  padding: 8px;
+  color: var(--text-dim);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+.matrix-axis-y {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.matrix-cell {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 14px;
+  min-height: 110px;
+  min-width: 0;
+}
+.matrix-cell.accented {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  border-width: 1.5px;
+}
+.matrix-cell.verification {
+  border-color: var(--axis-verif);
+  border-width: 1.5px;
+}
+.matrix-cell .matrix-title {
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.matrix-cell.accented .matrix-title {
+  color: var(--accent);
+}
+.matrix-cell.verification .matrix-title {
+  color: var(--axis-verif);
+}
+.matrix-cell .matrix-copy {
+  color: var(--text-sec);
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 /* Q&A */
@@ -639,12 +850,71 @@ body .key-hint { display: none; }
 .style-toggle button[data-style="navy"] .swatch { background: #1a3a8c; }
 
 @media (max-width: 900px) {
-  .slide { padding: 48px 32px; }
-  .meta { left: 32px; }
+  .slide { padding: 64px 32px 72px; }
+  .meta {
+    top: 26px;
+    left: 32px;
+    right: 126px;
+    flex-wrap: wrap;
+    gap: 6px;
+    line-height: 1.4;
+  }
+  .style-toggle {
+    top: 14px;
+    right: 14px;
+    opacity: 0.92;
+  }
+  .style-toggle button {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    justify-content: center;
+  }
+  .style-toggle .style-label { display: none; }
+  .style-toggle .swatch { width: 10px; height: 10px; }
+  .notes-toggle { left: 32px; }
+  .counter { right: 32px; }
+  .section .duration {
+    left: 32px;
+    bottom: 68px;
+    max-width: calc(100vw - 64px);
+  }
+  .section-metric { font-size: 96px; }
   .data-row, .axis-grid, .cards { flex-direction: column; grid-template-columns: 1fr; }
   .data-cell, .axis-col { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child, .axis-col:last-child { border-bottom: none; }
-  .slide-2col, .routine-visual, .method-grid, .proof-flow { grid-template-columns: 1fr; }
+  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .flow-strip { grid-template-columns: 1fr; }
+  .context-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .table-wrap table { min-width: 680px; }
+  .callback-box { align-items: flex-start; }
+}
+
+@media (max-height: 760px) and (min-width: 901px) {
+  .slide { padding-top: 62px; padding-bottom: 46px; }
+  h2 { margin-bottom: 18px; }
+  .quote { margin: 14px 0; }
+  .cards { margin-top: 18px; gap: 14px; }
+  .card { padding: 18px 20px; }
+  .data-row { margin-top: 24px; }
+  .data-cell { padding: 24px 22px; }
+  .axis-col { padding: 20px 20px 22px; }
+  .axis-stage { padding: 10px 0; }
+  .screenshot.tall .ss-frame { max-height: 260px; }
+  .slide-2col .screenshot.tall .ss-frame { max-height: 380px !important; }
+  .quote-attr { margin-top: 10px !important; }
+}
+
+@media (max-width: 560px) {
+  .slide { padding: 64px 32px 72px; }
+  .title h1 { font-size: 56px; }
+  .title .subtitle { margin-bottom: 40px; }
+  .flow-strip,
+  .proof-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tool-matrix-grid { font-size: 11px; }
+  .matrix-axis-x,
+  .matrix-axis-y { letter-spacing: 0.8px; }
+  .matrix-cell { padding: 12px; min-height: 96px; }
+  .section-metric { font-size: 86px; }
 }
 </style>
 </head>
@@ -653,9 +923,9 @@ body .key-hint { display: none; }
 <div class="counter" id="counter"></div>
 <button class="notes-toggle" id="notesToggle" type="button" aria-pressed="false">NOTES</button>
 <nav class="style-toggle" id="styleToggle" aria-label="Slide theme">
-  <button data-style="terminal" title="深炭灰 + 暖橙 (default)"><span class="swatch"></span>terminal</button>
-  <button data-style="newspaper" title="暖米黄 + 红墨"><span class="swatch"></span>newspaper</button>
-  <button data-style="navy" title="近白 + 深蓝"><span class="swatch"></span>navy</button>
+  <button data-style="terminal" title="深炭灰 + 暖橙 (default)" aria-label="Use terminal theme"><span class="swatch"></span><span class="style-label">terminal</span></button>
+  <button data-style="newspaper" title="暖米黄 + 红墨" aria-label="Use newspaper theme"><span class="swatch"></span><span class="style-label">newspaper</span></button>
+  <button data-style="navy" title="近白 + 深蓝" aria-label="Use navy theme"><span class="swatch"></span><span class="style-label">navy</span></button>
 </nav>
 <div class="deck" id="deck">
 
@@ -719,12 +989,10 @@ body .key-hint { display: none; }
 <!-- ============================================================ -->
 <div class="slide section">
   <div class="section-marker">§ 0.5</div>
-  <div style="font-family: var(--font-mono); font-weight: 500; font-size: clamp(120px, 18vw, 240px); color: var(--accent); line-height: 0.9; letter-spacing: 0; margin: 8px 0 24px;">
-    25.7<span style="font-size: 0.32em; color: var(--text-sec); margin-left: 8px;">pp</span>
+  <div class="section-metric">
+    25.7<span class="unit">pp</span>
   </div>
-  <p class="section-blurb" style="font-family: var(--font-display); font-style: italic;">
-    一个跨惊讶的差距 —— 同模型，只是换了个 harness
-  </p>
+  <p class="section-blurb">一个夸张的差距 —— 同模型，只是换了个 harness</p>
   <div class="speaker-note">2 min · 实证立柱。Karpathy 的 psychosis 不是个人感受，是有数据的。这一节就拍出三组实证：25.7pp / 6× / 81.8%。这页只放 25.7pp，留个钩子，下一页才出全图。</div>
 </div>
 
@@ -732,32 +1000,32 @@ body .key-hint { display: none; }
   <div class="meta"><span class="meta-tag">section/0.5</span> · 数据立柱</div>
   <div class="data-row">
     <div class="data-cell">
-      <div class="data-num">25.7<span style="font-size: 0.5em">pp</span></div>
+      <div class="data-num">25.7<span class="data-unit">pp</span></div>
       <div class="data-label">same model · different harness</div>
-      <div class="data-sub">GPT-5.5 在 Cursor <strong style="color:var(--text)">87.2%</strong> vs Codex <strong style="color:var(--text)">61.5%</strong><br>Endor Labs · 2026-04-27</div>
+      <div class="data-sub">GPT-5.5 在 Cursor <strong>87.2%</strong> vs Codex <strong>61.5%</strong><br>Endor Labs · 2026-04-27</div>
     </div>
     <div class="data-cell">
       <div class="data-num">6×</div>
       <div class="data-label">cited across studies</div>
-      <div class="data-sub">Meta-Harness 论文 <strong style="color:var(--text)">cite [46]</strong> 的跨研究发现<br>论文自己贡献 TerminalBench-2 <strong style="color:var(--text)">27.5% → 37.6%</strong><br>Stanford · arxiv 2603.28052</div>
+      <div class="data-sub">Meta-Harness 论文 <strong>cite [46]</strong> 的跨研究发现<br>论文自己贡献 TerminalBench-2 <strong>27.5% → 37.6%</strong><br>Stanford · arxiv 2603.28052</div>
     </div>
     <div class="data-cell">
-      <div class="data-num">81.8<span style="font-size: 0.5em">%</span></div>
+      <div class="data-num">81.8<span class="data-unit">%</span></div>
       <div class="data-label">different models · same harness</div>
       <div class="data-sub">GPT-5.4 + Opus 4.6 在同一 harness 下都跑到同分<br>"Opus reads between the lines. GPT reads the lines."<br>ForgeCode blog · 2026-03-16</div>
     </div>
   </div>
-  <div class="data-row" style="margin-top: 14px;">
-    <div class="screenshot tall" style="max-width: 100%;">
-      <div class="ss-frame" style="max-height: 180px;"><img src="images/slide-2.png" alt="Endor Labs · AI Code Security Benchmark"></div>
+  <div class="data-row evidence-row">
+    <div class="screenshot tall">
+      <div class="ss-frame"><img src="images/slide-2.png" alt="Endor Labs · AI Code Security Benchmark"></div>
       <div class="ss-cap">endorlabs.com/research/ai-code-security-benchmark</div>
     </div>
-    <div class="screenshot tall" style="max-width: 100%;">
-      <div class="ss-frame" style="max-height: 180px;"><img src="images/slide-3.png" alt="Stanford Meta-Harness paper · arxiv 2603.28052"></div>
+    <div class="screenshot tall">
+      <div class="ss-frame"><img src="images/slide-3.png" alt="Stanford Meta-Harness paper · arxiv 2603.28052"></div>
       <div class="ss-cap">arxiv.org/abs/2603.28052 · Meta-Harness</div>
     </div>
-    <div class="screenshot tall" style="max-width: 100%;">
-      <div class="ss-frame" style="max-height: 180px;"><img src="images/slide-4.png" alt="ForgeCode · Benchmarks Don't Matter Until They Do"></div>
+    <div class="screenshot tall">
+      <div class="ss-frame"><img src="images/slide-4.png" alt="ForgeCode · Benchmarks Don't Matter Until They Do"></div>
       <div class="ss-cap">forgecode.dev/blog/gpt-5-4-agent-improvements</div>
     </div>
   </div>
@@ -1151,7 +1419,7 @@ body .key-hint { display: none; }
       <div class="card-desc">"先跑一下""手动改改"——人盯每一步</div>
     </div>
   </div>
-  <h3 style="margin-top: 28px;">关键里程碑：<strong style="color: var(--text);">ultrathink (0.2.44)</strong> 让模型多想一会；<strong style="color: var(--text);">CLAUDE.md @import (0.2.107)</strong> 让上下文可以分文件、可以复用——但还是 prompt 风格，不是 skill / harness 风格</h3>
+  <h3 style="margin-top: 28px;">关键里程碑：<strong>ultrathink (0.2.44)</strong> 让模型多想一会；<strong>CLAUDE.md @import (0.2.107)</strong> 让上下文可以分文件、可以复用——但还是 prompt 风格，不是 skill / harness 风格</h3>
 </div>
 
 <div class="slide">
@@ -1212,9 +1480,9 @@ body .key-hint { display: none; }
       <div class="card-title">Subagent 雏形</div>
       <div class="card-desc">独立 context 的子任务隔离</div>
     </div>
-    <div class="card" style="border-color: var(--accent);">
-      <div class="card-tag" style="color: var(--accent);">1.0.94</div>
-      <div class="card-title" style="color: var(--accent);">/todos</div>
+    <div class="card accent-card">
+      <div class="card-tag">1.0.94</div>
+      <div class="card-title">/todos</div>
       <div class="card-desc">长任务的执行节奏被产品化</div>
     </div>
   </div>
@@ -1227,38 +1495,42 @@ body .key-hint { display: none; }
   <div class="quote">
     1.0.x 这一段最重要的事不是某个 feature——<em>是 "先 plan 再 do" 这个工程习惯被产品化了</em>
   </div>
-  <div class="table-wrap" style="margin-top: 22px;">
-    <table style="width: 100%; max-width: 900px; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px;">
-      <tr style="border-bottom: 1.5px solid var(--border);">
-        <th style="text-align: left; padding: 10px 14px; color: var(--accent); font-weight: 500; letter-spacing: 1px;">player</th>
-        <th style="text-align: left; padding: 10px 14px; color: var(--accent); font-weight: 500; letter-spacing: 1px;">feature</th>
-        <th style="text-align: left; padding: 10px 14px; color: var(--accent); font-weight: 500; letter-spacing: 1px;">when</th>
-        <th style="text-align: left; padding: 10px 14px; color: var(--accent); font-weight: 500; letter-spacing: 1px;">form</th>
-      </tr>
-      <tr style="border-bottom: 1px solid var(--border-light);">
-        <td style="padding: 10px 14px; color: var(--text);"><strong>Anthropic</strong> · Claude Code</td>
-        <td style="padding: 10px 14px;">Plan mode (Shift+Tab × 2)</td>
-        <td style="padding: 10px 14px; color: var(--text-sec);">2026-01 · v1.0.33</td>
-        <td style="padding: 10px 14px; color: var(--text-sec);">显式 mode toggle · 已落地</td>
-      </tr>
-      <tr style="border-bottom: 1px solid var(--border-light);">
-        <td style="padding: 10px 14px; color: var(--text);"><strong>OpenAI</strong> · Codex</td>
-        <td style="padding: 10px 14px;">Plan/Spec mode</td>
-        <td style="padding: 10px 14px; color: var(--text-sec);">2026-Q1 · discussion #7355</td>
-        <td style="padding: 10px 14px; color: var(--text-sec);">RFC 阶段 → 后期实现</td>
-      </tr>
-      <tr style="border-bottom: 1px solid var(--border-light);">
-        <td style="padding: 10px 14px; color: var(--text);"><strong>Cursor</strong></td>
-        <td style="padding: 10px 14px;">plan-and-act</td>
-        <td style="padding: 10px 14px; color: var(--text-sec);">2026-Q1</td>
-        <td style="padding: 10px 14px; color: var(--text-sec);">两阶段流程 · 内置</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px 14px; color: var(--text);"><strong>GitHub</strong> · Copilot</td>
-        <td style="padding: 10px 14px;">Plan mode</td>
-        <td style="padding: 10px 14px; color: var(--text-sec);">2026-Q2</td>
-        <td style="padding: 10px 14px; color: var(--text-sec);">跟进 · IDE 内</td>
-      </tr>
+  <div class="table-wrap spaced">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>player</th>
+          <th>feature</th>
+          <th>when</th>
+          <th>form</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="entity"><strong>Anthropic</strong> · Claude Code</td>
+          <td>Plan mode (Shift+Tab × 2)</td>
+          <td class="muted">2026-01 · v1.0.33</td>
+          <td class="muted">显式 mode toggle · 已落地</td>
+        </tr>
+        <tr>
+          <td class="entity"><strong>OpenAI</strong> · Codex</td>
+          <td>Plan/Spec mode</td>
+          <td class="muted">2026-Q1 · discussion #7355</td>
+          <td class="muted">RFC 阶段 → 后期实现</td>
+        </tr>
+        <tr>
+          <td class="entity"><strong>Cursor</strong></td>
+          <td>plan-and-act</td>
+          <td class="muted">2026-Q1</td>
+          <td class="muted">两阶段流程 · 内置</td>
+        </tr>
+        <tr>
+          <td class="entity"><strong>GitHub</strong> · Copilot</td>
+          <td>Plan mode</td>
+          <td class="muted">2026-Q2</td>
+          <td class="muted">跟进 · IDE 内</td>
+        </tr>
+      </tbody>
     </table>
   </div>
   <div class="speaker-note">不要把这页念成产品功能比对。重点是：四家在同一时间点做同一件事——把 "先 plan 再 do" 这个工程习惯产品化。这就是 binding constraint 被产品接过去的明确信号——当四家独立团队同时把同一个 prompt 习惯做成 button，说明这个 pattern 已经稳定到值得 bake-in。</div>
@@ -1322,12 +1594,12 @@ body .key-hint { display: none; }
       <div class="axis-q">agent 凭什么宣告 done?</div>
       <div class="axis-stage"><div class="stage-tag">manual</div><div class="stage-text">人盯每一步</div></div>
       <div class="axis-stage"><div class="stage-tag">in-loop</div><div class="stage-text">Anthropic Planner-Generator-Evaluator 三角色(GAN 启发)</div></div>
-      <div class="axis-stage bake"><div class="stage-tag">→ 2026-05</div><div class="stage-text"><strong>Outcomes</strong>：rubric + 独立 grader agent · <strong style="color: var(--accent);">+10pp</strong> task success / +8.4% docx / +10.1% pptx</div></div>
+      <div class="axis-stage bake"><div class="stage-tag">→ 2026-05</div><div class="stage-text"><strong>Outcomes</strong>：rubric + 独立 grader agent · <strong>+10pp</strong> task success / +8.4% docx / +10.1% pptx</div></div>
       <div class="axis-stage"><div class="stage-tag">why</div><div class="stage-text"><em>"Agents reliably skew positive when grading their own work."</em></div></div>
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px;">
-    每一轴都经历同一个动作：<strong style="color: var(--text);">从我们自己承担 → 被产品接过去</strong>
+    每一轴都经历同一个动作：<strong>从我们自己承担 → 被产品接过去</strong>
   </div>
 </div>
 
@@ -1353,36 +1625,36 @@ body .key-hint { display: none; }
     <div class="quote-attr">— Anthropic, *Effective context engineering for AI agents*</div>
   </div>
   <div class="table-wrap" style="margin-top: 22px;">
-    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; font-family: var(--font-mono); font-size: 12px;">
-      <div style="border-top: 2px solid var(--text-dim); padding-top: 10px;">
-        <div style="color: var(--text-dim); font-size: 10px; letter-spacing: 1px; margin-bottom: 4px;">2024</div>
-        <div style="color: var(--text); font-weight: 500; margin-bottom: 4px;">transcript buffer</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">all-or-nothing；溢出就丢</div>
+    <div class="context-strip">
+      <div class="context-node">
+        <div class="node-tag">2024</div>
+        <div class="node-title">transcript buffer</div>
+        <div class="node-copy">all-or-nothing；溢出就丢</div>
       </div>
-      <div style="border-top: 2px solid var(--axis-skill); padding-top: 10px;">
-        <div style="color: var(--axis-skill); font-size: 10px; letter-spacing: 1px; margin-bottom: 4px;">0.2.107</div>
-        <div style="color: var(--text); font-weight: 500; margin-bottom: 4px;">CLAUDE.md @import</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">人手动剪上下文</div>
+      <div class="context-node" style="--node-color: var(--axis-skill);">
+        <div class="node-tag">0.2.107</div>
+        <div class="node-title">CLAUDE.md @import</div>
+        <div class="node-copy">人手动剪上下文</div>
       </div>
-      <div style="border-top: 2px solid var(--axis-context); padding-top: 10px;">
-        <div style="color: var(--axis-context); font-size: 10px; letter-spacing: 1px; margin-bottom: 4px;">1.0.41</div>
-        <div style="color: var(--text); font-weight: 500; margin-bottom: 4px;">subagent 隔离</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">独立 200K context · 不污染主线</div>
+      <div class="context-node" style="--node-color: var(--axis-context);">
+        <div class="node-tag">1.0.41</div>
+        <div class="node-title">subagent 隔离</div>
+        <div class="node-copy">独立 200K context · 不污染主线</div>
       </div>
-      <div style="border-top: 2px solid var(--axis-context); padding-top: 10px;">
-        <div style="color: var(--axis-context); font-size: 10px; letter-spacing: 1px; margin-bottom: 4px;">1.0.x late</div>
-        <div style="color: var(--text); font-weight: 500; margin-bottom: 4px;">claude-progress.txt</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">长 session 自动持久化</div>
+      <div class="context-node" style="--node-color: var(--axis-context);">
+        <div class="node-tag">1.0.x late</div>
+        <div class="node-title">claude-progress.txt</div>
+        <div class="node-copy">长 session 自动持久化</div>
       </div>
-      <div style="border-top: 2px solid var(--accent); padding-top: 10px;">
-        <div style="color: var(--accent); font-size: 10px; letter-spacing: 1px; margin-bottom: 4px;">0.2.47 +</div>
-        <div style="color: var(--text); font-weight: 500; margin-bottom: 4px;">auto compact</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">达到阈值自动压缩</div>
+      <div class="context-node" style="--node-color: var(--accent);">
+        <div class="node-tag">0.2.47 +</div>
+        <div class="node-title">auto compact</div>
+        <div class="node-copy">达到阈值自动压缩</div>
       </div>
-      <div style="border-top: 2.5px solid var(--accent); padding-top: 10px;">
-        <div style="color: var(--accent); font-size: 10px; letter-spacing: 1px; margin-bottom: 4px;">2026-05-06 →</div>
-        <div style="color: var(--text); font-weight: 600; margin-bottom: 4px;">Dreaming (preview)</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">idle 时复盘 session 提取 pattern 进 memory</div>
+      <div class="context-node emphasis" style="--node-color: var(--accent); border-top-width: 2.5px;">
+        <div class="node-tag">2026-05-06 →</div>
+        <div class="node-title">Dreaming (preview)</div>
+        <div class="node-copy">idle 时复盘 session 提取 pattern 进 memory</div>
       </div>
     </div>
   </div>
@@ -1402,17 +1674,17 @@ body .key-hint { display: none; }
       </div>
       <div class="data-row" style="margin-top: 16px;">
         <div class="data-cell">
-          <div class="data-num">+10<span style="font-size: 0.5em">pp</span></div>
+          <div class="data-num">+10<span class="data-unit">pp</span></div>
           <div class="data-label">task success vs standard prompting</div>
           <div class="data-sub">largest gains on hardest problems<br>Anthropic Outcomes 内部基准</div>
         </div>
         <div class="data-cell">
-          <div class="data-num">+8.4<span style="font-size: 0.5em">%</span></div>
+          <div class="data-num">+8.4<span class="data-unit">%</span></div>
           <div class="data-label">docx generation quality</div>
           <div class="data-sub">claude.com/blog/<br>new-in-claude-managed-agents</div>
         </div>
         <div class="data-cell">
-          <div class="data-num">+10.1<span style="font-size: 0.5em">%</span></div>
+          <div class="data-num">+10.1<span class="data-unit">%</span></div>
           <div class="data-label">pptx generation quality</div>
           <div class="data-sub">2026-05-06 SF keynote</div>
         </div>
@@ -1492,30 +1764,30 @@ body .key-hint { display: none; }
     long unattended agent run<br>→ <em>one proof pack</em><br>→ short human review
     <div class="quote-attr">— github.com/MiaoDX/roboharness README</div>
   </div>
-  <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 10px; align-items: stretch; font-family: var(--font-mono); font-size: 12px;">
-    <div style="background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px;">
-      <div style="color: var(--accent); font-size: 10px; letter-spacing: 1.5px; margin-bottom: 6px;">1 · INPUT</div>
-      <div style="color: var(--text); font-weight: 500; margin-bottom: 4px;">contract.yml</div>
-      <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">声明这次 run 要满足的不变量</div>
+  <div class="flow-strip">
+    <div class="flow-card">
+      <div class="flow-tag">1 · INPUT</div>
+      <div class="flow-title">contract.yml</div>
+      <div class="flow-copy">声明这次 run 要满足的不变量</div>
     </div>
-    <div style="background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px;">
-      <div style="color: var(--accent); font-size: 10px; letter-spacing: 1.5px; margin-bottom: 6px;">2 · DURING RUN</div>
-      <div style="color: var(--text); font-weight: 500; margin-bottom: 4px;">phase_manifest</div>
-      <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">每个 phase 的 input / output / 决策点</div>
+    <div class="flow-card">
+      <div class="flow-tag">2 · DURING RUN</div>
+      <div class="flow-title">phase_manifest</div>
+      <div class="flow-copy">每个 phase 的 input / output / 决策点</div>
     </div>
-    <div style="background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px;">
-      <div style="color: var(--accent); font-size: 10px; letter-spacing: 1.5px; margin-bottom: 6px;">3 · AFTER RUN</div>
-      <div style="color: var(--text); font-weight: 500; margin-bottom: 4px;">approval_report</div>
-      <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">grader agent 出的 surfaced case 列表</div>
+    <div class="flow-card">
+      <div class="flow-tag">3 · AFTER RUN</div>
+      <div class="flow-title">approval_report</div>
+      <div class="flow-copy">grader agent 出的 surfaced case 列表</div>
     </div>
-    <div style="background: var(--accent-soft); border: 1.5px solid var(--accent); padding: 12px 14px;">
-      <div style="color: var(--accent); font-size: 10px; letter-spacing: 1.5px; margin-bottom: 6px;">4 · HUMAN REVIEW</div>
-      <div style="color: var(--text); font-weight: 600; margin-bottom: 4px;">report.html</div>
-      <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">Run Decision banner + surfaced case · 5 min</div>
+    <div class="flow-card accented">
+      <div class="flow-tag">4 · HUMAN REVIEW</div>
+      <div class="flow-title">report.html</div>
+      <div class="flow-copy">Run Decision banner + surfaced case · 5 min</div>
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px;">
-    review 流程：<strong style="color: var(--text);">看 Run Decision banner</strong> → 只看 surfaced case → 用 phase_manifest 决定是否重跑
+    review 流程：<strong>看 Run Decision banner</strong> → 只看 surfaced case → 用 phase_manifest 决定是否重跑
   </div>
 </div>
 
@@ -1625,41 +1897,41 @@ body .key-hint { display: none; }
   <div class="quote" style="font-size: clamp(28px, 3.4vw, 44px);">
     哪类活配哪种 harness——<em>这本身就是工程判断</em>
   </div>
-  <div style="margin-top: 28px; max-width: 720px; margin-left: auto; margin-right: auto;">
-    <div style="display: grid; grid-template-columns: auto 1fr 1fr; grid-template-rows: auto 1fr 1fr; gap: 0; font-family: var(--font-mono); font-size: 12px;">
+  <div class="tool-matrix">
+    <div class="tool-matrix-grid">
       <!-- top-left empty -->
-      <div></div>
+      <div class="matrix-empty"></div>
       <!-- col headers -->
-      <div style="text-align: center; padding: 8px; color: var(--text-dim); font-size: 10px; letter-spacing: 1.5px;">SCOPE 小 · 独立</div>
-      <div style="text-align: center; padding: 8px; color: var(--text-dim); font-size: 10px; letter-spacing: 1.5px;">SCOPE 大 · 跨文件</div>
+      <div class="matrix-axis-x">SCOPE 小 · 独立</div>
+      <div class="matrix-axis-x">SCOPE 大 · 跨文件</div>
       <!-- row 1 header -->
-      <div style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; padding: 8px; color: var(--text-dim); font-size: 10px; letter-spacing: 1.5px;">需求清晰</div>
+      <div class="matrix-axis-y">需求清晰</div>
       <!-- Q1 -->
-      <div style="background: var(--accent-soft); border: 1.5px solid var(--accent); padding: 14px; min-height: 110px;">
-        <div style="color: var(--accent); font-weight: 600; margin-bottom: 6px;">routine · 云端 60 分</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">auto_pr · daily_duty<br>每小时跑 · 人不在场</div>
+      <div class="matrix-cell accented">
+        <div class="matrix-title">routine · 云端 60 分</div>
+        <div class="matrix-copy">auto_pr · daily_duty<br>每小时跑 · 人不在场</div>
       </div>
       <!-- Q2 -->
-      <div style="background: var(--bg-card); border: 1px solid var(--border); padding: 14px; min-height: 110px;">
-        <div style="color: var(--text); font-weight: 600; margin-bottom: 6px;">本地 plan-pipeline</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">GSD / gstack 跨多文件大改<br>本地 plan + 多 phase 执行</div>
+      <div class="matrix-cell">
+        <div class="matrix-title">本地 plan-pipeline</div>
+        <div class="matrix-copy">GSD / gstack 跨多文件大改<br>本地 plan + 多 phase 执行</div>
       </div>
       <!-- row 2 header -->
-      <div style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; padding: 8px; color: var(--text-dim); font-size: 10px; letter-spacing: 1.5px;">需求模糊 / 长跑</div>
+      <div class="matrix-axis-y">需求模糊 / 长跑</div>
       <!-- Q3 -->
-      <div style="background: var(--bg-card); border: 1px solid var(--border); padding: 14px; min-height: 110px;">
-        <div style="color: var(--text); font-weight: 600; margin-bottom: 6px;">mattpocock/skills</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">grill-me / grill-with-docs<br>先让 AI 反问把需求磨清楚</div>
+      <div class="matrix-cell">
+        <div class="matrix-title">mattpocock/skills</div>
+        <div class="matrix-copy">grill-me / grill-with-docs<br>先让 AI 反问把需求磨清楚</div>
       </div>
       <!-- Q4 -->
-      <div style="background: var(--bg-card); border: 1.5px solid var(--axis-verif); padding: 14px; min-height: 110px;">
-        <div style="color: var(--axis-verif); font-weight: 600; margin-bottom: 6px;">roboharness</div>
-        <div style="color: var(--text-sec); font-size: 11px; line-height: 1.5;">unattended 长跑 + proof pack<br>5min review 把验证工程化掉</div>
+      <div class="matrix-cell verification">
+        <div class="matrix-title">roboharness</div>
+        <div class="matrix-copy">unattended 长跑 + proof pack<br>5min review 把验证工程化掉</div>
       </div>
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px; text-align: center;">
-    哪类活配哪种 harness — 不是模型选择，是<strong style="color: var(--text);">任务-工具匹配</strong>
+    哪类活配哪种 harness — 不是模型选择，是<strong>任务-工具匹配</strong>
   </div>
 </div>
 
@@ -1676,9 +1948,25 @@ body .key-hint { display: none; }
   <div class="meta"><span class="meta-tag">section/6</span> · /goal · bake-in</div>
   <h2>/goal：agent loop 自身被 bake 进 slash command</h2>
   <h3>三轴在一条命令里同时被产品接过去：Skill(按需调) + Context(runtime continuation) + Verification(强制 audit)</h3>
-  <div class="screenshot" style="max-width: 540px; margin-top: 20px;">
-    <img src="images/slide-8.png" alt="Greg Brockman: codex now has a built in Ralph loop++">
-    <div class="ss-cap">x.com/gdb/status/2050194039077495089 · 2026-05-01 · 推文里直接讲 codex 0.128.0 的 /goal &lt;objective&gt; 命令</div>
+  <div class="goal-visual">
+    <div class="screenshot">
+      <img src="images/slide-8.png" alt="Greg Brockman: codex now has a built in Ralph loop++">
+      <div class="ss-cap">x.com/gdb/status/2050194039077495089 · 2026-05-01 · 推文里直接讲 codex 0.128.0 的 /goal &lt;objective&gt; 命令</div>
+    </div>
+    <div class="routine-facts">
+      <div class="fact-row">
+        <div class="fact-tag">Skill axis</div>
+        <div class="fact-copy"><strong>/goal &lt;objective&gt;</strong> 把“设目标、拆动作、继续推进”包装成一个可调用入口。</div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-tag">Context axis</div>
+        <div class="fact-copy">loop 状态不再靠人手动续写 prompt，而是由 runtime continuation 接住。</div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-tag">Verification axis</div>
+        <div class="fact-copy">Ralph loop++ 的核心不是多跑几轮，是每轮都带着 audit pressure 逼近 done。</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1689,7 +1977,7 @@ body .key-hint { display: none; }
   <div class="cards">
     <div class="card"><div class="card-tag">cause 1</div><div class="card-title">reasoning effort 改 default</div><div class="card-desc">触发用户不可察觉的退化</div></div>
     <div class="card"><div class="card-tag">cause 2</div><div class="card-title">thinking-history 清理 bug</div><div class="card-desc">长 session 上下文被错误压缩</div></div>
-    <div class="card" style="border-color: var(--accent);"><div class="card-tag" style="color: var(--accent);">lesson</div><div class="card-title" style="color: var(--accent);">产品化 ≠ 终点</div><div class="card-desc">harness 接走的越多，反向出错的成本也越高</div></div>
+    <div class="card accent-card"><div class="card-tag">lesson</div><div class="card-title">产品化 ≠ 终点</div><div class="card-desc">harness 接走的越多，反向出错的成本也越高</div></div>
   </div>
 </div>
 
