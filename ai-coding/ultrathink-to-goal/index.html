@@ -2213,7 +2213,7 @@ body .key-hint { display: none; }
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 11px;">
-    社区参考：self.md/guides/plan-mode-guide · claudelog.com/faqs/what-is-ultrathink · kentgigger 等多位独立工程师的 workflow blog（2026-Q1 集中产出）
+    社区参考：<a href="https://self.md/guides/plan-mode-guide">self.md/guides/plan-mode-guide</a> · <a href="https://claudelog.com/faqs/what-is-ultrathink">claudelog.com/faqs/what-is-ultrathink</a> · kentgigger 等多位独立工程师的 workflow blog（2026-Q1 集中产出）
   </div>
   <div class="speaker-note">这一段最深的体感是：vibe 段我们自己在补后来会被产品内建的机制。Plan 没产品支持，就把 plan 写成 markdown 文件让 Claude 照做。Ultrathink 当时是隐藏关键词，没有 /effort 命令，每次都要手动加。Skill 没有产品形态，社区就互相分享 prompt template。这几件事 1.0.x 之后被产品化 —— plan 变成 plan mode，ultrathink 变成 /effort，prompt template 变成 skills。今天回头看，我们当时干的就是后来的 SDD / reasoning effort / Skill / Context 雏形。</div>
 </div>
@@ -2312,7 +2312,7 @@ body .key-hint { display: none; }
 </div>
 
 <!-- ============================================================ -->
-<!-- 6 · 4 节 Harness 三轴（8 张,含 inline figure #19）             -->
+<!-- 6 · 4 节 Harness 三轴（10 张,含 inline figure #19）            -->
 <!-- ============================================================ -->
 <div class="slide section">
   <div class="section-marker">§ 4</div>
@@ -2360,6 +2360,36 @@ body .key-hint { display: none; }
   <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px;">
     接下来三页分别拆开看：prompt 怎么变成可调用能力、context 怎么变成高信号 token、完成标准怎么被外显
   </div>
+</div>
+
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/4.1</span> · 三轴落地</div>
+  <h2>三轴在 2026 的产品里<span class="hl">长什么样</span></h2>
+  <h3>抽象的 action / information / exit 三个 surface，过去一年都被钉在了一个具体的产品形态上——下面三个就是它们今天最容易看见的样子。</h3>
+  <div class="axis-overview" style="margin-top: 22px;">
+    <div class="axis-overview-card">
+      <div class="axis-name">Skill</div>
+      <div class="axis-surface">action surface · 一条 <code style="font-family: var(--font-mono); color: var(--accent); background: var(--accent-soft); padding: 1px 6px; border-radius: 3px;">/goal</code> 命令</div>
+      <div class="axis-copy">Codex 0.128.0 把整套 ralph loop 烤进一条 slash command。从用户视角是“说目标”，从 harness 视角是 skill / planner / loop / continuation 一起被产品化。</div>
+      <div style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px;">γ-friendly：以前要自己拼一堆 prompt，现在一个命令</div>
+    </div>
+    <div class="axis-overview-card">
+      <div class="axis-name">Context</div>
+      <div class="axis-surface">information surface · subagent <em>fresh 200K</em></div>
+      <div class="axis-copy">每个 subagent 起一段干净的上下文，不背主线的噪音。最戏剧的演化：从被动 transcript → 隔离 context → 5-6 Dreaming idle 时离线蒸馏 pattern。</div>
+      <div style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px;">γ-friendly：不是塞更多，而是开一个新房间专门干这件事</div>
+    </div>
+    <div class="axis-overview-card">
+      <div class="axis-name">Verification</div>
+      <div class="axis-surface">exit condition · Anthropic <em>Outcomes</em></div>
+      <div class="axis-copy">rubric 加独立 grader agent 取代“agent 自评”。docx +8.4% / pptx +10.1% / task +10pp 都来自这套机制——下一页的数字就是它出的。</div>
+      <div style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px;">γ-friendly：写作业的同学和改作业的老师必须是两个人</div>
+    </div>
+  </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px; max-width: 80ch;">
+    每个 anchor 都是一年前还要我们自己拼的“工程动作”，今天变成了一个产品入口——这就是“被悄悄接走”的样子。
+  </div>
+  <div class="speaker-note">这一页是给 γ 听众的“下脚点”。前一页三轴还停在抽象名词，这页把它们各自钉到一个看得见的产品上：/goal 是一条命令、subagent 是开新窗口、Outcomes 是“写作业 vs 改作业分两人”。α 听众也得到一组锚点，方便后面 5.x 我自己实践时回照。停一拍后再翻 Skill 轴的演进图。</div>
 </div>
 
 <div class="slide skill-axis-slide">
@@ -2436,8 +2466,9 @@ body .key-hint { display: none; }
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴</div>
+  <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴 · 为什么</div>
   <h2>Verification 轴：完成标准必须<span class="hl">外显</span></h2>
+  <h3>不是“多看一眼”，而是把谁判定完成、用什么 rubric、由谁来读，三件事拆开外显。</h3>
   <div class="slide-2col" style="margin-top: 18px;">
     <div class="col-l">
       <div class="quote">
@@ -2458,23 +2489,6 @@ body .key-hint { display: none; }
           <div class="reason-copy">docx / pptx 这类对象有结构、约束和可见结果，适合独立 grader 逐项判断。</div>
         </div>
       </div>
-      <div class="data-row" style="margin-top: 16px;">
-        <div class="data-cell">
-          <div class="data-num">+10<span class="data-unit">pp</span></div>
-          <div class="data-label">task success vs standard prompting</div>
-          <div class="data-sub">largest gains on hardest problems<br>Anthropic Outcomes 内部基准</div>
-        </div>
-        <div class="data-cell">
-          <div class="data-num">+8.4<span class="data-unit">%</span></div>
-          <div class="data-label">docx generation quality</div>
-          <div class="data-sub">claude.com/blog/<br>new-in-claude-managed-agents</div>
-        </div>
-        <div class="data-cell">
-          <div class="data-num">+10.1<span class="data-unit">%</span></div>
-          <div class="data-label">pptx generation quality</div>
-          <div class="data-sub">2026-05-06 SF keynote</div>
-        </div>
-      </div>
     </div>
     <div class="col-r">
       <div class="screenshot tall">
@@ -2483,6 +2497,34 @@ body .key-hint { display: none; }
       </div>
     </div>
   </div>
+  <div class="speaker-note">这一页只讲“为什么要外显”，三个 reason 各停一拍。下一页才把 Anthropic Outcomes 的数字甩出来——把“反直觉论点”和“数据立柱”分开两次冲击，比挤一页更稳。</div>
+</div>
+
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴 · 数据</div>
+  <h2>fresh grader 不是直觉，<span class="hl">看 Anthropic Outcomes 的数</span></h2>
+  <h3>同一个模型，加上独立 rubric + 外部 grader（Outcomes 系统），任务成功率和结构化 artifact 质量集体抬升。</h3>
+  <div class="data-row" style="margin-top: 28px;">
+    <div class="data-cell">
+      <div class="data-num">+10<span class="data-unit">pp</span></div>
+      <div class="data-label">task success vs standard prompting</div>
+      <div class="data-sub">largest gains on hardest problems<br><a href="https://claude.com/blog/new-in-claude-managed-agents">claude.com/blog/new-in-claude-managed-agents</a></div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">+8.4<span class="data-unit">%</span></div>
+      <div class="data-label">docx generation quality</div>
+      <div class="data-sub"><a href="https://claude.com/blog/new-in-claude-managed-agents">claude.com/blog/new-in-claude-managed-agents</a></div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">+10.1<span class="data-unit">%</span></div>
+      <div class="data-label">pptx generation quality</div>
+      <div class="data-sub">Code w/ Claude SF keynote · 2026-05-06<br><a href="https://simonwillison.net/2026/May/6/code-w-claude-2026/">simonwillison.net/2026/May/6/code-w-claude-2026</a></div>
+    </div>
+  </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 22px; font-size: 12px; max-width: 80ch;">
+    数字的方向比绝对值更重要：越是“硬题”——长程目标、结构化交付物——外显完成标准带来的抬升越明显。这正是为什么 verification 必须从“事后人盯”升级成 harness 一等机制。
+  </div>
+  <div class="speaker-note">这页是 Verification 轴的“给数字”页。三组数都来自 Anthropic Outcomes 系统：+10pp 是 task success（最难的题抬升最大），+8.4% / +10.1% 是 docx / pptx 生成质量。强调“硬题受益最大”——和后面 5.1 roboharness 长程任务里 proof pack 的动机直接对上。</div>
 </div>
 
 <div class="slide">
@@ -2534,7 +2576,7 @@ body .key-hint { display: none; }
 </div>
 
 <!-- ============================================================ -->
-<!-- 7 · 5 节我的实践（6 张）                                       -->
+<!-- 7 · 5 节我的实践（6 张：5.1 合并 -1，5.2→5.3 交棒 +1）         -->
 <!-- ============================================================ -->
 <div class="slide section">
   <div class="section-marker">§ 5</div>
@@ -2543,96 +2585,123 @@ body .key-hint { display: none; }
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/5.1</span> · roboharness</div>
+  <div class="meta"><span class="meta-tag">section/5.1</span> · roboharness · 叙事页</div>
   <h2>roboharness · <span class="hl">长 unattended run 的 review 工程化</span></h2>
-  <h3>移走的是 Verification bottleneck：agent 跑 4 小时改机器人代码，人不该一帧帧看完整过程</h3>
-  <div class="quote" style="font-family: var(--font-mono); font-style: normal; font-size: clamp(15px, 1.7vw, 20px);">
-    long unattended agent run<br>→ <em>one proof pack</em><br>→ short human review
-    <div class="quote-attr">— <a href="https://github.com/MiaoDX/roboharness">github.com/MiaoDX/roboharness</a> README</div>
+  <h3>移走的是 Verification bottleneck——agent 跑 4 小时改机器人代码，人不该一帧帧看完整过程；做的是把 review 从“盯过程”换成“审证据包”。</h3>
+  <div class="slide-2col" style="margin-top: 22px; grid-template-columns: 1fr 1.6fr; align-items: start;">
+    <div class="col-l">
+      <div class="quote" style="font-family: var(--font-mono); font-style: normal; font-size: clamp(15px, 1.6vw, 19px);">
+        long unattended agent run<br>→ <em>one proof pack</em><br>→ short human review
+        <div class="quote-attr">— <a href="https://github.com/MiaoDX/roboharness">github.com/MiaoDX/roboharness</a> README</div>
+      </div>
+      <div style="margin-top: 20px; font-size: 13.5px; color: var(--text-sec); line-height: 1.6;">
+        <strong style="color: var(--text);">review path：</strong>看 Run Decision banner → 只看 surfaced case → 用 phase_manifest 决定是否重跑
+      </div>
+      <div style="margin-top: 16px; font-size: 13.5px; color: var(--text-sec); line-height: 1.6;">
+        <strong style="color: var(--accent);">关键变化：</strong>人不再验证完整过程，而是验证一个证据包——review bottleneck 从“盯 4 小时”变成“5 分钟做决策”。
+      </div>
+    </div>
+    <div class="col-r">
+      <div class="flow-strip">
+        <div class="flow-card">
+          <div class="flow-tag">1 · INPUT</div>
+          <div class="flow-title">contract.yml</div>
+          <div class="flow-copy">声明这次 run 必须满足的不变量，避免 review 时重新猜目标</div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-tag">2 · DURING RUN</div>
+          <div class="flow-title">phase_manifest</div>
+          <div class="flow-copy">每个 phase 的 input / output / 决策点都被保留下来</div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-tag">3 · AFTER RUN</div>
+          <div class="flow-title">approval_report</div>
+          <div class="flow-copy">grader agent 只 surface 需要人看的 case，而不是整段执行日志</div>
+        </div>
+        <div class="flow-card accented">
+          <div class="flow-tag">4 · HUMAN REVIEW</div>
+          <div class="flow-title">report.html</div>
+          <div class="flow-copy">先看 Run Decision banner，再看 surfaced cases，最后决定 merge / rerun · 5 min</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="flow-strip">
-    <div class="flow-card">
-      <div class="flow-tag">1 · INPUT</div>
-      <div class="flow-title">contract.yml</div>
-      <div class="flow-copy">声明这次 run 要满足的不变量</div>
-    </div>
-    <div class="flow-card">
-      <div class="flow-tag">2 · DURING RUN</div>
-      <div class="flow-title">phase_manifest</div>
-      <div class="flow-copy">每个 phase 的 input / output / 决策点</div>
-    </div>
-    <div class="flow-card">
-      <div class="flow-tag">3 · AFTER RUN</div>
-      <div class="flow-title">approval_report</div>
-      <div class="flow-copy">grader agent 出的 surfaced case 列表</div>
-    </div>
-    <div class="flow-card accented">
-      <div class="flow-tag">4 · HUMAN REVIEW</div>
-      <div class="flow-title">report.html</div>
-      <div class="flow-copy">Run Decision banner + surfaced case · 5 min</div>
-    </div>
-  </div>
-  <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px;">
-    review 流程：<strong>看 Run Decision banner</strong> → 只看 surfaced case → 用 phase_manifest 决定是否重跑
-  </div>
+  <div class="speaker-note">这页只讲“proof pack 的 4 步是什么 + 它换了 review 的什么”。下一页才用真实截图证明它长什么样。讲法：先指右边 4 张卡走一遍 pipeline，最后回到左边红字收束（4h→5min）。停一拍翻下一页。</div>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/5.1</span> · roboharness · 三轴定位</div>
-  <h2>roboharness 在三轴里落到 <span class="hl">Verification 轴</span></h2>
-  <h3>把 review 这个 binding constraint 工程化掉，让人在 5 分钟内消化几小时 unattended 跑</h3>
-  <div class="diagram-panel">
-    <div class="diagram-title">proof pack review path</div>
-    <div class="proof-flow">
-      <div class="proof-step">
-        <div>
-          <div class="step-tag">1 · input</div>
-          <div class="step-name">contract.yml</div>
+  <div class="meta"><span class="meta-tag">section/5.1</span> · roboharness · 实证页</div>
+  <h2>proof pack 长什么样：<span class="hl">G1 humanoid run 的真实输出</span></h2>
+  <h3>不是手绘示意——下面这组就是从 <code style="font-family: var(--font-mono); color: var(--accent); background: var(--accent-soft); padding: 1px 6px; border-radius: 3px;">examples/g1_cross_framework_report.py</code> 跑出来的 proof surface，原样进 report.html。</h3>
+  <div class="slide-2col" style="margin-top: 18px; grid-template-columns: 1.45fr 1fr; gap: 24px; align-items: start;">
+    <div class="col-l">
+      <div class="screenshot">
+        <img src="images/roboharness-g1-comparison.gif" alt="Unitree G1 humanoid demo rendered side by side in Meshcat and MuJoCo" style="width: 100%; max-height: 440px; object-fit: contain; background: #000;">
+        <div class="ss-cap">
+          G1 humanoid · Meshcat（左）vs MuJoCo（右）跨 framework 比较 GIF · 每帧保留 phase 名称
+          · <a href="https://github.com/MiaoDX/roboharness#choose-your-start">github.com/MiaoDX/roboharness</a>
         </div>
-        <div class="step-copy">先声明这次 run 必须满足的不变量，避免 review 时重新猜目标</div>
-      </div>
-      <div class="proof-step">
-        <div>
-          <div class="step-tag">2 · during run</div>
-          <div class="step-name">phase_manifest</div>
-        </div>
-        <div class="step-copy">每个 phase 的输入、输出和关键决策点被保留下来</div>
-      </div>
-      <div class="proof-step">
-        <div>
-          <div class="step-tag">3 · after run</div>
-          <div class="step-name">approval_report</div>
-        </div>
-        <div class="step-copy">grader agent 只 surface 需要人看的 case，而不是整段执行日志</div>
-      </div>
-      <div class="proof-step accented">
-        <div>
-          <div class="step-tag">4 · human review</div>
-          <div class="step-name">report.html</div>
-        </div>
-        <div class="step-copy">先看 Run Decision banner，再看 surfaced cases，最后决定 merge / rerun</div>
       </div>
     </div>
-    <div class="proof-note">关键变化：人不再验证完整过程，而是验证一个证据包；review bottleneck 从“盯 4 小时”变成“5 分钟做决策”</div>
+    <div class="col-r" style="display: block; align-items: initial;">
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+        <div class="screenshot" style="margin-top: 0;">
+          <img src="images/roboharness-grasp-pre.png" alt="MuJoCo grasp pre_grasp phase frame" style="max-height: 110px; object-fit: cover;">
+          <div class="ss-cap" style="font-size: 10px; padding: 4px 8px;">phase: pre_grasp</div>
+        </div>
+        <div class="screenshot" style="margin-top: 0;">
+          <img src="images/roboharness-grasp-contact.png" alt="MuJoCo grasp contact phase frame" style="max-height: 110px; object-fit: cover;">
+          <div class="ss-cap" style="font-size: 10px; padding: 4px 8px;">phase: contact</div>
+        </div>
+        <div class="screenshot" style="margin-top: 0;">
+          <img src="images/roboharness-grasp-grasp.png" alt="MuJoCo grasp grasp phase frame" style="max-height: 110px; object-fit: cover;">
+          <div class="ss-cap" style="font-size: 10px; padding: 4px 8px;">phase: grasp</div>
+        </div>
+        <div class="screenshot" style="margin-top: 0;">
+          <img src="images/roboharness-grasp-lift.png" alt="MuJoCo grasp lift phase frame" style="max-height: 110px; object-fit: cover;">
+          <div class="ss-cap" style="font-size: 10px; padding: 4px 8px;">phase: lift</div>
+        </div>
+      </div>
+      <div style="margin-top: 16px; font-size: 12.5px; color: var(--text-dim); line-height: 1.55; border-top: 1px dashed var(--border-light); padding-top: 12px;">
+        <strong style="color: var(--text-sec); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;">项目自己的轨迹</strong><br>
+        roboharness 本身从云端 routine 开发起步，遇到 GPU / 真机 / 长 trail-and-error 才切回本地——下一页那张交棒表，本质就是这个项目自己走过的路。
+      </div>
+    </div>
   </div>
+  <div class="speaker-note">这页是 P28a 的实证。GIF 是 README 头图：G1 humanoid 同一个 run 的 Meshcat 和 MuJoCo 跨 framework 比较，phase 名留在每帧上——这就是 proof pack 让人 5 分钟就能横扫的原因。右边 4 个 mujoco 抓取阶段是 baseline phase 帧的样子，证明每个 phase 都有 visual artifact。底部那行带出下一页的"同一项目走过两段"叙事。</div>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/5.2</span> · routine 多 agent</div>
+  <div class="meta"><span class="meta-tag">section/5.2</span> · routine 多 agent · 实证</div>
   <h2>routine 多 agent · <span class="hl">云端 60 分流水线</span></h2>
-  <h3>移走的是调度和上下文切换 bottleneck：四个 routine 把工程团队角色封装成云端流水线</h3>
-  <div class="cards" style="margin-top: 24px;">
-    <div class="card"><div class="card-tag">主力</div><div class="card-title">auto_pr</div><div class="card-desc">每小时一个 issue；三态自评 FULLY/PARTIAL/DIMINISHING</div></div>
+  <h3>移走的是调度和上下文切换 bottleneck——四个 routine 把工程团队角色封装成云端流水线，下面三张截图就是它真在跑的痕迹。</h3>
+  <div class="cards" style="margin-top: 22px;">
+    <div class="card"><div class="card-tag">主力</div><div class="card-title">auto_pr</div><div class="card-desc">每小时一个 issue；三态自评 FULLY / PARTIAL / DIMINISHING</div></div>
     <div class="card"><div class="card-tag">辅助 1</div><div class="card-title">issue_label</div><div class="card-desc">每天排优先级，只读 + 打标签</div></div>
     <div class="card"><div class="card-tag">辅助 2</div><div class="card-title">pr_again</div><div class="card-desc">救援孤儿分支</div></div>
     <div class="card"><div class="card-tag">辅助 3</div><div class="card-title">daily_duty</div><div class="card-desc">CI 兜底 + 代码健康</div></div>
   </div>
+  <div style="display: grid; grid-template-columns: 1.4fr 1.4fr 0.8fr; gap: 12px; margin-top: 18px;">
+    <div class="screenshot tall" style="margin-top: 0;">
+      <div class="ss-frame" style="max-height: 200px;"><img src="images/routines-auto-pr-runs.png" alt="auto_pr routine 每小时定时跑的运行历史"></div>
+      <div class="ss-cap" style="font-size: 10.5px;">auto_pr · 每小时定时触发 · <a href="../routines-multi-agent/">routines-multi-agent</a></div>
+    </div>
+    <div class="screenshot tall" style="margin-top: 0;">
+      <div class="ss-frame" style="max-height: 200px;"><img src="images/routines-pr-list.png" alt="routines 跑出的 PR 列表"></div>
+      <div class="ss-cap" style="font-size: 10.5px;">routine 产出的 PR 列表——agent 直接走 GitHub 标准协议</div>
+    </div>
+    <div class="screenshot tall" style="margin-top: 0;">
+      <div class="ss-frame" style="max-height: 200px;"><img src="images/routines-quota-used.png" alt="Max plan quota used by daily routines"></div>
+      <div class="ss-cap" style="font-size: 10.5px;">Max 配额被 daily routine 消耗——证明它真在跑</div>
+    </div>
+  </div>
+  <div class="speaker-note">这页给 cards 加上了视觉证据。讲法：先念 4 张 cards 的角色名，停一拍，再往下指三张截图：cron 真的每小时跑、PR 真的产出、配额真的在被消耗。这页解决一个常见怀疑：“云端 agent 听起来玄，到底是不是真在干活”。</div>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/5.2</span> · routine · 三轴定位 + Brockman tweet</div>
-  <h2>routine 跨 <span class="hl">Skill 轴</span> + <span class="hl">Context 轴</span></h2>
-  <h3>每个 routine fresh 200K context、subagent 隔离 (Context 轴)；把工程团队角色封装成可调用 routine (Skill 轴)</h3>
+  <div class="meta"><span class="meta-tag">section/5.2</span> · routine · 三轴定位 + Brockman</div>
+  <h2>routine 跨 <span class="hl">Skill 轴</span> + <span class="hl">Context 轴</span> + <span class="hl">Verification 轴</span></h2>
+  <h3>同一个 routine 同时落到三条轴上——下面架构图说"它怎么连"，右侧 4 行 fact 说"它各自负责什么"。</h3>
   <div class="routine-visual">
     <div class="screenshot">
       <img src="images/routine-architecture.svg" alt="Routine multi-agent architecture overview">
@@ -2648,11 +2717,51 @@ body .key-hint { display: none; }
         <div class="fact-copy">每个 routine 以 fresh context 开始，失败也隔离在自己的分支、comment 和下一轮接手协议里</div>
       </div>
       <div class="fact-row">
+        <div class="fact-tag">Verification axis</div>
+        <div class="fact-copy">三态自评（FULLY / PARTIAL / DIMINISHING）把 exit 条件外显——PARTIAL 不是失败，是云端流水线对自己边界的诚实声明</div>
+      </div>
+      <div class="fact-row">
         <div class="fact-tag">Boundary</div>
         <div class="fact-copy">60 分钟不是能力上限，是任务拆分和工具匹配的边界</div>
       </div>
     </div>
   </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12.5px; max-width: 90ch; border-left: 2px solid var(--accent); padding: 10px 0 10px 16px;">
+    <em style="color: var(--text); font-family: var(--font-display); font-size: 15px;">"[The Codex app] is really two things in one. It's a general agent harness that can use tools, and it's also an agent that knows how to write software."</em><br>
+    <span style="font-size: 11px;">— Greg Brockman · Big Technology Podcast · 2026-04-01 · <a href="https://www.bigtechnology.com/p/openai-president-greg-brockman-doubling">bigtechnology.com</a> —— OpenAI 总裁亲口把 harness 定义为产品一等概念</span>
+  </div>
+  <div class="speaker-note">三轴定位页：架构图说 routine 怎么用 GitHub 当消息总线；右侧 4 行 fact 把 Skill / Context / Verification / Boundary 一次过完。Verification 一行的"三态自评"是关键创新，PARTIAL 不是失败而是诚实声明边界。底部 Brockman 一行作为外部背书一句念过即可。</div>
+</div>
+
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/5.2 → 5.3</span> · 交棒 · 同一项目走过的两段</div>
+  <h2><span class="hl">cloud-first → 切回本地</span>：roboharness 自己走过这条路</h2>
+  <h3>不是两个独立工具的 routing，是<em>同一项目在不同资源密度下被迫迁移</em>。一旦任务需要 GPU、真机、单次迭代 &gt; 1h、或反复 trail-and-error——cloud routine 就该把活交出去，roboharness 这个 repo 就是这么被催生的。</h3>
+  <div class="routing-table" style="margin-top: 22px; display: grid; grid-template-columns: 160px 1fr 1fr; gap: 0; border: 1px solid var(--border); background: var(--bg-card);">
+    <div style="padding: 12px 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-dim); border-bottom: 1px solid var(--border);">维度</div>
+    <div style="padding: 12px 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--axis-context); border-bottom: 1px solid var(--border); border-left: 1px solid var(--border-light);">阶段 A · cloud routine（项目起步期）</div>
+    <div style="padding: 12px 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--border); border-left: 1px solid var(--border-light);">阶段 B · 切回本地（roboharness 期）</div>
+
+    <div style="padding: 12px 14px; font-size: 13px; color: var(--text-sec); border-bottom: 1px solid var(--border-light);">资源</div>
+    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">CPU、网络、API quota——配额范围内可调度</div>
+    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">GPU、真机、本地 dataset、特殊运行时——非云端 worker 能 reach</div>
+
+    <div style="padding: 12px 14px; font-size: 13px; color: var(--text-sec); border-bottom: 1px solid var(--border-light);">单次迭代时长</div>
+    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">≤ <strong>60 min</strong>，配 fresh 200K context 跑完一轮</div>
+    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;"><strong>&gt; 1h</strong> 单轮，往往要连跑几轮 trail-and-error</div>
+
+    <div style="padding: 12px 14px; font-size: 13px; color: var(--text-sec); border-bottom: 1px solid var(--border-light);">失败模态</div>
+    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">FULLY / PARTIAL / DIMINISHING 三态自评，PARTIAL 由人接</div>
+    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">用 contract / phase_manifest / approval_report 把试错过程沉淀成证据包</div>
+
+    <div style="padding: 12px 14px; font-size: 13px; color: var(--text-sec);">人审 surface</div>
+    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-left: 1px solid var(--border-light); line-height: 1.5;">PR diff + GitHub comment——日常增量</div>
+    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-left: 1px solid var(--border-light); line-height: 1.5;">report.html · Run Decision banner——压缩成 5 min 决策</div>
+  </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px; max-width: 80ch;">
+    交棒触发条件（实操判断）：任务<strong>需要 GPU/真机</strong>、单次迭代 <strong>&gt; 1h</strong>、或预期要<strong>反复 trail-and-error</strong>——满足任一条，就别指望 cloud routine 在 60 分内压住，直接 wrap 进 roboharness 的 proof pack 流程。
+  </div>
+  <div class="speaker-note">这页解决一个常见误会：routine 和 roboharness 不是新旧两代，是分别针对不同资源密度的两套 routing。stop-the-line 信号是“资源 + 时长 + 试错次数”——一旦其中任一条触发，60 分流水线就压不住，要换 long-run + proof pack。讲法：先念表头（cloud vs local），再走完 4 行维度，最后那行红字直接出口播。</div>
 </div>
 
 <div class="slide">
@@ -2764,6 +2873,9 @@ body .key-hint { display: none; }
     <div class="card"><div class="card-tag">cause 1</div><div class="card-title">reasoning effort 改 default</div><div class="card-desc">触发用户不可察觉的退化</div></div>
     <div class="card"><div class="card-tag">cause 2</div><div class="card-title">thinking-history 清理 bug</div><div class="card-desc">长 session 上下文被错误压缩</div></div>
     <div class="card accent-card"><div class="card-tag">lesson</div><div class="card-title">产品化 ≠ 终点</div><div class="card-desc">harness 接走的越多，反向出错的成本也越高</div></div>
+  </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px;">
+    一手出处：Anthropic, <em>An update on recent Claude Code quality reports</em> · <a href="https://www.anthropic.com/engineering/april-23-postmortem">anthropic.com/engineering/april-23-postmortem</a>
   </div>
 </div>
 
