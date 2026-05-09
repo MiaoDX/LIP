@@ -77,6 +77,7 @@ presentations/
 □ HTML 中用相对路径引用图片（src="images/image.png"）
 □ Push 到 main → GitHub Actions 运行 npm run publish:copy 自动复制到 dist
 □ 访问: https://miaodx.com/LIP/ai-coding/你的演讲/
+□ 如需同时出现在 /share/，在 scripts/publish-rules.mjs 的 AI Coding rule 里为该 slug 添加 aliases
 ```
 
 ## 注意事项

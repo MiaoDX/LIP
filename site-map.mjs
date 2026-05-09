@@ -97,6 +97,7 @@ export const sidebar = {
       collapsed: true,
       items: [
         { text: '分享入口', link: '/share/' },
+        { text: '从 Ultrathink 到 Goal', link: '/share/ultrathink-to-goal/' },
         { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab.html' },
         { text: 'Tailscale + Claude Code 配置实战', link: '/share/tailscale-claude-code-setup' },
         { text: 'OpenClaw 分享 v3', link: '/share/openclaw-sharing-v3.html' },
@@ -154,6 +155,7 @@ export const sidebar = {
       collapsed: true,
       items: [
         { text: 'Share Index', link: '/en/share/' },
+        { text: 'From Ultrathink to Goal', link: '/share/ultrathink-to-goal/' },
         { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab.html' },
         { text: 'Tailscale + Claude Code Setup', link: '/en/share/tailscale-claude-code-setup' },
         { text: 'OpenClaw Sharing v3', link: '/share/openclaw-sharing-v3.html' },

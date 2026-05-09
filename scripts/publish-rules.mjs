@@ -32,6 +32,9 @@ export const publishRules = [
     outDir: 'ai-coding',
     entryFile: 'index.html',
     assetDirs: AI_CODING_ASSET_DIRS,
+    aliases: {
+      'ultrathink-to-goal': ['share/ultrathink-to-goal'],
+    },
   },
   {
     name: 'consult pages',
@@ -103,6 +106,11 @@ async function copyFlatFiles(rule, distDir, copied) {
   }
 }
 
+function pageOutputDirs(rule, slug, distDir) {
+  const outDirs = [join(rule.outDir, slug), ...(rule.aliases?.[slug] || [])]
+  return outDirs.map((outDir) => outputPath(distDir, outDir))
+}
+
 async function copyAiCodingPages(rule, distDir, copied) {
   const sourceDir = resolve(rule.sourceDir)
   for (const entry of await entries(sourceDir)) {
@@ -112,16 +120,17 @@ async function copyAiCodingPages(rule, distDir, copied) {
     const page = join(srcDir, rule.entryFile)
     if (!(await exists(page))) continue
 
-    const destDir = outputPath(distDir, join(rule.outDir, entry.name))
-    await copyFileToDist(page, join(destDir, rule.entryFile))
-    copied.push(join(destDir, rule.entryFile))
+    for (const destDir of pageOutputDirs(rule, entry.name, distDir)) {
+      await copyFileToDist(page, join(destDir, rule.entryFile))
+      copied.push(join(destDir, rule.entryFile))
 
-    for (const assetDir of rule.assetDirs) {
-      const srcAssetDir = join(srcDir, assetDir)
-      if (!(await exists(srcAssetDir))) continue
-      const destAssetDir = join(destDir, assetDir)
-      await copyDirToDist(srcAssetDir, destAssetDir)
-      copied.push(destAssetDir)
+      for (const assetDir of rule.assetDirs) {
+        const srcAssetDir = join(srcDir, assetDir)
+        if (!(await exists(srcAssetDir))) continue
+        const destAssetDir = join(destDir, assetDir)
+        await copyDirToDist(srcAssetDir, destAssetDir)
+        copied.push(destAssetDir)
+      }
     }
   }
 }
@@ -150,12 +159,13 @@ export async function collectExpected({ distDir = DIST_DIR } = {}) {
         const page = join(srcDir, rule.entryFile)
         if (!(await exists(page))) continue
 
-        const destDir = outputPath(distDir, join(rule.outDir, entry.name))
-        expected.push(join(destDir, rule.entryFile))
+        for (const destDir of pageOutputDirs(rule, entry.name, distDir)) {
+          expected.push(join(destDir, rule.entryFile))
 
-        for (const assetDir of rule.assetDirs) {
-          const srcAssetDir = join(srcDir, assetDir)
-          if (await exists(srcAssetDir)) expected.push(join(destDir, assetDir))
+          for (const assetDir of rule.assetDirs) {
+            const srcAssetDir = join(srcDir, assetDir)
+            if (await exists(srcAssetDir)) expected.push(join(destDir, assetDir))
+          }
         }
       }
     } else {
