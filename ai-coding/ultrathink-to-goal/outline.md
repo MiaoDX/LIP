@@ -16,6 +16,18 @@
 
 ---
 
+## Prelude · 为什么我能讲这个(1 min)
+
+**目的**:先建立 proof-of-work,说明这不是旁观者视角。
+
+- Claude Code / Codex / Kimi / MiMo 都有真实消耗截图
+- 使用场景覆盖公司内部 project、自己的开源 project、CI、OpenClaw
+- 加两类长程任务截图:短的 19 min `/goal`,长的 7 小时级 `/goal`
+
+口播收束:这一页不是炫 token,而是说明后面的判断来自真实项目里的消耗、返工和踩坑。
+
+---
+
 ## 0 · Karpathy 的悖论(3 min)
 
 **钩子**:Karpathy 截图(自己截)+ 三段原话:
@@ -237,9 +249,21 @@ binding constraint 全部在我们这一侧。
   - 真正的失败模式:什么都不试
   - 今晚装一个 grill-me,明早跑一个 routine,就够你接下来一周看出区别
 
+### Bonus — hybrid-phase-pipeline + Codex `/goal`
+
+- 推荐最近用两三天体感不错的长程任务组合:
+  - [hybrid-phase-pipeline](https://github.com/MiaoDX/claude-devkit/blob/main/skills/hybrid-phase-pipeline/SKILL.md)
+  - GSD 负责 discuss / plan / execute / verify 的 phase 结构
+  - gstack + mattpocock/skills 负责 grill、office-hours、autoplan、review 等前置压实
+  - Codex `/goal` 负责持续目标、反复检查和最终收尾
+- 口播重点:这不是一个全新框架,而是把现有几套工具粘成一个更适合长程任务的方式。
+
 ---
 
 ## 9 · Q&A(≈4 min 留白)
+
+- 补公众号二维码:直觉机器漫谈
+- 补个人微信二维码:MiaoDX
 
 ---
 
@@ -247,6 +271,7 @@ binding constraint 全部在我们这一侧。
 
 | 节 | 内容 | 时长 |
 |---|---|---|
+| Prelude | proof-of-work:为什么我能讲这个 | 1 min |
 | 0 | Karpathy 悖论 | 3 min |
 | 0.5 | 实证立柱:25% / 6× / 81.8% | 2 min |
 | 1 | 主线介绍 | 2 min |
@@ -256,9 +281,9 @@ binding constraint 全部在我们这一侧。
 | 5 | 我的实践 | 8 min |
 | 6 | 当下与未来 + Caveat | 4 min |
 | 7 | 收尾回 Karpathy | 3 min |
-| 8 | Tips(三张 slide) | 3 min |
+| 8 | Tips + 长程任务 bonus | 4 min |
 | 9 | Q&A | 4 min |
-| **合计** | | **47 min 内容 + 4 min Q&A = 50 min** ✓ |
+| **合计** | | **约 45 min 内容 + 4 min Q&A = 50 min 内** ✓ |
 
 弹性:如果 Q&A 时间紧或某段超时,**Tips Slide 2 第三条(awesome-claude-code)可以删**,或 SDD 段砍到 4 min(todos / output styles 一笔带过)。
 

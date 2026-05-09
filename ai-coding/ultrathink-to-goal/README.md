@@ -5,7 +5,7 @@
 - **时长**:50 min(单人讲)
 - **听众**:α 类有实践的开发者为主,γ 类和非研发同事旁听
 - **受众优先级**:当技术密度和通俗性冲突时,优先服务 α 类开发者;γ 类和非研发同事通过反复出现的三问跟住主线:它能调什么?它看到了什么?谁在判定完成?
-- **状态**:大纲已定稿,fact-check 已完成,讲稿和 slide 还在制作(目标 ≤40 张)
+- **状态**:大纲已定稿,fact-check 已完成,讲稿和 slide 还在制作(当前约 42 张)
 
 ## 目录
 
@@ -35,6 +35,8 @@
 
 **模型选择立场**:尽量使用当前场景下能 access 的最好模型。这里的"最好"不是只指 SaaS frontier model;如果是内部 only 项目,也可以是私有部署的 top-tier 开源模型。理由不是"模型万能",而是 retry、人类 review、上下文重建和返工时间通常比模型成本贵得多。
 
+**开场 proof-of-work 口径**:新增的 token / 截图页不是炫耀 token,而是回答"为什么我能讲这个":Claude Code、Codex、Kimi、MiMo、OpenClaw、CI、公司内部 project、开源 project 和长程 `/goal` 任务都在真实使用。
+
 **权限建议口径**:权限建议不是"无条件 yolo",而是先准备 clean branch、git/CI、secret 边界,再尽量减少可避免的人类审批延迟。目标是避免人变成 turn-by-turn approval bottleneck。
 
 **结尾层级**:情绪收束押在"我们不必再是 binding constraint";行动 takeaway 押在"哪类活配哪种 harness";三问("它能调什么?它看到了什么?谁在判定完成?")作为两者之间的判断工具。
@@ -50,6 +52,8 @@
 **术语策略**:中文 lecture 中保留英文概念名 `harness`、`Skill`、`Context`、`Verification`、`binding constraint`、`vibe`、`bake-in`、`agent`;首次出现时给中文解释,之后固定用同一个英文词。`done` 不是核心术语,优先说"宣告完成"或"判定完成"。
 
 **Tips 口径**:最后三张不是"经验清单",而是"今晚就能做的三个实验":升级和整理 harness 环境;让 agent 先问你而不是直接干;用能 access 的最好模型跑一个真实任务。收尾目标是让听众马上试一次,而不是收藏工具列表。
+
+**Bonus 推荐口径**:`hybrid-phase-pipeline` 放在 Tips 后作为长程任务 bonus,不是展开教程。表达为"把 GSD、gstack、mattpocock/skills 和 Codex `/goal` 组合起来的好用方式",强调最近真实使用两三天后的体感。
 
 ## 主线时间轴
 
