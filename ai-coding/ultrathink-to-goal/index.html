@@ -282,6 +282,237 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
 .evidence-row .screenshot { max-width: 100%; }
 .evidence-row .ss-frame { max-height: 180px; }
 
+.evidence-duo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  margin-top: 18px;
+  max-width: 1180px;
+}
+.evidence-card {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 20px;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 14px;
+  min-width: 0;
+}
+.evidence-card .evidence-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.evidence-card .quote {
+  margin: 0;
+  padding-left: 18px;
+  font-size: clamp(20px, 2.25vw, 30px);
+}
+.evidence-card .screenshot {
+  margin-top: 0;
+  max-width: 100%;
+}
+.evidence-card .screenshot img {
+  max-height: 260px;
+  object-fit: contain;
+  background: #f8f6f2;
+}
+.evidence-card .screenshot.tall .ss-frame {
+  max-height: 260px;
+}
+
+.psychosis-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 1120px;
+  margin-top: 24px;
+}
+.psychosis-item {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 18px;
+  min-height: 128px;
+}
+.psychosis-item .psychosis-k {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.psychosis-item .psychosis-v {
+  color: var(--text-sec);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.triad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 1120px;
+  margin-top: 28px;
+}
+.triad-card {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 22px;
+  min-height: 188px;
+}
+.triad-card[data-axis="skill"] { border-top: 2px solid var(--axis-skill); }
+.triad-card[data-axis="context"] { border-top: 2px solid var(--axis-context); }
+.triad-card[data-axis="verif"] { border-top: 2px solid var(--axis-verif); }
+.triad-card .triad-name {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.triad-card .triad-question {
+  color: var(--text);
+  font-size: 19px;
+  line-height: 1.35;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.triad-card .triad-copy {
+  color: var(--text-sec);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.axis-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 1120px;
+  margin-top: 24px;
+}
+.axis-overview-card {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 20px;
+  min-height: 170px;
+}
+.axis-overview-card .axis-name {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.axis-overview-card .axis-surface {
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.axis-overview-card .axis-copy {
+  color: var(--text-sec);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.axis-pattern {
+  margin-top: 24px;
+  max-width: 920px;
+  border-left: 3px solid var(--accent);
+  padding: 14px 0 14px 24px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(23px, 2.6vw, 36px);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.evolution-lane {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 1120px;
+  margin-top: 22px;
+}
+.evolution-step {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 16px;
+  min-height: 148px;
+}
+.evolution-step.accented {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.evolution-step .step-tag {
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.evolution-step .step-title {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+.evolution-step .step-copy {
+  color: var(--text-sec);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.skill-axis-slide .evolution-lane {
+  margin-top: 16px;
+}
+.skill-axis-slide .evolution-step {
+  min-height: 126px;
+  padding: 14px;
+}
+.skill-axis-slide .quote {
+  margin: 12px 0;
+  font-size: clamp(20px, 2.35vw, 30px);
+}
+.skill-axis-slide .screenshot {
+  max-width: 360px !important;
+  margin-top: 12px !important;
+}
+.skill-axis-slide .screenshot.tall .ss-frame {
+  max-height: 190px;
+}
+
+.verification-reasons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.verification-reason {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 14px;
+}
+.verification-reason .reason-title {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.verification-reason .reason-copy {
+  color: var(--text-sec);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
 /* Three-axis matrix figure */
 .axis-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
@@ -751,7 +982,7 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
 }
 .context-strip {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
   font-family: var(--font-mono);
   font-size: 12px;
@@ -917,6 +1148,173 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   color: var(--text-sec);
   font-size: 13px;
   line-height: 1.55;
+}
+
+.quadrant-wrap {
+  margin-top: 22px;
+  width: min(100%, 1040px);
+}
+.quadrant-axis-note {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.quadrant-grid {
+  display: grid;
+  grid-template-columns: 120px repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto repeat(2, minmax(160px, 1fr));
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.quadrant-head,
+.quadrant-risk,
+.quadrant-cell {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 14px;
+  min-width: 0;
+}
+.quadrant-head {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.quadrant-head.blank {
+  color: var(--text-dim);
+}
+.quadrant-risk {
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.5;
+}
+.quadrant-cell:nth-child(3n),
+.quadrant-head:nth-child(3n) {
+  border-right: none;
+}
+.quadrant-cell:nth-last-child(-n+3),
+.quadrant-risk:nth-last-child(-n+3) {
+  border-bottom: none;
+}
+.quadrant-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.quadrant-cell.accented {
+  background: var(--accent-soft);
+}
+.quadrant-cell.verification {
+  border-color: var(--axis-verif);
+}
+.quadrant-cell .quadrant-title {
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.quadrant-cell .quadrant-tool {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.quadrant-cell .quadrant-copy {
+  color: var(--text-sec);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.prep-workflow {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.1fr);
+  gap: 18px;
+  max-width: 1180px;
+  margin-top: 22px;
+  align-items: stretch;
+}
+.prep-slide {
+  justify-content: flex-start;
+  padding-top: 72px;
+}
+.prep-slide h2 {
+  font-size: clamp(28px, 3.4vw, 44px);
+  margin-bottom: 14px;
+}
+.prep-slide h3 {
+  margin-bottom: 0;
+}
+.prep-card {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 14px;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 8px;
+  min-width: 0;
+}
+.prep-card.accented {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.prep-card .prep-tag {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.prep-card .prep-title {
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.prep-card .prep-copy {
+  color: var(--text-sec);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.prep-card .screenshot {
+  max-width: 100%;
+  margin-top: 0;
+}
+.prep-card .screenshot.tall .ss-frame {
+  max-height: 330px;
+}
+.prep-card .screenshot img {
+  background: #f8f6f2;
+  max-height: 330px;
+  object-fit: contain;
+}
+.prep-card.phone .screenshot img {
+  max-height: 330px;
+  object-position: top center;
+}
+.prep-lesson {
+  margin-top: 12px;
+  max-width: 980px;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--text);
+  font-size: clamp(20px, 2.3vw, 30px);
+  line-height: 1.45;
+  border-left: 3px solid var(--accent);
+  padding: 10px 0 10px 22px;
 }
 
 /* Q&A */
@@ -1122,10 +1520,11 @@ body .key-hint { display: none; }
     max-width: calc(100vw - 64px);
   }
   .section-metric { font-size: 96px; }
-  .data-row, .axis-grid, .cards { flex-direction: column; grid-template-columns: 1fr; }
+  .data-row, .axis-grid, .cards, .evidence-duo, .psychosis-grid, .triad-grid, .axis-overview, .evolution-lane, .verification-reasons { flex-direction: column; grid-template-columns: 1fr; }
   .data-cell, .axis-col { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child, .axis-col:last-child { border-bottom: none; }
-  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow { grid-template-columns: 1fr; }
+  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow, .prep-workflow { grid-template-columns: 1fr; }
+  .quadrant-grid { grid-template-columns: 86px repeat(2, minmax(0, 1fr)); }
   .context-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .table-wrap table { min-width: 680px; }
   .callback-box { align-items: flex-start; }
@@ -1154,6 +1553,17 @@ body .key-hint { display: none; }
   .proof-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .proof-board,
   .qa-contact-grid { grid-template-columns: 1fr; }
+  .quadrant-grid {
+    display: block;
+  }
+  .quadrant-head.blank,
+  .quadrant-risk {
+    display: none;
+  }
+  .quadrant-head,
+  .quadrant-cell {
+    border-right: none;
+  }
   .proof-card img,
   .proof-img-row img { height: 76px; }
   .routing-flow { gap: 10px; }
@@ -1250,40 +1660,62 @@ body .key-hint { display: none; }
 <!-- ============================================================ -->
 <div class="slide section">
   <div class="section-marker">§ 0</div>
-  <h1><span class="hash">#</span> Karpathy 的悖论</h1>
-  <div class="speaker-note">3 min · 开场。给观众扔一个悖论：Karpathy 说"一切都是 skill issue"，但同一段对话里他承认自己在 AI psychosis 里转圈。Sarah Guo 说自己是 binding constraint——他俩讲的是同一件事的两面。今天就来解这个悖论：如果一切都是 skill issue，那 skill 的边界是谁在推?</div>
+  <h1><span class="hash">#</span> Karpathy 的困境</h1>
+  <div class="speaker-note">开场。给观众扔一个困境：Karpathy 一边说自己每天都在 manifest，一边又说自己从没这么跟不上。今天不把它讲成情绪，而是讲成工程问题：如果一切都是 skill issue，那 skill 的边界是谁在推?</div>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/0</span> · 钩子</div>
-  <div class="quote" style="font-size: clamp(28px, 3.4vw, 44px); margin-top: 0;">
-    Code's not even the right verb anymore.<br>
-    I have to <em>express my will to my agents</em> for 16 hours a day.<br>
-    <em>Manifest.</em>
-    <div class="quote-attr">— Andrej Karpathy · No Priors podcast · 00:00 · <a href="https://www.youtube.com/watch?v=kwSVtQ7dziU">youtube.com/watch?v=kwSVtQ7dziU</a></div>
+  <div class="meta"><span class="meta-tag">section/0</span> · 双证据</div>
+  <h2>同一个人，两个信号</h2>
+  <div class="evidence-duo">
+    <div class="evidence-card">
+      <div class="evidence-label">No Priors · manifest</div>
+      <div class="quote">
+        Code's not even the right verb anymore.<br>
+        I have to <em>express my will to my agents</em> for 16 hours a day.<br>
+        <em>Manifest.</em>
+        <div class="quote-attr">— Andrej Karpathy · No Priors podcast · <a href="https://www.youtube.com/watch?v=kwSVtQ7dziU">youtube.com/watch?v=kwSVtQ7dziU</a></div>
+      </div>
+      <div class="screenshot">
+        <img src="images/slide-1.jpg" alt="Karpathy on No Priors: 'YOU ARE THE BOTTLENECK'">
+        <div class="ss-cap"><a href="https://www.youtube.com/watch?v=kwSVtQ7dziU">No Priors · Andrej Karpathy on Code Agents, AutoResearch, and the Loopy Era of AI · 2026-03-20</a></div>
+      </div>
+    </div>
+    <div class="evidence-card">
+      <div class="evidence-label">X post · behind</div>
+      <div class="quote">
+        <em>I've never felt this much behind as a programmer.</em><br>
+        The profession is being dramatically refactored.
+        <div class="quote-attr">— Andrej Karpathy on X · 2025-12-26 UTC / 2025-12-27 local · <a href="https://x.com/karpathy/status/2004607146781278521">x.com/karpathy/status/2004607146781278521</a></div>
+      </div>
+      <div class="screenshot tall">
+        <div class="ss-frame"><img src="images/slide-karpathy-behind.png" alt="Andrej Karpathy X post saying he has never felt this much behind as a programmer"></div>
+        <div class="ss-cap"><a href="https://x.com/karpathy/status/2004607146781278521">Karpathy on X · 2025-12-26 UTC / 2025-12-27 local screenshot</a></div>
+      </div>
+    </div>
   </div>
-  <div class="screenshot" style="max-width: 480px; margin-top: 28px;">
-    <img src="images/slide-1.jpg" alt="Karpathy on No Priors: 'YOU ARE THE BOTTLENECK'">
-    <div class="ss-cap">No Priors · "Andrej Karpathy on Code Agents, AutoResearch, and the Loopy Era of AI" · 2026-03-20</div>
-  </div>
-  <div class="speaker-note">动词改了。Karpathy 没说"写代码"，说的是 manifest——把意志投射给一群 agent。开场就把今天的主语换掉。停 1 秒，让动词的变化自己沉一沉。然后讲一句："我们今天就来看一下，过去一年 281 个版本里，哪些 skill issue 已经被产品悄悄接走了。"</div>
+  <div class="speaker-note">动词改了。Karpathy 没说"写代码"，说的是 manifest——把意图具现化给 agent。不是写代码，而是召唤/驱动一组 agent 去执行意图。另一边，他又说自己从没这么跟不上。今天就解释这个困境：工具越强，人越容易变成系统瓶颈。</div>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/0</span> · 钩子</div>
-  <div class="quote" style="margin-top: 0; margin-bottom: 28px;">
-    Sarah Guo: <em>"I'm the binding constraint."</em><br>
-    Karpathy: <em>"Yeah, it's a skill issue."</em>
-    <div class="quote-attr">— No Priors podcast · 00:06:12</div>
-  </div>
-  <div class="quote" style="font-size: clamp(20px, 2.4vw, 30px);">
+  <div class="meta"><span class="meta-tag">section/0</span> · AI psychosis</div>
+  <h2><span class="hl">AI psychosis</span> 在工程里长什么样</h2>
+  <div class="quote" style="font-size: clamp(20px, 2.4vw, 30px); margin-top: 0;">
     this is why it gets to the psychosis is that this is like <em>infinite</em> and everything is skill issue.
-    <div class="quote-attr">— No Priors podcast · 00:00:33</div>
+    <div class="quote-attr">— No Priors podcast · <a href="https://www.youtube.com/watch?v=kwSVtQ7dziU">00:00:33</a></div>
   </div>
-  <div style="margin-top: 40px; font-family: var(--font-display); font-style: italic; font-size: clamp(26px, 3.2vw, 40px); color: var(--text); line-height: 1.4; max-width: 80ch;">
-    我们不必再是 <span class="hl">binding constraint</span>
+  <div class="psychosis-grid">
+    <div class="psychosis-item"><div class="psychosis-k">best practice drift</div><div class="psychosis-v">最佳实践追不上，昨天刚学会的 workflow 今天就被产品内建或废掉</div></div>
+    <div class="psychosis-item"><div class="psychosis-k">infinite budget feeling</div><div class="psychosis-v">token 似乎用不完，任务总还能继续 refactor、继续 polish、继续开分支</div></div>
+    <div class="psychosis-item"><div class="psychosis-k">moving tools</div><div class="psychosis-v">MCP、skills、subagents、/goal、routines 快速变化，手册永远慢半拍</div></div>
+    <div class="psychosis-item"><div class="psychosis-k">endless continuation</div><div class="psychosis-v">agent 总能再跑一个验证、再补一个资料源、再生成一个候选实现</div></div>
+    <div class="psychosis-item"><div class="psychosis-k">exit problem</div><div class="psychosis-v">最难的不是生成，而是决定什么时候算完成、谁有资格说完成</div></div>
+    <div class="psychosis-item"><div class="psychosis-k">engineering reading</div><div class="psychosis-v">这里不做医学定义，只讲工程体感：无限 action surface 遇到模糊 exit condition</div></div>
   </div>
-  <div class="speaker-note">一组对话同时讲了悖论的两面。Sarah 说"我是 bottleneck"，Karpathy 说"是 skill issue"——表面一句怪罪自己，一句怪罪对方，但其实是同一件事：人作为系统瓶颈这件事本身可以被工程化掉。这就是今天 thesis 的入口。读到底部那句话停一下，这是整场反复回的句子。</div>
+  <div style="margin-top: 28px; font-family: var(--font-display); font-style: italic; font-size: clamp(25px, 3vw, 38px); color: var(--text); line-height: 1.4; max-width: 80ch;">
+    我们不必再是 <span class="hl">binding constraint</span>，但必须重新设计 harness
+  </div>
+  <div class="speaker-note">不要把 AI psychosis 当医学词展开。这里讲的是工程体感：生成成本接近零以后，事情没有自然停止点。你可以继续让它查、继续让它改、继续让它验证。于是真正的问题变成：谁定义 action surface，谁控制 information surface，谁给 exit condition。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -1298,7 +1730,7 @@ body .key-hint { display: none; }
   <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px;">
     harness = 模型外面那一圈：工具、上下文、权限、流程、验证机制
   </div>
-  <div class="speaker-note">2 min · 实证立柱。Karpathy 的 psychosis 不是个人感受，是有数据的。这一节就拍出三组实证：25.7pp / 6× / 81.8%。这页只放 25.7pp，留个钩子，下一页才出全图。</div>
+  <div class="speaker-note">实证立柱。Karpathy 的 psychosis 不是孤立感受，是有数据的。这一节就拍出三组实证：25.7pp / 6× / 81.8%。这页只放 25.7pp，留个钩子，下一页才出全图。</div>
 </div>
 
 <div class="slide">
@@ -1343,10 +1775,31 @@ body .key-hint { display: none; }
 <!-- ============================================================ -->
 <!-- 3 · 1 节主线介绍（2 张）                                       -->
 <!-- ============================================================ -->
-<div class="slide section">
-  <div class="section-marker">SECTION 1 · 02 min</div>
-  <h1><span class="hash">#</span> 主线介绍</h1>
-  <p class="section-blurb">281 个版本（截至 2026-05-06），但只看一件事：Skill / Context / Verification 这三个责任，哪些还在人手里，哪些被产品接走</p>
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/1</span> · 三轴入口</div>
+  <h2>为什么从三件事讲</h2>
+  <h3>同一个模型，换一个 harness，表现可以完全不同。因为 harness 改的不是智商，而是行动面、信息面和退出条件。</h3>
+  <div class="triad-grid">
+    <div class="triad-card" data-axis="skill">
+      <div class="triad-name">Skill</div>
+      <div class="triad-question">agent 能调什么?</div>
+      <div class="triad-copy">对应 <strong>action surface</strong>：工具、命令、skills、routines，决定 agent 能把意图落实到哪些动作上。</div>
+    </div>
+    <div class="triad-card" data-axis="context">
+      <div class="triad-name">Context</div>
+      <div class="triad-question">agent 看到了什么?</div>
+      <div class="triad-copy">对应 <strong>information surface</strong>：文件、历史、memory、subagent 隔离，决定模型靠什么作判断。</div>
+    </div>
+    <div class="triad-card" data-axis="verif">
+      <div class="triad-name">Verification</div>
+      <div class="triad-question">谁判定完成?</div>
+      <div class="triad-copy">对应 <strong>exit condition</strong>：rubric、grader、测试、proof pack，决定长程任务什么时候停止。</div>
+    </div>
+  </div>
+  <div class="axis-pattern">
+    这三件事能解释为什么同模型、不同 harness，会出现巨大的结果差异
+  </div>
+  <div class="speaker-note">提前给观众三轴。Skill 不是能力泛称，而是 action surface。Context 不是越多越好，而是 information surface。Verification 是 exit condition。后面的 281 个版本，都用这三件事读。</div>
 </div>
 
 <div class="slide">
@@ -1695,22 +2148,21 @@ body .key-hint { display: none; }
 </svg>
   </div>
   <div class="timeline-guide">
-    读这条时间线的方式：每到一个节点，只问三件事
+    读这条时间线的方法：每到一个节点，只问三件事
     <strong>它能调什么？</strong>
     <strong>它看到了什么？</strong>
     <strong>谁在判定完成？</strong>
   </div>
-  <div class="speaker-note">把三段念出来：0.2 时代 vibe，三个维度都靠人；1.0 时代 SDD，第一次有产品接过去——plan mode；2.x 时代 harness，三轴同时工程化。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定完成。指着右下方虚线那个 /goal —— OpenAI 同期也在做同样的事，Codex 0.128.0 把 agent loop 自身 bake 进 slash command。这条线上的 281 个 tick，每个都是这一年 Anthropic 工程师在重新定义 binding constraint。</div>
+  <div class="speaker-note">把三段念出来：0.2 时代 vibe，三个维度都靠人；1.0 时代 SDD，plan mode 第一次被做进产品内部；2.x 时代 harness，三轴同时工程化。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定完成。指着右下方虚线那个 /goal —— OpenAI 同期也在做同样的事，Codex 0.128.0 把 agent loop 自身 bake 进 slash command。这条线上的 281 个 tick，每个都是这一年 Anthropic 工程师在重新定义 binding constraint。</div>
 </div>
 
 <!-- ============================================================ -->
 <!-- 4 · 2 节 Vibe（3 张）                                          -->
 <!-- ============================================================ -->
 <div class="slide section">
-  <div class="section-marker">SECTION 2 · 04 min</div>
+  <div class="section-marker">§ 2</div>
   <h1><span class="hash">#</span> Vibe 段</h1>
   <p class="section-blurb">0.2.x 时代 · Skill / Context / Verification 三个责任几乎全在人手里</p>
-  <div class="duration">04:00 · ████░░░░░░░░░░░░ 08% of total</div>
 </div>
 
 <div class="slide">
@@ -1763,16 +2215,16 @@ body .key-hint { display: none; }
   <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 11px;">
     社区参考：self.md/guides/plan-mode-guide · claudelog.com/faqs/what-is-ultrathink · kentgigger 等多位独立工程师的 workflow blog（2026-Q1 集中产出）
   </div>
-  <div class="speaker-note">这一段最深的体感是：vibe 段我们自己在补后来会被产品接走的机制。Plan 没产品支持，就把 plan 写成 markdown 文件让 Claude 照做。Ultrathink 当时是隐藏关键词，没有 /effort 命令，每次都要手动加。Skill 没有产品形态，社区就互相分享 prompt template。这几件事 1.0.x 之后被产品一个个接走 —— plan 变成 plan mode，ultrathink 变成 /effort，prompt template 变成 skills。今天回头看，我们当时干的就是后来的 SDD / reasoning effort / Skill / Context 雏形。</div>
+  <div class="speaker-note">这一段最深的体感是：vibe 段我们自己在补后来会被产品内建的机制。Plan 没产品支持，就把 plan 写成 markdown 文件让 Claude 照做。Ultrathink 当时是隐藏关键词，没有 /effort 命令，每次都要手动加。Skill 没有产品形态，社区就互相分享 prompt template。这几件事 1.0.x 之后被产品化 —— plan 变成 plan mode，ultrathink 变成 /effort，prompt template 变成 skills。今天回头看，我们当时干的就是后来的 SDD / reasoning effort / Skill / Context 雏形。</div>
 </div>
 
 <!-- ============================================================ -->
 <!-- 5 · 3 节 SDD（4 张）                                           -->
 <!-- ============================================================ -->
 <div class="slide section">
-  <div class="section-marker">SECTION 3 · 05 min</div>
+  <div class="section-marker">§ 3</div>
   <h1><span class="hash">#</span> SDD 段</h1>
-  <p class="section-blurb">1.0.x 时代 · Plan 先被产品接走，但 skill / context / verification 还主要靠人</p>
+  <p class="section-blurb">1.0.x 时代 · Plan 先被做进产品内部，但 skill / context / verification 还主要靠人</p>
 </div>
 
 <div class="slide">
@@ -1847,7 +2299,7 @@ body .key-hint { display: none; }
       </tbody>
     </table>
   </div>
-  <div class="speaker-note">不要把这页念成产品功能比对。重点是：四家在同一时间点做同一件事——把 "先 plan 再 do" 这个工程习惯产品化。这就是 binding constraint 被产品接过去的明确信号——当四家独立团队同时把同一个 prompt 习惯做成 button，说明这个 pattern 已经稳定到值得 bake-in。</div>
+  <div class="speaker-note">不要把这页念成产品功能比对。重点是：四家在同一时间点做同一件事——把 "先 plan 再 do" 这个工程习惯产品化。这就是 binding constraint 被产品内建的明确信号——当四家独立团队同时把同一个 prompt 习惯做成 button，说明这个 pattern 已经稳定到值得 bake-in。</div>
 </div>
 
 <div class="slide">
@@ -1856,17 +2308,16 @@ body .key-hint { display: none; }
   <div class="quote">
     SDD 把 <em>plan</em> 这一件事工程化了；但 <em>skill</em>、<em>context 管理</em>、<em>verification</em> 仍然由人承担
   </div>
-  <h3 style="margin-top: 24px;">2.x 时代会同时把这三件事接走——这是接下来 9 分钟要讲的</h3>
+  <h3 style="margin-top: 24px;">2.x 时代会同时把这三件事做进 harness：agent 调什么、看什么、凭什么宣告完成</h3>
 </div>
 
 <!-- ============================================================ -->
 <!-- 6 · 4 节 Harness 三轴（8 张,含 inline figure #19）             -->
 <!-- ============================================================ -->
 <div class="slide section">
-  <div class="section-marker">SECTION 4 · 09 min</div>
+  <div class="section-marker">§ 4</div>
   <h1><span class="hash">##</span> Harness 段</h1>
   <p class="section-blurb">2.x 时代 · 三个责任同时工程化：agent 调什么、看什么、凭什么宣告完成</p>
-  <div class="duration">09:00 · ████████░░░░░░░░ 19% of total</div>
 </div>
 
 <div class="slide">
@@ -1874,66 +2325,83 @@ body .key-hint { display: none; }
   <h2>当生成成本归零，瓶颈在三件事</h2>
   <div class="quote">
     <em>"We view harness engineering as a subset of context engineering."</em>
-    <div class="quote-attr">— HumanLayer blog · *Skill Issue： Harness Engineering for Coding Agents* · author： Kyle (Dex Horthy 的 cofounder) · 2026-03-12</div>
+    <div class="quote-attr">— HumanLayer blog · <a href="https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents">Skill Issue: Harness Engineering for Coding Agents</a> · Kyle · 2026-03-12</div>
   </div>
   <div class="screenshot tall" style="max-width: 360px; margin-top: 18px;">
     <div class="ss-frame"><img src="images/slide-5.png" alt="HumanLayer · Skill Issue: Harness Engineering for Coding Agents"></div>
-    <div class="ss-cap">humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents</div>
+    <div class="ss-cap"><a href="https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents">humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents</a></div>
   </div>
   <h3 style="margin-top: 18px;">但 context 不是全部；harness 工程化在过去一年沿三条线收敛——</h3>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/4.1</span> · 三轴矩阵 · figure #19</div>
-  <h2>Skill <span class="dim">/</span> Context <span class="dim">/</span> Verification</h2>
-  <div class="axis-grid">
-    <div class="axis-col" data-axis="skill">
-      <div class="axis-name">SKILL</div>
-      <div class="axis-q">agent 调什么?</div>
-      <div class="axis-stage"><div class="stage-tag">2025</div><div class="stage-text">MCP 工具<strong>全部装载</strong>到 system prompt</div></div>
-      <div class="axis-stage"><div class="stage-tag">2025-10</div><div class="stage-text">Skills (2.0.20)：<strong>按需加载</strong></div></div>
-      <div class="axis-stage"><div class="stage-tag">2026-02</div><div class="stage-text">Codex Skills 跟进</div></div>
-      <div class="axis-stage bake"><div class="stage-tag">→ 2026</div><div class="stage-text"><strong>Routines are higher-order prompts.</strong> — Boris Cherny @ Code w/ Claude SF</div></div>
+  <div class="meta"><span class="meta-tag">section/4.1</span> · 三轴总览</div>
+  <h2>三轴看的是：<span class="hl">责任如何转移</span></h2>
+  <div class="axis-overview">
+    <div class="axis-overview-card">
+      <div class="axis-name">Skill</div>
+      <div class="axis-surface">action surface</div>
+      <div class="axis-copy">工具、命令、skills、routines：agent 被允许把意图转成哪些可执行动作。</div>
     </div>
-    <div class="axis-col" data-axis="context">
-      <div class="axis-name">CONTEXT</div>
-      <div class="axis-q">agent 看什么?</div>
-      <div class="axis-stage"><div class="stage-tag">passive</div><div class="stage-text">transcript buffer, all-or-nothing</div></div>
-      <div class="axis-stage"><div class="stage-tag">managed</div><div class="stage-text">CLAUDE.md @import → subagent 隔离 → claude-progress.txt → auto compact</div></div>
-      <div class="axis-stage bake"><div class="stage-tag">distilled</div><div class="stage-text"><strong>Dreaming</strong> (5-6 research preview)：agent idle 时复盘 session，提取 pattern 进 memory</div></div>
-      <div class="axis-stage"><div class="stage-tag">caveat</div><div class="stage-text">"models perform worse at longer context lengths" — Chroma context rot research</div></div>
+    <div class="axis-overview-card">
+      <div class="axis-name">Context</div>
+      <div class="axis-surface">information surface</div>
+      <div class="axis-copy">文件、memory、subagent、compact：agent 看见哪些高信号 token，以及哪些噪音被隔离。</div>
     </div>
-    <div class="axis-col" data-axis="verif">
-      <div class="axis-name">VERIFICATION</div>
-      <div class="axis-q">agent 凭什么宣告完成?</div>
-      <div class="axis-stage"><div class="stage-tag">manual</div><div class="stage-text">人盯每一步</div></div>
-      <div class="axis-stage"><div class="stage-tag">in-loop</div><div class="stage-text">Anthropic Planner-Generator-Evaluator 三角色(GAN 启发)</div></div>
-      <div class="axis-stage bake"><div class="stage-tag">→ 2026-05</div><div class="stage-text"><strong>Outcomes</strong>：rubric + 独立 grader agent · <strong>+10pp</strong> task success / +8.4% docx / +10.1% pptx</div></div>
-      <div class="axis-stage"><div class="stage-tag">why</div><div class="stage-text"><em>"Agents reliably skew positive when grading their own work."</em></div></div>
+    <div class="axis-overview-card">
+      <div class="axis-name">Verification</div>
+      <div class="axis-surface">exit condition</div>
+      <div class="axis-copy">rubric、tests、grader、proof pack：谁决定任务已经达到质量标准，可以停止。</div>
     </div>
   </div>
+  <div class="axis-pattern">
+    共同模式：人手动承担 → harness 显式化 → 产品内建
+  </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px;">
-    每一轴都经历同一个动作：<strong>从我们自己承担 → 被产品接过去</strong>
+    接下来三页分别拆开看：prompt 怎么变成可调用能力、context 怎么变成高信号 token、完成标准怎么被外显
   </div>
 </div>
 
-<div class="slide">
+<div class="slide skill-axis-slide">
   <div class="meta"><span class="meta-tag">section/4.2</span> · skill 轴</div>
-  <h2>Skill 轴的演进</h2>
+  <h2>Skill 轴：prompt 变成<span class="hl">可调用能力</span></h2>
+  <h3>这条线不是“prompt 写得更长”，而是把稳定动作包装成 agent 可以发现、加载、调用、调度的能力。</h3>
+  <div class="evolution-lane">
+    <div class="evolution-step">
+      <div class="step-tag">2025 · MCP</div>
+      <div class="step-title">工具暴露出来</div>
+      <div class="step-copy">MCP 把外部能力接到 agent，但早期经常把工具说明全部塞进 system prompt。</div>
+    </div>
+    <div class="evolution-step">
+      <div class="step-tag">2025-10 · Skills</div>
+      <div class="step-title">能力按需加载</div>
+      <div class="step-copy">Claude Skills 把说明、脚本、模板和资产打包，让 agent 在需要时再读。</div>
+    </div>
+    <div class="evolution-step">
+      <div class="step-tag">2026-02 · Codex Skills</div>
+      <div class="step-title">跨产品跟进</div>
+      <div class="step-copy">同一个 pattern 进入 Codex：任务经验不再散在 prompt 里，而是进入可安装能力。</div>
+    </div>
+    <div class="evolution-step accented">
+      <div class="step-tag">2026 · Routines</div>
+      <div class="step-title">能力可被调度</div>
+      <div class="step-copy">routine 把固定职责和触发节奏也封装进去：不是问一次，而是长期运行。</div>
+    </div>
+  </div>
   <div class="quote">
     <em>Routines are higher-order prompts.</em>
-    <div class="quote-attr">— Boris Cherny @ Code w/ Claude 2026 SF keynote, 2026-05-06 09:46 · simonwillison.net/2026/May/6/code-w-claude-2026/</div>
+    <div class="quote-attr">— Boris Cherny @ Code w/ Claude 2026 SF keynote · <a href="https://simonwillison.net/2026/May/6/code-w-claude-2026/">Simon Willison live blog</a></div>
   </div>
-  <div class="screenshot tall" style="max-width: 420px; margin-top: 22px;">
+  <div class="screenshot tall" style="max-width: 420px; margin-top: 18px;">
     <div class="ss-frame"><img src="images/slide-6.png" alt="Simon Willison live blog at Code w/ Claude 2026 keynote"></div>
-    <div class="ss-cap">Simon Willison live blog @ Code w/ Claude 2026 keynote · "Routines are higher-order prompts" 段</div>
+    <div class="ss-cap"><a href="https://simonwillison.net/2026/May/6/code-w-claude-2026/">Simon Willison live blog @ Code w/ Claude 2026 keynote · "Routines are higher-order prompts"</a></div>
   </div>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/4.2</span> · context 轴</div>
-  <h2>Context 轴的演进</h2>
-  <h3>从被动缓冲 → 主动管理 → 离线蒸馏</h3>
+  <h2>Context 轴：不是越多越好，是<span class="hl">高信号 token</span></h2>
+  <h3>从被动缓冲 → 手动裁剪 → 隔离/持久化 → 离线蒸馏；目标不是塞满窗口，而是提高每个 token 的命中率。</h3>
   <div class="quote" style="margin-top: 20px;">
     <em>Context is a critical but finite resource for AI agents. Find the smallest set of high-signal tokens that maximize the likelihood of your desired outcome.</em>
     <div class="quote-attr">— Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a></div>
@@ -1941,11 +2409,6 @@ body .key-hint { display: none; }
   <div class="table-wrap" style="margin-top: 22px;">
     <div class="context-strip">
       <div class="context-node">
-        <div class="node-tag">2024</div>
-        <div class="node-title">transcript buffer</div>
-        <div class="node-copy">all-or-nothing；溢出就丢</div>
-      </div>
-      <div class="context-node" style="--node-color: var(--axis-skill);">
         <div class="node-tag">0.2.107</div>
         <div class="node-title">CLAUDE.md @import</div>
         <div class="node-copy">人手动剪上下文</div>
@@ -1956,14 +2419,9 @@ body .key-hint { display: none; }
         <div class="node-copy">独立 200K context · 不污染主线</div>
       </div>
       <div class="context-node" style="--node-color: var(--axis-context);">
-        <div class="node-tag">1.0.x late</div>
+        <div class="node-tag">1.0.x</div>
         <div class="node-title">claude-progress.txt</div>
         <div class="node-copy">长 session 自动持久化</div>
-      </div>
-      <div class="context-node" style="--node-color: var(--accent);">
-        <div class="node-tag">0.2.47 +</div>
-        <div class="node-title">auto compact</div>
-        <div class="node-copy">达到阈值自动压缩</div>
       </div>
       <div class="context-node emphasis" style="--node-color: var(--accent); border-top-width: 2.5px;">
         <div class="node-tag">2026-05-06 →</div>
@@ -1973,18 +2431,32 @@ body .key-hint { display: none; }
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 11px;">
-    从 transcript buffer 到 Dreaming：人对 context 的角色从"剪 / 装 / 拼"→"什么都不做"
+    反直觉点：更长上下文不是自动更强；高信号 context 才能减少 agent 在噪音里自信地走偏
   </div>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴</div>
-  <h2>Verification 轴 · 从 manual 到 grader agent</h2>
+  <h2>Verification 轴：完成标准必须<span class="hl">外显</span></h2>
   <div class="slide-2col" style="margin-top: 18px;">
     <div class="col-l">
       <div class="quote">
         <em>You will get higher success if you give that output to a fresh Claude and say, 'what bugs do you see?'</em>
         <div class="quote-attr">— Anthropic 工程师 Albert @ Code w/ Claude 2026 keynote · <a href="https://venturebeat.com/technology/anthropic-introduces-dreaming-a-system-that-lets-ai-agents-learn-from-their-own-mistakes">source</a></div>
+      </div>
+      <div class="verification-reasons">
+        <div class="verification-reason">
+          <div class="reason-title">fresh grader 减少自评偏乐观</div>
+          <div class="reason-copy">生成者最容易 rationalize 自己的输出，独立检查能把问题重新 surface 出来。</div>
+        </div>
+        <div class="verification-reason">
+          <div class="reason-title">rubric 让质量标准外显</div>
+          <div class="reason-copy">“看起来不错”变成可检查条目，agent 和人才能对齐完成条件。</div>
+        </div>
+        <div class="verification-reason">
+          <div class="reason-title">结构化 artifact 更适合被检查</div>
+          <div class="reason-copy">docx / pptx 这类对象有结构、约束和可见结果，适合独立 grader 逐项判断。</div>
+        </div>
       </div>
       <div class="data-row" style="margin-top: 16px;">
         <div class="data-cell">
@@ -2019,11 +2491,11 @@ body .key-hint { display: none; }
   <h3>mattpocock/skills · GSD / gstack · Superpowers · Awesome Claude Code：社区也在把工程习惯做成 harness</h3>
   <div class="quote">
     <em>The most common failure mode in software development is misalignment.</em>
-    <div class="quote-attr">— mattpocock/skills README</div>
+    <div class="quote-attr">— <a href="https://github.com/mattpocock/skills">mattpocock/skills README</a></div>
   </div>
   <div class="quote" style="margin-top: 24px;">
     <em>Software engineering fundamentals matter more than ever.</em>
-    <div class="quote-attr">— mattpocock/skills README</div>
+    <div class="quote-attr">— <a href="https://github.com/mattpocock/skills">mattpocock/skills README</a></div>
   </div>
   <div class="cards" style="margin-top: 22px;">
     <div class="card">
@@ -2056,7 +2528,7 @@ body .key-hint { display: none; }
   <div class="meta"><span class="meta-tag">section/4</span> · 收束</div>
   <h2>三轴收束</h2>
   <div class="quote" style="font-size: clamp(24px, 3vw, 38px);">
-    每一轴都经历同一个动作：<br>从<em>我们自己承担</em> → 被产品<em>接过去</em>
+    每一轴都经历同一个动作：<br><em>人手动承担</em> → harness <em>显式化</em> → 产品<em>内建</em>
   </div>
   <h3 style="margin-top: 24px;">下一段：这套框架在我自己的项目里怎么落地</h3>
 </div>
@@ -2065,7 +2537,7 @@ body .key-hint { display: none; }
 <!-- 7 · 5 节我的实践（6 张）                                       -->
 <!-- ============================================================ -->
 <div class="slide section">
-  <div class="section-marker">SECTION 5 · 08 min</div>
+  <div class="section-marker">§ 5</div>
   <h1><span class="hash">#</span> 我的实践</h1>
   <p class="section-blurb">不是工具推荐，而是三个真实场景里 binding constraint 被移走的方式</p>
 </div>
@@ -2211,30 +2683,41 @@ body .key-hint { display: none; }
   <div class="quote" style="font-size: clamp(28px, 3.4vw, 44px);">
     哪类活配哪种 harness——<em>这本身就是工程判断</em>
   </div>
-  <div class="routing-flow">
-    <div class="route-card">
-      <div class="route-if">需求还模糊</div>
-      <div class="route-use">grill-me / office-hours</div>
-      <div class="route-copy">先让 agent 反问，把“想做个东西”压成可执行 spec</div>
+  <div class="quadrant-wrap">
+    <div class="quadrant-axis-note">
+      <span>纵轴：验证风险 · 低 → 高</span>
+      <span>横轴：任务清晰度 · 模糊 → 清晰</span>
     </div>
-    <div class="route-card accented">
-      <div class="route-if">清晰 + 重复调度</div>
-      <div class="route-use">routines</div>
-      <div class="route-copy">auto_pr / daily_duty 这类固定职责，适合云端定时跑</div>
-    </div>
-    <div class="route-card">
-      <div class="route-if">清晰 + 一次性长程</div>
-      <div class="route-use">hybrid pipeline + /goal</div>
-      <div class="route-copy">GSD / gstack / skills 负责拆 phase，Codex /goal 扛住目标</div>
-    </div>
-    <div class="route-card verification">
-      <div class="route-if">验证风险高</div>
-      <div class="route-use">proof pack / roboharness</div>
-      <div class="route-copy">这是叠加在长程任务后的 verification layer，不是一个任务象限</div>
+    <div class="quadrant-grid">
+      <div class="quadrant-head blank">risk / clarity</div>
+      <div class="quadrant-head">模糊</div>
+      <div class="quadrant-head">清晰</div>
+      <div class="quadrant-risk">高验证风险</div>
+      <div class="quadrant-cell verification">
+        <div class="quadrant-title">先规格化，再分 phase</div>
+        <div class="quadrant-tool">GSD / gstack plan pipeline</div>
+        <div class="quadrant-copy">需求还不稳，但错误成本高；先把目标、约束、验证标准写出来，再进入执行。</div>
+      </div>
+      <div class="quadrant-cell verification accented">
+        <div class="quadrant-title">长程执行 + 证据包</div>
+        <div class="quadrant-tool">/goal + hybrid-phase-pipeline + proof pack</div>
+        <div class="quadrant-copy">任务清楚但验证风险高；让 agent 扛住长程目标，同时用 proof pack / roboharness 缩短 review。</div>
+      </div>
+      <div class="quadrant-risk">低验证风险</div>
+      <div class="quadrant-cell">
+        <div class="quadrant-title">先问清楚</div>
+        <div class="quadrant-tool">grill-me / office-hours</div>
+        <div class="quadrant-copy">风险不高但意图模糊；最便宜的动作是让 agent 反问，把想法压成可执行判断。</div>
+      </div>
+      <div class="quadrant-cell">
+        <div class="quadrant-title">重复调度和固定职责</div>
+        <div class="quadrant-tool">routines</div>
+        <div class="quadrant-copy">任务清楚、风险可控；auto_pr / daily_duty 这类固定职责适合云端周期运行。</div>
+      </div>
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px; text-align: center;">
-    哪类活配哪种 harness — 不是模型选择，是<strong>任务-工具匹配</strong>
+    roboharness 不是单独象限，而是高验证风险任务里的 proof-pack 机制
   </div>
 </div>
 
@@ -2242,7 +2725,7 @@ body .key-hint { display: none; }
 <!-- 8 · 6 节当下与未来（3 张）                                     -->
 <!-- ============================================================ -->
 <div class="slide section">
-  <div class="section-marker">SECTION 6 · 04 min</div>
+  <div class="section-marker">§ 6</div>
   <h1><span class="hash">#</span> 当下与未来</h1>
   <p class="section-blurb">bake-in 的极致 · 用户表面回到 vibe，底层工程化反而更重</p>
 </div>
@@ -2288,13 +2771,13 @@ body .key-hint { display: none; }
 <!-- 9 · 7 节收尾回 Karpathy（2 张）                                -->
 <!-- ============================================================ -->
 <div class="slide section">
-  <div class="section-marker">SECTION 7 · 03 min</div>
+  <div class="section-marker">§ 7</div>
   <h1><span class="hash">#</span> 收尾</h1>
-  <p class="section-blurb">回到 Karpathy 的悖论</p>
+  <p class="section-blurb">回到 Karpathy 的困境</p>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/7</span> · 回到悖论</div>
+  <div class="meta"><span class="meta-tag">section/7</span> · 回到困境</div>
   <h2>everything is skill issue —— 但 skill issue 的<span class="hl">边界在移动</span></h2>
   <div class="cards" style="margin-top: 24px;">
     <div class="card"><div class="card-tag">仍需自己解</div><div class="card-title">judgment</div><div class="card-desc">什么活配什么 harness、何时介入、何时放手</div></div>
@@ -2318,7 +2801,7 @@ body .key-hint { display: none; }
 <!-- 10 · 8 节 Tips 三张（3 张）                                    -->
 <!-- ============================================================ -->
 <div class="slide section">
-  <div class="section-marker">SECTION 8 · 03 min</div>
+  <div class="section-marker">§ 8</div>
   <h1><span class="hash">#</span> Tips</h1>
   <p class="section-blurb">三件今晚就能做的实验：整理 harness、让 agent 反问、用最好模型跑真实任务</p>
 </div>
@@ -2385,7 +2868,7 @@ body .key-hint { display: none; }
   <div class="hybrid-layout">
     <div class="screenshot">
       <img src="images/hybrid-phase-pipeline-default.jpg" alt="Default hybrid phase pipeline diagram">
-      <div class="ss-cap">claude-devkit · skills/hybrid-phase-pipeline/SKILL.md</div>
+      <div class="ss-cap"><a href="https://github.com/MiaoDX/claude-devkit/blob/main/skills/hybrid-phase-pipeline/SKILL.md">claude-devkit · skills/hybrid-phase-pipeline/SKILL.md</a></div>
     </div>
     <div>
       <div class="routine-facts">
@@ -2412,13 +2895,42 @@ body .key-hint { display: none; }
   <div class="speaker-note">这页放在 Tips 后面当 bonus，不展开成教程。口播重点：它不是一个全新的框架，而是把现有几个好用的东西粘成了一个长程任务方式，再用 /goal 扛住最终目标。</div>
 </div>
 
+<div class="slide prep-slide">
+  <div class="meta"><span class="meta-tag">section/8 · coda</span> · 这场 lecture 的准备</div>
+  <h2>这场 lecture 的准备，也是同一套 workflow</h2>
+  <h3>云端先把方向跑出来，本地再用完整 repo context 做细节、证据和 QA。</h3>
+  <div class="prep-workflow">
+    <div class="prep-card phone">
+      <div class="prep-tag">cloud / phone</div>
+      <div class="prep-title">claude.ai 手机端先出初始版本</div>
+      <div class="prep-copy">在路上先讨论题目、听众、主线和讲稿骨架，把模糊想法压成能继续推进的 draft。</div>
+      <div class="screenshot tall">
+        <div class="ss-frame"><img src="images/prep-claude-cloud.jpg" alt="Claude mobile conversation used to draft the lecture framing"></div>
+        <div class="ss-cap"><a href="https://claude.ai/">claude.ai mobile/cloud · initial framing and outline</a></div>
+      </div>
+    </div>
+    <div class="prep-card accented">
+      <div class="prep-tag">local / repo</div>
+      <div class="prep-title">本地再做细节调整和验证</div>
+      <div class="prep-copy">回到 repo 里处理截图、链接、版面、source caption、主题截图和质量检查；细节靠本地 harness 收口。</div>
+      <div class="screenshot tall">
+        <div class="ss-frame"><img src="images/prep-local-plan.png" alt="Local terminal implementation plan for the lecture deck"></div>
+        <div class="ss-cap"><a href="https://github.com/MiaoDX/LIP/tree/main/ai-coding/ultrathink-to-goal">local repo workflow · implementation plan and QA loop</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="prep-lesson">
+    这也正是整场要讲的：云端负责快速 manifest，本地 harness 负责 context、verification 和最后一公里。
+  </div>
+</div>
+
 <!-- ============================================================ -->
 <!-- 11 · 9 Q&A                                                    -->
 <!-- ============================================================ -->
 <div class="slide qa">
   <div class="meta" style="position: static; margin-bottom: 40px;"><span class="meta-tag">section/9</span> · Q&amp;A</div>
   <h1><span class="hl">Q & A</span></h1>
-  <div class="qa-sub">— 4 min —</div>
+  <div class="qa-sub">— discussion —</div>
   <div class="qa-contact-grid">
     <div class="qr-card">
       <img src="images/qr-wechat-official.jpg" alt="微信公众号二维码">
