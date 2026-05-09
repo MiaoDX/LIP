@@ -527,6 +527,80 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   line-height: 1.6;
   color: var(--text-dim);
 }
+.proof-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 1120px;
+  min-width: 0;
+  margin-top: 18px;
+}
+.proof-slide {
+  justify-content: flex-start;
+  padding-top: 82px;
+  padding-bottom: 54px;
+}
+.proof-slide h2 {
+  margin-bottom: 14px;
+}
+.proof-slide h3 {
+  margin-bottom: 0;
+}
+.proof-card {
+  min-height: 182px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 12px;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 6px;
+  min-width: 0;
+}
+.proof-card.accented {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.proof-card img {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 74px;
+  object-fit: cover;
+  object-position: top left;
+  display: block;
+  border: 1px solid var(--border-light);
+  background: #f8f6f2;
+}
+.proof-img-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  min-width: 0;
+}
+.proof-img-row img {
+  height: 68px;
+}
+.proof-card .proof-tag {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+.proof-card .proof-title {
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--text);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.proof-card .proof-copy {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-sec);
+  overflow-wrap: anywhere;
+}
 .routine-visual {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -583,6 +657,37 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.hybrid-layout {
+  display: grid;
+  grid-template-columns: minmax(420px, 0.95fr) minmax(360px, 1.05fr);
+  gap: 18px;
+  align-items: stretch;
+  max-width: 1120px;
+  margin-top: 22px;
+}
+.hybrid-layout .screenshot {
+  margin-top: 0;
+  max-width: 100%;
+}
+.hybrid-layout .screenshot img {
+  background: #f8f6f2;
+  max-height: 310px;
+  object-fit: contain;
+}
+.longrun-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.longrun-strip img {
+  width: 100%;
+  height: 86px;
+  object-fit: cover;
+  object-position: left top;
+  border: 1px solid var(--border-light);
+  background: #f8f6f2;
 }
 .method-grid {
   display: grid;
@@ -753,6 +858,43 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
 .qa { align-items: center; text-align: center; }
 .qa h1 { font-size: clamp(60px, 9vw, 140px); }
 .qa .qa-sub { font-family: var(--font-mono); font-size: 14px; color: var(--text-dim); margin-top: 24px; letter-spacing: 3px; }
+.qa-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 190px));
+  justify-content: center;
+  gap: 18px;
+  margin-top: 34px;
+}
+.qr-card {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 12px;
+  text-align: center;
+  min-width: 0;
+}
+.qr-card img {
+  width: 142px;
+  height: 142px;
+  object-fit: contain;
+  background: #fff;
+  display: block;
+  margin: 0 auto 10px;
+}
+.qr-card .qr-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--text-sec);
+  overflow-wrap: anywhere;
+}
+.qa-footer {
+  margin-top: 28px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
 
 /* Speaker notes — display: none by default; body.show-notes reveals them */
 .speaker-note {
@@ -883,7 +1025,7 @@ body .key-hint { display: none; }
   .data-row, .axis-grid, .cards { flex-direction: column; grid-template-columns: 1fr; }
   .data-cell, .axis-col { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child, .axis-col:last-child { border-bottom: none; }
-  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .flow-strip { grid-template-columns: 1fr; }
+  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip { grid-template-columns: 1fr; }
   .context-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .table-wrap table { min-width: 680px; }
   .callback-box { align-items: flex-start; }
@@ -910,6 +1052,14 @@ body .key-hint { display: none; }
   .title .subtitle { margin-bottom: 40px; }
   .flow-strip,
   .proof-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .proof-board,
+  .qa-contact-grid { grid-template-columns: 1fr; }
+  .qa h1 { font-size: 60px; }
+  .qa .qa-sub { margin-top: 16px; }
+  .qa-contact-grid { margin-top: 24px; gap: 16px; }
+  .qr-card { padding: 10px; }
+  .qr-card img { width: 124px; height: 124px; }
+  .qa-footer { margin-top: 20px; font-size: 10px; padding-bottom: 42px; }
   .tool-matrix-grid { font-size: 11px; }
   .matrix-axis-x,
   .matrix-axis-y { letter-spacing: 0.8px; }
@@ -941,6 +1091,54 @@ body .key-hint { display: none; }
     小米自动驾驶 → 小米机器人<br>
     公众号：直觉机器漫谈 · github.com/MiaoDX
   </div>
+</div>
+
+<div class="slide proof-slide">
+  <div class="meta"><span class="meta-tag">prelude</span> · proof of work</div>
+  <h2>这不是旁观者视角</h2>
+  <h3>公司内部 project、自己的开源项目、CI、OpenClaw，都在真实消耗这些模型；长程任务也已经开始交给 agent 跑。</h3>
+  <div class="proof-board">
+    <div class="proof-card accented">
+      <img src="images/proof-claude-usage.png" alt="Claude Code usage limits screenshot">
+      <div class="proof-tag">claude code</div>
+      <div class="proof-title">主力长 session</div>
+      <div class="proof-copy">Max 20x / all models 接近打满，很多 lecture 和项目改动都从这里起步。</div>
+    </div>
+    <div class="proof-card">
+      <img src="images/proof-codex-usage.png" alt="Codex weekly quota screenshot">
+      <div class="proof-tag">codex</div>
+      <div class="proof-title">/goal、review、CI</div>
+      <div class="proof-copy">不是只做 demo，而是在真实 repo 里让 Codex 扛住目标、检查和收尾。</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-img-row">
+        <img src="images/proof-kimi-code.png" alt="Kimi Code console usage screenshot">
+        <img src="images/proof-mimo-orbit.png" alt="MiMo Orbit token grant screenshot">
+      </div>
+      <div class="proof-tag">kimi / mimo</div>
+      <div class="proof-title">国产与私有模型池</div>
+      <div class="proof-copy">内部 only 项目不一定能用 SaaS frontier model，但仍然要尽量用可 access 的最好模型。</div>
+    </div>
+    <div class="proof-card">
+      <img src="images/proof-openclaw-slack.png" alt="OpenClaw Slack agent status screenshot">
+      <div class="proof-tag">openclaw</div>
+      <div class="proof-title">Slack 里的 agent 工程</div>
+      <div class="proof-copy">GSD / WLB / 状态汇报不是孤立技巧，而是协作入口的一部分。</div>
+    </div>
+    <div class="proof-card">
+      <img src="images/proof-github-contrib.png" alt="GitHub contribution activity screenshot">
+      <div class="proof-tag">open source</div>
+      <div class="proof-title">开源项目持续迭代</div>
+      <div class="proof-copy">自己的工具链、deck、实验项目都在持续被 agent 辅助 refactor。</div>
+    </div>
+    <div class="proof-card">
+      <img src="images/proof-goal-robot-longrun.jpg" alt="Long running goal terminal screenshot">
+      <div class="proof-tag">long run</div>
+      <div class="proof-title">从 19 分钟到 7 小时级任务</div>
+      <div class="proof-copy">今天讲的不是 prompt 技巧，而是怎样把长程任务放进可验证的 harness。</div>
+    </div>
+  </div>
+  <div class="speaker-note">这页不要讲太久。目的不是炫耀 token，而是建立资格：内部项目、开源、CI、OpenClaw、长程任务都在跑，后面的判断来自真实消耗和踩坑。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -2084,6 +2282,40 @@ body .key-hint { display: none; }
   </div>
 </div>
 
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/8 · bonus</span> · 长程任务组合</div>
+  <h2>最近好用的一个大杂烩：<span class="hl">hybrid-phase-pipeline</span></h2>
+  <h3>把 GSD、gstack、mattpocock/skills 组合起来，再搭配 Codex 的 <code>/goal</code>，我最近用两三天，体感很适合长程任务。</h3>
+  <div class="hybrid-layout">
+    <div class="screenshot">
+      <img src="images/hybrid-phase-pipeline-default.jpg" alt="Default hybrid phase pipeline diagram">
+      <div class="ss-cap">claude-devkit · skills/hybrid-phase-pipeline/SKILL.md</div>
+    </div>
+    <div>
+      <div class="routine-facts">
+        <div class="fact-row">
+          <div class="fact-tag">gsd</div>
+          <div class="fact-copy">用 discuss / plan / execute / verify 把任务拆成可恢复的 phase。</div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-tag">gstack + mattpocock</div>
+          <div class="fact-copy">用 grill、office-hours、autoplan、review 类 skill 把需求和设计先压实。</div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-tag">codex /goal</div>
+          <div class="fact-copy">用一个持续目标把长程执行、反复检查和最终收尾串起来。</div>
+        </div>
+      </div>
+      <div class="longrun-strip">
+        <img src="images/proof-goal-refactor-complete.png" alt="Completed Codex goal screenshot">
+        <img src="images/proof-goal-robot-longrun.jpg" alt="Seven hour long running goal screenshot">
+      </div>
+    </div>
+  </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 14px;">推荐入口：<a href="https://github.com/MiaoDX/claude-devkit/blob/main/skills/hybrid-phase-pipeline/SKILL.md">github.com/MiaoDX/claude-devkit/blob/main/skills/hybrid-phase-pipeline/SKILL.md</a></div>
+  <div class="speaker-note">这页放在 Tips 后面当 bonus，不展开成教程。口播重点：它不是一个全新的框架，而是把现有几个好用的东西粘成了一个长程任务方式，再用 /goal 扛住最终目标。</div>
+</div>
+
 <!-- ============================================================ -->
 <!-- 11 · 9 Q&A                                                    -->
 <!-- ============================================================ -->
@@ -2091,9 +2323,19 @@ body .key-hint { display: none; }
   <div class="meta" style="position: static; margin-bottom: 40px;"><span class="meta-tag">section/9</span> · Q&amp;A</div>
   <h1><span class="hl">Q & A</span></h1>
   <div class="qa-sub">— 4 min —</div>
-  <div style="margin-top: 60px; font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); line-height: 1.8;">
+  <div class="qa-contact-grid">
+    <div class="qr-card">
+      <img src="images/qr-wechat-official.jpg" alt="微信公众号二维码">
+      <div class="qr-label">公众号<br>直觉机器漫谈</div>
+    </div>
+    <div class="qr-card">
+      <img src="images/qr-wechat-personal.jpg" alt="个人微信二维码">
+      <div class="qr-label">个人微信<br>MiaoDX</div>
+    </div>
+  </div>
+  <div class="qa-footer">
     缪东旭 · MiaoDX<br>
-    github.com/MiaoDX · 公众号：直觉机器漫谈<br>
+    github.com/MiaoDX · 公众号：直觉机器漫谈 · 微信：MiaoDX<br>
     本场 lecture 准备过程开源：github.com/MiaoDX/LIP/tree/main/ai-coding/ultrathink-to-goal
   </div>
 </div>
