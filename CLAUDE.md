@@ -42,7 +42,32 @@ Run `npm run quality:check` after source-layout changes. It updates `.quality-re
 
 Current canonical source: `ai-coding/ultrathink-to-goal/index.html`, with assets in `ai-coding/ultrathink-to-goal/images/`.
 
+### Visual verification
+
+Before declaring deck changes done, render the slide(s) in a real browser at both viewports. Static HTML inspection misses CSS layout regressions (especially `.slide-2col` grid vs flex confusion).
+
+Use the `/browse` skill. On Ubuntu 23.10+ the headless sandbox is blocked by AppArmor; fall back to `browse --headed` (needs `DISPLAY`).
+
+Two viewports — both required, they catch different bugs:
+
+- **Laptop**: `1440x900` (target talk projection; above all `@media` breakpoints).
+- **Mobile**: `390x844` (iPhone-class; exercises the `(max-width: 900px)` responsive branch).
+
+To jump to slide N (the runtime hides non-active slides via opacity 0):
+
+```js
+var s=document.querySelectorAll('.slide');
+s.forEach(x=>x.classList.remove('active'));
+s[N].classList.add('active');
+```
+
+For batch screenshots, first inject `'.slide{transition:none !important;}.slide:not(.active){visibility:hidden !important;opacity:0 !important;}'` to bypass the 0.45s fade.
+
 ## Known gotchas
+
+### Deck `.slide-2col` is grid, not flex
+
+`.slide-2col` uses `grid-template-columns: 2fr 1fr` by default. Setting `flex: 0 0 X%` on `.col-l` / `.col-r` is silently ignored — override `grid-template-columns` on the parent instead. Also: `.col-r` is `display: flex` (row); multiple stacked children need `display: block` or `flex-direction: column`. These bugs render fine in a static check but produce overlapping or squashed columns at 1440x900. Always verify decks via `/browse`.
 
 ### GitHub MCP: review thread resolution
 
