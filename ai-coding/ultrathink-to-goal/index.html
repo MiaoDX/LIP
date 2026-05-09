@@ -993,6 +993,9 @@ body .key-hint { display: none; }
     25.7<span class="unit">pp</span>
   </div>
   <p class="section-blurb">一个夸张的差距 —— 同模型，只是换了个 harness</p>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px;">
+    harness = 模型外面那一圈：工具、上下文、权限、流程、验证机制
+  </div>
   <div class="speaker-note">2 min · 实证立柱。Karpathy 的 psychosis 不是个人感受，是有数据的。这一节就拍出三组实证：25.7pp / 6× / 81.8%。这页只放 25.7pp，留个钩子，下一页才出全图。</div>
 </div>
 
@@ -1029,6 +1032,9 @@ body .key-hint { display: none; }
       <div class="ss-cap">forgecode.dev/blog/gpt-5-4-agent-improvements</div>
     </div>
   </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 12px;">
+    为什么同一个模型差这么多？因为 agent 只能调它能调的工具、看它能看到的上下文、在它被允许的验证机制里宣布完成。
+  </div>
   <div class="speaker-note">把三个数据点串起来念：同一个模型不同 harness 差 25 个百分点(Endor 真实 benchmark)；同 benchmark 跨研究有 6× 差距(Meta-Harness 论文 cite，不是它自己的实验数字 — 它自己的贡献是 27.5%→37.6%)；同 harness 让不同模型收敛到同分(ForgeCode 关键发现)。第三个最有意思 — 它说的是 harness 把不同模型的失败模式都 round 掉了。停一下，引到下页：今天不讲哪个模型最强，讲那 25 个百分点的工程化在哪里。</div>
 </div>
 
@@ -1038,12 +1044,12 @@ body .key-hint { display: none; }
 <div class="slide section">
   <div class="section-marker">SECTION 1 · 02 min</div>
   <h1><span class="hash">#</span> 主线介绍</h1>
-  <p class="section-blurb">281 个版本，三段叙事。整场 lecture 走这条时间轴</p>
+  <p class="section-blurb">281 个版本（截至 2026-05-06），三段叙事。整场 lecture 走这条时间轴</p>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/1</span> · 主线</div>
-  <h2>Claude Code <span class="hl">281 个版本</span> · 三段</h2>
+  <h2>Claude Code <span class="hl">281 个版本</span> · 截至 2026-05-06</h2>
   <div class="timeline-fig">
 <svg viewBox="0 0 1400 240" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
 <!-- 281 ticks (low opacity) -->
@@ -1428,7 +1434,7 @@ body .key-hint { display: none; }
   <div class="quote">
     所有 prompt 都是<em>一次性的</em> —— 一次没用上的对齐，下一次还得重说
   </div>
-  <h3 style="margin-top: 22px;">于是 0.2 时代社区里大家都在 hack —— 用 prompt 把后来的 SDD / Skill 雏形手工凑出来：</h3>
+  <h3 style="margin-top: 22px;">于是 0.2 时代社区里大家都在 hack —— 用 prompt 把后来的 SDD / 推理深度 / Context 雏形手工凑出来：</h3>
   <div class="cards" style="margin-top: 14px;">
     <div class="card">
       <div class="card-tag">SDD 雏形</div>
@@ -1436,7 +1442,7 @@ body .key-hint { display: none; }
       <div class="card-desc">先让模型出 plan，写成 docs/plan.md 再让它照着实现 —— 把 plan 模式手工模拟出来</div>
     </div>
     <div class="card">
-      <div class="card-tag">SKILL 雏形</div>
+      <div class="card-tag">推理深度雏形</div>
       <div class="card-title">一直加 "ultrathink"</div>
       <div class="card-desc">每个 prompt 末尾加 "ultrathink" 触发深度推理 —— 后来才被产品化进 /effort 命令</div>
     </div>
@@ -1449,7 +1455,7 @@ body .key-hint { display: none; }
   <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 11px;">
     社区参考：self.md/guides/plan-mode-guide · claudelog.com/faqs/what-is-ultrathink · kentgigger 等多位独立工程师的 workflow blog（2026-Q1 集中产出）
   </div>
-  <div class="speaker-note">这一段最深的体感是：vibe 段我们自己在补三个维度。Plan 没产品支持，就把 plan 写成 markdown 文件让 Claude 照做。Ultrathink 当时是隐藏关键词，没有 /effort 命令，每次都要手动加。Skill 没有产品形态，社区就互相分享 prompt template。这三件事 1.0.x 之后被产品一个个接走 —— plan 变成 plan mode，ultrathink 变成 /effort，prompt template 变成 skills。今天回头看，我们当时干的就是 SDD / Skill / Context 三轴的雏形。</div>
+  <div class="speaker-note">这一段最深的体感是：vibe 段我们自己在补后来会被产品接走的机制。Plan 没产品支持，就把 plan 写成 markdown 文件让 Claude 照做。Ultrathink 当时是隐藏关键词，没有 /effort 命令，每次都要手动加。Skill 没有产品形态，社区就互相分享 prompt template。这几件事 1.0.x 之后被产品一个个接走 —— plan 变成 plan mode，ultrathink 变成 /effort，prompt template 变成 skills。今天回头看，我们当时干的就是后来的 SDD / reasoning effort / Skill / Context 雏形。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -1702,7 +1708,7 @@ body .key-hint { display: none; }
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/4.3</span> · 社区在做同样的事</div>
   <h2>不只是 Anthropic / OpenAI / Cursor</h2>
-  <h3>mattpocock/skills · gstack · GSD · Superpowers · Awesome Claude Code</h3>
+  <h3>mattpocock/skills · GSD / gstack · Superpowers · Awesome Claude Code：社区也在把工程习惯做成 harness</h3>
   <div class="quote">
     <em>The most common failure mode in software development is misalignment.</em>
     <div class="quote-attr">— mattpocock/skills README</div>
@@ -1713,28 +1719,28 @@ body .key-hint { display: none; }
   </div>
   <div class="cards" style="margin-top: 22px;">
     <div class="card">
-      <div class="card-tag">Skill</div>
-      <div class="card-title">grill-me / grill-with-docs</div>
-      <div class="card-desc">让 AI 反问需求是否清晰 — 对应 <strong>Pragmatic Programmer</strong> "对齐先于实现"</div>
+      <div class="card-tag">SKILL LIBRARY</div>
+      <div class="card-title">mattpocock/skills</div>
+      <div class="card-desc">把 Pragmatic Programmer / DDD / TDD / APOSD 翻成可调用 skills：先对齐，再实现</div>
     </div>
     <div class="card">
-      <div class="card-tag">Skill</div>
-      <div class="card-title">naming / boundary-finder</div>
-      <div class="card-desc">提取领域语言、找模块边界 — 对应 <strong>DDD</strong> ubiquitous language</div>
+      <div class="card-tag">SDD PIPELINE</div>
+      <div class="card-title">GSD / gstack</div>
+      <div class="card-desc">把 spec → research → plan → execute → ship 做成 slash command；每段 fresh context / subagent 隔离</div>
     </div>
     <div class="card">
-      <div class="card-tag">Skill</div>
-      <div class="card-title">test-first / red-green</div>
-      <div class="card-desc">先写测试再写实现 — 对应 <strong>TDD</strong> 红 → 绿 → 重构</div>
+      <div class="card-tag">QUALITY GATE</div>
+      <div class="card-title">Superpowers</div>
+      <div class="card-desc">把 TDD、review、plan discipline 做成默认流程；不是 advice，而是 agent 必须穿过的门</div>
     </div>
     <div class="card">
-      <div class="card-tag">Skill</div>
-      <div class="card-title">complexity-budget</div>
-      <div class="card-desc">控制接口/模块的认知负载 — 对应 <strong>A Philosophy of Software Design</strong></div>
+      <div class="card-tag">PATTERN INDEX</div>
+      <div class="card-title">Awesome Claude Code</div>
+      <div class="card-desc">把分散的 CLAUDE.md、hooks、MCP、subagent 模式收集起来；社区在沉淀 reusable harness components</div>
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 11px;">
-    github.com/mattpocock/skills · Anthropic 2026-Q1 起社区 skill 仓库爆发期 · 工程经典 1:1 翻成可调用 skill
+    共同点：不是 prompt trick 越写越长，而是把稳定工程习惯封装成可复用入口、流程和质量门
   </div>
 </div>
 
@@ -2000,6 +2006,10 @@ body .key-hint { display: none; }
     <div class="card"><div class="card-tag">routine 走</div><div class="card-title">重复劳动</div><div class="card-desc">每小时一个、每天兜底</div></div>
   </div>
   <div class="quote" style="margin-top: 32px;">
+    下次 agent 失败时，先别问"模型是不是不行"。<br>
+    先问：它能调什么？它看到了什么？谁在判定 done？
+  </div>
+  <div class="quote" style="margin-top: 22px;">
     我们不必再是 <em>binding constraint</em>
   </div>
   <div class="quote-attr" style="padding-left: 31px; font-style: italic;">
@@ -2027,8 +2037,8 @@ body .key-hint { display: none; }
   <h3>每天第一件事：升级所有工具 · claude --upgrade · codex · MCP servers · skills</h3>
   <div class="cards" style="margin-top: 20px;">
     <div class="card"><div class="card-tag">tool kit</div><div class="card-title">github.com/MiaoDX/<wbr>claude-devkit</div><div class="card-desc">我整理的 daily-update 工具集</div></div>
-    <div class="card"><div class="card-tag">权限</div><div class="card-title">--dangerously-skip-permissions</div><div class="card-desc">/ Codex --yolo / Auto Mode<br>真正的 binding constraint 不是模型，是你审批的时间</div></div>
-    <div class="card"><div class="card-tag">cost</div><div class="card-title">281 个版本里落后 2 周</div><div class="card-desc">那 25 个百分点就回去了一半</div></div>
+    <div class="card"><div class="card-tag">权限</div><div class="card-title">clean workspace first</div><div class="card-desc">干净分支 / git / CI / secret 边界先到位，再减少审批 prompt</div></div>
+    <div class="card"><div class="card-tag">版本</div><div class="card-title">落后两周先升级</div><div class="card-desc">很多失败不是 prompt 问题，是 harness 版本还停在旧默认里</div></div>
   </div>
 </div>
 
@@ -2063,7 +2073,8 @@ body .key-hint { display: none; }
     <span>harness 比 model 重要 —— 但 model 别成为新的 binding constraint</span>
   </div>
   <div class="quote">
-    Opus 4.7 / GPT-5.5 直接用最好的模型。<em>不要用 Sonnet/Haiku 省那点钱</em>。<br>工程化做对了，最贵的模型反而最便宜——因为它一次过，不需要 retry
+    探索期先用 Opus 4.7 / GPT-5.5 这类最强模型。<br>
+    等任务形态稳定、harness 跑顺了，再降级到更便宜的模型省钱
   </div>
   <div class="quote" style="margin-top: 24px; font-size: clamp(20px, 2.4vw, 30px);">
     这场 lecture 听完最容易的失败模式：回去想"我下周开始整这套"。<br>真正的失败模式：<em>什么都不试</em>
