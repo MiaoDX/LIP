@@ -10,6 +10,7 @@
 ## 目录
 
 - [`outline.md`](./outline.md) — 完整大纲(v1,定稿)
+- [`transcript.md`](./transcript.md) — 基于当前 HTML deck 的逐字稿
 - [`poster-content.md`](./poster-content.md) — 海报文字稿
 - [`research/`](./research/) — 准备过程中的 deep research + fact-check 记录
   - [`01-harness-engineering-landscape.md`](./research/01-harness-engineering-landscape.md) — Codex `/goal`、GSD、第三方实践案例
