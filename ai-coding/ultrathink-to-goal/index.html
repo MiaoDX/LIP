@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>从 Ultrathink 到 Goal：AI Coding 工程化的一年 [v0 skeleton]</title>
+<title>从 Ultrathink 到 Goal：AI Coding 工程化的一年</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <style>
 /* ============================================================ */
 /* THEME TOKENS                                                  */
-/* Default = terminal (charcoal). 4 alternates via body[data-style] */
+/* Default = terminal (charcoal). Alternates via body[data-style] */
 /* ============================================================ */
 body {
   /* Terminal · charcoal warm — DEFAULT */
@@ -156,7 +156,7 @@ h1 {
   font-weight: 600;
   font-size: clamp(36px, 5.2vw, 68px);
   line-height: 1.08;
-  letter-spacing: -0.5px;
+  letter-spacing: 0;
   color: var(--text);
   font-style: italic;
 }
@@ -211,7 +211,7 @@ strong { color: var(--text); font-weight: 600; }
   font-style: normal;
   font-weight: 500;
   font-size: clamp(40px, 5.5vw, 76px);
-  letter-spacing: -1px;
+  letter-spacing: 0;
   color: var(--text);
   margin-bottom: 18px;
 }
@@ -249,7 +249,7 @@ strong { color: var(--text); font-weight: 600; }
 .data-cell .data-num {
   font-family: var(--font-mono); font-weight: 600;
   font-size: clamp(36px, 4.5vw, 56px); color: var(--accent);
-  line-height: 1; margin-bottom: 12px; letter-spacing: -1px;
+  line-height: 1; margin-bottom: 12px; letter-spacing: 0;
 }
 .data-cell .data-label {
   font-family: var(--font-body); font-size: 14px; font-weight: 500;
@@ -399,64 +399,144 @@ strong { color: var(--text); font-weight: 600; }
   pointer-events: none;
 }
 
-/* Image placeholder — for screenshots/video frames to be added later */
-.img-placeholder {
+/* Finished visual panels for source-backed diagrams and talk-specific flows */
+.diagram-panel {
   margin-top: 20px;
-  max-width: 540px;
-  aspect-ratio: 16 / 10;
-  border: 1px dashed var(--text-dim);
-  background:
-    linear-gradient(45deg, transparent 49%, var(--accent-soft) 49%, var(--accent-soft) 51%, transparent 51%) 0 0/14px 14px,
-    var(--bg-alt);
-  display: flex; align-items: center; justify-content: center; flex-direction: column;
-  padding: 20px 24px;
-  gap: 6px;
-  color: var(--text-dim);
-  text-align: center;
+  max-width: 1100px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 22px;
 }
-.img-placeholder .ph-icon {
-  font-family: var(--font-mono);
-  font-size: 24px;
-  color: var(--accent);
-  opacity: 0.55;
-  margin-bottom: 4px;
-  letter-spacing: 2px;
-}
-.img-placeholder .ph-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 1.5px;
-  font-weight: 500;
-}
-.img-placeholder .ph-desc {
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--text-sec);
-  line-height: 1.5;
-  font-style: italic;
-}
-.img-placeholder .ph-meta {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-dim);
-  margin-top: 4px;
-  letter-spacing: 0.5px;
-}
-
-/* Stub TODO marker — visible during v0 */
-.stub {
-  margin-top: 20px;
-  padding: 14px 18px;
-  border: 1px dashed var(--accent-deep);
-  background: var(--accent-glow);
+.diagram-title {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--accent);
-  line-height: 1.6;
-  max-width: 800px;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
 }
-.stub::before { content: "// TODO  "; color: var(--accent-deep); }
+.proof-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.proof-step {
+  min-height: 132px;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.proof-step.accented {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.proof-step .step-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.proof-step .step-name {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.proof-step .step-copy {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-sec);
+}
+.proof-note {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+.routine-visual {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 18px;
+  align-items: stretch;
+  max-width: 1100px;
+  margin-top: 22px;
+}
+.routine-visual .screenshot {
+  margin-top: 0;
+  max-width: 100%;
+}
+.routine-visual .screenshot img {
+  background: #f8f6f2;
+  max-height: 370px;
+  object-fit: contain;
+}
+.routine-facts {
+  display: grid;
+  gap: 12px;
+}
+.fact-row {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 14px 16px;
+}
+.fact-row .fact-tag {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.fact-row .fact-copy {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-sec);
+}
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 1050px;
+  margin-top: 24px;
+}
+.method-tile {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 18px;
+  min-height: 168px;
+}
+.method-tile.accented {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.method-tile .method-num {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+.method-tile .method-title {
+  font-size: 17px;
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+.method-tile .method-copy {
+  font-size: 13px;
+  color: var(--text-sec);
+  line-height: 1.6;
+}
 
 /* Q&A */
 .qa { align-items: center; text-align: center; }
@@ -504,7 +584,6 @@ body.show-notes .speaker-note { display: block; }
   transition: all 0.2s;
 }
 .notes-toggle:hover { border-color: var(--accent); color: var(--accent); }
-.notes-toggle::before { content: "🎤  "; opacity: 0.8; }
 body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent); }
 /* Hide the keyboard hint when notes button takes its corner */
 body .key-hint { display: none; }
@@ -565,13 +644,14 @@ body .key-hint { display: none; }
   .data-row, .axis-grid, .cards { flex-direction: column; grid-template-columns: 1fr; }
   .data-cell, .axis-col { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child, .axis-col:last-child { border-bottom: none; }
+  .slide-2col, .routine-visual, .method-grid, .proof-flow { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
 <div class="counter" id="counter"></div>
-<button class="notes-toggle" id="notesToggle" onclick="document.body.classList.toggle('show-notes'); this.textContent = document.body.classList.contains('show-notes') ? 'HIDE NOTES' : 'SHOW NOTES'">SHOW NOTES</button>
+<button class="notes-toggle" id="notesToggle" type="button" aria-pressed="false">NOTES</button>
 <nav class="style-toggle" id="styleToggle" aria-label="Slide theme">
   <button data-style="terminal" title="深炭灰 + 暖橙 (default)"><span class="swatch"></span>terminal</button>
   <button data-style="newspaper" title="暖米黄 + 红墨"><span class="swatch"></span>newspaper</button>
@@ -611,7 +691,7 @@ body .key-hint { display: none; }
     <div class="quote-attr">— Andrej Karpathy · No Priors podcast · 00:00 · <a href="https://www.youtube.com/watch?v=kwSVtQ7dziU">youtube.com/watch?v=kwSVtQ7dziU</a></div>
   </div>
   <div class="screenshot" style="max-width: 480px; margin-top: 28px;">
-    <img src="https://raw.githubusercontent.com/MiaoDX/LIP/main/ai-coding/ultrathink-to-goal/images/slide-1.jpg" alt="Karpathy on No Priors: 'YOU ARE THE BOTTLENECK'">
+    <img src="images/slide-1.jpg" alt="Karpathy on No Priors: 'YOU ARE THE BOTTLENECK'">
     <div class="ss-cap">No Priors · "Andrej Karpathy on Code Agents, AutoResearch, and the Loopy Era of AI" · 2026-03-20</div>
   </div>
   <div class="speaker-note">动词改了。Karpathy 没说"写代码"，说的是 manifest——把意志投射给一群 agent。开场就把今天的主语换掉。停 1 秒，让动词的变化自己沉一沉。然后讲一句："我们今天就来看一下，过去一年 281 个版本里，哪些 skill issue 已经被产品悄悄接走了。"</div>
@@ -639,7 +719,7 @@ body .key-hint { display: none; }
 <!-- ============================================================ -->
 <div class="slide section">
   <div class="section-marker">§ 0.5</div>
-  <div style="font-family: var(--font-mono); font-weight: 500; font-size: clamp(120px, 18vw, 240px); color: var(--accent); line-height: 0.9; letter-spacing: -4px; margin: 8px 0 24px;">
+  <div style="font-family: var(--font-mono); font-weight: 500; font-size: clamp(120px, 18vw, 240px); color: var(--accent); line-height: 0.9; letter-spacing: 0; margin: 8px 0 24px;">
     25.7<span style="font-size: 0.32em; color: var(--text-sec); margin-left: 8px;">pp</span>
   </div>
   <p class="section-blurb" style="font-family: var(--font-display); font-style: italic;">
@@ -669,15 +749,15 @@ body .key-hint { display: none; }
   </div>
   <div class="data-row" style="margin-top: 14px;">
     <div class="screenshot tall" style="max-width: 100%;">
-      <div class="ss-frame" style="max-height: 180px;"><img src="https://raw.githubusercontent.com/MiaoDX/LIP/main/ai-coding/ultrathink-to-goal/images/slide-2.png" alt="Endor Labs · AI Code Security Benchmark"></div>
+      <div class="ss-frame" style="max-height: 180px;"><img src="images/slide-2.png" alt="Endor Labs · AI Code Security Benchmark"></div>
       <div class="ss-cap">endorlabs.com/research/ai-code-security-benchmark</div>
     </div>
     <div class="screenshot tall" style="max-width: 100%;">
-      <div class="ss-frame" style="max-height: 180px;"><img src="https://raw.githubusercontent.com/MiaoDX/LIP/main/ai-coding/ultrathink-to-goal/images/slide-3.png" alt="Stanford Meta-Harness paper · arxiv 2603.28052"></div>
+      <div class="ss-frame" style="max-height: 180px;"><img src="images/slide-3.png" alt="Stanford Meta-Harness paper · arxiv 2603.28052"></div>
       <div class="ss-cap">arxiv.org/abs/2603.28052 · Meta-Harness</div>
     </div>
     <div class="screenshot tall" style="max-width: 100%;">
-      <div class="ss-frame" style="max-height: 180px;"><img src="https://raw.githubusercontent.com/MiaoDX/LIP/main/ai-coding/ultrathink-to-goal/images/slide-4.png" alt="ForgeCode · Benchmarks Don't Matter Until They Do"></div>
+      <div class="ss-frame" style="max-height: 180px;"><img src="images/slide-4.png" alt="ForgeCode · Benchmarks Don't Matter Until They Do"></div>
       <div class="ss-cap">forgecode.dev/blog/gpt-5-4-agent-improvements</div>
     </div>
   </div>
@@ -1147,7 +1227,7 @@ body .key-hint { display: none; }
   <div class="quote">
     1.0.x 这一段最重要的事不是某个 feature——<em>是 "先 plan 再 do" 这个工程习惯被产品化了</em>
   </div>
-  <div class="stub-table" style="margin-top: 22px;">
+  <div class="table-wrap" style="margin-top: 22px;">
     <table style="width: 100%; max-width: 900px; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px;">
       <tr style="border-bottom: 1.5px solid var(--border);">
         <th style="text-align: left; padding: 10px 14px; color: var(--accent); font-weight: 500; letter-spacing: 1px;">player</th>
@@ -1211,7 +1291,7 @@ body .key-hint { display: none; }
     <div class="quote-attr">— HumanLayer blog · *Skill Issue： Harness Engineering for Coding Agents* · author： Kyle (Dex Horthy 的 cofounder) · 2026-03-12</div>
   </div>
   <div class="screenshot tall" style="max-width: 360px; margin-top: 18px;">
-    <div class="ss-frame"><img src="https://raw.githubusercontent.com/MiaoDX/LIP/main/ai-coding/ultrathink-to-goal/images/slide-5.png" alt="HumanLayer · Skill Issue: Harness Engineering for Coding Agents"></div>
+    <div class="ss-frame"><img src="images/slide-5.png" alt="HumanLayer · Skill Issue: Harness Engineering for Coding Agents"></div>
     <div class="ss-cap">humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents</div>
   </div>
   <h3 style="margin-top: 18px;">但 context 不是全部。harness 工程化在过去一年沿三条线收敛——</h3>
@@ -1259,7 +1339,7 @@ body .key-hint { display: none; }
     <div class="quote-attr">— Boris Cherny @ Code w/ Claude 2026 SF keynote, 2026-05-06 09:46 · simonwillison.net/2026/May/6/code-w-claude-2026/</div>
   </div>
   <div class="screenshot tall" style="max-width: 420px; margin-top: 22px;">
-    <div class="ss-frame"><img src="https://raw.githubusercontent.com/MiaoDX/LIP/main/ai-coding/ultrathink-to-goal/images/slide-6.png" alt="Simon Willison live blog at Code w/ Claude 2026 keynote"></div>
+    <div class="ss-frame"><img src="images/slide-6.png" alt="Simon Willison live blog at Code w/ Claude 2026 keynote"></div>
     <div class="ss-cap">Simon Willison live blog @ Code w/ Claude 2026 keynote · "Routines are higher-order prompts" 段</div>
   </div>
 </div>
@@ -1272,7 +1352,7 @@ body .key-hint { display: none; }
     <em>Context is a critical but finite resource for AI agents. Find the smallest set of high-signal tokens that maximize the likelihood of your desired outcome.</em>
     <div class="quote-attr">— Anthropic, *Effective context engineering for AI agents*</div>
   </div>
-  <div class="stub-table" style="margin-top: 22px;">
+  <div class="table-wrap" style="margin-top: 22px;">
     <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; font-family: var(--font-mono); font-size: 12px;">
       <div style="border-top: 2px solid var(--text-dim); padding-top: 10px;">
         <div style="color: var(--text-dim); font-size: 10px; letter-spacing: 1px; margin-bottom: 4px;">2024</div>
@@ -1340,7 +1420,7 @@ body .key-hint { display: none; }
     </div>
     <div class="col-r">
       <div class="screenshot tall">
-        <div class="ss-frame" style="max-height: 460px;"><img src="https://raw.githubusercontent.com/MiaoDX/LIP/main/ai-coding/ultrathink-to-goal/images/slide-7.png" alt="Anthropic · New in Claude: Managed Agents"></div>
+        <div class="ss-frame" style="max-height: 460px;"><img src="images/slide-7.png" alt="Anthropic · New in Claude: Managed Agents"></div>
         <div class="ss-cap">claude.com/blog/new-in-claude-managed-agents</div>
       </div>
     </div>
@@ -1443,11 +1523,39 @@ body .key-hint { display: none; }
   <div class="meta"><span class="meta-tag">section/5.1</span> · roboharness · 三轴定位</div>
   <h2>roboharness 在三轴里落到 <span class="hl">Verification 轴</span></h2>
   <h3>把 review 这个 binding constraint 工程化掉，让人在 5 分钟内消化几小时 unattended 跑</h3>
-  <div class="img-placeholder" style="max-width: 540px; margin-top: 22px;">
-    <div class="ph-icon">▶</div>
-    <div class="ph-label">SCREENSHOT · TO ADD</div>
-    <div class="ph-desc">roboharness review 工作流截图（report.html 的 Run Decision banner + surfaced case 列表）</div>
-    <div class="ph-meta">github.com/MiaoDX/roboharness README · 现成可拿</div>
+  <div class="diagram-panel">
+    <div class="diagram-title">proof pack review path</div>
+    <div class="proof-flow">
+      <div class="proof-step">
+        <div>
+          <div class="step-tag">1 · input</div>
+          <div class="step-name">contract.yml</div>
+        </div>
+        <div class="step-copy">先声明这次 run 必须满足的不变量，避免 review 时重新猜目标。</div>
+      </div>
+      <div class="proof-step">
+        <div>
+          <div class="step-tag">2 · during run</div>
+          <div class="step-name">phase_manifest</div>
+        </div>
+        <div class="step-copy">每个 phase 的输入、输出和关键决策点被保留下来。</div>
+      </div>
+      <div class="proof-step">
+        <div>
+          <div class="step-tag">3 · after run</div>
+          <div class="step-name">approval_report</div>
+        </div>
+        <div class="step-copy">grader agent 只 surface 需要人看的 case，而不是整段执行日志。</div>
+      </div>
+      <div class="proof-step accented">
+        <div>
+          <div class="step-tag">4 · human review</div>
+          <div class="step-name">report.html</div>
+        </div>
+        <div class="step-copy">先看 Run Decision banner，再看 surfaced cases，最后决定 merge / rerun。</div>
+      </div>
+    </div>
+    <div class="proof-note">关键变化：人不再验证完整过程，而是验证一个证据包。review bottleneck 从“盯 4 小时”变成“5 分钟做决策”。</div>
   </div>
 </div>
 
@@ -1467,11 +1575,25 @@ body .key-hint { display: none; }
   <div class="meta"><span class="meta-tag">section/5.2</span> · routine · 三轴定位 + Brockman tweet</div>
   <h2>routine 跨 <span class="hl">Skill 轴</span> + <span class="hl">Context 轴</span></h2>
   <h3>每个 routine fresh 200K context、subagent 隔离 (Context 轴)；把工程团队角色封装成可调用 routine (Skill 轴)</h3>
-  <div class="img-placeholder" style="max-width: 540px; margin-top: 24px;">
-    <div class="ph-icon">▶</div>
-    <div class="ph-label">SCREENSHOT · TO ADD</div>
-    <div class="ph-desc">Anthropic routine UI / claude.ai/code/routines 截图</div>
-    <div class="ph-meta">说明 routine 的 fresh 200K context · subagent 隔离</div>
+  <div class="routine-visual">
+    <div class="screenshot">
+      <img src="images/routine-architecture.svg" alt="Routine multi-agent architecture overview">
+      <div class="ss-cap">routine 多 agent 架构图 · GitHub issue / comment / label / branch 作为消息总线</div>
+    </div>
+    <div class="routine-facts">
+      <div class="fact-row">
+        <div class="fact-tag">Skill axis</div>
+        <div class="fact-copy"><strong>auto_pr / issue_label / pr_again / daily_duty</strong> 不再是 prompt，而是工程团队角色的可调用封装。</div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-tag">Context axis</div>
+        <div class="fact-copy">每个 routine 以 fresh context 开始，失败也隔离在自己的分支、comment 和下一轮接手协议里。</div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-tag">Boundary</div>
+        <div class="fact-copy">60 分钟不是能力上限，是任务拆分和工具匹配的边界。</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1555,7 +1677,7 @@ body .key-hint { display: none; }
   <h2>/goal：agent loop 自身被 bake 进 slash command</h2>
   <h3>三轴在一条命令里同时被产品接过去：Skill(按需调) + Context(runtime continuation) + Verification(强制 audit)</h3>
   <div class="screenshot" style="max-width: 540px; margin-top: 20px;">
-    <img src="https://raw.githubusercontent.com/MiaoDX/LIP/main/ai-coding/ultrathink-to-goal/images/slide-8.png" alt="Greg Brockman: codex now has a built in Ralph loop++">
+    <img src="images/slide-8.png" alt="Greg Brockman: codex now has a built in Ralph loop++">
     <div class="ss-cap">x.com/gdb/status/2050194039077495089 · 2026-05-01 · 推文里直接讲 codex 0.128.0 的 /goal &lt;objective&gt; 命令</div>
   </div>
 </div>
@@ -1608,7 +1730,7 @@ body .key-hint { display: none; }
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 1</span> · 把环境装好</div>
-  <h2>Slide 1 · <span class="hl">harness 比 model 重要，但前提是 harness 是最新的</span></h2>
+  <h2>Tip 1 · <span class="hl">harness 比 model 重要，但前提是 harness 是最新的</span></h2>
   <div class="callback-box">
     <span class="ref">↪ TIP 3</span>
     <span class="arrow">·</span>
@@ -1624,23 +1746,29 @@ body .key-hint { display: none; }
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 2</span> · 试这些方法</div>
-  <h2>Slide 2 · <span class="hl">对齐 &gt; 提示词。先让 agent 问你，再让它干</span></h2>
-  <div class="cards">
-    <div class="card"><div class="card-tag">grill-me</div><div class="card-title">mattpocock/skills</div><div class="card-desc">让 AI 反问你需求是否清晰</div></div>
-    <div class="card"><div class="card-tag">office-hours</div><div class="card-title">gstack</div><div class="card-desc">YC 风格的 6 个 forcing question</div></div>
-    <div class="card"><div class="card-tag">画图给它看</div><div class="card-title">don't write 200 字</div><div class="card-desc">截图丢进去比写 200 字描述快 10 倍。Claude / Codex 都是多模态的，别浪费</div></div>
-  </div>
-  <div class="img-placeholder" style="max-width: 540px; margin-top: 18px;">
-    <div class="ph-icon">▶</div>
-    <div class="ph-label">SCREENSHOT · TO ADD</div>
-    <div class="ph-desc">mattpocock/skills 仓库 README + awesome-claude-code 入口</div>
-    <div class="ph-meta">github.com/mattpocock/skills · github.com/hesreallyhim/awesome-claude-code</div>
+  <h2>Tip 2 · <span class="hl">对齐 &gt; 提示词。先让 agent 问你，再让它干</span></h2>
+  <div class="method-grid">
+    <div class="method-tile accented">
+      <div class="method-num">01</div>
+      <div class="method-title">跑一次 grill-me</div>
+      <div class="method-copy">让 AI 先反问需求是否清晰。被盘问过一次，就很难再回到直接写 prompt。</div>
+    </div>
+    <div class="method-tile">
+      <div class="method-num">02</div>
+      <div class="method-title">试一次 office-hours</div>
+      <div class="method-copy">用 YC 风格 forcing questions 把“我想做个东西”压成可执行判断。</div>
+    </div>
+    <div class="method-tile">
+      <div class="method-num">03</div>
+      <div class="method-title">画图给它看</div>
+      <div class="method-copy">架构、流程、UI 草图直接截图丢进去。多模态输入比 200 字描述稳定得多。</div>
+    </div>
   </div>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 3</span> · 心态</div>
-  <h2>Slide 3 · <span class="hl">Just use the best model, please. Just try it.</span></h2>
+  <h2>Tip 3 · <span class="hl">Just use the best model, please. Just try it.</span></h2>
   <div class="callback-box">
     <span class="ref">↩ TIP 1</span>
     <span class="arrow">·</span>
@@ -1717,6 +1845,14 @@ body .key-hint { display: none; }
   }
   syncFromHash();
   window.addEventListener('hashchange', syncFromHash);
+
+  const notesToggle = document.getElementById('notesToggle');
+  notesToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const on = document.body.classList.toggle('show-notes');
+    notesToggle.textContent = on ? 'NOTES ON' : 'NOTES';
+    notesToggle.setAttribute('aria-pressed', String(on));
+  });
 
   // Style toggle — load persisted, wire clicks, save on change
   const STYLES = ['terminal', 'newspaper', 'navy'];

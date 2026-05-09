@@ -78,10 +78,12 @@ share/ 下有两种文件类型，用途不同：
 | 类型 | 放哪里 | 渲染方式 | 适合 |
 |------|--------|----------|------|
 | `.md` | `share/` 根目录 | VitePress 自动渲染 | 教程、配置指南、博客文章 |
-| `.html` | `share/presentations/` | 独立文件，GitHub Actions 直接复制 | 演讲稿、Slide、需要离线分享的内容 |
+| `.html` | `presentations/` | GitHub Actions 复制到 `/share/` | 演讲稿、Slide、需要离线分享的内容 |
+| `index.html` + 素材 | `ai-coding/<slug>/` | GitHub Actions 复制到同路径 | 带 research / scripts / screenshots 的专题演讲项目 |
 
 - **写文章/教程** → `share/your-article.md`
-- **做演讲/Slide** → `share/presentations/your-talk.html`（配套图片放同目录）
+- **做演讲/Slide** → `presentations/your-talk.html`（配套图片放同目录，部署后访问 `/LIP/share/your-talk.html`）
+- **做 AI Coding 专题演讲项目** → `ai-coding/your-talk/index.html`（素材放 `images/`、`screenshots/` 或 `assets/`，部署后访问 `/LIP/ai-coding/your-talk/`）
 - 新增 Markdown 文章时，同步更新 `.vitepress/config.mts` 的 sidebar
 - 详见 `share/README.md`
 

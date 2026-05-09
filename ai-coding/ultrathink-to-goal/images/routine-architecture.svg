@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif">
+  <style>
+    .node { fill: #fff; stroke: #333; stroke-width: 1.5; }
+    .human { fill: #fef3c7; stroke: #b45309; }
+    .auto_pr { fill: #dbeafe; stroke: #1d4ed8; }
+    .issue_label { fill: #e0e7ff; stroke: #4338ca; }
+    .daily { fill: #fee2e2; stroke: #b91c1c; }
+    .pr_again { fill: #fce7f3; stroke: #be185d; }
+    .bus { fill: #f3f4f6; stroke: #4b5563; stroke-dasharray: 5 3; }
+    .title { font-size: 15px; font-weight: 600; fill: #111; }
+    .subtitle { font-size: 12px; fill: #4b5563; }
+    .period { font-size: 11px; fill: #6b7280; font-style: italic; }
+    .arrow { fill: none; stroke: #6b7280; stroke-width: 1.5; }
+    .label { font-size: 11px; fill: #374151; }
+    .core-note { font-size: 10px; fill: #1d4ed8; font-weight: 600; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- Human + Opus at top -->
+  <rect x="330" y="30" width="240" height="50" rx="6" class="node human"/>
+  <text x="450" y="52" text-anchor="middle" class="title">和 Opus 聊 roadmap</text>
+  <text x="450" y="70" text-anchor="middle" class="subtitle">deep research → 讨论 → 细化 → 拆 issue</text>
+
+  <!-- Arrow to issues -->
+  <path d="M 450 80 L 450 110" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- GitHub Issues bucket -->
+  <rect x="300" y="115" width="300" height="55" rx="6" class="node"/>
+  <text x="450" y="138" text-anchor="middle" class="title">GitHub Issues (backlog)</text>
+  <text x="450" y="156" text-anchor="middle" class="subtitle">每个 issue = 一个可验证的小目标</text>
+
+  <!-- issue_label + auto_pr side by side, feeding from issues -->
+  <path d="M 380 170 L 180 225" class="arrow" marker-end="url(#arrow)"/>
+  <path d="M 520 170 L 720 225" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- issue_label -->
+  <rect x="60" y="230" width="240" height="72" rx="6" class="node issue_label"/>
+  <text x="180" y="253" text-anchor="middle" class="title">issue_label</text>
+  <text x="180" y="270" text-anchor="middle" class="period">每天一次</text>
+  <text x="180" y="289" text-anchor="middle" class="subtitle">读所有 issue，打优先级 label</text>
+
+  <!-- auto_pr (highlighted as main) -->
+  <rect x="600" y="230" width="240" height="72" rx="6" class="node auto_pr" stroke-width="2.5"/>
+  <text x="720" y="253" text-anchor="middle" class="title">auto_pr（主力）</text>
+  <text x="720" y="270" text-anchor="middle" class="period">每小时一次</text>
+  <text x="720" y="289" text-anchor="middle" class="subtitle">挑 issue → 改代码 → PR → 自评</text>
+
+  <!-- issue_label feeds priority back to issues (visual loop) -->
+  <path d="M 180 230 Q 180 195 300 160" class="arrow" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+  <text x="195" y="200" class="label">打上 label</text>
+
+  <!-- auto_pr produces PR + comments -->
+  <path d="M 720 302 L 720 345" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- Message bus -->
+  <rect x="200" y="355" width="520" height="52" rx="6" class="node bus"/>
+  <text x="460" y="378" text-anchor="middle" class="title">GitHub comments + labels + branches（消息总线）</text>
+  <text x="460" y="396" text-anchor="middle" class="subtitle">[auto-pr] · [conflict] · [ci-fail] · [deferred] — agent 间的异步消息</text>
+
+  <!-- pr_again + daily_duty at bottom consume bus -->
+  <path d="M 300 407 L 180 450" class="arrow" marker-end="url(#arrow)"/>
+  <path d="M 620 407 L 720 450" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- pr_again -->
+  <rect x="60" y="455" width="240" height="72" rx="6" class="node pr_again"/>
+  <text x="180" y="478" text-anchor="middle" class="title">pr_again</text>
+  <text x="180" y="495" text-anchor="middle" class="period">每天一次</text>
+  <text x="180" y="514" text-anchor="middle" class="subtitle">孤儿分支 → 建 PR / 救援</text>
+
+  <!-- daily_duty -->
+  <rect x="600" y="455" width="240" height="72" rx="6" class="node daily"/>
+  <text x="720" y="478" text-anchor="middle" class="title">daily_duty</text>
+  <text x="720" y="495" text-anchor="middle" class="period">每天一次</text>
+  <text x="720" y="514" text-anchor="middle" class="subtitle">CI 修复 + 代码健康检查</text>
+
+  <!-- Human review at bottom -->
+  <rect x="330" y="560" width="240" height="42" rx="6" class="node human"/>
+  <text x="450" y="587" text-anchor="middle" class="title">人：review PR + 把控方向</text>
+
+  <path d="M 180 527 Q 180 555 330 580" class="arrow" marker-end="url(#arrow)"/>
+  <path d="M 720 527 Q 720 555 570 580" class="arrow" marker-end="url(#arrow)"/>
+  <path d="M 720 302 Q 870 440 570 580" class="arrow" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+
+  <!-- Legend note -->
+  <text x="450" y="615" text-anchor="middle" class="subtitle" style="font-size:11px;">
+    四个 routine 通过 GitHub 原生的 issue / comment / label / branch 协作 — 无额外 orchestration
+  </text>
+</svg>
