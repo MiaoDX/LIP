@@ -20,6 +20,8 @@ This is a single-context repo: use root `CONTEXT.md` and `docs/adr/` when presen
 
 Some pages are standalone HTML apps/decks and are copied into the built VitePress site by `scripts/publish-rules.mjs`, which is called from `.github/workflows/deploy.yml`. Do not edit `.vitepress/dist/` or any generated output directly.
 
+Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs`. Update that module instead of duplicating section lists in VitePress config or build scripts.
+
 ### Canonical source locations
 
 - General share decks live in `presentations/`.

@@ -20,6 +20,8 @@ This is a single-context repo: use root `CONTEXT.md` and `docs/adr/` when presen
 
 GitHub Pages is built by `.github/workflows/deploy.yml`. VitePress handles Markdown, but standalone HTML decks are copied into `.vitepress/dist/` by `scripts/publish-rules.mjs` after `npm run docs:build`.
 
+Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs`. Update that module instead of duplicating section lists in VitePress config or build scripts.
+
 ### Canonical source locations
 
 - `presentations/`: general standalone decks. `npm run publish:copy` copies direct files and asset folders into `/LIP/share/`.

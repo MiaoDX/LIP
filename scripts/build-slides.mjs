@@ -12,23 +12,14 @@
 import { readdir, readFile, mkdir } from 'node:fs/promises'
 import { join, relative, basename, extname } from 'node:path'
 import { spawn } from 'node:child_process'
+import { marpScanDirs } from '../site-map.mjs'
 
 const ROOT = process.cwd()
 const OUT = join(ROOT, '.vitepress', 'dist', 'slides', 'marp')
 const THEME = join(ROOT, 'themes', 'lip-ink.css')
 const BUILD_PDF = process.env.MARP_PDF === '1'
 
-const SCAN_DIRS = [
-  'stories',
-  'lessons',
-  'now',
-  'share',
-  'slides',
-  'openclaw',
-  'presentations',
-  'ai-coding',
-  'bestpractice',
-]
+const SCAN_DIRS = marpScanDirs
 const SKIP_DIRS = new Set(['node_modules', '.vitepress', '.git', 'dist'])
 
 async function walk(dir, out = []) {
