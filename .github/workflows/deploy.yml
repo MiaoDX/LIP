@@ -41,7 +41,7 @@ jobs:
       - run: npm run marp:build
 
       # 4. Build Slidev slides → output to VitePress dist
-      - run: npx slidev build slides/slides.md --base /LIP/slides/slidev/ --out ../../.vitepress/dist/slides/slidev
+      - run: npm run slides:build
 
       - uses: actions/upload-pages-artifact@v3
         with:
