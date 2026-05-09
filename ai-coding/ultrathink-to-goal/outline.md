@@ -12,7 +12,7 @@
 
 **Takeaway**:哪类活配哪种 harness——这本身就是工程判断。
 
-**三轴叙事**:Skill(agent 调什么)+ Context(agent 看什么)+ Verification(agent 凭什么宣告 done)。
+**三轴叙事**:Skill(agent 调什么)+ Context(agent 看什么)+ Verification(agent 凭什么宣告完成)。
 
 ---
 
@@ -37,8 +37,8 @@
 **三个数据点**:
 
 - **Endor Labs**(2026-04):同一个 GPT-5.5,同一周。OpenAI 自家 Codex harness 跑出 **61.5%**;Cursor harness 跑出 **87.2%**。**25.7 个百分点,没换模型,只换 harness。**
-- **Stanford Meta-Harness paper**(arXiv 2603.28052):"Changing the harness around a fixed LLM can produce a **6× performance gap** on the same benchmark."
-- **ForgeCode @ Terminal Bench 2.0**:GPT-5.4 和 Opus 4.6 用同一个 harness,分数都是 **81.8%(并列榜首)**。"Drop both models into the same harness and Opus looks easier. Adapt the harness to GPT 5.4's failure modes and the gap disappears."
+- **Stanford Meta-Harness paper**(arXiv 2603.28052):论文开篇引用跨研究 observation:"Changing the harness around a fixed LLM can produce a **6× performance gap** on the same benchmark."
+- **ForgeCode @ Terminal Bench 2.0**:GPT-5.4 和 Opus 4.6 用同一个 harness,分数都到过 **81.8%**。关键不是排名,而是它的失败模式洞察:"**Opus reads between the lines. GPT reads the lines.**"
 
 **伏笔**:为什么同一个模型差 25 个百分点?模型只看它能看到的 token,只调它能调的 skill,只在它被允许的边界里宣告完成——而**不同 harness 让这三件事完全不一样**。
 
@@ -50,7 +50,7 @@
 
 接 Karpathy 自己的话:
 
-> "The LLM part is not taken for granted. The agent part is now taken for granted. The claw-like entities are taken for granted. Now you can have multiple of them. Now you can have instructions to them. Now you can have optimization over the instructions."
+> "The agent part is now taken for granted... Now you can have multiple of them. Now you can have instructions to them. Now you can have optimization over the instructions."
 
 **主图**:Claude Code 281 个版本时间轴 + 三段 vibe / SDD / harness 颜色标记 + 12-15 个里程碑节点。
 
@@ -100,7 +100,7 @@ binding constraint 全部在我们这一侧。
 |---|---|---|
 | **Skill** | agent 调什么 | from all-loaded → on-demand |
 | **Context** | agent 看什么 | from passive transcript → actively managed → distilled |
-| **Verification** | agent 凭什么宣告 done | from manual review → in-loop verifier → external grader |
+| **Verification** | agent 凭什么宣告完成 | from manual review → in-loop verifier → external grader |
 
 每一轴都经历了同一个动作:**从我们自己承担 → 被产品接过去**。
 
@@ -160,11 +160,12 @@ binding constraint 全部在我们这一侧。
 
 ## 6 · 当下与未来 + Caveat(4 min)
 
-**bake-in 的极致:用户表面回到 vibe**
+**bake-in 的极致:用户表面回到 vibe,底层工程化反而更重**
 
 - **/goal**(4-30 Codex 0.128.0):引 Greg Brockman tweet "**codex now has a built in Ralph loop++**"
   - agent loop 自身被 bake 进 slash command
   - 三轴在一条命令里同时被产品接过去:Skill(按需调)+ Context(runtime continuation)+ Verification(强制 audit)
+  - 但 /goal 不替代 AGENTS.md / skills / permissions / subagents,而是把它们 wrap 成"我说目标"的入口
 
 - **Routines + Auto Mode + Managed Agents**(Outcomes / Multiagent / Dreaming):Anthropic 同向。
   - 用户表面回到 vibe("我说目标"),底下 spec/harness 配置反而更前置
@@ -187,9 +188,9 @@ binding constraint 全部在我们这一侧。
 
 ---
 
-## 8 · Tips · 三件值得今晚就做的事(3 min)
+## 8 · Tips · 三个今晚就能做的实验(3 min)
 
-### Slide 1 — 把环境装好
+### Slide 1 — 实验 1:把 harness 环境整理到最新
 
 > "harness 比 model 重要,但前提是 harness 是最新的"
 
@@ -198,12 +199,12 @@ binding constraint 全部在我们这一侧。
   - 推荐我整理的工具集:[github.com/MiaoDX/claude-devkit](https://github.com/MiaoDX/claude-devkit)
   - 281 个版本里只要落后 2 周,那 25 个百分点就回去了一半
 
-- **给它们全部权限**
-  - `claude --dangerously-skip-permissions` / Codex `--yolo` / Auto Mode
-  - 模型不会乱来,会乱来的是你没装 git
-  - 真正的 binding constraint 不是模型,是你审批 prompt 的时间
+- **先准备边界,再减少审批延迟**
+  - clean branch / git / CI / secret 边界先到位
+  - 然后尽量减少可避免的人类审批 prompt
+  - 真正要避免的是人变成 turn-by-turn approval bottleneck
 
-### Slide 2 — 试试这些方法
+### Slide 2 — 实验 2:先让 agent 问你,再让它干
 
 > "对齐 > 提示词。先让 agent 问你,再让它干"
 
@@ -222,14 +223,14 @@ binding constraint 全部在我们这一侧。
   - SDD / gstack / mattpocock/skills 都在里面有条目
   - 不是让你全装,是让你看自己缺哪一类工具
 
-### Slide 3 — 关于心态
+### Slide 3 — 实验 3:用你能 access 的最好模型跑真实任务
 
 > "Just use the best model, please. Just try it."
 
-- **直接用最好的模型**
-  - Opus 4.7 / GPT-5.5。不要用 Sonnet/Haiku 省那点钱
-  - 工程化做对了,最贵的模型反而最便宜——因为它一次过,不需要 retry
-  - 这句是字面意思:please
+- **尽量用你能 access 的最好模型**
+  - SaaS frontier model 可以用就直接用
+  - 内部 only 项目,就用私有部署的 top-tier 开源模型
+  - 省下来的 retry、review、上下文重建和返工时间,通常比模型成本更贵
 
 - **Just try it**
   - 这场 lecture 听完最容易的失败模式:回去想"我下周开始整这套"

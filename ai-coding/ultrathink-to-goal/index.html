@@ -1393,9 +1393,9 @@ body .key-hint { display: none; }
 </svg>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 12px;">
-    读这条时间线的方式：每到一个节点，只问三件事——它能调什么？它看到了什么？谁在判定 done？
+    读这条时间线的方式：每到一个节点，只问三件事——它能调什么？它看到了什么？谁在判定完成？
   </div>
-  <div class="speaker-note">把三段念出来：0.2 时代 vibe，三个维度都靠人；1.0 时代 SDD，第一次有产品接过去——plan mode；2.x 时代 harness，三轴同时工程化。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定 done。指着右下方虚线那个 /goal —— OpenAI 同期也在做同样的事，Codex 0.128.0 把 agent loop 自身 bake 进 slash command。这条线上的 281 个 tick，每个都是这一年 Anthropic 工程师在重新定义 binding constraint。</div>
+  <div class="speaker-note">把三段念出来：0.2 时代 vibe，三个维度都靠人；1.0 时代 SDD，第一次有产品接过去——plan mode；2.x 时代 harness，三轴同时工程化。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定完成。指着右下方虚线那个 /goal —— OpenAI 同期也在做同样的事，Codex 0.128.0 把 agent loop 自身 bake 进 slash command。这条线上的 281 个 tick，每个都是这一年 Anthropic 工程师在重新定义 binding constraint。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -1560,7 +1560,7 @@ body .key-hint { display: none; }
 <div class="slide section">
   <div class="section-marker">SECTION 4 · 09 min</div>
   <h1><span class="hash">##</span> Harness 段</h1>
-  <p class="section-blurb">2.x 时代 · 三个责任同时工程化：agent 调什么、看什么、凭什么宣告 done</p>
+  <p class="section-blurb">2.x 时代 · 三个责任同时工程化：agent 调什么、看什么、凭什么宣告完成</p>
   <div class="duration">09:00 · ████████░░░░░░░░ 19% of total</div>
 </div>
 
@@ -1600,7 +1600,7 @@ body .key-hint { display: none; }
     </div>
     <div class="axis-col" data-axis="verif">
       <div class="axis-name">VERIFICATION</div>
-      <div class="axis-q">agent 凭什么宣告 done?</div>
+      <div class="axis-q">agent 凭什么宣告完成?</div>
       <div class="axis-stage"><div class="stage-tag">manual</div><div class="stage-text">人盯每一步</div></div>
       <div class="axis-stage"><div class="stage-tag">in-loop</div><div class="stage-text">Anthropic Planner-Generator-Evaluator 三角色(GAN 启发)</div></div>
       <div class="axis-stage bake"><div class="stage-tag">→ 2026-05</div><div class="stage-text"><strong>Outcomes</strong>：rubric + 独立 grader agent · <strong>+10pp</strong> task success / +8.4% docx / +10.1% pptx</div></div>
@@ -1762,13 +1762,13 @@ body .key-hint { display: none; }
 <div class="slide section">
   <div class="section-marker">SECTION 5 · 08 min</div>
   <h1><span class="hash">#</span> 我的实践</h1>
-  <p class="section-blurb">任务 / 工具的匹配：roboharness · routine 多 agent · local 重 harness</p>
+  <p class="section-blurb">不是工具推荐，而是三个真实场景里 binding constraint 被移走的方式</p>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/5.1</span> · roboharness</div>
   <h2>roboharness · <span class="hl">长 unattended run 的 review 工程化</span></h2>
-  <h3>不是补视觉——模型有视觉。是当 agent 跑 4 小时改机器人代码，人没法一帧帧看完</h3>
+  <h3>移走的是 Verification bottleneck：agent 跑 4 小时改机器人代码，人不该一帧帧看完整过程</h3>
   <div class="quote" style="font-family: var(--font-mono); font-style: normal; font-size: clamp(15px, 1.7vw, 20px);">
     long unattended agent run<br>→ <em>one proof pack</em><br>→ short human review
     <div class="quote-attr">— github.com/MiaoDX/roboharness README</div>
@@ -1843,7 +1843,7 @@ body .key-hint { display: none; }
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/5.2</span> · routine 多 agent</div>
   <h2>routine 多 agent · <span class="hl">云端 60 分流水线</span></h2>
-  <h3>四个 routine + GitHub comment 协议：auto_pr / issue_label / pr_again / daily_duty</h3>
+  <h3>移走的是调度和上下文切换 bottleneck：四个 routine 把工程团队角色封装成云端流水线</h3>
   <div class="cards" style="margin-top: 24px;">
     <div class="card"><div class="card-tag">主力</div><div class="card-title">auto_pr</div><div class="card-desc">每小时一个 issue；三态自评 FULLY/PARTIAL/DIMINISHING</div></div>
     <div class="card"><div class="card-tag">辅助 1</div><div class="card-title">issue_label</div><div class="card-desc">每天排优先级，只读 + 打标签</div></div>
@@ -1881,7 +1881,7 @@ body .key-hint { display: none; }
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/5.3</span> · local 重 harness</div>
   <h2>"60 分" 是<span class="hl">任务-工具匹配的边界</span></h2>
-  <h3>不是产出完成度，而是哪些活让云端 routine 负责，哪些活留本地用更重的 harness 处理</h3>
+  <h3>移走的是任务匹配 bottleneck：哪些活交给 routine，哪些活留给本地重 harness</h3>
   <div class="cards" style="margin-top: 24px;">
     <div class="card">
       <div class="card-tag">SKILL 轴 + 对齐</div>
@@ -1950,13 +1950,13 @@ body .key-hint { display: none; }
 <div class="slide section">
   <div class="section-marker">SECTION 6 · 04 min</div>
   <h1><span class="hash">#</span> 当下与未来</h1>
-  <p class="section-blurb">bake-in 的极致 · 用户表面回到 vibe</p>
+  <p class="section-blurb">bake-in 的极致 · 用户表面回到 vibe，底层工程化反而更重</p>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · /goal · bake-in</div>
   <h2>/goal：agent loop 自身被 bake 进 slash command</h2>
-  <h3>三轴在一条命令里同时被产品接过去：Skill(按需调) + Context(runtime continuation) + Verification(强制 audit)</h3>
+  <h3>不是替代 AGENTS.md / skills / permissions / subagents，而是把它们 wrap 成"我说目标"的入口</h3>
   <div class="goal-visual">
     <div class="screenshot">
       <img src="images/slide-8.png" alt="Greg Brockman: codex now has a built in Ralph loop++">
@@ -1973,7 +1973,7 @@ body .key-hint { display: none; }
       </div>
       <div class="fact-row">
         <div class="fact-tag">Verification axis</div>
-        <div class="fact-copy">Ralph loop++ 的核心不是多跑几轮，是每轮都带着 audit pressure 逼近 done。</div>
+        <div class="fact-copy">Ralph loop++ 的核心不是多跑几轮，是每轮都带着 audit pressure 逼近完成。</div>
       </div>
     </div>
   </div>
@@ -2010,7 +2010,7 @@ body .key-hint { display: none; }
   </div>
   <div class="quote" style="margin-top: 32px;">
     下次 agent 失败时，先别问"模型是不是不行"。<br>
-    先问：它能调什么？它看到了什么？谁在判定 done？
+    先问：它能调什么？它看到了什么？谁在判定完成？
   </div>
   <div class="quote" style="margin-top: 22px;">
     我们不必再是 <em>binding constraint</em>
@@ -2026,12 +2026,12 @@ body .key-hint { display: none; }
 <div class="slide section">
   <div class="section-marker">SECTION 8 · 03 min</div>
   <h1><span class="hash">#</span> Tips</h1>
-  <p class="section-blurb">三件值得今晚就做的事</p>
+  <p class="section-blurb">三件今晚就能做的实验：整理 harness、让 agent 反问、用最好模型跑真实任务</p>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 1</span> · 把环境装好</div>
-  <h2>Tip 1 · <span class="hl">harness 比 model 重要，但前提是 harness 是最新的</span></h2>
+  <h2>实验 1 · <span class="hl">把 harness 环境整理到最新</span></h2>
   <div class="callback-box">
     <span class="ref">↪ TIP 3</span>
     <span class="arrow">·</span>
@@ -2047,7 +2047,7 @@ body .key-hint { display: none; }
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 2</span> · 试这些方法</div>
-  <h2>Tip 2 · <span class="hl">对齐 &gt; 提示词。先让 agent 问你，再让它干</span></h2>
+  <h2>实验 2 · <span class="hl">先让 agent 问你，再让它干</span></h2>
   <div class="method-grid">
     <div class="method-tile accented">
       <div class="method-num">01</div>
@@ -2069,15 +2069,15 @@ body .key-hint { display: none; }
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 3</span> · 心态</div>
-  <h2>Tip 3 · <span class="hl">Just use the best model, please. Just try it.</span></h2>
+  <h2>实验 3 · <span class="hl">用你能 access 的最好模型跑真实任务</span></h2>
   <div class="callback-box">
     <span class="ref">↩ TIP 1</span>
     <span class="arrow">·</span>
     <span>harness 比 model 重要 —— 但 model 别成为新的 binding constraint</span>
   </div>
   <div class="quote">
-    探索期先用 Opus 4.7 / GPT-5.5 这类最强模型。<br>
-    等任务形态稳定、harness 跑顺了，再降级到更便宜的模型省钱
+    SaaS frontier model 可以用就直接用。内部 only 项目，就用私有部署的 top-tier 开源模型。<br>
+    省下来的 retry、review、上下文重建和返工时间，通常比模型成本更贵
   </div>
   <div class="quote" style="margin-top: 24px; font-size: clamp(20px, 2.4vw, 30px);">
     这场 lecture 听完最容易的失败模式：回去想"我下周开始整这套"。<br>真正的失败模式：<em>什么都不试</em>
