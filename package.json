@@ -13,6 +13,7 @@
     "marp:build": "node scripts/build-slides.mjs",
     "publish:copy": "node scripts/publish-rules.mjs copy",
     "publish:check": "node scripts/publish-rules.mjs check",
+    "quality:check": "node scripts/quality-check.mjs",
     "build:all": "npm run docs:build && npm run publish:copy && npm run marp:build && npm run slides:build && npm run publish:check"
   },
   "repository": {

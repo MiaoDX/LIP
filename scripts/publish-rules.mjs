@@ -126,7 +126,7 @@ async function copyAiCodingPages(rule, distDir, copied) {
   }
 }
 
-async function copyStandalone({ distDir = DIST_DIR } = {}) {
+export async function copyStandalone({ distDir = DIST_DIR } = {}) {
   const copied = []
   for (const rule of publishRules) {
     if (rule.entryFile) {
@@ -138,7 +138,7 @@ async function copyStandalone({ distDir = DIST_DIR } = {}) {
   return copied
 }
 
-async function collectExpected({ distDir = DIST_DIR } = {}) {
+export async function collectExpected({ distDir = DIST_DIR } = {}) {
   const expected = []
   for (const rule of publishRules) {
     if (rule.entryFile) {
@@ -214,7 +214,7 @@ async function checkNoGeneratedSourceDir(path, message, errors) {
   if (files.length) errors.push(message)
 }
 
-async function checkSourceOwnership() {
+export async function checkSourceOwnership() {
   const errors = []
   await checkNoGeneratedSourceDir(
     'public/share',
@@ -232,7 +232,7 @@ async function checkSourceOwnership() {
   return errors
 }
 
-async function checkStandalone({ distDir = DIST_DIR } = {}) {
+export async function checkStandalone({ distDir = DIST_DIR } = {}) {
   const expected = await collectExpected({ distDir })
   const missing = []
   const sourceErrors = await checkSourceOwnership()

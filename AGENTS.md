@@ -22,6 +22,8 @@ Some pages are standalone HTML apps/decks and are copied into the built VitePres
 
 Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs`. Update that module instead of duplicating section lists in VitePress config or build scripts.
 
+Run `npm run quality:check` after source-layout changes. It updates `.quality-report.md` and checks that generated publish output has not been committed as source.
+
 ### Canonical source locations
 
 - General share decks live in `presentations/`.
