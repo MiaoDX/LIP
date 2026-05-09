@@ -162,10 +162,11 @@ binding constraint 全部在我们这一侧。
 
 - "60 分" 不是产出完成度,是**任务-工具匹配的边界**——哪些活让云端 routine 负责,哪些活留本地用更重的 harness 处理
 - 边界外的活留 local,用更重的工具:
-  - **mattpocock/skills 的 grill-me / grill-with-docs** → Skill 轴 + 对齐
+  - **mattpocock/skills 的 grill-me / grill-with-docs** → 需求模糊时先沉淀任务约束
   - **GSD / gstack 的 plan-pipeline** → Skill 轴 + 大 scope 修改
-  - **roboharness 的 proof pack** → Verification 轴 + 长 unattended run
-- 三种工具不是替代关系,是**针对不同任务类型的 harness specialization**
+  - **Codex `/goal` + hybrid-phase-pipeline** → 清晰但一次性的长程任务
+  - **roboharness 的 proof pack** → 验证风险高时叠加的 Verification layer
+- 这些工具不是替代关系,是**针对不同任务类型和验证风险的 harness specialization**
 - 收束:"**哪类活配哪种 harness——这本身就是工程判断。**"
 
 ---
@@ -263,7 +264,7 @@ binding constraint 全部在我们这一侧。
 ## 9 · Q&A(≈4 min 留白)
 
 - 补公众号二维码:直觉机器漫谈
-- 补个人微信二维码:MiaoDX
+- 补个人微信二维码:Dongxu-Miao
 
 ---
 
@@ -314,7 +315,7 @@ binding constraint 全部在我们这一侧。
 2. **0.5 节数据图**:Endor Labs 25% + Stanford 6× + ForgeCode 81.8% 三条数据并列
 3. **第 1 节主图**:Claude Code 281 版本时间轴 + 三段颜色 + 12-15 个里程碑
 4. **第 4 节三轴矩阵图**:Skill / Context / Verification × from-X-to-Y 演进
-5. **第 5.3 节决策图**:把 routine / mattpocock / GSD-gstack / roboharness 按任务类型分到象限里
+5. **第 5.3 节 routing 图**:需求模糊 / 重复调度 / 一次性长程 / 验证风险高分别匹配不同 harness
 
 ---
 
