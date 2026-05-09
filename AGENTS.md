@@ -28,11 +28,15 @@ Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs
   - Put `*.html` directly in `presentations/`.
   - Put small sibling assets directly in `presentations/`, or larger grouped assets in `presentations/<deck-assets>/`.
   - `npm run publish:copy` publishes these to `/LIP/share/`.
+  - Do not put presentation assets under `public/share/`; `/LIP/share/` must be generated from `share/*.md` and `presentations/`.
 
 - AI Coding project decks with research/source material live in `ai-coding/<slug>/`.
   - The canonical HTML entry is `ai-coding/<slug>/index.html`.
   - Local assets must live under `ai-coding/<slug>/images/`, `ai-coding/<slug>/screenshots/`, or `ai-coding/<slug>/assets/`.
   - `npm run publish:copy` publishes these to `/LIP/ai-coding/<slug>/`.
+
+- Consult pages live in `public/consult/` and publish to `/LIP/consult/`.
+  - Do not recreate a parallel root `consult/` tree.
 
 ### Path rules
 

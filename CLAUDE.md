@@ -26,12 +26,15 @@ Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs
 
 - `presentations/`: general standalone decks. `npm run publish:copy` copies direct files and asset folders into `/LIP/share/`.
 - `ai-coding/<slug>/index.html`: AI Coding project decks that live beside research/source material. `npm run publish:copy` copies `index.html` plus `images/`, `screenshots/`, and `assets/` into `/LIP/ai-coding/<slug>/`.
+- `public/consult/`: consult pages and downloads. `npm run publish:copy` copies HTML into `/LIP/consult/`; keep PDFs and downloads there for VitePress public passthrough.
 
 ### Path rules
 
 - Shared standalone deck behavior lives in `assets/deck-runtime.js`. From an AI Coding deck, load it with `../../assets/deck-runtime.js`; from a `presentations/` deck, load it with `../assets/deck-runtime.js`.
 - Keep deck assets inside the deck's own source directory, usually `images/`.
 - Use relative paths from the HTML file, for example `images/slide-1.png`.
+- Do not put presentation assets under `public/share/`; `/LIP/share/` must be generated from `share/*.md` and `presentations/`.
+- Do not recreate a parallel root `consult/` tree; `public/consult/` is the canonical consult source.
 - Do not depend on sibling folders or `raw.githubusercontent.com` for presentation images unless that dependency is intentional.
 - Never edit `.vitepress/dist/` directly; update the canonical source and `scripts/publish-rules.mjs` instead.
 

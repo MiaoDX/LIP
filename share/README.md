@@ -82,6 +82,7 @@ presentations/
 ## 注意事项
 
 - **不要把 `.html` 放在 `share/` 根目录** — 统一放到仓库根目录 `presentations/`，由 `scripts/publish-rules.mjs` 发布到 `/share/`
+- **不要把演讲素材放在 `public/share/`** — `/share/` 发布结果必须由 `share/*.md` 和 `presentations/` 生成
 - **Markdown 中引用图片**：可以用相对路径，图片放在同目录或 `public/`
 - **HTML 中引用图片**：用相对路径，图片和 HTML 放同一目录
 - **AI Coding 专题 HTML**：源文件放 `ai-coding/<slug>/index.html`，素材留在该目录下的 `images/`、`screenshots/` 或 `assets/`

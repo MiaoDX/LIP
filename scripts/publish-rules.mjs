@@ -7,7 +7,7 @@
  * verification pointed at this file instead of duplicating shell snippets.
  */
 
-import { access, cp, mkdir, readdir, stat } from 'node:fs/promises'
+import { access, cp, mkdir, readFile, readdir, stat } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { dirname, extname, join, relative } from 'node:path'
 
@@ -16,6 +16,7 @@ const DIST_DIR = '.vitepress/dist'
 
 const SHARE_EXTENSIONS = ['.html', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.gif']
 const AI_CODING_ASSET_DIRS = ['images', 'screenshots', 'assets']
+const HTML_REF_RE = /\b(?:src|href)=["']([^"']+)["']/gi
 
 export const publishRules = [
   {
@@ -172,9 +173,69 @@ async function collectExpected({ distDir = DIST_DIR } = {}) {
   return expected
 }
 
+async function walkFiles(dir, files = []) {
+  for (const entry of await entries(dir)) {
+    const path = join(dir, entry.name)
+    if (entry.isDirectory()) await walkFiles(path, files)
+    else if (entry.isFile()) files.push(path)
+  }
+  return files
+}
+
+function isLocalRef(ref) {
+  return ref && !/^(?:[a-z][a-z0-9+.-]*:|#|\/)/i.test(ref)
+}
+
+function cleanRef(ref) {
+  return ref.split('#')[0].split('?')[0]
+}
+
+async function checkHtmlLocalRefs(rootDir, errors) {
+  const htmlFiles = (await walkFiles(resolve(rootDir))).filter((file) => file.endsWith('.html'))
+  for (const file of htmlFiles) {
+    const source = await readFile(file, 'utf8')
+    for (const match of source.matchAll(HTML_REF_RE)) {
+      const ref = cleanRef(match[1])
+      if (!isLocalRef(ref)) continue
+      if (!ref || ref.startsWith('javascript:')) continue
+
+      const target = join(dirname(file), ref)
+      if (!(await exists(target))) {
+        errors.push(`${relative(ROOT, file)} references missing local asset ${ref}`)
+      }
+    }
+  }
+}
+
+async function checkNoGeneratedSourceDir(path, message, errors) {
+  const fullPath = resolve(path)
+  if (!(await exists(fullPath))) return
+  const files = await walkFiles(fullPath)
+  if (files.length) errors.push(message)
+}
+
+async function checkSourceOwnership() {
+  const errors = []
+  await checkNoGeneratedSourceDir(
+    'public/share',
+    'public/share contains tracked publish output; move share sources to share/*.md or presentations/',
+    errors
+  )
+  await checkNoGeneratedSourceDir(
+    'consult',
+    'consult/ is not published; use public/consult/ as the canonical consult source',
+    errors
+  )
+  await checkHtmlLocalRefs('presentations', errors)
+  await checkHtmlLocalRefs('ai-coding', errors)
+  await checkHtmlLocalRefs('public/consult', errors)
+  return errors
+}
+
 async function checkStandalone({ distDir = DIST_DIR } = {}) {
   const expected = await collectExpected({ distDir })
   const missing = []
+  const sourceErrors = await checkSourceOwnership()
   for (const path of expected) {
     try {
       await stat(path)
@@ -183,7 +244,7 @@ async function checkStandalone({ distDir = DIST_DIR } = {}) {
       else throw error
     }
   }
-  return { expected, missing }
+  return { expected, missing, sourceErrors }
 }
 
 function parseArgs(argv) {
@@ -198,7 +259,10 @@ function parseArgs(argv) {
 
 function printList(label, paths) {
   console.log(`${label}: ${paths.length}`)
-  for (const path of paths) console.log(`  - ${relative(ROOT, path)}`)
+  for (const path of paths) {
+    const item = path.startsWith(ROOT) ? relative(ROOT, path) : path
+    console.log(`  - ${item}`)
+  }
 }
 
 async function main() {
@@ -211,10 +275,14 @@ async function main() {
   }
 
   if (command === 'check') {
-    const { expected, missing } = await checkStandalone({ distDir })
+    const { expected, missing, sourceErrors } = await checkStandalone({ distDir })
     printList('Expected standalone publish output', expected)
     if (missing.length) {
       printList('Missing standalone publish output', missing)
+      process.exitCode = 1
+    }
+    if (sourceErrors.length) {
+      printList('Standalone source ownership errors', sourceErrors)
       process.exitCode = 1
     }
     return
