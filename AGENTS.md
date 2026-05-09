@@ -2,6 +2,20 @@
 
 Repo-level instructions for coding agents.
 
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues for `MiaoDX/LIP` using the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the default Matt Pocock triage label vocabulary. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a single-context repo: use root `CONTEXT.md` and `docs/adr/` when present. See `docs/agents/domain.md`.
+
 ## Standalone HTML deployment
 
 Some pages are standalone HTML apps/decks and are copied into the built VitePress site by `.github/workflows/deploy.yml`. Do not edit `.vitepress/dist/` or any generated output directly.
