@@ -11,7 +11,9 @@
     "slides:build": "slidev build slides/slides.md --base /LIP/slides/slidev/ --out ../../.vitepress/dist/slides/slidev",
     "slides:export": "slidev export slides/slides.md",
     "marp:build": "node scripts/build-slides.mjs",
-    "build:all": "npm run docs:build && npm run marp:build && npm run slides:build"
+    "publish:copy": "node scripts/publish-rules.mjs copy",
+    "publish:check": "node scripts/publish-rules.mjs check",
+    "build:all": "npm run docs:build && npm run publish:copy && npm run marp:build && npm run slides:build && npm run publish:check"
   },
   "repository": {
     "type": "git",

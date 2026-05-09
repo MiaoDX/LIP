@@ -18,19 +18,19 @@ This is a single-context repo: use root `CONTEXT.md` and `docs/adr/` when presen
 
 ## Standalone HTML deployment
 
-Some pages are standalone HTML apps/decks and are copied into the built VitePress site by `.github/workflows/deploy.yml`. Do not edit `.vitepress/dist/` or any generated output directly.
+Some pages are standalone HTML apps/decks and are copied into the built VitePress site by `scripts/publish-rules.mjs`, which is called from `.github/workflows/deploy.yml`. Do not edit `.vitepress/dist/` or any generated output directly.
 
 ### Canonical source locations
 
 - General share decks live in `presentations/`.
   - Put `*.html` directly in `presentations/`.
   - Put small sibling assets directly in `presentations/`, or larger grouped assets in `presentations/<deck-assets>/`.
-  - The workflow publishes these to `/LIP/share/`.
+  - `npm run publish:copy` publishes these to `/LIP/share/`.
 
 - AI Coding project decks with research/source material live in `ai-coding/<slug>/`.
   - The canonical HTML entry is `ai-coding/<slug>/index.html`.
   - Local assets must live under `ai-coding/<slug>/images/`, `ai-coding/<slug>/screenshots/`, or `ai-coding/<slug>/assets/`.
-  - The workflow publishes these to `/LIP/ai-coding/<slug>/`.
+  - `npm run publish:copy` publishes these to `/LIP/ai-coding/<slug>/`.
 
 ### Path rules
 

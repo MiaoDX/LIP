@@ -29,44 +29,9 @@ jobs:
       - run: npm run docs:build
 
       # 2. Copy standalone HTML presentations + assets that VitePress does not transform.
-      # Canonical sources:
-      # - presentations/*.{html,png,jpg,jpeg,svg,webp,gif}
-      # - presentations/<asset-folder>/
-      # Published under /LIP/share/
-      - name: Copy standalone share presentations
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p .vitepress/dist/share
-          shopt -s nullglob
-          cp presentations/*.{html,png,jpg,jpeg,svg,webp,gif} .vitepress/dist/share/ 2>/dev/null || true
-          for dir in presentations/*/; do
-            cp -R "$dir" ".vitepress/dist/share/$(basename "$dir")"
-          done
-
-      # 2.5 Copy standalone AI Coding pages that live with their source material.
-      # Example: ai-coding/ultrathink-to-goal/index.html + images/
-      # Published under /LIP/ai-coding/<slug>/
-      - name: Copy standalone AI Coding pages
-        shell: bash
-        run: |
-          set -euo pipefail
-          shopt -s nullglob
-          for page in ai-coding/*/index.html; do
-            src_dir="$(dirname "$page")"
-            slug="$(basename "$src_dir")"
-            dest=".vitepress/dist/ai-coding/$slug"
-            mkdir -p "$dest"
-            cp "$page" "$dest/index.html"
-            for asset_dir in images screenshots assets; do
-              if [ -d "$src_dir/$asset_dir" ]; then
-                cp -R "$src_dir/$asset_dir" "$dest/"
-              fi
-            done
-          done
-
-      # 2.6 Copy consult/ → output
-      - run: mkdir -p .vitepress/dist/consult && cp public/consult/*.html .vitepress/dist/consult/ 2>/dev/null || true
+      # See scripts/publish-rules.mjs for canonical source and output mappings.
+      - run: npm run publish:copy
+      - run: npm run publish:check
 
       # 3. Build Marp slides → output to VitePress dist.
       # Scanner picks up every md file with `marp: true` in frontmatter

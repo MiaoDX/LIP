@@ -18,19 +18,19 @@ This is a single-context repo: use root `CONTEXT.md` and `docs/adr/` when presen
 
 ## Standalone HTML deployment
 
-GitHub Pages is built by `.github/workflows/deploy.yml`. VitePress handles Markdown, but standalone HTML decks are copied into `.vitepress/dist/` after `npm run docs:build`.
+GitHub Pages is built by `.github/workflows/deploy.yml`. VitePress handles Markdown, but standalone HTML decks are copied into `.vitepress/dist/` by `scripts/publish-rules.mjs` after `npm run docs:build`.
 
 ### Canonical source locations
 
-- `presentations/`: general standalone decks. The workflow copies direct files and asset folders into `/LIP/share/`.
-- `ai-coding/<slug>/index.html`: AI Coding project decks that live beside research/source material. The workflow copies `index.html` plus `images/`, `screenshots/`, and `assets/` into `/LIP/ai-coding/<slug>/`.
+- `presentations/`: general standalone decks. `npm run publish:copy` copies direct files and asset folders into `/LIP/share/`.
+- `ai-coding/<slug>/index.html`: AI Coding project decks that live beside research/source material. `npm run publish:copy` copies `index.html` plus `images/`, `screenshots/`, and `assets/` into `/LIP/ai-coding/<slug>/`.
 
 ### Path rules
 
 - Keep deck assets inside the deck's own source directory, usually `images/`.
 - Use relative paths from the HTML file, for example `images/slide-1.png`.
 - Do not depend on sibling folders or `raw.githubusercontent.com` for presentation images unless that dependency is intentional.
-- Never edit `.vitepress/dist/` directly; update the canonical source and the deploy copy rules instead.
+- Never edit `.vitepress/dist/` directly; update the canonical source and `scripts/publish-rules.mjs` instead.
 
 Current canonical source: `ai-coding/ultrathink-to-goal/index.html`, with assets in `ai-coding/ultrathink-to-goal/images/`.
 
