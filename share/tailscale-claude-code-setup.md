@@ -13,8 +13,7 @@ marp: true
 > **2026.05 更新**：
 > - 新增 AWS 部署方案（章节 **三 BIS**），现在主推 Tokyo 区域，比 Singapore 还要快 ~20ms 实测。GCP 章节保留。
 > - 服务端配置改成 **一组命令复制粘贴到底** 的形态，重复跑也安全，包含已知最佳的性能优化。
-> - 新增 **附录**（章节八）：六种隐形故障的排查方法。
-> - 删了"模式二 SOCKS5"那一节——它需要客户端也装 Tailscale 才能用，相比全局 exit node 模式没有实质优势，反而误导读者。
+> - 新增 **附录**（章节七）：进阶选项与几条值得记下的排错。
 
 ---
 
@@ -142,7 +141,7 @@ sudo tailscale up --advertise-exit-node
 
 最后一行执行后，终端会输出一个 URL，**在浏览器里打开、登录你的 Tailscale 账号完成认证**。
 
-> 💡 关于 GRO 那一段：Tailscale 1.54+ 内核会建议你打开 `rx-udp-gro-forwarding`，官方 benchmark 显示能让转发吞吐量从 1.3 Gb/s 提到 10.7 Gb/s（接近 10 倍）。t4g.small/e2-micro 当然达不到这种数字，但能把"实例本身的带宽上限"打满。一行命令就做了，没理由不开。原理细节见附录 8.1。
+> 💡 关于 GRO 那一段：Tailscale 1.54+ 内核会建议你打开 `rx-udp-gro-forwarding`，官方 benchmark 显示能让转发吞吐量从 1.3 Gb/s 提到 10.7 Gb/s（接近 10 倍）。t4g.small/e2-micro 当然达不到这种数字，但能把"实例本身的带宽上限"打满。一行命令就做了，没理由不开。原理细节见附录 7.1。
 
 #### 3. 在 Admin Console 里批准 exit node
 
@@ -299,12 +298,6 @@ pong from aws-tk-arm via 54.95.50.5:41641 in 64ms
 
 稳定 ~65ms，比 Singapore 快约 20ms。
 
-### 关于 Security Group：要不要单开 UDP 41641？
-
-**不需要主动开**。AWS 的 Security Group 是 stateful 的，Tailscale 的 NAT traversal 通过同时双向打洞建立连接，AWS 的状态表会自动放行后续流量。我的 AWS 实例 inbound 没开任何 UDP 41641 的规则，从中国客户端 `tailscale ping` 仍然能直连。
-
-> 📌 顺带说下 SG idle timeout：AWS 文档说默认 TCP 已建立连接超时 **5 天**、UDP stream 超时 **180 秒**。Tailscale 的 keepalive 时间远小于这两个值，所以正常使用根本不会触发。如果你看到"挂机几分钟就断"，那是客户端家里路由器的 NAT 表超时，不是 AWS 的问题。
-
 ### 关于 `tailscale ping` 输出里的 DERP — 长期容易被误读的一点
 
 `tailscale ping` 偶尔会先输出几行 `via DERP(xxx)` 然后才看到 `via <IP>:41641`。**这是 Tailscale 的设计行为**，但**不影响你实际跑 Claude Code 的体验**。
@@ -404,26 +397,6 @@ sudo tailscale up --exit-node=<VPS_IP> --exit-node-allow-lan-access=true
 
 ## 六、常见问题
 
-**Q: 速度怎么样？**
-
-实测延迟：AWS Tokyo ~65ms，Singapore ~85ms（中国移动接入）。跑 Claude Code 完全没问题 —— API 调用本身就不是实时音视频，这个延迟感知不明显。
-
-**Q: GCP 还是 AWS，到底选哪个？**
-
-如果你已经有任一家的账号，就用那家——配置都不复杂，没必要折腾。如果都没有，2026 年内强烈建议 AWS：t4g.small 免费到 12 月底，每月 100GB egress 免费，可以放心当全局通道用。延迟和稳定性两边几乎没差别。
-
-**Q: Tokyo 还是 Singapore？**
-
-实测 Tokyo 稳定快 20ms 左右（中国移动接入）。如果你的目标 API（Anthropic / OpenAI）在美国西岸，Tokyo 到 us-west 的国际线路也通常更短。优先 Tokyo。Singapore 适合做备用。
-
-**Q: AWS Lightsail 也可以吗？**
-
-可以，而且更便宜更省事。Lightsail $3.50-$5/月套餐已经包含 IPv4 + 1-2 TB 流量，不用单独算 EIP 费用。代价是没有 EIP 概念（IP 跟实例绑死）、控制台是单独一套、不能用 EC2 的 Reserved Instance 优惠。如果你只是要一个长期 exit node、且 t4g.small 免费期结束后想低成本继续用，Lightsail 是更省心的选择。EC2 + EIP 的组合更适合"已经在 AWS 生态里"的人。
-
-**Q: AWS 的 SSH 安全组开 from anywhere 不危险吗？**
-
-只要不创建 key pair（创建实例时选 "Proceed without a key pair"），SSH 服务实际上没有任何认证路径可用：默认 password auth 关闭、没有公钥配置、Ubuntu 24.04 默认开启 unattended-upgrades 自动打 OpenSSH 安全补丁。攻击者扫到 22 端口看到的就是 `Permission denied (publickey)`，无法登录。需要进 shell 时用 EC2 Instance Connect（浏览器 SSH，AWS 控制台直接连）。
-
 **Q: 我在公司内网上班，开了 Tailscale 之后内网服务（Jira/GitLab）连不上怎么办？**
 
 最简单的办法：**只在需要时打开 exit node**，平时关掉。Mac 和手机的 Tailscale 客户端 UI 都支持一键切换 exit node 开关。如果你需要让特定 app（比如终端里的 Claude Code）走通道、其他不走，Android 上有原生 per-app VPN 设置，Mac 可以在终端用 `HTTPS_PROXY` 环境变量配合本地代理。
@@ -435,15 +408,11 @@ sudo tailscale up --exit-node=<VPS_IP> --exit-node-allow-lan-access=true
 Tailscale 默认 node key **180 天**过期（老文章说 90 天，已经更新了），到期后 exit node 会从 tailnet 上掉下来——更糟糕的是 Tailscale 是 "fail close" 模式：客户端仍然认为该 exit node 在用，结果是"突然外网全断"。两种解决方法：
 
 - **(推荐) admin console → Machines → 你的 VPS → 菜单 → Disable key expiry**——前面流程里第 5 步顺手做了的话就不用担心。
-- 或者**给设备打 tag**（比如 `tag:exit-sg`）——带 tag 的设备**默认不会过期**。这是生产环境的正确做法（详见附录 8.2）。
+- 或者**给设备打 tag**（比如 `tag:exit-sg`）——带 tag 的设备**默认不会过期**。这是生产环境的正确做法（详见附录 7.2）。
 
 **Q: 长时间不发 API 请求，下次会不会要重新建立连接？**
 
 不会。Tailscale 在后台会一直用 keepalive 维护直连：WireGuard 每 25 秒一个 keepalive 包，magicsock 活跃 peer 之间每 2 秒一次心跳。你写代码 10 分钟、跑个长脚本、出去吃午饭，路径都一直是热的。详见三 BIS 末尾的"DERP 行为说明"。
-
-**Q: Tailscale 免费版够用吗？**
-
-够。Personal 计划免费，100 台设备、3 个用户。个人开发者用不完。
 
 **Q: 安全吗？**
 
@@ -451,75 +420,29 @@ Tailscale 用的是 WireGuard 加密，端到端加密，Tailscale 服务器本�
 
 ---
 
-## 七、配置清单 Checklist
-
-### GCP 路线
-
-```
-□ GCP 账号注册 + 绑定支付方式
-□ 创建 e2-micro VM（Tokyo / Singapore / 或美国免费区，根盘 12GB）
-□ SSH 进去后复制粘贴章节三的"一键服务端配置"命令
-□ 浏览器打开 Tailscale 输出的 URL 完成认证
-□ Admin Console 批准 exit node + Disable key expiry
-□ 本地设备安装 Tailscale + 登录
-□ 客户端选 exit node：tailscale up --exit-node=... --exit-node-allow-lan-access=true
-□ 验证：curl ifconfig.me 显示 VPS IP，curl https://api.anthropic.com 能通
-```
-
-### AWS 路线
-
-```
-□ AWS 账号注册 + 绑定支付方式
-□ 创建 EC2 t4g.small（ap-northeast-1 Tokyo 或 ap-southeast-1 Singapore，
-  Ubuntu 24.04 ARM64，根盘 12GB）
-  ★ Key pair: "Proceed without a key pair"
-  ★ 默认安全组即可
-□ ★ 关闭 Source/Destination Check（Actions → Networking）
-□ ★ 分配并绑定 Elastic IP
-□ EC2 Instance Connect 登录实例
-□ 复制粘贴章节三 BIS 的"一键服务端配置"命令
-□ 浏览器打开 Tailscale 输出的 URL 完成认证
-□ Admin Console 批准 exit node + Disable key expiry
-□ 本地设备安装 Tailscale + 登录
-□ 客户端选 exit node
-□ 验证：tailscale ping <aws-host> 显示直连，curl ifconfig.me 显示 EIP
-□（可选）CloudWatch billing alarm 设 $20/月
-```
-
-★ 标记的是 AWS 独有步骤，GCP 路线没有这些。
-
----
-
-## 八、附录：进阶选项 & 排错指南
+## 七、附录：进阶选项 & 排错指南
 
 > 主流程到这里就结束了。下面这些是给"想搞清楚为什么"或"出了奇怪问题"的玩家准备的，按需查阅。
 
-### 8.1 为什么主流程里的那条 ethtool 命令是必要的
+### 7.1 为什么主流程里的那条 ethtool 命令是必要的
 
-主流程第 3 步那条：
+主流程里那条：
 
 ```bash
 sudo ethtool -K "$NETDEV" rx-udp-gro-forwarding on rx-gro-list off
 ```
 
-不做的话，`tailscale up` 会在每次启动时印一行：
+不做的话，`tailscale up` 每次启动会印一行 GRO warning。这是真实可观测的性能损失：Tailscale 自家 benchmark 显示打开 UDP GRO forwarding 后，转发吞吐量从 1.3 Gb/s 提升到 10.7 Gb/s（接近 10 倍）。t4g.small/e2-micro 当然达不到这种数字，但能"打满"实例本身的网络上限。
 
-```
-Warning: UDP GRO forwarding is suboptimally configured on ens5,
-UDP forwarding throughput capability will increase with a configuration change.
-```
+`networkd-dispatcher` 那段脚本是为了让重启后自动恢复（hook 在网卡 routable 时自动触发，Ubuntu 24.04 默认装了 networkd-dispatcher）。
 
-**这是真实可观测的性能损失**：Tailscale 自己的 benchmark 显示打开 UDP GRO forwarding 后，转发吞吐量从 1.3 Gb/s 提升到 10.7 Gb/s（接近 10 倍）。t4g.small/e2-micro 当然达不到这种数字，但能"打满"实例本身的网络上限。
+> ⚠️ 注意 `rx-gro-list` 必须设为 **off**——它会和 GRO forwarding 冲突，开错了反而拖慢。
 
-`networkd-dispatcher` 的脚本是为了让重启后自动恢复（这个 hook 在网卡 routable 时自动触发，Ubuntu 24.04 默认装了 networkd-dispatcher）。
-
-> ⚠️ 注意 `rx-gro-list` 必须设为 **off**——它会和 GRO forwarding 冲突，开错了反而拖慢。Tailscale 文档里也是这么写的。
-
-### 8.2 进阶：用 tag + autoApprovers 替代手动批准
+### 7.2 进阶：用 tag + autoApprovers 替代手动批准
 
 每次重装 VPS 都要去 admin console 手动点"Use as exit node"和"Disable key expiry"很烦。Tailscale 的标准做法是用 **tag + autoApprovers**：
 
-在 admin console → Access controls 里的 ACL 里加：
+admin console → Access controls 里加：
 
 ```jsonc
 {
@@ -535,7 +458,7 @@ UDP forwarding throughput capability will increase with a configuration change.
 }
 ```
 
-然后在 admin console 生成一个 auth key（带 `tag:exit-sg`），VPS 上：
+然后 admin console 生成一个带 `tag:exit-sg` 的 auth key，VPS 上：
 
 ```bash
 sudo tailscale up --advertise-exit-node \
@@ -543,46 +466,13 @@ sudo tailscale up --advertise-exit-node \
   --auth-key=tskey-auth-xxxxx
 ```
 
-这样：
-- exit node 自动批准，不用手动点
-- 带 tag 的设备**默认不会过期**，不用担心 180 天后掉线
-- 如果将来想限制只有部分设备能用这个 exit node，改 ACL 即可
+这样 exit node 自动批准、key 默认不过期。如果将来想限制只有部分设备能用这个 exit node，改 ACL 即可。
 
-### 8.3 排错：六种常见的"隐形"故障
+### 7.3 `tailscale ping` 切换 peer 时看到 DERP
 
-#### ① 部分网站打不开（SSH banner 长、HTTPS 卡住）
+**正常**，**不影响实际使用**。详见三 BIS 末尾的解释。简单说：Tailscale 会把不活跃的 peer 降级，`tailscale ping` 一个最近没用过的 peer 会触发重新激活，前几个包走 DERP 是预期的。但你**实际通过 exit node 跑 API** 时，每次请求都让该 peer 保持活跃，根本不会经历这个过程。
 
-→ 几乎一定是 **MTU/PMTU 问题**。诊断：
-
-```bash
-ping -M do -s 1252 google.com    # 不分片，1252 字节
-```
-
-如果 1252 失败但 1100 成功，说明路径上某处 MTU 比预期小。Tailscale 默认 MTU 是 1280（IPv6 最小值），通常没事；如果你手动调过（用过 `TS_DEBUG_MTU` 这种环境变量），把它撤掉。
-
-#### ② 用了几个月之后突然外网全断
-
-→ 八成是 **node key 过期**（默认 180 天）。Tailscale 是 "fail close"：客户端不会自动 fallback，会卡住。解决：admin console 给该设备 disable key expiry 或者打 tag（见 8.2）。
-
-#### ③ `tailscale ping` 切换 peer 时看到 DERP
-
-→ **正常**，**不影响实际使用**。详见三 BIS 章节末尾的解释。简单说：Tailscale 会把不活跃的 peer 降级，`tailscale ping` 一个最近没用过的 peer 会触发重新激活，前几个包走 DERP 是预期的。但你**实际通过 exit node 跑 API** 时，每次请求都让该 peer 保持活跃，根本不会经历这个过程。
-
-#### ④ 真的几分钟空闲后就掉线（不是 ③ 的"看 DERP"，是连不通）
-
-→ 一般**不是** AWS Security Group 超时（SG 默认 TCP 5 天、UDP 180 秒，Tailscale keepalive 频率远高于此）。常见元凶：
-- 客户端家用路由器/CGNAT 的 NAT 表用了非常激进的 UDP 超时（< 25 秒）
-- 客户端断网过、Tailscale 没探测到链路恢复
-
-排查：`tailscale netcheck` 看 NAT 类型；`tailscale up` 一次手动重连试试。
-
-#### ⑤ DNS 解析行为奇怪（公司内网域名解析不到 / MagicDNS 不工作）
-
-→ 大概率是 `--accept-dns` 的 flag 设错了。规则：
-- **客户端不需要 MagicDNS / 想自己控 DNS** → `--accept-dns=false` 在客户端
-- **服务端（exit node 那台 VPS）永远不要设 `--accept-dns=false`**——它会改变所有走该 exit node 的客户端的 DNS 行为
-
-#### ⑥ tailscaled 看起来挂了 / 想看日志
+### 7.4 排错命令速查
 
 ```bash
 systemctl status tailscaled --no-pager
