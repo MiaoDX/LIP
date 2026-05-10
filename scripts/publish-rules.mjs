@@ -97,34 +97,34 @@ function outputPath(distDir, outPath) {
   return join(ROOT, distDir, outPath)
 }
 
-async function copyFileToDist(src, dest) {
+async function copyFileToDist(target) {
+  const { src, dest } = target
   await mkdir(dirname(dest), { recursive: true })
   await cp(src, dest, { force: true })
 }
 
-async function copyDirToDist(src, dest) {
+async function copyDirToDist(target) {
+  const { src, dest } = target
   await mkdir(dirname(dest), { recursive: true })
   await cp(src, dest, { recursive: true, force: true })
 }
 
-async function copyFlatFiles(rule, distDir, copied) {
+async function collectFlatTargets(rule, distDir) {
+  const targets = []
   const sourceDir = resolve(rule.sourceDir)
   const outDir = outputPath(distDir, rule.outDir)
-  await mkdir(outDir, { recursive: true })
 
   for (const entry of await entries(sourceDir)) {
     const src = join(sourceDir, entry.name)
     if (entry.isFile() && rule.fileExtensions.includes(extname(entry.name).toLowerCase())) {
-      const dest = join(outDir, entry.name)
-      await copyFileToDist(src, dest)
-      copied.push(dest)
+      targets.push({ kind: 'file', src, dest: join(outDir, entry.name) })
     }
     if (entry.isDirectory() && rule.copyChildDirs) {
-      const dest = join(outDir, entry.name)
-      await copyDirToDist(src, dest)
-      copied.push(dest)
+      targets.push({ kind: 'dir', src, dest: join(outDir, entry.name) })
     }
   }
+
+  return targets
 }
 
 function pageOutputDirs(rule, slug, distDir) {
@@ -132,7 +132,8 @@ function pageOutputDirs(rule, slug, distDir) {
   return outDirs.map((outDir) => outputPath(distDir, outDir))
 }
 
-async function copyAiCodingPages(rule, distDir, copied) {
+async function collectAiCodingTargets(rule, distDir) {
+  const targets = []
   const sourceDir = resolve(rule.sourceDir)
   for (const entry of await entries(sourceDir)) {
     if (!entry.isDirectory()) continue
@@ -142,66 +143,42 @@ async function copyAiCodingPages(rule, distDir, copied) {
     if (!(await exists(page))) continue
 
     for (const destDir of pageOutputDirs(rule, entry.name, distDir)) {
-      await copyFileToDist(page, join(destDir, rule.entryFile))
-      copied.push(join(destDir, rule.entryFile))
+      targets.push({ kind: 'file', src: page, dest: join(destDir, rule.entryFile) })
 
       for (const assetDir of rule.assetDirs) {
         const srcAssetDir = join(srcDir, assetDir)
         if (!(await exists(srcAssetDir))) continue
-        const destAssetDir = join(destDir, assetDir)
-        await copyDirToDist(srcAssetDir, destAssetDir)
-        copied.push(destAssetDir)
+        targets.push({ kind: 'dir', src: srcAssetDir, dest: join(destDir, assetDir) })
       }
     }
   }
+  return targets
+}
+
+export async function collectPublishTargets({ distDir = DIST_DIR } = {}) {
+  const targets = []
+  for (const rule of publishRules) {
+    if (rule.entryFile) {
+      targets.push(...await collectAiCodingTargets(rule, distDir))
+    } else {
+      targets.push(...await collectFlatTargets(rule, distDir))
+    }
+  }
+  return targets
 }
 
 export async function copyStandalone({ distDir = DIST_DIR } = {}) {
   const copied = []
-  for (const rule of publishRules) {
-    if (rule.entryFile) {
-      await copyAiCodingPages(rule, distDir, copied)
-    } else {
-      await copyFlatFiles(rule, distDir, copied)
-    }
+  for (const target of await collectPublishTargets({ distDir })) {
+    if (target.kind === 'dir') await copyDirToDist(target)
+    else await copyFileToDist(target)
+    copied.push(target.dest)
   }
   return copied
 }
 
 export async function collectExpected({ distDir = DIST_DIR } = {}) {
-  const expected = []
-  for (const rule of publishRules) {
-    if (rule.entryFile) {
-      const sourceDir = resolve(rule.sourceDir)
-      for (const entry of await entries(sourceDir)) {
-        if (!entry.isDirectory()) continue
-
-        const srcDir = join(sourceDir, entry.name)
-        const page = join(srcDir, rule.entryFile)
-        if (!(await exists(page))) continue
-
-        for (const destDir of pageOutputDirs(rule, entry.name, distDir)) {
-          expected.push(join(destDir, rule.entryFile))
-
-          for (const assetDir of rule.assetDirs) {
-            const srcAssetDir = join(srcDir, assetDir)
-            if (await exists(srcAssetDir)) expected.push(join(destDir, assetDir))
-          }
-        }
-      }
-    } else {
-      const sourceDir = resolve(rule.sourceDir)
-      for (const entry of await entries(sourceDir)) {
-        if (entry.isFile() && rule.fileExtensions.includes(extname(entry.name).toLowerCase())) {
-          expected.push(outputPath(distDir, join(rule.outDir, entry.name)))
-        }
-        if (entry.isDirectory() && rule.copyChildDirs) {
-          expected.push(outputPath(distDir, join(rule.outDir, entry.name)))
-        }
-      }
-    }
-  }
-  return expected
+  return (await collectPublishTargets({ distDir })).map((target) => target.dest)
 }
 
 async function walkFiles(dir, files = []) {
