@@ -11,7 +11,7 @@ import { constants } from 'node:fs'
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { basename, join, relative } from 'node:path'
-import { checkSourceOwnership, checkStandalone } from './publish-rules.mjs'
+import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
 
 const execFileAsync = promisify(execFile)
 const ROOT = process.cwd()
@@ -90,20 +90,16 @@ async function trackedGeneratedOutputs() {
   return stdout
     .split('\n')
     .filter(Boolean)
-    .filter((path) => (
-      path.startsWith('public/share/')
-      || path.startsWith('consult/')
-      || (path.startsWith('share/') && path.endsWith('.html'))
-    ))
+    .filter(isGeneratedSourcePath)
 }
 
-async function publishOutputGate() {
+async function publishOutputGate(sourceErrors) {
   if (!(await exists(DIST_DIR))) {
     return { status: 'SKIP', detail: '.vitepress/dist does not exist; run npm run docs:build && npm run publish:copy to verify generated output' }
   }
 
-  const { missing, sourceErrors } = await checkStandalone()
-  const problems = [...missing.map((path) => `missing ${relative(ROOT, path)}`), ...sourceErrors]
+  const { missing, sourceErrors: standaloneSourceErrors } = await checkStandalone({ sourceErrors })
+  const problems = [...missing.map((path) => `missing ${relative(ROOT, path)}`), ...standaloneSourceErrors]
   if (problems.length) return { status: 'FAIL', detail: problems.join('; ') }
   return { status: 'PASS', detail: 'standalone publish outputs match canonical sources' }
 }
@@ -127,7 +123,7 @@ async function main() {
 
   const sourceErrors = await checkSourceOwnership()
   const generatedOutputs = await trackedGeneratedOutputs()
-  const publishGate = await publishOutputGate()
+  const publishGate = await publishOutputGate(sourceErrors)
 
   const gates = [
     {

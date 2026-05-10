@@ -18,6 +18,27 @@ const SHARE_EXTENSIONS = ['.html', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.g
 const AI_CODING_ASSET_DIRS = ['images', 'screenshots', 'assets']
 const HTML_REF_RE = /\b(?:src|href)=["']([^"']+)["']/gi
 
+export const sourceOwnershipRules = {
+  generatedSourceDirs: [
+    {
+      path: 'public/share',
+      message: 'public/share contains tracked publish output; move share sources to share/*.md or presentations/',
+    },
+    {
+      path: 'consult',
+      message: 'consult/ is not published; use public/consult/ as the canonical consult source',
+    },
+  ],
+  generatedSourceFiles: [
+    {
+      dir: 'share',
+      fileExtensions: ['.html'],
+      message: 'share/*.html is generated publish output; move HTML sources to presentations/ or ai-coding/<slug>/index.html',
+    },
+  ],
+  htmlReferenceRoots: ['presentations', 'ai-coding', 'public/consult'],
+}
+
 export const publishRules = [
   {
     name: 'share presentations',
@@ -224,28 +245,48 @@ async function checkNoGeneratedSourceDir(path, message, errors) {
   if (files.length) errors.push(message)
 }
 
+async function checkNoGeneratedSourceFiles(rule, errors) {
+  const fullDir = resolve(rule.dir)
+  for (const entry of await entries(fullDir)) {
+    if (!entry.isFile()) continue
+    if (!rule.fileExtensions.includes(extname(entry.name).toLowerCase())) continue
+    errors.push(`${rule.dir}/${entry.name}: ${rule.message}`)
+  }
+}
+
+export function isGeneratedSourcePath(path) {
+  for (const rule of sourceOwnershipRules.generatedSourceDirs) {
+    if (path.startsWith(`${rule.path}/`)) return true
+  }
+
+  for (const rule of sourceOwnershipRules.generatedSourceFiles) {
+    if (!path.startsWith(`${rule.dir}/`)) continue
+    const childPath = path.slice(rule.dir.length + 1)
+    if (childPath.includes('/')) continue
+    if (rule.fileExtensions.includes(extname(childPath).toLowerCase())) return true
+  }
+
+  return false
+}
+
 export async function checkSourceOwnership() {
   const errors = []
-  await checkNoGeneratedSourceDir(
-    'public/share',
-    'public/share contains tracked publish output; move share sources to share/*.md or presentations/',
-    errors
-  )
-  await checkNoGeneratedSourceDir(
-    'consult',
-    'consult/ is not published; use public/consult/ as the canonical consult source',
-    errors
-  )
-  await checkHtmlLocalRefs('presentations', errors)
-  await checkHtmlLocalRefs('ai-coding', errors)
-  await checkHtmlLocalRefs('public/consult', errors)
+  for (const rule of sourceOwnershipRules.generatedSourceDirs) {
+    await checkNoGeneratedSourceDir(rule.path, rule.message, errors)
+  }
+  for (const rule of sourceOwnershipRules.generatedSourceFiles) {
+    await checkNoGeneratedSourceFiles(rule, errors)
+  }
+  for (const rootDir of sourceOwnershipRules.htmlReferenceRoots) {
+    await checkHtmlLocalRefs(rootDir, errors)
+  }
   return errors
 }
 
-export async function checkStandalone({ distDir = DIST_DIR } = {}) {
+export async function checkStandalone({ distDir = DIST_DIR, sourceErrors } = {}) {
   const expected = await collectExpected({ distDir })
   const missing = []
-  const sourceErrors = await checkSourceOwnership()
+  const ownershipErrors = sourceErrors ?? await checkSourceOwnership()
   for (const path of expected) {
     try {
       await stat(path)
@@ -254,7 +295,7 @@ export async function checkStandalone({ distDir = DIST_DIR } = {}) {
       else throw error
     }
   }
-  return { expected, missing, sourceErrors }
+  return { expected, missing, sourceErrors: ownershipErrors }
 }
 
 function parseArgs(argv) {

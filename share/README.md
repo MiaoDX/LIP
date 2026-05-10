@@ -52,7 +52,7 @@ presentations/
 ### Markdown 文章
 ```
 □ 创建 share/你的文章.md
-□ 在 .vitepress/config.mts 的 sidebar 中添加入口
+□ 在 site-map.mjs 的 sidebar 中添加入口
 □ Push 到 main → VitePress 自动构建
 □ 访问: https://miaodx.com/LIP/share/你的文章
 ```
@@ -62,7 +62,7 @@ presentations/
 □ 创建 presentations/你的演讲.html
 □ 配套图片放在 presentations/ 目录，或 presentations/你的演讲-assets/
 □ HTML 中用相对路径引用图片（src="image.png" 或 src="你的演讲-assets/image.png"）
-□ 如果需要 sidebar 入口，在 .vitepress/config.mts 中添加
+□ 如果需要 sidebar 入口，在 site-map.mjs 中添加
 □ Push 到 main → GitHub Actions 运行 npm run publish:copy 自动复制到 dist
 □ 访问: https://miaodx.com/LIP/share/你的演讲.html
 ```
