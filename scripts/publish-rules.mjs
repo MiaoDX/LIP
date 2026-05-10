@@ -7,12 +7,13 @@
  * verification pointed at this file instead of duplicating shell snippets.
  */
 
-import { access, cp, mkdir, readFile, readdir, stat } from 'node:fs/promises'
+import { access, cp, mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises'
 import { constants } from 'node:fs'
-import { dirname, extname, join, relative } from 'node:path'
+import { dirname, extname, isAbsolute, join, relative } from 'node:path'
 
 const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
+const PUBLISH_MANIFEST = '.standalone-publish-manifest.json'
 
 const SHARE_EXTENSIONS = ['.html', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.gif']
 const AI_CODING_ASSET_DIRS = ['images', 'screenshots', 'assets']
@@ -108,6 +109,7 @@ async function copyFileToDist(target) {
 
 async function copyDirToDist(target) {
   const { src, dest } = target
+  await rm(dest, { recursive: true, force: true })
   await mkdir(dirname(dest), { recursive: true })
   await cp(src, dest, { recursive: true, force: true })
 }
@@ -170,13 +172,85 @@ export async function collectPublishTargets({ distDir = DIST_DIR } = {}) {
   return targets
 }
 
+async function targetDestFiles(target) {
+  if (target.kind === 'file') return [target.dest]
+  const files = await walkRelativeFiles(target.src)
+  return files.map((file) => join(target.dest, file))
+}
+
+async function collectPublishFiles(targets) {
+  const files = []
+  for (const target of targets) files.push(...await targetDestFiles(target))
+  return files
+}
+
+function distRoot(distDir) {
+  return join(ROOT, distDir)
+}
+
+function manifestPath(distDir) {
+  return join(distRoot(distDir), PUBLISH_MANIFEST)
+}
+
+function toManifestPath(distDir, file) {
+  return relative(distRoot(distDir), file)
+}
+
+function fromManifestPath(distDir, file) {
+  const root = distRoot(distDir)
+  const fullPath = join(root, file)
+  const normalized = relative(root, fullPath)
+  if (!file || isAbsolute(normalized) || normalized.startsWith('..')) {
+    throw new Error(`Invalid standalone publish manifest path: ${file}`)
+  }
+  return fullPath
+}
+
+async function readPublishManifest(distDir) {
+  try {
+    const source = await readFile(manifestPath(distDir), 'utf8')
+    const parsed = JSON.parse(source)
+    if (!Array.isArray(parsed.files)) {
+      throw new Error('Standalone publish manifest is missing files[]')
+    }
+    return parsed.files
+  } catch (error) {
+    if (error.code === 'ENOENT') return []
+    throw error
+  }
+}
+
+async function writePublishManifest(distDir, files) {
+  const uniqueFiles = [...new Set(files)].sort()
+  const manifest = {
+    version: 1,
+    files: uniqueFiles,
+  }
+  await mkdir(distRoot(distDir), { recursive: true })
+  await writeFile(manifestPath(distDir), `${JSON.stringify(manifest, null, 2)}\n`)
+}
+
+async function removeOldPublishFiles(distDir, nextFiles) {
+  const next = new Set(nextFiles)
+  const previous = await readPublishManifest(distDir)
+  for (const file of previous) {
+    if (next.has(file)) continue
+    await rm(fromManifestPath(distDir, file), { force: true })
+  }
+}
+
 export async function copyStandalone({ distDir = DIST_DIR } = {}) {
   const copied = []
-  for (const target of await collectPublishTargets({ distDir })) {
+  const targets = await collectPublishTargets({ distDir })
+  const publishFiles = (await collectPublishFiles(targets)).map((file) => toManifestPath(distDir, file))
+  await removeOldPublishFiles(distDir, publishFiles)
+
+  for (const target of targets) {
     if (target.kind === 'dir') await copyDirToDist(target)
     else await copyFileToDist(target)
     copied.push(target.dest)
   }
+  await writePublishManifest(distDir, publishFiles)
   return copied
 }
 
@@ -354,11 +428,19 @@ async function checkDirTarget(target, problems) {
 export async function checkStandalone({ distDir = DIST_DIR, sourceErrors } = {}) {
   const targets = await collectPublishTargets({ distDir })
   const expected = targets.map((target) => target.dest)
+  const expectedFiles = new Set((await collectPublishFiles(targets)).map((file) => toManifestPath(distDir, file)))
   const problems = { missing: [], stale: [] }
   const ownershipErrors = sourceErrors ?? await checkSourceOwnership()
   for (const target of targets) {
     if (target.kind === 'dir') await checkDirTarget(target, problems)
     else await checkFileTarget(target, problems)
+  }
+  for (const file of await readPublishManifest(distDir)) {
+    if (expectedFiles.has(file)) continue
+    const stalePath = fromManifestPath(distDir, file)
+    if (await exists(stalePath)) {
+      problems.stale.push(`${relative(ROOT, stalePath)} is no longer published from a standalone source`)
+    }
   }
   return { expected, missing: problems.missing, stale: problems.stale, sourceErrors: ownershipErrors }
 }

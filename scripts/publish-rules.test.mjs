@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict'
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { access, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -9,6 +9,15 @@ import { pathToFileURL } from 'node:url'
 const originalRoot = process.cwd()
 const tempRoot = await mkdtemp(join(tmpdir(), 'lip-publish-rules-'))
 const moduleUrl = `${pathToFileURL(join(originalRoot, 'scripts', 'publish-rules.mjs')).href}?test=${Date.now()}`
+
+async function exists(path) {
+  try {
+    await access(path)
+    return true
+  } catch {
+    return false
+  }
+}
 
 try {
   process.chdir(tempRoot)
@@ -62,6 +71,24 @@ try {
     check.stale.some((error) => error.includes('dist/share/assets/orphan.png is not in presentations/assets')),
     'standalone check should detect orphaned copied assets'
   )
+
+  await publishRules.copyStandalone({ distDir: 'dist' })
+  check = await publishRules.checkStandalone({ distDir: 'dist' })
+  assert.deepEqual(check.stale, [], 'standalone copy should remove orphaned copied assets')
+
+  await writeFile('dist/share/index.html', 'vitepress-generated neighbor')
+  await rm('presentations/demo.html')
+  check = await publishRules.checkStandalone({ distDir: 'dist' })
+  assert(
+    check.stale.some((error) => error.includes('dist/share/demo.html is no longer published from a standalone source')),
+    'standalone check should detect removed source files from the copy manifest'
+  )
+
+  await publishRules.copyStandalone({ distDir: 'dist' })
+  assert.equal(await exists('dist/share/demo.html'), false, 'standalone copy should remove files no longer in source')
+  assert.equal(await exists('dist/share/index.html'), true, 'standalone copy should not remove non-standalone neighbors')
+  check = await publishRules.checkStandalone({ distDir: 'dist' })
+  assert.deepEqual(check.stale, [])
 } finally {
   process.chdir(originalRoot)
   await rm(tempRoot, { recursive: true, force: true })
