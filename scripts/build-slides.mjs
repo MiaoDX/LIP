@@ -48,6 +48,26 @@ function slugOf(file) {
   return basename(file, extname(file))
 }
 
+function assertUniqueSlugs(files) {
+  const filesBySlug = new Map()
+  for (const file of files) {
+    const slug = slugOf(file)
+    const group = filesBySlug.get(slug) || []
+    group.push(file)
+    filesBySlug.set(slug, group)
+  }
+
+  const duplicates = [...filesBySlug.entries()].filter(([, files]) => files.length > 1)
+  if (!duplicates.length) return
+
+  const lines = ['Marp output slug collision detected:']
+  for (const [slug, files] of duplicates) {
+    lines.push(`- ${slug}.html`)
+    for (const file of files) lines.push(`  - ${relative(ROOT, file)}`)
+  }
+  throw new Error(lines.join('\n'))
+}
+
 function run(cmd, args) {
   return new Promise((resolve, reject) => {
     const p = spawn(cmd, args, {
@@ -76,6 +96,7 @@ async function main() {
     console.log('No files with `marp: true` found. Nothing to build.')
     return
   }
+  assertUniqueSlugs(marpFiles)
 
   const outs = BUILD_PDF ? '{html,pdf}' : 'html'
   console.log(

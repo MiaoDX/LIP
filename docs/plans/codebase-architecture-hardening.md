@@ -21,7 +21,7 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 
 1. `publish:check` only verifies that standalone publish targets exist. It can pass when copied files or asset directories are stale.
 2. The local asset checker only reads `src` and `href`, so local references in `srcset`, CSS `url(...)`, or `@import` can miss the quality gate.
-3. `slides:build` writes Slidev output to `../.vitepress/dist`, outside the repo root when run from this package.
+3. `slides:build` encodes a relative Slidev output path whose meaning depends on whether Slidev resolves from the deck root or package root.
 4. Marp slide output uses only the markdown basename as the slug, so two decks with the same basename would silently overwrite each other.
 
 ## Acceptance Criteria
@@ -38,3 +38,8 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 - Commit each coherent slice.
 - Avoid touching unrelated content edits in `ai-coding/ultrathink-to-goal/` except generated publish output.
 - Repeat the architecture audit after the first fixes and continue only if another big issue remains.
+
+## Pass Log
+
+- Pass 1: deepened standalone publish verification and added regression coverage.
+- Pass 2: moved Slidev output handling into a build module with an absolute output path, and added Marp slug collision protection.
