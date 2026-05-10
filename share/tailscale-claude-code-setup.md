@@ -488,14 +488,17 @@ sudo tailscale ping <peer>         # 看到具体 peer 的实际路径
 
 ### 7.5 想自己测一下哪个 exit node 更快？
 
-下面这个脚本测两件事：**TTFB**（首字节时间，对 API 调用最关键）+ **下载带宽**（用 Cloudflare 10MB 端点）。一次跑一个 exit node：
+下面这个脚本对每个目标 URL 跑 **10 次 TTFB**（首字节时间），对带宽跑 **3 次 10MB 下载**，然后给 min / median / max。多次取 median 才能滤掉单次 DNS 抖动、TLS 握手抖动这种噪声：
 
 ```bash
 #!/bin/bash
 # bench-exit-node.sh <exit-node-hostname>
 # Example: ./bench-exit-node.sh aws-tk-arm
+# 单节点跑下来 ~25 秒，三个节点连跑 ~75 秒。
 
 NODE=${1:?"Usage: $0 <exit-node-hostname>"}
+TTFB_RUNS=10
+BW_RUNS=3
 
 echo "=== Switching to $NODE ==="
 sudo tailscale up --exit-node="$NODE" --exit-node-allow-lan-access=true
@@ -507,23 +510,36 @@ curl -s --max-time 10 ifconfig.me
 echo
 
 echo
-echo "=== TTFB to common targets (lower is better) ==="
+echo "=== TTFB ($TTFB_RUNS runs each, lower is better) ==="
+printf "%-35s %8s %8s %8s\n" "target" "min(ms)" "median" "max"
 for url in \
     https://api.anthropic.com/ \
     https://api.openai.com/ \
     https://github.com/ \
     https://www.google.com/ \
     ; do
-    printf "%-35s " "$url"
-    curl -w "TTFB:%{time_starttransfer}s (DNS:%{time_namelookup} Conn:%{time_connect} TLS:%{time_appconnect})\n" \
-         -o /dev/null -s --max-time 10 "$url"
+    samples=$(for i in $(seq 1 $TTFB_RUNS); do
+        curl -w "%{time_starttransfer}\n" -o /dev/null -s --max-time 10 "$url" 2>/dev/null
+    done | sort -n)
+    min=$(echo "$samples" | head -1)
+    max=$(echo "$samples" | tail -1)
+    median=$(echo "$samples" | awk -v n=$TTFB_RUNS 'NR==int((n+1)/2)')
+    printf "%-35s %8.0f %8.0f %8.0f\n" "$url" \
+        "$(echo "$min*1000" | bc -l)" \
+        "$(echo "$median*1000" | bc -l)" \
+        "$(echo "$max*1000" | bc -l)"
 done
 
 echo
-echo "=== Throughput (Cloudflare 10MB) ==="
-curl -o /dev/null --max-time 30 \
-     -w "  %{size_download} bytes in %{time_total}s = %{speed_download} B/s\n" \
-     "https://speed.cloudflare.com/__down?bytes=10000000"
+echo "=== Throughput ($BW_RUNS runs of Cloudflare 10MB) ==="
+bw_samples=$(for i in $(seq 1 $BW_RUNS); do
+    curl -o /dev/null --max-time 30 -s -w "%{speed_download}\n" \
+         "https://speed.cloudflare.com/__down?bytes=10000000"
+done | sort -n)
+echo "$bw_samples" | awk '{ printf "  run: %.1f Mbps\n", $1*8/1000000 }'
+median_bw=$(echo "$bw_samples" | awk -v n=$BW_RUNS 'NR==int((n+1)/2)')
+echo "  ---"
+echo "$median_bw" | awk '{ printf "  median: %.1f Mbps\n", $1*8/1000000 }'
 
 echo
 echo "=== Tailscale path (should be 'via <ip>:41641', not DERP) ==="
@@ -537,30 +553,30 @@ tailscale ping "$NODE" | head -3
 ./bench-exit-node.sh aws-sg-arm
 ```
 
-#### 我的实测结果（中国移动接入，2026.05，多次运行）
+#### 我的实测结果（中国移动接入，2026.05，10 次 TTFB / 3 次带宽取 median）
 
 | 指标 | AWS Tokyo | AWS Singapore | GCP Singapore |
 |---|---|---|---|
-| Tailscale ping (直连) | **63-67ms** | 80-85ms | 84-132ms |
-| Anthropic API TTFB | 210-410ms | 330-350ms | 334-468ms |
-| OpenAI API TTFB | 246-437ms | 324-393ms | 354-414ms |
-| GitHub TTFB | 416-433ms | 271-426ms | 273-545ms |
-| Google TTFB | 293-361ms | 300-601ms | 309-674ms |
-| Cloudflare 10MB 下载 | **51 Mbps** | 39 Mbps | 49 Mbps |
+| Tailscale ping (直连) | **64ms** | 82ms | 111ms |
+| Anthropic median TTFB | 333ms | **328ms** | 381ms |
+| OpenAI median TTFB | **279ms** | 293ms | 312ms |
+| GitHub median TTFB | 295ms | 332ms | **278ms** |
+| Google median TTFB | **326ms** | 347ms | 340ms |
+| Cloudflare 10MB median | **47 Mbps** | 33 Mbps | 33 Mbps |
+| TTFB max (噪声示例) | 1287ms | 1405ms | 1489ms |
 
 **怎么读这张表**：
 
-- **Tailscale ping 是最稳定的信号**——它就是你的 Mac 到 VPS 的物理 RTT，跟目标 API 无关。Tokyo 在这一项上稳定领先 ~20ms，物理上无法被反超。
-- **下载带宽也很稳定**：Tokyo 50 Mbps 量级、Singapore 38 Mbps 量级，多轮测量都差不多。Tokyo 微胜。
-- **TTFB 单次测量噪声大**：受 DNS 解析（macOS 缓存命中与否差好几个数量级）、TLS 握手、目标服务器当时负载等影响。我多跑几次同一个 URL，最快的那一次和最慢的那一次能差 200ms。所以表里给的是范围而不是单值。
+- **Tailscale ping 是最稳定的信号**——它就是你的 Mac 到 VPS 的物理 RTT，跟目标 API 无关。Tokyo 在这一项上稳定领先 18-47ms，物理距离决定的、不会反超。
+- **下载带宽也很稳定**：Tokyo 47 Mbps 量级，比两个 Singapore 节点（33 Mbps）多 40%。物理距离 + 该路径的拥塞情况决定，多轮测都差不多。
+- **TTFB median 比单次更可信，但区域差异已经不大**：到 Anthropic 三家几乎打平（330ms 量级），Tokyo 在 OpenAI 和 Google 上微胜，GCP Singapore 在 GitHub 上反而最快——说明各家 CDN/边缘节点的部署策略不同，**没有一个 region 是全场最优**。
+- **看一下 max 列就知道为什么必须取 median**：单次最坏情况能飙到 1.4 秒，是 median 的 4 倍。如果只跑 1 次就下结论，结论会被随机抖动主导。
 
-**结论**：日常 Claude Code / ChatGPT 用 **Tokyo**——基线延迟和带宽都更好。这两个是物理决定的、不会随机波动。TTFB 多次测平均下来 Tokyo 也更快，但单次测可能会因为 DNS 抖动反超，属于噪声。
-
-OpenAI 那一项有个细节：OpenAI 在亚洲多个城市都有边缘节点，所以从哪个 region 出去都不会差太多——Tokyo 通常微胜，但 Singapore 也不会差。Anthropic 服务器主要在美国，所以哪个亚洲 region 离美西更近就更占优——Tokyo 在物理位置上赢（北太平洋直线 vs Singapore 绕远）。
+**结论**：日常 Claude Code / ChatGPT 用 **Tokyo**——基线延迟（ping）和带宽这两个**物理决定的、稳定的**信号上 Tokyo 都明显胜。TTFB median 各家差距其实不大（30-50ms 量级），不是关键决策因素。如果你的工作负载有大流量传输（model checkpoint、视频会议），Tokyo 的 47 Mbps vs Singapore 的 33 Mbps 这个差距会更明显。
 
 > 💡 **不建议用国内"测速网站"测 exit node**：那些站测的是"AWS → 国内服务器"的特定路径（比如教育网 CERNET 出口），跟你"本地 → AWS → Anthropic 美国"的实际链路完全无关。我用 USTC 测速测出来过 Tokyo 上传只有 1.94 Mbps 这种数字，但实际跑 API 完全没问题——纯粹是 USTC 那条 CERNET 链路当时拥塞，与你的使用场景没关系。
 
-> 📌 **关于带宽的现实情况**：Claude Code / ChatGPT API 单次几十 KB，1 Mbps 都跑不到。带宽测试主要是 sanity check，确认你的隧道没出毛病。**决策的两个最稳定信号是 Tailscale ping（基线延迟）和带宽（吞吐上限）**——这两个物理决定，不随机抖动。TTFB 的单次值只是参考。
+> 📌 **关于带宽的现实情况**：Claude Code / ChatGPT API 单次几十 KB，1 Mbps 都跑不到。带宽测试主要是 sanity check，确认你的隧道没出毛病。**决策的两个最稳定信号是 Tailscale ping（基线延迟）和带宽（吞吐上限）**——这两个物理决定，不随机抖动。TTFB 的单次值只是参考，多跑几次取 median 才有意义。
 
 ---
 
