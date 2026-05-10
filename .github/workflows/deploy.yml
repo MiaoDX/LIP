@@ -25,23 +25,10 @@ jobs:
           cache: npm
       - run: npm ci
 
-      # 1. Build VitePress docs
-      - run: npm run docs:build
-
-      # 2. Copy standalone HTML presentations + assets that VitePress does not transform.
-      # See scripts/publish-rules.mjs for canonical source and output mappings.
-      - run: npm run publish:copy
-      - run: npm run publish:check
-
-      # 3. Build Marp slides → output to VitePress dist.
-      # Scanner picks up every md file with `marp: true` in frontmatter
-      # (see scripts/build-slides.mjs) and writes .html to
-      # .vitepress/dist/slides/marp/<slug>.html. PDF generation is opt-in
-      # via MARP_PDF=1 (skipped by default to keep CI fast + deterministic).
-      - run: npm run marp:build
-
-      # 4. Build Slidev slides → output to VitePress dist
-      - run: npm run slides:build
+      # Build docs, standalone pages, Marp, Slidev, and final publish checks.
+      # Keep this routed through package.json so local and CI builds share one
+      # interface.
+      - run: npm run build:all
 
       - uses: actions/upload-pages-artifact@v3
         with:

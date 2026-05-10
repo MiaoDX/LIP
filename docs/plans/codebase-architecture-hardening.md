@@ -25,6 +25,7 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 4. Marp slide output uses only the markdown basename as the slug, so two decks with the same basename would silently overwrite each other.
 5. `publish:copy` verifies stale standalone outputs after the fact, but it does not own a sync manifest, so removed source files can leave old generated files behind.
 6. Local reference validation covers CSS embedded in HTML, but standalone external `.css` files can still hide missing `url(...)` assets or `@import` files.
+7. The deploy workflow duplicates the local build sequence instead of calling the `build:all` interface, so local and CI verification can drift.
 
 ## Acceptance Criteria
 
@@ -35,6 +36,7 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 - Marp build fails with a clear error if two scanned decks resolve to the same output slug.
 - `npm run publish:copy` removes stale files that were previously copied from standalone sources without deleting adjacent VitePress-generated output.
 - Local reference validation also scans standalone `.css` files under the canonical source roots.
+- GitHub Pages deployment uses `npm run build:all` as the single build interface.
 - Verification commands pass after generated output is refreshed.
 
 ## Execution Notes
@@ -49,3 +51,4 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 - Pass 2: moved Slidev output handling into a build module with an absolute output path, and added Marp slug collision protection.
 - Pass 3: deepened standalone publish copy into a manifest-backed sync so removed sources clean up their generated files.
 - Pass 4: extended local reference validation to standalone CSS files so copied stylesheets cannot hide missing assets.
+- Pass 5: routed GitHub Pages deployment through `npm run build:all` so CI and local builds share the same interface.
