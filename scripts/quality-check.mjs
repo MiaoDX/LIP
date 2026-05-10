@@ -98,8 +98,12 @@ async function publishOutputGate(sourceErrors) {
     return { status: 'SKIP', detail: '.vitepress/dist does not exist; run npm run docs:build && npm run publish:copy to verify generated output' }
   }
 
-  const { missing, sourceErrors: standaloneSourceErrors } = await checkStandalone({ sourceErrors })
-  const problems = [...missing.map((path) => `missing ${relative(ROOT, path)}`), ...standaloneSourceErrors]
+  const { missing, stale, sourceErrors: standaloneSourceErrors } = await checkStandalone({ sourceErrors })
+  const problems = [
+    ...missing.map((path) => `missing ${relative(ROOT, path)}`),
+    ...stale,
+    ...standaloneSourceErrors,
+  ]
   if (problems.length) return { status: 'FAIL', detail: problems.join('; ') }
   return { status: 'PASS', detail: 'standalone publish outputs match canonical sources' }
 }

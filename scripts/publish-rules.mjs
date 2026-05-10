@@ -16,7 +16,10 @@ const DIST_DIR = '.vitepress/dist'
 
 const SHARE_EXTENSIONS = ['.html', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.gif']
 const AI_CODING_ASSET_DIRS = ['images', 'screenshots', 'assets']
-const HTML_REF_RE = /\b(?:src|href)=["']([^"']+)["']/gi
+const HTML_REF_RE = /\b(?:src|href|poster)=["']([^"']+)["']/gi
+const HTML_SRCSET_RE = /\bsrcset=["']([^"']+)["']/gi
+const CSS_URL_REF_RE = /\burl\(\s*(['"]?)(.*?)\1\s*\)/gi
+const CSS_IMPORT_REF_RE = /@import\s+(?:url\(\s*)?["']([^"']+)["']\s*\)?/gi
 
 export const sourceOwnershipRules = {
   generatedSourceDirs: [
@@ -190,6 +193,15 @@ async function walkFiles(dir, files = []) {
   return files
 }
 
+async function walkRelativeFiles(dir, currentDir = dir, files = []) {
+  for (const entry of await entries(currentDir)) {
+    const path = join(currentDir, entry.name)
+    if (entry.isDirectory()) await walkRelativeFiles(dir, path, files)
+    else if (entry.isFile()) files.push(relative(dir, path))
+  }
+  return files.sort()
+}
+
 function isLocalRef(ref) {
   return ref && !/^(?:[a-z][a-z0-9+.-]*:|#|\/)/i.test(ref)
 }
@@ -198,15 +210,29 @@ function cleanRef(ref) {
   return ref.split('#')[0].split('?')[0]
 }
 
+function srcsetRefs(value) {
+  return value
+    .split(',')
+    .map((candidate) => candidate.trim().split(/\s+/)[0])
+    .filter(Boolean)
+}
+
+function localRefsInHtml(source) {
+  const refs = []
+  for (const match of source.matchAll(HTML_REF_RE)) refs.push(match[1])
+  for (const match of source.matchAll(HTML_SRCSET_RE)) refs.push(...srcsetRefs(match[1]))
+  for (const match of source.matchAll(CSS_URL_REF_RE)) refs.push(match[2])
+  for (const match of source.matchAll(CSS_IMPORT_REF_RE)) refs.push(match[1])
+  return refs
+    .map(cleanRef)
+    .filter((ref) => ref && isLocalRef(ref))
+}
+
 async function checkHtmlLocalRefs(rootDir, errors) {
   const htmlFiles = (await walkFiles(resolve(rootDir))).filter((file) => file.endsWith('.html'))
   for (const file of htmlFiles) {
     const source = await readFile(file, 'utf8')
-    for (const match of source.matchAll(HTML_REF_RE)) {
-      const ref = cleanRef(match[1])
-      if (!isLocalRef(ref)) continue
-      if (!ref || ref.startsWith('javascript:')) continue
-
+    for (const ref of localRefsInHtml(source)) {
       const target = join(dirname(file), ref)
       if (!(await exists(target))) {
         errors.push(`${relative(ROOT, file)} references missing local asset ${ref}`)
@@ -260,19 +286,81 @@ export async function checkSourceOwnership() {
   return errors
 }
 
-export async function checkStandalone({ distDir = DIST_DIR, sourceErrors } = {}) {
-  const expected = await collectExpected({ distDir })
-  const missing = []
-  const ownershipErrors = sourceErrors ?? await checkSourceOwnership()
-  for (const path of expected) {
-    try {
-      await stat(path)
-    } catch (error) {
-      if (error.code === 'ENOENT') missing.push(path)
-      else throw error
+async function pathKind(path) {
+  try {
+    const info = await stat(path)
+    if (info.isDirectory()) return 'dir'
+    if (info.isFile()) return 'file'
+    return 'other'
+  } catch (error) {
+    if (error.code === 'ENOENT') return 'missing'
+    throw error
+  }
+}
+
+async function filesMatch(src, dest) {
+  const [srcData, destData] = await Promise.all([readFile(src), readFile(dest)])
+  return srcData.equals(destData)
+}
+
+async function checkFileTarget(target, problems) {
+  const destKind = await pathKind(target.dest)
+  if (destKind === 'missing') {
+    problems.missing.push(target.dest)
+    return
+  }
+  if (destKind !== 'file') {
+    problems.stale.push(`${relative(ROOT, target.dest)} should be a file`)
+    return
+  }
+  if (!(await filesMatch(target.src, target.dest))) {
+    problems.stale.push(`${relative(ROOT, target.dest)} differs from ${relative(ROOT, target.src)}`)
+  }
+}
+
+async function checkDirTarget(target, problems) {
+  const destKind = await pathKind(target.dest)
+  if (destKind === 'missing') {
+    problems.missing.push(target.dest)
+    return
+  }
+  if (destKind !== 'dir') {
+    problems.stale.push(`${relative(ROOT, target.dest)} should be a directory`)
+    return
+  }
+
+  const sourceFiles = await walkRelativeFiles(target.src)
+  const destFiles = await walkRelativeFiles(target.dest)
+  const sourceSet = new Set(sourceFiles)
+  const destSet = new Set(destFiles)
+
+  for (const file of sourceFiles) {
+    const src = join(target.src, file)
+    const dest = join(target.dest, file)
+    if (!destSet.has(file)) {
+      problems.missing.push(dest)
+    } else if (!(await filesMatch(src, dest))) {
+      problems.stale.push(`${relative(ROOT, dest)} differs from ${relative(ROOT, src)}`)
     }
   }
-  return { expected, missing, sourceErrors: ownershipErrors }
+
+  for (const file of destFiles) {
+    if (!sourceSet.has(file)) {
+      problems.stale.push(`${relative(ROOT, join(target.dest, file))} is not in ${relative(ROOT, target.src)}`)
+    }
+  }
+}
+
+export async function checkStandalone({ distDir = DIST_DIR, sourceErrors } = {}) {
+  const targets = await collectPublishTargets({ distDir })
+  const expected = targets.map((target) => target.dest)
+  const problems = { missing: [], stale: [] }
+  const ownershipErrors = sourceErrors ?? await checkSourceOwnership()
+  for (const target of targets) {
+    if (target.kind === 'dir') await checkDirTarget(target, problems)
+    else await checkFileTarget(target, problems)
+  }
+  return { expected, missing: problems.missing, stale: problems.stale, sourceErrors: ownershipErrors }
 }
 
 function parseArgs(argv) {
@@ -303,10 +391,14 @@ async function main() {
   }
 
   if (command === 'check') {
-    const { expected, missing, sourceErrors } = await checkStandalone({ distDir })
+    const { expected, missing, stale, sourceErrors } = await checkStandalone({ distDir })
     printList('Expected standalone publish output', expected)
     if (missing.length) {
       printList('Missing standalone publish output', missing)
+      process.exitCode = 1
+    }
+    if (stale.length) {
+      printList('Stale standalone publish output', stale)
       process.exitCode = 1
     }
     if (sourceErrors.length) {
