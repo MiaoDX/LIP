@@ -298,6 +298,8 @@ pong from aws-tk-arm via 54.95.50.5:41641 in 64ms
 
 稳定 ~65ms，比 Singapore 快约 20ms。
 
+> 💡 想自己跑一遍验证？附录 7.5 里有个 `bench-exit-node.sh` 脚本，测 TTFB + 带宽，附我的实测对比表。
+
 ### 关于 `tailscale ping` 输出里的 DERP — 长期容易被误读的一点
 
 `tailscale ping` 偶尔会先输出几行 `via DERP(xxx)` 然后才看到 `via <IP>:41641`。**这是 Tailscale 的设计行为**，但**不影响你实际跑 Claude Code 的体验**。
@@ -483,6 +485,74 @@ sudo tailscale ping <peer>         # 看到具体 peer 的实际路径
 ```
 
 实践上 tailscaled 非常稳，更常见的问题是**实例本身被 stop/start 导致 IP 变了**——这就是为什么强烈推荐绑 EIP。
+
+### 7.5 想自己测一下哪个 exit node 更快？
+
+下面这个脚本测两件事：**TTFB**（首字节时间，对 API 调用最关键）+ **下载带宽**（用 Cloudflare 10MB 端点）。一次跑一个 exit node：
+
+```bash
+#!/bin/bash
+# bench-exit-node.sh <exit-node-hostname>
+# Example: ./bench-exit-node.sh aws-tk-arm
+
+NODE=${1:?"Usage: $0 <exit-node-hostname>"}
+
+echo "=== Switching to $NODE ==="
+sudo tailscale up --exit-node="$NODE" --exit-node-allow-lan-access=true
+sleep 2
+
+echo
+echo "=== Outbound IP ==="
+curl -s --max-time 10 ifconfig.me
+echo
+
+echo
+echo "=== TTFB to common targets (lower is better) ==="
+for url in \
+    https://api.anthropic.com/ \
+    https://api.openai.com/ \
+    https://github.com/ \
+    https://www.google.com/ \
+    ; do
+    printf "%-35s " "$url"
+    curl -w "TTFB:%{time_starttransfer}s (DNS:%{time_namelookup} Conn:%{time_connect} TLS:%{time_appconnect})\n" \
+         -o /dev/null -s --max-time 10 "$url"
+done
+
+echo
+echo "=== Throughput (Cloudflare 10MB) ==="
+curl -o /dev/null --max-time 30 \
+     -w "  %{size_download} bytes in %{time_total}s = %{speed_download} B/s\n" \
+     "https://speed.cloudflare.com/__down?bytes=10000000"
+
+echo
+echo "=== Tailscale path (should be 'via <ip>:41641', not DERP) ==="
+tailscale ping "$NODE" | head -3
+```
+
+存成 `bench-exit-node.sh`，`chmod +x`，然后：
+
+```bash
+./bench-exit-node.sh aws-tk-arm
+./bench-exit-node.sh aws-sg-arm
+```
+
+#### 我的实测结果（中国移动接入，2026.05）
+
+| 指标 | AWS Tokyo | AWS Singapore | GCP Singapore |
+|---|---|---|---|
+| Tailscale ping (直连) | **64ms** | 80-85ms | 84ms |
+| Anthropic API TTFB | **210ms** | 351ms | 468ms |
+| OpenAI API TTFB | 437ms | 393ms | 414ms |
+| GitHub TTFB | 416ms | 426ms | 545ms |
+| Google TTFB | **293ms** | 601ms | 309ms |
+| Cloudflare 10MB 下载 | **45 Mbps** | 38 Mbps | — |
+
+**结论很明确**：日常 Anthropic API 调用 Tokyo 比 Singapore 快 60%（TTFB 210ms vs 351ms），带宽方面 Tokyo 也微胜。OpenAI 边缘节点在亚洲多地，所以两个 Singapore 节点反而稍快——但 Anthropic 那一项才是大多数读者的主要场景。
+
+> 💡 **不建议用国内"测速网站"测 exit node**：那些站测的是"AWS → 国内服务器"的特定路径（比如教育网 CERNET 出口），跟你"本地 → AWS → Anthropic 美国"的实际链路完全无关。我用 USTC 测速测出来过 Tokyo 上传只有 1.94 Mbps 这种数字，但实际跑 API 完全没问题——纯粹是 USTC 那条 CERNET 链路当时拥塞，与你的使用场景没关系。
+
+> 📌 **关于带宽的现实情况**：Claude Code / ChatGPT API 单次几十 KB，1 Mbps 都跑不到。带宽测试主要是 sanity check，确认你的隧道没出毛病。决策应该看 **TTFB**——那个数字直接对应你按下回车后等响应的时间。
 
 ---
 
