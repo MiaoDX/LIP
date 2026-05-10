@@ -1491,6 +1491,11 @@ body .key-hint { display: none; }
 
 @media (max-width: 900px) {
   .slide { padding: 64px 32px 72px; }
+  .verification-why-slide,
+  .verification-data-slide {
+    justify-content: flex-start;
+    padding-top: 104px;
+  }
   .meta {
     top: 26px;
     left: 32px;
@@ -2358,7 +2363,7 @@ body .key-hint { display: none; }
     共同模式：人手动承担 → harness 显式化 → 产品内建
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px;">
-    接下来三页分别拆开看：prompt 怎么变成可调用能力、context 怎么变成高信号 token、完成标准怎么被外显
+    接下来三页分别拆开看：prompt 怎么变成可调用能力、context 怎么变成高信号 token、完成判断怎么独立出来
   </div>
 </div>
 
@@ -2465,10 +2470,10 @@ body .key-hint { display: none; }
   </div>
 </div>
 
-<div class="slide">
+<div class="slide verification-why-slide">
   <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴 · 为什么</div>
-  <h2>Verification 轴：完成标准必须<span class="hl">外显</span></h2>
-  <h3>不是“多看一眼”，而是把谁判定完成、用什么 rubric、由谁来读，三件事拆开外显。</h3>
+  <h2>Verification 轴：完成判断必须<span class="hl">独立出来</span></h2>
+  <h3>不是“多看一眼”，而是把判断标准、判断角色、判断证据从生成过程里拆出来。</h3>
   <div class="slide-2col" style="margin-top: 18px;">
     <div class="col-l">
       <div class="quote">
@@ -2481,7 +2486,7 @@ body .key-hint { display: none; }
           <div class="reason-copy">生成者最容易 rationalize 自己的输出，独立检查能把问题重新 surface 出来。</div>
         </div>
         <div class="verification-reason">
-          <div class="reason-title">rubric 让质量标准外显</div>
+          <div class="reason-title">rubric 把质量标准写清楚</div>
           <div class="reason-copy">“看起来不错”变成可检查条目，agent 和人才能对齐完成条件。</div>
         </div>
         <div class="verification-reason">
@@ -2497,13 +2502,13 @@ body .key-hint { display: none; }
       </div>
     </div>
   </div>
-  <div class="speaker-note">这一页只讲“为什么要外显”，三个 reason 各停一拍。下一页才把 Anthropic Outcomes 的数字甩出来——把“反直觉论点”和“数据立柱”分开两次冲击，比挤一页更稳。</div>
+  <div class="speaker-note">这一页只讲“为什么完成判断要独立出来”，三个 reason 各停一拍。下一页再讲 Outcomes 的 loop 和数字——先把“为什么不能自评”讲清楚，再讲“进入迭代后为什么会提升最终交付质量”。</div>
 </div>
 
-<div class="slide">
+<div class="slide verification-data-slide">
   <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴 · 数据</div>
-  <h2>fresh grader 不是直觉，<span class="hl">看 Anthropic Outcomes 的数</span></h2>
-  <h3>同一个模型，加上独立 rubric + 外部 grader（Outcomes 系统），任务成功率和结构化 artifact 质量集体抬升。</h3>
+  <h2>独立 grader 提升的是<span class="hl">最终交付质量</span></h2>
+  <h3>因为它把“生成 → 检查 → 指出 gap → 修改 → 再检查”做成 loop，而不是让 agent 自己写完自己宣布完成。</h3>
   <div class="data-row" style="margin-top: 28px;">
     <div class="data-cell">
       <div class="data-num">+10<span class="data-unit">pp</span></div>
@@ -2522,9 +2527,9 @@ body .key-hint { display: none; }
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 22px; font-size: 12px; max-width: 80ch;">
-    数字的方向比绝对值更重要：越是“硬题”——长程目标、结构化交付物——外显完成标准带来的抬升越明显。这正是为什么 verification 必须从“事后人盯”升级成 harness 一等机制。
+    核心不是 grader 魔法，而是 generate-grade-revise loop：grader 在独立 context 里按 rubric 找 gap，反馈回 agent 再迭代。越是“硬题”——长程目标、结构化交付物——越不能让 first draft 直接过线。
   </div>
-  <div class="speaker-note">这页是 Verification 轴的“给数字”页。三组数都来自 Anthropic Outcomes 系统：+10pp 是 task success（最难的题抬升最大），+8.4% / +10.1% 是 docx / pptx 生成质量。强调“硬题受益最大”——和后面 5.1 roboharness 长程任务里 proof pack 的动机直接对上。</div>
+  <div class="speaker-note">这页要先澄清：grader 不会让 first draft 突然变聪明，它提升的是 final deliverable quality。Outcomes 把 artifact 交给独立 grader，grader 按 rubric 指出 gap，反馈给 agent 再改下一版。然后再给数字：+10pp 是 task success（最难的题抬升最大），+8.4% / +10.1% 是 docx / pptx 生成质量。最后接到 roboharness：proof pack 也是不让长程任务靠“我完成了”直接过线。</div>
 </div>
 
 <div class="slide">
@@ -2718,7 +2723,7 @@ body .key-hint { display: none; }
       </div>
       <div class="fact-row">
         <div class="fact-tag">Verification axis</div>
-        <div class="fact-copy">三态自评（FULLY / PARTIAL / DIMINISHING）把 exit 条件外显——PARTIAL 不是失败，是云端流水线对自己边界的诚实声明</div>
+        <div class="fact-copy">三态自评（FULLY / PARTIAL / DIMINISHING）把 exit 条件写清楚——PARTIAL 不是失败，是云端流水线对自己边界的诚实声明</div>
       </div>
       <div class="fact-row">
         <div class="fact-tag">Boundary</div>

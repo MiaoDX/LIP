@@ -208,7 +208,7 @@ Plan mode 把“先计划，再执行”做成一个产品模式。Hooks 让你�
 
 不过 SDD 不是终点。
 
-它主要工程化了 plan 这一件事，但 skill 怎么发现、context 怎么管理、verification 怎么外显，仍然大量由人承担。
+它主要工程化了 plan 这一件事，但 skill 怎么发现、context 怎么管理、verification 怎么变成独立质量门，仍然大量由人承担。
 
 所以 2.x 时代会继续往前走：不只是先想再写，而是把 agent 调什么、看什么、凭什么宣告完成，这三件事都做进 harness。
 
@@ -234,7 +234,7 @@ HumanLayer 有一句话，把 harness engineering 看成 context engineering 的
 
 所以我今天把 harness 压成三轴：Skill、Context、Verification。
 
-当生成成本下降以后，瓶颈不在“能不能写一版代码”。瓶颈在于：它能不能调用正确的能力；它有没有看到足够高信号的信息；它完成以后，有没有一个外显的机制防止它自我感觉良好。
+当生成成本下降以后，瓶颈不在“能不能写一版代码”。瓶颈在于：它能不能调用正确的能力；它有没有看到足够高信号的信息；它完成以后，有没有一个独立质量门防止它自我感觉良好。
 
 [翻页]
 
@@ -298,25 +298,31 @@ Context 不是越多越好。它是有限资源，而且长上下文不是免费
 
 第三条是 Verification 轴，也是我自己越来越重视的一条。
 
-完成标准必须外显。不是“让模型多看一眼”，而是把三件事拆开：谁判定完成，用什么 rubric，由谁来读。
+完成判断必须独立出来。不是“让模型多看一眼”，而是把判断标准、判断角色、判断证据从生成过程里拆出来。
 
 这里有一个反直觉点：同一个 agent 很难客观评价自己的输出。它刚写完一段东西，天然会倾向于觉得自己做得不错。
 
-所以更稳的结构是 fresh grader。生成者先生成，另一个干净上下文里的 evaluator 根据 rubric 来读。这个动作一旦外显，很多长程任务的质量会明显变化。
+所以更稳的结构是 fresh grader。生成者先生成，另一个干净上下文里的 evaluator 根据 rubric 来读。注意，它不是让第一版输出突然变聪明，而是让第一版不能自己宣布过线。
 
-下一页我们看 Anthropic Outcomes 的数字。
+下一页我们看 Anthropic Outcomes 怎么把这个检查动作接进迭代 loop。
 
 [翻页]
 
-## Slide 24｜fresh grader 的数字
+## Slide 24｜独立 grader 提升的是最终交付质量
 
-Anthropic Outcomes 做的就是把独立 rubric 加外部 grader 变成系统能力。
+Anthropic Outcomes 做的就是把独立 rubric 加外部 grader 变成系统能力，但这里要澄清一点：grader 不是魔法。
+
+它不会让 first draft 突然变聪明。它真正改变的是完成机制。
+
+以前是 agent 生成完，说“我觉得可以了”，任务就结束。现在是 agent 生成一个 artifact，独立 grader 用 rubric 检查，指出哪些地方没达标，再把这些 gap 反馈回 agent，让它改下一版。
+
+所以 Outcomes 提升的不是 first-pass quality，而是 final deliverable quality。它把“完成”从一个主观声明，变成一个 generate-grade-revise 的 loop。
 
 这页三组数字都来自这个方向：task success 提升大约 10 个百分点，docx 生成质量提升 8.4%，pptx 生成质量提升 10.1%。
 
-这里最值得注意的是：越难的任务，收益越大。简单任务可能本来就能过；真正容易失控的是长程任务、结构化 artifact、复杂修改。
+这里最值得注意的是：越难的任务，收益越大。简单任务第一版可能就够了；真正容易失控的是长程任务、结构化 artifact、复杂修改。它们最容易死在“看起来完成了，但其实没满足标准”。
 
-这和后面我讲 roboharness 的 proof pack 是同一个动机：不要指望人一帧帧看完 agent 跑了几小时的过程，也不要指望 agent 自己说“我完成了”就结束。要把完成标准和证据 surface 出来。
+这和后面我讲 roboharness 的 proof pack 是同一个动机：不要指望人一帧帧看完 agent 跑了几小时的过程，也不要指望 agent 自己说“我完成了”就结束。要有一个独立证据面，让 review 可以被压缩、被判断、被复查。
 
 [翻页]
 
