@@ -537,22 +537,30 @@ tailscale ping "$NODE" | head -3
 ./bench-exit-node.sh aws-sg-arm
 ```
 
-#### 我的实测结果（中国移动接入，2026.05）
+#### 我的实测结果（中国移动接入，2026.05，多次运行）
 
 | 指标 | AWS Tokyo | AWS Singapore | GCP Singapore |
 |---|---|---|---|
-| Tailscale ping (直连) | **64ms** | 80-85ms | 84ms |
-| Anthropic API TTFB | **210ms** | 351ms | 468ms |
-| OpenAI API TTFB | 437ms | 393ms | 414ms |
-| GitHub TTFB | 416ms | 426ms | 545ms |
-| Google TTFB | **293ms** | 601ms | 309ms |
-| Cloudflare 10MB 下载 | **45 Mbps** | 38 Mbps | — |
+| Tailscale ping (直连) | **63-67ms** | 80-85ms | 84-132ms |
+| Anthropic API TTFB | 210-410ms | 330-350ms | 334-468ms |
+| OpenAI API TTFB | 246-437ms | 324-393ms | 354-414ms |
+| GitHub TTFB | 416-433ms | 271-426ms | 273-545ms |
+| Google TTFB | 293-361ms | 300-601ms | 309-674ms |
+| Cloudflare 10MB 下载 | **51 Mbps** | 39 Mbps | 49 Mbps |
 
-**结论很明确**：日常 Anthropic API 调用 Tokyo 比 Singapore 快 60%（TTFB 210ms vs 351ms），带宽方面 Tokyo 也微胜。OpenAI 边缘节点在亚洲多地，所以两个 Singapore 节点反而稍快——但 Anthropic 那一项才是大多数读者的主要场景。
+**怎么读这张表**：
+
+- **Tailscale ping 是最稳定的信号**——它就是你的 Mac 到 VPS 的物理 RTT，跟目标 API 无关。Tokyo 在这一项上稳定领先 ~20ms，物理上无法被反超。
+- **下载带宽也很稳定**：Tokyo 50 Mbps 量级、Singapore 38 Mbps 量级，多轮测量都差不多。Tokyo 微胜。
+- **TTFB 单次测量噪声大**：受 DNS 解析（macOS 缓存命中与否差好几个数量级）、TLS 握手、目标服务器当时负载等影响。我多跑几次同一个 URL，最快的那一次和最慢的那一次能差 200ms。所以表里给的是范围而不是单值。
+
+**结论**：日常 Claude Code / ChatGPT 用 **Tokyo**——基线延迟和带宽都更好。这两个是物理决定的、不会随机波动。TTFB 多次测平均下来 Tokyo 也更快，但单次测可能会因为 DNS 抖动反超，属于噪声。
+
+OpenAI 那一项有个细节：OpenAI 在亚洲多个城市都有边缘节点，所以从哪个 region 出去都不会差太多——Tokyo 通常微胜，但 Singapore 也不会差。Anthropic 服务器主要在美国，所以哪个亚洲 region 离美西更近就更占优——Tokyo 在物理位置上赢（北太平洋直线 vs Singapore 绕远）。
 
 > 💡 **不建议用国内"测速网站"测 exit node**：那些站测的是"AWS → 国内服务器"的特定路径（比如教育网 CERNET 出口），跟你"本地 → AWS → Anthropic 美国"的实际链路完全无关。我用 USTC 测速测出来过 Tokyo 上传只有 1.94 Mbps 这种数字，但实际跑 API 完全没问题——纯粹是 USTC 那条 CERNET 链路当时拥塞，与你的使用场景没关系。
 
-> 📌 **关于带宽的现实情况**：Claude Code / ChatGPT API 单次几十 KB，1 Mbps 都跑不到。带宽测试主要是 sanity check，确认你的隧道没出毛病。决策应该看 **TTFB**——那个数字直接对应你按下回车后等响应的时间。
+> 📌 **关于带宽的现实情况**：Claude Code / ChatGPT API 单次几十 KB，1 Mbps 都跑不到。带宽测试主要是 sanity check，确认你的隧道没出毛病。**决策的两个最稳定信号是 Tailscale ping（基线延迟）和带宽（吞吐上限）**——这两个物理决定，不随机抖动。TTFB 的单次值只是参考。
 
 ---
 
