@@ -25,7 +25,13 @@ try {
   await mkdir('presentations/assets', { recursive: true })
   await writeFile('presentations/assets/hero.png', 'hero')
   await writeFile('presentations/assets/small.png', 'small')
-  await writeFile('presentations/assets/theme.css', 'theme')
+  await writeFile(
+    'presentations/assets/theme.css',
+    [
+      '@import "nested.css";',
+      '.hero { background: url("css-hero.png"); }',
+    ].join('\n')
+  )
   await writeFile(
     'presentations/demo.html',
     [
@@ -41,8 +47,18 @@ try {
     sourceErrors.some((error) => error.includes('assets/large.png')),
     'source ownership should detect missing srcset assets'
   )
+  assert(
+    sourceErrors.some((error) => error.includes('assets/theme.css references missing local asset nested.css')),
+    'source ownership should detect missing CSS imports'
+  )
+  assert(
+    sourceErrors.some((error) => error.includes('assets/theme.css references missing local asset css-hero.png')),
+    'source ownership should detect missing CSS url assets'
+  )
 
   await writeFile('presentations/assets/large.png', 'large')
+  await writeFile('presentations/assets/nested.css', 'nested')
+  await writeFile('presentations/assets/css-hero.png', 'css hero')
   assert.deepEqual(await publishRules.checkSourceOwnership(), [])
 
   await publishRules.copyStandalone({ distDir: 'dist' })

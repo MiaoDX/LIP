@@ -40,7 +40,7 @@ export const sourceOwnershipRules = {
       message: 'share/*.html is generated publish output; move HTML sources to presentations/ or ai-coding/<slug>/index.html',
     },
   ],
-  htmlReferenceRoots: ['presentations', 'ai-coding', 'public/consult'],
+  localReferenceRoots: ['presentations', 'ai-coding', 'public/consult'],
 }
 
 export const publishRules = [
@@ -291,10 +291,8 @@ function srcsetRefs(value) {
     .filter(Boolean)
 }
 
-function localRefsInHtml(source) {
+function localRefsInCss(source) {
   const refs = []
-  for (const match of source.matchAll(HTML_REF_RE)) refs.push(match[1])
-  for (const match of source.matchAll(HTML_SRCSET_RE)) refs.push(...srcsetRefs(match[1]))
   for (const match of source.matchAll(CSS_URL_REF_RE)) refs.push(match[2])
   for (const match of source.matchAll(CSS_IMPORT_REF_RE)) refs.push(match[1])
   return refs
@@ -302,16 +300,32 @@ function localRefsInHtml(source) {
     .filter((ref) => ref && isLocalRef(ref))
 }
 
-async function checkHtmlLocalRefs(rootDir, errors) {
-  const htmlFiles = (await walkFiles(resolve(rootDir))).filter((file) => file.endsWith('.html'))
-  for (const file of htmlFiles) {
-    const source = await readFile(file, 'utf8')
-    for (const ref of localRefsInHtml(source)) {
-      const target = join(dirname(file), ref)
-      if (!(await exists(target))) {
-        errors.push(`${relative(ROOT, file)} references missing local asset ${ref}`)
-      }
+function localRefsInHtml(source) {
+  const refs = []
+  for (const match of source.matchAll(HTML_REF_RE)) refs.push(match[1])
+  for (const match of source.matchAll(HTML_SRCSET_RE)) refs.push(...srcsetRefs(match[1]))
+  refs.push(...localRefsInCss(source))
+  return refs
+    .map(cleanRef)
+    .filter((ref) => ref && isLocalRef(ref))
+}
+
+async function checkFileLocalRefs(file, refs, errors) {
+  for (const ref of refs) {
+    const target = join(dirname(file), ref)
+    if (!(await exists(target))) {
+      errors.push(`${relative(ROOT, file)} references missing local asset ${ref}`)
     }
+  }
+}
+
+async function checkLocalRefs(rootDir, errors) {
+  const files = await walkFiles(resolve(rootDir))
+  for (const file of files) {
+    if (!file.endsWith('.html') && !file.endsWith('.css')) continue
+    const source = await readFile(file, 'utf8')
+    const refs = file.endsWith('.html') ? localRefsInHtml(source) : localRefsInCss(source)
+    await checkFileLocalRefs(file, refs, errors)
   }
 }
 
@@ -354,8 +368,8 @@ export async function checkSourceOwnership() {
   for (const rule of sourceOwnershipRules.generatedSourceFiles) {
     await checkNoGeneratedSourceFiles(rule, errors)
   }
-  for (const rootDir of sourceOwnershipRules.htmlReferenceRoots) {
-    await checkHtmlLocalRefs(rootDir, errors)
+  for (const rootDir of sourceOwnershipRules.localReferenceRoots) {
+    await checkLocalRefs(rootDir, errors)
   }
   return errors
 }
