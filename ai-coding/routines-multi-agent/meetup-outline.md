@@ -279,8 +279,8 @@
 
 - 公众号文章可以提一下：[`ai-coding/routines-multi-agent/index.md`](./index.md)
 - 二维码（slide 右下角并排）：
-  - 公众号 · 直觉机器漫谈：复用 [`public/share/qr-gzh.jpg`](../../public/share/qr-gzh.jpg)
-  - 个人微信 · 缪东旭：复用 [`public/share/qr-personal.jpg`](../../public/share/qr-personal.jpg)
+  - 公众号 · 直觉机器漫谈：复用 [`presentations/qr-gzh.jpg`](../../presentations/qr-gzh.jpg)
+  - 个人微信 · 缪东旭：复用 [`presentations/qr-personal.jpg`](../../presentations/qr-personal.jpg)
 - Q&A 邀请
 
 ---
@@ -291,4 +291,3 @@
 - [ ] 是否需要打印一份 cheatsheet（4 个 routine 名 + 协议前缀），方便观众回去复用
 - [ ] slide 视觉风格——沿用文章里的 SVG 还是重新做？
 - [ ] 文章里有些 roboharness 数据（148 PR、auto_pr 12 次/天）要不要保留作为"另一个跑的项目"佐证，还是全部换成 docfit？我倾向：**保留 1 张 roboharness 截图当 social proof，正文 case 全部用 docfit**
-

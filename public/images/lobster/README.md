@@ -14,5 +14,4 @@ Copy from `claw-agents-shared` repository:
 
 After adding images, uncomment the `<image>` tags in the HTML files:
 - `share/lowcost-multiplatform-multiagent-deploy.html`
-- `public/share/lowcost-multiplatform-multiagent-deploy.html`
 - `presentations/low-cost-multi-agent-deployment.html`

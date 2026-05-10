@@ -157,7 +157,7 @@ export const sidebar = {
         { text: 'Share Index', link: '/en/share/' },
         { text: 'From Ultrathink to Goal', link: '/share/ultrathink-to-goal/' },
         { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab.html' },
-        { text: 'Tailscale + Claude Code Setup', link: '/en/share/tailscale-claude-code-setup' },
+        { text: 'Tailscale + Claude Code Setup', link: '/share/tailscale-claude-code-setup' },
         { text: 'OpenClaw Sharing v3', link: '/share/openclaw-sharing-v3.html' },
         { text: 'Low-Cost Multi-Agent Deploy', link: '/share/lowcost-multiplatform-multiagent-deploy.html' },
         { text: 'Claws Civilization', link: '/share/claws-civilization.html' },
