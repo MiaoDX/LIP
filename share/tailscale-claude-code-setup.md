@@ -109,7 +109,25 @@ Claude Code、ChatGPT、GitHub Copilot、Cursor —— 这些 AI 开发工具已
 - **机型**: `e2-micro`
 - **系统**: Ubuntu 24.04 LTS
 - **磁盘**: 12GB Standard persistent disk（默认 10GB 长期会被 apt cache + journal 撑爆，多 2GB 一年才几毛钱）
-- **防火墙**: 允许 HTTP/HTTPS（可选）
+- **防火墙**: 允许 **UDP 41641 from anywhere**（Tailscale 直连端口）
+
+**怎么开这条防火墙规则**（VM 创建页里没有 UDP 选项，需要单独建一条 VPC 防火墙规则）：
+
+Console 操作：GCP Console → **VPC Network → Firewall → Create Firewall Rule**
+
+- Name: `allow-tailscale`
+- Direction: `Ingress` / Action on match: `Allow` / Targets: `All instances in the network`
+- Source IPv4 ranges: `0.0.0.0/0` / Protocols and ports: 勾选 UDP, 填 `41641`
+
+或者一行 gcloud 搞定：
+
+```bash
+gcloud compute firewall-rules create allow-tailscale \
+  --direction=INGRESS --action=ALLOW \
+  --rules=udp:41641 --source-ranges=0.0.0.0/0
+```
+
+> 💡 **为什么要开 UDP 41641**：Tailscale 在建立直连（绕开 DERP 中继）时，客户端会向 VPS 的 UDP 41641 端口做 hole punching。多数家用网络下，云厂商 stateful firewall 的状态表会自动放行回包，**不开这个端口也能直连**。但**某些客户端网络**（部分企业网/教育网/光猫的 Symmetric NAT）的 NAT 行为会让 hole punching 失败，此时 VPS 端有显式 inbound 规则可以大幅提升成功率。一劳永逸：开 UDP 41641 inbound。如果不开，最坏情况是该客户端永久走 DERP（带宽和延迟会显著变差，但功能可用）。判断方法：客户端运行 `tailscale netcheck`，如果 `MappingVariesByDestIP: true` 就是 Symmetric NAT。
 
 #### 2. 一键服务端配置
 
@@ -236,6 +254,12 @@ GCP 的 ephemeral IP 在某些情况下会保留；AWS 的 auto-assigned public 
 #      （不需要 SSH key —— 后面用 Tailscale + EC2 Instance Connect）
 #    - Network settings: 默认安全组允许 SSH from anywhere 即可
 #      （没 key pair 攻击者扫到 22 端口也无法登录）
+#      ★ 在 "Network settings" 旁点 "Edit" 展开后，点 "Add security group rule"，加一条：
+#        Type: Custom UDP, Port range: 41641, Source type: Anywhere-IPv4 (0.0.0.0/0)
+#      （Tailscale 直连端口，原因见上面 GCP 章节的 💡 说明）
+#      如果实例已经建好忘了加，可以事后补：
+#        EC2 Console → Security Groups → 选你实例的 SG →
+#        Edit inbound rules → Add rule → Custom UDP, 41641, 0.0.0.0/0
 
 # 1. ★ Disable Source/Destination Check ★
 #    EC2 Console → Actions → Networking → Change source/destination check → Stop
