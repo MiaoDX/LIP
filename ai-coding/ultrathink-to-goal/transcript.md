@@ -16,7 +16,7 @@
 
 我想讲的不是某个工具的使用教程，而是这一年里发生的一件更底层的事：AI Coding 里很多原来必须由人亲自承担的工程责任，正在被 harness、产品默认和 agent runtime 悄悄接走。
 
-整场我会用一条线串起来：Ultrathink → SDD → Harness → Goal。它背后讲的是 Claude Code 这一年 281 个版本里，binding constraint，也就是限制系统继续前进的那个瓶颈，是怎么从人手里迁移出去的。
+整场我会用一条线串起来：Ultrathink → SDD → Harness → Goal。它背后讲的是 Claude Code 这一年 405 个 npm publish timestamp 里，latest 已经到 2.1.139，binding constraint，也就是限制系统继续前进的那个瓶颈，是怎么从人手里迁移出去的。
 
 [翻页]
 
@@ -114,19 +114,19 @@ Karpathy 的这种体感不是孤立的。我们先看一个很硬的数据锚�
 
 这三个词不是为了造分类，而是为了让大家之后看任何 AI Coding 工具时，都能问同一组问题：它能调什么？它看到了什么？谁在判定完成？
 
-后面 281 个版本，我们都用这三问来读。
+后面 405 个 npm publish timestamp，我们都用这三问来读。
 
 [翻页]
 
-## Slide 09｜Claude Code 281 个版本
+## Slide 09｜Claude Code 405 个版本
 
-这条时间轴把 Claude Code 过去一年粗略分成三段，再接到 OpenAI `/goal` 这条副线。
+这条时间轴把 Claude Code 过去一年粗略分成三段，再接到 OpenAI `/goal` 这条副线。今天是 2026-05-12，我把信息更新到 2026-05-11 UTC：这条线上现在有 405 个 npm publish timestamp，npm latest 是 2.1.139，stable tag 还在 2.1.126。
 
 第一段是 0.2 时代，我叫它 vibe 段，也就是 Ultrathink 那一端。这个阶段 Skill、Context、Verification 三个维度基本都靠人。人写 prompt，人管上下文，人看输出。
 
 第二段是 1.0 时代，我叫它 SDD 段。这里最重要的是 plan mode。也就是“先想再写”这件事，第一次被做进产品内部。
 
-第三段是 2.x 时代，我叫它 harness 段。Skills、Subagents、Routines、Auto Mode、Managed Agents 这些东西，开始同时工程化三条轴。
+第三段是 2.x 时代，我叫它 harness 段。Skills、Subagents、Routines、Auto Mode、Managed Agents 这些东西，开始同时工程化三条轴。这里几个节点要念准：Routines 对应 2.1.107，时间是 04-14；Managed Agents 对应 2.1.132，时间是 05-06；最新的 2.1.139 在 05-11，把 agent view 和 `/goal` 这样的入口也放进了 Claude Code 的 release 线上。
 
 右下角那条虚线是 OpenAI 的副线，也就是 Goal 那一端。Codex 0.128.0 把 agent loop 自身 bake 进 `/goal` 命令。也就是说，Anthropic 和 OpenAI 在不同产品里，其实都在做同一件事：重新定义人和 agent 之间的 binding constraint。
 

@@ -5,13 +5,14 @@
 - **时长**:50 min(单人讲)
 - **听众**:α 类有实践的开发者为主,γ 类和非研发同事旁听
 - **受众优先级**:当技术密度和通俗性冲突时,优先服务 α 类开发者;γ 类和非研发同事通过反复出现的三问跟住主线:它能调什么?它看到了什么?谁在判定完成?
-- **状态**:大纲已定稿,fact-check 已完成,讲稿和 slide 还在制作(当前约 42 张)
+- **状态**:当前 46 页 deck 已完成 tonight 版内容 refactor, Claude Code timeline 已更新到 2026-05-11 UTC
 
 ## 目录
 
 - [`outline.md`](./outline.md) — 完整大纲(v1,定稿)
 - [`transcript.md`](./transcript.md) — 基于当前 HTML deck 的逐字稿
 - [`poster-content.md`](./poster-content.md) — 海报文字稿
+- [`claude-code-release-timeline-2026-05-11.md`](./claude-code-release-timeline-2026-05-11.md) — Claude Code npm / changelog 快照,用于复查 05-11 timeline 口径
 - [`research/`](./research/) — 准备过程中的 deep research + fact-check 记录
   - [`01-harness-engineering-landscape.md`](./research/01-harness-engineering-landscape.md) — Codex `/goal`、GSD、第三方实践案例
   - [`02-key-figures-and-blogs.md`](./research/02-key-figures-and-blogs.md) — Sam Altman / Greg Brockman / Boris Cherny 近期发言 + 官方 blog 索引
@@ -58,13 +59,13 @@
 
 ## 主线时间轴
 
-Claude Code 一年 281 个版本,自然分三段:
+Claude Code 一年 405 个 npm publish timestamp,截至 2026-05-11 UTC 自然分三段:
 
 | 阶段 | 时间窗口 | 标志性 release |
 |---|---|---|
-| **Vibe** | 0.2.x | ultrathink (0.2.44) → auto compact (0.2.47) → CLAUDE.md @import (0.2.107) |
-| **SDD** | 1.0.x | Plan mode (1.0.33) → Hooks (1.0.38) → Subagent 雏形 (1.0.41) → /todos (1.0.94) |
-| **Harness** | 2.x | Skills (2.0.20) → Subagents (2.0.30) → Routines (2.1.72 / 2026-04-14) → Auto Mode → Managed Agents (2026-05-06) |
+| **Vibe** | 0.2.x · 95 | ultrathink (0.2.44) → auto compact (0.2.47) → CLAUDE.md @import (0.2.107) |
+| **SDD** | 1.0.x · 121 | Plan mode (1.0.33) → Hooks (1.0.38) → Subagent 雏形 (1.0.41) → /todos (1.0.94) |
+| **Harness** | 2.x · 189 | Skills (2.0.20) → Subagents (2.0.30) → Routines (2.1.107 / 2026-04-14) → Auto Mode → Managed Agents (2.1.132 / 2026-05-06) → latest (2.1.139 / 2026-05-11 UTC) |
 
 副线:OpenAI Codex 一年的演进,在 4-30 把 agent loop 整体 bake 进 `/goal` 一条命令。
 

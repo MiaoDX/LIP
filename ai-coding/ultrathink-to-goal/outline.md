@@ -64,7 +64,7 @@
 
 > "The agent part is now taken for granted... Now you can have multiple of them. Now you can have instructions to them. Now you can have optimization over the instructions."
 
-**主图**:Claude Code 281 个版本时间轴 + 三段 vibe / SDD / harness 颜色标记 + 12-15 个里程碑节点。
+**主图**:Claude Code 405 个 npm publish timestamp 时间轴(截至 2026-05-11 UTC, latest 2.1.139) + 三段 vibe / SDD / harness 颜色标记 + 12-15 个里程碑节点。
 
 整场 lecture 沿着这条时间轴走,但每到一个关键节点会从三个维度看:**Skill / Context / Verification**。
 
@@ -210,7 +210,7 @@ binding constraint 全部在我们这一侧。
 - **每天第一件事:升级所有工具**
   - `claude --upgrade` / `codex` / MCP servers / skills
   - 推荐我整理的工具集:[github.com/MiaoDX/claude-devkit](https://github.com/MiaoDX/claude-devkit)
-  - 281 个版本里只要落后 2 周,那 25 个百分点就回去了一半
+  - 405 个 npm publish timestamp 里只要落后 2 周,那 25 个百分点就回去了一半
 
 - **先准备边界,再减少审批延迟**
   - clean branch / git / CI / secret 边界先到位
@@ -313,7 +313,7 @@ binding constraint 全部在我们这一侧。
 
 1. **开场 Karpathy 截图**(自己截 No Priors)
 2. **0.5 节数据图**:Endor Labs 25% + Stanford 6× + ForgeCode 81.8% 三条数据并列
-3. **第 1 节主图**:Claude Code 281 版本时间轴 + 三段颜色 + 12-15 个里程碑
+3. **第 1 节主图**:Claude Code 405 个 npm publish timestamp 时间轴 + 三段颜色 + 12-15 个里程碑
 4. **第 4 节三轴矩阵图**:Skill / Context / Verification × from-X-to-Y 演进
 5. **第 5.3 节 routing 图**:需求模糊 / 重复调度 / 一次性长程 / 验证风险高分别匹配不同 harness
 
