@@ -21,6 +21,12 @@ As of `2026-05-11T23:59:59Z`, the npm timeline contains **405 publish timestamps
 - npm package `modified`: `2026-05-11T18:43:30.297Z`
 - latest publish timestamp: `2.1.139` at `2026-05-11T18:09:28.537Z`
 
+## Visual map
+
+![Claude Code release visual map through 2026-05-11](images/claude-code-release-map-2026-05-11.png)
+
+This image combines an AI-generated visual base with deterministic text overlays, so the word cloud highlights remain readable and reviewable.
+
 ## Era counts used in the slide
 
 | Era | Version family | Publish timestamps |
