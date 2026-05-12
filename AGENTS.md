@@ -80,4 +80,4 @@ Common layout gotchas this catches:
 
 ### Slide copy punctuation
 
-For visible text inside standalone slide decks, prefer fragment-style copy without sentence-ending periods or Chinese full stops. Keep punctuation when it is part of a quote, URL, version number, decimal, filename, code snippet, or when speaker notes/transcripts need normal prose punctuation.
+For visible text inside standalone slide decks, prefer fragment-style copy without unnecessary sentence-ending `。`, `.`, or `；`. Keep punctuation when it is part of a quote, URL, version number, decimal, filename, code snippet, or when speaker notes/transcripts need normal prose punctuation.

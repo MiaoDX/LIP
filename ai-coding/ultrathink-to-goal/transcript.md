@@ -1,7 +1,7 @@
 # 从 Ultrathink 到 Goal：AI Coding 工程化的一年｜逐字稿
 
 > 「汽车人 AI 进化论」第 09 期 · 缪东旭
-> 版本：基于 `index.html` 当前 45 页 deck
+> 版本：基于 `index.html` 当前 44 页 deck
 > 用途：排练口播稿。方括号里的内容是舞台提示，不需要念出来。
 
 ---
@@ -12,11 +12,11 @@
 
 今天这场分享的题目叫《从 Ultrathink 到 Goal：AI Coding 工程化的一年》。
 
-这个题目里有两个端点，也有一条中间线。Ultrathink 是去年大家很熟悉的一个词：你在 prompt 末尾加上它，希望模型多想一会儿。中间经过 SDD，也就是把口头意图变成 spec、plan、todos、state 这些 durable artifacts；再经过 harness，也就是模型外面那圈工程边界被认真设计。Goal 是最近 Codex 和 Claude Code 都开始收敛到的入口：你不再只给下一步指令，而是直接交给它一个目标，或者直接声明什么叫完成。
+这个题目里有两个端点，也有一条中间线。Ultrathink 是去年大家很熟悉的一个词：你在 prompt 末尾加上它，希望模型多想一会儿。中间经过 SDD，也就是把口头意图变成 spec、plan、todos、state 这些 durable artifacts。再经过 harness，也就是模型外面那圈工程边界被认真设计。Goal 是最近 Codex 和 Claude Code 都开始收敛到的入口：你不再只给下一步指令，而是直接交给它一个目标，或者直接声明什么叫完成。
 
 我想讲的不是某个工具的使用教程，而是这一年里发生的一件更底层的事：AI Coding 里很多原来必须由人亲自承担的工程责任，正在被 harness、产品默认和 agent runtime 悄悄接走。
 
-整场我会用一条线串起来：Ultrathink → SDD → Harness → Goal。它背后讲的是 Claude Code 这一年 405 个 npm publish timestamp 里，latest 已经到 2.1.139，binding constraint，也就是限制系统继续前进的那个瓶颈，是怎么从人手里迁移出去的。
+整场我会用一条线串起来：Ultrathink → SDD → Harness → Goal。它背后讲的是 Claude Code 这一年 405 个 npm publish timestamp 里，latest 已经到 2.1.139，系统瓶颈是怎么从人手里迁移出去的。
 
 [翻页]
 
@@ -68,11 +68,11 @@ Claude Code 是主力长 session。很多 lecture、工具链和项目改动，�
 
 第二，infinite budget feeling。token 好像用不完，任务总还能继续 polish、继续 refactor。
 
-第三，moving tools。MCP、skills、subagents、routines、`/goal` 都在变，手册永远慢半拍。
+第三，moving tools。MCP、skills、subagents、Claude Routines、`/goal` 都在变，手册永远慢半拍。
 
 最后真正难的是 exit problem。最难的不是生成，而是决定什么时候算完成，谁有资格说完成。
 
-所以今天的核心不是“AI 太强了怎么办”，而是：谁定义 action surface，谁控制 information surface，谁给 exit condition。
+所以今天的核心不是“AI 太强了怎么办”，而是：谁定义行动入口，谁控制信息入口，谁给退出条件。
 
 [翻页]
 
@@ -106,11 +106,11 @@ Karpathy 的这种体感不是孤立的。我们先看一个很硬的数据锚�
 
 我把这件事压成三问。这里不是说模型不重要，模型当然决定能力上限；但 harness 决定这个能力能不能稳定转成可交付结果。
 
-第一，Skill：agent 能调什么？这对应 action surface。工具、命令、skills、routines，决定 agent 能把你的意图落实到哪些动作上。
+第一，Skill：agent 能调什么？这对应行动入口。工具、命令、skills、Claude Routines，决定 agent 能把你的意图落实到哪些动作上。
 
-第二，Context：agent 看到了什么？这对应 information surface。文件、历史、memory、subagent 隔离，决定模型靠什么做判断。
+第二，Context：agent 看到了什么？这对应信息入口。文件、历史、memory、subagent 隔离，决定模型靠什么做判断。
 
-第三，Verification：谁判定完成？这对应 exit condition。rubric、grader、测试、proof pack，决定长程任务什么时候停止。
+第三，Verification：谁判定完成？这对应退出条件。rubric、grader、测试、proof pack / 证据包，决定长程任务什么时候停止。
 
 这三个词不是为了造分类，而是为了让大家之后看任何 AI Coding 工具时，都能问同一组问题：它能调什么？它看到了什么？谁在判定完成？
 
@@ -120,13 +120,13 @@ Karpathy 的这种体感不是孤立的。我们先看一个很硬的数据锚�
 
 ## Slide 09｜Claude Code 405 个版本
 
-这页上面是 release map，下面还是时间线。release map 负责告诉你“现在的产品 stack 长什么样”，时间线负责告诉你“它是怎么一路长到这里的”。
+这页先看时间线，再看 release map。时间线负责告诉你“它是怎么一路长到这里的”，release map 负责给出“现在已经长什么样”的视觉证据。
 
 今天是 2026-05-12，我把信息更新到 2026-05-11 UTC：这条线上现在有 405 个 npm publish timestamp，npm latest 是 2.1.139，stable tag 还在 2.1.126。
 
-读这张图不要背版本号。先看左边五层 stack：terminal runtime，MCP and auth，plugins and hooks，agent loop，最后到 `/goal`。
+读这张图不要背版本号。先看时间线四段：Ultrathink、SDD、Harness、Goal。
 
-这五层其实对应同一件事：product stack 在一层层接走原来人手动承担的责任。工具怎么接进来，权限怎么管，流程怎么挂钩，agent loop 怎么延续，最后什么叫完成。
+再看 release map 左侧五层：terminal runtime，MCP and auth，plugins and hooks，agent loop，最后到 `/goal`。这五层其实对应同一件事：产品能力在一层层接走原来人手动承担的责任。工具怎么接进来，权限怎么管，流程怎么挂钩，agent loop 怎么延续，最后什么叫完成。
 
 中间最新 release 是 2.1.139，它加了 `/goal` 和 agent view。右侧词云里 `/goal` 最大，这个很有意思：说明最近这一段产品变化的重心，已经不是“多一个工具”，而是把目标和完成条件做成一等入口。
 
@@ -154,7 +154,7 @@ Context 轴上，我们管上下文。auto compact 开始帮一点忙，CLAUDE.m
 
 Verification 轴上，我们自己看输出。模型做完以后，是否正确、是否完整、是否值得 merge，还是人亲自判断。
 
-这段的核心是：binding constraint 基本全部在我们这一侧。
+这段的核心是：系统瓶颈基本全部在我们这一侧。
 
 [翻页]
 
@@ -186,11 +186,11 @@ Vibe 阶段里，很多东西都活在对话里：我要什么、边界是什么
 
 [翻页]
 
-## Slide 14｜durable artifacts 出现了
+## Slide 14｜durable artifacts 成为 agent 接口
 
-所以我这里想纠偏一下：SDD 的核心不是 plan mode。
+所以我这里想先把重点放在 artifact 上。
 
-Plan 很重要，但它只是 artifact 的一种。真正的变化是：spec 写清楚做什么、为什么、边界和验收标准；plan 写清楚怎么做、顺序、风险；todos 和 state 写清楚现在到哪、下一步是什么；context 文件写清楚哪些信息应该长期存在。
+Plan mode 很重要，但它只是其中一个入口。真正的变化是：spec 写清楚做什么、为什么、边界和验收标准；plan 写清楚怎么做、顺序、风险；todos 和 state 写清楚现在到哪、下一步是什么；context 文件写清楚哪些信息应该长期存在。
 
 以前这些信息都混在 prompt 和 transcript 里。agent 做到一半迷路了，你只能继续解释，或者重开一个 session 再讲一遍。
 
@@ -218,7 +218,7 @@ Spec-Kit、OpenSpec、BMAD 这类东西重的是 spec 和 requirements。GSD、g
 
 这些路径看起来不一样，但共同点是：先把意图写成结构，再让 agent 执行结构。
 
-这就是 SDD 在这一年里真正的位置：社区先证明 vibe 不够，要有 spec 和流程；产品再把其中最稳定、最通用的部分收进去。
+这就是 SDD 在这一年里真正的位置：社区先证明 vibe 不够，要有 spec 和流程。产品再把其中最稳定、最通用的部分收进去。
 
 [翻页]
 
@@ -226,7 +226,7 @@ Spec-Kit、OpenSpec、BMAD 这类东西重的是 spec 和 requirements。GSD、g
 
 不过 SDD 不是终点，它是给 Harness 铺路。
 
-一句话讲：SDD 把 intent 工程化成 artifacts；Harness 把 artifacts 工程化成 runtime。
+一句话讲：SDD 把 intent 写成 artifacts，Harness 把 artifacts 工程化成 runtime。
 
 也就是说，SDD 先把目标、计划、状态和验收标准写出来。到了 Harness 阶段，agent 调什么、看什么、凭什么宣告完成，不只是写在文件里，而是被 runtime、产品和框架接管。
 
@@ -252,7 +252,7 @@ HumanLayer 有一句话，把 harness engineering 看成 context engineering 的
 
 所以我今天把 harness 压成三轴：Skill、Context、Verification。它不是某一个产品名。后面出现的 routine、roboharness、GSD、gstack、hybrid-phase-pipeline 和 `/goal`，都只是不同任务下的 harness 形态。
 
-当生成成本下降以后，瓶颈不在“能不能写一版代码”。瓶颈在于：它能不能调用正确的能力；它有没有看到足够高信号的信息；它完成以后，有没有一个独立质量门防止它自我感觉良好。
+当生成成本下降以后，瓶颈不在“能不能写一版代码”。瓶颈在于：它能不能调用正确的能力，它有没有看到足够高信号的信息，它完成以后，有没有一个独立质量门防止它自我感觉良好。
 
 [翻页]
 
@@ -260,9 +260,9 @@ HumanLayer 有一句话，把 harness engineering 看成 context engineering 的
 
 这页是一个总览。
 
-Skill 轴看 action surface：从全部工具预加载，到按需发现、按需加载，再到 routine 这种更高阶的动作包装。
+Skill 轴看行动入口：从全部工具预加载，到按需发现、按需加载，再到 Claude Routines 这种更高阶的动作包装。
 
-Context 轴看 information surface：从被动 transcript buffer，到 CLAUDE.md、subagent 隔离、progress 文件、auto compact，再到 idle 时复盘和蒸馏。
+Context 轴看信息入口：从被动 transcript buffer，到 CLAUDE.md、subagent 隔离、progress 文件、auto compact，再到 idle 时复盘和蒸馏。
 
 Verification 轴看 exit condition：从人肉 review，到 in-loop verifier，到外部 grader、rubric、proof pack。
 
@@ -340,7 +340,7 @@ Superpowers、Awesome Claude Code 这些社区项目也说明，这不是大厂�
 
 每一轴都经历了同一个动作：人手动承担，harness 显式化，最后产品内建。
 
-Skill 轴上，prompt 变成 skills、tools、routines。
+Skill 轴上，prompt 变成 skills、tools、Claude Routines。
 
 Context 轴上，手工上下文管理变成 import、subagent 隔离、compact、memory、蒸馏。
 
@@ -354,13 +354,13 @@ Verification 轴上，人肉 review 变成 tests、rubric、fresh evaluator、pr
 
 这一节有三个实践，但它不是工具推荐。
 
-我想让每个案例都回答同一个问题：它移走了哪个 binding constraint？
+我想让每个案例都回答同一个问题：它移走了哪个系统瓶颈？
 
 第一个是 roboharness，解决长 unattended run 的 review 问题。
 
-第二个是 routine 多 agent，解决云端重复调度和上下文切换问题。
+第二个是 Claude Routines 多 agent，解决云端重复调度和上下文切换问题。
 
-第三个是 60 分边界，讲哪些活适合云端 routine，哪些活必须切回本地重 harness。
+第三个是 60 分边界，讲哪些活适合 Claude Routines，哪些活必须切回本地重 harness。
 
 [翻页]
 
@@ -372,15 +372,15 @@ Verification 轴上，人肉 review 变成 tests、rubric、fresh evaluator、pr
 
 如果 agent 跑 4 个小时改机器人代码，中间生成了很多仿真、日志、对比图，人不可能一帧帧看完。真正需要的是把 review 从“盯过程”换成“审证据包”。
 
-所以 roboharness 的定位是一句话：long unattended agent run，最后变成 one proof pack，再变成 short human review。
+所以 roboharness 的定位是一句话：long unattended agent run，最后变成 one proof pack / 证据包，再变成 short human review。
 
-这个 proof pack 里有 contract，有 phase manifest，有 approval report，有 report.html。人先看 Run Decision banner，再看 surfaced case，再决定要不要重跑某个 phase。
+这个 proof pack / 证据包里有 contract，有 phase manifest，有 approval report，有 report.html。人先看 Run Decision banner，再看关键 case，再决定要不要重跑某个 phase。
 
-这样 Verification bottleneck 就被工程化了。原来 4 小时的过程，人可能只需要 5 分钟就能做第一轮判断。
+这样审查瓶颈就被工程化了。原来 4 小时的过程，人可能只需要 5 分钟就能做第一轮判断。
 
 [翻页]
 
-## Slide 28｜proof pack 长什么样
+## Slide 28｜proof pack / 证据包长什么样
 
 这页是一个真实输出，不是手绘示意。
 
@@ -390,17 +390,17 @@ Verification 轴上，人肉 review 变成 tests、rubric、fresh evaluator、pr
 
 这就是 proof pack 的意义。它让你不需要回放全部过程，也能快速看到关键证据：任务有没有到位，哪一步开始偏，是否值得继续跑。
 
-所以 roboharness 主要落在 Verification 轴。它把机器人领域里昂贵的 review bottleneck 压缩成一个可读的证据 surface。
+所以 roboharness 主要落在 Verification 轴。它把机器人领域里昂贵的 review 瓶颈压缩成一个可读的证据视图。
 
 [翻页]
 
-## Slide 29｜routine 多 agent
+## Slide 29｜Claude Routines 多 agent
 
-第二个实践是 routine 多 agent。
+第二个实践是 Claude Routines 多 agent。
 
-这里移走的是调度和上下文切换 bottleneck。
+这里移走的是调度和上下文切换瓶颈。
 
-我把工程团队里几个固定角色封装成云端 routine：auto_pr 负责周期性推进 PR，issue_label 负责 issue 分类，pr_again 负责对 PR 做二次推进，daily_duty 负责每天兜底。
+我把工程团队里几个固定角色封装成云端 Claude Routines：auto_pr 负责周期性推进 PR，issue_label 负责 issue 分类，pr_again 负责对 PR 做二次推进，daily_duty 负责每天兜底。
 
 这页下面的截图是为了回答一个常见怀疑：云端 agent 听起来很玄，到底是不是真在干活？
 
@@ -410,49 +410,45 @@ Verification 轴上，人肉 review 变成 tests、rubric、fresh evaluator、pr
 
 [翻页]
 
-## Slide 30｜routine 跨三轴
+## Slide 30｜Claude Routines 的流水线视图
 
-routine 不是只落在 Skill 轴。它同时跨 Skill、Context、Verification。
+Claude Routines 不是只落在 Skill 轴。它是一条从触发到交接的流水线。
 
-Skill 轴上，它把工程角色包装成可调用 routine。你不需要每次都解释“帮我做一次 issue triage”，这个职责已经被封装。
+角色封装上，它把工程角色包装成可调用 routine。你不需要每次都解释“帮我做一次 issue triage”，这个职责已经被封装。
 
-Context 轴上，每个 routine 都有 fresh context，不会和你本地长 session 混在一起。GitHub issue、comment、label、branch 变成消息总线。
+上下文上，每个 Claude Routine 都以干净上下文开始，不会和你本地长 session 混在一起。GitHub issue、comment、label、branch 变成消息总线。
 
 Verification 轴上，关键是三态自评：FULLY、PARTIALLY、DIMINISHING RETURNS。这里 PARTIAL 不是失败，而是云端流水线诚实声明自己的边界。它告诉你：我做到这里，剩下需要人接。
 
-最后 Boundary 也很重要。云端 routine 不是万能的。一旦任务超过资源、时长或验证风险边界，就要交给本地更重的 harness。
+最后 Boundary 也很重要。Claude Routines 不是万能的。一旦任务超过资源、时长或验证风险边界，就要交给本地更重的 harness。
 
 [翻页]
 
-## Slide 31｜cloud-first 到切回本地
-
-这里澄清一个常见误会：routine 和 roboharness 不是新旧两代工具。
-
-它们是同一项目在不同资源密度下的两套路由。
-
-roboharness 这个 repo 自己就是这么走过来的。早期很多事情可以让 cloud routine 帮你推进，比如 daily duty、issue 分类、PR 增量。但是一旦任务需要 GPU、真机、单次迭代超过 1 小时，或者需要反复 trial-and-error，cloud routine 的 60 分钟窗口就压不住了。
-
-这时候要切回本地。不是因为云端不好，而是任务资源密度变了。
-
-所以 stop-the-line 信号很简单：需要 GPU 或真机，单次迭代大于 1 小时，预期反复试错。满足任一条，就别硬塞给 cloud routine，直接 wrap 进本地 long-run 加 proof pack。
-
-[翻页]
-
-## Slide 32｜60 分是任务-工具匹配边界
+## Slide 31｜60 分是任务-工具匹配边界
 
 所以“60 分”不是产出完成度，而是任务和工具匹配的边界。
 
+先看左边的交棒触发条件。
+
+第一，任务需要 GPU、真机、本地 dataset 或特殊运行时，云端 worker reach 不到。
+
+第二，单次迭代超过 1 小时，60 分钟流水线很难完整闭环。
+
+第三，预期要反复试错，过程就需要 contract、phase_manifest、approval_report 这些材料沉淀成证据包。
+
+再看右边怎么选工具。
+
 有些活适合 mattpocock/skills。比如需求还很模糊时，先用 grill-me 或 grill-with-docs，让 agent 反问你，把任务约束压实。
 
-有些活适合 GSD / gstack。比如 scope 大、跨文件、需要 discuss / plan / execute / verify 的 phase 结构。
+有些活适合 GSD / gstack。比如范围大、跨文件、需要 discuss / plan / execute / verify 的 phase 结构。
 
-有些活适合 roboharness。比如验证风险高、运行时间长、人不可能看完整过程，就需要 proof pack。
+有些活适合 roboharness。比如验证风险高、运行时间长、人不可能看完整过程，就需要 proof pack / 证据包。
 
-这些工具不是替代关系，也不是工具排序。routine 更像 product 或 cloud harness，GSD / gstack 更像 workflow harness，roboharness 的 proof pack 是 Verification layer。真正的判断不是“哪个工具最好”，而是任务边界和验证风险在哪里。
+这些工具不是替代关系，也不是工具排序。Claude Routines 更像产品和云端 harness，GSD / gstack 更像 workflow harness，roboharness 的 proof pack 是验证层。真正的判断不是“哪个工具最好”，而是任务边界和验证风险在哪里。
 
 [翻页]
 
-## Slide 33｜哪类活配哪种 harness
+## Slide 32｜哪类活配哪种 harness
 
 这页是实践部分的收束。
 
@@ -460,17 +456,17 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 如果任务模糊、验证风险高，先规格化，再分 phase。不要急着让 agent 写代码。
 
-如果任务清晰、验证风险高，适合长程执行加证据包。比如 `/goal`、hybrid-phase-pipeline、proof pack。
+如果任务清晰、验证风险高，适合长程执行加证据包。比如 `/goal`、hybrid-phase-pipeline、proof pack / 证据包。
 
 如果任务模糊但风险不高，先问清楚。用 grill-me、office-hours 这类工具，先把意图压成可执行判断。
 
-如果任务清楚、风险可控，而且重复发生，适合 routine。每小时跑一次、每天兜底，这类固定职责就该被云端流水线吃掉。
+如果任务清楚、风险可控，而且重复发生，适合 Claude Routines。每小时跑一次、每天兜底，这类固定职责就该被云端流水线吃掉。
 
 这就是我想让大家带走的实践判断：不是“哪个工具最好”，而是“这个任务应该交给哪种 harness”。
 
 [翻页]
 
-## Slide 34｜当下与未来
+## Slide 33｜当下与未来
 
 现在我们回到产品趋势。
 
@@ -480,11 +476,11 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 35｜/goal
+## Slide 34｜/goal
 
 `/goal` 是这个方向很典型的例子，而且这里刚好有一个很有意思的新变化：Claude Code 也支持 `/goal` 了。
 
-它不是替代 AGENTS.md、skills、permissions、subagents。它是把这些东西 wrap 成“我说目标”的入口。
+它不是替代 AGENTS.md、skills、permissions、subagents。它是把这些东西收进“我说目标”的入口。
 
 时间线上，Codex 0.128.0 是 2026 年 4 月 30 日 UTC 发布的，5 月 1 日 Greg Brockman 的 tweet 里已经直接在讲 `/goal <objective>`。这里的重心是 objective loop：把目标交给 Codex，让它拆动作、循环推进、持续收尾。
 
@@ -496,9 +492,9 @@ Claude Code 这边，2.1.139 是 2026 年 5 月 11 日 UTC 发布的，changelog
 
 [翻页]
 
-## Slide 36｜bake-in 的新失败模态
+## Slide 35｜产品内建的新失败模态
 
-但 bake-in 不是终点。
+但产品内建不是终点。
 
 Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产品把更多责任接走以后，也会引入新的失败模态。
 
@@ -510,7 +506,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 37｜收尾
+## Slide 36｜收尾
 
 现在回到 Karpathy 的困境。
 
@@ -518,7 +514,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 38｜skill issue 的边界在移动
+## Slide 37｜skill issue 的边界在移动
 
 有些东西仍然需要我们自己解，比如 judgment。什么活配什么 harness，何时介入，何时放手，这些不是产品能完全替你判断的。
 
@@ -526,17 +522,17 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 有些特定能力正在被 skill 接走。以前你要在 prompt 里再说一遍，现在可以直接调用。
 
-有些重复劳动正在被 routine 接走。每小时一个、每天兜底，这些不该再靠人想起来。
+有些重复劳动正在被 Claude Routines 接走。每小时一个、每天兜底，这些不该再靠人想起来。
 
 所以下次 agent 失败时，先别问“模型是不是不行”。先问三件事：它能调什么？它看到了什么？谁在判定完成？
 
 这三问能帮你定位问题到底在模型、任务、上下文、工具、还是验证机制。
 
-最后回到今天的 thesis：我们不必再是 binding constraint。但前提是，我们要学会设计和选择合适的 harness。
+最后回到今天的 thesis：我们不必再是系统瓶颈。但前提是，我们要学会设计和选择合适的 harness。
 
 [翻页]
 
-## Slide 39｜Tips
+## Slide 38｜Tips
 
 最后给三个今晚就能做的实验。
 
@@ -544,51 +540,51 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 40｜实验 1：把 harness 环境整理到最新
+## Slide 39｜实验 1：把 harness 环境整理到最新
 
 第一个实验：把 harness 环境整理到最新。
 
 每天第一件事，升级所有工具。Claude Code、Codex、MCP servers、skills，都别落后太久。
 
-这不是版本洁癖。今天我们讲了一整场，很多能力就是在最近几个版本里被 bake-in 的。你落后两周，可能不是 prompt 写得不好，而是你还停在旧默认里。
+这不是版本洁癖。今天我们讲了一整场，很多能力就是在最近几个版本里被产品内建的。你落后两周，可能不是 prompt 写得不好，而是你还停在旧默认里。
 
 同时先准备边界，再减少审批延迟。clean branch、git、CI、secret 边界先到位。边界清楚以后，尽量减少那些可避免的人类审批 prompt。
 
-真正要避免的是：agent 每走一步都要你点一下，最后人又变成 turn-by-turn approval bottleneck。
+真正要避免的是：agent 每走一步都要你点一下，最后人又变成 turn-by-turn approval 瓶颈。
 
 [翻页]
 
-## Slide 41｜实验 2：先让 agent 问你
+## Slide 40｜实验 2：先让 agent 问你
 
 第二个实验：先让 agent 问你，再让它干。
 
-可以跑一次 grill-me。让 AI 先反问你需求是否清晰。被盘问过一次，就很难再回到直接写 prompt。
+可以先试一次 office-hours，用 YC 风格的 forcing questions，把“我想做个东西”压成几个必须回答的判断。
 
-也可以试一次 office-hours，用 YC 风格的 forcing questions，把“我想做个东西”压成几个必须回答的判断。
+也可以跑一次 grill-me。让 AI 先反问你需求是否清晰。被盘问过一次，就很难再回到直接写 prompt。
 
-还有一个很简单的动作：画图给它看。架构、流程、UI 草图，直接截图丢进去。多模态输入通常比 200 字描述稳定得多。
+还有一个很简单的动作：写清验收标准。把完成条件、non-goals 和验收样例写出来，让 agent 先对齐再执行。
 
 这背后的原则是：对齐比提示词更重要。任务没对齐时，prompt 写得越长，错得越像真的。
 
 [翻页]
 
-## Slide 42｜实验 3：用最好模型跑真实任务
+## Slide 41｜实验 3：用最好模型跑真实任务
 
-第三个实验：用你能 access 的最好模型跑真实任务。
+第三个实验：用你能用到的最好模型跑真实任务。
 
 如果 SaaS frontier model 可以用，就直接用。如果是内部 only 项目，就用你能用到的 top-tier 私有或开源模型。
 
-这里不是说模型万能。今天整场的更准确说法是：model 决定能力上限，harness 决定这个能力能不能稳定转成交付。两者都不能成为新的 binding constraint。
+这里不是说模型万能。今天整场的更准确说法是：model 决定能力上限，harness 决定这个能力能不能稳定转成交付。两者都不能成为新的系统瓶颈。
 
 很多时候你省下来的 retry、review、上下文重建和返工时间，比模型成本贵得多。
 
-这场 lecture 听完最容易的失败模式，是回去想“我下周开始整这套”。真正的失败模式是什么都不试。
+最容易失败的方式，是回去想“我下周开始整这套”。更好的动作是今晚就拿一个真实任务试一次。
 
-今晚装一个 grill-me，明早跑一个 routine，或者拿一个真实任务试一次 `/goal`，就够你接下来一周看出区别。
+今晚试一次 office-hours，明早跑一个 Claude Routine，或者拿一个真实任务试一次 `/goal`，就够你接下来一周看出区别。
 
 [翻页]
 
-## Slide 43｜Bonus：hybrid-phase-pipeline
+## Slide 42｜Bonus：hybrid-phase-pipeline
 
 最后放一个 bonus。
 
@@ -606,7 +602,7 @@ Codex `/goal` 负责持续目标、反复检查和最终收尾。
 
 [翻页]
 
-## Slide 44｜这场 lecture 的准备
+## Slide 43｜这场 lecture 的准备
 
 最后这场 lecture 本身，也是同一套 workflow。
 
@@ -620,12 +616,12 @@ Codex `/goal` 负责持续目标、反复检查和最终收尾。
 
 [翻页]
 
-## Slide 45｜Q&A
+## Slide 44｜Q&A
 
 我的部分就到这里。
 
 最后再收一句：软件工程的 fundamentals 没变，变的是它们装到了谁手里。
 
-我们不必再是 binding constraint，但我们必须学会判断：agent 能调什么，它看到了什么，谁在判定完成。
+我们不必再是系统瓶颈，但我们必须学会判断：agent 能调什么，它看到了什么，谁在判定完成。
 
 谢谢大家。接下来欢迎提问。

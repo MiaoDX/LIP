@@ -326,7 +326,7 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
 
 .psychosis-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
   max-width: 1120px;
   margin-top: 24px;
@@ -335,7 +335,7 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   border: 1px solid var(--border);
   background: var(--bg-card);
   padding: 18px;
-  min-height: 128px;
+  min-height: 118px;
 }
 .psychosis-item .psychosis-k {
   font-family: var(--font-mono);
@@ -904,10 +904,53 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   display: block;
   width: auto;
   max-width: 100%;
-  max-height: 345px;
+  max-height: 300px;
   margin: 0 auto;
   border: 1px solid var(--border-light);
   background: #02070b;
+}
+.release-map-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.85fr);
+  gap: 16px;
+  align-items: stretch;
+  max-width: 1240px;
+  margin-top: 12px;
+}
+.release-map-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.release-prompts {
+  display: grid;
+  gap: 10px;
+}
+.release-prompt {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 12px 14px;
+}
+.release-prompt .prompt-tag {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.release-prompt .prompt-title {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+.release-prompt .prompt-copy {
+  color: var(--text-sec);
+  font-size: 12.5px;
+  line-height: 1.45;
 }
 .release-map-slide .timeline-guide {
   margin-top: 8px;
@@ -957,15 +1000,24 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
 }
 .goal-visual {
   display: grid;
-  grid-template-columns: minmax(420px, 540px) minmax(280px, 1fr);
+  grid-template-columns: minmax(430px, 610px) minmax(280px, 1fr);
   gap: 22px;
   align-items: stretch;
   max-width: 1120px;
   margin-top: 20px;
 }
+.goal-evidence-stack {
+  display: grid;
+  gap: 12px;
+}
 .goal-visual .screenshot {
   margin-top: 0;
   max-width: 100%;
+}
+.goal-evidence-stack .screenshot img {
+  background: #f8f6f2;
+  max-height: 190px;
+  object-fit: contain;
 }
 .goal-visual .fact-row {
   background: var(--accent-soft);
@@ -1074,6 +1126,42 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   font-size: 13px;
   color: var(--text-sec);
   line-height: 1.6;
+}
+.boundary-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.85fr) minmax(420px, 1.15fr);
+  gap: 18px;
+  align-items: stretch;
+  max-width: 1120px;
+  margin-top: 22px;
+}
+.boundary-grid .routine-facts {
+  gap: 10px;
+}
+.boundary-grid .fact-row {
+  padding: 12px 14px;
+}
+.boundary-grid .cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 0;
+}
+.boundary-grid .card {
+  padding: 14px 16px;
+}
+.boundary-note {
+  margin-top: 16px;
+  max-width: 92ch;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--text-dim);
+  border-top: 1px dashed var(--border-light);
+  padding-top: 12px;
+}
+.routines-proof-row .ss-frame {
+  max-height: 255px !important;
 }
 .context-strip {
   display: grid;
@@ -1626,7 +1714,7 @@ body .key-hint { display: none; }
   .data-row, .axis-grid, .cards, .evidence-duo, .psychosis-grid, .triad-grid, .axis-overview, .evolution-lane, .verification-reasons { flex-direction: column; grid-template-columns: 1fr; }
   .data-cell, .axis-col { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child, .axis-col:last-child { border-bottom: none; }
-  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow, .prep-workflow, .verification-proof-strip { grid-template-columns: 1fr !important; }
+  .slide-2col, .routine-visual, .goal-visual, .goal-evidence-stack, .release-map-body, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow, .prep-workflow, .verification-proof-strip, .boundary-grid { grid-template-columns: 1fr !important; }
   .routing-table {
     grid-template-columns: 72px repeat(2, minmax(0, 1fr)) !important;
     width: 100%;
@@ -1678,6 +1766,29 @@ body .key-hint { display: none; }
     font-size: 10.5px;
     line-height: 1.25;
     overflow-wrap: anywhere;
+  }
+  .psychosis-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .psychosis-item {
+    min-height: 92px;
+    padding: 10px;
+  }
+  .psychosis-item .psychosis-k {
+    font-size: 8px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .psychosis-item .psychosis-v {
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+  .psychosis-close {
+    margin-top: 14px !important;
+    font-size: clamp(20px, 6.2vw, 26px) !important;
+    line-height: 1.28 !important;
   }
   .verification-pipeline-slide .evolution-lane {
     margin-top: 8px;
@@ -1837,6 +1948,9 @@ body .key-hint { display: none; }
     max-height: 112px;
     object-fit: contain;
   }
+  .goal-bake-slide .goal-evidence-stack {
+    gap: 6px;
+  }
   .goal-bake-slide .ss-cap {
     margin-top: 4px;
     font-size: 8.4px;
@@ -1872,6 +1986,200 @@ body .key-hint { display: none; }
     padding: 7px 0 7px 10px;
     font-size: 16px;
     line-height: 1.22;
+  }
+  .robo-flow-slide h3,
+  .claude-routines-evidence-slide h3 {
+    font-size: 13px;
+    line-height: 1.28;
+    margin-bottom: 4px;
+  }
+  .robo-flow-slide .slide-2col {
+    gap: 8px;
+    margin-top: 10px !important;
+  }
+  .robo-flow-slide .quote {
+    font-size: 13px !important;
+    line-height: 1.35;
+  }
+  .robo-flow-slide .col-l > div:not(.quote) {
+    margin-top: 8px !important;
+    font-size: 11.2px !important;
+    line-height: 1.35 !important;
+  }
+  .robo-flow-slide .flow-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px;
+    margin-top: 0;
+  }
+  .robo-flow-slide .flow-card {
+    padding: 8px 9px;
+  }
+  .robo-flow-slide .flow-card .flow-tag {
+    font-size: 7.5px;
+    letter-spacing: 0.8px;
+    margin-bottom: 3px;
+  }
+  .robo-flow-slide .flow-card .flow-title {
+    font-size: 10.5px;
+    margin-bottom: 2px;
+  }
+  .robo-flow-slide .flow-card .flow-copy {
+    font-size: 9.4px;
+    line-height: 1.25;
+  }
+  .robo-proof-slide h3 {
+    font-size: 13px;
+    line-height: 1.28;
+    margin-bottom: 4px;
+  }
+  .robo-proof-slide .slide-2col {
+    gap: 8px;
+    margin-top: 8px !important;
+  }
+  .robo-proof-slide .col-l .screenshot img {
+    max-height: 185px !important;
+  }
+  .robo-proof-slide .col-r > div:first-child {
+    gap: 6px !important;
+  }
+  .robo-proof-slide .col-r .screenshot img {
+    max-height: 72px !important;
+  }
+  .robo-proof-slide .col-r .ss-cap {
+    font-size: 8px !important;
+    padding: 3px 5px !important;
+  }
+  .robo-proof-slide .col-r > div:last-child {
+    display: none;
+  }
+  .claude-routines-evidence-slide .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 7px;
+    margin-top: 10px !important;
+  }
+  .claude-routines-evidence-slide .card {
+    padding: 9px 10px;
+  }
+  .claude-routines-evidence-slide .card .card-tag {
+    font-size: 8px;
+    margin-bottom: 3px;
+  }
+  .claude-routines-evidence-slide .card .card-title {
+    font-size: 12px;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+  .claude-routines-evidence-slide .card .card-desc {
+    font-size: 9.5px;
+    line-height: 1.25;
+  }
+  .routines-proof-row {
+    gap: 6px !important;
+    margin-top: 8px !important;
+  }
+  .routines-proof-row .ss-frame {
+    max-height: 92px !important;
+  }
+  .routines-proof-row .ss-cap {
+    max-height: 40px;
+    overflow: hidden;
+    padding: 4px 5px !important;
+    font-size: 7.4px !important;
+    line-height: 1.15;
+  }
+  .claude-routines-pipeline-slide h3 {
+    font-size: 13px;
+    line-height: 1.28;
+    margin-bottom: 4px;
+  }
+  .claude-routines-pipeline-slide .routine-visual {
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .claude-routines-pipeline-slide .routine-visual .screenshot img {
+    max-height: 165px;
+  }
+  .claude-routines-pipeline-slide .ss-cap {
+    padding: 4px 6px;
+    font-size: 8px;
+    line-height: 1.2;
+  }
+  .claude-routines-pipeline-slide .routine-facts {
+    gap: 6px;
+  }
+  .claude-routines-pipeline-slide .fact-row {
+    padding: 8px 10px;
+  }
+  .claude-routines-pipeline-slide .fact-tag {
+    font-size: 8px;
+    margin-bottom: 3px;
+  }
+  .claude-routines-pipeline-slide .fact-copy {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+  .claude-routines-pipeline-slide .quote-attr {
+    display: none;
+  }
+  .boundary-grid {
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .boundary-grid .routine-facts,
+  .boundary-grid .cards {
+    gap: 6px;
+  }
+  .boundary-grid .fact-row,
+  .boundary-grid .card {
+    padding: 9px 10px;
+  }
+  .boundary-grid .fact-row .fact-tag,
+  .boundary-grid .card .card-tag {
+    font-size: 8px;
+    margin-bottom: 3px;
+  }
+  .boundary-grid .fact-row .fact-copy,
+  .boundary-grid .card .card-desc {
+    font-size: 10px;
+    line-height: 1.28;
+  }
+  .boundary-grid .card .card-title {
+    font-size: 12.5px;
+    line-height: 1.22;
+    margin-bottom: 2px;
+  }
+  .boundary-note {
+    display: none;
+  }
+  .quadrant-wrap {
+    margin-top: 10px;
+  }
+  .quadrant-axis-note {
+    font-size: 8.5px;
+    margin-bottom: 6px;
+  }
+  .quadrant-head,
+  .quadrant-cell {
+    padding: 9px 10px;
+  }
+  .quadrant-cell {
+    gap: 4px;
+  }
+  .quadrant-cell .quadrant-title {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  .quadrant-cell .quadrant-tool {
+    font-size: 9.2px;
+    line-height: 1.25;
+  }
+  .quadrant-cell .quadrant-copy {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+  .quadrant-wrap + .quote-attr {
+    display: none;
   }
   .callback-box { align-items: flex-start; }
 }
@@ -1945,7 +2253,7 @@ body .key-hint { display: none; }
 <div class="slide title active">
   <div class="runner">汽车人 AI 进化论 · 第 09 期</div>
   <h1>从 <em>Ultrathink</em><br>到 <em>Goal</em></h1>
-  <div class="subtitle">AI Coding 工程化的一年<br>—— Ultrathink → SDD → Harness → Goal：binding constraint 的迁移</div>
+  <div class="subtitle">AI Coding 工程化的一年<br>—— Ultrathink → SDD → Harness → Goal：系统瓶颈的迁移</div>
   <div class="author-block">
     <strong>缪东旭 MiaoDX</strong><br>
     小米自动驾驶 → 小米机器人<br>
@@ -1956,7 +2264,7 @@ body .key-hint { display: none; }
 <div class="slide proof-slide">
   <div class="meta"><span class="meta-tag">prelude</span> · proof of work</div>
   <h2>这不是旁观者视角</h2>
-  <h3>公司内部 project、自己的开源项目、CI、OpenClaw，都在真实消耗这些模型；长程任务也已经开始交给 agent 跑</h3>
+  <h3>公司内部 project、自己的开源项目、CI、OpenClaw，都在真实消耗这些模型，长程任务也已经开始交给 agent 跑</h3>
   <div class="proof-board">
     <div class="proof-card accented">
       <img src="images/proof-claude-usage.png" alt="Claude Code usage limits screenshot">
@@ -1977,7 +2285,7 @@ body .key-hint { display: none; }
       </div>
       <div class="proof-tag">kimi / mimo</div>
       <div class="proof-title">国产与私有模型池</div>
-      <div class="proof-copy">内部 only 项目不一定能用 SaaS frontier model，但仍然要尽量用可 access 的最好模型</div>
+      <div class="proof-copy">内部 only 项目不一定能用 SaaS frontier model，但仍然要尽量用能用到的最好模型</div>
     </div>
     <div class="proof-card">
       <img src="images/proof-openclaw-slack.png" alt="OpenClaw Slack agent status screenshot">
@@ -2053,15 +2361,13 @@ body .key-hint { display: none; }
   <div class="psychosis-grid">
     <div class="psychosis-item"><div class="psychosis-k">best practice drift</div><div class="psychosis-v">最佳实践追不上，昨天刚学会的 workflow 今天就被产品内建或废掉</div></div>
     <div class="psychosis-item"><div class="psychosis-k">infinite budget feeling</div><div class="psychosis-v">token 似乎用不完，任务总还能继续 refactor、继续 polish、继续开分支</div></div>
-    <div class="psychosis-item"><div class="psychosis-k">moving tools</div><div class="psychosis-v">MCP、skills、subagents、/goal、routines 快速变化，手册永远慢半拍</div></div>
-    <div class="psychosis-item"><div class="psychosis-k">endless continuation</div><div class="psychosis-v">agent 总能再跑一个验证、再补一个资料源、再生成一个候选实现</div></div>
+    <div class="psychosis-item"><div class="psychosis-k">moving tools</div><div class="psychosis-v">MCP、skills、subagents、/goal、Claude Routines 快速变化，手册永远慢半拍</div></div>
     <div class="psychosis-item"><div class="psychosis-k">exit problem</div><div class="psychosis-v">最难的不是生成，而是决定什么时候算完成、谁有资格说完成</div></div>
-    <div class="psychosis-item"><div class="psychosis-k">engineering reading</div><div class="psychosis-v">这里不做医学定义，只讲工程体感：无限 action surface 遇到模糊 exit condition</div></div>
   </div>
-  <div style="margin-top: 28px; font-family: var(--font-display); font-style: italic; font-size: clamp(25px, 3vw, 38px); color: var(--text); line-height: 1.4; max-width: 80ch;">
-    我们不必再是 <span class="hl">binding constraint</span>，但必须学会设计和选择 harness
+  <div class="psychosis-close" style="margin-top: 28px; font-family: var(--font-display); font-style: italic; font-size: clamp(25px, 3vw, 38px); color: var(--text); line-height: 1.4; max-width: 80ch;">
+    不要让人继续卡在<span class="hl">系统瓶颈</span>的位置
   </div>
-  <div class="speaker-note">不要把 AI psychosis 当医学词展开。这里讲的是工程体感：生成成本接近零以后，事情没有自然停止点。你可以继续让它查、继续让它改、继续让它验证。于是真正的问题变成：谁定义 action surface，谁控制 information surface，谁给 exit condition。</div>
+  <div class="speaker-note">不要把 AI psychosis 当医学词展开。这里讲的是工程体感：生成成本接近零以后，事情没有自然停止点。你可以继续让它查、继续让它改、继续让它验证。于是真正的问题变成：谁定义行动入口，谁控制信息入口，谁给退出条件。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -2124,17 +2430,17 @@ body .key-hint { display: none; }
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/1</span> · 三轴入口</div>
   <h2>为什么从三件事讲</h2>
-  <h3>同一个模型，换一个 harness，表现可以完全不同；模型能力仍然重要，但 harness 决定能力怎么被转成可交付结果：行动面、信息面和退出条件</h3>
+  <h3>同一个模型，换一个 harness，表现可以完全不同，模型能力仍然重要，但 harness 决定能力怎么被转成可交付结果：行动面、信息面和退出条件</h3>
   <div class="triad-grid">
     <div class="triad-card" data-axis="skill">
       <div class="triad-name">Skill</div>
       <div class="triad-question">agent 能调什么?</div>
-      <div class="triad-copy">对应 <strong>action surface</strong>：工具、命令、skills、routines，决定 agent 能把意图落实到哪些动作上</div>
+      <div class="triad-copy">对应<strong>行动入口</strong>：工具、命令、skills、Claude Routines，决定 agent 能把意图落实到哪些动作上</div>
     </div>
     <div class="triad-card" data-axis="context">
       <div class="triad-name">Context</div>
       <div class="triad-question">agent 看到了什么?</div>
-      <div class="triad-copy">对应 <strong>information surface</strong>：文件、历史、memory、subagent 隔离，决定模型靠什么作判断</div>
+      <div class="triad-copy">对应<strong>信息入口</strong>：文件、历史、memory、subagent 隔离，决定模型靠什么作判断</div>
     </div>
     <div class="triad-card" data-axis="verif">
       <div class="triad-name">Verification</div>
@@ -2145,14 +2451,13 @@ body .key-hint { display: none; }
   <div class="axis-pattern">
     这三件事能解释为什么同模型、不同 harness，会出现巨大的结果差异
   </div>
-  <div class="speaker-note">提前给观众三轴。这里要把 model 和 harness 的关系讲准：模型能力当然重要，但 harness 决定能力怎样被转成可交付结果。Skill 不是能力泛称，而是 action surface。Context 不是越多越好，而是 information surface。Verification 是 exit condition。后面的 405 个 npm publish timestamp，都用这三件事读。</div>
+  <div class="speaker-note">提前给观众三轴。这里要把 model 和 harness 的关系讲准：模型能力当然重要，但 harness 决定能力怎样被转成可交付结果。Skill 不是能力泛称，而是行动入口。Context 不是越多越好，而是信息入口。Verification 是退出条件。后面的 405 个 npm publish timestamp，都用这三件事读。</div>
 </div>
 
 <div class="slide release-map-slide">
   <div class="meta"><span class="meta-tag">section/1</span> · 主线</div>
   <h2>Claude Code <span class="hl">405 个版本</span> · latest <span class="hl">2.1.139</span> · 截至 2026-05-11 UTC</h2>
   <div class="timeline-fig">
-<img class="release-map-img" src="images/claude-code-release-map-v3-clean-2026-05-11.png" alt="Claude Code release map through 2026-05-11 showing latest 2.1.139 with /goal and agent view highlighted">
 <svg viewBox="0 0 1400 260" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
 <!-- 405 npm publish timestamps through 2026-05-11 UTC -->
 <line x1="30.00" y1="122" x2="30.00" y2="138" class="tick-vibe"/>
@@ -2623,13 +2928,29 @@ body .key-hint { display: none; }
 <text x="1310.82" y="248" text-anchor="middle" class="ms-label ms-side-text">Claude 2.1.139</text>
 </svg>
   </div>
-  <div class="timeline-guide">
-    上面看 product stack 现在长什么样，下面看它怎样从 Ultrathink → SDD → Harness → Goal
-    <strong>它能调什么？</strong>
-    <strong>它看到了什么？</strong>
-    <strong>谁在判定完成？</strong>
+  <div class="release-map-body">
+    <div class="release-map-panel">
+      <img class="release-map-img" src="images/claude-code-release-map-v3-clean-2026-05-11.png" alt="Claude Code release map through 2026-05-11 showing latest 2.1.139 with /goal and agent view highlighted">
+    </div>
+    <div class="release-prompts">
+      <div class="release-prompt">
+        <div class="prompt-tag">Skill</div>
+        <div class="prompt-title">它能调什么？</div>
+        <div class="prompt-copy">terminal runtime、MCP/auth、plugins/hooks、agent loop 都在扩展行动入口</div>
+      </div>
+      <div class="release-prompt">
+        <div class="prompt-tag">Context</div>
+        <div class="prompt-title">它看到了什么？</div>
+        <div class="prompt-copy">@import、subagents、managed agents，把上下文从手工拼接变成产品状态</div>
+      </div>
+      <div class="release-prompt">
+        <div class="prompt-tag">Verification</div>
+        <div class="prompt-title">谁在判定完成？</div>
+        <div class="prompt-copy">/goal 开始把目标和完成条件做成一等入口</div>
+      </div>
+    </div>
   </div>
-  <div class="speaker-note">这页同时保留两层：上面 release map 给“现在已经长什么样”的视觉证据，下面 timeline 给“怎么一路长到这里”的叙事结构。讲法：先看左侧五层 stack：terminal runtime、MCP/auth、plugins/hooks、agent loop、/goal。再指中间最新 release 2.1.139：adds /goal and agent view。接着用下面时间线念四段：Ultrathink → SDD → Harness → Goal。最后回到底部三问：每一层都在改变 agent 能调什么、看到了什么、谁在判定完成。OpenAI 和 Anthropic 都在做同样的事：Codex 0.128.0 把 agent loop 自身 bake 进 slash command，Claude Code 2.1.139 把 task completion criteria 也变成 /goal 入口。</div>
+  <div class="speaker-note">这页同时保留两层：先用上方时间线讲“怎么一路长到这里”，再用下方 release map 给“现在已经长什么样”的视觉证据。讲法：先念四段 Ultrathink → SDD → Harness → Goal。再看左侧五层：terminal runtime、MCP/auth、plugins/hooks、agent loop、/goal。右侧三问收束：它能调什么、看到了什么、谁在判定完成。OpenAI 和 Anthropic 都在做同样的事：Codex 0.128.0 把 agent loop 自身做进 slash command，Claude Code 2.1.139 把 task completion criteria 变成 /goal 入口。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -2661,7 +2982,7 @@ body .key-hint { display: none; }
       <div class="card-desc">"先跑一下""手动改改"——人盯每一步</div>
     </div>
   </div>
-  <h3 style="margin-top: 28px;">关键里程碑：<strong>ultrathink (0.2.44)</strong> 让模型多想一会；<strong>CLAUDE.md @import (0.2.107)</strong> 让上下文可以分文件、可以复用——但还是 prompt 风格，不是 skill / harness 风格</h3>
+  <h3 style="margin-top: 28px;">关键里程碑：<strong>ultrathink (0.2.44)</strong> 让模型多想一会，<strong>CLAUDE.md @import (0.2.107)</strong> 让上下文可以分文件、可以复用——但还是 prompt 风格，不是 skill / harness 风格</h3>
 </div>
 
 <div class="slide">
@@ -2705,8 +3026,8 @@ body .key-hint { display: none; }
 
 <div class="slide sdd-compact">
   <div class="meta"><span class="meta-tag">section/3</span> · sdd · 关键转折</div>
-  <h2>不是 plan mode，是 <span class="hl">durable artifacts</span> 出现了</h2>
-  <h3>SDD 的核心不是“先想一会儿”，而是把原来藏在对话里的意图、约束和完成标准，搬到 agent 可以反复读取和更新的对象里</h3>
+  <h2><span class="hl">durable artifacts</span> 开始成为 agent 接口</h2>
+  <h3>Plan mode 只是其中一个入口，真正的变化是把原来藏在对话里的意图、约束和完成标准，搬到 agent 可以反复读取和更新的对象里</h3>
   <div class="cards">
     <div class="card">
       <div class="card-tag">SPEC</div>
@@ -2732,7 +3053,7 @@ body .key-hint { display: none; }
   <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px;">
     这一段的关键词：prompt-driven → artifact-driven
   </div>
-  <div class="speaker-note">这里纠偏：不要把 SDD 讲成 Plan mode 历史。Plan 只是最容易被产品做成按钮的 artifact。真正的变化是 intent、约束、步骤、状态和验收标准开始外部化，agent 可以反复读取、更新和交接。</div>
+  <div class="speaker-note">这里纠偏：先讲 artifact，再讲 Plan mode。Plan 只是最容易被产品做成按钮的 artifact。真正的变化是 intent、约束、步骤、状态和验收标准开始外部化，agent 可以反复读取、更新和交接。</div>
 </div>
 
 <div class="slide sdd-compact">
@@ -2767,7 +3088,7 @@ body .key-hint { display: none; }
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/3</span> · sdd · 社区收敛</div>
   <h2>社区把 SDD 推成方法论，产品把稳定部分收进去</h2>
-  <h3>先是社区用框架证明 vibe 不够，要有 spec 和流程；然后产品和 harness 把其中稳定的部分变得更易用</h3>
+  <h3>先是社区用框架证明 vibe 不够，要有 spec 和流程，然后产品和 harness 把其中稳定的部分变得更易用</h3>
   <div class="quote">
     SDD 不是单点 feature，而是一条谱系：<em>先把意图写成结构，再让 agent 执行结构</em>
   </div>
@@ -2811,7 +3132,7 @@ body .key-hint { display: none; }
   <div class="meta"><span class="meta-tag">section/3</span> · sdd · 收束</div>
   <h2>SDD 不是终点，是给 Harness 铺路</h2>
   <div class="quote">
-    SDD 把 <em>intent</em> 工程化成 artifacts；<br>
+    SDD 把 <em>intent</em> 写成 artifacts<br>
     Harness 把 artifacts 工程化成 <em>runtime</em>
   </div>
   <h3 style="margin-top: 24px;">2.x 时代继续往前走：agent 调什么、看什么、凭什么宣告完成，不只是写在文件里，而是被 runtime、产品和框架接管</h3>
@@ -2838,7 +3159,7 @@ body .key-hint { display: none; }
     <div class="ss-frame"><img src="images/slide-5.png" alt="HumanLayer · Skill Issue: Harness Engineering for Coding Agents"></div>
     <div class="ss-cap"><a href="https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents">humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents</a></div>
   </div>
-  <h3 style="margin-top: 18px;">但 context 不是全部；今晚说的 harness 还包括 Skill、权限边界、流程节奏和 Verification，过去一年主要沿三条线收敛——</h3>
+  <h3 style="margin-top: 18px;">但 context 不是全部，今晚说的 harness 还包括 Skill、权限边界、流程节奏和 Verification，过去一年主要沿三条线收敛——</h3>
   <div class="speaker-note">这里把术语钉死：harness 不是又一个工具名，也不是只等于 context。它是 agent 外面那圈工程边界。后面出现 product harness、local harness、routine、proof pack、workflow，都是这圈边界的不同打包方式，不要让听众以为在推荐一个单独工具。</div>
 </div>
 
@@ -2848,12 +3169,12 @@ body .key-hint { display: none; }
   <div class="axis-overview">
     <div class="axis-overview-card">
       <div class="axis-name">Skill</div>
-      <div class="axis-surface">action surface</div>
-      <div class="axis-copy">工具、命令、skills、routines：agent 被允许把意图转成哪些可执行动作</div>
+      <div class="axis-surface">行动入口</div>
+      <div class="axis-copy">工具、命令、skills、Claude Routines：agent 被允许把意图转成哪些可执行动作</div>
     </div>
     <div class="axis-overview-card">
       <div class="axis-name">Context</div>
-      <div class="axis-surface">information surface</div>
+      <div class="axis-surface">信息入口</div>
       <div class="axis-copy">文件、memory、subagent、compact：agent 看见哪些高信号 token，以及哪些噪音被隔离</div>
     </div>
     <div class="axis-overview-card">
@@ -2899,7 +3220,7 @@ body .key-hint { display: none; }
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/4.2</span> · context 轴</div>
   <h2>Context 轴：不是越多越好，是<span class="hl">高信号 token</span></h2>
-  <h3>从被动缓冲 → 手动裁剪 → 隔离/持久化 → 离线蒸馏；目标不是塞满窗口，而是提高每个 token 的命中率</h3>
+  <h3>从被动缓冲 → 手动裁剪 → 隔离/持久化 → 离线蒸馏，目标不是塞满窗口，而是提高每个 token 的命中率</h3>
   <div class="quote" style="margin-top: 20px;">
     <em>Context is a critical but finite resource for AI agents. Find the smallest set of high-signal tokens that maximize the likelihood of your desired outcome.</em>
     <div class="quote-attr">— Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a></div>
@@ -2929,7 +3250,7 @@ body .key-hint { display: none; }
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 11px;">
-    反直觉点：更长上下文不是自动更强；高信号 context 才能减少 agent 在噪音里自信地走偏
+    反直觉点：更长上下文不是自动更强，高信号 context 才能减少 agent 在噪音里自信地走偏
   </div>
 </div>
 
@@ -2941,17 +3262,17 @@ body .key-hint { display: none; }
     <div class="evolution-step">
       <div class="step-tag">manual review</div>
       <div class="step-title">人看输出</div>
-      <div class="step-copy">diff、截图、artifact 靠人肉判断；agent 说 done 以后，人再补最后一道质量门</div>
+      <div class="step-copy">diff、截图、artifact 靠人肉判断，agent 说 done 以后，人再补最后一道质量门</div>
     </div>
     <div class="evolution-step">
       <div class="step-tag">in-loop checks</div>
       <div class="step-title">检查进循环</div>
-      <div class="step-copy">tests、lint、checklist、rubric 被放进执行流程；不是写完再想，而是边跑边校准</div>
+      <div class="step-copy">tests、lint、checklist、rubric 被放进执行流程，不是写完再想，而是边跑边校准</div>
     </div>
     <div class="evolution-step">
       <div class="step-tag">fresh evaluator</div>
       <div class="step-title">生成者 ≠ 评审者</div>
-      <div class="step-copy">fresh context 的 evaluator 按标准读 artifact，减少生成 agent 对自己输出的乐观偏差</div>
+      <div class="step-copy">干净上下文里的 evaluator 按标准读 artifact，减少生成 agent 对自己输出的乐观偏差</div>
     </div>
     <div class="evolution-step accented">
       <div class="step-tag">evidence loop</div>
@@ -2964,7 +3285,7 @@ body .key-hint { display: none; }
     <div><strong>roboharness</strong>：long unattended run → proof pack → short human review</div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 11px;">
-    反直觉点：grader 不是让 first draft 更聪明；它提升的是 final deliverable quality，因为 first draft 不能自己宣布过线
+    反直觉点：grader 不是让 first draft 更聪明，它提升的是 final deliverable quality，因为 first draft 不能自己宣布过线
   </div>
   <div class="speaker-note">这一页把 Verification 改成和 Skill / Context 对称的 pipeline。重点不是 Anthropic Outcomes 单点产品，而是 done 的性质变化：从 agent 或人主观说“差不多了”，变成 tests、rubric、fresh evaluator、proof pack 共同构成的证据循环。Outcomes 数字只作为 evidence loop 的证据，不展开成单独产品页。</div>
 </div>
@@ -2982,17 +3303,17 @@ body .key-hint { display: none; }
     <div class="card">
       <div class="card-tag">SDD PIPELINE</div>
       <div class="card-title">GSD / gstack</div>
-      <div class="card-desc">把 spec → research → plan → execute → ship 做成 slash command；每段 fresh context / subagent 隔离</div>
+      <div class="card-desc">把 spec → research → plan → execute → ship 做成 slash command，每段干净上下文 / subagent 隔离</div>
     </div>
     <div class="card">
       <div class="card-tag">QUALITY GATE</div>
       <div class="card-title">Superpowers</div>
-      <div class="card-desc">把 TDD、review、plan discipline 做成默认流程；不是 advice，而是 agent 必须穿过的门</div>
+      <div class="card-desc">把 TDD、review、plan discipline 做成默认流程，不是 advice，而是 agent 必须穿过的门</div>
     </div>
     <div class="card">
       <div class="card-tag">PATTERN INDEX</div>
       <div class="card-title">Awesome Claude Code</div>
-      <div class="card-desc">把分散的 CLAUDE.md、hooks、MCP、subagent 模式收集起来；社区在沉淀 reusable harness components</div>
+      <div class="card-desc">把分散的 CLAUDE.md、hooks、MCP、subagent 模式收集起来，社区在沉淀 reusable harness components</div>
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 11px;">
@@ -3015,24 +3336,24 @@ body .key-hint { display: none; }
 <div class="slide section">
   <div class="section-marker">§ 5</div>
   <h1><span class="hash">#</span> 我的实践</h1>
-  <p class="section-blurb">不是工具推荐，而是三个真实场景里 binding constraint 被移走的方式</p>
+  <p class="section-blurb">不是工具推荐，而是三个真实场景里系统瓶颈被移走的方式</p>
 </div>
 
-<div class="slide">
+<div class="slide robo-flow-slide">
   <div class="meta"><span class="meta-tag">section/5.1</span> · roboharness · 叙事页</div>
-  <h2>roboharness · <span class="hl">长 unattended run 的 review 工程化</span></h2>
-  <h3>移走的是 Verification bottleneck——agent 跑 4 小时改机器人代码，人不该一帧帧看完整过程；做的是把 review 从“盯过程”换成“审证据包”</h3>
+  <h2>roboharness · <span class="hl">长跑证据包</span></h2>
+  <h3>移走的是审查瓶颈——agent 跑 4 小时改机器人代码，人不该一帧帧看完整过程，而是把 review 从“盯过程”换成“审证据包”</h3>
   <div class="slide-2col" style="margin-top: 22px; grid-template-columns: 1fr 1.6fr; align-items: start;">
     <div class="col-l">
       <div class="quote" style="font-family: var(--font-mono); font-style: normal; font-size: clamp(15px, 1.6vw, 19px);">
-        long unattended agent run<br>→ <em>one proof pack</em><br>→ short human review
+        long unattended agent run<br>→ <em>one proof pack / 证据包</em><br>→ short human review
         <div class="quote-attr">— <a href="https://github.com/MiaoDX/roboharness">github.com/MiaoDX/roboharness</a> README</div>
       </div>
       <div style="margin-top: 20px; font-size: 13.5px; color: var(--text-sec); line-height: 1.6;">
-        <strong style="color: var(--text);">review path：</strong>看 Run Decision banner → 只看 surfaced case → 用 phase_manifest 决定是否重跑
+        <strong style="color: var(--text);">review path：</strong>看 Run Decision banner → 只看关键 case → 用 phase_manifest 决定是否重跑
       </div>
       <div style="margin-top: 16px; font-size: 13.5px; color: var(--text-sec); line-height: 1.6;">
-        <strong style="color: var(--accent);">关键变化：</strong>人不再验证完整过程，而是验证一个证据包——review bottleneck 从“盯 4 小时”变成“5 分钟做决策”
+        <strong style="color: var(--accent);">关键变化：</strong>人不再验证完整过程，而是验证一个证据包——review 瓶颈从“盯 4 小时”变成“5 分钟做决策”
       </div>
     </div>
     <div class="col-r">
@@ -3050,12 +3371,12 @@ body .key-hint { display: none; }
         <div class="flow-card">
           <div class="flow-tag">3 · AFTER RUN</div>
           <div class="flow-title">approval_report</div>
-          <div class="flow-copy">grader agent 只 surface 需要人看的 case，而不是整段执行日志</div>
+          <div class="flow-copy">grader agent 只筛出需要人看的 case，而不是整段执行日志</div>
         </div>
         <div class="flow-card accented">
           <div class="flow-tag">4 · HUMAN REVIEW</div>
           <div class="flow-title">report.html</div>
-          <div class="flow-copy">先看 Run Decision banner，再看 surfaced cases，最后决定 merge / rerun · 5 min</div>
+          <div class="flow-copy">先看 Run Decision banner，再看关键 cases，最后决定 merge / rerun · 5 min</div>
         </div>
       </div>
     </div>
@@ -3063,10 +3384,10 @@ body .key-hint { display: none; }
   <div class="speaker-note">这页只讲“proof pack 的 4 步是什么 + 它换了 review 的什么”。下一页才用真实截图证明它长什么样。讲法：先指右边 4 张卡走一遍 pipeline，最后回到左边红字收束（4h→5min）。停一拍翻下一页。</div>
 </div>
 
-<div class="slide">
+<div class="slide robo-proof-slide">
   <div class="meta"><span class="meta-tag">section/5.1</span> · roboharness · 实证页</div>
-  <h2>proof pack 长什么样：<span class="hl">G1 humanoid run 的真实输出</span></h2>
-  <h3>不是手绘示意——下面这组就是从 <code style="font-family: var(--font-mono); color: var(--accent); background: var(--accent-soft); padding: 1px 6px; border-radius: 3px;">examples/g1_cross_framework_report.py</code> 跑出来的 proof surface，原样进 report.html</h3>
+  <h2>proof pack / 证据包长什么样：<span class="hl">G1 humanoid run 的真实输出</span></h2>
+  <h3>不是手绘示意——下面这组就是 <code style="font-family: var(--font-mono); color: var(--accent); background: var(--accent-soft); padding: 1px 6px; border-radius: 3px;">examples/g1_cross_framework_report.py</code> 跑出来的证据视图，可直接进入 report.html</h3>
   <div class="slide-2col" style="margin-top: 18px; grid-template-columns: 1.45fr 1fr; gap: 24px; align-items: start;">
     <div class="col-l">
       <div class="screenshot">
@@ -3098,24 +3419,24 @@ body .key-hint { display: none; }
       </div>
       <div style="margin-top: 16px; font-size: 12.5px; color: var(--text-dim); line-height: 1.55; border-top: 1px dashed var(--border-light); padding-top: 12px;">
         <strong style="color: var(--text-sec); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;">项目自己的轨迹</strong><br>
-        roboharness 本身从云端 routine 开发起步，遇到 GPU / 真机 / 长 trail-and-error 才切回本地——下一页那张交棒表，本质就是这个项目自己走过的路
+        roboharness 本身从 Claude Routines 开发起步，遇到 GPU / 真机 / 长时间反复试错才切回本地——下一页那张交棒表，本质就是这个项目自己走过的路
       </div>
     </div>
   </div>
   <div class="speaker-note">这页是 P28a 的实证。GIF 是 README 头图：G1 humanoid 同一个 run 的 Meshcat 和 MuJoCo 跨 framework 比较，phase 名留在每帧上——这就是 proof pack 让人 5 分钟就能横扫的原因。右边 4 个 mujoco 抓取阶段是 baseline phase 帧的样子，证明每个 phase 都有 visual artifact。底部那行带出下一页的"同一项目走过两段"叙事。</div>
 </div>
 
-<div class="slide">
+<div class="slide claude-routines-evidence-slide">
   <div class="meta"><span class="meta-tag">section/5.2</span> · routine 多 agent · 实证</div>
-  <h2>routine 多 agent · <span class="hl">云端 60 分流水线</span></h2>
-  <h3>移走的是调度和上下文切换 bottleneck——四个 routine 把工程团队角色封装成云端流水线，下面三张截图就是它真在跑的痕迹</h3>
+  <h2>Claude Routines 多 agent · <span class="hl">云端 60 分流水线</span></h2>
+  <h3>移走的是调度和上下文切换瓶颈——四个 Claude Routines 把工程团队角色封装成云端流水线，下面三张截图就是它真在跑的痕迹</h3>
   <div class="cards" style="margin-top: 22px;">
-    <div class="card"><div class="card-tag">主力</div><div class="card-title">auto_pr</div><div class="card-desc">每小时一个 issue；三态自评 FULLY / PARTIAL / DIMINISHING</div></div>
+    <div class="card"><div class="card-tag">主力</div><div class="card-title">auto_pr</div><div class="card-desc">每小时一个 issue，三态自评 FULLY / PARTIAL / DIMINISHING</div></div>
     <div class="card"><div class="card-tag">辅助 1</div><div class="card-title">issue_label</div><div class="card-desc">每天排优先级，只读 + 打标签</div></div>
     <div class="card"><div class="card-tag">辅助 2</div><div class="card-title">pr_again</div><div class="card-desc">救援孤儿分支</div></div>
     <div class="card"><div class="card-tag">辅助 3</div><div class="card-title">daily_duty</div><div class="card-desc">CI 兜底 + 代码健康</div></div>
   </div>
-  <div style="display: grid; grid-template-columns: 0.8fr 1.1fr 1fr; gap: 12px; margin-top: 18px;">
+  <div class="routines-proof-row" style="display: grid; grid-template-columns: 0.8fr 1.1fr 1fr; gap: 12px; margin-top: 18px;">
     <div class="screenshot tall" style="margin-top: 0;">
       <div class="ss-frame" style="max-height: 280px;"><img src="images/routines-calendar.png" alt="Anthropic Claude.ai Routines 后台日历视图，显示 robowbc / roboharness 的 daily_duty 每天 9:00/9:30 自动跑"></div>
       <div class="ss-cap" style="font-size: 10.5px;"><strong>schedule</strong> · Claude.ai Routines 后台 · daily_duty 每天 9:00 / 9:30 触发 · <a href="../../ai-coding/routines-multi-agent/">routines-multi-agent</a></div>
@@ -3132,26 +3453,26 @@ body .key-hint { display: none; }
   <div class="speaker-note">这页给 cards 加上了视觉证据。讲法：先念 4 张 cards 的角色名，停一拍，再往下指三张截图：cron 真的每小时跑、PR 真的产出、配额真的在被消耗。这页解决一个常见怀疑：“云端 agent 听起来玄，到底是不是真在干活”。</div>
 </div>
 
-<div class="slide">
+<div class="slide claude-routines-pipeline-slide">
   <div class="meta"><span class="meta-tag">section/5.2</span> · routine · 三轴定位 + Brockman</div>
-  <h2>routine 跨 <span class="hl">Skill 轴</span> + <span class="hl">Context 轴</span> + <span class="hl">Verification 轴</span></h2>
-  <h3>同一个 routine 同时落到三条轴上——下面架构图说"它怎么连"，右侧 4 行 fact 说"它各自负责什么"</h3>
+  <h2>Claude Routines：<span class="hl">从触发到交接的流水线</span></h2>
+  <h3>架构图说明它怎么连，右侧四行说明角色封装、干净上下文、三态自评和 60 分边界</h3>
   <div class="routine-visual">
     <div class="screenshot">
       <img src="images/routine-architecture.svg" alt="Routine multi-agent architecture overview">
-      <div class="ss-cap"><a href="../../ai-coding/routines-multi-agent/">routine 多 agent</a> · GitHub issue / comment / label / branch 作为消息总线</div>
+      <div class="ss-cap"><a href="../../ai-coding/routines-multi-agent/">Claude Routines 多 agent</a> · GitHub issue / comment / label / branch 作为消息总线</div>
     </div>
     <div class="routine-facts">
       <div class="fact-row">
-        <div class="fact-tag">Skill axis</div>
+        <div class="fact-tag">Role package</div>
         <div class="fact-copy"><strong>auto_pr / issue_label / pr_again / daily_duty</strong> 不再是 prompt，而是工程团队角色的可调用封装</div>
       </div>
       <div class="fact-row">
-        <div class="fact-tag">Context axis</div>
-        <div class="fact-copy">每个 routine 以 fresh context 开始，失败也隔离在自己的分支、comment 和下一轮接手协议里</div>
+        <div class="fact-tag">Clean context</div>
+        <div class="fact-copy">每个 Claude Routine 都以干净上下文开始，失败也隔离在自己的分支、comment 和下一轮接手协议里</div>
       </div>
       <div class="fact-row">
-        <div class="fact-tag">Verification axis</div>
+        <div class="fact-tag">Completion check</div>
         <div class="fact-copy">三态自评（FULLY / PARTIAL / DIMINISHING）把 exit 条件写清楚——PARTIAL 不是失败，是云端流水线对自己边界的诚实声明</div>
       </div>
       <div class="fact-row">
@@ -3164,64 +3485,50 @@ body .key-hint { display: none; }
     <em style="color: var(--text); font-family: var(--font-display); font-size: 15px;">"[The Codex app] is really two things in one. It's a general agent harness that can use tools, and it's also an agent that knows how to write software."</em><br>
     <span style="font-size: 11px;">— Greg Brockman · Big Technology Podcast · 2026-04-01 · <a href="https://www.bigtechnology.com/p/openai-president-greg-brockman-doubling">bigtechnology.com</a> —— OpenAI 总裁亲口把 harness 定义为产品一等概念</span>
   </div>
-  <div class="speaker-note">三轴定位页：架构图说 routine 怎么用 GitHub 当消息总线；右侧 4 行 fact 把 Skill / Context / Verification / Boundary 一次过完。Verification 一行的"三态自评"是关键创新，PARTIAL 不是失败而是诚实声明边界。底部 Brockman 一行作为外部背书一句念过即可。</div>
+  <div class="speaker-note">流水线页：架构图说 Claude Routines 怎么用 GitHub 当消息总线；右侧 4 行 fact 把角色封装、干净上下文、完成判断和 60 分边界一次过完。三态自评是关键创新，PARTIAL 不是失败而是诚实声明边界。底部 Brockman 一行作为外部背书一句念过即可。</div>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/5.2 → 5.3</span> · 交棒 · 同一项目走过的两段</div>
-  <h2><span class="hl">cloud-first → 切回本地</span>：roboharness 自己走过这条路</h2>
-  <h3>不是两个独立工具的 routing，而是<em>同一项目在不同资源密度下被迫迁移</em>；一旦任务需要 GPU、真机、单次迭代 &gt; 1h、或反复 trail-and-error——cloud routine 就该把活交出去，roboharness 这个 repo 就是这么被催生的</h3>
-  <div class="routing-table" style="margin-top: 22px; display: grid; grid-template-columns: 160px 1fr 1fr; gap: 0; border: 1px solid var(--border); background: var(--bg-card);">
-    <div style="padding: 12px 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-dim); border-bottom: 1px solid var(--border);">维度</div>
-    <div style="padding: 12px 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--axis-context); border-bottom: 1px solid var(--border); border-left: 1px solid var(--border-light);">阶段 A · cloud routine（项目起步期）</div>
-    <div style="padding: 12px 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--border); border-left: 1px solid var(--border-light);">阶段 B · 切回本地（roboharness 期）</div>
-
-    <div style="padding: 12px 14px; font-size: 13px; color: var(--text-sec); border-bottom: 1px solid var(--border-light);">资源</div>
-    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">CPU、网络、API quota——配额范围内可调度</div>
-    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">GPU、真机、本地 dataset、特殊运行时——非云端 worker 能 reach</div>
-
-    <div style="padding: 12px 14px; font-size: 13px; color: var(--text-sec); border-bottom: 1px solid var(--border-light);">单次迭代时长</div>
-    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">≤ <strong>60 min</strong>，配 fresh 200K context 跑完一轮</div>
-    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;"><strong>&gt; 1h</strong> 单轮，往往要连跑几轮 trail-and-error</div>
-
-    <div style="padding: 12px 14px; font-size: 13px; color: var(--text-sec); border-bottom: 1px solid var(--border-light);">失败模态</div>
-    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">FULLY / PARTIAL / DIMINISHING 三态自评，PARTIAL 由人接</div>
-    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border-light); border-left: 1px solid var(--border-light); line-height: 1.5;">用 contract / phase_manifest / approval_report 把试错过程沉淀成证据包</div>
-
-    <div style="padding: 12px 14px; font-size: 13px; color: var(--text-sec);">人审 surface</div>
-    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-left: 1px solid var(--border-light); line-height: 1.5;">PR diff + GitHub comment——日常增量</div>
-    <div style="padding: 12px 16px; font-size: 14px; color: var(--text); border-left: 1px solid var(--border-light); line-height: 1.5;">report.html · Run Decision banner——压缩成 5 min 决策</div>
-  </div>
-  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px; max-width: 80ch;">
-    交棒触发条件（实操判断）：任务<strong>需要 GPU/真机</strong>、单次迭代 <strong>&gt; 1h</strong>、或预期要<strong>反复 trail-and-error</strong>——满足任一条，就别指望 cloud routine 在 60 分内压住，直接 wrap 进 roboharness 的 proof pack 流程
-  </div>
-  <div class="speaker-note">这页解决一个常见误会：routine 和 roboharness 不是新旧两代，是分别针对不同资源密度的两套 routing。stop-the-line 信号是“资源 + 时长 + 试错次数”——一旦其中任一条触发，60 分流水线就压不住，要换 long-run + proof pack。讲法：先念表头（cloud vs local），再走完 4 行维度，最后那行红字直接出口播。</div>
-</div>
-
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/5.3</span> · local 重 harness</div>
-  <h2>"60 分" 是<span class="hl">任务-工具匹配的边界</span></h2>
-  <h3>移走的是任务匹配 bottleneck：哪些活交给 routine，哪些活留给本地重 harness</h3>
-  <div class="cards" style="margin-top: 24px;">
-    <div class="card">
-      <div class="card-tag">SKILL 轴 + 对齐</div>
-      <div class="card-title">mattpocock/skills</div>
-      <div class="card-desc">grill-me / grill-with-docs：让 AI 反问需求是否清晰</div>
+  <div class="meta"><span class="meta-tag">section/5.3</span> · 60 分边界</div>
+  <h2>"60 分" 是<span class="hl">任务-工具匹配边界</span></h2>
+  <h3>不是产出完成度，而是判断哪些活交给 Claude Routines，哪些活切回本地重 harness</h3>
+  <div class="boundary-grid">
+    <div class="routine-facts">
+      <div class="fact-row">
+        <div class="fact-tag">交棒触发 1</div>
+        <div class="fact-copy">需要 GPU、真机、本地 dataset 或特殊运行时，云端 worker reach 不到</div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-tag">交棒触发 2</div>
+        <div class="fact-copy">单次迭代超过 1 小时，60 分钟流水线很难完整闭环</div>
+      </div>
+      <div class="fact-row">
+        <div class="fact-tag">交棒触发 3</div>
+        <div class="fact-copy">预期要反复试错，过程就需要 contract / phase_manifest / approval_report 沉淀成证据包</div>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-tag">SKILL 轴 + 大 scope</div>
-      <div class="card-title">GSD / gstack</div>
-      <div class="card-desc">plan-pipeline 跨多文件大改</div>
-    </div>
-    <div class="card">
-      <div class="card-tag">VERIFICATION 轴 + 长 run</div>
-      <div class="card-title">roboharness</div>
-      <div class="card-desc">proof pack 让 unattended 长跑可 review</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-tag">对齐前置</div>
+        <div class="card-title">mattpocock/skills</div>
+        <div class="card-desc">grill-me / grill-with-docs：让 AI 反问需求是否清晰</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">大范围工作流</div>
+        <div class="card-title">GSD / gstack</div>
+        <div class="card-desc">discuss / plan / execute / verify，把跨多文件任务拆成可恢复 phase</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">高验证风险</div>
+        <div class="card-title">roboharness</div>
+        <div class="card-desc">proof pack / 证据包让 unattended 长跑可以被快速 review</div>
+      </div>
     </div>
   </div>
-  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px; max-width: 82ch;">
-    这不是工具排序：routine 是 product/cloud harness，GSD / gstack 是 workflow harness，roboharness 的 proof pack 是 Verification layer；真正的判断是任务边界和验证风险
+  <div class="boundary-note">
+    这不是工具排序：Claude Routines 是产品和云端 harness，GSD / gstack 是 workflow harness，roboharness 的 proof pack 是验证层。真正的判断是任务边界和验证风险在哪里
   </div>
+  <div class="speaker-note">这页把原来的交棒页和 60 分判断页合并。先讲“60 分不是完成度，而是任务和工具是否匹配”。再读左侧三个交棒触发条件：资源、时长、反复试错。最后用右侧三张卡说明怎么选工具。roboharness 不是替代 Claude Routines，而是在资源密度和验证风险变高时接手。</div>
 </div>
 
 <div class="slide">
@@ -3242,23 +3549,23 @@ body .key-hint { display: none; }
       <div class="quadrant-cell verification">
         <div class="quadrant-title">先规格化，再分 phase</div>
         <div class="quadrant-tool">GSD / gstack plan pipeline</div>
-        <div class="quadrant-copy">需求还不稳，但错误成本高；先把目标、约束、验证标准写出来，再进入执行</div>
+        <div class="quadrant-copy">需求还不稳，但错误成本高，先把目标、约束、验证标准写出来，再进入执行</div>
       </div>
       <div class="quadrant-cell verification accented">
         <div class="quadrant-title">长程执行 + 证据包</div>
         <div class="quadrant-tool">/goal + hybrid-phase-pipeline + proof pack</div>
-        <div class="quadrant-copy">任务清楚但验证风险高；让 agent 扛住长程目标，同时用 proof pack / roboharness 缩短 review</div>
+        <div class="quadrant-copy">任务清楚但验证风险高，让 agent 扛住长程目标，同时用 proof pack / 证据包缩短 review</div>
       </div>
       <div class="quadrant-risk">低验证风险</div>
       <div class="quadrant-cell">
         <div class="quadrant-title">先问清楚</div>
         <div class="quadrant-tool">grill-me / office-hours</div>
-        <div class="quadrant-copy">风险不高但意图模糊；最便宜的动作是让 agent 反问，把想法压成可执行判断</div>
+        <div class="quadrant-copy">风险不高但意图模糊，最便宜的动作是让 agent 反问，把想法压成可执行判断</div>
       </div>
       <div class="quadrant-cell">
         <div class="quadrant-title">重复调度和固定职责</div>
-        <div class="quadrant-tool">routines</div>
-        <div class="quadrant-copy">任务清楚、风险可控；auto_pr / daily_duty 这类固定职责适合云端周期运行</div>
+        <div class="quadrant-tool">Claude Routines</div>
+        <div class="quadrant-copy">任务清楚、风险可控，auto_pr / daily_duty 这类固定职责适合云端周期运行</div>
       </div>
     </div>
   </div>
@@ -3273,17 +3580,23 @@ body .key-hint { display: none; }
 <div class="slide section">
   <div class="section-marker">§ 6</div>
   <h1><span class="hash">#</span> 当下与未来</h1>
-  <p class="section-blurb">bake-in 的极致 · 用户表面回到 vibe，底层工程化反而更重</p>
+  <p class="section-blurb">产品内建的极致 · 用户表面回到 vibe，底层工程化反而更重</p>
 </div>
 
 <div class="slide goal-bake-slide">
-  <div class="meta"><span class="meta-tag">section/6</span> · /goal · bake-in</div>
-  <h2>/goal：agent loop 自身被 bake 进 slash command</h2>
-  <h3>不是替代 AGENTS.md / skills / permissions / subagents，而是把它们 wrap 成"我说目标"的入口</h3>
+  <div class="meta"><span class="meta-tag">section/6</span> · /goal · 产品内建</div>
+  <h2>/goal：目标和完成条件成为产品入口</h2>
+  <h3>不是替代 AGENTS.md / skills / permissions / subagents，而是把它们收进“我说目标”的入口</h3>
   <div class="goal-visual">
-    <div class="screenshot">
-      <img src="images/slide-8.png" alt="Greg Brockman: codex now has a built in Ralph loop++">
-      <div class="ss-cap"><a href="https://x.com/gdb/status/2050194039077495089">x.com/gdb/status/2050194039077495089</a> · 2026-05-01 · codex 0.128.0 的 /goal &lt;objective&gt;</div>
+    <div class="goal-evidence-stack">
+      <div class="screenshot">
+        <img src="images/goal_codex.png" alt="Codex CLI /goal objective screenshot">
+        <div class="ss-cap">Codex 0.128.0 · /goal &lt;objective&gt; 把目标循环变成入口</div>
+      </div>
+      <div class="screenshot">
+        <img src="images/goal_claude.png" alt="Claude Code /goal task completion criteria screenshot">
+        <div class="ss-cap">Claude Code 2.1.139 · /goal 把 task completion criteria 变成入口</div>
+      </div>
     </div>
     <div class="routine-facts">
       <div class="goal-timeline">
@@ -3306,13 +3619,13 @@ body .key-hint { display: none; }
       </div>
     </div>
   </div>
-  <div class="speaker-note">这页加入一个新事实：Claude Code 2.1.139 也支持 /goal。Codex 0.128.0 的 npm publish 是 2026-04-30 UTC，gdb 2026-05-01 推文公开讲 /goal objective；Claude Code 2.1.139 的 npm publish 是 2026-05-11 UTC，changelog 说 added /goal command to specify task completion criteria。讲法：OpenAI 先把“目标循环”做成入口，Anthropic 紧接着把“完成条件”做成入口。真正有趣的是同一个命令名在收敛，但它们强调的是同一条 harness 的两端：objective 和 exit condition。</div>
+  <div class="speaker-note">这页加入两个截图作为主证据：Codex 和 Claude Code 都把 /goal 放到产品入口里。Codex 0.128.0 的 npm publish 是 2026-04-30 UTC，gdb 2026-05-01 推文公开讲 /goal objective；Claude Code 2.1.139 的 npm publish 是 2026-05-11 UTC，changelog 说 added /goal command to specify task completion criteria。讲法：OpenAI 先把“目标循环”做成入口，Anthropic 紧接着把“完成条件”做成入口。真正有趣的是同一个命令名在收敛，但它们强调的是同一条 harness 的两端：objective 和 exit condition。</div>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · caveat</div>
-  <h2>bake-in 也会引入新失败模态</h2>
-  <h3>Anthropic 2026-04-23 quality post-mortem 是产品 bake-in 引发新失败模态的活教材</h3>
+  <h2>产品内建也会引入新失败模态</h2>
+  <h3>Anthropic 2026-04-23 quality post-mortem 是产品内建引发新失败模态的活教材</h3>
   <div class="cards">
     <div class="card"><div class="card-tag">cause 1</div><div class="card-title">reasoning effort 改 default</div><div class="card-desc">触发用户不可察觉的退化</div></div>
     <div class="card"><div class="card-tag">cause 2</div><div class="card-title">thinking-history 清理 bug</div><div class="card-desc">长 session 上下文被错误压缩</div></div>
@@ -3346,7 +3659,7 @@ body .key-hint { display: none; }
     先问：它能调什么？它看到了什么？谁在判定完成？
   </div>
   <div class="quote" style="margin-top: 22px;">
-    我们不必再是 <em>binding constraint</em>
+    我们不必再是<em>系统瓶颈</em>
   </div>
   <div class="quote-attr" style="padding-left: 31px; font-style: italic;">
     "or it's a skill issue, and we just haven't figured out how to use it. So, it's hard to tell." — Karpathy
@@ -3384,36 +3697,38 @@ body .key-hint { display: none; }
   <div class="method-grid">
     <div class="method-tile accented">
       <div class="method-num">01</div>
-      <div class="method-title">跑一次 grill-me</div>
-      <div class="method-copy">让 AI 先反问需求是否清晰；被盘问过一次，就很难再回到直接写 prompt</div>
-    </div>
-    <div class="method-tile">
-      <div class="method-num">02</div>
       <div class="method-title">试一次 office-hours</div>
       <div class="method-copy">用 YC 风格 forcing questions 把“我想做个东西”压成可执行判断</div>
     </div>
     <div class="method-tile">
+      <div class="method-num">02</div>
+      <div class="method-title">跑一次 grill-me</div>
+      <div class="method-copy">让 AI 先反问需求是否清晰，被盘问过一次，就很难再回到直接写 prompt</div>
+    </div>
+    <div class="method-tile">
       <div class="method-num">03</div>
-      <div class="method-title">画图给它看</div>
-      <div class="method-copy">架构、流程、UI 草图直接截图丢进去；多模态输入比 200 字描述稳定得多</div>
+      <div class="method-title">写清验收标准</div>
+      <div class="method-copy">把完成条件、non-goals 和验收样例写出来，让 agent 先对齐再执行</div>
     </div>
   </div>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 3</span> · 心态</div>
-  <h2>实验 3 · <span class="hl">用你能 access 的最好模型跑真实任务</span></h2>
+  <h2>实验 3 · <span class="hl">用你能用到的最好模型跑真实任务</span></h2>
   <div class="callback-box">
     <span class="ref">↩ TIP 1</span>
     <span class="arrow">·</span>
     <span>model 决定能力上限，harness 决定能力能否稳定转成交付</span>
   </div>
   <div class="quote">
-    SaaS frontier model 可以用就直接用；内部 only 项目，就用私有部署的 top-tier 开源模型<br>
+    SaaS frontier model 可以用就直接用<br>
+    内部 only 项目，就用私有部署的 top-tier 开源模型<br>
     省下来的 retry、review、上下文重建和返工时间，通常比模型成本更贵
   </div>
   <div class="quote" style="margin-top: 24px; font-size: clamp(20px, 2.4vw, 30px);">
-    这场 lecture 听完最容易的失败模式：回去想"我下周开始整这套"<br>真正的失败模式：<em>什么都不试</em>
+    最容易失败的方式：回去想"我下周开始整这套"<br>
+    更好的动作：<em>今晚就拿一个真实任务试一次</em>
   </div>
 </div>
 
@@ -3468,7 +3783,7 @@ body .key-hint { display: none; }
     <div class="prep-card accented">
       <div class="prep-tag">local / repo</div>
       <div class="prep-title">本地再做细节调整和验证</div>
-      <div class="prep-copy">回到 repo 里处理截图、链接、版面、source caption、主题截图和质量检查；细节靠本地 harness 收口</div>
+      <div class="prep-copy">回到 repo 里处理截图、链接、版面、source caption、主题截图和质量检查，细节靠本地 harness 收口</div>
       <div class="screenshot tall">
         <div class="ss-frame"><img src="images/prep-local-plan.png" alt="Local terminal implementation plan for the lecture deck"></div>
         <div class="ss-cap"><a href="https://github.com/MiaoDX/LIP/tree/main/ai-coding/ultrathink-to-goal">local repo workflow · implementation plan and QA loop</a></div>
