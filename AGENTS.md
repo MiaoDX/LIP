@@ -77,3 +77,7 @@ Common layout gotchas this catches:
 ### Current important deck
 
 `ai-coding/ultrathink-to-goal/index.html` is the canonical source for the "从 Ultrathink 到 Goal" presentation. Its website assets belong in `ai-coding/ultrathink-to-goal/images/`. Do not recreate a second copy under `presentations/` or `share/`.
+
+### Slide copy punctuation
+
+For visible text inside standalone slide decks, prefer fragment-style copy without sentence-ending periods or Chinese full stops. Keep punctuation when it is part of a quote, URL, version number, decimal, filename, code snippet, or when speaker notes/transcripts need normal prose punctuation.

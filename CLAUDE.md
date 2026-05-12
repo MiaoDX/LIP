@@ -42,6 +42,10 @@ Run `npm run quality:check` after source-layout changes. It updates `.quality-re
 
 Current canonical source: `ai-coding/ultrathink-to-goal/index.html`, with assets in `ai-coding/ultrathink-to-goal/images/`.
 
+### Slide copy punctuation
+
+For visible text inside standalone slide decks, prefer fragment-style copy without sentence-ending periods or Chinese full stops. Keep punctuation when it is part of a quote, URL, version number, decimal, filename, code snippet, or when speaker notes/transcripts need normal prose punctuation.
+
 ### Visual verification
 
 Before declaring deck changes done, render the slide(s) in a real browser at both viewports. Static HTML inspection misses CSS layout regressions (especially `.slide-2col` grid vs flex confusion).

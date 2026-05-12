@@ -12,7 +12,7 @@
 
 今天这场分享的题目叫《从 Ultrathink 到 Goal：AI Coding 工程化的一年》。
 
-这个题目里有两个端点，也有一条中间线。Ultrathink 是去年大家很熟悉的一个词：你在 prompt 末尾加上它，希望模型多想一会儿。中间经过 SDD，也就是把口头意图变成 spec、plan、todos、state 这些 durable artifacts；再经过 harness，也就是模型外面那圈工程边界被认真设计。Goal 是最近 Codex 里出现的入口：你不再只给下一步指令，而是直接交给它一个目标，让 agent 自己循环推进、检查和收尾。
+这个题目里有两个端点，也有一条中间线。Ultrathink 是去年大家很熟悉的一个词：你在 prompt 末尾加上它，希望模型多想一会儿。中间经过 SDD，也就是把口头意图变成 spec、plan、todos、state 这些 durable artifacts；再经过 harness，也就是模型外面那圈工程边界被认真设计。Goal 是最近 Codex 和 Claude Code 都开始收敛到的入口：你不再只给下一步指令，而是直接交给它一个目标，或者直接声明什么叫完成。
 
 我想讲的不是某个工具的使用教程，而是这一年里发生的一件更底层的事：AI Coding 里很多原来必须由人亲自承担的工程责任，正在被 harness、产品默认和 agent runtime 悄悄接走。
 
@@ -480,17 +480,17 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 ## Slide 35｜/goal
 
-`/goal` 是这个方向很典型的例子。
+`/goal` 是这个方向很典型的例子，而且这里刚好有一个很有意思的新变化：Claude Code 也支持 `/goal` 了。
 
 它不是替代 AGENTS.md、skills、permissions、subagents。它是把这些东西 wrap 成“我说目标”的入口。
 
-Skill 轴上，`/goal <objective>` 把设目标、拆动作、继续推进包装成一个可调用入口。
+时间线上，Codex 0.128.0 是 2026 年 4 月 30 日 UTC 发布的，5 月 1 日 Greg Brockman 的 tweet 里已经直接在讲 `/goal <objective>`。这里的重心是 objective loop：把目标交给 Codex，让它拆动作、循环推进、持续收尾。
 
-Context 轴上，loop 状态不再完全靠人手动续写 prompt，而是由 runtime continuation 接住。
+Claude Code 这边，2.1.139 是 2026 年 5 月 11 日 UTC 发布的，changelog 里说 added `/goal` command to specify task completion criteria。这个重心稍微不一样，它更像是把 exit condition 变成命令：直接告诉 agent 什么叫完成。
 
-Verification 轴上，Ralph loop++ 的重点不是多跑几轮，而是每轮都带着 audit pressure 逼近完成。
+所以同样叫 `/goal`，Codex 更像 objective loop，Claude 更像 exit condition command。这不是谁抄谁的问题，而是一个很强的生态信号：大家都发现，下一步指令已经不够了，产品入口开始围绕“目标”和“完成条件”重新设计。
 
-所以 `/goal` 表面上很 vibe：我说一句目标。底层其实很 engineering：它在组织 skill、context 和 verification。
+表面上它很 vibe：我说一句目标。底层其实更 engineering：它在组织 skill、context 和 verification。
 
 [翻页]
 
