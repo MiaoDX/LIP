@@ -1490,7 +1490,10 @@ body .key-hint { display: none; }
 .style-toggle button[data-style="navy"] .swatch { background: #1a3a8c; }
 
 @media (max-width: 900px) {
-  .slide { padding: 64px 32px 72px; }
+  .slide {
+    justify-content: flex-start;
+    padding: 64px 32px 72px;
+  }
   .verification-why-slide,
   .verification-data-slide {
     justify-content: flex-start;
@@ -1528,7 +1531,17 @@ body .key-hint { display: none; }
   .data-row, .axis-grid, .cards, .evidence-duo, .psychosis-grid, .triad-grid, .axis-overview, .evolution-lane, .verification-reasons { flex-direction: column; grid-template-columns: 1fr; }
   .data-cell, .axis-col { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child, .axis-col:last-child { border-bottom: none; }
-  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow, .prep-workflow { grid-template-columns: 1fr; }
+  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow, .prep-workflow { grid-template-columns: 1fr !important; }
+  .routing-table {
+    grid-template-columns: 72px repeat(2, minmax(0, 1fr)) !important;
+    width: 100%;
+    min-width: 0;
+  }
+  .routing-table > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
   .quadrant-grid { grid-template-columns: 86px repeat(2, minmax(0, 1fr)); }
   .context-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .table-wrap table { min-width: 680px; }
@@ -1604,7 +1617,7 @@ body .key-hint { display: none; }
 <div class="slide title active">
   <div class="runner">汽车人 AI 进化论 · 第 09 期</div>
   <h1>从 <em>Ultrathink</em><br>到 <em>Goal</em></h1>
-  <div class="subtitle">AI Coding 工程化的一年<br>—— 281 个版本里被悄悄接走的 binding constraint</div>
+  <div class="subtitle">AI Coding 工程化的一年<br>—— Ultrathink → SDD → Harness → Goal：binding constraint 的迁移</div>
   <div class="author-block">
     <strong>缪东旭 MiaoDX</strong><br>
     小米自动驾驶 → 小米机器人<br>
@@ -1718,7 +1731,7 @@ body .key-hint { display: none; }
     <div class="psychosis-item"><div class="psychosis-k">engineering reading</div><div class="psychosis-v">这里不做医学定义，只讲工程体感：无限 action surface 遇到模糊 exit condition</div></div>
   </div>
   <div style="margin-top: 28px; font-family: var(--font-display); font-style: italic; font-size: clamp(25px, 3vw, 38px); color: var(--text); line-height: 1.4; max-width: 80ch;">
-    我们不必再是 <span class="hl">binding constraint</span>，但必须重新设计 harness
+    我们不必再是 <span class="hl">binding constraint</span>，但必须学会设计和选择 harness
   </div>
   <div class="speaker-note">不要把 AI psychosis 当医学词展开。这里讲的是工程体感：生成成本接近零以后，事情没有自然停止点。你可以继续让它查、继续让它改、继续让它验证。于是真正的问题变成：谁定义 action surface，谁控制 information surface，谁给 exit condition。</div>
 </div>
@@ -1733,7 +1746,7 @@ body .key-hint { display: none; }
   </div>
   <p class="section-blurb">一个夸张的差距 —— 同模型，只是换了个 harness</p>
   <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px;">
-    harness = 模型外面那一圈：工具、上下文、权限、流程、验证机制
+    今晚固定用法：harness = 模型外面那一圈工程边界：工具、上下文、权限、流程、验证机制
   </div>
   <div class="speaker-note">实证立柱。Karpathy 的 psychosis 不是孤立感受，是有数据的。这一节就拍出三组实证：25.7pp / 6× / 81.8%。这页只放 25.7pp，留个钩子，下一页才出全图。</div>
 </div>
@@ -1783,7 +1796,7 @@ body .key-hint { display: none; }
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/1</span> · 三轴入口</div>
   <h2>为什么从三件事讲</h2>
-  <h3>同一个模型，换一个 harness，表现可以完全不同。因为 harness 改的不是智商，而是行动面、信息面和退出条件。</h3>
+  <h3>同一个模型，换一个 harness，表现可以完全不同。模型能力仍然重要，但 harness 决定能力怎么被转成可交付结果：行动面、信息面和退出条件。</h3>
   <div class="triad-grid">
     <div class="triad-card" data-axis="skill">
       <div class="triad-name">Skill</div>
@@ -1804,7 +1817,7 @@ body .key-hint { display: none; }
   <div class="axis-pattern">
     这三件事能解释为什么同模型、不同 harness，会出现巨大的结果差异
   </div>
-  <div class="speaker-note">提前给观众三轴。Skill 不是能力泛称，而是 action surface。Context 不是越多越好，而是 information surface。Verification 是 exit condition。后面的 281 个版本，都用这三件事读。</div>
+  <div class="speaker-note">提前给观众三轴。这里要把 model 和 harness 的关系讲准：模型能力当然重要，但 harness 决定能力怎样被转成可交付结果。Skill 不是能力泛称，而是 action surface。Context 不是越多越好，而是 information surface。Verification 是 exit condition。后面的 281 个版本，都用这三件事读。</div>
 </div>
 
 <div class="slide">
@@ -2153,12 +2166,12 @@ body .key-hint { display: none; }
 </svg>
   </div>
   <div class="timeline-guide">
-    读这条时间线的方法：每到一个节点，只问三件事
+    读这条时间线的方法：Ultrathink → SDD → Harness → Goal；每到一个节点，只问三件事
     <strong>它能调什么？</strong>
     <strong>它看到了什么？</strong>
     <strong>谁在判定完成？</strong>
   </div>
-  <div class="speaker-note">把三段念出来：0.2 时代 vibe，三个维度都靠人；1.0 时代 SDD，plan mode 第一次被做进产品内部；2.x 时代 harness，三轴同时工程化。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定完成。指着右下方虚线那个 /goal —— OpenAI 同期也在做同样的事，Codex 0.128.0 把 agent loop 自身 bake 进 slash command。这条线上的 281 个 tick，每个都是这一年 Anthropic 工程师在重新定义 binding constraint。</div>
+  <div class="speaker-note">把四段念出来：Ultrathink 是“让模型多想一会”；SDD 是“先想再写”被产品接走；Harness 是 Skill / Context / Verification 同时工程化；Goal 是 agent loop 被产品 bake 进入口。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定完成。指着右下方虚线那个 /goal —— OpenAI 同期也在做同样的事，Codex 0.128.0 把 agent loop 自身 bake 进 slash command。这条线上的 281 个 tick，每个都是这一年工程师在重新定义 binding constraint。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -2336,7 +2349,8 @@ body .key-hint { display: none; }
     <div class="ss-frame"><img src="images/slide-5.png" alt="HumanLayer · Skill Issue: Harness Engineering for Coding Agents"></div>
     <div class="ss-cap"><a href="https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents">humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents</a></div>
   </div>
-  <h3 style="margin-top: 18px;">但 context 不是全部；harness 工程化在过去一年沿三条线收敛——</h3>
+  <h3 style="margin-top: 18px;">但 context 不是全部；今晚说的 harness 还包括 Skill、权限边界、流程节奏和 Verification。过去一年，它主要沿三条线收敛——</h3>
+  <div class="speaker-note">这里把术语钉死：harness 不是又一个工具名，也不是只等于 context。它是 agent 外面那圈工程边界。后面出现 product harness、local harness、routine、proof pack、workflow，都是这圈边界的不同打包方式，不要让听众以为在推荐一个单独工具。</div>
 </div>
 
 <div class="slide">
@@ -2375,7 +2389,7 @@ body .key-hint { display: none; }
     <div class="axis-overview-card">
       <div class="axis-name">Skill</div>
       <div class="axis-surface">action surface · 一条 <code style="font-family: var(--font-mono); color: var(--accent); background: var(--accent-soft); padding: 1px 6px; border-radius: 3px;">/goal</code> 命令</div>
-      <div class="axis-copy">Codex 0.128.0 把整套 ralph loop 烤进一条 slash command。从用户视角是“说目标”，从 harness 视角是 skill / planner / loop / continuation 一起被产品化。</div>
+      <div class="axis-copy">Codex 0.128.0 把整套 Ralph loop bake 进一条 slash command。从用户视角是“说目标”，从 harness 视角是 skill / planner / loop / continuation 一起被产品化。</div>
       <div style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px;">γ-friendly：以前要自己拼一堆 prompt，现在一个命令</div>
     </div>
     <div class="axis-overview-card">
@@ -2790,6 +2804,9 @@ body .key-hint { display: none; }
       <div class="card-desc">proof pack 让 unattended 长跑可 review</div>
     </div>
   </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px; max-width: 82ch;">
+    这不是工具排序：routine 是 product/cloud harness，GSD / gstack 是 workflow harness，roboharness 的 proof pack 是 Verification layer。真正的判断是任务边界和验证风险。
+  </div>
 </div>
 
 <div class="slide">
@@ -2967,7 +2984,7 @@ body .key-hint { display: none; }
   <div class="callback-box">
     <span class="ref">↩ TIP 1</span>
     <span class="arrow">·</span>
-    <span>harness 比 model 重要 —— 但 model 别成为新的 binding constraint</span>
+    <span>model 决定能力上限，harness 决定能力能否稳定转成交付</span>
   </div>
   <div class="quote">
     SaaS frontier model 可以用就直接用；内部 only 项目，就用私有部署的 top-tier 开源模型<br>
@@ -2981,7 +2998,7 @@ body .key-hint { display: none; }
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · bonus</span> · 长程任务组合</div>
   <h2>最近好用的一个大杂烩：<span class="hl">hybrid-phase-pipeline</span></h2>
-  <h3>把 GSD、gstack、mattpocock/skills 组合起来，再搭配 Codex 的 <code>/goal</code>，我最近用两三天，体感很适合长程任务</h3>
+  <h3>把 GSD、gstack、mattpocock/skills 组合起来，再搭配 Codex 的 <code>/goal</code>，我最近一周在高频使用，体感上很适合较为复杂的长程任务</h3>
   <div class="hybrid-layout">
     <div class="screenshot">
       <img src="images/hybrid-phase-pipeline-default.jpg" alt="Default hybrid phase pipeline diagram">

@@ -12,11 +12,11 @@
 
 今天这场分享的题目叫《从 Ultrathink 到 Goal：AI Coding 工程化的一年》。
 
-这个题目里有两个端点。Ultrathink 是去年大家很熟悉的一个词：你在 prompt 末尾加上它，希望模型多想一会儿。Goal 是最近 Codex 里出现的入口：你不再只给下一步指令，而是直接交给它一个目标，让 agent 自己循环推进、检查和收尾。
+这个题目里有两个端点，也有一条中间线。Ultrathink 是去年大家很熟悉的一个词：你在 prompt 末尾加上它，希望模型多想一会儿。中间经过 SDD，也就是先想再写被产品化；再经过 harness，也就是模型外面那圈工程边界被认真设计。Goal 是最近 Codex 里出现的入口：你不再只给下一步指令，而是直接交给它一个目标，让 agent 自己循环推进、检查和收尾。
 
 我想讲的不是某个工具的使用教程，而是这一年里发生的一件更底层的事：AI Coding 里很多原来必须由人亲自承担的工程责任，正在被 harness、产品默认和 agent runtime 悄悄接走。
 
-整场我会用一条线串起来：Claude Code 这一年 281 个版本里，binding constraint，也就是限制系统继续前进的那个瓶颈，是怎么从人手里迁移出去的。
+整场我会用一条线串起来：Ultrathink → SDD → Harness → Goal。它背后讲的是 Claude Code 这一年 281 个版本里，binding constraint，也就是限制系统继续前进的那个瓶颈，是怎么从人手里迁移出去的。
 
 [翻页]
 
@@ -82,6 +82,8 @@ Karpathy 的这种体感不是孤立的。我们先看一个很硬的数据锚�
 
 这不是换了模型，也不是换了任务，而是同一个模型换了一个 harness，结果就差出二十多个点。
 
+这里先把今晚的用法说清楚：harness 指的是模型外面那一圈工程边界，包括工具、上下文、权限、流程和验证机制。后面我说 product harness、local harness、routine、proof pack、workflow，都是这圈边界的不同打包方式。
+
 这里先只记住这个数。下一页我们把三组证据放在一起看。
 
 [翻页]
@@ -102,7 +104,7 @@ Karpathy 的这种体感不是孤立的。我们先看一个很硬的数据锚�
 
 ## Slide 08｜为什么从三件事讲
 
-我把这件事压成三问。
+我把这件事压成三问。这里不是说模型不重要，模型当然决定能力上限；但 harness 决定这个能力能不能稳定转成可交付结果。
 
 第一，Skill：agent 能调什么？这对应 action surface。工具、命令、skills、routines，决定 agent 能把你的意图落实到哪些动作上。
 
@@ -118,15 +120,15 @@ Karpathy 的这种体感不是孤立的。我们先看一个很硬的数据锚�
 
 ## Slide 09｜Claude Code 281 个版本
 
-这条时间轴把 Claude Code 过去一年粗略分成三段。
+这条时间轴把 Claude Code 过去一年粗略分成三段，再接到 OpenAI `/goal` 这条副线。
 
-第一段是 0.2 时代，我叫它 vibe 段。这个阶段 Skill、Context、Verification 三个维度基本都靠人。人写 prompt，人管上下文，人看输出。
+第一段是 0.2 时代，我叫它 vibe 段，也就是 Ultrathink 那一端。这个阶段 Skill、Context、Verification 三个维度基本都靠人。人写 prompt，人管上下文，人看输出。
 
 第二段是 1.0 时代，我叫它 SDD 段。这里最重要的是 plan mode。也就是“先想再写”这件事，第一次被做进产品内部。
 
 第三段是 2.x 时代，我叫它 harness 段。Skills、Subagents、Routines、Auto Mode、Managed Agents 这些东西，开始同时工程化三条轴。
 
-右下角那条虚线是 OpenAI 的副线。Codex 0.128.0 把 agent loop 自身 bake 进 `/goal` 命令。也就是说，Anthropic 和 OpenAI 在不同产品里，其实都在做同一件事：重新定义人和 agent 之间的 binding constraint。
+右下角那条虚线是 OpenAI 的副线，也就是 Goal 那一端。Codex 0.128.0 把 agent loop 自身 bake 进 `/goal` 命令。也就是说，Anthropic 和 OpenAI 在不同产品里，其实都在做同一件事：重新定义人和 agent 之间的 binding constraint。
 
 [翻页]
 
@@ -230,9 +232,9 @@ Plan mode 把“先计划，再执行”做成一个产品模式。Hooks 让你�
 
 HumanLayer 有一句话，把 harness engineering 看成 context engineering 的一个子集。这个说法有道理，因为模型确实只通过上下文理解世界。
 
-但如果只讲 context，又会太窄。真实的 agent 系统里，还有它能调用什么工具、它有什么权限、它怎样判断自己完成了。
+但如果只讲 context，又会太窄。真实的 agent 系统里，还有它能调用什么工具、它有什么权限、它用什么流程推进、它怎样判断自己完成了。
 
-所以我今天把 harness 压成三轴：Skill、Context、Verification。
+所以我今天把 harness 压成三轴：Skill、Context、Verification。它不是某一个产品名。后面出现的 routine、roboharness、GSD、gstack、hybrid-phase-pipeline 和 `/goal`，都只是不同任务下的 harness 形态。
 
 当生成成本下降以后，瓶颈不在“能不能写一版代码”。瓶颈在于：它能不能调用正确的能力；它有没有看到足够高信号的信息；它完成以后，有没有一个独立质量门防止它自我感觉良好。
 
@@ -456,7 +458,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 有些活适合 roboharness。比如验证风险高、运行时间长、人不可能看完整过程，就需要 proof pack。
 
-这些工具不是替代关系，而是不同任务类型和验证风险下的 harness specialization。
+这些工具不是替代关系，也不是工具排序。routine 更像 product 或 cloud harness，GSD / gstack 更像 workflow harness，roboharness 的 proof pack 是 Verification layer。真正的判断不是“哪个工具最好”，而是任务边界和验证风险在哪里。
 
 [翻页]
 
@@ -586,7 +588,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 如果 SaaS frontier model 可以用，就直接用。如果是内部 only 项目，就用你能用到的 top-tier 私有或开源模型。
 
-这里不是说模型万能。恰恰相反，今天整场都在讲 harness 比 model 重要。但 model 也不能成为新的 binding constraint。
+这里不是说模型万能。今天整场的更准确说法是：model 决定能力上限，harness 决定这个能力能不能稳定转成交付。两者都不能成为新的 binding constraint。
 
 很多时候你省下来的 retry、review、上下文重建和返工时间，比模型成本贵得多。
 
@@ -600,7 +602,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 最后放一个 bonus。
 
-最近我自己用得比较顺的是 hybrid-phase-pipeline。它不是一个全新的框架，而是把几套现有工具粘成一个更适合长程任务的方式。
+最近我自己用得比较顺的是 hybrid-phase-pipeline。它不是一个全新的框架，而是把几套现有工具粘成一个更适合一次性长程任务的方式。
 
 GSD 负责 discuss、plan、execute、verify 的 phase 结构。
 
