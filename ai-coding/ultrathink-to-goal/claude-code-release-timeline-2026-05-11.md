@@ -21,11 +21,23 @@ As of `2026-05-11T23:59:59Z`, the npm timeline contains **405 publish timestamps
 - npm package `modified`: `2026-05-11T18:43:30.297Z`
 - latest publish timestamp: `2.1.139` at `2026-05-11T18:09:28.537Z`
 
-## Visual map
+## Visual map candidates
+
+The existing map is kept below for comparison. The five new candidates combine AI-generated visual bases with deterministic HTML/CSS overlays, so release numbers and word-cloud terms remain readable and reviewable.
+
+| Candidate | Preview |
+|---|---|
+| v1: Release Radar | <img src="images/claude-code-release-map-v1-2026-05-11.png" alt="Claude Code release map candidate v1, release radar" width="520"> |
+| v2: Metro Map | <img src="images/claude-code-release-map-v2-2026-05-11.png" alt="Claude Code release map candidate v2, metro map" width="520"> |
+| v3: Layered Stack | <img src="images/claude-code-release-map-v3-2026-05-11.png" alt="Claude Code release map candidate v3, layered stack" width="520"> |
+| v4: Constellation | <img src="images/claude-code-release-map-v4-2026-05-11.png" alt="Claude Code release map candidate v4, constellation graph" width="520"> |
+| v5: Release Board | <img src="images/claude-code-release-map-v5-2026-05-11.png" alt="Claude Code release map candidate v5, release board" width="520"> |
+
+Overlay source: `assets/claude-code-release-map-candidates-2026-05-11.html`
+
+### Existing map
 
 ![Claude Code release visual map through 2026-05-11](images/claude-code-release-map-2026-05-11.png)
-
-This image combines an AI-generated visual base with deterministic text overlays, so the word cloud highlights remain readable and reviewable.
 
 ## Era counts used in the slide
 

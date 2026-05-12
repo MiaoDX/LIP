@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Release Map Candidates 2026-05-11</title>
+<style>
+  :root {
+    --bg: #070b10;
+    --panel: rgba(5, 9, 14, 0.68);
+    --panel-soft: rgba(5, 9, 14, 0.48);
+    --line: rgba(238, 244, 245, 0.18);
+    --ink: #f4f7f2;
+    --muted: rgba(244, 247, 242, 0.7);
+    --dim: rgba(244, 247, 242, 0.48);
+    --cyan: #38d8ff;
+    --green: #91ee7c;
+    --amber: #ffbe4a;
+    --orange: #ff8652;
+    --white: #e9f2f4;
+  }
+
+  * { box-sizing: border-box; }
+
+  html,
+  body {
+    margin: 0;
+    width: 1672px;
+    height: 941px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  body {
+    font-family: Inter, "IBM Plex Sans", "Noto Sans SC", system-ui, sans-serif;
+    color: var(--ink);
+  }
+
+  .canvas {
+    position: relative;
+    width: 1672px;
+    height: 941px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .base-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .canvas::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(90deg, rgba(3, 7, 12, 0.52), rgba(3, 7, 12, 0.14) 44%, rgba(3, 7, 12, 0.34)),
+      radial-gradient(circle at 52% 46%, rgba(4, 12, 18, 0) 0, rgba(4, 8, 12, 0.3) 64%, rgba(2, 5, 9, 0.54) 100%);
+    pointer-events: none;
+  }
+
+  .title,
+  .stats,
+  .word-cloud,
+  .release-list,
+  .latest-card,
+  .legend,
+  .layout-note,
+  .board-cards,
+  .layer-labels,
+  .cluster-tags,
+  .track-labels {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .title {
+    left: 74px;
+    top: 58px;
+    width: 700px;
+  }
+
+  .variant {
+    color: var(--cyan);
+    font-size: 22px;
+    font-weight: 780;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 62px;
+    line-height: 1.02;
+    letter-spacing: 0;
+    font-weight: 860;
+  }
+
+  .subtitle {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 25px;
+    line-height: 1.24;
+    max-width: 760px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 14px;
+  }
+
+  .stat {
+    min-width: 144px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    background: rgba(2, 6, 10, 0.62);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+  }
+
+  .stat strong {
+    display: block;
+    color: var(--amber);
+    font-size: 30px;
+    line-height: 1;
+    margin-bottom: 7px;
+  }
+
+  .stat span {
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 690;
+  }
+
+  .release-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .release {
+    border: 1px solid rgba(244, 247, 242, 0.15);
+    background: rgba(3, 8, 13, 0.66);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+    padding: 10px 12px;
+  }
+
+  .release .version {
+    display: block;
+    font-size: 23px;
+    line-height: 1;
+    font-weight: 850;
+  }
+
+  .release .label {
+    display: block;
+    margin-top: 7px;
+    font-size: 16px;
+    color: var(--muted);
+    font-weight: 740;
+  }
+
+  .release.is-latest {
+    border-color: rgba(255, 190, 74, 0.58);
+    box-shadow: 0 0 0 1px rgba(255, 190, 74, 0.12), 0 0 38px rgba(255, 190, 74, 0.25);
+  }
+
+  .release.is-latest .version,
+  .release.is-latest .label {
+    color: var(--amber);
+  }
+
+  .latest-card {
+    width: 312px;
+    padding: 20px 22px;
+    border: 1px solid rgba(255, 190, 74, 0.48);
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 190, 74, 0.2), transparent 42%),
+      rgba(4, 8, 13, 0.68);
+    box-shadow: 0 0 0 1px rgba(255, 190, 74, 0.12), 0 22px 65px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(9px);
+  }
+
+  .latest-card .kicker {
+    color: var(--amber);
+    font-size: 18px;
+    font-weight: 820;
+    margin-bottom: 10px;
+  }
+
+  .latest-card .big {
+    font-size: 46px;
+    line-height: 1;
+    font-weight: 880;
+  }
+
+  .latest-card .copy {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.28;
+  }
+
+  .word-cloud {
+    border: 1px solid rgba(244, 247, 242, 0.16);
+    background:
+      radial-gradient(circle at 28% 18%, rgba(56, 216, 255, 0.14), transparent 45%),
+      rgba(3, 8, 13, 0.52);
+    backdrop-filter: blur(7px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 22px 65px rgba(0, 0, 0, 0.28);
+    overflow: hidden;
+  }
+
+  .cloud-title {
+    position: absolute;
+    left: 28px;
+    top: 23px;
+    color: var(--muted);
+    font-size: 18px;
+    font-weight: 820;
+  }
+
+  .cloud-words {
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    top: 86px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 20px 24px;
+  }
+
+  .word {
+    display: inline-block;
+    white-space: nowrap;
+    font-weight: 860;
+    line-height: 1;
+    letter-spacing: 0;
+    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.38);
+  }
+
+  .w-goal { color: var(--amber); font-size: 68px; }
+  .w-agent { color: var(--cyan); font-size: 34px; }
+  .w-mcp { color: var(--green); font-size: 48px; }
+  .w-hooks { color: #f8da96; font-size: 34px; }
+  .w-plugins { color: var(--white); font-size: 36px; }
+  .w-remote { color: var(--cyan); font-size: 26px; }
+  .w-subagents { color: #c7ffd3; font-size: 28px; }
+  .w-context { color: #d8f8ff; font-size: 32px; }
+  .w-worktree { color: #f8da96; font-size: 28px; }
+  .w-auth { color: var(--white); font-size: 26px; }
+  .w-terminal { color: rgba(244, 247, 242, 0.72); font-size: 25px; }
+  .w-auto { color: var(--green); font-size: 26px; }
+
+  .legend {
+    display: flex;
+    gap: 11px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 1px solid rgba(244, 247, 242, 0.15);
+    background: rgba(3, 8, 13, 0.58);
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 780;
+  }
+
+  .swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 14px currentColor;
+  }
+
+  .swatch.green { background: var(--green); }
+  .swatch.amber { background: var(--amber); }
+
+  .layout-note {
+    color: rgba(244, 247, 242, 0.46);
+    font-size: 15px;
+    font-weight: 680;
+  }
+
+  .radar .stats { left: 74px; top: 282px; }
+  .radar .release-list {
+    left: 74px;
+    bottom: 86px;
+    width: 620px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .radar .release { min-height: 76px; }
+  .radar .word-cloud { right: 68px; top: 124px; width: 410px; height: 590px; }
+  .radar .latest-card { left: 862px; top: 584px; }
+  .radar .legend { left: 74px; bottom: 34px; }
+  .radar .layout-note { right: 86px; bottom: 42px; }
+
+  .metro .title { width: 720px; }
+  .metro .stats { display: none; }
+  .metro .release-list {
+    left: 198px;
+    top: 300px;
+    width: 980px;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .metro .release {
+    min-height: 80px;
+    text-align: center;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .metro .release .version { font-size: 21px; }
+  .metro .release .label { font-size: 15px; }
+  .metro .track-labels {
+    left: 86px;
+    top: 346px;
+    width: 78px;
+    display: grid;
+    gap: 55px;
+    color: var(--muted);
+    font-size: 18px;
+    font-weight: 830;
+  }
+  .metro .word-cloud { right: 54px; top: 130px; width: 388px; height: 640px; }
+  .metro .legend { left: 166px; bottom: 85px; }
+  .metro .layout-note { left: 166px; bottom: 40px; }
+  .metro .latest-card { left: 930px; top: 602px; width: 282px; }
+  .metro .latest-card .big { font-size: 38px; }
+
+  .stack .title { width: 650px; }
+  .stack .stats { display: none; }
+  .stack .layer-labels {
+    left: 86px;
+    top: 343px;
+    width: 420px;
+    display: grid;
+    gap: 32px;
+  }
+  .layer {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 68px;
+    padding: 10px 14px;
+    border: 1px solid rgba(244, 247, 242, 0.13);
+    background: rgba(3, 8, 13, 0.54);
+  }
+  .layer .dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 18px currentColor;
+    flex: none;
+  }
+  .layer strong {
+    display: block;
+    font-size: 22px;
+    line-height: 1.05;
+  }
+  .layer span {
+    display: block;
+    color: var(--muted);
+    font-size: 15px;
+    margin-top: 5px;
+  }
+  .stack .release-list {
+    left: 566px;
+    bottom: 72px;
+    width: 650px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .stack .release { min-height: 72px; }
+  .stack .release .version { font-size: 20px; }
+  .stack .release .label { font-size: 14px; }
+  .stack .word-cloud { right: 70px; top: 128px; width: 356px; height: 642px; }
+  .stack .latest-card { left: 697px; top: 196px; width: 282px; }
+  .stack .legend { left: 566px; bottom: 30px; }
+
+  .constellation .stats { display: none; }
+  .constellation .release-list {
+    left: 118px;
+    bottom: 72px;
+    width: 1160px;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .constellation .release {
+    min-height: 74px;
+    text-align: center;
+    padding: 10px 8px;
+  }
+  .constellation .release .version { font-size: 20px; }
+  .constellation .release .label { font-size: 14px; }
+  .constellation .cluster-tags {
+    left: 535px;
+    top: 195px;
+    width: 710px;
+    height: 430px;
+  }
+  .tag {
+    position: absolute;
+    padding: 9px 12px;
+    border: 1px solid rgba(244, 247, 242, 0.15);
+    background: rgba(3, 8, 13, 0.58);
+    color: var(--ink);
+    font-size: 19px;
+    font-weight: 830;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.24);
+  }
+  .tag.cyan { color: var(--cyan); }
+  .tag.green { color: var(--green); }
+  .tag.amber { color: var(--amber); }
+  .tag.white { color: var(--white); }
+  .constellation .tag:nth-child(1) { left: 310px; top: 35px; font-size: 30px; }
+  .constellation .tag:nth-child(2) { left: 75px; top: 105px; }
+  .constellation .tag:nth-child(3) { left: 0; top: 250px; }
+  .constellation .tag:nth-child(4) { left: 405px; top: 247px; }
+  .constellation .tag:nth-child(5) { left: 510px; top: 119px; }
+  .constellation .word-cloud { right: 54px; top: 136px; width: 355px; height: 604px; }
+  .constellation .layout-note { left: 118px; bottom: 34px; }
+
+  .board .title { top: 50px; width: 780px; }
+  .board h1 { font-size: 58px; }
+  .board .subtitle { display: none; }
+  .board .stats { left: 918px; top: 45px; }
+  .board .board-cards {
+    left: 86px;
+    top: 168px;
+    width: 994px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 30px;
+  }
+  .board .release {
+    min-height: 222px;
+    padding: 24px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .board .release .version { font-size: 34px; }
+  .board .release .label { font-size: 22px; }
+  .board .release .note {
+    color: var(--dim);
+    font-size: 16px;
+    line-height: 1.26;
+    font-weight: 700;
+  }
+  .board .latest-card {
+    left: 1136px;
+    top: 182px;
+    width: 432px;
+    min-height: 360px;
+    padding: 30px 32px;
+  }
+  .board .latest-card .big { font-size: 58px; }
+  .board .latest-card .copy { font-size: 21px; }
+  .board .word-cloud {
+    left: 1136px;
+    top: 558px;
+    width: 432px;
+    height: 180px;
+  }
+  .board .word-cloud .cloud-title {
+    left: 26px;
+    top: 17px;
+    font-size: 17px;
+  }
+  .board .cloud-words {
+    left: 26px;
+    right: 26px;
+    top: 54px;
+    gap: 10px 15px;
+  }
+  .board .word {
+    font-size: 19px;
+  }
+  .board .w-goal { font-size: 34px; }
+  .board .w-agent { font-size: 24px; }
+  .board .w-mcp { font-size: 29px; }
+  .board .w-hooks { font-size: 21px; }
+  .board .w-plugins { font-size: 24px; }
+  .board .w-remote { font-size: 18px; }
+  .board .w-subagents,
+  .board .w-context,
+  .board .w-worktree,
+  .board .w-auth { font-size: 18px; }
+  .board .w-terminal,
+  .board .w-auto { display: none; }
+</style>
+</head>
+<body>
+  <main class="canvas" aria-label="Claude Code release map candidate"></main>
+
+<script>
+const releases = [
+  ["2.1.126", "stable", "npm stable anchor before the May 2026 acceleration"],
+  ["2.1.128", "worktree", "agent isolation and workspace flow improvements"],
+  ["2.1.129", "plugins", "plugin zip loading and marketplace polish"],
+  ["2.1.132", "runtime", "terminal, MCP, resume, and session hardening"],
+  ["2.1.133", "effort", "effort propagation, Remote Control, policy merge"],
+  ["2.1.136", "auto mode", "auto-mode policy, MCP fixes, terminal polish"],
+  ["2.1.139", "/goal", "agent view and goal-directed continuation"]
+];
+
+const variants = {
+  "1": { layout: "radar", name: "Release Radar", base: "../images/claude-code-release-map-v1-base-2026-05-11.png", note: "Radial view: capability streams converge on latest." },
+  "2": { layout: "metro", name: "Metro Map", base: "../images/claude-code-release-map-v2-base-2026-05-11.png", note: "Transit view: Skill, Context, and Verification arrive together." },
+  "3": { layout: "stack", name: "Layered Stack", base: "../images/claude-code-release-map-v3-base-2026-05-11.png", note: "Stack view: releases raise the harness layer by layer." },
+  "4": { layout: "constellation", name: "Constellation", base: "../images/claude-code-release-map-v4-base-2026-05-11.png", note: "Graph view: release nodes connect to capability clusters." },
+  "5": { layout: "board", name: "Release Board", base: "../images/claude-code-release-map-v5-base-2026-05-11.png", note: "Board view: exact cards plus one clear latest-release feature." }
+};
+
+const query = new URLSearchParams(window.location.search);
+const requested = query.get("v") || "1";
+const current = variants[requested] || variants["1"];
+const canvas = document.querySelector(".canvas");
+document.body.className = current.layout;
+const baseImage = document.createElement("img");
+baseImage.className = "base-image";
+baseImage.alt = "";
+baseImage.src = current.base;
+canvas.append(baseImage);
+
+function releaseCards(items = releases, withNotes = false) {
+  return items.map(([version, label, note], index) => `
+    <article class="release ${version === "2.1.139" ? "is-latest" : ""}">
+      <div>
+        <span class="version">${version}</span>
+        <span class="label">${label}</span>
+      </div>
+      ${withNotes ? `<div class="note">${note}</div>` : ""}
+    </article>
+  `).join("");
+}
+
+function wordCloud() {
+  return `
+    <section class="word-cloud" aria-label="word cloud">
+      <div class="cloud-title">auto-highlighted release terms</div>
+      <div class="cloud-words">
+        <span class="word w-goal">/goal</span>
+        <span class="word w-agent">agent view</span>
+        <span class="word w-mcp">MCP</span>
+        <span class="word w-hooks">hooks</span>
+        <span class="word w-plugins">plugins</span>
+        <span class="word w-remote">Remote Control</span>
+        <span class="word w-subagents">subagents</span>
+        <span class="word w-context">context</span>
+        <span class="word w-worktree">worktree</span>
+        <span class="word w-auth">OAuth</span>
+        <span class="word w-terminal">terminal</span>
+        <span class="word w-auto">auto mode</span>
+      </div>
+    </section>
+  `;
+}
+
+function stats() {
+  return `
+    <section class="stats" aria-label="release stats">
+      <div class="stat"><strong>405</strong><span>npm publish timestamps</span></div>
+      <div class="stat"><strong>2.1.139</strong><span>latest on 2026-05-11</span></div>
+      <div class="stat"><strong>189</strong><span>2.x harness-era publishes</span></div>
+    </section>
+  `;
+}
+
+function title() {
+  return `
+    <section class="title">
+      <div class="variant">${requested}/5 | ${current.name}</div>
+      <h1>Claude Code release map</h1>
+      <div class="subtitle">2026-05-01 to 05-11 | 405 npm publishes | latest 2.1.139</div>
+    </section>
+  `;
+}
+
+function legend() {
+  return `
+    <section class="legend" aria-label="axis legend">
+      <div class="pill"><span class="swatch"></span>Skill</div>
+      <div class="pill"><span class="swatch green"></span>Context</div>
+      <div class="pill"><span class="swatch amber"></span>Verification</div>
+    </section>
+  `;
+}
+
+function latestCard() {
+  return `
+    <section class="latest-card">
+      <div class="kicker">latest release</div>
+      <div class="big">2.1.139</div>
+      <div class="copy">Adds <strong>/goal</strong> and <strong>agent view</strong>: the harness turns model capability into a goal-directed delivery loop.</div>
+    </section>
+  `;
+}
+
+function layerLabels() {
+  return `
+    <section class="layer-labels">
+      <div class="layer"><span class="dot"></span><div><strong>terminal runtime</strong><span>scrolling, paste, resize, CJK, resume</span></div></div>
+      <div class="layer"><span class="dot" style="background: var(--green)"></span><div><strong>MCP and auth</strong><span>connectors, OAuth, retry, project env</span></div></div>
+      <div class="layer"><span class="dot" style="background: var(--amber)"></span><div><strong>plugins and hooks</strong><span>marketplaces, hook args, permissions</span></div></div>
+      <div class="layer"><span class="dot" style="background: var(--white)"></span><div><strong>agent loop</strong><span>lineage, worktree, Remote Control</span></div></div>
+      <div class="layer"><span class="dot" style="background: var(--orange)"></span><div><strong>/goal</strong><span>completion condition plus continuation</span></div></div>
+    </section>
+  `;
+}
+
+function clusterTags() {
+  return `
+    <section class="cluster-tags" aria-label="capability clusters">
+      <span class="tag amber">2.1.139 /goal</span>
+      <span class="tag cyan">agent view</span>
+      <span class="tag amber">plugins + hooks</span>
+      <span class="tag green">MCP + OAuth</span>
+      <span class="tag white">terminal runtime</span>
+    </section>
+  `;
+}
+
+function metroTracks() {
+  return `
+    <section class="track-labels" aria-label="axis labels">
+      <div>Skill</div>
+      <div>Context</div>
+      <div>Verification</div>
+    </section>
+  `;
+}
+
+const common = `${title()}${stats()}`;
+
+if (current.layout === "board") {
+  canvas.insertAdjacentHTML("beforeend", `
+    ${common}
+    <section class="board-cards">${releaseCards(releases.slice(0, 6), true)}</section>
+    ${latestCard()}
+    ${wordCloud()}
+  `);
+} else if (current.layout === "stack") {
+  canvas.insertAdjacentHTML("beforeend", `
+    ${common}
+    ${layerLabels()}
+    <section class="release-list">${releaseCards()}</section>
+    ${latestCard()}
+    ${wordCloud()}
+    ${legend()}
+  `);
+} else if (current.layout === "constellation") {
+  canvas.insertAdjacentHTML("beforeend", `
+    ${common}
+    ${clusterTags()}
+    <section class="release-list">${releaseCards()}</section>
+    ${wordCloud()}
+    <div class="layout-note">${current.note}</div>
+  `);
+} else if (current.layout === "metro") {
+  canvas.insertAdjacentHTML("beforeend", `
+    ${common}
+    ${metroTracks()}
+    <section class="release-list">${releaseCards()}</section>
+    ${latestCard()}
+    ${wordCloud()}
+    ${legend()}
+    <div class="layout-note">${current.note}</div>
+  `);
+} else {
+  canvas.insertAdjacentHTML("beforeend", `
+    ${common}
+    <section class="release-list">${releaseCards()}</section>
+    ${latestCard()}
+    ${wordCloud()}
+    ${legend()}
+    <div class="layout-note">${current.note}</div>
+  `);
+}
+</script>
+</body>
+</html>
