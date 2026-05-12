@@ -1,7 +1,7 @@
 # 从 Ultrathink 到 Goal：AI Coding 工程化的一年｜逐字稿
 
 > 「汽车人 AI 进化论」第 09 期 · 缪东旭  
-> 版本：基于 `index.html` 当前 46 页 deck  
+> 版本：基于 `index.html` 当前 47 页 deck  
 > 用途：排练口播稿。方括号里的内容是舞台提示，不需要念出来。
 
 ---
@@ -12,7 +12,7 @@
 
 今天这场分享的题目叫《从 Ultrathink 到 Goal：AI Coding 工程化的一年》。
 
-这个题目里有两个端点，也有一条中间线。Ultrathink 是去年大家很熟悉的一个词：你在 prompt 末尾加上它，希望模型多想一会儿。中间经过 SDD，也就是先想再写被产品化；再经过 harness，也就是模型外面那圈工程边界被认真设计。Goal 是最近 Codex 里出现的入口：你不再只给下一步指令，而是直接交给它一个目标，让 agent 自己循环推进、检查和收尾。
+这个题目里有两个端点，也有一条中间线。Ultrathink 是去年大家很熟悉的一个词：你在 prompt 末尾加上它，希望模型多想一会儿。中间经过 SDD，也就是把口头意图变成 spec、plan、todos、state 这些 durable artifacts；再经过 harness，也就是模型外面那圈工程边界被认真设计。Goal 是最近 Codex 里出现的入口：你不再只给下一步指令，而是直接交给它一个目标，让 agent 自己循环推进、检查和收尾。
 
 我想讲的不是某个工具的使用教程，而是这一年里发生的一件更底层的事：AI Coding 里很多原来必须由人亲自承担的工程责任，正在被 harness、产品默认和 agent runtime 悄悄接走。
 
@@ -124,7 +124,7 @@ Karpathy 的这种体感不是孤立的。我们先看一个很硬的数据锚�
 
 第一段是 0.2 时代，我叫它 vibe 段，也就是 Ultrathink 那一端。这个阶段 Skill、Context、Verification 三个维度基本都靠人。人写 prompt，人管上下文，人看输出。
 
-第二段是 1.0 时代，我叫它 SDD 段。这里最重要的是 plan mode。也就是“先想再写”这件事，第一次被做进产品内部。
+第二段是 1.0 时代，我叫它 SDD 段。这里最重要的不是 plan mode 这个按钮本身，而是意图开始从对话里搬出来，变成 spec、plan、todos、state 这些可以被读取、review、暂停和恢复的 artifact。
 
 第三段是 2.x 时代，我叫它 harness 段。Skills、Subagents、Routines、Auto Mode、Managed Agents 这些东西，开始同时工程化三条轴。这里几个节点要念准：Routines 对应 2.1.107，时间是 04-14；Managed Agents 对应 2.1.132，时间是 05-06；最新的 2.1.139 在 05-11，把 agent view 和 `/goal` 这样的入口也放进了 Claude Code 的 release 线上。
 
@@ -176,57 +176,71 @@ Skill 没有产品形态，大家就互相分享 prompt template。某个任务�
 
 第二段是 SDD 段。
 
-这里的关键词是：先想再写，从 prompt 习惯变成产品按钮。
+这里的关键词不是“先想再写”这么简单，而是：从 prompt-driven，转向 artifact-driven。
 
-这一步很重要，因为它说明某个实践已经稳定到值得被产品 bake-in。
+Vibe 阶段里，很多东西都活在对话里：我要什么、边界是什么、下一步做什么、怎么算完成。到了 SDD 阶段，这些东西开始被搬到对话外面，变成 spec、plan、todos、progress file、acceptance criteria。
 
-[翻页]
-
-## Slide 14｜先想再写
-
-1.0.x 里几个节点连起来看很清楚。
-
-Plan mode 把“先计划，再执行”做成一个产品模式。Hooks 让你可以把某些检查和动作挂到流程里。Subagent 雏形开始把不同任务隔离开。`/todos` 让执行过程里的任务分解变得显式。
-
-这些功能单看都像小 feature，但合在一起，它们在做同一件事：把原来靠人反复提醒模型的工程纪律，变成产品里的结构。
-
-这就是 binding constraint 第一次明显被产品接走。以前你要在 prompt 里说“先别写代码，先给计划”。现在产品直接提供一个入口，默认帮你把这件事放到流程里。
+这一步很重要，因为只有这些东西变成 durable artifact，后面的 harness 才有东西可以接管。
 
 [翻页]
 
-## Slide 15｜OpenAI 同时间在做同样的事
+## Slide 14｜durable artifacts 出现了
 
-这件事不只发生在 Claude Code。
+所以我这里想纠偏一下：SDD 的核心不是 plan mode。
 
-同一时间，OpenAI 社区在讨论 Plan/Spec mode，GitHub Copilot 有 Plan mode，Cursor 也有 plan-and-act 的路径。不同团队、不同产品，同时把“先 plan 再 do”这个习惯做成显式入口。
+Plan 很重要，但它只是 artifact 的一种。真正的变化是：spec 写清楚做什么、为什么、边界和验收标准；plan 写清楚怎么做、顺序、风险；todos 和 state 写清楚现在到哪、下一步是什么；context 文件写清楚哪些信息应该长期存在。
 
-所以这页不要读成产品功能比较。重点不是谁更早、谁更好，而是这个 pattern 已经稳定到值得 bake-in。
+以前这些信息都混在 prompt 和 transcript 里。agent 做到一半迷路了，你只能继续解释，或者重开一个 session 再讲一遍。
 
-当四家独立团队都在把同一个 prompt 习惯做成 button，说明这里有一个真实的工程瓶颈：人不应该每次都亲自提醒 agent 先想清楚。
-
-[翻页]
-
-## Slide 16｜但 SDD 不是终点
-
-不过 SDD 不是终点。
-
-它主要工程化了 plan 这一件事，但 skill 怎么发现、context 怎么管理、verification 怎么变成独立质量门，仍然大量由人承担。
-
-所以 2.x 时代会继续往前走：不只是先想再写，而是把 agent 调什么、看什么、凭什么宣告完成，这三件事都做进 harness。
+SDD 的意义是把它们拿出来，变成 agent 可以反复读取、更新、交接的对象。这才是从 vibe 到工程化的关键一步。
 
 [翻页]
 
-## Slide 17｜Harness 段
+## Slide 15｜产品开始承认 artifact 是一等对象
+
+1.0.x 里几个节点连起来看就很清楚。
+
+Plan mode 把 plan 从“prompt 里求它先想”变成显式模式和可审查对象。Hooks 让流程边界和自动检查接到执行链上。Subagent 雏形开始把子任务放进隔离 context，而不是让所有信息挤在同一个 transcript。`/todos` 把执行进度和下一步变成产品可见的状态。
+
+这些功能单看都像小 feature，但合在一起，它们是在给 spec、workflow、state、context 留位置。
+
+所以这页不要读成“plan 被大家认可了”。更准确地说，是产品开始承认 artifact 是 coding agent 的关键接口。
+
+[翻页]
+
+## Slide 16｜社区把 SDD 推成方法论
+
+这件事也不只发生在产品里。社区其实更早、更激进。
+
+Spec-Kit、OpenSpec、BMAD 这类东西重的是 spec 和 requirements。GSD、gstack 重的是 phase、plan、state、verification，把 SDD 打包成一条可复用 workflow。Superpowers、skills 这类东西把 TDD、review、quality gate 做成 agent 必须经过的门。
+
+这些路径看起来不一样，但共同点是：先把意图写成结构，再让 agent 执行结构。
+
+这就是 SDD 在这一年里真正的位置：社区先证明 vibe 不够，要有 spec 和流程；产品再把其中最稳定、最通用的部分收进去。
+
+[翻页]
+
+## Slide 17｜SDD 不是终点
+
+不过 SDD 不是终点，它是给 Harness 铺路。
+
+一句话讲：SDD 把 intent 工程化成 artifacts；Harness 把 artifacts 工程化成 runtime。
+
+也就是说，SDD 先把目标、计划、状态和验收标准写出来。到了 Harness 阶段，agent 调什么、看什么、凭什么宣告完成，不只是写在文件里，而是被 runtime、产品和框架接管。
+
+[翻页]
+
+## Slide 18｜Harness 段
 
 接下来进入第三段，Harness 段。
 
 这一段是今天的主体。
 
-如果说 Vibe 段靠 prompt，SDD 段靠 plan，那么 Harness 段要解决的是：当生成已经很便宜，真正限制结果质量的，不再只是模型本身，而是模型外面那一圈工程系统。
+如果说 Vibe 段靠 prompt，SDD 段把意图变成 artifact，那么 Harness 段要解决的是：这些 artifact 怎么被 runtime 执行、隔离、调度和验证。
 
 [翻页]
 
-## Slide 18｜当生成成本归零，瓶颈在三件事
+## Slide 19｜当生成成本归零，瓶颈在三件事
 
 这里先重新框定一下 harness。
 
@@ -240,7 +254,7 @@ HumanLayer 有一句话，把 harness engineering 看成 context engineering 的
 
 [翻页]
 
-## Slide 19｜三轴看的是责任如何转移
+## Slide 20｜三轴看的是责任如何转移
 
 这页是一个总览。
 
@@ -254,7 +268,7 @@ Verification 轴看 exit condition：从人肉 review，到 in-loop verifier，�
 
 [翻页]
 
-## Slide 20｜三轴在 2026 的产品里长什么样
+## Slide 21｜三轴在 2026 的产品里长什么样
 
 如果刚才三轴还比较抽象，这页把它钉到三个具体产品形态上。
 
@@ -268,7 +282,7 @@ Verification 轴上，Outcomes 代表“写作业”和“改作业”分给不�
 
 [翻页]
 
-## Slide 21｜Skill 轴
+## Slide 22｜Skill 轴
 
 先看 Skill 轴。
 
@@ -282,7 +296,7 @@ Boris Cherny 说 routines 是 higher-order prompts，我觉得这个说法很准
 
 [翻页]
 
-## Slide 22｜Context 轴
+## Slide 23｜Context 轴
 
 再看 Context 轴。
 
@@ -296,7 +310,7 @@ Context 不是越多越好。它是有限资源，而且长上下文不是免费
 
 [翻页]
 
-## Slide 23｜Verification 轴
+## Slide 24｜Verification 轴
 
 第三条是 Verification 轴，也是我自己越来越重视的一条。
 
@@ -310,7 +324,7 @@ Context 不是越多越好。它是有限资源，而且长上下文不是免费
 
 [翻页]
 
-## Slide 24｜独立 grader 提升的是最终交付质量
+## Slide 25｜独立 grader 提升的是最终交付质量
 
 Anthropic Outcomes 做的就是把独立 rubric 加外部 grader 变成系统能力，但这里要澄清一点：grader 不是魔法。
 
@@ -328,7 +342,7 @@ Anthropic Outcomes 做的就是把独立 rubric 加外部 grader 变成系统能
 
 [翻页]
 
-## Slide 25｜社区也在做同样的事
+## Slide 26｜社区也在做同样的事
 
 这件事也不只是 Anthropic、OpenAI、Cursor 这些大厂在做。
 
@@ -344,7 +358,7 @@ Superpowers、Awesome Claude Code 这些社区项目也说明，这不是大厂�
 
 [翻页]
 
-## Slide 26｜三轴收束
+## Slide 27｜三轴收束
 
 到这里我们先收束一下。
 
@@ -360,7 +374,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 27｜我的实践
+## Slide 28｜我的实践
 
 这一节有三个实践，但它不是工具推荐。
 
@@ -374,7 +388,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 28｜roboharness
+## Slide 29｜roboharness
 
 先讲 roboharness。
 
@@ -390,7 +404,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 29｜proof pack 长什么样
+## Slide 30｜proof pack 长什么样
 
 这页是一个真实输出，不是手绘示意。
 
@@ -404,7 +418,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 30｜routine 多 agent
+## Slide 31｜routine 多 agent
 
 第二个实践是 routine 多 agent。
 
@@ -420,7 +434,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 31｜routine 跨三轴
+## Slide 32｜routine 跨三轴
 
 routine 不是只落在 Skill 轴。它同时跨 Skill、Context、Verification。
 
@@ -434,7 +448,7 @@ Verification 轴上，关键是三态自评：FULLY、PARTIALLY、DIMINISHING RE
 
 [翻页]
 
-## Slide 32｜cloud-first 到切回本地
+## Slide 33｜cloud-first 到切回本地
 
 这里澄清一个常见误会：routine 和 roboharness 不是新旧两代工具。
 
@@ -448,7 +462,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 33｜60 分是任务-工具匹配边界
+## Slide 34｜60 分是任务-工具匹配边界
 
 所以“60 分”不是产出完成度，而是任务和工具匹配的边界。
 
@@ -462,7 +476,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 34｜哪类活配哪种 harness
+## Slide 35｜哪类活配哪种 harness
 
 这页是实践部分的收束。
 
@@ -480,7 +494,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 35｜当下与未来
+## Slide 36｜当下与未来
 
 现在我们回到产品趋势。
 
@@ -490,7 +504,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 36｜/goal
+## Slide 37｜/goal
 
 `/goal` 是这个方向很典型的例子。
 
@@ -506,7 +520,7 @@ Verification 轴上，Ralph loop++ 的重点不是多跑几轮，而是每轮都
 
 [翻页]
 
-## Slide 37｜bake-in 的新失败模态
+## Slide 38｜bake-in 的新失败模态
 
 但 bake-in 不是终点。
 
@@ -520,7 +534,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 38｜收尾
+## Slide 39｜收尾
 
 现在回到 Karpathy 的困境。
 
@@ -528,7 +542,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 39｜skill issue 的边界在移动
+## Slide 40｜skill issue 的边界在移动
 
 有些东西仍然需要我们自己解，比如 judgment。什么活配什么 harness，何时介入，何时放手，这些不是产品能完全替你判断的。
 
@@ -546,7 +560,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 40｜Tips
+## Slide 41｜Tips
 
 最后给三个今晚就能做的实验。
 
@@ -554,7 +568,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 41｜实验 1：把 harness 环境整理到最新
+## Slide 42｜实验 1：把 harness 环境整理到最新
 
 第一个实验：把 harness 环境整理到最新。
 
@@ -568,7 +582,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 42｜实验 2：先让 agent 问你
+## Slide 43｜实验 2：先让 agent 问你
 
 第二个实验：先让 agent 问你，再让它干。
 
@@ -582,7 +596,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 43｜实验 3：用最好模型跑真实任务
+## Slide 44｜实验 3：用最好模型跑真实任务
 
 第三个实验：用你能 access 的最好模型跑真实任务。
 
@@ -598,7 +612,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 44｜Bonus：hybrid-phase-pipeline
+## Slide 45｜Bonus：hybrid-phase-pipeline
 
 最后放一个 bonus。
 
@@ -616,7 +630,7 @@ Codex `/goal` 负责持续目标、反复检查和最终收尾。
 
 [翻页]
 
-## Slide 45｜这场 lecture 的准备
+## Slide 46｜这场 lecture 的准备
 
 最后这场 lecture 本身，也是同一套 workflow。
 
@@ -630,7 +644,7 @@ Codex `/goal` 负责持续目标、反复检查和最终收尾。
 
 [翻页]
 
-## Slide 46｜Q&A
+## Slide 47｜Q&A
 
 我的部分就到这里。
 

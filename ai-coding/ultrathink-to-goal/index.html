@@ -1545,6 +1545,45 @@ body .key-hint { display: none; }
   .quadrant-grid { grid-template-columns: 86px repeat(2, minmax(0, 1fr)); }
   .context-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .table-wrap table { min-width: 680px; }
+  .sdd-compact h3 {
+    font-size: 15px;
+    line-height: 1.42;
+  }
+  .sdd-compact .cards {
+    margin-top: 12px;
+    gap: 8px;
+  }
+  .sdd-compact .card {
+    padding: 11px 14px;
+  }
+  .sdd-compact .card .card-tag {
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+  .sdd-compact .card .card-title {
+    font-size: 13.5px;
+    line-height: 1.25;
+    margin-bottom: 3px;
+  }
+  .sdd-compact .card .card-desc {
+    font-size: 11.6px;
+    line-height: 1.35;
+  }
+  .sdd-compact .quote-attr {
+    margin-top: 8px !important;
+    font-size: 10px !important;
+  }
+  .sdd-method-table table {
+    min-width: 0 !important;
+    table-layout: fixed;
+  }
+  .sdd-method-table th,
+  .sdd-method-table td {
+    padding: 8px 6px;
+    font-size: 10.5px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
   .callback-box { align-items: flex-start; }
 }
 
@@ -2299,7 +2338,7 @@ body .key-hint { display: none; }
     <strong>它看到了什么？</strong>
     <strong>谁在判定完成？</strong>
   </div>
-  <div class="speaker-note">把四段念出来：Ultrathink 是“让模型多想一会”；SDD 是“先想再写”被产品接走；Harness 是 Skill / Context / Verification 同时工程化；Goal 是 agent loop 被产品 bake 进入口。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定完成。指着右下方虚线那个 /goal —— OpenAI 同期也在做同样的事，Codex 0.128.0 把 agent loop 自身 bake 进 slash command。这条线上的 405 个 npm publish timestamp，最新到 2.1.139；每个 tick 都在提醒我们，binding constraint 一直在移动。</div>
+  <div class="speaker-note">把四段念出来：Ultrathink 是“让模型多想一会”；SDD 是把意图从对话里搬出来，变成 spec / plan / todos / state；Harness 是 Skill / Context / Verification 同时工程化；Goal 是 agent loop 被产品 bake 进入口。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定完成。指着右下方虚线那个 /goal —— OpenAI 同期也在做同样的事，Codex 0.128.0 把 agent loop 自身 bake 进 slash command。这条线上的 405 个 npm publish timestamp，最新到 2.1.139；每个 tick 都在提醒我们，binding constraint 一直在移动。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -2365,96 +2404,127 @@ body .key-hint { display: none; }
 </div>
 
 <!-- ============================================================ -->
-<!-- 5 · 3 节 SDD（4 张）                                           -->
+<!-- 5 · 3 节 SDD（5 张）                                           -->
 <!-- ============================================================ -->
 <div class="slide section">
   <div class="section-marker">§ 3</div>
   <h1><span class="hash">#</span> SDD 段</h1>
-  <p class="section-blurb">1.0.x 时代 · Plan 先被做进产品内部，但 skill / context / verification 还主要靠人</p>
+  <p class="section-blurb">1.0.x 时代 · 意图开始从对话里搬出来，变成 spec / plan / todos / state 这些 durable artifacts</p>
 </div>
 
-<div class="slide">
+<div class="slide sdd-compact">
   <div class="meta"><span class="meta-tag">section/3</span> · sdd · 关键转折</div>
-  <h2>"先想再写" 从 prompt 习惯变成产品按钮</h2>
+  <h2>不是 plan mode，是 <span class="hl">durable artifacts</span> 出现了</h2>
+  <h3>SDD 的核心不是“先想一会儿”，而是把原来藏在对话里的意图、约束和完成标准，搬到 agent 可以反复读取和更新的对象里。</h3>
+  <div class="cards">
+    <div class="card">
+      <div class="card-tag">SPEC</div>
+      <div class="card-title">做什么 / 为什么 / 约束</div>
+      <div class="card-desc">需求、边界、non-goals、acceptance criteria 不再只靠口头 prompt 临场解释</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">PLAN</div>
+      <div class="card-title">怎么做 / 顺序 / 风险</div>
+      <div class="card-desc">把执行路径写成可以 review、暂停、恢复和修正的结构</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">TODOS / STATE</div>
+      <div class="card-title">现在到哪 / 下一步是什么</div>
+      <div class="card-desc">长任务从“聊着聊着推进”变成显式状态机，减少迷路和假完成</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">CONTEXT</div>
+      <div class="card-title">哪些信息应该长期存在</div>
+      <div class="card-desc">CLAUDE.md / AGENTS.md / progress file 让约束从 transcript 噪音里沉淀出来</div>
+    </div>
+  </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px;">
+    这一段的关键词：prompt-driven → artifact-driven
+  </div>
+  <div class="speaker-note">这里纠偏：不要把 SDD 讲成 Plan mode 历史。Plan 只是最容易被产品做成按钮的 artifact。真正的变化是 intent、约束、步骤、状态和验收标准开始外部化，agent 可以反复读取、更新和交接。</div>
+</div>
+
+<div class="slide sdd-compact">
+  <div class="meta"><span class="meta-tag">section/3</span> · sdd · 产品化</div>
+  <h2>产品开始承认这些 artifact 是<span class="hl">一等对象</span></h2>
+  <h3>这些 feature 单看像小更新，合在一起是在给 spec、workflow、state、context 留位置。</h3>
   <div class="cards">
     <div class="card">
       <div class="card-tag">1.0.33</div>
       <div class="card-title">Plan mode</div>
-      <div class="card-desc">先 think 后 act 变成显式 mode</div>
+      <div class="card-desc">把 plan 从“prompt 里求它先想”变成显式 mode 和可审查 artifact</div>
     </div>
     <div class="card">
       <div class="card-tag">1.0.38</div>
       <div class="card-title">Hooks</div>
-      <div class="card-desc">在生成边界注入约束 — 机械执行胜过文档</div>
+      <div class="card-desc">把流程边界和自动检查接到执行链上，靠机制补强文档</div>
     </div>
     <div class="card">
       <div class="card-tag">1.0.41</div>
       <div class="card-title">Subagent 雏形</div>
-      <div class="card-desc">独立 context 的子任务隔离</div>
+      <div class="card-desc">开始把子任务放进隔离 context，而不是让所有信息挤在同一段 transcript</div>
     </div>
     <div class="card accent-card">
       <div class="card-tag">1.0.94</div>
       <div class="card-title">/todos</div>
-      <div class="card-desc">长任务的执行节奏被产品化</div>
+      <div class="card-desc">把执行进度和下一步变成产品可见状态，而不是靠人记着</div>
     </div>
   </div>
+  <div class="speaker-note">这页仍然保留 1.0.x 的 release 节点，但口径改掉：不是“大家都认可 plan”，而是产品开始承认 artifact 是 coding agent 的关键接口。Plan、hooks、subagent、todos 分别对应计划、流程边界、上下文隔离和执行状态。</div>
 </div>
 
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/3</span> · sdd · 副线</div>
-  <h2>OpenAI 同时间在做同样的事</h2>
-  <h3>Plan/Spec mode discussion #7355 · GitHub Copilot Plan mode · Cursor 的 plan-and-act</h3>
+  <div class="meta"><span class="meta-tag">section/3</span> · sdd · 社区收敛</div>
+  <h2>社区把 SDD 推成方法论，产品把稳定部分收进去</h2>
+  <h3>先是社区用框架证明 vibe 不够，要有 spec 和流程；然后产品和 harness 把其中稳定的部分变得更易用。</h3>
   <div class="quote">
-    1.0.x 这一段最重要的事不是某个 feature——<em>是 "先 plan 再 do" 这个工程习惯被产品化了</em>
+    SDD 不是单点 feature，而是一条谱系：<em>先把意图写成结构，再让 agent 执行结构</em>
   </div>
-  <div class="table-wrap spaced">
+  <div class="table-wrap spaced sdd-method-table">
     <table class="compare-table">
       <thead>
         <tr>
-          <th>player</th>
-          <th>feature</th>
-          <th>when</th>
-          <th>form</th>
+          <th>stream</th>
+          <th>artifact focus</th>
+          <th>what it proves</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="entity"><strong>Anthropic</strong> · Claude Code</td>
-          <td>Plan mode (Shift+Tab × 2)</td>
-          <td class="muted">2026-01 · v1.0.33</td>
-          <td class="muted">显式 mode toggle · 已落地</td>
+          <td class="entity"><strong>Spec-Kit / OpenSpec / BMAD</strong></td>
+          <td>spec / requirements / decisions</td>
+          <td class="muted">需求先结构化，agent 才能稳定执行</td>
         </tr>
         <tr>
-          <td class="entity"><strong>OpenAI</strong> · Codex</td>
-          <td>Plan/Spec mode</td>
-          <td class="muted">2026-Q1 · discussion #7355</td>
-          <td class="muted">RFC 阶段 → 后期实现</td>
+          <td class="entity"><strong>GSD / gstack</strong></td>
+          <td>phase / plan / state / verification</td>
+          <td class="muted">SDD 可以被打包成可复用 workflow</td>
         </tr>
         <tr>
-          <td class="entity"><strong>Cursor</strong></td>
-          <td>plan-and-act</td>
-          <td class="muted">2026-Q1</td>
-          <td class="muted">两阶段流程 · 内置</td>
+          <td class="entity"><strong>Superpowers / skills</strong></td>
+          <td>TDD / review / quality gate</td>
+          <td class="muted">工程纪律可以变成 agent 必须经过的门</td>
         </tr>
         <tr>
-          <td class="entity"><strong>GitHub</strong> · Copilot</td>
-          <td>Plan mode</td>
-          <td class="muted">2026-Q2</td>
-          <td class="muted">跟进 · IDE 内</td>
+          <td class="entity"><strong>Product modes</strong></td>
+          <td>plan / todos / context isolation</td>
+          <td class="muted">稳定 artifact 最后会被 bake 进产品入口</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="speaker-note">不要把这页念成产品功能比对。重点是：四家在同一时间点做同一件事——把 "先 plan 再 do" 这个工程习惯产品化。这就是 binding constraint 被产品内建的明确信号——当四家独立团队同时把同一个 prompt 习惯做成 button，说明这个 pattern 已经稳定到值得 bake-in。</div>
+  <div class="speaker-note">这页不要讲成“哪个工具更好”。重点是社区在同向收敛：vibe 不能承载复杂工程任务，所以大家把 spec、plan、state、review gate 做成 artifact。产品后来接走的，是这些 artifact 里最稳定、最通用的部分。</div>
 </div>
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/3</span> · sdd · 收束</div>
-  <h2>但 SDD 不是终点</h2>
+  <h2>SDD 不是终点，是给 Harness 铺路</h2>
   <div class="quote">
-    SDD 把 <em>plan</em> 这一件事工程化了；但 <em>skill</em>、<em>context 管理</em>、<em>verification</em> 仍然由人承担
+    SDD 把 <em>intent</em> 工程化成 artifacts；<br>
+    Harness 把 artifacts 工程化成 <em>runtime</em>
   </div>
-  <h3 style="margin-top: 24px;">2.x 时代会同时把这三件事做进 harness：agent 调什么、看什么、凭什么宣告完成</h3>
+  <h3 style="margin-top: 24px;">2.x 时代继续往前走：agent 调什么、看什么、凭什么宣告完成，不只是写在文件里，而是被 runtime、产品和框架接管。</h3>
+  <div class="speaker-note">收束要非常清楚：SDD 不是 Harness 的反面，而是 Harness 的输入层。没有 spec、plan、state、acceptance criteria 这些 durable artifacts，后面的 routines、/goal、Outcomes、proof pack 都缺少可接管的对象。</div>
 </div>
 
 <!-- ============================================================ -->
