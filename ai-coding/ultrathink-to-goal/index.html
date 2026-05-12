@@ -489,6 +489,35 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   max-height: 190px;
 }
 
+.verification-pipeline-slide .evolution-lane {
+  margin-top: 18px;
+}
+.verification-pipeline-slide .evolution-step {
+  min-height: 142px;
+}
+.verification-proof-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 1120px;
+  margin-top: 16px;
+}
+.verification-proof-strip > div {
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--text-sec);
+}
+.verification-proof-strip strong,
+.verification-proof-strip em {
+  color: var(--accent);
+  font-style: normal;
+}
+
 .verification-reasons {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1531,7 +1560,7 @@ body .key-hint { display: none; }
   .data-row, .axis-grid, .cards, .evidence-duo, .psychosis-grid, .triad-grid, .axis-overview, .evolution-lane, .verification-reasons { flex-direction: column; grid-template-columns: 1fr; }
   .data-cell, .axis-col { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child, .axis-col:last-child { border-bottom: none; }
-  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow, .prep-workflow { grid-template-columns: 1fr !important; }
+  .slide-2col, .routine-visual, .goal-visual, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow, .prep-workflow, .verification-proof-strip { grid-template-columns: 1fr !important; }
   .routing-table {
     grid-template-columns: 72px repeat(2, minmax(0, 1fr)) !important;
     width: 100%;
@@ -1583,6 +1612,147 @@ body .key-hint { display: none; }
     font-size: 10.5px;
     line-height: 1.25;
     overflow-wrap: anywhere;
+  }
+  .verification-pipeline-slide .evolution-lane {
+    margin-top: 8px;
+    gap: 7px;
+  }
+  .verification-pipeline-slide .evolution-step {
+    min-height: 0;
+    padding: 9px 12px;
+  }
+  .verification-pipeline-slide .evolution-step .step-tag {
+    font-size: 8.8px;
+    margin-bottom: 3px;
+  }
+  .verification-pipeline-slide .evolution-step .step-title {
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 2px;
+  }
+  .verification-pipeline-slide .evolution-step .step-copy {
+    font-size: 10.8px;
+    line-height: 1.3;
+  }
+  .verification-proof-strip {
+    gap: 7px;
+    margin-top: 8px;
+  }
+  .verification-proof-strip > div {
+    padding: 7px 9px;
+    font-size: 9.8px;
+    line-height: 1.3;
+  }
+  .verification-pipeline-slide h2,
+  .axis-summary-slide h2,
+  .skill-axis-slide h2 {
+    margin-bottom: 12px;
+  }
+  .verification-pipeline-slide h3,
+  .skill-axis-slide h3 {
+    font-size: 14.5px;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .verification-pipeline-slide .quote-attr {
+    margin-top: 8px !important;
+    font-size: 10px !important;
+  }
+  .harness-frame-slide h3,
+  .axis-summary-slide h3 {
+    font-size: 15px;
+    line-height: 1.42;
+  }
+  .harness-frame-slide .quote {
+    margin: 10px 0;
+    font-size: clamp(20px, 6.8vw, 28px);
+  }
+  .harness-frame-slide .screenshot {
+    margin-top: 10px !important;
+  }
+  .harness-frame-slide .screenshot.tall .ss-frame {
+    max-height: 145px;
+  }
+  .axis-summary-slide .axis-overview {
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .axis-summary-slide .axis-overview-card {
+    min-height: 0;
+    padding: 10px 13px;
+  }
+  .axis-summary-slide .axis-name {
+    font-size: 8.8px;
+    margin-bottom: 3px;
+  }
+  .axis-summary-slide .axis-surface {
+    font-size: 11.6px;
+    margin-bottom: 3px;
+  }
+  .axis-summary-slide .axis-copy {
+    font-size: 10.9px;
+    line-height: 1.3;
+  }
+  .axis-summary-slide .axis-pattern {
+    margin-top: 10px;
+    padding: 8px 0 8px 14px;
+    font-size: 20px;
+    line-height: 1.34;
+  }
+  .skill-axis-slide .evolution-lane {
+    margin-top: 8px;
+    gap: 7px;
+  }
+  .skill-axis-slide .evolution-step {
+    min-height: 0;
+    padding: 9px 12px;
+  }
+  .skill-axis-slide .evolution-step .step-tag {
+    font-size: 8.8px;
+    margin-bottom: 3px;
+  }
+  .skill-axis-slide .evolution-step .step-title {
+    font-size: 13px;
+    line-height: 1.22;
+    margin-bottom: 2px;
+  }
+  .skill-axis-slide .evolution-step .step-copy {
+    font-size: 10.8px;
+    line-height: 1.3;
+  }
+  .skill-axis-slide .quote-attr {
+    margin-top: 8px !important;
+    font-size: 9.6px !important;
+  }
+  .community-compact h3 {
+    font-size: 15px;
+    line-height: 1.42;
+  }
+  .community-compact .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+    margin-top: 12px !important;
+  }
+  .community-compact .card {
+    padding: 10px 12px;
+  }
+  .community-compact .card .card-tag {
+    font-size: 8.5px;
+    margin-bottom: 4px;
+  }
+  .community-compact .card .card-title {
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 3px;
+  }
+  .community-compact .card .card-desc {
+    font-size: 10.5px;
+    line-height: 1.3;
+  }
+  .community-compact .quote-attr {
+    margin-top: 8px !important;
+    font-size: 9.5px !important;
   }
   .callback-box { align-items: flex-start; }
 }
@@ -2528,7 +2698,7 @@ body .key-hint { display: none; }
 </div>
 
 <!-- ============================================================ -->
-<!-- 6 · 4 节 Harness 三轴（10 张,含 inline figure #19）            -->
+<!-- 6 · 4 节 Harness 三轴（8 张,含 inline figure #19）             -->
 <!-- ============================================================ -->
 <div class="slide section">
   <div class="section-marker">§ 4</div>
@@ -2536,7 +2706,7 @@ body .key-hint { display: none; }
   <p class="section-blurb">2.x 时代 · 三个责任同时工程化：agent 调什么、看什么、凭什么宣告完成</p>
 </div>
 
-<div class="slide">
+<div class="slide harness-frame-slide">
   <div class="meta"><span class="meta-tag">section/4.1</span> · 三轴框架</div>
   <h2>当生成成本归零，瓶颈在三件事</h2>
   <div class="quote">
@@ -2551,7 +2721,7 @@ body .key-hint { display: none; }
   <div class="speaker-note">这里把术语钉死：harness 不是又一个工具名，也不是只等于 context。它是 agent 外面那圈工程边界。后面出现 product harness、local harness、routine、proof pack、workflow，都是这圈边界的不同打包方式，不要让听众以为在推荐一个单独工具。</div>
 </div>
 
-<div class="slide">
+<div class="slide axis-summary-slide">
   <div class="meta"><span class="meta-tag">section/4.1</span> · 三轴总览</div>
   <h2>三轴看的是：<span class="hl">责任如何转移</span></h2>
   <div class="axis-overview">
@@ -2574,39 +2744,6 @@ body .key-hint { display: none; }
   <div class="axis-pattern">
     共同模式：人手动承担 → harness 显式化 → 产品内建
   </div>
-  <div class="quote-attr" style="padding-left: 0; margin-top: 16px; font-size: 11px;">
-    接下来三页分别拆开看：prompt 怎么变成可调用能力、context 怎么变成高信号 token、完成判断怎么独立出来
-  </div>
-</div>
-
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/4.1</span> · 三轴落地</div>
-  <h2>三轴在 2026 的产品里<span class="hl">长什么样</span></h2>
-  <h3>抽象的 action / information / exit 三个 surface，过去一年都被钉在了一个具体的产品形态上——下面三个就是它们今天最容易看见的样子。</h3>
-  <div class="axis-overview" style="margin-top: 22px;">
-    <div class="axis-overview-card">
-      <div class="axis-name">Skill</div>
-      <div class="axis-surface">action surface · 一条 <code style="font-family: var(--font-mono); color: var(--accent); background: var(--accent-soft); padding: 1px 6px; border-radius: 3px;">/goal</code> 命令</div>
-      <div class="axis-copy">Codex 0.128.0 把整套 Ralph loop bake 进一条 slash command。从用户视角是“说目标”，从 harness 视角是 skill / planner / loop / continuation 一起被产品化。</div>
-      <div style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px;">γ-friendly：以前要自己拼一堆 prompt，现在一个命令</div>
-    </div>
-    <div class="axis-overview-card">
-      <div class="axis-name">Context</div>
-      <div class="axis-surface">information surface · subagent <em>fresh 200K</em></div>
-      <div class="axis-copy">每个 subagent 起一段干净的上下文，不背主线的噪音。最戏剧的演化：从被动 transcript → 隔离 context → 5-6 Dreaming idle 时离线蒸馏 pattern。</div>
-      <div style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px;">γ-friendly：不是塞更多，而是开一个新房间专门干这件事</div>
-    </div>
-    <div class="axis-overview-card">
-      <div class="axis-name">Verification</div>
-      <div class="axis-surface">exit condition · Anthropic <em>Outcomes</em></div>
-      <div class="axis-copy">rubric 加独立 grader agent 取代“agent 自评”。docx +8.4% / pptx +10.1% / task +10pp 都来自这套机制——下一页的数字就是它出的。</div>
-      <div style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.5px;">γ-friendly：写作业的同学和改作业的老师必须是两个人</div>
-    </div>
-  </div>
-  <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12px; max-width: 80ch;">
-    每个 anchor 都是一年前还要我们自己拼的“工程动作”，今天变成了一个产品入口——这就是“被悄悄接走”的样子。
-  </div>
-  <div class="speaker-note">这一页是给 γ 听众的“下脚点”。前一页三轴还停在抽象名词，这页把它们各自钉到一个看得见的产品上：/goal 是一条命令、subagent 是开新窗口、Outcomes 是“写作业 vs 改作业分两人”。α 听众也得到一组锚点，方便后面 5.x 我自己实践时回照。停一拍后再翻 Skill 轴的演进图。</div>
 </div>
 
 <div class="slide skill-axis-slide">
@@ -2635,14 +2772,7 @@ body .key-hint { display: none; }
       <div class="step-copy">routine 把固定职责和触发节奏也封装进去：不是问一次，而是长期运行。</div>
     </div>
   </div>
-  <div class="quote">
-    <em>Routines are higher-order prompts.</em>
-    <div class="quote-attr">— Boris Cherny @ Code w/ Claude 2026 SF keynote · <a href="https://simonwillison.net/2026/May/6/code-w-claude-2026/">Simon Willison live blog</a></div>
-  </div>
-  <div class="screenshot tall" style="max-width: 420px; margin-top: 18px;">
-    <div class="ss-frame"><img src="images/slide-6.png" alt="Simon Willison live blog at Code w/ Claude 2026 keynote"></div>
-    <div class="ss-cap"><a href="https://simonwillison.net/2026/May/6/code-w-claude-2026/">Simon Willison live blog @ Code w/ Claude 2026 keynote · "Routines are higher-order prompts"</a></div>
-  </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 14px;">Boris Cherny @ Code w/ Claude 2026: <a href="https://simonwillison.net/2026/May/6/code-w-claude-2026/">"Routines are higher-order prompts."</a></div>
 </div>
 
 <div class="slide">
@@ -2682,81 +2812,47 @@ body .key-hint { display: none; }
   </div>
 </div>
 
-<div class="slide verification-why-slide">
-  <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴 · 为什么</div>
-  <h2>Verification 轴：完成判断必须<span class="hl">独立出来</span></h2>
+<div class="slide verification-pipeline-slide">
+  <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴</div>
+  <h2>Verification 轴：done 从<span class="hl">主观声明</span>变成<span class="hl">证据循环</span></h2>
   <h3>不是“多看一眼”，而是把判断标准、判断角色、判断证据从生成过程里拆出来。</h3>
-  <div class="slide-2col" style="margin-top: 18px;">
-    <div class="col-l">
-      <div class="quote">
-        <em>You will get higher success if you give that output to a fresh Claude and say, 'what bugs do you see?'</em>
-        <div class="quote-attr">— Anthropic 工程师 Albert @ Code w/ Claude 2026 keynote · <a href="https://venturebeat.com/technology/anthropic-introduces-dreaming-a-system-that-lets-ai-agents-learn-from-their-own-mistakes">source</a></div>
-      </div>
-      <div class="verification-reasons">
-        <div class="verification-reason">
-          <div class="reason-title">fresh grader 减少自评偏乐观</div>
-          <div class="reason-copy">生成者最容易 rationalize 自己的输出，独立检查能把问题重新 surface 出来。</div>
-        </div>
-        <div class="verification-reason">
-          <div class="reason-title">rubric 把质量标准写清楚</div>
-          <div class="reason-copy">“看起来不错”变成可检查条目，agent 和人才能对齐完成条件。</div>
-        </div>
-        <div class="verification-reason">
-          <div class="reason-title">结构化 artifact 更适合被检查</div>
-          <div class="reason-copy">docx / pptx 这类对象有结构、约束和可见结果，适合独立 grader 逐项判断。</div>
-        </div>
-      </div>
+  <div class="evolution-lane">
+    <div class="evolution-step">
+      <div class="step-tag">manual review</div>
+      <div class="step-title">人看输出</div>
+      <div class="step-copy">diff、截图、artifact 靠人肉判断；agent 说 done 以后，人再补最后一道质量门。</div>
     </div>
-    <div class="col-r">
-      <div class="screenshot tall">
-        <div class="ss-frame" style="max-height: 460px;"><img src="images/slide-7.png" alt="Anthropic · New in Claude: Managed Agents"></div>
-        <div class="ss-cap"><a href="https://claude.com/blog/new-in-claude-managed-agents">claude.com/blog/new-in-claude-managed-agents</a></div>
-      </div>
+    <div class="evolution-step">
+      <div class="step-tag">in-loop checks</div>
+      <div class="step-title">检查进循环</div>
+      <div class="step-copy">tests、lint、checklist、rubric 被放进执行流程；不是写完再想，而是边跑边校准。</div>
+    </div>
+    <div class="evolution-step">
+      <div class="step-tag">fresh evaluator</div>
+      <div class="step-title">生成者 ≠ 评审者</div>
+      <div class="step-copy">fresh context 的 evaluator 按标准读 artifact，减少生成 agent 对自己输出的乐观偏差。</div>
+    </div>
+    <div class="evolution-step accented">
+      <div class="step-tag">evidence loop</div>
+      <div class="step-title">generate → grade → revise → proof</div>
+      <div class="step-copy">Outcomes / proof pack 都是这条线：把“完成”变成可复查证据和可重复迭代。</div>
     </div>
   </div>
-  <div class="speaker-note">这一页只讲“为什么完成判断要独立出来”，三个 reason 各停一拍。下一页再讲 Outcomes 的 loop 和数字——先把“为什么不能自评”讲清楚，再讲“进入迭代后为什么会提升最终交付质量”。</div>
+  <div class="verification-proof-strip">
+    <div><strong>Outcomes</strong>：task success up to <em>+10pp</em> · docx <em>+8.4%</em> · pptx <em>+10.1%</em></div>
+    <div><strong>roboharness</strong>：long unattended run → proof pack → short human review</div>
+  </div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 14px; font-size: 11px;">
+    反直觉点：grader 不是让 first draft 更聪明；它提升的是 final deliverable quality，因为 first draft 不能自己宣布过线
+  </div>
+  <div class="speaker-note">这一页把 Verification 改成和 Skill / Context 对称的 pipeline。重点不是 Anthropic Outcomes 单点产品，而是 done 的性质变化：从 agent 或人主观说“差不多了”，变成 tests、rubric、fresh evaluator、proof pack 共同构成的证据循环。Outcomes 数字只作为 evidence loop 的证据，不展开成单独产品页。</div>
 </div>
 
-<div class="slide verification-data-slide">
-  <div class="meta"><span class="meta-tag">section/4.2</span> · verification 轴 · 数据</div>
-  <h2>独立 grader 提升的是<span class="hl">最终交付质量</span></h2>
-  <h3>因为它把“生成 → 检查 → 指出 gap → 修改 → 再检查”做成 loop，而不是让 agent 自己写完自己宣布完成。</h3>
-  <div class="data-row" style="margin-top: 28px;">
-    <div class="data-cell">
-      <div class="data-num">+10<span class="data-unit">pp</span></div>
-      <div class="data-label">task success vs standard prompting</div>
-      <div class="data-sub">largest gains on hardest problems<br><a href="https://claude.com/blog/new-in-claude-managed-agents">claude.com/blog/new-in-claude-managed-agents</a></div>
-    </div>
-    <div class="data-cell">
-      <div class="data-num">+8.4<span class="data-unit">%</span></div>
-      <div class="data-label">docx generation quality</div>
-      <div class="data-sub"><a href="https://claude.com/blog/new-in-claude-managed-agents">claude.com/blog/new-in-claude-managed-agents</a></div>
-    </div>
-    <div class="data-cell">
-      <div class="data-num">+10.1<span class="data-unit">%</span></div>
-      <div class="data-label">pptx generation quality</div>
-      <div class="data-sub">Code w/ Claude SF keynote · 2026-05-06<br><a href="https://simonwillison.net/2026/May/6/code-w-claude-2026/">simonwillison.net/2026/May/6/code-w-claude-2026</a></div>
-    </div>
-  </div>
-  <div class="quote-attr" style="padding-left: 0; margin-top: 22px; font-size: 12px; max-width: 80ch;">
-    核心不是 grader 魔法，而是 generate-grade-revise loop：grader 在独立 context 里按 rubric 找 gap，反馈回 agent 再迭代。越是“硬题”——长程目标、结构化交付物——越不能让 first draft 直接过线。
-  </div>
-  <div class="speaker-note">这页要先澄清：grader 不会让 first draft 突然变聪明，它提升的是 final deliverable quality。Outcomes 把 artifact 交给独立 grader，grader 按 rubric 指出 gap，反馈给 agent 再改下一版。然后再给数字：+10pp 是 task success（最难的题抬升最大），+8.4% / +10.1% 是 docx / pptx 生成质量。最后接到 roboharness：proof pack 也是不让长程任务靠“我完成了”直接过线。</div>
-</div>
-
-<div class="slide">
+<div class="slide community-compact">
   <div class="meta"><span class="meta-tag">section/4.3</span> · 社区在做同样的事</div>
   <h2>不只是 Anthropic / OpenAI / Cursor</h2>
-  <h3>mattpocock/skills · GSD / gstack · Superpowers · Awesome Claude Code：社区也在把工程习惯做成 harness</h3>
-  <div class="quote">
-    <em>The most common failure mode in software development is misalignment.</em>
-    <div class="quote-attr">— <a href="https://github.com/mattpocock/skills">mattpocock/skills README</a></div>
-  </div>
-  <div class="quote" style="margin-top: 24px;">
-    <em>Software engineering fundamentals matter more than ever.</em>
-    <div class="quote-attr">— <a href="https://github.com/mattpocock/skills">mattpocock/skills README</a></div>
-  </div>
-  <div class="cards" style="margin-top: 22px;">
+  <h3>社区也在把工程习惯做成 harness：不是 prompt trick 越写越长，而是入口、流程和质量门变成可复用对象。</h3>
+  <div class="cards" style="margin-top: 20px;">
     <div class="card">
       <div class="card-tag">SKILL LIBRARY</div>
       <div class="card-title">mattpocock/skills</div>

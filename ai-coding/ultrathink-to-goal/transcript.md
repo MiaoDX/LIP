@@ -1,7 +1,7 @@
 # 从 Ultrathink 到 Goal：AI Coding 工程化的一年｜逐字稿
 
-> 「汽车人 AI 进化论」第 09 期 · 缪东旭  
-> 版本：基于 `index.html` 当前 47 页 deck  
+> 「汽车人 AI 进化论」第 09 期 · 缪东旭
+> 版本：基于 `index.html` 当前 45 页 deck
 > 用途：排练口播稿。方括号里的内容是舞台提示，不需要念出来。
 
 ---
@@ -268,21 +268,7 @@ Verification 轴看 exit condition：从人肉 review，到 in-loop verifier，�
 
 [翻页]
 
-## Slide 21｜三轴在 2026 的产品里长什么样
-
-如果刚才三轴还比较抽象，这页把它钉到三个具体产品形态上。
-
-Skill 轴上，`/goal` 是一个看得见的入口。你说目标，底层去组织动作。
-
-Context 轴上，subagent 像是给任务开了一个新窗口。它不是把所有东西塞进同一个上下文，而是把不同任务隔离开，减少互相污染。
-
-Verification 轴上，Outcomes 代表“写作业”和“改作业”分给不同的人。不要让同一个 agent 一边生成，一边给自己打高分。
-
-这三个例子对应的就是 action、information、exit 三个 surface。
-
-[翻页]
-
-## Slide 22｜Skill 轴
+## Slide 21｜Skill 轴
 
 先看 Skill 轴。
 
@@ -296,7 +282,7 @@ Boris Cherny 说 routines 是 higher-order prompts，我觉得这个说法很准
 
 [翻页]
 
-## Slide 23｜Context 轴
+## Slide 22｜Context 轴
 
 再看 Context 轴。
 
@@ -310,39 +296,27 @@ Context 不是越多越好。它是有限资源，而且长上下文不是免费
 
 [翻页]
 
-## Slide 24｜Verification 轴
+## Slide 23｜Verification 轴
 
 第三条是 Verification 轴，也是我自己越来越重视的一条。
 
-完成判断必须独立出来。不是“让模型多看一眼”，而是把判断标准、判断角色、判断证据从生成过程里拆出来。
+这一页我也不想只讲“独立 grader”。独立 grader 是其中一个点，更大的变化是：done 从主观声明变成证据循环。
 
-这里有一个反直觉点：同一个 agent 很难客观评价自己的输出。它刚写完一段东西，天然会倾向于觉得自己做得不错。
+第一阶段是 manual review。agent 生成完，自己说 done，人再看 diff、截图、artifact，判断是不是能过。
 
-所以更稳的结构是 fresh grader。生成者先生成，另一个干净上下文里的 evaluator 根据 rubric 来读。注意，它不是让第一版输出突然变聪明，而是让第一版不能自己宣布过线。
+第二阶段是 in-loop checks。tests、lint、checklist、rubric 开始进入执行循环，不是写完以后才想起来检查。
 
-下一页我们看 Anthropic Outcomes 怎么把这个检查动作接进迭代 loop。
+第三阶段是 fresh evaluator。生成者和评审者分开，用一个干净上下文里的 evaluator 按标准读 artifact，减少 agent 对自己输出的乐观偏差。
 
-[翻页]
+第四阶段是 evidence loop：generate、grade、revise、proof。Outcomes 和后面我要讲的 proof pack，其实都是这条线上的产品化实例。
 
-## Slide 25｜独立 grader 提升的是最终交付质量
+这里要澄清一点：grader 不是魔法。它不会让 first draft 突然变聪明。它真正提升的是 final deliverable quality，因为 first draft 不能自己宣布过线。
 
-Anthropic Outcomes 做的就是把独立 rubric 加外部 grader 变成系统能力，但这里要澄清一点：grader 不是魔法。
-
-它不会让 first draft 突然变聪明。它真正改变的是完成机制。
-
-以前是 agent 生成完，说“我觉得可以了”，任务就结束。现在是 agent 生成一个 artifact，独立 grader 用 rubric 检查，指出哪些地方没达标，再把这些 gap 反馈回 agent，让它改下一版。
-
-所以 Outcomes 提升的不是 first-pass quality，而是 final deliverable quality。它把“完成”从一个主观声明，变成一个 generate-grade-revise 的 loop。
-
-这页三组数字都来自这个方向：task success 提升大约 10 个百分点，docx 生成质量提升 8.4%，pptx 生成质量提升 10.1%。
-
-这里最值得注意的是：越难的任务，收益越大。简单任务第一版可能就够了；真正容易失控的是长程任务、结构化 artifact、复杂修改。它们最容易死在“看起来完成了，但其实没满足标准”。
-
-这和后面我讲 roboharness 的 proof pack 是同一个动机：不要指望人一帧帧看完 agent 跑了几小时的过程，也不要指望 agent 自己说“我完成了”就结束。要有一个独立证据面，让 review 可以被压缩、被判断、被复查。
+Outcomes 的数字可以放在这里当证据：task success 最高提升大约 10 个百分点，docx 生成质量提升 8.4%，pptx 生成质量提升 10.1%。但重点不是 Outcomes 这个产品名，而是“完成”这个动作被工程化了。
 
 [翻页]
 
-## Slide 26｜社区也在做同样的事
+## Slide 24｜社区也在做同样的事
 
 这件事也不只是 Anthropic、OpenAI、Cursor 这些大厂在做。
 
@@ -358,23 +332,23 @@ Superpowers、Awesome Claude Code 这些社区项目也说明，这不是大厂�
 
 [翻页]
 
-## Slide 27｜三轴收束
+## Slide 25｜三轴收束
 
 到这里我们先收束一下。
 
 每一轴都经历了同一个动作：人手动承担，harness 显式化，最后产品内建。
 
-Skill 轴上，prompt 变成 skills、tools、routines、`/goal`。
+Skill 轴上，prompt 变成 skills、tools、routines。
 
 Context 轴上，手工上下文管理变成 import、subagent 隔离、compact、memory、蒸馏。
 
-Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof pack。
+Verification 轴上，人肉 review 变成 tests、rubric、fresh evaluator、proof pack。
 
 下一段我不继续讲产品，而是讲这套框架在我自己的项目里怎么落地。
 
 [翻页]
 
-## Slide 28｜我的实践
+## Slide 26｜我的实践
 
 这一节有三个实践，但它不是工具推荐。
 
@@ -388,7 +362,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 29｜roboharness
+## Slide 27｜roboharness
 
 先讲 roboharness。
 
@@ -404,7 +378,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 30｜proof pack 长什么样
+## Slide 28｜proof pack 长什么样
 
 这页是一个真实输出，不是手绘示意。
 
@@ -418,7 +392,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 31｜routine 多 agent
+## Slide 29｜routine 多 agent
 
 第二个实践是 routine 多 agent。
 
@@ -434,7 +408,7 @@ Verification 轴上，人肉 review 变成 rubric、evaluator、Outcomes、proof
 
 [翻页]
 
-## Slide 32｜routine 跨三轴
+## Slide 30｜routine 跨三轴
 
 routine 不是只落在 Skill 轴。它同时跨 Skill、Context、Verification。
 
@@ -448,7 +422,7 @@ Verification 轴上，关键是三态自评：FULLY、PARTIALLY、DIMINISHING RE
 
 [翻页]
 
-## Slide 33｜cloud-first 到切回本地
+## Slide 31｜cloud-first 到切回本地
 
 这里澄清一个常见误会：routine 和 roboharness 不是新旧两代工具。
 
@@ -462,7 +436,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 34｜60 分是任务-工具匹配边界
+## Slide 32｜60 分是任务-工具匹配边界
 
 所以“60 分”不是产出完成度，而是任务和工具匹配的边界。
 
@@ -476,7 +450,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 35｜哪类活配哪种 harness
+## Slide 33｜哪类活配哪种 harness
 
 这页是实践部分的收束。
 
@@ -494,7 +468,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 36｜当下与未来
+## Slide 34｜当下与未来
 
 现在我们回到产品趋势。
 
@@ -504,7 +478,7 @@ roboharness 这个 repo 自己就是这么走过来的。早期很多事情可�
 
 [翻页]
 
-## Slide 37｜/goal
+## Slide 35｜/goal
 
 `/goal` 是这个方向很典型的例子。
 
@@ -520,7 +494,7 @@ Verification 轴上，Ralph loop++ 的重点不是多跑几轮，而是每轮都
 
 [翻页]
 
-## Slide 38｜bake-in 的新失败模态
+## Slide 36｜bake-in 的新失败模态
 
 但 bake-in 不是终点。
 
@@ -534,7 +508,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 39｜收尾
+## Slide 37｜收尾
 
 现在回到 Karpathy 的困境。
 
@@ -542,7 +516,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 40｜skill issue 的边界在移动
+## Slide 38｜skill issue 的边界在移动
 
 有些东西仍然需要我们自己解，比如 judgment。什么活配什么 harness，何时介入，何时放手，这些不是产品能完全替你判断的。
 
@@ -560,7 +534,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 41｜Tips
+## Slide 39｜Tips
 
 最后给三个今晚就能做的实验。
 
@@ -568,7 +542,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 42｜实验 1：把 harness 环境整理到最新
+## Slide 40｜实验 1：把 harness 环境整理到最新
 
 第一个实验：把 harness 环境整理到最新。
 
@@ -582,7 +556,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 43｜实验 2：先让 agent 问你
+## Slide 41｜实验 2：先让 agent 问你
 
 第二个实验：先让 agent 问你，再让它干。
 
@@ -596,7 +570,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 44｜实验 3：用最好模型跑真实任务
+## Slide 42｜实验 3：用最好模型跑真实任务
 
 第三个实验：用你能 access 的最好模型跑真实任务。
 
@@ -612,7 +586,7 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 45｜Bonus：hybrid-phase-pipeline
+## Slide 43｜Bonus：hybrid-phase-pipeline
 
 最后放一个 bonus。
 
@@ -630,7 +604,7 @@ Codex `/goal` 负责持续目标、反复检查和最终收尾。
 
 [翻页]
 
-## Slide 46｜这场 lecture 的准备
+## Slide 44｜这场 lecture 的准备
 
 最后这场 lecture 本身，也是同一套 workflow。
 
@@ -644,7 +618,7 @@ Codex `/goal` 负责持续目标、反复检查和最终收尾。
 
 [翻页]
 
-## Slide 47｜Q&A
+## Slide 45｜Q&A
 
 我的部分就到这里。
 
