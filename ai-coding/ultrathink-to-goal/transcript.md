@@ -120,15 +120,17 @@ Karpathy 的这种体感不是孤立的。我们先看一个很硬的数据锚�
 
 ## Slide 09｜Claude Code 405 个版本
 
-这条时间轴把 Claude Code 过去一年粗略分成三段，再接到 OpenAI `/goal` 这条副线。今天是 2026-05-12，我把信息更新到 2026-05-11 UTC：这条线上现在有 405 个 npm publish timestamp，npm latest 是 2.1.139，stable tag 还在 2.1.126。
+这页上面是 release map，下面还是时间线。release map 负责告诉你“现在的产品 stack 长什么样”，时间线负责告诉你“它是怎么一路长到这里的”。
 
-第一段是 0.2 时代，我叫它 vibe 段，也就是 Ultrathink 那一端。这个阶段 Skill、Context、Verification 三个维度基本都靠人。人写 prompt，人管上下文，人看输出。
+今天是 2026-05-12，我把信息更新到 2026-05-11 UTC：这条线上现在有 405 个 npm publish timestamp，npm latest 是 2.1.139，stable tag 还在 2.1.126。
 
-第二段是 1.0 时代，我叫它 SDD 段。这里最重要的不是 plan mode 这个按钮本身，而是意图开始从对话里搬出来，变成 spec、plan、todos、state 这些可以被读取、review、暂停和恢复的 artifact。
+读这张图不要背版本号。先看左边五层 stack：terminal runtime，MCP and auth，plugins and hooks，agent loop，最后到 `/goal`。
 
-第三段是 2.x 时代，我叫它 harness 段。Skills、Subagents、Routines、Auto Mode、Managed Agents 这些东西，开始同时工程化三条轴。这里几个节点要念准：Routines 对应 2.1.107，时间是 04-14；Managed Agents 对应 2.1.132，时间是 05-06；最新的 2.1.139 在 05-11，把 agent view 和 `/goal` 这样的入口也放进了 Claude Code 的 release 线上。
+这五层其实对应同一件事：product stack 在一层层接走原来人手动承担的责任。工具怎么接进来，权限怎么管，流程怎么挂钩，agent loop 怎么延续，最后什么叫完成。
 
-右下角那条虚线是 OpenAI 的副线，也就是 Goal 那一端。Codex 0.128.0 把 agent loop 自身 bake 进 `/goal` 命令。也就是说，Anthropic 和 OpenAI 在不同产品里，其实都在做同一件事：重新定义人和 agent 之间的 binding constraint。
+中间最新 release 是 2.1.139，它加了 `/goal` 和 agent view。右侧词云里 `/goal` 最大，这个很有意思：说明最近这一段产品变化的重心，已经不是“多一个工具”，而是把目标和完成条件做成一等入口。
+
+所以这页还是回到三问：它能调什么，它看到了什么，谁在判定完成。后面 Ultrathink、SDD、Harness、Goal 四段，都可以用这三问串起来。
 
 [翻页]
 

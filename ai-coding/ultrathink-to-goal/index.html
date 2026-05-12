@@ -884,6 +884,38 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   color: var(--accent);
   font-weight: 600;
 }
+.release-map-slide h2 {
+  margin-bottom: 10px;
+}
+.release-map-slide .timeline-fig {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  max-width: 1240px;
+}
+.release-map-slide .timeline-fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+}
+.release-map-img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 345px;
+  margin: 0 auto;
+  border: 1px solid var(--border-light);
+  background: #02070b;
+}
+.release-map-slide .timeline-guide {
+  margin-top: 8px;
+  max-width: 1240px;
+  padding: 8px 12px;
+  font-size: clamp(11px, 1.05vw, 14px);
+  line-height: 1.38;
+}
 .routine-visual {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -2116,10 +2148,11 @@ body .key-hint { display: none; }
   <div class="speaker-note">提前给观众三轴。这里要把 model 和 harness 的关系讲准：模型能力当然重要，但 harness 决定能力怎样被转成可交付结果。Skill 不是能力泛称，而是 action surface。Context 不是越多越好，而是 information surface。Verification 是 exit condition。后面的 405 个 npm publish timestamp，都用这三件事读。</div>
 </div>
 
-<div class="slide">
+<div class="slide release-map-slide">
   <div class="meta"><span class="meta-tag">section/1</span> · 主线</div>
   <h2>Claude Code <span class="hl">405 个版本</span> · latest <span class="hl">2.1.139</span> · 截至 2026-05-11 UTC</h2>
   <div class="timeline-fig">
+<img class="release-map-img" src="images/claude-code-release-map-v3-clean-2026-05-11.png" alt="Claude Code release map through 2026-05-11 showing latest 2.1.139 with /goal and agent view highlighted">
 <svg viewBox="0 0 1400 260" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
 <!-- 405 npm publish timestamps through 2026-05-11 UTC -->
 <line x1="30.00" y1="122" x2="30.00" y2="138" class="tick-vibe"/>
@@ -2591,12 +2624,12 @@ body .key-hint { display: none; }
 </svg>
   </div>
   <div class="timeline-guide">
-    读这条时间线的方法：Ultrathink → SDD → Harness → Goal；每到一个节点，只问三件事
+    上面看 product stack 现在长什么样，下面看它怎样从 Ultrathink → SDD → Harness → Goal
     <strong>它能调什么？</strong>
     <strong>它看到了什么？</strong>
     <strong>谁在判定完成？</strong>
   </div>
-  <div class="speaker-note">把四段念出来：Ultrathink 是“让模型多想一会”；SDD 是把意图从对话里搬出来，变成 spec / plan / todos / state；Harness 是 Skill / Context / Verification 同时工程化；Goal 是 agent loop 被产品 bake 进入口。提醒听众：后面不按 release note 讲功能，而是每到一个节点只问三件事——agent 能调什么、看到了什么、谁在判定完成。指着右下方虚线那个 /goal —— OpenAI 和 Anthropic 都在做同样的事：Codex 0.128.0 把 agent loop 自身 bake 进 slash command，Claude Code 2.1.139 把 task completion criteria 也变成 /goal 入口。这条线上的 405 个 npm publish timestamp，最新到 2.1.139；每个 tick 都在提醒我们，binding constraint 一直在移动。</div>
+  <div class="speaker-note">这页同时保留两层：上面 release map 给“现在已经长什么样”的视觉证据，下面 timeline 给“怎么一路长到这里”的叙事结构。讲法：先看左侧五层 stack：terminal runtime、MCP/auth、plugins/hooks、agent loop、/goal。再指中间最新 release 2.1.139：adds /goal and agent view。接着用下面时间线念四段：Ultrathink → SDD → Harness → Goal。最后回到底部三问：每一层都在改变 agent 能调什么、看到了什么、谁在判定完成。OpenAI 和 Anthropic 都在做同样的事：Codex 0.128.0 把 agent loop 自身 bake 进 slash command，Claude Code 2.1.139 把 task completion criteria 也变成 /goal 入口。</div>
 </div>
 
 <!-- ============================================================ -->
