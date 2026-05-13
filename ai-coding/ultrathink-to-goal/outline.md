@@ -164,7 +164,7 @@ binding constraint 全部在我们这一侧。
 - 边界外的活留 local,用更重的工具:
   - **mattpocock/skills 的 grill-me / grill-with-docs** → 需求模糊时先沉淀任务约束
   - **GSD / gstack 的 plan-pipeline** → Skill 轴 + 大 scope 修改
-  - **Codex `/goal` + hybrid-phase-pipeline** → 清晰但一次性的长程任务
+  - **Codex `/goal` + intuitive-flow** → 清晰但一次性的长程任务
   - **roboharness 的 proof pack** → 验证风险高时叠加的 Verification layer
 - 这些工具不是替代关系,是**针对不同任务类型和验证风险的 harness specialization**
 - 收束:"**哪类活配哪种 harness——这本身就是工程判断。**"
@@ -250,10 +250,10 @@ binding constraint 全部在我们这一侧。
   - 真正的失败模式:什么都不试
   - 今晚装一个 grill-me,明早跑一个 routine,就够你接下来一周看出区别
 
-### Bonus — hybrid-phase-pipeline + Codex `/goal`
+### Bonus — intuitive-flow + Codex `/goal`
 
 - 推荐最近用两三天体感不错的长程任务组合:
-  - [hybrid-phase-pipeline](https://github.com/MiaoDX/claude-devkit/blob/main/skills/hybrid-phase-pipeline/SKILL.md)
+  - [intuitive-flow](https://github.com/MiaoDX/intuitive-flow/blob/main/skills/intuitive-flow/SKILL.md)
   - GSD 负责 discuss / plan / execute / verify 的 phase 结构
   - gstack + mattpocock/skills 负责 grill、office-hours、autoplan、review 等前置压实
   - Codex `/goal` 负责持续目标、反复检查和最终收尾

@@ -26,7 +26,7 @@
 
 这不是一个旁观者视角的行业观察。我自己在公司内部项目、自己的开源项目、CI、OpenClaw、还有一些长程 agent 任务里，都在真实消耗这些模型。
 
-Claude Code 是主力长 session。很多 lecture、工具链和项目改动，都是从它开始的。Codex 这边，我不只是拿它做 demo，也会让它跑 `/goal`、做 review、查 CI、收尾。Kimi、MiMo 这些国产或私有模型池，在内部 only 的场景里也会用，因为很多项目不能直接丢给 SaaS frontier model。OpenClaw 里，Slack 里的 agent 工程也在跑。再往后，还有开源项目持续迭代，以及 `/goal` 加 hybrid-phase-pipeline 的长程任务。
+Claude Code 是主力长 session。很多 lecture、工具链和项目改动，都是从它开始的。Codex 这边，我不只是拿它做 demo，也会让它跑 `/goal`、做 review、查 CI、收尾。Kimi、MiMo 这些国产或私有模型池，在内部 only 的场景里也会用，因为很多项目不能直接丢给 SaaS frontier model。OpenClaw 里，Slack 里的 agent 工程也在跑。再往后，还有开源项目持续迭代，以及 `/goal` 加 intuitive-flow 的长程任务。
 
 所以这页不是为了炫 token。它只回答一个问题：后面这些判断不是看 release note 想出来的，而是来自真实项目里的消耗、返工和踩坑。
 
@@ -250,7 +250,7 @@ HumanLayer 有一句话，把 harness engineering 看成 context engineering 的
 
 但如果只讲 context，又会太窄。真实的 agent 系统里，还有它能调用什么工具、它有什么权限、它用什么流程推进、它怎样判断自己完成了。
 
-所以我今天把 harness 压成三轴：Skill、Context、Verification。它不是某一个产品名。后面出现的 routine、roboharness、GSD、gstack、hybrid-phase-pipeline 和 `/goal`，都只是不同任务下的 harness 形态。
+所以我今天把 harness 压成三轴：Skill、Context、Verification。它不是某一个产品名。后面出现的 routine、roboharness、GSD、gstack、intuitive-flow 和 `/goal`，都只是不同任务下的 harness 形态。
 
 当生成成本下降以后，瓶颈不在“能不能写一版代码”。瓶颈在于：它能不能调用正确的能力，它有没有看到足够高信号的信息，它完成以后，有没有一个独立质量门防止它自我感觉良好。
 
@@ -456,7 +456,7 @@ Verification 轴上，关键是三态自评：FULLY、PARTIALLY、DIMINISHING RE
 
 如果任务模糊、验证风险高，先规格化，再分 phase。不要急着让 agent 写代码。
 
-如果任务清晰、验证风险高，适合长程执行加证据包。比如 `/goal`、hybrid-phase-pipeline、proof pack / 证据包。
+如果任务清晰、验证风险高，适合长程执行加证据包。比如 `/goal`、intuitive-flow、proof pack / 证据包。
 
 如果任务模糊但风险不高，先问清楚。用 grill-me、office-hours 这类工具，先把意图压成可执行判断。
 
@@ -584,11 +584,11 @@ Anthropic 2026-04-23 的 quality post-mortem 就是一个很好的提醒：产�
 
 [翻页]
 
-## Slide 42｜Bonus：hybrid-phase-pipeline
+## Slide 42｜Bonus：intuitive-flow
 
 最后放一个 bonus。
 
-最近我自己用得比较顺的是 hybrid-phase-pipeline。它不是一个全新的框架，而是把几套现有工具粘成一个更适合一次性长程任务的方式。
+最近我自己用得比较顺的是 intuitive-flow。它不是一个全新的框架，而是把几套现有工具粘成一个更适合一次性长程任务的方式。
 
 GSD 负责 discuss、plan、execute、verify 的 phase 结构。
 

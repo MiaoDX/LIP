@@ -840,6 +840,9 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub, .stage-t
   background: #f8f6f2;
   cursor: zoom-in;
 }
+.proof-card img.terminal-proof {
+  background: #360722;
+}
 .proof-img-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1715,6 +1718,65 @@ body .key-hint { display: none; }
   .data-cell, .axis-col { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child, .axis-col:last-child { border-bottom: none; }
   .slide-2col, .routine-visual, .goal-visual, .goal-evidence-stack, .release-map-body, .method-grid, .proof-flow, .proof-board, .hybrid-layout, .longrun-strip, .flow-strip, .routing-flow, .prep-workflow, .verification-proof-strip, .boundary-grid { grid-template-columns: 1fr !important; }
+  .bonus-flow-slide {
+    padding-top: 56px;
+  }
+  .bonus-flow-slide h2 {
+    font-size: clamp(30px, 9vw, 42px);
+    line-height: 1.08;
+    margin-bottom: 22px;
+  }
+  .bonus-flow-slide h3 {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .bonus-flow-slide .hybrid-layout {
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .bonus-flow-slide .hybrid-layout > .screenshot {
+    order: 2;
+  }
+  .bonus-flow-slide .bonus-flow-proof {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .bonus-flow-slide .longrun-strip {
+    order: -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+    margin-top: 0;
+  }
+  .bonus-flow-slide .longrun-strip img {
+    height: 58px;
+  }
+  .bonus-flow-slide .routine-facts {
+    gap: 8px;
+  }
+  .bonus-flow-slide .fact-row {
+    padding: 10px 14px;
+  }
+  .bonus-flow-slide .fact-row .fact-tag {
+    font-size: 8.5px;
+    margin-bottom: 4px;
+  }
+  .bonus-flow-slide .fact-row .fact-copy {
+    font-size: 12.4px;
+    line-height: 1.35;
+  }
+  .bonus-flow-slide .hybrid-layout .screenshot img {
+    max-height: 140px;
+  }
+  .bonus-flow-slide .ss-cap {
+    font-size: 9px;
+    line-height: 1.25;
+    margin-top: 4px;
+  }
+  .bonus-flow-slide .quote-attr {
+    display: none;
+  }
   .routing-table {
     grid-template-columns: 72px repeat(2, minmax(0, 1fr)) !important;
     width: 100%;
@@ -2300,9 +2362,9 @@ body .key-hint { display: none; }
       <div class="proof-copy">自己的工具链、deck、实验项目都在持续被 agent 辅助 refactor</div>
     </div>
     <div class="proof-card">
-      <img src="images/proof-goal-robot-longrun.jpg" alt="Long running goal terminal screenshot">
+      <img class="terminal-proof" src="images/proof-goal-intuitive-flow-complete.jpg" alt="Completed Codex goal using intuitive-flow screenshot">
       <div class="proof-tag">long run</div>
-      <div class="proof-title">/goal + hybrid-phase-pipeline</div>
+      <div class="proof-title">/goal + intuitive-flow</div>
       <div class="proof-copy">展示的是目标命令加自建 skill 可以承接真正的长程任务</div>
     </div>
   </div>
@@ -3553,7 +3615,7 @@ body .key-hint { display: none; }
       </div>
       <div class="quadrant-cell verification accented">
         <div class="quadrant-title">长程执行 + 证据包</div>
-        <div class="quadrant-tool">/goal + hybrid-phase-pipeline + proof pack</div>
+        <div class="quadrant-tool">/goal + intuitive-flow + proof pack</div>
         <div class="quadrant-copy">任务清楚但验证风险高，让 agent 扛住长程目标，同时用 proof pack / 证据包缩短 review</div>
       </div>
       <div class="quadrant-risk">低验证风险</div>
@@ -3732,24 +3794,24 @@ body .key-hint { display: none; }
   </div>
 </div>
 
-<div class="slide">
+<div class="slide bonus-flow-slide">
   <div class="meta"><span class="meta-tag">section/8 · bonus</span> · 长程任务组合</div>
-  <h2>最近好用的一个大杂烩：<span class="hl">hybrid-phase-pipeline</span></h2>
-  <h3>把 GSD、gstack、mattpocock/skills 组合起来，再搭配 Codex 的 <code>/goal</code>，我最近一周在高频使用，体感上很适合较为复杂的长程任务</h3>
+  <h2>最近好用的一个大杂烩：<span class="hl">intuitive-flow</span></h2>
+  <h3>把 grill / office-hours、docs/plans、autoplan、GSD 和 Codex 的 <code>/goal</code> 串起来，最近一周在高频使用，体感上很适合较为复杂的长程任务</h3>
   <div class="hybrid-layout">
     <div class="screenshot">
-      <img src="images/hybrid-phase-pipeline-default.jpg" alt="Default hybrid phase pipeline diagram">
-      <div class="ss-cap"><a href="https://github.com/MiaoDX/claude-devkit/blob/main/skills/hybrid-phase-pipeline/SKILL.md">claude-devkit · skills/hybrid-phase-pipeline/SKILL.md</a></div>
+      <img src="images/intuitive-flow-default.jpg" alt="Default intuitive-flow pipeline diagram">
+      <div class="ss-cap"><a href="https://github.com/MiaoDX/intuitive-flow/blob/main/skills/intuitive-flow/SKILL.md">intuitive-flow · skills/intuitive-flow/SKILL.md</a></div>
     </div>
-    <div>
+    <div class="bonus-flow-proof">
       <div class="routine-facts">
         <div class="fact-row">
-          <div class="fact-tag">gsd</div>
-          <div class="fact-copy">用 discuss / plan / execute / verify 把任务拆成可恢复的 phase</div>
+          <div class="fact-tag">idea shaping</div>
+          <div class="fact-copy">用 grill / office-hours 把模糊想法先压成可执行判断</div>
         </div>
         <div class="fact-row">
-          <div class="fact-tag">gstack + mattpocock</div>
-          <div class="fact-copy">用 grill、office-hours、autoplan、review 类 skill 把需求和设计先压实</div>
+          <div class="fact-tag">source of truth</div>
+          <div class="fact-copy">用 docs/plans、autoplan、GSD phase 让计划和执行各有唯一权威</div>
         </div>
         <div class="fact-row">
           <div class="fact-tag">codex /goal</div>
@@ -3758,12 +3820,12 @@ body .key-hint { display: none; }
       </div>
       <div class="longrun-strip">
         <img src="images/proof-goal-refactor-complete.png" alt="Completed Codex goal screenshot">
-        <img src="images/proof-goal-robot-longrun.jpg" alt="Seven hour long running goal screenshot">
+        <img src="images/proof-goal-intuitive-flow-complete.jpg" alt="Completed Codex goal using intuitive-flow screenshot">
       </div>
     </div>
   </div>
-  <div class="quote-attr" style="padding-left: 0; margin-top: 14px;">推荐入口：<a href="https://github.com/MiaoDX/claude-devkit/blob/main/skills/hybrid-phase-pipeline/SKILL.md">github.com/MiaoDX/claude-devkit/blob/main/skills/hybrid-phase-pipeline/SKILL.md</a></div>
-  <div class="speaker-note">这页放在 Tips 后面当 bonus，不展开成教程。口播重点：它不是一个全新的框架，而是把现有几个好用的东西粘成了一个长程任务方式，再用 /goal 扛住最终目标。</div>
+  <div class="quote-attr" style="padding-left: 0; margin-top: 14px;">推荐入口：<a href="https://github.com/MiaoDX/intuitive-flow/blob/main/skills/intuitive-flow/SKILL.md">github.com/MiaoDX/intuitive-flow/blob/main/skills/intuitive-flow/SKILL.md</a></div>
+  <div class="speaker-note">这页放在 Tips 后面当 bonus，不展开成教程。口播重点：intuitive-flow 不是一个全新的框架，而是把现有几个好用的东西粘成了一个长程任务方式，再用 /goal 扛住最终目标。</div>
 </div>
 
 <div class="slide prep-slide">

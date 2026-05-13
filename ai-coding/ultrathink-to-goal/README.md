@@ -55,7 +55,7 @@
 
 **Tips 口径**:最后三张不是"经验清单",而是"今晚就能做的三个实验":升级和整理 harness 环境;让 agent 先问你而不是直接干;用能 access 的最好模型跑一个真实任务。收尾目标是让听众马上试一次,而不是收藏工具列表。
 
-**Bonus 推荐口径**:`hybrid-phase-pipeline` 放在 Tips 后作为长程任务 bonus,不是展开教程。表达为"把 GSD、gstack、mattpocock/skills 和 Codex `/goal` 组合起来的好用方式",强调最近真实使用两三天后的体感。
+**Bonus 推荐口径**:`intuitive-flow` 放在 Tips 后作为长程任务 bonus,不是展开教程。表达为"把 grill/office-hours、docs/plans、autoplan、GSD 和 Codex `/goal` 组合起来的好用方式",强调最近真实使用两三天后的体感。
 
 ## 主线时间轴
 
