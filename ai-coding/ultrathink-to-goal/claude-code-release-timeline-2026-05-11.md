@@ -27,11 +27,11 @@ The existing map is kept below for comparison. The five new candidates combine A
 
 | Candidate | Preview |
 |---|---|
-| v1: Release Radar | <img src="images/claude-code-release-map-v1-2026-05-11.png" alt="Claude Code release map candidate v1, release radar" width="520"> |
-| v2: Metro Map | <img src="images/claude-code-release-map-v2-2026-05-11.png" alt="Claude Code release map candidate v2, metro map" width="520"> |
-| v3: Layered Stack | <img src="images/claude-code-release-map-v3-2026-05-11.png" alt="Claude Code release map candidate v3, layered stack" width="520"> |
-| v4: Constellation | <img src="images/claude-code-release-map-v4-2026-05-11.png" alt="Claude Code release map candidate v4, constellation graph" width="520"> |
-| v5: Release Board | <img src="images/claude-code-release-map-v5-2026-05-11.png" alt="Claude Code release map candidate v5, release board" width="520"> |
+| v1: Release Radar | <img src="./images/claude-code-release-map-v1-2026-05-11.png" alt="Claude Code release map candidate v1, release radar" width="520"> |
+| v2: Metro Map | <img src="./images/claude-code-release-map-v2-2026-05-11.png" alt="Claude Code release map candidate v2, metro map" width="520"> |
+| v3: Layered Stack | <img src="./images/claude-code-release-map-v3-2026-05-11.png" alt="Claude Code release map candidate v3, layered stack" width="520"> |
+| v4: Constellation | <img src="./images/claude-code-release-map-v4-2026-05-11.png" alt="Claude Code release map candidate v4, constellation graph" width="520"> |
+| v5: Release Board | <img src="./images/claude-code-release-map-v5-2026-05-11.png" alt="Claude Code release map candidate v5, release board" width="520"> |
 
 Overlay source: `assets/claude-code-release-map-candidates-2026-05-11.html`
 
