@@ -2429,7 +2429,7 @@ body .key-hint { display: none; }
   <div class="psychosis-close" style="margin-top: 28px; font-family: var(--font-display); font-style: italic; font-size: clamp(25px, 3vw, 38px); color: var(--text); line-height: 1.4; max-width: 80ch;">
     不要让人继续卡在<span class="hl">系统瓶颈</span>的位置
   </div>
-  <div class="speaker-note">不要把 AI psychosis 当医学词展开。这里讲的是工程体感：生成成本接近零以后，事情没有自然停止点。你可以继续让它查、继续让它改、继续让它验证。于是真正的问题变成：谁定义行动入口，谁控制信息入口，谁给退出条件。</div>
+  <div class="speaker-note">不要把 AI psychosis 当医学词展开。这里讲的是工程体感：生成成本接近零以后，事情没有自然停止点。我们可以继续让它查、继续让它改、继续让它验证。于是真正的问题变成：谁定义行动入口，谁控制信息入口，谁给退出条件。</div>
 </div>
 
 <!-- ============================================================ -->
@@ -3489,65 +3489,65 @@ body .key-hint { display: none; }
 </div>
 
 <div class="slide claude-routines-evidence-slide">
-  <div class="meta"><span class="meta-tag">section/5.2</span> · routine 多 agent · 实证</div>
-  <h2>Claude Routines 多 agent · <span class="hl">云端 60 分流水线</span></h2>
-  <h3>移走的是调度和上下文切换瓶颈——四个 Claude Routines 把工程团队角色封装成云端流水线，下面三张截图就是它真在跑的痕迹</h3>
+  <div class="meta"><span class="meta-tag">section/5.2</span> · routine · 实证</div>
+  <h2>Claude Routines · <span class="hl">固定职责进云端</span></h2>
+  <h3>趋势不是多一个 prompt，而是 harness 可以被保存、触发，并在独立云端环境里运行</h3>
   <div class="cards" style="margin-top: 22px;">
-    <div class="card"><div class="card-tag">主力</div><div class="card-title">auto_pr</div><div class="card-desc">每小时一个 issue，三态自评 FULLY / PARTIAL / DIMINISHING</div></div>
-    <div class="card"><div class="card-tag">辅助 1</div><div class="card-title">issue_label</div><div class="card-desc">每天排优先级，只读 + 打标签</div></div>
-    <div class="card"><div class="card-tag">辅助 2</div><div class="card-title">pr_again</div><div class="card-desc">救援孤儿分支</div></div>
-    <div class="card"><div class="card-tag">辅助 3</div><div class="card-title">daily_duty</div><div class="card-desc">CI 兜底 + 代码健康</div></div>
+    <div class="card"><div class="card-tag">Trigger</div><div class="card-title">定时 / API / GitHub</div><div class="card-desc">固定职责不再靠人想起来，而是按事件启动</div></div>
+    <div class="card"><div class="card-tag">Package</div><div class="card-title">prompt + repo + connectors</div><div class="card-desc">把一次解释，变成可复用的 routine 配置</div></div>
+    <div class="card"><div class="card-tag">Run</div><div class="card-title">clean cloud session</div><div class="card-desc">独立上下文运行，和本地长 session 分开</div></div>
+    <div class="card"><div class="card-tag">Evidence</div><div class="card-title">label / comment / PR</div><div class="card-desc">结果回到 GitHub，留下可审查痕迹</div></div>
   </div>
   <div class="routines-proof-row" style="display: grid; grid-template-columns: 0.8fr 1.1fr 1fr; gap: 12px; margin-top: 18px;">
     <div class="screenshot tall" style="margin-top: 0;">
       <div class="ss-frame" style="max-height: 280px;"><img src="images/routines-calendar.png" alt="Anthropic Claude.ai Routines 后台日历视图，显示 robowbc / roboharness 的 daily_duty 每天 9:00/9:30 自动跑"></div>
-      <div class="ss-cap" style="font-size: 10.5px;"><strong>schedule</strong> · Claude.ai Routines 后台 · daily_duty 每天 9:00 / 9:30 触发 · <a href="../../ai-coding/routines-multi-agent/">routines-multi-agent</a></div>
+      <div class="ss-cap" style="font-size: 10.5px;"><strong>schedule</strong> · daily_duty 9:00 / 9:30</div>
     </div>
     <div class="screenshot tall" style="margin-top: 0;">
       <div class="ss-frame" style="max-height: 280px;"><img src="images/routines-issue-label-list.png" alt="GitHub issue 列表自动打上 documentation / priority / enhancement 标签"></div>
-      <div class="ss-cap" style="font-size: 10.5px;"><strong>label</strong> · issue_label routine 自动打 documentation / priority / enhancement 标签</div>
+      <div class="ss-cap" style="font-size: 10.5px;"><strong>label</strong> · issue_label 自动分类</div>
     </div>
     <div class="screenshot tall" style="margin-top: 0;">
       <div class="ss-frame" style="max-height: 280px;"><img src="images/routines-pr-example.png" alt="auto_pr routine 输出的真实 merged PR 详情"></div>
-      <div class="ss-cap" style="font-size: 10.5px;"><strong>PR</strong> · auto_pr 输出的 merged PR · 走 GitHub 标准协议，留下 Summary / Test plan</div>
+      <div class="ss-cap" style="font-size: 10.5px;"><strong>PR</strong> · auto_pr 产出 merged PR</div>
     </div>
   </div>
-  <div class="speaker-note">这页给 cards 加上了视觉证据。讲法：先念 4 张 cards 的角色名，停一拍，再往下指三张截图：cron 真的每小时跑、PR 真的产出、配额真的在被消耗。这页解决一个常见怀疑：“云端 agent 听起来玄，到底是不是真在干活”。</div>
+  <div class="speaker-note">这页把 Claude Routines 先讲成趋势：配置好的 harness 可以保存、触发，并在独立云端环境里运行。四张 cards 讲 trigger、package、run、evidence；下面三张截图证明 schedule 真的触发，issue 真的被标记，PR 真的产出。</div>
 </div>
 
 <div class="slide claude-routines-pipeline-slide">
-  <div class="meta"><span class="meta-tag">section/5.2</span> · routine · 三轴定位 + Brockman</div>
+  <div class="meta"><span class="meta-tag">section/5.2</span> · routine · 三轴定位</div>
   <h2>Claude Routines：<span class="hl">从触发到交接的流水线</span></h2>
-  <h3>架构图说明它怎么连，右侧四行说明角色封装、干净上下文、三态自评和 60 分边界</h3>
+  <h3>一个 routine 把触发、配置、独立运行、证据回传和边界交接串成闭环</h3>
   <div class="routine-visual">
     <div class="screenshot">
-      <img src="images/routine-architecture.svg" alt="Routine multi-agent architecture overview">
-      <div class="ss-cap"><a href="../../ai-coding/routines-multi-agent/">Claude Routines 多 agent</a> · GitHub issue / comment / label / branch 作为消息总线</div>
+      <img src="images/routine-architecture.svg" alt="Claude Routine trigger to handoff pipeline overview">
+      <div class="ss-cap"><a href="../../ai-coding/routines-multi-agent/">Claude Routines demo</a> · schedule / API / GitHub events 触发独立云端 session</div>
     </div>
     <div class="routine-facts">
       <div class="fact-row">
-        <div class="fact-tag">Role package</div>
-        <div class="fact-copy"><strong>auto_pr / issue_label / pr_again / daily_duty</strong> 不再是 prompt，而是工程团队角色的可调用封装</div>
+        <div class="fact-tag">Routine package</div>
+        <div class="fact-copy"><strong>prompt / repo / connectors / environment</strong> 一起保存，固定职责变成可触发配置</div>
       </div>
       <div class="fact-row">
         <div class="fact-tag">Clean context</div>
-        <div class="fact-copy">每个 Claude Routine 都以干净上下文开始，失败也隔离在自己的分支、comment 和下一轮接手协议里</div>
+        <div class="fact-copy">每次运行都从独立云端 session 开始，和本地长上下文分开</div>
       </div>
       <div class="fact-row">
         <div class="fact-tag">Completion check</div>
-        <div class="fact-copy">三态自评（FULLY / PARTIAL / DIMINISHING）把 exit 条件写清楚——PARTIAL 不是失败，是云端流水线对自己边界的诚实声明</div>
+        <div class="fact-copy">三态自评（FULLY / PARTIAL / DIMINISHING）把 exit 条件写清楚，PARTIAL 是边界声明</div>
       </div>
       <div class="fact-row">
         <div class="fact-tag">Boundary</div>
-        <div class="fact-copy">60 分钟不是能力上限，是任务拆分和工具匹配的边界</div>
+        <div class="fact-copy">超过资源、时长或验证风险边界，就交给本地更重的 harness</div>
       </div>
     </div>
   </div>
   <div class="quote-attr" style="padding-left: 0; margin-top: 18px; font-size: 12.5px; max-width: 90ch; border-left: 2px solid var(--accent); padding: 10px 0 10px 16px;">
-    <em style="color: var(--text); font-family: var(--font-display); font-size: 15px;">"[The Codex app] is really two things in one. It's a general agent harness that can use tools, and it's also an agent that knows how to write software."</em><br>
-    <span style="font-size: 11px;">— Greg Brockman · Big Technology Podcast · 2026-04-01 · <a href="https://www.bigtechnology.com/p/openai-president-greg-brockman-doubling">bigtechnology.com</a> —— OpenAI 总裁亲口把 harness 定义为产品一等概念</span>
+    <em style="color: var(--text); font-family: var(--font-display); font-size: 15px;">Routines save Claude Code configuration and run on Anthropic-managed cloud infrastructure</em><br>
+    <span style="font-size: 11px;">— Claude Code docs · Routines research preview · <a href="https://code.claude.com/docs/en/routines">code.claude.com/docs/en/routines</a></span>
   </div>
-  <div class="speaker-note">流水线页：架构图说 Claude Routines 怎么用 GitHub 当消息总线；右侧 4 行 fact 把角色封装、干净上下文、完成判断和 60 分边界一次过完。三态自评是关键创新，PARTIAL 不是失败而是诚实声明边界。底部 Brockman 一行作为外部背书一句念过即可。</div>
+  <div class="speaker-note">流水线页：架构图讲 trigger 到 handoff，不再讲复杂角色互联。右侧 4 行 fact 讲 routine package、clean context、completion check、boundary。底部文档来源只作为趋势背书：routine 是保存好的 Claude Code 配置，并在 Anthropic 托管的云端基础设施上运行。</div>
 </div>
 
 <div class="slide">
@@ -3755,7 +3755,7 @@ body .key-hint { display: none; }
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 2</span> · 试这些方法</div>
-  <h2>实验 2 · <span class="hl">先让 agent 问你，再让它干</span></h2>
+  <h2>实验 2 · <span class="hl">先让 agent 问我们，再让它干</span></h2>
   <div class="method-grid">
     <div class="method-tile accented">
       <div class="method-num">01</div>
@@ -3777,7 +3777,7 @@ body .key-hint { display: none; }
 
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/8 · slide 3</span> · 心态</div>
-  <h2>实验 3 · <span class="hl">用你能用到的最好模型跑真实任务</span></h2>
+  <h2>实验 3 · <span class="hl">用我们能用到的最好模型跑真实任务</span></h2>
   <div class="callback-box">
     <span class="ref">↩ TIP 1</span>
     <span class="arrow">·</span>

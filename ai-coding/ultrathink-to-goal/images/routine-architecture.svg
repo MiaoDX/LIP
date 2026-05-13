@@ -1,92 +1,73 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif">
   <style>
-    .node { fill: #fff; stroke: #333; stroke-width: 1.5; }
-    .human { fill: #fef3c7; stroke: #b45309; }
-    .auto_pr { fill: #dbeafe; stroke: #1d4ed8; }
-    .issue_label { fill: #e0e7ff; stroke: #4338ca; }
-    .daily { fill: #fee2e2; stroke: #b91c1c; }
-    .pr_again { fill: #fce7f3; stroke: #be185d; }
-    .bus { fill: #f3f4f6; stroke: #4b5563; stroke-dasharray: 5 3; }
-    .title { font-size: 15px; font-weight: 600; fill: #111; }
-    .subtitle { font-size: 12px; fill: #4b5563; }
-    .period { font-size: 11px; fill: #6b7280; font-style: italic; }
-    .arrow { fill: none; stroke: #6b7280; stroke-width: 1.5; }
-    .label { font-size: 11px; fill: #374151; }
-    .core-note { font-size: 10px; fill: #1d4ed8; font-weight: 600; }
+    .bg { fill: #f8f6f2; }
+    .title { font-size: 25px; font-weight: 700; fill: #171717; }
+    .subtitle { font-size: 14px; fill: #57534e; }
+    .card { fill: #fffaf0; stroke: #d6c8b5; stroke-width: 1.4; }
+    .cloud { fill: #eef6ff; stroke: #78a8d8; stroke-width: 1.5; }
+    .evidence { fill: #f1f8f4; stroke: #80b48a; stroke-width: 1.5; }
+    .handoff { fill: #fff3f1; stroke: #d18a7d; stroke-width: 1.5; }
+    .tag { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; fill: #8a5a25; font-weight: 700; }
+    .card-title { font-size: 17px; font-weight: 700; fill: #1f1f1f; }
+    .copy { font-size: 12.5px; fill: #57534e; }
+    .small { font-size: 11.5px; fill: #6b625a; }
+    .arrow { fill: none; stroke: #9a8f83; stroke-width: 2; }
+    .boundary { fill: #f4efe7; stroke: #c6b59f; stroke-width: 1.2; stroke-dasharray: 6 5; }
+    .boundary-title { font-size: 14px; font-weight: 700; fill: #3a332c; }
+    .boundary-copy { font-size: 12px; fill: #5f574f; }
   </style>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9a8f83"/>
     </marker>
   </defs>
 
-  <!-- Human + Opus at top -->
-  <rect x="330" y="30" width="240" height="50" rx="6" class="node human"/>
-  <text x="450" y="52" text-anchor="middle" class="title">和 Opus 聊 roadmap</text>
-  <text x="450" y="70" text-anchor="middle" class="subtitle">deep research → 讨论 → 细化 → 拆 issue</text>
+  <rect width="920" height="560" rx="18" class="bg"/>
 
-  <!-- Arrow to issues -->
-  <path d="M 450 80 L 450 110" class="arrow" marker-end="url(#arrow)"/>
+  <text x="460" y="48" text-anchor="middle" class="title">Claude Routine = saved harness configuration</text>
+  <text x="460" y="72" text-anchor="middle" class="subtitle">prompt, repo, connectors, environment, trigger, and handoff protocol run as one cloud job</text>
 
-  <!-- GitHub Issues bucket -->
-  <rect x="300" y="115" width="300" height="55" rx="6" class="node"/>
-  <text x="450" y="138" text-anchor="middle" class="title">GitHub Issues (backlog)</text>
-  <text x="450" y="156" text-anchor="middle" class="subtitle">每个 issue = 一个可验证的小目标</text>
+  <rect x="42" y="128" width="150" height="112" rx="10" class="card"/>
+  <text x="117" y="158" text-anchor="middle" class="tag">Trigger</text>
+  <text x="117" y="188" text-anchor="middle" class="card-title">启动入口</text>
+  <text x="117" y="214" text-anchor="middle" class="copy">schedule / API</text>
+  <text x="117" y="232" text-anchor="middle" class="copy">GitHub events</text>
 
-  <!-- issue_label + auto_pr side by side, feeding from issues -->
-  <path d="M 380 170 L 180 225" class="arrow" marker-end="url(#arrow)"/>
-  <path d="M 520 170 L 720 225" class="arrow" marker-end="url(#arrow)"/>
+  <path d="M 192 184 L 238 184" class="arrow" marker-end="url(#arrow)"/>
 
-  <!-- issue_label -->
-  <rect x="60" y="230" width="240" height="72" rx="6" class="node issue_label"/>
-  <text x="180" y="253" text-anchor="middle" class="title">issue_label</text>
-  <text x="180" y="270" text-anchor="middle" class="period">每天一次</text>
-  <text x="180" y="289" text-anchor="middle" class="subtitle">读所有 issue，打优先级 label</text>
+  <rect x="240" y="112" width="170" height="144" rx="10" class="card"/>
+  <text x="325" y="142" text-anchor="middle" class="tag">Package</text>
+  <text x="325" y="172" text-anchor="middle" class="card-title">封装 harness</text>
+  <text x="325" y="199" text-anchor="middle" class="copy">prompt + repo</text>
+  <text x="325" y="218" text-anchor="middle" class="copy">connectors + env</text>
+  <text x="325" y="237" text-anchor="middle" class="copy">固定职责和边界</text>
 
-  <!-- auto_pr (highlighted as main) -->
-  <rect x="600" y="230" width="240" height="72" rx="6" class="node auto_pr" stroke-width="2.5"/>
-  <text x="720" y="253" text-anchor="middle" class="title">auto_pr（主力）</text>
-  <text x="720" y="270" text-anchor="middle" class="period">每小时一次</text>
-  <text x="720" y="289" text-anchor="middle" class="subtitle">挑 issue → 改代码 → PR → 自评</text>
+  <path d="M 410 184 L 456 184" class="arrow" marker-end="url(#arrow)"/>
 
-  <!-- issue_label feeds priority back to issues (visual loop) -->
-  <path d="M 180 230 Q 180 195 300 160" class="arrow" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
-  <text x="195" y="200" class="label">打上 label</text>
+  <rect x="458" y="102" width="178" height="164" rx="12" class="cloud"/>
+  <text x="547" y="134" text-anchor="middle" class="tag">Cloud Run</text>
+  <text x="547" y="165" text-anchor="middle" class="card-title">独立云端 session</text>
+  <text x="547" y="195" text-anchor="middle" class="copy">clean context</text>
+  <text x="547" y="215" text-anchor="middle" class="copy">managed infra</text>
+  <text x="547" y="235" text-anchor="middle" class="copy">bounded runtime</text>
 
-  <!-- auto_pr produces PR + comments -->
-  <path d="M 720 302 L 720 345" class="arrow" marker-end="url(#arrow)"/>
+  <path d="M 636 184 L 682 184" class="arrow" marker-end="url(#arrow)"/>
 
-  <!-- Message bus -->
-  <rect x="200" y="355" width="520" height="52" rx="6" class="node bus"/>
-  <text x="460" y="378" text-anchor="middle" class="title">GitHub comments + labels + branches（消息总线）</text>
-  <text x="460" y="396" text-anchor="middle" class="subtitle">[auto-pr] · [conflict] · [ci-fail] · [deferred] — agent 间的异步消息</text>
+  <rect x="684" y="112" width="174" height="144" rx="10" class="evidence"/>
+  <text x="771" y="142" text-anchor="middle" class="tag">Evidence</text>
+  <text x="771" y="172" text-anchor="middle" class="card-title">结果回传</text>
+  <text x="771" y="199" text-anchor="middle" class="copy">label / comment</text>
+  <text x="771" y="218" text-anchor="middle" class="copy">branch / PR</text>
+  <text x="771" y="237" text-anchor="middle" class="copy">session transcript</text>
 
-  <!-- pr_again + daily_duty at bottom consume bus -->
-  <path d="M 300 407 L 180 450" class="arrow" marker-end="url(#arrow)"/>
-  <path d="M 620 407 L 720 450" class="arrow" marker-end="url(#arrow)"/>
+  <path d="M 771 256 C 771 324 673 336 586 336" class="arrow" marker-end="url(#arrow)"/>
 
-  <!-- pr_again -->
-  <rect x="60" y="455" width="240" height="72" rx="6" class="node pr_again"/>
-  <text x="180" y="478" text-anchor="middle" class="title">pr_again</text>
-  <text x="180" y="495" text-anchor="middle" class="period">每天一次</text>
-  <text x="180" y="514" text-anchor="middle" class="subtitle">孤儿分支 → 建 PR / 救援</text>
+  <rect x="298" y="304" width="288" height="100" rx="10" class="handoff"/>
+  <text x="442" y="335" text-anchor="middle" class="tag">Handoff</text>
+  <text x="442" y="365" text-anchor="middle" class="card-title">人 review，或切回本地重 harness</text>
+  <text x="442" y="390" text-anchor="middle" class="copy">human judgment stays at the boundary</text>
 
-  <!-- daily_duty -->
-  <rect x="600" y="455" width="240" height="72" rx="6" class="node daily"/>
-  <text x="720" y="478" text-anchor="middle" class="title">daily_duty</text>
-  <text x="720" y="495" text-anchor="middle" class="period">每天一次</text>
-  <text x="720" y="514" text-anchor="middle" class="subtitle">CI 修复 + 代码健康检查</text>
-
-  <!-- Human review at bottom -->
-  <rect x="330" y="560" width="240" height="42" rx="6" class="node human"/>
-  <text x="450" y="587" text-anchor="middle" class="title">人：review PR + 把控方向</text>
-
-  <path d="M 180 527 Q 180 555 330 580" class="arrow" marker-end="url(#arrow)"/>
-  <path d="M 720 527 Q 720 555 570 580" class="arrow" marker-end="url(#arrow)"/>
-  <path d="M 720 302 Q 870 440 570 580" class="arrow" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
-
-  <!-- Legend note -->
-  <text x="450" y="615" text-anchor="middle" class="subtitle" style="font-size:11px;">
-    四个 routine 通过 GitHub 原生的 issue / comment / label / branch 协作 — 无额外 orchestration
-  </text>
+  <rect x="82" y="444" width="756" height="72" rx="12" class="boundary"/>
+  <text x="460" y="472" text-anchor="middle" class="boundary-title">60 分钟不是能力上限，而是任务-工具匹配边界</text>
+  <text x="460" y="497" text-anchor="middle" class="boundary-copy">需要 GPU / 真机 / 本地 dataset，或者验证风险变高，就切回本地重 harness</text>
 </svg>
