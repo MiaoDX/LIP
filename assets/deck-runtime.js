@@ -9,6 +9,99 @@
     return String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
   }
 
+  function ensureLightboxStyles() {
+    if (document.getElementById('deck-runtime-lightbox-styles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'deck-runtime-lightbox-styles';
+    style.textContent = `
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(0, 0, 0, 0.82);
+}
+.image-lightbox.open { display: flex; }
+.image-lightbox-inner {
+  max-width: min(94vw, 1600px);
+  max-height: 92vh;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+.image-lightbox img {
+  max-width: 100%;
+  max-height: 84vh;
+  object-fit: contain;
+  background: #f8f6f2;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.image-lightbox-caption {
+  max-width: min(94vw, 1200px);
+  color: #d8d4c8;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+`;
+    document.head.appendChild(style);
+  }
+
+  function installImageLightbox(settings) {
+    if (!settings.lightboxSelector) return null;
+
+    ensureLightboxStyles();
+
+    const lightbox = document.createElement('div');
+    lightbox.className = 'image-lightbox';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-modal', 'true');
+    lightbox.innerHTML = '<div class="image-lightbox-inner"><img alt=""><div class="image-lightbox-caption"></div></div>';
+    document.body.appendChild(lightbox);
+
+    const lightboxImage = lightbox.querySelector('img');
+    const caption = lightbox.querySelector('.image-lightbox-caption');
+
+    function captionFor(image) {
+      const container = image.closest(settings.lightboxContainerSelector);
+      if (container) {
+        const label = container.querySelector(settings.lightboxCaptionSelector);
+        if (label) return label.textContent.trim();
+      }
+      return image.alt || '';
+    }
+
+    function close() {
+      lightbox.classList.remove('open');
+      lightboxImage.removeAttribute('src');
+      lightboxImage.alt = '';
+      caption.textContent = '';
+    }
+
+    document.addEventListener('click', (event) => {
+      const image = event.target.closest(settings.lightboxSelector);
+      if (!image) return;
+      event.preventDefault();
+      event.stopPropagation();
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt || '';
+      caption.textContent = captionFor(image);
+      lightbox.classList.add('open');
+    }, true);
+
+    lightbox.addEventListener('click', close);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('open')) close();
+    });
+
+    return { close, element: lightbox };
+  }
+
   function createDeckRuntime(options) {
     const settings = Object.assign({
       slideSelector: '.slide',
@@ -25,6 +118,9 @@
       activeClass: 'active',
       updateHash: true,
       clickZones: true,
+      lightboxSelector: null,
+      lightboxContainerSelector: '.media-frame, .screenshot, .hero-shot, .qr-card',
+      lightboxCaptionSelector: '.ss-cap, .qr-label',
     }, options || {});
 
     const slides = Array.from(document.querySelectorAll(settings.slideSelector));
@@ -144,8 +240,10 @@
       }
     }
 
+    const lightbox = installImageLightbox(settings);
+
     show(current);
-    return { show, next, previous, total, get current() { return current; } };
+    return { show, next, previous, total, lightbox, get current() { return current; } };
   }
 
   window.createDeckRuntime = createDeckRuntime;

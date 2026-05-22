@@ -1,44 +1,8 @@
 <!DOCTYPE html>
 <!--
-  ============================================================================
-  STANDALONE DECK TEMPLATE
-  ============================================================================
-  Reusable starting point for HTML / PPT-style slide decks in this repo.
-  Distilled from ai-coding/ultrathink-to-goal/index.html.
-
-  What this template gives you:
-    1. Three switchable themes (font + color) via body[data-style] + a top-right
-       style toggle pill. See "THEME TOKENS" below.
-    2. Keyboard / click paging, progress bar, slide counter, deep-link hash —
-       all handled by the shared assets/deck-runtime.js.
-    3. Image pop-up (lightbox): click any .screenshot/.proof-card image to zoom.
-    4. Speaker notes toggle (press the NOTES button; hidden by default).
-    5. A catalogue of common slide layouts you can copy: title, section
-       divider, big-metric, quote, data-row, cards, two-column + screenshot,
-       compare table, closing/Q&A.
-
-  HOW TO USE — read templates/README.md first, then:
-    - For an AI Coding deck:  copy this folder to  ai-coding/<slug>/index.html
-      (keep the ../../assets/deck-runtime.js path — same depth).
-    - For a general deck:     copy index.html to   presentations/<name>.html
-      and change ../../assets/ to ../assets/ (presentations sits one level up).
-    - Replace placeholder SVG images with real files in an images/ folder
-      and reference them with a relative path like images/your-screenshot.png
-      (use a normal img tag in the slide body — see slide 4 of this template).
-    - Run `npm run quality:check` after adding the deck to a published folder.
-
-  IMAGES — keep them as separate files in the deck's images/ folder; do NOT
-  inline them as base64 data URIs into the HTML. Reasons:
-    - Real source diffs stay reviewable in PRs (inlined base64 explodes the diff).
-    - The deck file stays small enough for chat-app previews to render.
-    - Publish pipeline (`npm run publish:copy`) copies the images/ folder as-is.
-  The SVG placeholders that ship with this template are inline by design — they
-  exist only until you swap in real files, and they encode short labels not
-  photo data.
-
-  Slide copy style: prefer fragment-style text without trailing 。 / . / ；
-  (keep punctuation inside quotes, URLs, versions, filenames, code).
-  ============================================================================
+  Roboharness self-evaluating agents standalone deck.
+  Canonical source: ai-coding/roboharness-self-evaluating-agents/index.html
+  Published by scripts/publish-rules.mjs with local assets from images/.
 -->
 <html lang="zh-CN">
 <head>
@@ -218,6 +182,60 @@ img { max-width: 100%; }
 h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   overflow-wrap: anywhere;
 }
+.mt-xs { margin-top: 6px; }
+.mt-sm { margin-top: 12px; }
+.mt-md { margin-top: 18px; }
+.mt-card { margin-top: 20px; }
+.mt-lg { margin-top: 22px; }
+.mt-quote { margin-top: 24px; }
+.mt-xl { margin-top: 26px; }
+.mt-2xl { margin-top: 28px; }
+.mt-qa { margin-top: 32px; }
+.mb-md { margin-bottom: 14px; }
+.quote-flush { margin: 0 0 22px; }
+.max-prose { max-width: 70ch; }
+.max-wide { max-width: 80ch; }
+.mono-note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.mono-line {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-sec);
+}
+.quote-lg { font-size: clamp(28px, 3.4vw, 44px); line-height: 1.4; }
+.quote-md { font-size: clamp(20px, 2.2vw, 28px); }
+.quote-code {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: clamp(20px, 2.4vw, 32px);
+  border-left-width: 4px;
+  margin: 18px 0;
+}
+.cards-tight { margin-top: 18px; }
+.cards-spacious { margin-top: 26px; }
+.table-wide { max-width: 1100px; }
+.table-mid { max-width: 1000px; }
+.danger-muted { color: #b97f7f; }
+.link-accent { color: var(--accent); text-decoration: none; }
+.text-accent { color: var(--accent); }
+.list-plain {
+  margin: 12px 0 0 22px;
+  padding: 0;
+  line-height: 1.8;
+  list-style: none;
+}
+.section-metric.compact { font-size: clamp(80px, 12vw, 160px); margin-top: 20px; }
+.quote .quote-sub { font-size: 0.78em; }
+.quote .quote-sub-sm { font-size: 0.7em; }
+.quote-center {
+  border-left: none;
+  padding-left: 0;
+  text-align: center;
+  max-width: 100%;
+}
 
 /* TITLE slide */
 .title {
@@ -328,7 +346,8 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 }
 .slide-2col .col-l { display: flex; flex-direction: column; gap: 14px; }
 .slide-2col .col-r { display: flex; align-items: center; }
-.slide-2col .col-r .screenshot { margin-top: 0; max-width: 100%; }
+.slide-2col .col-r .media-frame { margin-top: 0; max-width: 100%; }
+.slide-2col--figure { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
 
 /* Callback box — forward / back reference between slides */
 .callback-box {
@@ -362,31 +381,33 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .compare-table .entity { color: var(--text); }
 .compare-table .muted { color: var(--text-sec); }
 
-/* Inline screenshot — click to pop up (lightbox). */
-.screenshot {
+/* Media frame — click images to pop up via deck runtime lightbox. */
+.media-frame {
   margin-top: 20px; max-width: 800px;
   border: 1px solid var(--border);
   background: var(--bg-card);
 }
-.screenshot img { display: block; width: 100%; height: auto; cursor: zoom-in; }
-.screenshot .ss-cap {
+.media-frame img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.media-frame .ss-cap {
   font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
   padding: 8px 12px; border-top: 1px solid var(--border-light);
   letter-spacing: 0.5px;
 }
-.screenshot .ss-cap a, .quote-attr a {
+.media-frame .ss-cap a, .quote-attr a {
   color: inherit; text-decoration: underline;
   text-decoration-thickness: 1px; text-underline-offset: 3px;
 }
 /* For tall vertical screenshots — cap visible height, fade out the bottom */
-.screenshot.tall .ss-frame { max-height: 320px; overflow: hidden; position: relative; }
-.screenshot.tall .ss-frame::after {
+.media-frame.tall .ss-frame { max-height: 320px; overflow: hidden; position: relative; }
+.media-frame.tall .ss-frame::after {
   content: "";
   position: absolute; left: 0; right: 0; bottom: 0;
   height: 60px;
   background: linear-gradient(to bottom, transparent, var(--bg-card));
   pointer-events: none;
 }
+.media-frame--hero { margin-top: 18px; max-width: 1100px; }
+.media-frame--vision { max-width: 620px; }
 
 /* Closing / Q&A slide */
 .qa { align-items: center; justify-content: center; text-align: center; }
@@ -424,34 +445,6 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   color: var(--text-sec);
   overflow-wrap: anywhere;
 }
-
-/* Wide hero screenshot inside a content slide (e.g. demo banner preview). */
-.hero-shot {
-  margin-top: 18px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  max-width: 1100px;
-}
-.hero-shot img { display: block; width: 100%; height: auto; cursor: zoom-in; }
-.hero-shot .ss-cap {
-  font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
-  padding: 8px 12px; border-top: 1px solid var(--border-light);
-  letter-spacing: 0.5px;
-}
-
-/* ============================================================ */
-/* IMAGE LIGHTBOX — built + wired by installImageLightbox() JS    */
-/* ============================================================ */
-.image-lightbox {
-  position: fixed; inset: 0; z-index: 500;
-  display: none; align-items: center; justify-content: center;
-  padding: 32px;
-  background: rgba(0, 0, 0, 0.82);
-}
-.image-lightbox.open { display: flex; }
-.image-lightbox-inner { max-width: min(94vw, 1600px); max-height: 92vh; display: grid; gap: 10px; justify-items: center; }
-.image-lightbox img { max-width: 100%; max-height: 84vh; object-fit: contain; background: #f8f6f2; border: 1px solid rgba(255, 255, 255, 0.22); }
-.image-lightbox-caption { max-width: min(94vw, 1200px); color: #d8d4c8; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; text-align: center; }
 
 /* ============================================================ */
 /* SPEAKER NOTES — hidden by default; NOTES button reveals them   */
@@ -580,19 +573,19 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/2</span> · 钩子 · 两个月前的承诺</div>
   <h2>两个月前那张图</h2>
-  <div class="slide-2col" style="margin-top: 22px;">
+  <div class="slide-2col slide-2col--figure mt-lg">
     <div class="col-l">
-      <p class="dim" style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px; margin-bottom: 14px;">2026-03 · 内部分享最后一页</p>
-      <div class="quote" style="margin: 0 0 22px;">
+      <p class="dim mono-note mb-md">2026-03 · 内部分享最后一页</p>
+      <div class="quote quote-flush">
         下一步，让 <em>AI 完全接手</em> 这个测试自动化
       </div>
       <p>那张图当时是一个 <strong>vision</strong></p>
-      <p style="margin-top: 6px;">今天来汇报 —— <span class="hl">这件事我们做到了</span></p>
+      <p class="mt-xs">今天来汇报 —— <span class="hl">这件事我们做到了</span></p>
     </div>
     <div class="col-r">
-      <div class="screenshot">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22860%22%20height%3D%22520%22%3E%3Crect%20width%3D%22860%22%20height%3D%22520%22%20fill%3D%22%23e9e2d4%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%22858%22%20height%3D%22518%22%20fill%3D%22none%22%20stroke%3D%22%23b8a99a%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2240%22%20font-family%3D%22monospace%22%20font-size%3D%2214%22%20font-weight%3D%22600%22%20fill%3D%22%238a3a3a%22%20letter-spacing%3D%223%22%3EFIGURE%20%231%20%C2%B7%20TODO%3C%2Ftext%3E%3Ctext%20x%3D%22430%22%20y%3D%22250%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22500%22%20fill%3D%22%231c1612%22%20text-anchor%3D%22middle%22%3E%E4%B8%A4%E4%B8%AA%E6%9C%88%E5%89%8D%E9%82%A3%E5%BC%A0%20vision%20%E5%9B%BE%3C%2Ftext%3E%3Ctext%20x%3D%22430%22%20y%3D%22290%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20fill%3D%22%234a3a2a%22%20text-anchor%3D%22middle%22%20font-style%3D%22italic%22%3EAI%20%E5%AE%8C%E5%85%A8%E6%8E%A5%E6%89%8B%E6%B5%8B%E8%AF%95%E8%87%AA%E5%8A%A8%E5%8C%96%20%28%E5%86%85%E9%83%A8%E5%88%86%E4%BA%AB%202026-03%29%3C%2Ftext%3E%3Ctext%20x%3D%2232%22%20y%3D%22490%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20fill%3D%22%238a7960%22%3Ereplace%20with%3A%20images%2Ffig1-old-vision.png%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Figure 1 placeholder — 两个月前那张 vision 图">
-        <div class="ss-cap">图 #1 · 待补 · <span class="dim">images/fig1-old-vision.png</span></div>
+      <div class="media-frame media-frame--vision">
+        <img src="images/fig1-old-vision.png" alt="两个月前内部分享最后一页：让 AI 自己验证">
+        <div class="ss-cap">图 #1 · 2026-03 内部分享最后一页 · <span class="dim">来自 tmp/001.png，发布副本 images/fig1-old-vision.png</span></div>
       </div>
     </div>
   </div>
@@ -605,7 +598,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/2</span> · 当时的卡点</div>
   <h2>当时为什么做不到</h2>
   <h3>Unitree G1 + GR00T Decoupled WBC · 下肢 RL + 上肢 IK 的混合架构 · 2025-11</h3>
-  <div class="cards" style="margin-top: 26px;">
+  <div class="cards cards-spacious">
     <div class="card">
       <div class="card-tag">不是瓶颈</div>
       <div class="card-title">Agent 改控制代码 <span class="hl">✓</span></div>
@@ -617,7 +610,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc">夹爪夹住没？方块滑了没？姿态合理吗？<br>日志看不出来，必须看画面</div>
     </div>
   </div>
-  <p style="margin-top: 22px; max-width: 70ch;">
+  <p class="mt-lg max-prose">
     工程师只能盯着 —— <strong>agent 跑一轮，人看一眼；再跑一轮，再看一眼</strong>
   </p>
   <div class="speaker-note">G1 + GR00T Decoupled WBC = 2025-11 那版下肢 RL/上肢 IK 的混合架构做抓取。改代码不是瓶颈，判断才是。</div>
@@ -627,12 +620,12 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/2</span> · 关键洞察</div>
-  <div class="quote" style="font-size: clamp(28px, 3.4vw, 44px); line-height: 1.4;">
+  <div class="quote quote-lg">
     这不是 <em>算力</em> 问题<br>
     是 <em>注意力</em> 问题
   </div>
-  <div class="section-metric" style="font-size: clamp(80px, 12vw, 160px); margin-top: 20px;">瓶颈 <span class="unit">不在 GPU · 在工程师的注意力</span></div>
-  <p style="margin-top: 12px; max-width: 70ch;">
+  <div class="section-metric compact">瓶颈 <span class="unit">不在 GPU · 在工程师的注意力</span></div>
+  <p class="mt-sm max-prose">
     Agent 要真自主 —— <strong>唯一的路是让它自己有判断依据</strong>
   </p>
   <div class="speaker-note">过去两个月我们做的就是这件事。过渡到下一页：下面看一个真实案例 —— SONIC 升级。</div>
@@ -643,7 +636,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/2</span> · 兑现 · SONIC 升级</div>
   <h2>兑现 —— 三阶段工作流跑下来</h2>
-  <div class="cards" style="margin-top: 18px;">
+  <div class="cards cards-tight">
     <div class="card">
       <div class="card-tag">phase 01 · 人主导</div>
       <div class="card-title">Plan</div>
@@ -660,11 +653,11 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc">先看 metric · metric OK 再看视觉<br>最后人工 E2E</div>
     </div>
   </div>
-  <div class="callback-box" style="margin-top: 22px;">
+  <div class="callback-box mt-lg">
     <span class="ref">真实例子</span><span class="arrow">→</span>
-    2026-02-19 NVIDIA 发布 <strong style="color: var(--accent);">GEAR-SONIC</strong> · 不是版本升级，是范式切换
+    2026-02-19 NVIDIA 发布 <strong class="text-accent">GEAR-SONIC</strong> · 不是版本升级，是范式切换
   </div>
-  <p style="max-width: 80ch; margin-top: 8px;">
+  <p class="mt-xs max-wide">
     Decoupled WBC <span class="dim">(RL + IK 混合)</span> → GEAR-SONIC <span class="dim">(单一 Transformer 基础模型)</span><br>
     整条控制栈底层重写 —— <span class="hl">agent 连续自主跑了几个小时，工程师全程不在场</span>
   </p>
@@ -677,11 +670,11 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/2</span> · 校准</div>
   <h2>不是 Agent 突然变聪明</h2>
   <h3>是给了它判断自己工作好坏的工具</h3>
-  <div class="quote" style="margin-top: 28px;">
+  <div class="quote mt-2xl">
     让 agent 跑得久 —— 不靠模型变神<br>
     靠 <em>"越过边界时会被挡住、边界内时能自己往前走"</em>
   </div>
-  <p style="margin-top: 24px; max-width: 70ch; font-family: var(--font-mono); font-size: 14px; color: var(--text-sec);">
+  <p class="mono-line mt-quote max-prose">
     <span class="hl">roboharness</span> · 抽出独立 repo · <span class="dim">github.com/MiaoDX/roboharness</span>
   </p>
   <div class="speaker-note">这一页是过渡 + 校准。把"模型变神"这种解读挡掉，把"trust boundary"埋下（页 15 收）。内部抓取项目跑通后我们发现 —— 任何需要 agent 长时间自主跑机器人代码的场景都缺这一层，所以抽成独立 repo。</div>
@@ -694,21 +687,21 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <h2>案例 A · qpos 索引</h2>
   <h3>仿真 · commit <code>102a593</code></h3>
   <div class="table-wrap spaced">
-    <table class="compare-table" style="max-width: 1100px;">
+    <table class="compare-table table-wide">
       <thead>
         <tr><th>证据通道</th><th>判定</th><th>解释</th></tr>
       </thead>
       <tbody>
         <tr><td class="entity">截图</td><td class="muted"><span class="hl">✓ 看起来抓住了</span></td><td class="muted">画面 OK · Agent 自己也判 PASS</td></tr>
-        <tr><td class="entity">物理约束 metric</td><td class="muted" style="color: #b97f7f;">✗ cube z ≈ 0</td><td class="muted">加上 <code>--assert-success</code> 后才发现 —— 根本没抬起来</td></tr>
+        <tr><td class="entity">物理约束 metric</td><td class="muted danger-muted">✗ cube z ≈ 0</td><td class="muted">加上 <code>--assert-success</code> 后才发现 —— 根本没抬起来</td></tr>
       </tbody>
     </table>
   </div>
-  <div class="callback-box" style="margin-top: 22px;">
+  <div class="callback-box mt-lg">
     <span class="ref">根因</span><span class="arrow">→</span>
     agent 假设 MuJoCo qpos 里 slide joint 在前，用了 <code>qpos[5]</code> · 实际 free joint 在前，正确是 <code>qpos[2]</code>
   </div>
-  <p style="margin-top: 18px;">教训方向 —— <strong>光看图不够，metric 是兜底</strong></p>
+  <p class="mt-md">教训方向 —— <strong>光看图不够，metric 是兜底</strong></p>
   <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。两个案例是反向对称的。</div>
 </div>
 <!-- ====================================================================== -->
@@ -718,23 +711,23 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 B</div>
   <h2>案例 B · 拇指朝下抓 bottle</h2>
   <h3>真机 Unitree G1</h3>
-  <div class="slide-2col" style="margin-top: 18px;">
+  <div class="slide-2col mt-md">
     <div class="col-l">
       <p>初始唯一 metric · <strong>抓取中心点 vs bottle 中心点 3D 距离</strong></p>
-      <p style="margin-top: 12px;">Agent 规划出的解 —— <span class="hl">整个手反着抓，拇指朝下而不是朝上</span></p>
-      <ul style="margin: 12px 0 0 22px; padding: 0; line-height: 1.8; list-style: none;">
+      <p class="mt-sm">Agent 规划出的解 —— <span class="hl">整个手反着抓，拇指朝下而不是朝上</span></p>
+      <ul class="list-plain">
         <li>· metric <span class="hl">✓ 完全 PASS</span> · 3D 距离确实在阈值内</li>
         <li>· visual harness 一打开图 —— <strong>谁都看得出来不对</strong></li>
       </ul>
-      <div class="callback-box" style="margin-top: 20px;">
+      <div class="callback-box mt-card">
         <span class="ref">第三幕</span><span class="arrow">→</span>
         加了新 metric · <strong>手部 / 拇指朝向</strong> —— 这种失败模式永久关掉
       </div>
-      <p style="margin-top: 14px;">教训方向 —— <strong>光看 metric 不够</strong><br>visual 才能挡住"数学上对、物理上荒谬"的解</p>
+      <p class="mt-md">教训方向 —— <strong>光看 metric 不够</strong><br>visual 才能挡住"数学上对、物理上荒谬"的解</p>
     </div>
     <div class="col-r">
-      <div class="screenshot">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22860%22%20height%3D%22520%22%3E%3Crect%20width%3D%22860%22%20height%3D%22520%22%20fill%3D%22%23e9e2d4%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%22858%22%20height%3D%22518%22%20fill%3D%22none%22%20stroke%3D%22%23b8a99a%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2240%22%20font-family%3D%22monospace%22%20font-size%3D%2214%22%20font-weight%3D%22600%22%20fill%3D%22%238a3a3a%22%20letter-spacing%3D%223%22%3EFIGURE%20%233%20%C2%B7%20TODO%3C%2Ftext%3E%3Ctext%20x%3D%22430%22%20y%3D%22250%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22500%22%20fill%3D%22%231c1612%22%20text-anchor%3D%22middle%22%3E%E6%8B%87%E6%8C%87%E6%9C%9D%E4%B8%8B%E6%8A%93%20bottle%20%E5%AF%B9%E6%AF%94%E5%9B%BE%3C%2Ftext%3E%3Ctext%20x%3D%22430%22%20y%3D%22290%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20fill%3D%22%234a3a2a%22%20text-anchor%3D%22middle%22%20font-style%3D%22italic%22%3E%E5%B7%A6%3A%20%E6%AD%A3%E5%B8%B8%E6%8A%93%20%20%20%20%20%E5%8F%B3%3A%20%E5%8F%8D%E7%9D%80%E6%8A%93%20%28metric%20PASS%20%C2%B7%20visual%20NG%29%3C%2Ftext%3E%3Ctext%20x%3D%2232%22%20y%3D%22490%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20fill%3D%22%238a7960%22%3Ereplace%20with%3A%20images%2Ffig3-thumb-down-grasp.png%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Figure 3 placeholder — 拇指朝下抓 bottle 对比图">
+      <div class="media-frame">
+        <img src="images/fig3-thumb-down-grasp-placeholder.svg" alt="Figure 3 placeholder — 拇指朝下抓 bottle 对比图">
         <div class="ss-cap">图 #3 · 待补 · 左 正常抓 · 右 拇指朝下 · <span class="dim">images/fig3-thumb-down-grasp.png</span></div>
       </div>
     </div>
@@ -748,7 +741,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 闭环</div>
   <h2>metric 和 visual 不是冗余</h2>
   <h3>是闭环里两个不同角色</h3>
-  <div class="cards" style="margin-top: 26px;">
+  <div class="cards cards-spacious">
     <div class="card">
       <div class="card-tag">role · 发现器</div>
       <div class="card-title">Visual Harness</div>
@@ -765,7 +758,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc">每发现一个新坑 → 从 visual 那侧 <strong>搬到</strong> metric 那侧<br>把失败永久转成可量化护栏</div>
     </div>
   </div>
-  <div class="quote" style="margin-top: 24px; font-size: clamp(20px, 2.2vw, 28px);">
+  <div class="quote quote-md mt-quote">
     这就是 Mitchell Hashimoto 讲的 <em>engineer the harness</em><br>字面意义在做的事
   </div>
 </div>
@@ -793,7 +786,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="data-sub">大部分 per-step 判断根本不需要人介入</div>
     </div>
   </div>
-  <div class="callback-box" style="margin-top: 22px;">
+  <div class="callback-box mt-lg">
     <span class="ref">CALLBACK</span><span class="arrow">→</span>
     SONIC 升级属于"真正新颖"那一类 —— 所以才有 Plan / Review 两端的人
   </div>
@@ -805,15 +798,15 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/4</span> · 现场 Demo</div>
   <h2>现场切到浏览器</h2>
-  <div class="quote" style="font-family: var(--font-mono); font-style: normal; font-size: clamp(20px, 2.4vw, 32px); border-left-width: 4px; margin: 18px 0;">
-    <a href="https://miaodx.com/roboharness/grasp/" style="color: var(--accent); text-decoration: none;">miaodx.com/roboharness/grasp/</a>
+  <div class="quote quote-code">
+    <a class="link-accent" href="https://miaodx.com/roboharness/grasp/">miaodx.com/roboharness/grasp/</a>
   </div>
-  <div class="hero-shot">
+  <div class="media-frame media-frame--hero">
     <img src="images/demo-run-decision.png" alt="Run Decision banner · No surfaced cases · Verdict PASS">
     <div class="ss-cap">live · Run Decision banner · <span class="dim">点击放大</span></div>
   </div>
-  <h3 style="margin-top: 8px;">三个看点</h3>
-  <div class="cards" style="margin-top: 18px;">
+  <h3 class="mt-xs">三个看点</h3>
+  <div class="cards cards-tight">
     <div class="card">
       <div class="card-tag">① 顶部 banner</div>
       <div class="card-title">Run Decision</div>
@@ -830,7 +823,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc">10 条物理约束 · Expected / Actual / Severity<br><code>cube_height_mm &gt; 5.0</code> actual <code>143.4</code></div>
     </div>
   </div>
-  <p class="dim" style="margin-top: 22px; font-family: var(--font-mono); font-size: 12px;">网络不稳时切到本地备份截图 · <code>images/demo-run-decision.png</code> · <code>images/demo-constraint-eval.png</code></p>
+  <p class="dim mono-note mt-lg">网络不稳时切到本地备份截图 · <code>images/demo-run-decision.png</code> · <code>images/demo-constraint-eval.png</code></p>
   <div class="speaker-note">留够 90 秒，全场最有冲击力。指给观众的顺序（每段约 10-20 秒）：① 顶部 Run Decision banner —— 'PASS — 10/10 constraints satisfied'，agent 跑完一轮的整体判决；② 'No surfaced cases. No material changes surfaced.' —— clean 的时候工程师根本不用打开这一页，数小时无人值守就是这么来的；③ 右边 Surfaced 0 / Suppressed 1 / Unchanged 1 —— escape hatch，只有 Surfaced > 0 才需要人看；④ Constraint Evaluation 表 —— metric_gate 的具体形态，10 条物理约束都有 Expected / Actual / Severity；⑤ Phase Timeline —— 每个 phase 三视角截图 + grip err / contacts / alarms，这是 visual harness 的数据形态；⑥ 回到顶部 —— 所有数据合起来得出 PASS，agent 自己读自己判决。投屏挂了切到 images/demo-fallback-*.png 按 1/2/3 顺序换页。</div>
 </div>
 <!-- ====================================================================== -->
@@ -840,7 +833,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/5</span> · repo 演化</div>
   <h2>抽成 repo 之后 · 3 周</h2>
   <h3>v0.3.0 / 0.3.1 已发到 PyPI · 又长了两件事</h3>
-  <div class="cards" style="margin-top: 22px;">
+  <div class="cards mt-lg">
     <div class="card">
       <div class="card-tag">2026-05-20 上线</div>
       <div class="card-title">❶ Agent Visual Review v1</div>
@@ -852,9 +845,9 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc"><code>contract.py</code> 是手写真值<br><code>roboharness contract generate</code> → SKILL.md / schemas / stubs<br><span class="dim">→ Agent 自己加载契约约束自己</span></div>
     </div>
   </div>
-  <div class="quote" style="margin-top: 22px; font-size: clamp(20px, 2.2vw, 28px);">
+  <div class="quote quote-md mt-lg">
     判断边界从 <em>run-time</em> 扩到 <em>design-time</em><br>
-    <span style="font-size: 0.7em;">Agent 不是变聪明 —— 是约束它的契约写得更清楚了</span>
+    <span class="quote-sub-sm">Agent 不是变聪明 —— 是约束它的契约写得更清楚了</span>
   </div>
   <div class="speaker-note">这两个 feature 都是 5 月 20 日刚 commit 的，要诚实 —— "刚上、小规模验证中"，不需要进 demo。</div>
 </div>
@@ -864,7 +857,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/5</span> · sidenote · by agents</div>
   <h2>Sidenote · 这个 repo 自己也是 agent 做的</h2>
-  <div class="data-row" style="margin-top: 20px;">
+  <div class="data-row mt-card">
     <div class="data-cell">
       <div class="data-num">139</div>
       <div class="data-label">commit · 100% AI 完成</div>
@@ -886,8 +879,8 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="data-sub">gitignore / README 链接 / 几行 docs 修补</div>
     </div>
   </div>
-  <h3 style="margin-top: 26px;">工作流速描</h3>
-  <p style="margin-top: 6px; max-width: 80ch;">
+  <h3 class="mt-xl">工作流速描</h3>
+  <p class="mt-xs max-wide">
     Opus 聊出 roadmap <span class="dim">→</span> 拆 GitHub issue <span class="dim">→</span>
     routine 每小时自动解 issue <span class="dim">→</span> 人 review PR
     <span class="dim">·</span> <strong>手机上就能完成全套</strong>
@@ -902,7 +895,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <h2>两件事 —— 同一个工程思路</h2>
   <h3>"用 agent 做" + "为 agent 做" 背后都是 trust boundary</h3>
   <div class="table-wrap spaced">
-    <table class="compare-table" style="max-width: 1100px;">
+    <table class="compare-table table-wide">
       <thead>
         <tr><th>层面</th><th>For agents · 产品层</th><th>By agents · 开发层</th></tr>
       </thead>
@@ -913,9 +906,9 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </tbody>
     </table>
   </div>
-  <div class="quote" style="margin-top: 22px;">
+  <div class="quote mt-lg">
     <em>Agent 越过边界 → 被挡住</em> · <em>Agent 边界内 → 能自己往前走</em><br>
-    <span style="font-size: 0.78em;">信任不是建立在"agent 足够好"上 —— 是建立在"agent 越过边界时一定会被挡住"上</span>
+    <span class="quote-sub">信任不是建立在"agent 足够好"上 —— 是建立在"agent 越过边界时一定会被挡住"上</span>
   </div>
   <div class="speaker-note">把页 1 的钩子（"给 agent 用 + 用 agent 做"）和页 7 的"越过边界会被挡住"两根线在这里合并收口。</div>
 </div>
@@ -926,7 +919,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/6</span> · takeaway · 工程师</div>
   <h2>实践 · 工程师向</h2>
   <h3>两个能直接拿走的实践</h3>
-  <div class="cards" style="margin-top: 26px;">
+  <div class="cards cards-spacious">
     <div class="card accent-card">
       <div class="card-tag">practice 01</div>
       <div class="card-title">契约先于 prompt</div>
@@ -938,7 +931,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc"><strong>metric + visual 双轨 · 缺一不可</strong><br>· qpos 案例 → visual 没救你 · metric 救<br>· 拇指朝下 → metric 没救你 · visual 救<br>发现一个新失败模式 → promote 到 metric</div>
     </div>
   </div>
-  <p style="margin-top: 22px;">这就是 <span class="hl">engineer the harness</span> 字面意思 —— 也是我们日常的工作流</p>
+  <p class="mt-lg">这就是 <span class="hl">engineer the harness</span> 字面意思 —— 也是我们日常的工作流</p>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 16 · Takeaway · 产品 / 管理向 (page 17)                             -->
@@ -947,7 +940,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/6</span> · takeaway · 宏观</div>
   <h2>判断 · 宏观向</h2>
   <h3>两个判断</h3>
-  <div class="cards" style="margin-top: 26px;">
+  <div class="cards cards-spacious">
     <div class="card">
       <div class="card-tag">judgment 01</div>
       <div class="card-title">瓶颈已经换地方了</div>
@@ -956,7 +949,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     <div class="card accent-card">
       <div class="card-tag">judgment 02</div>
       <div class="card-title">方向是契约工程 · 不是堆模型</div>
-      <div class="card-desc">同模型 + 好契约 <strong style="color: var(--accent);">&gt;</strong> 更强模型 + 没契约<br><span class="dim">—— 这是杠杆点所在</span></div>
+      <div class="card-desc">同模型 + 好契约 <strong class="text-accent">&gt;</strong> 更强模型 + 没契约<br><span class="dim">—— 这是杠杆点所在</span></div>
     </div>
   </div>
 </div>
@@ -968,7 +961,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <h2>当前边界</h2>
   <h3>已验证范围 · 仍在补的部分</h3>
   <div class="table-wrap spaced">
-    <table class="compare-table" style="max-width: 1000px;">
+    <table class="compare-table table-mid">
       <tbody>
         <tr><td class="entity">已验证</td><td class="muted">MuJoCo + G1 · 抓取 / 到达 / 移动 类任务</td></tr>
         <tr><td class="entity">补充中</td><td class="muted">Contract preset 数量还在补</td></tr>
@@ -983,11 +976,11 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <!-- SLIDE 18 · 收尾 · QA + 二维码 (page 19)                                   -->
 <!-- ====================================================================== -->
 <div class="slide qa">
-  <div class="quote" style="border-left: none; padding-left: 0; text-align: center; max-width: 100%;">
+  <div class="quote quote-center">
     让 Agent 跑得久 —— 不是 Agent 变神<br>
     是把 <em>"Agent 越过边界时会被挡住"</em> 这件事做扎实
   </div>
-  <div class="qa-sub" style="margin-top: 32px;">— Q &amp; A —</div>
+  <div class="qa-sub mt-qa">— Q &amp; A —</div>
   <div class="qa-contact-grid">
     <div class="qr-card">
       <img src="images/qr-wechat-official.jpg" alt="微信公众号二维码">
@@ -1000,77 +993,23 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   </div>
   <div class="qa-footer">
     缪东旭 · MiaoDX<br>
-    github.com/<strong style="color: var(--accent);">MiaoDX/roboharness</strong> · miaodx.com/roboharness/<br>
+    github.com/<strong class="text-accent">MiaoDX/roboharness</strong> · miaodx.com/roboharness/<br>
     本场分享准备过程开源：github.com/MiaoDX/LIP/tree/main/ai-coding/roboharness-self-evaluating-agents
   </div>
 </div>
 
 </div><!-- /deck -->
 
-<!--
-  Shared deck runtime: keyboard/click paging, progress, counter, hash deep-link,
-  notes toggle, theme switching + localStorage persistence.
-  Path is ../../assets/deck-runtime.js because this file sits two levels deep
-  (templates/deck/index.html). If you copy this to presentations/<name>.html
-  (one level deep), change it to ../assets/deck-runtime.js.
--->
 <script src="../../assets/deck-runtime.js"></script>
 <script>
-// Image pop-up: any image matching the selector opens a full-screen overlay.
-// Add more selectors (comma-separated) if you introduce new image containers.
-function installImageLightbox() {
-  const imageSelector = '.screenshot img, .qr-card img, .hero-shot img';
-  const lightbox = document.createElement('div');
-  lightbox.className = 'image-lightbox';
-  lightbox.setAttribute('role', 'dialog');
-  lightbox.setAttribute('aria-modal', 'true');
-  lightbox.innerHTML = '<div class="image-lightbox-inner"><img alt=""><div class="image-lightbox-caption"></div></div>';
-  document.body.appendChild(lightbox);
-
-  const lightboxImage = lightbox.querySelector('img');
-  const caption = lightbox.querySelector('.image-lightbox-caption');
-
-  function captionFor(image) {
-    const screenshot = image.closest('.screenshot');
-    if (screenshot) {
-      const cap = screenshot.querySelector('.ss-cap');
-      if (cap) return cap.textContent.trim();
-    }
-    return image.alt || '';
-  }
-
-  function close() {
-    lightbox.classList.remove('open');
-    lightboxImage.removeAttribute('src');
-    lightboxImage.alt = '';
-    caption.textContent = '';
-  }
-
-  document.addEventListener('click', (event) => {
-    const image = event.target.closest(imageSelector);
-    if (!image) return;
-    event.preventDefault();
-    event.stopPropagation();
-    lightboxImage.src = image.currentSrc || image.src;
-    lightboxImage.alt = image.alt || '';
-    caption.textContent = captionFor(image);
-    lightbox.classList.add('open');
-  }, true);
-
-  lightbox.addEventListener('click', close);
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && lightbox.classList.contains('open')) close();
-  });
-}
-
 window.createDeckRuntime({
   notesToggleSelector: '#notesToggle',
   styleToggleSelector: '#styleToggle',
   styleStorageKey: 'deck-roboharness-self-eval-style',
   defaultStyle: 'terminal',
   styles: ['terminal', 'newspaper', 'navy'],
+  lightboxSelector: '.media-frame img, .qr-card img',
 });
-installImageLightbox();
 </script>
 </body>
 </html>
