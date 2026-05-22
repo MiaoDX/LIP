@@ -408,6 +408,58 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 }
 .media-frame--hero { margin-top: 18px; max-width: 1100px; }
 .media-frame--vision { max-width: 620px; }
+.media-frame--motion { max-width: 660px; }
+.intro-proof {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+  max-width: 720px;
+}
+.evidence-badge {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 16px 18px;
+}
+.evidence-badge .badge-k {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.evidence-badge .badge-v {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-sec);
+}
+.demo-crops {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.55fr);
+  gap: 14px;
+  max-width: 1100px;
+  margin-top: 18px;
+}
+.demo-crop {
+  min-height: 142px;
+  border: 1px solid var(--border);
+  background-color: var(--bg-card);
+  background-image: url("images/demo-run-decision.png");
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  position: relative;
+  overflow: hidden;
+}
+.demo-crop--decision { background-position: left center; }
+.demo-crop--verdict { background-position: right center; }
+.stat-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  margin-top: 14px;
+}
 
 /* Closing / Q&A slide */
 .qa { align-items: center; justify-content: center; text-align: center; }
@@ -520,7 +572,17 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .data-cell { border-right: none; border-bottom: 1px solid var(--border); }
   .data-cell:last-child { border-bottom: none; }
   .cards { flex-direction: column; }
+  .cards { gap: 12px; }
+  .card { padding: 18px 20px; }
+  .data-cell { padding: 24px 24px; }
+  .data-cell .data-num { font-size: clamp(38px, 10vw, 48px); }
   .slide-2col { grid-template-columns: 1fr; }
+  .intro-proof { grid-template-columns: 1fr; gap: 10px; }
+  .motion-intro .slide-2col .col-r { order: -1; }
+  .motion-intro .media-frame .ss-cap { display: none; }
+  .media-frame--motion { max-width: 100%; }
+  .demo-crops { grid-template-columns: 1fr; gap: 10px; }
+  .demo-crop { min-height: 116px; }
   /* Local fix: keep callback-box readable on narrow widths */
   .callback-box { flex-wrap: wrap; row-gap: 4px; }
   .qa-contact-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -594,26 +656,38 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <!-- ====================================================================== -->
 <!-- SLIDE 3 · 当时为什么做不到 (page 4)                                       -->
 <!-- ====================================================================== -->
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/2</span> · 当时的卡点</div>
-  <h2>当时为什么做不到</h2>
-  <h3>Unitree G1 + GR00T Decoupled WBC · 下肢 RL + 上肢 IK 的混合架构 · 2025-11</h3>
-  <div class="cards cards-spacious">
-    <div class="card">
-      <div class="card-tag">不是瓶颈</div>
-      <div class="card-title">Agent 改控制代码 <span class="hl">✓</span></div>
-      <div class="card-desc">控制器代码、参数调整、报错修复 —— 这些早已不是瓶颈</div>
+<div class="slide motion-intro">
+  <div class="meta"><span class="meta-tag">section/2</span> · 真实项目 · 当时的卡点</div>
+  <h2>先看真实项目里跑出来的抓取效果</h2>
+  <div class="slide-2col slide-2col--figure mt-md">
+    <div class="col-l">
+      <h3>Unitree G1 + MuJoCo / MeshCat 对照 · 真实 grasp pipeline 输出</h3>
+      <div class="quote quote-flush">
+        机器人已经能跑起来<br>
+        但 agent 长时间自主跑，卡在 <em>判断</em>
+      </div>
+      <div class="intro-proof">
+        <div class="evidence-badge">
+          <div class="badge-k">不是瓶颈</div>
+          <div class="badge-v">Agent 改控制代码、调参数、修报错</div>
+        </div>
+        <div class="evidence-badge">
+          <div class="badge-k">真正卡点</div>
+          <div class="badge-v">夹爪夹住没？方块滑了没？姿态合理吗？</div>
+        </div>
+      </div>
+      <p class="mt-card max-prose">
+        工程师只能盯着 —— <strong>agent 跑一轮，人看一眼；再跑一轮，再看一眼</strong>
+      </p>
     </div>
-    <div class="card accent-card">
-      <div class="card-tag">真正卡点</div>
-      <div class="card-title">Agent 的判断 <span class="hl">✗</span></div>
-      <div class="card-desc">夹爪夹住没？方块滑了没？姿态合理吗？<br>日志看不出来，必须看画面</div>
+    <div class="col-r">
+      <div class="media-frame media-frame--motion">
+        <img src="images/g1-meshcat-mujoco-comparison.gif" alt="Unitree G1 在 MeshCat 和 MuJoCo 中运行抓取任务的对照动图">
+        <div class="ss-cap">真实项目输出 · G1 grasp · MeshCat / MuJoCo 对照 · <span class="dim">来自 MiaoDX/roboharness assets/g1/X36_Y28_Z13</span></div>
+      </div>
     </div>
   </div>
-  <p class="mt-lg max-prose">
-    工程师只能盯着 —— <strong>agent 跑一轮，人看一眼；再跑一轮，再看一眼</strong>
-  </p>
-  <div class="speaker-note">G1 + GR00T Decoupled WBC = 2025-11 那版下肢 RL/上肢 IK 的混合架构做抓取。改代码不是瓶颈，判断才是。</div>
+  <div class="speaker-note">这里先给真实效果，不急着解释细节。重点是：系统不是停在"跑不起来"，而是停在"agent 自己不知道这一轮到底好不好"。G1 + GR00T Decoupled WBC = 2025-11 那版下肢 RL / 上肢 IK 的混合架构做抓取。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 4 · 关键洞察 · 注意力问题 (page 5)                                  -->
@@ -655,13 +729,13 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   </div>
   <div class="callback-box mt-lg">
     <span class="ref">真实例子</span><span class="arrow">→</span>
-    2026-02-19 NVIDIA 发布 <strong class="text-accent">GEAR-SONIC</strong> · 不是版本升级，是范式切换
+    2026-02 中下旬 <strong class="text-accent">GEAR-SONIC</strong> 权重公开 · 不是版本升级，是范式切换
   </div>
   <p class="mt-xs max-wide">
     Decoupled WBC <span class="dim">(RL + IK 混合)</span> → GEAR-SONIC <span class="dim">(单一 Transformer 基础模型)</span><br>
     整条控制栈底层重写 —— <span class="hl">agent 连续自主跑了几个小时，工程师全程不在场</span>
   </p>
-  <div class="speaker-note">三阶段讲清楚：Plan 人主导；Execute 完全 agent，工程师不在场，每改一步 harness 自跑 + metric/视觉自评 + Codex CLI /goal 锚定长程目标；Review 人回来，metric→视觉→E2E。Q&A 备好：为什么不是直接 N1.7 —— SONIC 是 2 月 19 日发布，N1.7 4 月才商业 release，时间线对得上。/goal 需要 codex-cli 0.128.0+ /experimental 打开。</div>
+  <div class="speaker-note">三阶段讲清楚：Plan 人主导；Execute 完全 agent，工程师不在场，每改一步 harness 自跑 + metric/视觉自评 + Codex CLI /goal 锚定长程目标；Review 人回来，metric→视觉→E2E。Q&A 备好：为什么不是直接 N1.7 —— GEAR-SONIC 权重 2 月中下旬已有公开记录，N1.7 4 月才商业 release，时间线对得上。/goal 需要 codex-cli 0.128.0+ /experimental 打开。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 6 · 校准关键一句 (page 7)                                           -->
@@ -786,6 +860,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="data-sub">大部分 per-step 判断根本不需要人介入</div>
     </div>
   </div>
+  <div class="stat-note">口径 · 当前小规模真实项目经验值，不是公开 benchmark</div>
   <div class="callback-box mt-lg">
     <span class="ref">CALLBACK</span><span class="arrow">→</span>
     SONIC 升级属于"真正新颖"那一类 —— 所以才有 Plan / Review 两端的人
@@ -801,9 +876,9 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="quote quote-code">
     <a class="link-accent" href="https://miaodx.com/roboharness/grasp/">miaodx.com/roboharness/grasp/</a>
   </div>
-  <div class="media-frame media-frame--hero">
-    <img src="images/demo-run-decision.png" alt="Run Decision banner · No surfaced cases · Verdict PASS">
-    <div class="ss-cap">live · Run Decision banner · <span class="dim">点击放大</span></div>
+  <div class="demo-crops" aria-label="Run Decision 截图局部">
+    <div class="demo-crop demo-crop--decision" role="img" aria-label="Run Decision 显示 No surfaced cases"></div>
+    <div class="demo-crop demo-crop--verdict" role="img" aria-label="Verdict 显示 PASS"></div>
   </div>
   <h3 class="mt-xs">三个看点</h3>
   <div class="cards cards-tight">
@@ -832,7 +907,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/5</span> · repo 演化</div>
   <h2>抽成 repo 之后 · 3 周</h2>
-  <h3>v0.3.0 / 0.3.1 已发到 PyPI · 又长了两件事</h3>
+  <h3>v0.3.1 已发到 PyPI · v0.3.0 / v0.3.1 已打 GitHub tag · 又长了两件事</h3>
   <div class="cards mt-lg">
     <div class="card">
       <div class="card-tag">2026-05-20 上线</div>
@@ -859,24 +934,24 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <h2>Sidenote · 这个 repo 自己也是 agent 做的</h2>
   <div class="data-row mt-card">
     <div class="data-cell">
-      <div class="data-num">139</div>
-      <div class="data-label">commit · 100% AI 完成</div>
-      <div class="data-sub">总数</div>
+      <div class="data-num">257</div>
+      <div class="data-label">commit · AI 主导完成</div>
+      <div class="data-sub">截至 2026-05-22 10:12 +08</div>
     </div>
     <div class="data-cell">
-      <div class="data-num">65</div>
+      <div class="data-num">172</div>
       <div class="data-label">AI solo</div>
       <div class="data-sub">Claude / Codex 直接 author</div>
     </div>
     <div class="data-cell">
-      <div class="data-num">66</div>
+      <div class="data-num">67</div>
       <div class="data-label">AI 协作</div>
       <div class="data-sub">co-authored-by trailer</div>
     </div>
     <div class="data-cell">
-      <div class="data-num">8</div>
-      <div class="data-label">小改动漏加 trailer</div>
-      <div class="data-sub">gitignore / README 链接 / 几行 docs 修补</div>
+      <div class="data-num">18</div>
+      <div class="data-label">人工账号小改 / 漏 trailer</div>
+      <div class="data-sub">README / docs / gitignore / 清理类提交</div>
     </div>
   </div>
   <h3 class="mt-xl">工作流速描</h3>
@@ -885,7 +960,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     routine 每小时自动解 issue <span class="dim">→</span> 人 review PR
     <span class="dim">·</span> <strong>手机上就能完成全套</strong>
   </p>
-  <div class="speaker-note">节奏快，2 分钟内。4 routine 设计细节这里不展开 · 公众号上有完整文章。Q&A 备好：如果有人 git log | grep claude 发现 8 个没 trailer —— "我们用 co-authored-by trailer 标记，偶尔小改动忘了加；这些都是 gitignore 之类的杂活"。</div>
+  <div class="speaker-note">节奏快，2 分钟内。4 routine 设计细节这里不展开 · 公众号上有完整文章。Q&A 备好：统计口径是截至 2026-05-22 10:12 +08 的 main HEAD；AI solo 看 author，AI 协作看 co-authored-by trailer；剩下 18 个是 README / docs / gitignore / 清理类小提交或漏加 trailer。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 14 · 点题 · trust boundary (page 15)                                -->
