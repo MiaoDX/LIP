@@ -348,6 +348,8 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .slide-2col .col-r { display: flex; align-items: center; }
 .slide-2col .col-r .media-frame { margin-top: 0; max-width: 100%; }
 .slide-2col--figure { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
+.slide-2col--vision { grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.72fr); }
+.slide-2col--qpos { grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr); align-items: center; }
 
 /* Callback box — forward / back reference between slides */
 .callback-box {
@@ -364,6 +366,7 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 }
 .callback-box .ref { color: var(--accent); font-weight: 600; letter-spacing: 1.5px; }
 .callback-box .arrow { color: var(--accent); opacity: 0.6; }
+.callback-box .callback-copy { line-height: 1.55; }
 
 /* Compare table */
 .table-wrap { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
@@ -414,8 +417,9 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   pointer-events: none;
 }
 .media-frame--hero { margin-top: 18px; max-width: 1100px; }
-.media-frame--vision { max-width: 620px; }
+.slide-2col .col-r .media-frame--vision { max-width: 420px; }
 .media-frame--motion { max-width: 660px; }
+.slide-2col .col-r .media-frame--qpos-proof { max-width: 650px; justify-self: end; }
 .media-frame--thumb-video { max-width: 520px; justify-self: end; }
 .media-frame--thumb-video video { aspect-ratio: 202 / 223; }
 .intro-proof {
@@ -662,8 +666,11 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .data-cell { padding: 24px 24px; }
   .data-cell .data-num { font-size: clamp(38px, 10vw, 48px); }
   .slide-2col { grid-template-columns: 1fr; }
+  .slide-2col--vision, .slide-2col--qpos { grid-template-columns: 1fr; }
   .intro-proof { grid-template-columns: 1fr; gap: 10px; }
   .motion-intro .slide-2col .col-r { order: -1; }
+  .media-frame--vision { max-width: 100%; }
+  .media-frame--qpos-proof { max-width: 100%; }
   .motion-intro .media-frame .ss-cap { display: none; }
   .media-frame--motion { max-width: 100%; }
   .media-frame--thumb-video { max-width: 100%; }
@@ -727,7 +734,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/2</span> · 钩子 · 两个月前的承诺</div>
   <h2>两个月前那张图</h2>
-  <div class="slide-2col slide-2col--figure mt-lg">
+  <div class="slide-2col slide-2col--figure slide-2col--vision mt-lg">
     <div class="col-l">
       <p class="dim mono-note mb-md">2026-03 · 内部分享最后一页</p>
       <div class="quote quote-flush">
@@ -851,24 +858,34 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 A</div>
   <h2>案例 A · qpos 索引</h2>
-  <h3>仿真 · commit <code>102a593</code></h3>
-  <div class="table-wrap spaced">
-    <table class="compare-table table-wide">
-      <thead>
-        <tr><th>证据通道</th><th>判定</th><th>解释</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="entity">截图</td><td class="muted"><span class="hl">✓ 看起来抓住了</span></td><td class="muted">画面 OK · Agent 自己也判 PASS</td></tr>
-        <tr><td class="entity">物理约束 metric</td><td class="muted danger-muted">✗ cube z ≈ 0</td><td class="muted">加上 <code>--assert-success</code> 后才发现 —— 根本没抬起来</td></tr>
-      </tbody>
-    </table>
+  <h3>GitHub commit <code>102a593</code> · CI 上曾有 <code>mujoco-grasp-output</code> artifact（现已过期）</h3>
+  <div class="slide-2col slide-2col--qpos mt-md">
+    <div class="col-l">
+      <div class="table-wrap">
+        <table class="compare-table table-wide">
+          <thead>
+            <tr><th>证据通道</th><th>判定</th><th>解释</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="entity">截图</td><td class="muted"><span class="hl">✓ 视觉 PASS</span></td><td class="muted">画面 OK · Agent 判 PASS</td></tr>
+            <tr><td class="entity">物理约束 metric</td><td class="muted danger-muted">✗ cube z ≈ 0</td><td class="muted">success 断言才发现根本没抬起来</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callback-box mt-lg">
+        <span class="ref">根因</span><span class="arrow">→</span>
+        <span class="callback-copy">agent 假设 slide joint 在前，用了 <code>qpos[5]</code> · MuJoCo 实际 free joint 在前，cube z 是 <code>qpos[2]</code></span>
+      </div>
+      <p class="mt-md">教训方向 —— <strong>光看图不够，metric 是兜底</strong></p>
+    </div>
+    <div class="col-r">
+      <div class="media-frame media-frame--qpos-proof">
+        <img src="images/qpos-commit-102a593.png" alt="GitHub commit 102a593 截图，说明 qpos[5] 到 qpos[2] 的修复和 CI artifact 上传">
+        <div class="ss-cap">GitHub commit 证据 · <a href="https://github.com/MiaoDX/roboharness/commit/102a5936c378081369b06a431a11eb690bef4026">102a593</a> · qpos[5] → qpos[2] · CI run <a href="https://github.com/MiaoDX/roboharness/actions/runs/23974919781">23974919781</a> 曾上传 <span class="dim">mujoco-grasp-output</span></div>
+      </div>
+    </div>
   </div>
-  <div class="callback-box mt-lg">
-    <span class="ref">根因</span><span class="arrow">→</span>
-    agent 假设 MuJoCo qpos 里 slide joint 在前，用了 <code>qpos[5]</code> · 实际 free joint 在前，正确是 <code>qpos[2]</code>
-  </div>
-  <p class="mt-md">教训方向 —— <strong>光看图不够，metric 是兜底</strong></p>
-  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。两个案例是反向对称的。</div>
+  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。右侧是真实 GitHub commit 截图：commit message 写明 qpos[5] 假设错误、正确是 qpos[2]，也写了 artifact upload 即使失败也要 always()。CI run 23974919781 当时有 mujoco-grasp-output artifact，但 4 月 4 日的 artifact 现在已过期，所以这一页用 commit 截图做稳定证据。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 8 · 案例 B · 拇指朝下抓 bottle (page 9) — visual 救 metric         -->
