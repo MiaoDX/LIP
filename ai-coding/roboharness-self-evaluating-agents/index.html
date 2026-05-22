@@ -388,6 +388,13 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   background: var(--bg-card);
 }
 .media-frame img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.media-frame video {
+  display: block;
+  width: 100%;
+  max-height: 430px;
+  object-fit: contain;
+  background: #050505;
+}
 .media-frame .ss-cap {
   font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
   padding: 8px 12px; border-top: 1px solid var(--border-light);
@@ -409,6 +416,8 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .media-frame--hero { margin-top: 18px; max-width: 1100px; }
 .media-frame--vision { max-width: 620px; }
 .media-frame--motion { max-width: 660px; }
+.media-frame--thumb-video { max-width: 520px; justify-self: end; }
+.media-frame--thumb-video video { aspect-ratio: 202 / 223; }
 .intro-proof {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -459,6 +468,82 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   color: var(--text-dim);
   letter-spacing: 0.5px;
   margin-top: 14px;
+}
+.arch-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.34fr);
+  gap: 18px;
+  align-items: stretch;
+  max-width: 1160px;
+}
+.arch-diagram {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 14px;
+  min-width: 0;
+}
+.arch-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--font-mono);
+}
+.arch-diagram .arch-svg--narrow { display: none; }
+.arch-svg .arch-band {
+  fill: var(--accent-soft);
+  stroke: var(--accent-mid);
+}
+.arch-svg .arch-node {
+  fill: var(--bg);
+  stroke: var(--border);
+  stroke-width: 1.3;
+}
+.arch-svg .arch-node-strong {
+  stroke: var(--accent);
+  stroke-width: 1.8;
+}
+.arch-svg .arch-node-soft {
+  fill: var(--bg-alt);
+}
+.arch-svg .arch-label {
+  fill: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+}
+.arch-svg .arch-sub {
+  fill: var(--text-sec);
+  font-size: 12.5px;
+}
+.arch-svg .arch-note {
+  fill: var(--text-dim);
+  font-size: 11px;
+}
+.arch-svg .arch-accent {
+  fill: var(--accent);
+}
+.arch-svg .arch-flow {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  marker-end: url(#arch-arrow);
+}
+.arch-svg .arch-flow-soft {
+  fill: none;
+  stroke: var(--text-dim);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 5;
+  marker-end: url(#arch-arrow-soft);
+}
+.arch-svg--narrow .arch-flow { marker-end: url(#arch-arrow-mobile); }
+.arch-svg--narrow .arch-flow-soft { marker-end: url(#arch-arrow-mobile-soft); }
+.arch-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.arch-side .card {
+  flex: none;
+  min-height: 0;
 }
 
 /* Closing / Q&A slide */
@@ -581,8 +666,15 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .motion-intro .slide-2col .col-r { order: -1; }
   .motion-intro .media-frame .ss-cap { display: none; }
   .media-frame--motion { max-width: 100%; }
+  .media-frame--thumb-video { max-width: 100%; }
+  .media-frame--thumb-video video { max-height: 360px; }
   .demo-crops { grid-template-columns: 1fr; gap: 10px; }
   .demo-crop { min-height: 116px; }
+  .arch-layout { grid-template-columns: 1fr; }
+  .arch-diagram { padding: 10px; overflow: hidden; }
+  .arch-diagram .arch-svg--wide { display: none; }
+  .arch-diagram .arch-svg--narrow { display: block; }
+  .arch-side { gap: 10px; margin-top: 82px; padding-bottom: 46px; }
   /* Local fix: keep callback-box readable on narrow widths */
   .callback-box { flex-wrap: wrap; row-gap: 4px; }
   .qa-contact-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -784,7 +876,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 B</div>
   <h2>案例 B · 拇指朝下抓 bottle</h2>
-  <h3>真机 Unitree G1</h3>
+  <h3>真实项目录屏 · Unitree G1</h3>
   <div class="slide-2col mt-md">
     <div class="col-l">
       <p>初始唯一 metric · <strong>抓取中心点 vs bottle 中心点 3D 距离</strong></p>
@@ -800,13 +892,15 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <p class="mt-md">教训方向 —— <strong>光看 metric 不够</strong><br>visual 才能挡住"数学上对、物理上荒谬"的解</p>
     </div>
     <div class="col-r">
-      <div class="media-frame">
-        <img src="images/fig3-thumb-down-grasp-placeholder.svg" alt="Figure 3 placeholder — 拇指朝下抓 bottle 对比图">
-        <div class="ss-cap">图 #3 · 待补 · 左 正常抓 · 右 拇指朝下 · <span class="dim">images/fig3-thumb-down-grasp.png</span></div>
+      <div class="media-frame media-frame--thumb-video">
+        <video autoplay muted loop playsinline preload="metadata" poster="images/0325_02-poster.jpg" aria-label="真实项目录屏：Unitree G1 抓 bottle 时手部和拇指朝向异常">
+          <source src="images/0325_02.webm" type="video/webm">
+        </video>
+        <div class="ss-cap">图 #3 · 真实项目录屏 · 初始距离 metric PASS，但视觉上手部 / 拇指朝向异常 · <span class="dim">images/0325_02.webm</span></div>
       </div>
     </div>
   </div>
-  <div class="speaker-note">90 秒。图 #3 是这一页的灵魂，必须有。一句方法论：这是 reward hacking 的经典模式 —— agent 不只会犯错，更危险的是它会找出弱 metric 下数学 PASS 但语义荒谬的解。</div>
+  <div class="speaker-note">90 秒。图 #3 是这一页的灵魂。先让视频自己播放几秒，再讲：距离 metric 能 PASS，但人一看就知道手部 / 拇指朝向不对。这是 reward hacking 的经典模式 —— agent 不只会犯错，更危险的是它会找出弱 metric 下数学 PASS 但语义荒谬的解。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 9 · metric ↔ visual 的循环分工 (page 10)                            -->
@@ -902,7 +996,150 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">留够 90 秒，全场最有冲击力。指给观众的顺序（每段约 10-20 秒）：① 顶部 Run Decision banner —— 'PASS — 10/10 constraints satisfied'，agent 跑完一轮的整体判决；② 'No surfaced cases. No material changes surfaced.' —— clean 的时候工程师根本不用打开这一页，数小时无人值守就是这么来的；③ 右边 Surfaced 0 / Suppressed 1 / Unchanged 1 —— escape hatch，只有 Surfaced > 0 才需要人看；④ Constraint Evaluation 表 —— metric_gate 的具体形态，10 条物理约束都有 Expected / Actual / Severity；⑤ Phase Timeline —— 每个 phase 三视角截图 + grip err / contacts / alarms，这是 visual harness 的数据形态；⑥ 回到顶部 —— 所有数据合起来得出 PASS，agent 自己读自己判决。投屏挂了切到 images/demo-fallback-*.png 按 1/2/3 顺序换页。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 12 · 抽成 repo 之后又长了什么 (page 13)                              -->
+<!-- SLIDE 12 · Roboharness 架构 (page 13)                                    -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/4</span> · architecture</div>
+  <h2>roboharness 的架构<br>把判断做成证据流水线</h2>
+  <div class="arch-layout mt-sm">
+    <div class="arch-diagram" role="img" aria-label="roboharness architecture diagram">
+      <svg class="arch-svg arch-svg--wide" viewBox="0 0 700 560" aria-hidden="true">
+        <defs>
+          <marker id="arch-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"></path>
+          </marker>
+          <marker id="arch-arrow-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-dim)"></path>
+          </marker>
+        </defs>
+
+        <rect x="36" y="28" width="628" height="74" rx="8" class="arch-node arch-node-strong"></rect>
+        <text x="350" y="58" text-anchor="middle" class="arch-label">AI Coding Agent / CLI</text>
+        <text x="350" y="80" text-anchor="middle" class="arch-sub">写控制代码 · 跑验证命令 · 读回 proof pack</text>
+
+        <path d="M 350 102 L 350 133" class="arch-flow"></path>
+
+        <rect x="36" y="132" width="628" height="92" rx="8" class="arch-band"></rect>
+        <text x="350" y="158" text-anchor="middle" class="arch-label arch-accent">Contract Boundary</text>
+        <rect x="72" y="174" width="160" height="34" rx="5" class="arch-node"></rect>
+        <text x="152" y="196" text-anchor="middle" class="arch-sub">contract.py</text>
+        <rect x="270" y="174" width="160" height="34" rx="5" class="arch-node"></rect>
+        <text x="350" y="196" text-anchor="middle" class="arch-sub">SKILL.md / schemas</text>
+        <rect x="468" y="174" width="160" height="34" rx="5" class="arch-node"></rect>
+        <text x="548" y="196" text-anchor="middle" class="arch-sub">scope / policy</text>
+        <path d="M 232 191 L 268 191" class="arch-flow-soft"></path>
+        <path d="M 430 191 L 466 191" class="arch-flow-soft"></path>
+
+        <path d="M 350 224 L 350 255" class="arch-flow"></path>
+
+        <rect x="36" y="254" width="628" height="118" rx="8" class="arch-node arch-node-soft"></rect>
+        <text x="350" y="284" text-anchor="middle" class="arch-label">Harness Run</text>
+        <rect x="72" y="306" width="156" height="44" rx="6" class="arch-node"></rect>
+        <text x="150" y="325" text-anchor="middle" class="arch-sub">TaskProtocol</text>
+        <text x="150" y="342" text-anchor="middle" class="arch-note">semantic phases</text>
+        <rect x="272" y="306" width="156" height="44" rx="6" class="arch-node"></rect>
+        <text x="350" y="325" text-anchor="middle" class="arch-sub">SimulatorBackend</text>
+        <text x="350" y="342" text-anchor="middle" class="arch-note">MuJoCo · Meshcat · LeRobot</text>
+        <rect x="472" y="306" width="156" height="44" rx="6" class="arch-node"></rect>
+        <text x="550" y="325" text-anchor="middle" class="arch-sub">Checkpoints</text>
+        <text x="550" y="342" text-anchor="middle" class="arch-note">multi-view + state</text>
+        <path d="M 228 328 L 270 328" class="arch-flow-soft"></path>
+        <path d="M 428 328 L 470 328" class="arch-flow-soft"></path>
+
+        <path d="M 350 372 L 350 404" class="arch-flow"></path>
+
+        <rect x="36" y="402" width="286" height="98" rx="8" class="arch-node arch-node-strong"></rect>
+        <text x="179" y="430" text-anchor="middle" class="arch-label">Metric Gate</text>
+        <text x="179" y="453" text-anchor="middle" class="arch-sub">hard constraints</text>
+        <text x="179" y="473" text-anchor="middle" class="arch-note">alarms.json · autonomous_report.json</text>
+
+        <rect x="378" y="402" width="286" height="98" rx="8" class="arch-node"></rect>
+        <text x="521" y="430" text-anchor="middle" class="arch-label">Agent Visual Review</text>
+        <text x="521" y="453" text-anchor="middle" class="arch-sub">bounded manifest</text>
+        <text x="521" y="473" text-anchor="middle" class="arch-note">visual_review_*.json / md</text>
+
+        <path d="M 179 500 C 179 524 246 530 304 530" class="arch-flow"></path>
+        <path d="M 521 500 C 521 524 454 530 396 530" class="arch-flow"></path>
+        <rect x="282" y="512" width="136" height="36" rx="18" class="arch-node arch-node-strong"></rect>
+        <text x="350" y="535" text-anchor="middle" class="arch-sub arch-accent">PASS / surface</text>
+      </svg>
+      <svg class="arch-svg arch-svg--narrow" viewBox="0 0 360 660" aria-hidden="true">
+        <defs>
+          <marker id="arch-arrow-mobile" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"></path>
+          </marker>
+          <marker id="arch-arrow-mobile-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-dim)"></path>
+          </marker>
+        </defs>
+
+        <rect x="24" y="20" width="312" height="62" rx="8" class="arch-node arch-node-strong"></rect>
+        <text x="180" y="48" text-anchor="middle" class="arch-label">AI Coding Agent / CLI</text>
+        <text x="180" y="68" text-anchor="middle" class="arch-sub">写代码 · 跑验证 · 读 proof pack</text>
+        <path d="M 180 82 L 180 110" class="arch-flow" marker-end="url(#arch-arrow-mobile)"></path>
+
+        <rect x="24" y="110" width="312" height="116" rx="8" class="arch-band"></rect>
+        <text x="180" y="138" text-anchor="middle" class="arch-label arch-accent">Contract Boundary</text>
+        <rect x="44" y="158" width="84" height="36" rx="5" class="arch-node"></rect>
+        <text x="86" y="181" text-anchor="middle" class="arch-sub">contract.py</text>
+        <rect x="138" y="158" width="84" height="36" rx="5" class="arch-node"></rect>
+        <text x="180" y="181" text-anchor="middle" class="arch-sub">SKILL.md</text>
+        <rect x="232" y="158" width="84" height="36" rx="5" class="arch-node"></rect>
+        <text x="274" y="181" text-anchor="middle" class="arch-sub">policy</text>
+        <path d="M 128 176 L 136 176" class="arch-flow-soft" marker-end="url(#arch-arrow-mobile-soft)"></path>
+        <path d="M 222 176 L 230 176" class="arch-flow-soft" marker-end="url(#arch-arrow-mobile-soft)"></path>
+        <text x="180" y="212" text-anchor="middle" class="arch-note">phase · metric · visual dimension · approval</text>
+
+        <path d="M 180 226 L 180 254" class="arch-flow" marker-end="url(#arch-arrow-mobile)"></path>
+
+        <rect x="24" y="254" width="312" height="160" rx="8" class="arch-node arch-node-soft"></rect>
+        <text x="180" y="282" text-anchor="middle" class="arch-label">Harness Run</text>
+        <rect x="58" y="304" width="244" height="34" rx="5" class="arch-node"></rect>
+        <text x="180" y="326" text-anchor="middle" class="arch-sub">TaskProtocol · semantic phases</text>
+        <path d="M 180 338 L 180 352" class="arch-flow-soft" marker-end="url(#arch-arrow-mobile-soft)"></path>
+        <rect x="58" y="352" width="244" height="34" rx="5" class="arch-node"></rect>
+        <text x="180" y="374" text-anchor="middle" class="arch-sub">SimulatorBackend · MuJoCo / LeRobot</text>
+        <path d="M 180 386 L 180 400" class="arch-flow-soft" marker-end="url(#arch-arrow-mobile-soft)"></path>
+        <rect x="58" y="400" width="244" height="34" rx="5" class="arch-node"></rect>
+        <text x="180" y="422" text-anchor="middle" class="arch-sub">Checkpoints · multi-view + state</text>
+
+        <path d="M 180 414 L 180 448" class="arch-flow" marker-end="url(#arch-arrow-mobile)"></path>
+
+        <rect x="24" y="448" width="146" height="76" rx="8" class="arch-node arch-node-strong"></rect>
+        <text x="97" y="478" text-anchor="middle" class="arch-label">Metric</text>
+        <text x="97" y="500" text-anchor="middle" class="arch-sub">hard gate</text>
+        <rect x="190" y="448" width="146" height="76" rx="8" class="arch-node"></rect>
+        <text x="263" y="478" text-anchor="middle" class="arch-label">Visual</text>
+        <text x="263" y="500" text-anchor="middle" class="arch-sub">manifest</text>
+
+        <path d="M 97 524 C 97 556 136 570 154 584" class="arch-flow" marker-end="url(#arch-arrow-mobile)"></path>
+        <path d="M 263 524 C 263 556 224 570 206 584" class="arch-flow" marker-end="url(#arch-arrow-mobile)"></path>
+        <rect x="112" y="584" width="136" height="42" rx="21" class="arch-node arch-node-strong"></rect>
+        <text x="180" y="611" text-anchor="middle" class="arch-sub arch-accent">Run Decision</text>
+      </svg>
+    </div>
+    <div class="arch-side">
+      <div class="card accent-card">
+        <div class="card-tag">source of truth</div>
+        <div class="card-title">契约先定边界</div>
+        <div class="card-desc"><code>contract.py</code> 定义 phase / metric / visual dimension / approval policy<br><span class="dim">生成物只做 agent 指南</span></div>
+      </div>
+      <div class="card">
+        <div class="card-tag">runtime</div>
+        <div class="card-title">运行只产证据</div>
+        <div class="card-desc">仿真 backend 负责 step / capture / state<br>harness 负责 checkpoint 和 artifact layout</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">decision</div>
+        <div class="card-title">判断可审计</div>
+        <div class="card-desc">metric 先挡住确定性失败<br>visual 只看 manifest 允许看的图<br><span class="hl">最后收敛成 Run Decision</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-note">这页放在 demo 后讲，观众刚看完 report.html，再解释它不是一张漂亮网页，而是一条证据流水线。重点顺序：contract.py 是源头；runtime 只负责采集；metric gate 优先；visual review 被 manifest 框住；最后只有 surfaced case 需要人看。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 13 · 抽成 repo 之后又长了什么 (page 14)                              -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/5</span> · repo 演化</div>
@@ -927,7 +1164,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">这两个 feature 都是 5 月 20 日刚 commit 的，要诚实 —— "刚上、小规模验证中"，不需要进 demo。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 13 · Sidenote · 这个 repo 自己也是 agent 做的 (page 14)             -->
+<!-- SLIDE 14 · Sidenote · 这个 repo 自己也是 agent 做的 (page 15)             -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/5</span> · sidenote · by agents</div>
@@ -963,7 +1200,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">节奏快，2 分钟内。4 routine 设计细节这里不展开 · 公众号上有完整文章。Q&A 备好：统计口径是截至 2026-05-22 10:12 +08 的 main HEAD；AI solo 看 author，AI 协作看 co-authored-by trailer；剩下 18 个是 README / docs / gitignore / 清理类小提交或漏加 trailer。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 14 · 点题 · trust boundary (page 15)                                -->
+<!-- SLIDE 15 · 点题 · trust boundary (page 16)                                -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · 收口 · trust boundary</div>
@@ -988,7 +1225,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">把页 1 的钩子（"给 agent 用 + 用 agent 做"）和页 7 的"越过边界会被挡住"两根线在这里合并收口。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 15 · Takeaway · 工程师向 (page 16)                                  -->
+<!-- SLIDE 16 · Takeaway · 工程师向 (page 17)                                  -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · takeaway · 工程师</div>
@@ -1009,7 +1246,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <p class="mt-lg">这就是 <span class="hl">engineer the harness</span> 字面意思 —— 也是我们日常的工作流</p>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 16 · Takeaway · 产品 / 管理向 (page 17)                             -->
+<!-- SLIDE 17 · Takeaway · 产品 / 管理向 (page 18)                             -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · takeaway · 宏观</div>
@@ -1029,7 +1266,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   </div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 17 · 边界 · 当前限制 (page 18)                                      -->
+<!-- SLIDE 18 · 边界 · 当前限制 (page 19)                                      -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · 边界</div>
@@ -1048,7 +1285,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">30 秒，快速诚实带过，不卖惨。说这些是因为 —— 如果你想在自己项目里用，这是我们目前真实的能力边界。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 18 · 收尾 · QA + 二维码 (page 19)                                   -->
+<!-- SLIDE 19 · 收尾 · QA + 二维码 (page 20)                                   -->
 <!-- ====================================================================== -->
 <div class="slide qa">
   <div class="quote quote-center">

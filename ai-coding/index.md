@@ -10,7 +10,7 @@
 
 ## 分享材料
 
-- [Roboharness · 给 AI Agent 装上自己判断自己工作的能力](roboharness-self-evaluating-agents/) — 2026-05 Showcase，19 页 deck，从内部抓取项目到独立 repo，metric + visual harness 双轨证据，SONIC 升级长程任务作为兑现案例
+- [Roboharness · 给 AI Agent 装上自己判断自己工作的能力](roboharness-self-evaluating-agents/) — 2026-05 Showcase，20 页 deck，从内部抓取项目到独立 repo，metric + visual harness 双轨证据，SONIC 升级长程任务作为兑现案例
 - [从 Ultrathink 到 Goal：AI Coding 工程化的一年](ultrathink-to-goal/) — 2026-05，「汽车人 AI 进化论」第 09 期，50 min lecture（大纲已定稿，fact-check 已完成，讲稿和 slide 制作中）
 - [AI Coding for Research — 从工具到工作流](/share/AICodingRaiseLab.html) — 2026-03-24，Raise Lab 分享，25页 Slide
 
