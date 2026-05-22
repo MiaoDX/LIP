@@ -442,6 +442,34 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   border-top: 1px solid var(--border-light);
   letter-spacing: 0.4px;
 }
+.qpos-code-card {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.65;
+  color: var(--text-sec);
+  overflow-x: auto;
+}
+.qpos-code-card .code-kicker {
+  color: var(--accent);
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+.qpos-code-card pre {
+  font: inherit;
+  margin: 0;
+  white-space: pre;
+}
+.qpos-code-card .code-del { color: #b97f7f; }
+.qpos-code-card .code-add { color: var(--accent); }
+.qpos-code-card .code-note {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+  color: var(--text-dim);
+}
 .intro-proof {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -753,6 +781,8 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .slide--qpos-case .col-l { gap: 10px; }
   .slide--qpos-case .callback-box { margin-top: 14px; }
   .slide--qpos-case .qpos-proof-label { display: none; }
+  .slide--qpos-case .qpos-code-card { font-size: 10px; line-height: 1.5; padding: 10px 12px; }
+  .slide--qpos-case .qpos-code-card .code-note { display: none; }
   .slide--qpos-case .media-frame .ss-cap { font-size: 9px; line-height: 1.45; padding: 6px 8px; }
   .motion-intro .media-frame .ss-cap { display: none; }
   .media-frame--motion { max-width: 100%; }
@@ -938,12 +968,12 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">这一页是过渡 + 校准。把"模型突然变强"这种解读挡掉，把"信任边界"埋下（页 15 收）。内部抓取项目跑通后我们发现 —— 任何需要 agent 长时间自主跑机器人代码的场景都缺这一层，所以抽成独立 repo。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 7 · 案例 A · qpos (page 8) — metric 救 visual                      -->
+<!-- SLIDE 7 · 案例 A · qpos (page 8) — metric false negative                 -->
 <!-- ====================================================================== -->
 <div class="slide slide--qpos-case">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 A</div>
   <h2>案例 A · qpos 索引</h2>
-  <h3>修复前 artifact · 视觉上 lift 基本合理，但 success metric 读错</h3>
+  <h3>视觉上 lift 基本合理，但 success metric 读错 MuJoCo 状态</h3>
   <div class="slide-2col slide-2col--qpos mt-md">
     <div class="col-l">
       <div class="table-wrap">
@@ -953,15 +983,17 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
           </thead>
           <tbody>
             <tr><td class="entity">视觉 artifact</td><td class="muted"><span class="hl">✓ lift 看起来成立</span></td><td class="muted">front / side 视角都像抓住并抬起</td></tr>
-            <tr><td class="entity">success metric</td><td class="muted danger-muted">✗ cube z=0.0000m</td><td class="muted">断言失败 · expected &gt; 0.2250m</td></tr>
+            <tr><td class="entity">metric</td><td class="muted danger-muted">✗ false negative</td><td class="muted">读错 qpos index，报 cube z=0.0000m</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="callback-box mt-lg">
-        <span class="ref">根因</span><span class="arrow">→</span>
-        <span class="callback-copy">agent 假设 slide joint 在前，用了 <code>qpos[5]</code> · MuJoCo 实际 free joint 在前，cube z 是 <code>qpos[2]</code></span>
+      <div class="qpos-code-card">
+        <div class="code-kicker">根因 · _get_cube_z()</div>
+        <pre><span class="code-del">- return float(qpos[5])  # assumed cube_z</span>
+<span class="code-add">+ return float(qpos[2])  # actual cube_z</span></pre>
+        <div class="code-note">MuJoCo free joint 在前：qpos[0:3] = cube xyz；slide joints 在 qpos[7:10]</div>
       </div>
-      <p class="mt-md">教训方向 —— <strong>光看图不够，metric 是兜底</strong></p>
+      <p class="mt-md">教训方向 —— <strong>判据代码也要被 artifact 反查校准</strong></p>
     </div>
     <div class="col-r">
       <div class="media-frame media-frame--qpos-proof">
@@ -979,7 +1011,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。右侧是修复前 parent 23ad3ae 重跑出来的 artifact：只改 ci.yml trigger 和 if: always()，不改业务代码。视觉上 lift/front 和 lift/side 都像抓住并抬起；日志同时显示 gripper-cube contact at lift OK，但 ASSERT-SUCCESS FAILED，cube z=0.0000m，expected >0.2250m。根因来自修复 commit 102a593：agent / helper 假设 qpos[5] 是 cube z，实际 MuJoCo free joint 在前，cube z 是 qpos[2]。</div>
+  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。右侧是修复前 parent 23ad3ae 重跑出来的 artifact：只改 ci.yml trigger 和 if: always()，不改业务代码。视觉上 lift/front 和 lift/side 都像抓住并抬起；日志同时显示 gripper-cube contact at lift OK，但 ASSERT-SUCCESS FAILED，cube z=0.0000m，expected >0.2250m。这里不是机器人没抓起来，而是 success metric false negative。根因来自修复 commit 102a593：helper 假设 qpos[5] 是 cube z，实际 MuJoCo free joint 在前，cube z 是 qpos[2]。这页的教训是：metric 判据本身也要被 artifact 和代码审查反查校准。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 8 · 案例 B · 拇指朝下抓 bottle (page 9) — visual 救 metric         -->
@@ -1394,7 +1426,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     <div class="card accent-card">
       <div class="card-tag">practice 02</div>
       <div class="card-title">给 Agent 真正的判断依据</div>
-      <div class="card-desc"><strong>metric + visual 双轨 · 缺一不可</strong><br>· qpos 案例 → visual 没救你 · metric 救<br>· 拇指朝下 → metric 没救你 · visual 救<br>发现一个新失败模式 → promote 到 metric</div>
+      <div class="card-desc"><strong>metric + visual 双轨 · 缺一不可</strong><br>· qpos 案例 → metric 误判 · visual / 代码反查<br>· 拇指朝下 → metric 没救你 · visual 救<br>发现一个新失败模式 → promote 到 metric</div>
     </div>
     <div class="card">
       <div class="card-tag">judgment 01</div>
