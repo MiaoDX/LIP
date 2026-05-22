@@ -44,9 +44,22 @@ containers).
    slide starts `active`.
 
 3. **Add real images.** Put assets in the deck's own `images/` folder and
-   reference them with relative paths, e.g. `<img src="images/foo.png">`.
+   reference them with relative paths, e.g. `<img src="images/your-shot.png">`.
    Replace the inline-SVG placeholders. Do not depend on sibling folders or
    `raw.githubusercontent.com`.
+
+   **Do NOT inline real images as base64 data URIs.** The placeholder SVGs
+   that ship with the template are inline by design (they encode short labels,
+   not photos, and exist only until you swap in real files). Real screenshots
+   and photos must stay as separate files because:
+
+   - PR diffs stay reviewable — inlined base64 blobs balloon the diff and
+     hide content changes.
+   - The HTML file stays small enough for chat-app and IDE previews to
+     render — once the file crosses ~1 MB, many previewers silently bail.
+   - The publish pipeline (`npm run publish:copy`) copies the `images/`
+     folder as a sibling alongside `index.html`, which is the convention
+     `/LIP/ai-coding/<slug>/` expects.
 
 4. **Verify in a real browser** at both `1440x900` and `390x844` before
    declaring done — static inspection misses layout regressions (see
