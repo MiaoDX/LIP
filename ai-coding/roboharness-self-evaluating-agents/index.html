@@ -788,6 +788,13 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .media-frame--motion { max-width: 100%; }
   .media-frame--thumb-video { max-width: 100%; }
   .media-frame--thumb-video video { max-height: 360px; }
+  .slide--thumb-case .callback-box { display: none; }
+  .slide--thumb-case .media-frame--thumb-video {
+    max-width: 220px;
+    margin: 8px auto 0;
+  }
+  .slide--thumb-case .media-frame--thumb-video video { max-height: 242px; }
+  .slide--thumb-case .media-frame .ss-cap { display: none; }
   .demo-crops { grid-template-columns: 1fr; gap: 10px; }
   .demo-crop { min-height: 116px; }
   .loop-row { grid-template-columns: 1fr; gap: 12px; }
@@ -968,11 +975,43 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">这一页是过渡 + 校准。把"模型突然变强"这种解读挡掉，把"信任边界"埋下（页 15 收）。内部抓取项目跑通后我们发现 —— 任何需要 agent 长时间自主跑机器人代码的场景都缺这一层，所以抽成独立 repo。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 7 · 案例 A · qpos (page 8) — metric false negative                 -->
+<!-- SLIDE 7 · 案例 A · 拇指朝下抓 bottle (page 8) — visual 救 metric         -->
+<!-- ====================================================================== -->
+<div class="slide slide--thumb-case">
+  <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 A</div>
+  <h2>案例 A · 拇指朝下抓 bottle</h2>
+  <h3>真实项目录屏 · RealMan</h3>
+  <div class="slide-2col mt-md">
+    <div class="col-l">
+      <p>初始唯一 metric · <strong>抓取中心点 vs bottle 中心点 3D 距离</strong></p>
+      <p class="mt-sm">Agent 写出的 cuRobo 代码，规划出的解 —— <span class="hl">整个手反着抓，拇指朝下而不是朝上</span></p>
+      <ul class="list-plain">
+        <li>· metric <span class="hl">✓ 完全 PASS</span> · 3D 距离确实在阈值内</li>
+        <li>· visual harness 一打开图 —— <strong>谁都看得出来不对</strong></li>
+      </ul>
+      <div class="callback-box mt-card">
+        <span class="ref">闭环</span><span class="arrow">→</span>
+        加了新 metric · <strong>手部 / 拇指朝向</strong> —— 这种失败模式永久关掉
+      </div>
+      <p class="mt-md">教训方向 —— <strong>光看 metric 不够</strong><br>visual 才能挡住"数学上对、物理上荒谬"的解</p>
+    </div>
+    <div class="col-r">
+      <div class="media-frame media-frame--thumb-video">
+        <video autoplay muted loop playsinline preload="metadata" poster="images/0325_02-poster.jpg" aria-label="真实项目录屏：RealMan 抓 bottle 时手部和拇指朝向异常">
+          <source src="images/0325_02.webm" type="video/webm">
+        </video>
+        <div class="ss-cap">图 #3 · 真实项目录屏 · RealMan · 初始距离 metric PASS，但视觉上手部 / 拇指朝向异常 · <span class="dim">images/0325_02.webm</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-note">90 秒。这里先顺着观众直觉：大家第一反应会是加 metric，我们一开始也有距离 metric。但距离 metric 能 PASS，人一看就知道手部 / 拇指朝向不对。这是 reward hacking 的经典模式 —— agent 不只会犯错，更危险的是它会找出弱 metric 下数学 PASS 但语义荒谬的解。结论是：metric 要有，但需要 visual 抓 unknown unknowns。下一页反过来讲：只靠 visual 也不行。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 8 · 案例 B · qpos (page 9) — metric false negative                 -->
 <!-- ====================================================================== -->
 <div class="slide slide--qpos-case">
-  <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 A</div>
-  <h2>案例 A · qpos 索引</h2>
+  <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 B</div>
+  <h2>案例 B · qpos 索引</h2>
   <h3>视觉上 lift 基本合理，但 success metric 读错 MuJoCo 状态</h3>
   <div class="slide-2col slide-2col--qpos mt-md">
     <div class="col-l">
@@ -1011,39 +1050,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。右侧是修复前 parent 23ad3ae 重跑出来的 artifact：只改 ci.yml trigger 和 if: always()，不改业务代码。视觉上 lift/front 和 lift/side 都像抓住并抬起；日志同时显示 gripper-cube contact at lift OK，但 ASSERT-SUCCESS FAILED，cube z=0.0000m，expected >0.2250m。这里不是机器人没抓起来，而是 success metric false negative。根因来自修复 commit 102a593：helper 假设 qpos[5] 是 cube z，实际 MuJoCo free joint 在前，cube z 是 qpos[2]。这页的教训是：metric 判据本身也要被 artifact 和代码审查反查校准。</div>
-</div>
-<!-- ====================================================================== -->
-<!-- SLIDE 8 · 案例 B · 拇指朝下抓 bottle (page 9) — visual 救 metric         -->
-<!-- ====================================================================== -->
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 B</div>
-  <h2>案例 B · 拇指朝下抓 bottle</h2>
-  <h3>真实项目录屏 · RealMan</h3>
-  <div class="slide-2col mt-md">
-    <div class="col-l">
-      <p>初始唯一 metric · <strong>抓取中心点 vs bottle 中心点 3D 距离</strong></p>
-      <p class="mt-sm">Agent 写出的 cuRobo 代码，规划出的解 —— <span class="hl">整个手反着抓，拇指朝下而不是朝上</span></p>
-      <ul class="list-plain">
-        <li>· metric <span class="hl">✓ 完全 PASS</span> · 3D 距离确实在阈值内</li>
-        <li>· visual harness 一打开图 —— <strong>谁都看得出来不对</strong></li>
-      </ul>
-      <div class="callback-box mt-card">
-        <span class="ref">第三幕</span><span class="arrow">→</span>
-        加了新 metric · <strong>手部 / 拇指朝向</strong> —— 这种失败模式永久关掉
-      </div>
-      <p class="mt-md">教训方向 —— <strong>光看 metric 不够</strong><br>visual 才能挡住"数学上对、物理上荒谬"的解</p>
-    </div>
-    <div class="col-r">
-      <div class="media-frame media-frame--thumb-video">
-        <video autoplay muted loop playsinline preload="metadata" poster="images/0325_02-poster.jpg" aria-label="真实项目录屏：RealMan 抓 bottle 时手部和拇指朝向异常">
-          <source src="images/0325_02.webm" type="video/webm">
-        </video>
-        <div class="ss-cap">图 #3 · 真实项目录屏 · RealMan · 初始距离 metric PASS，但视觉上手部 / 拇指朝向异常 · <span class="dim">images/0325_02.webm</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="speaker-note">90 秒。图 #3 是这一页的灵魂。先让视频自己播放几秒，再讲：距离 metric 能 PASS，但人一看就知道手部 / 拇指朝向不对。这是 reward hacking 的经典模式 —— agent 不只会犯错，更危险的是它会找出弱 metric 下数学 PASS 但语义荒谬的解。</div>
+  <div class="speaker-note">60 秒以内讲完。承接上一页：补 visual 之后，不能把 visual 当成唯一裁判。右侧是修复前 parent 23ad3ae 重跑出来的 artifact：只改 ci.yml trigger 和 if: always()，不改业务代码。视觉上 lift/front 和 lift/side 都像抓住并抬起；日志同时显示 gripper-cube contact at lift OK，但 ASSERT-SUCCESS FAILED，cube z=0.0000m，expected >0.2250m。这里不是机器人没抓起来，而是 success metric false negative。根因来自修复 commit 102a593：helper 假设 qpos[5] 是 cube z，实际 MuJoCo free joint 在前，cube z 是 qpos[2]。这页的教训是：metric 判据本身也要被 artifact 和代码审查反查校准。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 9 · metric ↔ visual 的循环分工 (page 10)                            -->
@@ -1426,7 +1433,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     <div class="card accent-card">
       <div class="card-tag">practice 02</div>
       <div class="card-title">给 Agent 真正的判断依据</div>
-      <div class="card-desc"><strong>metric + visual 双轨 · 缺一不可</strong><br>· qpos 案例 → metric 误判 · visual / 代码反查<br>· 拇指朝下 → metric 没救你 · visual 救<br>发现一个新失败模式 → promote 到 metric</div>
+      <div class="card-desc"><strong>metric + visual 双轨 · 缺一不可</strong><br>· 拇指朝下 → metric 没救你 · visual 救<br>· qpos 案例 → metric 误判 · visual / 代码反查<br>发现一个新失败模式 → promote 到 metric</div>
     </div>
     <div class="card">
       <div class="card-tag">judgment 01</div>
