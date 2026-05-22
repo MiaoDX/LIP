@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  STANDALONE DECK TEMPLATE
+  ============================================================================
+  Reusable starting point for HTML / PPT-style slide decks in this repo.
+  Distilled from ai-coding/ultrathink-to-goal/index.html.
+
+  What this template gives you:
+    1. Three switchable themes (font + color) via body[data-style] + a top-right
+       style toggle pill. See "THEME TOKENS" below.
+    2. Keyboard / click paging, progress bar, slide counter, deep-link hash —
+       all handled by the shared assets/deck-runtime.js.
+    3. Image pop-up (lightbox): click any .screenshot/.proof-card image to zoom.
+    4. Speaker notes toggle (press the NOTES button; hidden by default).
+    5. A catalogue of common slide layouts you can copy: title, section
+       divider, big-metric, quote, data-row, cards, two-column + screenshot,
+       compare table, closing/Q&A.
+
+  HOW TO USE — read templates/README.md first, then:
+    - For an AI Coding deck:  copy this folder to  ai-coding/<slug>/index.html
+      (keep the ../../assets/deck-runtime.js path — same depth).
+    - For a general deck:     copy index.html to   presentations/<name>.html
+      and change ../../assets/ to ../assets/ (presentations sits one level up).
+    - Replace placeholder SVG images with real files in an images/ folder
+      and reference them with a relative path like images/your-screenshot.png
+      (use a normal img tag in the slide body — see slide 4 of this template).
+    - Run `npm run quality:check` after adding the deck to a published folder.
+
+  IMAGES — keep them as separate files in the deck's images/ folder; do NOT
+  inline them as base64 data URIs into the HTML. Reasons:
+    - Real source diffs stay reviewable in PRs (inlined base64 explodes the diff).
+    - The deck file stays small enough for chat-app previews to render.
+    - Publish pipeline (`npm run publish:copy`) copies the images/ folder as-is.
+  The SVG placeholders that ship with this template are inline by design — they
+  exist only until you swap in real files, and they encode short labels not
+  photo data.
+
+  Slide copy style: prefer fragment-style text without trailing 。 / . / ；
+  (keep punctuation inside quotes, URLs, versions, filenames, code).
+  ============================================================================
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roboharness · 给 AI Agent 装上自己判断自己工作的能力</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================ */
+/* THEME TOKENS                                                  */
+/* Default = terminal (charcoal). Alternates via body[data-style] */
+/* Each theme defines colors + a font triple (display/body/mono).*/
+/* Add a new theme: copy a block, give it a new data-style name,  */
+/* then add it to the `styles` array + a toggle button below.     */
+/* ============================================================ */
+body {
+  /* Terminal · charcoal warm — DEFAULT (dark) */
+  --bg: #1a1715;
+  --bg-alt: #221e1b;
+  --bg-card: #2a2522;
+  --text: #ede0c9;
+  --text-sec: #b9a888;
+  --text-dim: #7a6c58;
+  --border: #3a322c;
+  --border-light: #2f2925;
+  --accent: #d68548;
+  --accent-deep: #a85d2c;
+  --accent-glow: rgba(214, 133, 72, 0.12);
+  --accent-soft: rgba(214, 133, 72, 0.04);
+  --accent-mid: rgba(214, 133, 72, 0.18);
+  --font-display: 'Newsreader', 'Noto Sans SC', serif;
+  --font-body: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --is-light: 0;
+}
+
+body[data-style="newspaper"] {
+  /* Warm cream + red ink (light) */
+  --bg: #f4ede0;
+  --bg-alt: #ece4d2;
+  --bg-card: #faf4e8;
+  --text: #1c1612;
+  --text-sec: #4a3a2a;
+  --text-dim: #8a7960;
+  --border: #b8a99a;
+  --border-light: #d8c8b0;
+  --accent: #8a3a3a;
+  --accent-deep: #6a2828;
+  --accent-glow: rgba(138, 58, 58, 0.10);
+  --accent-soft: rgba(138, 58, 58, 0.04);
+  --accent-mid: rgba(138, 58, 58, 0.18);
+  --font-display: 'Newsreader', 'Noto Serif SC', serif;
+  --font-body: 'IBM Plex Serif', 'Noto Serif SC', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --is-light: 1;
+}
+
+body[data-style="navy"] {
+  /* Near-white + deep blue (light) */
+  --bg: #f8f5ee;
+  --bg-alt: #f0ede0;
+  --bg-card: #ffffff;
+  --text: #1a1612;
+  --text-sec: #4a4640;
+  --text-dim: #8a8a85;
+  --border: #c8c0b0;
+  --border-light: #d8d4c8;
+  --accent: #1a3a8c;
+  --accent-deep: #0d2466;
+  --accent-glow: rgba(26, 58, 140, 0.08);
+  --accent-soft: rgba(26, 58, 140, 0.03);
+  --accent-mid: rgba(26, 58, 140, 0.14);
+  --font-display: 'Source Serif 4', 'Noto Serif SC', serif;
+  --font-body: 'Source Serif 4', 'Noto Serif SC', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --is-light: 1;
+}
+/* ============================================================ */
+/* END THEME TOKENS                                              */
+/* ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  font-feature-settings: "ss01", "ss02";
+}
+
+/* Subtle atmosphere on the background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, var(--accent-soft) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* HUD chrome — progress bar + slide counter */
+.progress { position: fixed; top: 0; left: 0; height: 1px; background: linear-gradient(90deg, var(--accent), var(--accent-deep)); transition: width 0.4s; z-index: 100; }
+.counter { position: fixed; bottom: 18px; right: 32px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); z-index: 100; letter-spacing: 0.5px; }
+.counter::before { content: "[ "; }
+.counter::after { content: " ]"; }
+
+/* Slide stage — one slide visible at a time, fade + lift transition */
+.deck { width: 100vw; height: 100vh; position: relative; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 88px 64px;
+  opacity: 0; transform: translateY(8px);
+  visibility: hidden;
+  transition: opacity 0.45s, transform 0.45s, visibility 0s linear 0.45s;
+  pointer-events: none;
+  overflow-y: auto;
+}
+.slide.active {
+  opacity: 1; transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.45s, transform 0.45s, visibility 0s linear 0s;
+}
+
+/* Quiet metadata strip — like a git log entry, top-left of each slide */
+.meta {
+  position: absolute;
+  top: 32px; left: 88px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  display: flex; gap: 12px; align-items: center;
+  z-index: 5;
+}
+.meta .meta-tag { color: var(--accent); }
+.meta::before { content: "$"; opacity: 0.4; }
+
+/* Typography */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(36px, 5.2vw, 68px);
+  line-height: 1.08;
+  color: var(--text);
+  font-style: italic;
+}
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+h3 {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(15px, 1.7vw, 19px);
+  line-height: 1.55;
+  color: var(--text-sec);
+  margin-bottom: 8px;
+}
+p { font-size: clamp(14px, 1.5vw, 18px); line-height: 1.65; color: var(--text-sec); }
+.hl { color: var(--accent); }
+.dim { color: var(--text-dim); }
+strong { color: var(--text); font-weight: 600; }
+img { max-width: 100%; }
+h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
+  overflow-wrap: anywhere;
+}
+
+/* TITLE slide */
+.title {
+  align-items: flex-start;
+  background: linear-gradient(170deg, var(--bg) 0%, var(--bg-alt) 100%);
+}
+.title .runner { font-family: var(--font-mono); font-size: 12px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; }
+.title h1 { font-size: clamp(44px, 6.5vw, 88px); margin-bottom: 28px; max-width: 95%; }
+.title h1 em { color: var(--accent); font-style: italic; }
+.title .subtitle { font-family: var(--font-display); font-style: italic; font-size: clamp(20px, 2.2vw, 28px); color: var(--text-sec); margin-bottom: 60px; max-width: 70ch; line-height: 1.5; }
+.title .author-block {
+  font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.9;
+  border-left: 2px solid var(--accent); padding-left: 18px;
+}
+.title .author-block strong { color: var(--text); font-weight: 600; }
+
+/* SECTION divider — markdown-heading inspired */
+.section {
+  align-items: flex-start;
+  background: var(--bg-alt);
+}
+.section .section-marker {
+  font-family: var(--font-mono); font-size: 14px; color: var(--accent);
+  letter-spacing: 2px; margin-bottom: 16px;
+}
+.section h1 {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 500;
+  font-size: clamp(40px, 5.5vw, 76px);
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.section h1 .hash { color: var(--accent); margin-right: 16px; opacity: 0.7; }
+.section .section-blurb { font-family: var(--font-display); font-style: italic; font-size: clamp(20px, 2.4vw, 30px); color: var(--text-sec); max-width: 70ch; line-height: 1.5; }
+.section .duration { position: absolute; bottom: 80px; left: 88px; font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: 1px; }
+/* Optional giant metric on a section slide */
+.section-metric {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(120px, 18vw, 240px);
+  color: var(--accent);
+  line-height: 0.9;
+  margin: 8px 0 24px;
+}
+.section-metric .unit { font-size: 0.32em; color: var(--text-sec); margin-left: 8px; }
+
+/* Quote — generous scale, restrained chrome */
+.quote {
+  font-family: var(--font-display); font-style: italic; font-weight: 300;
+  font-size: clamp(22px, 2.8vw, 36px);
+  line-height: 1.5;
+  color: var(--text);
+  border-left: 3px solid var(--accent);
+  padding: 4px 0 4px 28px;
+  margin: 20px 0;
+  max-width: 80ch;
+}
+.quote em { color: var(--accent); font-style: italic; font-weight: 600; }
+.quote-attr { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-top: 12px; padding-left: 31px; letter-spacing: 0.5px; }
+.quote-attr a { color: var(--text-sec); text-decoration: none; }
+.quote-attr a:hover { color: var(--accent); }
+
+/* Data callouts — a row of big numbers */
+.data-row {
+  display: flex; gap: 0; margin-top: 32px; max-width: 1100px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.data-cell {
+  flex: 1; padding: 32px 28px; position: relative;
+  border-right: 1px solid var(--border);
+}
+.data-cell:last-child { border-right: none; }
+.data-cell .data-num {
+  font-family: var(--font-mono); font-weight: 600;
+  font-size: clamp(36px, 4.5vw, 56px); color: var(--accent);
+  line-height: 1; margin-bottom: 12px;
+}
+.data-cell .data-unit { font-size: 0.5em; }
+.data-cell .data-label {
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  color: var(--text); margin-bottom: 6px; line-height: 1.4;
+}
+.data-cell .data-sub {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-dim); line-height: 1.5;
+}
+
+/* Cards — a flexible row of titled blocks */
+.cards { display: flex; gap: 16px; margin-top: 24px; max-width: 1100px; }
+.card { flex: 1; background: var(--bg-card); border: 1px solid var(--border); padding: 22px 24px; }
+.card.accent-card { border-color: var(--accent); }
+.card.accent-card .card-tag,
+.card.accent-card .card-title { color: var(--accent); }
+.card .card-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+.card .card-title { font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
+.card .card-desc { font-size: 13.5px; color: var(--text-sec); line-height: 1.6; }
+
+/* Two-column layout (e.g. text left, screenshot right). */
+/* NOTE: this is CSS grid, not flex — to change the split, override */
+/* grid-template-columns on .slide-2col, not flex on the children.  */
+.slide-2col {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.slide-2col .col-l { display: flex; flex-direction: column; gap: 14px; }
+.slide-2col .col-r { display: flex; align-items: center; }
+.slide-2col .col-r .screenshot { margin-top: 0; max-width: 100%; }
+
+/* Callback box — forward / back reference between slides */
+.callback-box {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 9px 14px;
+  margin-bottom: 18px;
+  background: var(--accent-soft);
+  border-left: 2px solid var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-sec);
+  letter-spacing: 0.3px;
+  max-width: 720px;
+}
+.callback-box .ref { color: var(--accent); font-weight: 600; letter-spacing: 1.5px; }
+.callback-box .arrow { color: var(--accent); opacity: 0.6; }
+
+/* Compare table */
+.table-wrap { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+.table-wrap.spaced { margin-top: 22px; }
+.compare-table {
+  width: 100%; max-width: 900px;
+  border-collapse: collapse;
+  font-family: var(--font-mono); font-size: 13px;
+}
+.compare-table th, .compare-table td { text-align: left; padding: 10px 14px; }
+.compare-table th { color: var(--accent); font-weight: 500; letter-spacing: 1px; }
+.compare-table tr { border-bottom: 1px solid var(--border-light); }
+.compare-table thead tr { border-bottom: 1.5px solid var(--border); }
+.compare-table tbody tr:last-child { border-bottom: none; }
+.compare-table .entity { color: var(--text); }
+.compare-table .muted { color: var(--text-sec); }
+
+/* Inline screenshot — click to pop up (lightbox). */
+.screenshot {
+  margin-top: 20px; max-width: 800px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.screenshot img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.screenshot .ss-cap {
+  font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
+  padding: 8px 12px; border-top: 1px solid var(--border-light);
+  letter-spacing: 0.5px;
+}
+.screenshot .ss-cap a, .quote-attr a {
+  color: inherit; text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+/* For tall vertical screenshots — cap visible height, fade out the bottom */
+.screenshot.tall .ss-frame { max-height: 320px; overflow: hidden; position: relative; }
+.screenshot.tall .ss-frame::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--bg-card));
+  pointer-events: none;
+}
+
+/* Closing / Q&A slide */
+.qa { align-items: center; justify-content: center; text-align: center; }
+.qa h1 { font-style: normal; }
+.qa .qa-sub { font-family: var(--font-mono); color: var(--text-dim); letter-spacing: 3px; margin-top: 14px; }
+.qa .qa-footer { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); line-height: 1.9; margin-top: 40px; }
+
+/* QR card pair on the QA slide (pattern from ai-coding/ultrathink-to-goal). */
+.qa-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 190px));
+  justify-content: center;
+  gap: 18px;
+  margin-top: 34px;
+}
+.qr-card {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 12px;
+  text-align: center;
+  min-width: 0;
+}
+.qr-card img {
+  width: 142px;
+  height: 142px;
+  object-fit: contain;
+  background: #fff;
+  display: block;
+  margin: 0 auto 10px;
+}
+.qr-card .qr-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--text-sec);
+  overflow-wrap: anywhere;
+}
+
+/* Wide hero screenshot inside a content slide (e.g. demo banner preview). */
+.hero-shot {
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  max-width: 1100px;
+}
+.hero-shot img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.hero-shot .ss-cap {
+  font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
+  padding: 8px 12px; border-top: 1px solid var(--border-light);
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================ */
+/* IMAGE LIGHTBOX — built + wired by installImageLightbox() JS    */
+/* ============================================================ */
+.image-lightbox {
+  position: fixed; inset: 0; z-index: 500;
+  display: none; align-items: center; justify-content: center;
+  padding: 32px;
+  background: rgba(0, 0, 0, 0.82);
+}
+.image-lightbox.open { display: flex; }
+.image-lightbox-inner { max-width: min(94vw, 1600px); max-height: 92vh; display: grid; gap: 10px; justify-items: center; }
+.image-lightbox img { max-width: 100%; max-height: 84vh; object-fit: contain; background: #f8f6f2; border: 1px solid rgba(255, 255, 255, 0.22); }
+.image-lightbox-caption { max-width: min(94vw, 1200px); color: #d8d4c8; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; text-align: center; }
+
+/* ============================================================ */
+/* SPEAKER NOTES — hidden by default; NOTES button reveals them   */
+/* ============================================================ */
+.speaker-note {
+  display: none;
+  margin-top: 28px; padding: 16px 20px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-mid);
+  border-radius: 4px;
+  font-family: var(--font-body); font-size: 14px; line-height: 1.7;
+  color: var(--text-sec); max-width: 80ch;
+}
+.speaker-note::before {
+  content: "口播 · NOTES";
+  display: block;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+  color: var(--accent); letter-spacing: 2px; margin-bottom: 8px;
+}
+body.show-notes .speaker-note { display: block; }
+.notes-toggle {
+  position: fixed; bottom: 18px; left: 88px; z-index: 200;
+  background: var(--bg-alt); border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 6px 14px; border-radius: 3px; cursor: pointer;
+  font-size: 11px; font-family: var(--font-mono); letter-spacing: 1px;
+  transition: all 0.2s;
+}
+.notes-toggle:hover { border-color: var(--accent); color: var(--accent); }
+body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent); }
+
+/* ============================================================ */
+/* STYLE TOGGLE — top-right floating pill                         */
+/* ============================================================ */
+.style-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 200;
+  display: flex; gap: 2px; padding: 3px;
+  background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.5px;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  opacity: 0.7; transition: opacity 0.2s;
+}
+.style-toggle:hover { opacity: 1; }
+.style-toggle button {
+  border: none; background: transparent; color: var(--text-dim);
+  padding: 5px 10px; cursor: pointer; border-radius: 2px;
+  font-family: inherit; font-size: inherit; letter-spacing: inherit;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.style-toggle button:hover { color: var(--text); }
+.style-toggle button.active { background: var(--text); color: var(--bg); }
+.style-toggle .swatch { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.style-toggle button[data-style="terminal"] .swatch { background: #d68548; }
+.style-toggle button[data-style="newspaper"] .swatch { background: #8a3a3a; }
+.style-toggle button[data-style="navy"] .swatch { background: #1a3a8c; }
+
+/* ============================================================ */
+/* RESPONSIVE — laptop default; phone branch at <= 900px          */
+/* Always verify both 1440x900 and 390x844 (see CLAUDE.md).       */
+/* ============================================================ */
+@media (max-width: 900px) {
+  .slide { justify-content: flex-start; padding: 64px 32px 72px; }
+  .meta { top: 26px; left: 32px; right: 126px; flex-wrap: wrap; gap: 6px; line-height: 1.4; }
+  .style-toggle { top: 14px; right: 14px; opacity: 0.92; }
+  .style-toggle button { width: 28px; height: 28px; padding: 0; justify-content: center; }
+  .style-toggle .style-label { display: none; }
+  .style-toggle .swatch { width: 10px; height: 10px; }
+  .notes-toggle { left: 32px; }
+  .counter { right: 32px; }
+  .section .duration { left: 32px; bottom: 68px; max-width: calc(100vw - 64px); }
+  .data-row { flex-direction: column; }
+  .data-cell { border-right: none; border-bottom: 1px solid var(--border); }
+  .data-cell:last-child { border-bottom: none; }
+  .cards { flex-direction: column; }
+  .slide-2col { grid-template-columns: 1fr; }
+  /* Local fix: keep callback-box readable on narrow widths */
+  .callback-box { flex-wrap: wrap; row-gap: 4px; }
+  .qa-contact-grid { grid-template-columns: 1fr; gap: 14px; }
+  .qr-card img { width: 124px; height: 124px; }
+}
+</style>
+</head>
+<body>
+<!-- HUD chrome: progress bar, slide counter, notes + style toggles -->
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+<button class="notes-toggle" id="notesToggle" type="button" aria-pressed="false">NOTES</button>
+<nav class="style-toggle" id="styleToggle" aria-label="Slide theme">
+  <button data-style="terminal" title="深炭灰 + 暖橙 (default)" aria-label="Use terminal theme"><span class="swatch"></span><span class="style-label">terminal</span></button>
+  <button data-style="newspaper" title="暖米黄 + 红墨" aria-label="Use newspaper theme"><span class="swatch"></span><span class="style-label">newspaper</span></button>
+  <button data-style="navy" title="近白 + 深蓝" aria-label="Use navy theme"><span class="swatch"></span><span class="style-label">navy</span></button>
+</nav>
+
+<div class="deck" id="deck">
+
+<!-- ====================================================================== -->
+<!-- SLIDE 0 · Title (storyboard page 1)                                     -->
+<!-- ====================================================================== -->
+<div class="slide title active">
+  <div class="runner">2026-05 Showcase · Roboharness</div>
+  <h1>Roboharness<br><em>给 AI Agent 装上"自己判断自己工作"的能力</em></h1>
+  <div class="subtitle">这个项目是 <em>给 AI Agent 用的</em>，也是 <em>用 AI Agent 做出来的</em></div>
+  <div class="author-block">
+    <strong>MiaoDX · 直觉机器漫谈</strong><br>
+    github.com/MiaoDX/roboharness · miaodx.com/roboharness/<br>
+    2026-05
+  </div>
+  <div class="speaker-note">标题页节奏快，不超过 30 秒。一句话定位 + 双线钩子，把'用 agent 做'+'为 agent 做'埋进去，后面页 15 收回。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 1 · 一句话定义 (page 2)                                            -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/1</span> · 一句话定义</div>
+  <h2>机器人开发里<br>AI Agent 能不能长时间自主跑</h2>
+  <div class="quote">
+    关键不是模型多聪明<br>
+    是它能不能 —— <em>自己判断「这一步成了没」</em>
+  </div>
+  <div class="speaker-note">整个 talk 围绕这个判断展开。Agent 能写代码、能调参、能跑仿真 —— 这些早就不是瓶颈，卡住的是它不知道自己做的事到底成没成。今天会用一个我们刚做完的真实案例证明：补上这层判断能力，agent 能完成相当复杂的、原本需要人盯几天的工程任务。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 2 · 两个月前那张图 (page 3) — 钩子                                  -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/2</span> · 钩子 · 两个月前的承诺</div>
+  <h2>两个月前那张图</h2>
+  <div class="slide-2col" style="margin-top: 22px;">
+    <div class="col-l">
+      <p class="dim" style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px; margin-bottom: 14px;">2026-03 · 内部分享最后一页</p>
+      <div class="quote" style="margin: 0 0 22px;">
+        下一步，让 <em>AI 完全接手</em> 这个测试自动化
+      </div>
+      <p>那张图当时是一个 <strong>vision</strong></p>
+      <p style="margin-top: 6px;">今天来汇报 —— <span class="hl">这件事我们做到了</span></p>
+    </div>
+    <div class="col-r">
+      <div class="screenshot">
+        <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22860%22%20height%3D%22520%22%3E%3Crect%20width%3D%22860%22%20height%3D%22520%22%20fill%3D%22%23e9e2d4%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%22858%22%20height%3D%22518%22%20fill%3D%22none%22%20stroke%3D%22%23b8a99a%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2240%22%20font-family%3D%22monospace%22%20font-size%3D%2214%22%20font-weight%3D%22600%22%20fill%3D%22%238a3a3a%22%20letter-spacing%3D%223%22%3EFIGURE%20%231%20%C2%B7%20TODO%3C%2Ftext%3E%3Ctext%20x%3D%22430%22%20y%3D%22250%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22500%22%20fill%3D%22%231c1612%22%20text-anchor%3D%22middle%22%3E%E4%B8%A4%E4%B8%AA%E6%9C%88%E5%89%8D%E9%82%A3%E5%BC%A0%20vision%20%E5%9B%BE%3C%2Ftext%3E%3Ctext%20x%3D%22430%22%20y%3D%22290%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20fill%3D%22%234a3a2a%22%20text-anchor%3D%22middle%22%20font-style%3D%22italic%22%3EAI%20%E5%AE%8C%E5%85%A8%E6%8E%A5%E6%89%8B%E6%B5%8B%E8%AF%95%E8%87%AA%E5%8A%A8%E5%8C%96%20%28%E5%86%85%E9%83%A8%E5%88%86%E4%BA%AB%202026-03%29%3C%2Ftext%3E%3Ctext%20x%3D%2232%22%20y%3D%22490%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20fill%3D%22%238a7960%22%3Ereplace%20with%3A%20images%2Ffig1-old-vision.png%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Figure 1 placeholder — 两个月前那张 vision 图">
+        <div class="ss-cap">图 #1 · 待补 · <span class="dim">images/fig1-old-vision.png</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-note">这一页就是钩子。讲快，往下走。图 #1 占位需要在演讲前替换成 2026-03 内部分享最后一张 slide 的截图。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 3 · 当时为什么做不到 (page 4)                                       -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/2</span> · 当时的卡点</div>
+  <h2>当时为什么做不到</h2>
+  <h3>Unitree G1 + GR00T Decoupled WBC · 下肢 RL + 上肢 IK 的混合架构 · 2025-11</h3>
+  <div class="cards" style="margin-top: 26px;">
+    <div class="card">
+      <div class="card-tag">不是瓶颈</div>
+      <div class="card-title">Agent 改控制代码 <span class="hl">✓</span></div>
+      <div class="card-desc">控制器代码、参数调整、报错修复 —— 这些早已不是瓶颈</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">真正卡点</div>
+      <div class="card-title">Agent 的判断 <span class="hl">✗</span></div>
+      <div class="card-desc">夹爪夹住没？方块滑了没？姿态合理吗？<br>日志看不出来，必须看画面</div>
+    </div>
+  </div>
+  <p style="margin-top: 22px; max-width: 70ch;">
+    工程师只能盯着 —— <strong>agent 跑一轮，人看一眼；再跑一轮，再看一眼</strong>
+  </p>
+  <div class="speaker-note">G1 + GR00T Decoupled WBC = 2025-11 那版下肢 RL/上肢 IK 的混合架构做抓取。改代码不是瓶颈，判断才是。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 4 · 关键洞察 · 注意力问题 (page 5)                                  -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/2</span> · 关键洞察</div>
+  <div class="quote" style="font-size: clamp(28px, 3.4vw, 44px); line-height: 1.4;">
+    这不是 <em>算力</em> 问题<br>
+    是 <em>注意力</em> 问题
+  </div>
+  <div class="section-metric" style="font-size: clamp(80px, 12vw, 160px); margin-top: 20px;">瓶颈 <span class="unit">不在 GPU · 在工程师的注意力</span></div>
+  <p style="margin-top: 12px; max-width: 70ch;">
+    Agent 要真自主 —— <strong>唯一的路是让它自己有判断依据</strong>
+  </p>
+  <div class="speaker-note">过去两个月我们做的就是这件事。过渡到下一页：下面看一个真实案例 —— SONIC 升级。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 5 · 兑现 · SONIC 升级 (page 6)                                     -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/2</span> · 兑现 · SONIC 升级</div>
+  <h2>兑现 —— 三阶段工作流跑下来</h2>
+  <div class="cards" style="margin-top: 18px;">
+    <div class="card">
+      <div class="card-tag">phase 01 · 人主导</div>
+      <div class="card-title">Plan</div>
+      <div class="card-desc">详尽计划<br>每一步成 / 不成 判据明确</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">phase 02 · Agent 接管 · 工程师不在场</div>
+      <div class="card-title">Execute</div>
+      <div class="card-desc">harness 每改一步自跑 grasp pipeline<br>metric + 视觉证据自评<br>Codex CLI <code>/goal</code> 锚定长程</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">phase 03 · 人回来</div>
+      <div class="card-title">Review</div>
+      <div class="card-desc">先看 metric · metric OK 再看视觉<br>最后人工 E2E</div>
+    </div>
+  </div>
+  <div class="callback-box" style="margin-top: 22px;">
+    <span class="ref">真实例子</span><span class="arrow">→</span>
+    2026-02-19 NVIDIA 发布 <strong style="color: var(--accent);">GEAR-SONIC</strong> · 不是版本升级，是范式切换
+  </div>
+  <p style="max-width: 80ch; margin-top: 8px;">
+    Decoupled WBC <span class="dim">(RL + IK 混合)</span> → GEAR-SONIC <span class="dim">(单一 Transformer 基础模型)</span><br>
+    整条控制栈底层重写 —— <span class="hl">agent 连续自主跑了几个小时，工程师全程不在场</span>
+  </p>
+  <div class="speaker-note">三阶段讲清楚：Plan 人主导；Execute 完全 agent，工程师不在场，每改一步 harness 自跑 + metric/视觉自评 + Codex CLI /goal 锚定长程目标；Review 人回来，metric→视觉→E2E。Q&A 备好：为什么不是直接 N1.7 —— SONIC 是 2 月 19 日发布，N1.7 4 月才商业 release，时间线对得上。/goal 需要 codex-cli 0.128.0+ /experimental 打开。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 6 · 校准关键一句 (page 7)                                           -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/2</span> · 校准</div>
+  <h2>不是 Agent 突然变聪明</h2>
+  <h3>是给了它判断自己工作好坏的工具</h3>
+  <div class="quote" style="margin-top: 28px;">
+    让 agent 跑得久 —— 不靠模型变神<br>
+    靠 <em>"越过边界时会被挡住、边界内时能自己往前走"</em>
+  </div>
+  <p style="margin-top: 24px; max-width: 70ch; font-family: var(--font-mono); font-size: 14px; color: var(--text-sec);">
+    <span class="hl">roboharness</span> · 抽出独立 repo · <span class="dim">github.com/MiaoDX/roboharness</span>
+  </p>
+  <div class="speaker-note">这一页是过渡 + 校准。把"模型变神"这种解读挡掉，把"trust boundary"埋下（页 15 收）。内部抓取项目跑通后我们发现 —— 任何需要 agent 长时间自主跑机器人代码的场景都缺这一层，所以抽成独立 repo。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 7 · 案例 A · qpos (page 8) — metric 救 visual                      -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 A</div>
+  <h2>案例 A · qpos 索引</h2>
+  <h3>仿真 · commit <code>102a593</code></h3>
+  <div class="table-wrap spaced">
+    <table class="compare-table" style="max-width: 1100px;">
+      <thead>
+        <tr><th>证据通道</th><th>判定</th><th>解释</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="entity">截图</td><td class="muted"><span class="hl">✓ 看起来抓住了</span></td><td class="muted">画面 OK · Agent 自己也判 PASS</td></tr>
+        <tr><td class="entity">物理约束 metric</td><td class="muted" style="color: #b97f7f;">✗ cube z ≈ 0</td><td class="muted">加上 <code>--assert-success</code> 后才发现 —— 根本没抬起来</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callback-box" style="margin-top: 22px;">
+    <span class="ref">根因</span><span class="arrow">→</span>
+    agent 假设 MuJoCo qpos 里 slide joint 在前，用了 <code>qpos[5]</code> · 实际 free joint 在前，正确是 <code>qpos[2]</code>
+  </div>
+  <p style="margin-top: 18px;">教训方向 —— <strong>光看图不够，metric 是兜底</strong></p>
+  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。两个案例是反向对称的。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 8 · 案例 B · 拇指朝下抓 bottle (page 9) — visual 救 metric         -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 B</div>
+  <h2>案例 B · 拇指朝下抓 bottle</h2>
+  <h3>真机 Unitree G1</h3>
+  <div class="slide-2col" style="margin-top: 18px;">
+    <div class="col-l">
+      <p>初始唯一 metric · <strong>抓取中心点 vs bottle 中心点 3D 距离</strong></p>
+      <p style="margin-top: 12px;">Agent 规划出的解 —— <span class="hl">整个手反着抓，拇指朝下而不是朝上</span></p>
+      <ul style="margin: 12px 0 0 22px; padding: 0; line-height: 1.8; list-style: none;">
+        <li>· metric <span class="hl">✓ 完全 PASS</span> · 3D 距离确实在阈值内</li>
+        <li>· visual harness 一打开图 —— <strong>谁都看得出来不对</strong></li>
+      </ul>
+      <div class="callback-box" style="margin-top: 20px;">
+        <span class="ref">第三幕</span><span class="arrow">→</span>
+        加了新 metric · <strong>手部 / 拇指朝向</strong> —— 这种失败模式永久关掉
+      </div>
+      <p style="margin-top: 14px;">教训方向 —— <strong>光看 metric 不够</strong><br>visual 才能挡住"数学上对、物理上荒谬"的解</p>
+    </div>
+    <div class="col-r">
+      <div class="screenshot">
+        <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22860%22%20height%3D%22520%22%3E%3Crect%20width%3D%22860%22%20height%3D%22520%22%20fill%3D%22%23e9e2d4%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%22858%22%20height%3D%22518%22%20fill%3D%22none%22%20stroke%3D%22%23b8a99a%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2240%22%20font-family%3D%22monospace%22%20font-size%3D%2214%22%20font-weight%3D%22600%22%20fill%3D%22%238a3a3a%22%20letter-spacing%3D%223%22%3EFIGURE%20%233%20%C2%B7%20TODO%3C%2Ftext%3E%3Ctext%20x%3D%22430%22%20y%3D%22250%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22500%22%20fill%3D%22%231c1612%22%20text-anchor%3D%22middle%22%3E%E6%8B%87%E6%8C%87%E6%9C%9D%E4%B8%8B%E6%8A%93%20bottle%20%E5%AF%B9%E6%AF%94%E5%9B%BE%3C%2Ftext%3E%3Ctext%20x%3D%22430%22%20y%3D%22290%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20fill%3D%22%234a3a2a%22%20text-anchor%3D%22middle%22%20font-style%3D%22italic%22%3E%E5%B7%A6%3A%20%E6%AD%A3%E5%B8%B8%E6%8A%93%20%20%20%20%20%E5%8F%B3%3A%20%E5%8F%8D%E7%9D%80%E6%8A%93%20%28metric%20PASS%20%C2%B7%20visual%20NG%29%3C%2Ftext%3E%3Ctext%20x%3D%2232%22%20y%3D%22490%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20fill%3D%22%238a7960%22%3Ereplace%20with%3A%20images%2Ffig3-thumb-down-grasp.png%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Figure 3 placeholder — 拇指朝下抓 bottle 对比图">
+        <div class="ss-cap">图 #3 · 待补 · 左 正常抓 · 右 拇指朝下 · <span class="dim">images/fig3-thumb-down-grasp.png</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-note">90 秒。图 #3 是这一页的灵魂，必须有。一句方法论：这是 reward hacking 的经典模式 —— agent 不只会犯错，更危险的是它会找出弱 metric 下数学 PASS 但语义荒谬的解。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 9 · metric ↔ visual 的循环分工 (page 10)                            -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 闭环</div>
+  <h2>metric 和 visual 不是冗余</h2>
+  <h3>是闭环里两个不同角色</h3>
+  <div class="cards" style="margin-top: 26px;">
+    <div class="card">
+      <div class="card-tag">role · 发现器</div>
+      <div class="card-title">Visual Harness</div>
+      <div class="card-desc">抓 <strong>unknown unknowns</strong><br>发现预先没想到的失败模式</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">role · 稳态护栏</div>
+      <div class="card-title">Metric Gate</div>
+      <div class="card-desc">精确、快、确定性<br>已知失败模式自动挡住</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">闭环动作</div>
+      <div class="card-title">Promote</div>
+      <div class="card-desc">每发现一个新坑 → 从 visual 那侧 <strong>搬到</strong> metric 那侧<br>把失败永久转成可量化护栏</div>
+    </div>
+  </div>
+  <div class="quote" style="margin-top: 24px; font-size: clamp(20px, 2.2vw, 28px);">
+    这就是 Mitchell Hashimoto 讲的 <em>engineer the harness</em><br>字面意义在做的事
+  </div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 10 · 自主率分阶段 (page 11)                                         -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/4</span> · 自主率</div>
+  <h2>得投入多少？之后能多自主？</h2>
+  <h3>投入 vs 自主率 · 分开看</h3>
+  <div class="data-row">
+    <div class="data-cell">
+      <div class="data-num">1<span class="data-unit">×</span></div>
+      <div class="data-label">Harness 调试期 · 一次性成本</div>
+      <div class="data-sub">写契约 · 跑 seeded good/bad/ambiguous corpus · 调阈值</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">95<span class="data-unit">%+</span></div>
+      <div class="data-label">Harness 稳态期 · Agent 自己 PASS/FAIL</div>
+      <div class="data-sub">只有真正新颖 / 复杂的场景才需要人最后兜底</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">数<span class="data-unit">小时</span></div>
+      <div class="data-label">SONIC 升级长程任务跑下来</div>
+      <div class="data-sub">大部分 per-step 判断根本不需要人介入</div>
+    </div>
+  </div>
+  <div class="callback-box" style="margin-top: 22px;">
+    <span class="ref">CALLBACK</span><span class="arrow">→</span>
+    SONIC 升级属于"真正新颖"那一类 —— 所以才有 Plan / Review 两端的人
+  </div>
+  <div class="speaker-note">两件事要分开讲：调试期是一次性成本；稳态期 95%+ agent 自己 PASS/FAIL。这也是为什么 SONIC 那种几小时长程任务能跑 —— 大部分 per-step 判断根本不需要人介入。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 11 · 现场 Demo (page 12)                                            -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/4</span> · 现场 Demo</div>
+  <h2>现场切到浏览器</h2>
+  <div class="quote" style="font-family: var(--font-mono); font-style: normal; font-size: clamp(20px, 2.4vw, 32px); border-left-width: 4px; margin: 18px 0;">
+    <a href="https://miaodx.com/roboharness/grasp/" style="color: var(--accent); text-decoration: none;">miaodx.com/roboharness/grasp/</a>
+  </div>
+  <div class="hero-shot">
+    <img src="images/demo-run-decision.png" alt="Run Decision banner · No surfaced cases · Verdict PASS">
+    <div class="ss-cap">live · Run Decision banner · <span class="dim">点击放大</span></div>
+  </div>
+  <h3 style="margin-top: 8px;">三个看点</h3>
+  <div class="cards" style="margin-top: 18px;">
+    <div class="card">
+      <div class="card-tag">① 顶部 banner</div>
+      <div class="card-title">Run Decision</div>
+      <div class="card-desc"><code>PASS — 10/10 constraints satisfied</code><br>agent 跑完一轮的整体判决</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">② 核心区</div>
+      <div class="card-title">No surfaced cases</div>
+      <div class="card-desc"><strong>没有任何需要人看的事情</strong><br>clean 时工程师根本不用打开<br><span class="dim">数小时无人值守的来源</span></div>
+    </div>
+    <div class="card">
+      <div class="card-tag">③ Constraint Evaluation</div>
+      <div class="card-title">Metric Gate 具体形态</div>
+      <div class="card-desc">10 条物理约束 · Expected / Actual / Severity<br><code>cube_height_mm &gt; 5.0</code> actual <code>143.4</code></div>
+    </div>
+  </div>
+  <p class="dim" style="margin-top: 22px; font-family: var(--font-mono); font-size: 12px;">网络不稳时切到本地备份截图 · <code>images/demo-run-decision.png</code> · <code>images/demo-constraint-eval.png</code></p>
+  <div class="speaker-note">留够 90 秒，全场最有冲击力。指给观众的顺序（每段约 10-20 秒）：① 顶部 Run Decision banner —— 'PASS — 10/10 constraints satisfied'，agent 跑完一轮的整体判决；② 'No surfaced cases. No material changes surfaced.' —— clean 的时候工程师根本不用打开这一页，数小时无人值守就是这么来的；③ 右边 Surfaced 0 / Suppressed 1 / Unchanged 1 —— escape hatch，只有 Surfaced > 0 才需要人看；④ Constraint Evaluation 表 —— metric_gate 的具体形态，10 条物理约束都有 Expected / Actual / Severity；⑤ Phase Timeline —— 每个 phase 三视角截图 + grip err / contacts / alarms，这是 visual harness 的数据形态；⑥ 回到顶部 —— 所有数据合起来得出 PASS，agent 自己读自己判决。投屏挂了切到 images/demo-fallback-*.png 按 1/2/3 顺序换页。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 12 · 抽成 repo 之后又长了什么 (page 13)                              -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/5</span> · repo 演化</div>
+  <h2>抽成 repo 之后 · 3 周</h2>
+  <h3>v0.3.0 / 0.3.1 已发到 PyPI · 又长了两件事</h3>
+  <div class="cards" style="margin-top: 22px;">
+    <div class="card">
+      <div class="card-tag">2026-05-20 上线</div>
+      <div class="card-title">❶ Agent Visual Review v1</div>
+      <div class="card-desc">同一个 coding agent 在 bounded manifest 边界内做视觉评审 —— <strong>不另起 VLM 服务</strong><br>每个 visual dimension 必须声明 <code>metric_fallback</code> 或 <code>why_not_metricized</code> · 否则 fail-closed<br><span class="dim">→ 把"agent 看图"也做成有契约的、不能滥用的机制</span></div>
+    </div>
+    <div class="card">
+      <div class="card-tag">2026-05-20 上线</div>
+      <div class="card-title">❷ Python contract → SKILL.md</div>
+      <div class="card-desc"><code>contract.py</code> 是手写真值<br><code>roboharness contract generate</code> → SKILL.md / schemas / stubs<br><span class="dim">→ Agent 自己加载契约约束自己</span></div>
+    </div>
+  </div>
+  <div class="quote" style="margin-top: 22px; font-size: clamp(20px, 2.2vw, 28px);">
+    判断边界从 <em>run-time</em> 扩到 <em>design-time</em><br>
+    <span style="font-size: 0.7em;">Agent 不是变聪明 —— 是约束它的契约写得更清楚了</span>
+  </div>
+  <div class="speaker-note">这两个 feature 都是 5 月 20 日刚 commit 的，要诚实 —— "刚上、小规模验证中"，不需要进 demo。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 13 · Sidenote · 这个 repo 自己也是 agent 做的 (page 14)             -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/5</span> · sidenote · by agents</div>
+  <h2>Sidenote · 这个 repo 自己也是 agent 做的</h2>
+  <div class="data-row" style="margin-top: 20px;">
+    <div class="data-cell">
+      <div class="data-num">139</div>
+      <div class="data-label">commit · 100% AI 完成</div>
+      <div class="data-sub">总数</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">65</div>
+      <div class="data-label">AI solo</div>
+      <div class="data-sub">Claude / Codex 直接 author</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">66</div>
+      <div class="data-label">AI 协作</div>
+      <div class="data-sub">co-authored-by trailer</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">8</div>
+      <div class="data-label">小改动漏加 trailer</div>
+      <div class="data-sub">gitignore / README 链接 / 几行 docs 修补</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 26px;">工作流速描</h3>
+  <p style="margin-top: 6px; max-width: 80ch;">
+    Opus 聊出 roadmap <span class="dim">→</span> 拆 GitHub issue <span class="dim">→</span>
+    routine 每小时自动解 issue <span class="dim">→</span> 人 review PR
+    <span class="dim">·</span> <strong>手机上就能完成全套</strong>
+  </p>
+  <div class="speaker-note">节奏快，2 分钟内。4 routine 设计细节这里不展开 · 公众号上有完整文章。Q&A 备好：如果有人 git log | grep claude 发现 8 个没 trailer —— "我们用 co-authored-by trailer 标记，偶尔小改动忘了加；这些都是 gitignore 之类的杂活"。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 14 · 点题 · trust boundary (page 15)                                -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/6</span> · 收口 · trust boundary</div>
+  <h2>两件事 —— 同一个工程思路</h2>
+  <h3>"用 agent 做" + "为 agent 做" 背后都是 trust boundary</h3>
+  <div class="table-wrap spaced">
+    <table class="compare-table" style="max-width: 1100px;">
+      <thead>
+        <tr><th>层面</th><th>For agents · 产品层</th><th>By agents · 开发层</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="entity">边界形态</td><td class="muted">contract · metric_gate · visual review manifest · approval report</td><td class="muted">branch namespace · 4 routine 隔离</td></tr>
+        <tr><td class="entity">消息通道</td><td class="muted">structured evidence · 自动 surface / suppress</td><td class="muted">GitHub comment as msgbus · PR template / CI gate</td></tr>
+        <tr><td class="entity">越界后果</td><td class="muted">fail-closed · 被挡住</td><td class="muted">被锁在前缀内 · 不互踩</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="quote" style="margin-top: 22px;">
+    <em>Agent 越过边界 → 被挡住</em> · <em>Agent 边界内 → 能自己往前走</em><br>
+    <span style="font-size: 0.78em;">信任不是建立在"agent 足够好"上 —— 是建立在"agent 越过边界时一定会被挡住"上</span>
+  </div>
+  <div class="speaker-note">把页 1 的钩子（"给 agent 用 + 用 agent 做"）和页 7 的"越过边界会被挡住"两根线在这里合并收口。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 15 · Takeaway · 工程师向 (page 16)                                  -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/6</span> · takeaway · 工程师</div>
+  <h2>实践 · 工程师向</h2>
+  <h3>两个能直接拿走的实践</h3>
+  <div class="cards" style="margin-top: 26px;">
+    <div class="card accent-card">
+      <div class="card-tag">practice 01</div>
+      <div class="card-title">契约先于 prompt</div>
+      <div class="card-desc">把目标 / 不可改部分 / 异常行为写成结构化契约<br>不能 ground 的 prompt 别让 agent 跑<br><strong>节省的不是 token · 是审查时间</strong></div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">practice 02</div>
+      <div class="card-title">给 Agent 真正的判断依据</div>
+      <div class="card-desc"><strong>metric + visual 双轨 · 缺一不可</strong><br>· qpos 案例 → visual 没救你 · metric 救<br>· 拇指朝下 → metric 没救你 · visual 救<br>发现一个新失败模式 → promote 到 metric</div>
+    </div>
+  </div>
+  <p style="margin-top: 22px;">这就是 <span class="hl">engineer the harness</span> 字面意思 —— 也是我们日常的工作流</p>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 16 · Takeaway · 产品 / 管理向 (page 17)                             -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/6</span> · takeaway · 宏观</div>
+  <h2>判断 · 宏观向</h2>
+  <h3>两个判断</h3>
+  <div class="cards" style="margin-top: 26px;">
+    <div class="card">
+      <div class="card-tag">judgment 01</div>
+      <div class="card-title">瓶颈已经换地方了</div>
+      <div class="card-desc">"模型够不够好" <span class="hl">→</span> <strong>"Agent 能不能自己判断"</strong><br>这件事一旦解决 · <span class="hl">研发流程长度直接解锁</span><br><span class="dim">SONIC 升级就是证据</span></div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">judgment 02</div>
+      <div class="card-title">方向是契约工程 · 不是堆模型</div>
+      <div class="card-desc">同模型 + 好契约 <strong style="color: var(--accent);">&gt;</strong> 更强模型 + 没契约<br><span class="dim">—— 这是杠杆点所在</span></div>
+    </div>
+  </div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 17 · 边界 · 当前限制 (page 18)                                      -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/6</span> · 边界</div>
+  <h2>当前边界</h2>
+  <h3>已验证范围 · 仍在补的部分</h3>
+  <div class="table-wrap spaced">
+    <table class="compare-table" style="max-width: 1000px;">
+      <tbody>
+        <tr><td class="entity">已验证</td><td class="muted">MuJoCo + G1 · 抓取 / 到达 / 移动 类任务</td></tr>
+        <tr><td class="entity">补充中</td><td class="muted">Contract preset 数量还在补</td></tr>
+        <tr><td class="entity">硬件验证</td><td class="muted">Sim-to-real 真机 evidence 通道</td></tr>
+        <tr><td class="entity">小规模验证</td><td class="muted">Agent Visual Review v1 刚上 (2026-05-20)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="speaker-note">30 秒，快速诚实带过，不卖惨。说这些是因为 —— 如果你想在自己项目里用，这是我们目前真实的能力边界。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 18 · 收尾 · QA + 二维码 (page 19)                                   -->
+<!-- ====================================================================== -->
+<div class="slide qa">
+  <div class="quote" style="border-left: none; padding-left: 0; text-align: center; max-width: 100%;">
+    让 Agent 跑得久 —— 不是 Agent 变神<br>
+    是把 <em>"Agent 越过边界时会被挡住"</em> 这件事做扎实
+  </div>
+  <div class="qa-sub" style="margin-top: 32px;">— Q &amp; A —</div>
+  <div class="qa-contact-grid">
+    <div class="qr-card">
+      <img src="images/qr-wechat-official.jpg" alt="微信公众号二维码">
+      <div class="qr-label">公众号<br>直觉机器漫谈</div>
+    </div>
+    <div class="qr-card">
+      <img src="images/qr-wechat-personal.jpg" alt="个人微信二维码">
+      <div class="qr-label">个人微信<br>Dongxu-Miao</div>
+    </div>
+  </div>
+  <div class="qa-footer">
+    缪东旭 · MiaoDX<br>
+    github.com/<strong style="color: var(--accent);">MiaoDX/roboharness</strong> · miaodx.com/roboharness/<br>
+    本场分享准备过程开源：github.com/MiaoDX/LIP/tree/main/ai-coding/roboharness-self-evaluating-agents
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!--
+  Shared deck runtime: keyboard/click paging, progress, counter, hash deep-link,
+  notes toggle, theme switching + localStorage persistence.
+  Path is ../../assets/deck-runtime.js because this file sits two levels deep
+  (templates/deck/index.html). If you copy this to presentations/<name>.html
+  (one level deep), change it to ../assets/deck-runtime.js.
+-->
+<script src="../../assets/deck-runtime.js"></script>
+<script>
+// Image pop-up: any image matching the selector opens a full-screen overlay.
+// Add more selectors (comma-separated) if you introduce new image containers.
+function installImageLightbox() {
+  const imageSelector = '.screenshot img, .qr-card img, .hero-shot img';
+  const lightbox = document.createElement('div');
+  lightbox.className = 'image-lightbox';
+  lightbox.setAttribute('role', 'dialog');
+  lightbox.setAttribute('aria-modal', 'true');
+  lightbox.innerHTML = '<div class="image-lightbox-inner"><img alt=""><div class="image-lightbox-caption"></div></div>';
+  document.body.appendChild(lightbox);
+
+  const lightboxImage = lightbox.querySelector('img');
+  const caption = lightbox.querySelector('.image-lightbox-caption');
+
+  function captionFor(image) {
+    const screenshot = image.closest('.screenshot');
+    if (screenshot) {
+      const cap = screenshot.querySelector('.ss-cap');
+      if (cap) return cap.textContent.trim();
+    }
+    return image.alt || '';
+  }
+
+  function close() {
+    lightbox.classList.remove('open');
+    lightboxImage.removeAttribute('src');
+    lightboxImage.alt = '';
+    caption.textContent = '';
+  }
+
+  document.addEventListener('click', (event) => {
+    const image = event.target.closest(imageSelector);
+    if (!image) return;
+    event.preventDefault();
+    event.stopPropagation();
+    lightboxImage.src = image.currentSrc || image.src;
+    lightboxImage.alt = image.alt || '';
+    caption.textContent = captionFor(image);
+    lightbox.classList.add('open');
+  }, true);
+
+  lightbox.addEventListener('click', close);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lightbox.classList.contains('open')) close();
+  });
+}
+
+window.createDeckRuntime({
+  notesToggleSelector: '#notesToggle',
+  styleToggleSelector: '#styleToggle',
+  styleStorageKey: 'deck-roboharness-self-eval-style',
+  defaultStyle: 'terminal',
+  styles: ['terminal', 'newspaper', 'navy'],
+});
+installImageLightbox();
+</script>
+</body>
+</html>

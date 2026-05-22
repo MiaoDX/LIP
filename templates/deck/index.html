@@ -22,9 +22,19 @@
       (keep the ../../assets/deck-runtime.js path — same depth).
     - For a general deck:     copy index.html to   presentations/<name>.html
       and change ../../assets/ to ../assets/ (presentations sits one level up).
-    - Replace placeholder SVG images with real files in an images/ folder and
-      use relative paths, e.g. <img src="images/foo.png">.
+    - Replace placeholder SVG images with real files in an images/ folder
+      and reference them with a relative path like images/your-screenshot.png
+      (use a normal img tag in the slide body — see slide 4 of this template).
     - Run `npm run quality:check` after adding the deck to a published folder.
+
+  IMAGES — keep them as separate files in the deck's images/ folder; do NOT
+  inline them as base64 data URIs into the HTML. Reasons:
+    - Real source diffs stay reviewable in PRs (inlined base64 explodes the diff).
+    - The deck file stays small enough for chat-app previews to render.
+    - Publish pipeline (`npm run publish:copy`) copies the images/ folder as-is.
+  The SVG placeholders that ship with this template are inline by design — they
+  exist only until you swap in real files, and they encode short labels not
+  photo data.
 
   Slide copy style: prefer fragment-style text without trailing 。 / . / ；
   (keep punctuation inside quotes, URLs, versions, filenames, code).
