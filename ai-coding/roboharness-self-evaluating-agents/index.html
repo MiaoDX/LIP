@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roboharness · 给 AI Agent 装上自己判断自己工作的能力</title>
+<title>Roboharness · 让 AI Agent 自己判断工作成败</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -422,6 +422,26 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .slide-2col .col-r .media-frame--qpos-proof { max-width: 650px; justify-self: end; }
 .media-frame--thumb-video { max-width: 520px; justify-self: end; }
 .media-frame--thumb-video video { aspect-ratio: 202 / 223; }
+.qpos-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border-light);
+}
+.qpos-proof-shot {
+  background: var(--bg-card);
+}
+.qpos-proof-shot img {
+  cursor: zoom-in;
+}
+.qpos-proof-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  padding: 6px 8px;
+  border-top: 1px solid var(--border-light);
+  letter-spacing: 0.4px;
+}
 .intro-proof {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -473,6 +493,64 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   letter-spacing: 0.5px;
   margin-top: 14px;
 }
+.loop-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.58fr) minmax(0, 0.42fr);
+  gap: 18px;
+  align-items: stretch;
+  max-width: 1100px;
+  margin-top: 22px;
+}
+.loop-graphic {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 16px;
+  min-height: 156px;
+}
+.loop-graphic svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--font-mono);
+}
+.loop-graphic .loop-node {
+  fill: var(--bg);
+  stroke: var(--border);
+  stroke-width: 1.4;
+}
+.loop-graphic .loop-node-strong {
+  stroke: var(--accent);
+  stroke-width: 1.8;
+}
+.loop-graphic .loop-label {
+  fill: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+.loop-graphic .loop-sub {
+  fill: var(--text-sec);
+  font-size: 10.5px;
+}
+.loop-graphic .loop-flow {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  marker-end: url(#loop-arrow);
+}
+.reference-line {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--text-dim);
+  align-self: center;
+}
+.reference-line a {
+  color: var(--text-sec);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.reference-line a:hover { color: var(--accent); }
 .arch-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 0.34fr);
@@ -671,12 +749,19 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .motion-intro .slide-2col .col-r { order: -1; }
   .media-frame--vision { max-width: 100%; }
   .media-frame--qpos-proof { max-width: 100%; }
+  .slide--qpos-case .slide-2col { margin-top: 10px; row-gap: 12px; }
+  .slide--qpos-case .col-l { gap: 10px; }
+  .slide--qpos-case .callback-box { margin-top: 14px; }
+  .slide--qpos-case .qpos-proof-label { display: none; }
+  .slide--qpos-case .media-frame .ss-cap { font-size: 9px; line-height: 1.45; padding: 6px 8px; }
   .motion-intro .media-frame .ss-cap { display: none; }
   .media-frame--motion { max-width: 100%; }
   .media-frame--thumb-video { max-width: 100%; }
   .media-frame--thumb-video video { max-height: 360px; }
   .demo-crops { grid-template-columns: 1fr; gap: 10px; }
   .demo-crop { min-height: 116px; }
+  .loop-row { grid-template-columns: 1fr; gap: 12px; }
+  .loop-graphic { padding: 12px; min-height: 0; }
   .arch-layout { grid-template-columns: 1fr; }
   .arch-diagram { padding: 10px; overflow: hidden; }
   .arch-diagram .arch-svg--wide { display: none; }
@@ -707,10 +792,10 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <!-- ====================================================================== -->
 <div class="slide title active">
   <div class="runner">2026-05 Showcase · Roboharness</div>
-  <h1>Roboharness<br><em>给 AI Agent 装上"自己判断自己工作"的能力</em></h1>
+  <h1>Roboharness<br><em>让 AI Agent 自己判断工作成败</em></h1>
   <div class="subtitle">这个项目是 <em>给 AI Agent 用的</em>，也是 <em>用 AI Agent 做出来的</em></div>
   <div class="author-block">
-    <strong>MiaoDX · 直觉机器漫谈</strong><br>
+    <strong>miaodongxu · dingsong1 · 直觉机器漫谈</strong><br>
     github.com/MiaoDX/roboharness · miaodx.com/roboharness/<br>
     2026-05
   </div>
@@ -772,7 +857,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
         </div>
         <div class="evidence-badge">
           <div class="badge-k">真正卡点</div>
-          <div class="badge-v">夹爪夹住没？方块滑了没？姿态合理吗？</div>
+          <div class="badge-v">手指抓住没？瓶子滑了没？姿态合理吗？</div>
         </div>
       </div>
       <p class="mt-card max-prose">
@@ -794,10 +879,10 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/2</span> · 关键洞察</div>
   <div class="quote quote-lg">
-    这不是 <em>算力</em> 问题<br>
-    是 <em>注意力</em> 问题
+    <em>不是仿真跑不动</em><br>
+    是 <em>没人能一直盯</em>
   </div>
-  <div class="section-metric compact">瓶颈 <span class="unit">不在 GPU · 在工程师的注意力</span></div>
+  <div class="section-metric compact">瓶颈 <span class="unit">不是仿真跑不动 · 是没人能一直盯</span></div>
   <p class="mt-sm max-prose">
     Agent 要真自主 —— <strong>唯一的路是让它自己有判断依据</strong>
   </p>
@@ -818,7 +903,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     <div class="card accent-card">
       <div class="card-tag">phase 02 · Agent 接管 · 工程师不在场</div>
       <div class="card-title">Execute</div>
-      <div class="card-desc">harness 每改一步自跑 grasp pipeline<br>metric + 视觉证据自评<br>Codex CLI <code>/goal</code> 锚定长程</div>
+      <div class="card-desc">roboharness 每改一步自跑 grasp pipeline<br>收集 metric + 视觉证据<br>生成 PASS / FAIL proof pack</div>
     </div>
     <div class="card">
       <div class="card-tag">phase 03 · 人回来</div>
@@ -832,9 +917,9 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   </div>
   <p class="mt-xs max-wide">
     Decoupled WBC <span class="dim">(RL + IK 混合)</span> → GEAR-SONIC <span class="dim">(单一 Transformer 基础模型)</span><br>
-    整条控制栈底层重写 —— <span class="hl">agent 连续自主跑了几个小时，工程师全程不在场</span>
+    整条控制栈底层重写 —— <span class="hl">roboharness 给每一步回传证据，agent 才能无人值守跑几个小时</span>
   </p>
-  <div class="speaker-note">三阶段讲清楚：Plan 人主导；Execute 完全 agent，工程师不在场，每改一步 harness 自跑 + metric/视觉自评 + Codex CLI /goal 锚定长程目标；Review 人回来，metric→视觉→E2E。Q&A 备好：为什么不是直接 N1.7 —— GEAR-SONIC 权重 2 月中下旬已有公开记录，N1.7 4 月才商业 release，时间线对得上。/goal 需要 codex-cli 0.128.0+ /experimental 打开。</div>
+  <div class="speaker-note">三阶段讲清楚：Plan 人主导；Execute 完全 agent，工程师不在场，每改一步 roboharness 自跑 + metric / 视觉证据 + PASS / FAIL proof pack，Codex CLI /goal 锚定长程目标；Review 人回来，metric→视觉→E2E。Q&A 备好：为什么不是直接 N1.7 —— GEAR-SONIC 权重 2 月中下旬已有公开记录，N1.7 4 月才商业 release，时间线对得上。/goal 需要 codex-cli 0.128.0+ /experimental 打开。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 6 · 校准关键一句 (page 7)                                           -->
@@ -844,21 +929,21 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <h2>不是 Agent 突然变聪明</h2>
   <h3>是给了它判断自己工作好坏的工具</h3>
   <div class="quote mt-2xl">
-    让 agent 跑得久 —— 不靠模型变神<br>
+    让 agent 跑得久 —— 不靠模型突然变强<br>
     靠 <em>"越过边界时会被挡住、边界内时能自己往前走"</em>
   </div>
   <p class="mono-line mt-quote max-prose">
     <span class="hl">roboharness</span> · 抽出独立 repo · <span class="dim">github.com/MiaoDX/roboharness</span>
   </p>
-  <div class="speaker-note">这一页是过渡 + 校准。把"模型变神"这种解读挡掉，把"trust boundary"埋下（页 15 收）。内部抓取项目跑通后我们发现 —— 任何需要 agent 长时间自主跑机器人代码的场景都缺这一层，所以抽成独立 repo。</div>
+  <div class="speaker-note">这一页是过渡 + 校准。把"模型突然变强"这种解读挡掉，把"信任边界"埋下（页 15 收）。内部抓取项目跑通后我们发现 —— 任何需要 agent 长时间自主跑机器人代码的场景都缺这一层，所以抽成独立 repo。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 7 · 案例 A · qpos (page 8) — metric 救 visual                      -->
 <!-- ====================================================================== -->
-<div class="slide">
+<div class="slide slide--qpos-case">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 A</div>
   <h2>案例 A · qpos 索引</h2>
-  <h3>GitHub commit <code>102a593</code> · 临时分支重跑 CI，拿到新的 <code>mujoco-grasp-output</code> artifact</h3>
+  <h3>修复前 artifact · 视觉上 lift 基本合理，但 success metric 读错</h3>
   <div class="slide-2col slide-2col--qpos mt-md">
     <div class="col-l">
       <div class="table-wrap">
@@ -867,8 +952,8 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
             <tr><th>证据通道</th><th>判定</th><th>解释</th></tr>
           </thead>
           <tbody>
-            <tr><td class="entity">截图</td><td class="muted"><span class="hl">✓ 视觉 PASS</span></td><td class="muted">画面 OK · Agent 判 PASS</td></tr>
-            <tr><td class="entity">物理约束 metric</td><td class="muted danger-muted">✗ cube z ≈ 0</td><td class="muted">success 断言才发现根本没抬起来</td></tr>
+            <tr><td class="entity">视觉 artifact</td><td class="muted"><span class="hl">✓ lift 看起来成立</span></td><td class="muted">front / side 视角都像抓住并抬起</td></tr>
+            <tr><td class="entity">success metric</td><td class="muted danger-muted">✗ cube z=0.0000m</td><td class="muted">断言失败 · expected &gt; 0.2250m</td></tr>
           </tbody>
         </table>
       </div>
@@ -880,12 +965,21 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     </div>
     <div class="col-r">
       <div class="media-frame media-frame--qpos-proof">
-        <img src="images/qpos-ci-rerun-artifact.png" alt="GitHub Actions 临时分支重跑 CI 截图，显示成功并产出一个 artifact">
-        <div class="ss-cap">CI artifact 证据 · 基于 <a href="https://github.com/MiaoDX/roboharness/commit/102a5936c378081369b06a431a11eb690bef4026">102a593</a> + 仅改 workflow trigger · run <a href="https://github.com/MiaoDX/roboharness/actions/runs/26277040748">26277040748</a> · artifact <a href="https://github.com/MiaoDX/roboharness/actions/runs/26277040748/artifacts/7156126533">7156126533</a></div>
+        <div class="qpos-proof-grid">
+          <div class="qpos-proof-shot">
+            <img src="images/qpos-lift-front.png" alt="MuJoCo grasp artifact lift phase front view">
+            <div class="qpos-proof-label">lift · front · step 2600</div>
+          </div>
+          <div class="qpos-proof-shot">
+            <img src="images/qpos-lift-side.png" alt="MuJoCo grasp artifact lift phase side view">
+            <div class="qpos-proof-label">lift · side · step 2600</div>
+          </div>
+        </div>
+        <div class="ss-cap">修复前 artifact · front / side 视觉像 PASS；日志：<span class="hl">contact OK</span> / <span class="danger-muted">ASSERT-SUCCESS FAILED</span> · run <a href="https://github.com/MiaoDX/roboharness/actions/runs/26278739873">26278739873</a></div>
       </div>
     </div>
   </div>
-  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。根因来自 commit 102a593：commit message 写明 qpos[5] 假设错误、正确是 qpos[2]，也写了 artifact upload 即使失败也要 always()。右侧是 2026-05-22 临时分支重跑：只改 ci.yml trigger，不改业务代码，run 26277040748 成功并产出 mujoco-grasp-output artifact 7156126533。</div>
+  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。右侧是修复前 parent 23ad3ae 重跑出来的 artifact：只改 ci.yml trigger 和 if: always()，不改业务代码。视觉上 lift/front 和 lift/side 都像抓住并抬起；日志同时显示 gripper-cube contact at lift OK，但 ASSERT-SUCCESS FAILED，cube z=0.0000m，expected >0.2250m。根因来自修复 commit 102a593：agent / helper 假设 qpos[5] 是 cube z，实际 MuJoCo free joint 在前，cube z 是 qpos[2]。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 8 · 案例 B · 拇指朝下抓 bottle (page 9) — visual 救 metric         -->
@@ -893,11 +987,11 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 B</div>
   <h2>案例 B · 拇指朝下抓 bottle</h2>
-  <h3>真实项目录屏 · Unitree G1</h3>
+  <h3>真实项目录屏 · RealMan</h3>
   <div class="slide-2col mt-md">
     <div class="col-l">
       <p>初始唯一 metric · <strong>抓取中心点 vs bottle 中心点 3D 距离</strong></p>
-      <p class="mt-sm">Agent 规划出的解 —— <span class="hl">整个手反着抓，拇指朝下而不是朝上</span></p>
+      <p class="mt-sm">Agent 写出的 cuRobo 代码，规划出的解 —— <span class="hl">整个手反着抓，拇指朝下而不是朝上</span></p>
       <ul class="list-plain">
         <li>· metric <span class="hl">✓ 完全 PASS</span> · 3D 距离确实在阈值内</li>
         <li>· visual harness 一打开图 —— <strong>谁都看得出来不对</strong></li>
@@ -910,10 +1004,10 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     </div>
     <div class="col-r">
       <div class="media-frame media-frame--thumb-video">
-        <video autoplay muted loop playsinline preload="metadata" poster="images/0325_02-poster.jpg" aria-label="真实项目录屏：Unitree G1 抓 bottle 时手部和拇指朝向异常">
+        <video autoplay muted loop playsinline preload="metadata" poster="images/0325_02-poster.jpg" aria-label="真实项目录屏：RealMan 抓 bottle 时手部和拇指朝向异常">
           <source src="images/0325_02.webm" type="video/webm">
         </video>
-        <div class="ss-cap">图 #3 · 真实项目录屏 · 初始距离 metric PASS，但视觉上手部 / 拇指朝向异常 · <span class="dim">images/0325_02.webm</span></div>
+        <div class="ss-cap">图 #3 · 真实项目录屏 · RealMan · 初始距离 metric PASS，但视觉上手部 / 拇指朝向异常 · <span class="dim">images/0325_02.webm</span></div>
       </div>
     </div>
   </div>
@@ -943,6 +1037,33 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc">每发现一个新坑 → 从 visual 那侧 <strong>搬到</strong> metric 那侧<br>把失败永久转成可量化护栏</div>
     </div>
   </div>
+  <div class="loop-row">
+    <div class="loop-graphic" role="img" aria-label="visual review promotes new failure modes into metric gates">
+      <svg viewBox="0 0 520 150" aria-hidden="true">
+        <defs>
+          <marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"></path>
+          </marker>
+        </defs>
+        <rect x="18" y="42" width="132" height="58" rx="8" class="loop-node"></rect>
+        <text x="84" y="67" text-anchor="middle" class="loop-label">Visual</text>
+        <text x="84" y="86" text-anchor="middle" class="loop-sub">发现新失败模式</text>
+        <path d="M 154 72 L 186 72" class="loop-flow"></path>
+        <rect x="194" y="42" width="132" height="58" rx="8" class="loop-node loop-node-strong"></rect>
+        <text x="260" y="67" text-anchor="middle" class="loop-label">Promote</text>
+        <text x="260" y="86" text-anchor="middle" class="loop-sub">沉淀成判据</text>
+        <path d="M 330 72 L 362 72" class="loop-flow"></path>
+        <rect x="370" y="42" width="132" height="58" rx="8" class="loop-node"></rect>
+        <text x="436" y="67" text-anchor="middle" class="loop-label">Metric Gate</text>
+        <text x="436" y="86" text-anchor="middle" class="loop-sub">自动挡住复发</text>
+      </svg>
+    </div>
+    <div class="reference-line">
+      参考 · <a href="https://mitchellh.com/writing/my-ai-adoption-journey">Mitchell Hashimoto · My AI Adoption Journey</a><br>
+      参考 · <a href="https://openai.com/index/harness-engineering/">OpenAI · Harness engineering</a><br>
+      背景 · <a href="https://github.com/NVlabs/curobo">NVIDIA cuRobo</a> · <a href="https://github.com/NVlabs/GR00T-WholeBodyControl#gear-sonic">GEAR-SONIC</a>
+    </div>
+  </div>
   <div class="quote quote-md mt-quote">
     这就是 Mitchell Hashimoto 讲的 <em>engineer the harness</em><br>字面意义在做的事
   </div>
@@ -954,11 +1075,12 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/4</span> · 自主率</div>
   <h2>得投入多少？之后能多自主？</h2>
   <h3>投入 vs 自主率 · 分开看</h3>
+  <p class="max-prose">所以问题变成：前期要投入多少判据，之后能少盯多少轮？</p>
   <div class="data-row">
     <div class="data-cell">
       <div class="data-num">1<span class="data-unit">×</span></div>
       <div class="data-label">Harness 调试期 · 一次性成本</div>
-      <div class="data-sub">写契约 · 跑 seeded good/bad/ambiguous corpus · 调阈值</div>
+      <div class="data-sub">写判据 · 跑 seeded good/bad/ambiguous corpus · 调阈值</div>
     </div>
     <div class="data-cell">
       <div class="data-num">95<span class="data-unit">%+</span></div>
@@ -983,7 +1105,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/4</span> · 现场 Demo</div>
-  <h2>现场切到浏览器</h2>
+  <h2>一个 MuJoCo 抓取方块的示例</h2>
   <div class="quote quote-code">
     <a class="link-accent" href="https://miaodx.com/roboharness/grasp/">miaodx.com/roboharness/grasp/</a>
   </div>
@@ -1037,7 +1159,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
         <path d="M 350 102 L 350 133" class="arch-flow"></path>
 
         <rect x="36" y="132" width="628" height="92" rx="8" class="arch-band"></rect>
-        <text x="350" y="158" text-anchor="middle" class="arch-label arch-accent">Contract Boundary</text>
+        <text x="350" y="158" text-anchor="middle" class="arch-label arch-accent">Decision Boundary</text>
         <rect x="72" y="174" width="160" height="34" rx="5" class="arch-node"></rect>
         <text x="152" y="196" text-anchor="middle" class="arch-sub">contract.py</text>
         <rect x="270" y="174" width="160" height="34" rx="5" class="arch-node"></rect>
@@ -1096,7 +1218,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
         <path d="M 180 82 L 180 110" class="arch-flow" marker-end="url(#arch-arrow-mobile)"></path>
 
         <rect x="24" y="110" width="312" height="116" rx="8" class="arch-band"></rect>
-        <text x="180" y="138" text-anchor="middle" class="arch-label arch-accent">Contract Boundary</text>
+        <text x="180" y="138" text-anchor="middle" class="arch-label arch-accent">Decision Boundary</text>
         <rect x="44" y="158" width="84" height="36" rx="5" class="arch-node"></rect>
         <text x="86" y="181" text-anchor="middle" class="arch-sub">contract.py</text>
         <rect x="138" y="158" width="84" height="36" rx="5" class="arch-node"></rect>
@@ -1138,7 +1260,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     <div class="arch-side">
       <div class="card accent-card">
         <div class="card-tag">source of truth</div>
-        <div class="card-title">契约先定边界</div>
+        <div class="card-title">判据先定边界</div>
         <div class="card-desc"><code>contract.py</code> 定义 phase / metric / visual dimension / approval policy<br><span class="dim">生成物只做 agent 指南</span></div>
       </div>
       <div class="card">
@@ -1153,32 +1275,42 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">这页放在 demo 后讲，观众刚看完 report.html，再解释它不是一张漂亮网页，而是一条证据流水线。重点顺序：contract.py 是源头；runtime 只负责采集；metric gate 优先；visual review 被 manifest 框住；最后只有 surfaced case 需要人看。</div>
+  <div class="speaker-note">这页放在 demo 后讲，观众刚看完 report.html，再解释它不是一张漂亮网页，而是一条证据流水线。重点顺序：contract.py 是判据源头；runtime 只负责采集；metric gate 优先；visual review 被 manifest 框住；最后只有 surfaced case 需要人看。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 13 · 抽成 repo 之后又长了什么 (page 14)                              -->
+<!-- SLIDE 13 · 历史演进 (page 14)                                            -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/5</span> · repo 演化</div>
-  <h2>抽成 repo 之后 · 3 周</h2>
-  <h3>v0.3.1 已发到 PyPI · v0.3.0 / v0.3.1 已打 GitHub tag · 又长了两件事</h3>
+  <h2>从项目内脚本到 Roboharness repo</h2>
+  <h3>历史演进，不是一次性抽象出来</h3>
   <div class="cards mt-lg">
     <div class="card">
-      <div class="card-tag">2026-05-20 上线</div>
-      <div class="card-title">❶ Agent Visual Review v1</div>
-      <div class="card-desc">同一个 coding agent 在 bounded manifest 边界内做视觉评审 —— <strong>不另起 VLM 服务</strong><br>每个 visual dimension 必须声明 <code>metric_fallback</code> 或 <code>why_not_metricized</code> · 否则 fail-closed<br><span class="dim">→ 把"agent 看图"也做成有契约的、不能滥用的机制</span></div>
+      <div class="card-tag">2026-03 · 项目内</div>
+      <div class="card-title">grasp pipeline 先跑起来</div>
+      <div class="card-desc">MuJoCo / MeshCat 对照<br>人工盯图 + 少量 metric<br><span class="dim">问题不是不会跑，是不会自己判</span></div>
     </div>
     <div class="card">
-      <div class="card-tag">2026-05-20 上线</div>
-      <div class="card-title">❷ Python contract → SKILL.md</div>
-      <div class="card-desc"><code>contract.py</code> 是手写真值<br><code>roboharness contract generate</code> → SKILL.md / schemas / stubs<br><span class="dim">→ Agent 自己加载契约约束自己</span></div>
+      <div class="card-tag">2026-04 · 抽层</div>
+      <div class="card-title">验证层独立出来</div>
+      <div class="card-desc">checkpoint / artifact layout / report.html<br>Run Decision 汇总成 agent 可读结论<br><span class="dim">从一次项目经验变成可复用工具</span></div>
+    </div>
+    <div class="card">
+      <div class="card-tag">2026-05-20 · v1</div>
+      <div class="card-title">Agent Visual Review</div>
+      <div class="card-desc">同一个 coding agent 在 bounded manifest 内看图<br>每个 visual dimension 都要声明 metric fallback 或原因<br><span class="dim">让"agent 看图"也有边界</span></div>
+    </div>
+    <div class="card">
+      <div class="card-tag">2026-05-20 · v0.3</div>
+      <div class="card-title">Python spec → SKILL.md</div>
+      <div class="card-desc"><code>contract.py</code> 是手写真值<br><code>roboharness contract generate</code> → SKILL.md / schemas / stubs<br><span class="dim">Agent 自己加载边界和判据</span></div>
     </div>
   </div>
   <div class="quote quote-md mt-lg">
     判断边界从 <em>run-time</em> 扩到 <em>design-time</em><br>
-    <span class="quote-sub-sm">Agent 不是变聪明 —— 是约束它的契约写得更清楚了</span>
+    <span class="quote-sub-sm">Agent 不是变聪明 —— 是边界和判据写得更清楚了</span>
   </div>
-  <div class="speaker-note">这两个 feature 都是 5 月 20 日刚 commit 的，要诚实 —— "刚上、小规模验证中"，不需要进 demo。</div>
+  <div class="speaker-note">这里讲历史演进，不讲成"三周神速做完"。重点是：先有真实项目里的痛点，再把判断、证据、报告抽出来，最后扩到 visual review 和 Python spec 生成 agent 指南。5 月 20 日的两个 feature 要诚实 —— 刚上、小规模验证中，不需要进 demo。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 14 · Sidenote · 这个 repo 自己也是 agent 做的 (page 15)             -->
@@ -1217,23 +1349,28 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">节奏快，2 分钟内。4 routine 设计细节这里不展开 · 公众号上有完整文章。Q&A 备好：统计口径是截至 2026-05-22 10:12 +08 的 main HEAD；AI solo 看 author，AI 协作看 co-authored-by trailer；剩下 18 个是 README / docs / gitignore / 清理类小提交或漏加 trailer。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 15 · 点题 · trust boundary (page 16)                                -->
+<!-- SLIDE 15 · 点题 · 信任边界 (page 16)                                      -->
 <!-- ====================================================================== -->
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/6</span> · 收口 · trust boundary</div>
+  <div class="meta"><span class="meta-tag">section/6</span> · 收口 · 信任边界</div>
   <h2>两件事 —— 同一个工程思路</h2>
-  <h3>"用 agent 做" + "为 agent 做" 背后都是 trust boundary</h3>
-  <div class="table-wrap spaced">
-    <table class="compare-table table-wide">
-      <thead>
-        <tr><th>层面</th><th>For agents · 产品层</th><th>By agents · 开发层</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="entity">边界形态</td><td class="muted">contract · metric_gate · visual review manifest · approval report</td><td class="muted">branch namespace · 4 routine 隔离</td></tr>
-        <tr><td class="entity">消息通道</td><td class="muted">structured evidence · 自动 surface / suppress</td><td class="muted">GitHub comment as msgbus · PR template / CI gate</td></tr>
-        <tr><td class="entity">越界后果</td><td class="muted">fail-closed · 被挡住</td><td class="muted">被锁在前缀内 · 不互踩</td></tr>
-      </tbody>
-    </table>
+  <h3>"用 agent 做" + "为 agent 做" 背后都是信任边界</h3>
+  <div class="cards cards-spacious">
+    <div class="card">
+      <div class="card-tag">边界</div>
+      <div class="card-title">先限定 agent 可以做什么</div>
+      <div class="card-desc">产品层是 metric gate / visual manifest / approval report<br>开发层是 branch namespace / routine 隔离</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">证据</div>
+      <div class="card-title">只相信结构化回传</div>
+      <div class="card-desc">产品层看 proof pack 和自动 surface / suppress<br>开发层看 GitHub comment / PR template / CI gate</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">越界</div>
+      <div class="card-title">越界就停，边界内就放手</div>
+      <div class="card-desc">fail-closed · 需要人看的东西被 surfaced<br>不需要人看的循环继续自动跑</div>
+    </div>
   </div>
   <div class="quote mt-lg">
     <em>Agent 越过边界 → 被挡住</em> · <em>Agent 边界内 → 能自己往前走</em><br>
@@ -1242,48 +1379,33 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">把页 1 的钩子（"给 agent 用 + 用 agent 做"）和页 7 的"越过边界会被挡住"两根线在这里合并收口。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 16 · Takeaway · 工程师向 (page 17)                                  -->
+<!-- SLIDE 16 · Takeaways (page 17)                                            -->
 <!-- ====================================================================== -->
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/6</span> · takeaway · 工程师</div>
-  <h2>实践 · 工程师向</h2>
-  <h3>两个能直接拿走的实践</h3>
+  <div class="meta"><span class="meta-tag">section/6</span> · takeaways</div>
+  <h2>Takeaways</h2>
+  <h3>工程做法 + 宏观判断放在一页</h3>
   <div class="cards cards-spacious">
     <div class="card accent-card">
       <div class="card-tag">practice 01</div>
-      <div class="card-title">契约先于 prompt</div>
-      <div class="card-desc">把目标 / 不可改部分 / 异常行为写成结构化契约<br>不能 ground 的 prompt 别让 agent 跑<br><strong>节省的不是 token · 是审查时间</strong></div>
+      <div class="card-title">判据先于 prompt</div>
+      <div class="card-desc">把目标 / 不可改部分 / 异常行为写成结构化判据<br>不能 ground 的 prompt 别让 agent 跑<br><strong>节省的不是 token · 是审查时间</strong></div>
     </div>
     <div class="card accent-card">
       <div class="card-tag">practice 02</div>
       <div class="card-title">给 Agent 真正的判断依据</div>
       <div class="card-desc"><strong>metric + visual 双轨 · 缺一不可</strong><br>· qpos 案例 → visual 没救你 · metric 救<br>· 拇指朝下 → metric 没救你 · visual 救<br>发现一个新失败模式 → promote 到 metric</div>
     </div>
-  </div>
-  <p class="mt-lg">这就是 <span class="hl">engineer the harness</span> 字面意思 —— 也是我们日常的工作流</p>
-</div>
-<!-- ====================================================================== -->
-<!-- SLIDE 17 · Takeaway · 产品 / 管理向 (page 18)                             -->
-<!-- ====================================================================== -->
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/6</span> · takeaway · 宏观</div>
-  <h2>判断 · 宏观向</h2>
-  <h3>两个判断</h3>
-  <div class="cards cards-spacious">
     <div class="card">
       <div class="card-tag">judgment 01</div>
       <div class="card-title">瓶颈已经换地方了</div>
       <div class="card-desc">"模型够不够好" <span class="hl">→</span> <strong>"Agent 能不能自己判断"</strong><br>这件事一旦解决 · <span class="hl">研发流程长度直接解锁</span><br><span class="dim">SONIC 升级就是证据</span></div>
     </div>
-    <div class="card accent-card">
-      <div class="card-tag">judgment 02</div>
-      <div class="card-title">方向是契约工程 · 不是堆模型</div>
-      <div class="card-desc">同模型 + 好契约 <strong class="text-accent">&gt;</strong> 更强模型 + 没契约<br><span class="dim">—— 这是杠杆点所在</span></div>
-    </div>
   </div>
+  <p class="mt-lg">方向不是堆模型 —— 是把 <span class="hl">判断</span> 工程化</p>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 18 · 边界 · 当前限制 (page 19)                                      -->
+<!-- SLIDE 17 · 边界 · 当前限制 (page 18)                                      -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · 边界</div>
@@ -1292,8 +1414,8 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="table-wrap spaced">
     <table class="compare-table table-mid">
       <tbody>
-        <tr><td class="entity">已验证</td><td class="muted">MuJoCo + G1 · 抓取 / 到达 / 移动 类任务</td></tr>
-        <tr><td class="entity">补充中</td><td class="muted">Contract preset 数量还在补</td></tr>
+        <tr><td class="entity">已验证</td><td class="muted">MuJoCo + RealMan / G1 · 抓取 / 到达 / 移动 类任务</td></tr>
+        <tr><td class="entity">补充中</td><td class="muted">任务 preset 和判据模板数量还在补</td></tr>
         <tr><td class="entity">硬件验证</td><td class="muted">Sim-to-real 真机 evidence 通道</td></tr>
         <tr><td class="entity">小规模验证</td><td class="muted">Agent Visual Review v1 刚上 (2026-05-20)</td></tr>
       </tbody>
@@ -1302,11 +1424,11 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">30 秒，快速诚实带过，不卖惨。说这些是因为 —— 如果你想在自己项目里用，这是我们目前真实的能力边界。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 19 · 收尾 · QA + 二维码 (page 20)                                   -->
+<!-- SLIDE 18 · 收尾 · QA + 二维码 (page 19)                                   -->
 <!-- ====================================================================== -->
 <div class="slide qa">
   <div class="quote quote-center">
-    让 Agent 跑得久 —— 不是 Agent 变神<br>
+    让 Agent 跑得久 —— 不靠模型突然变强<br>
     是把 <em>"Agent 越过边界时会被挡住"</em> 这件事做扎实
   </div>
   <div class="qa-sub mt-qa">— Q &amp; A —</div>
