@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  STANDALONE DECK TEMPLATE
+  ============================================================================
+  Reusable starting point for HTML / PPT-style slide decks in this repo.
+  Distilled from ai-coding/ultrathink-to-goal/index.html.
+
+  What this template gives you:
+    1. Three switchable themes (font + color) via body[data-style] + a top-right
+       style toggle pill. See "THEME TOKENS" below.
+    2. Keyboard / click paging, progress bar, slide counter, deep-link hash —
+       all handled by the shared assets/deck-runtime.js.
+    3. Image pop-up (lightbox): click any .screenshot/.proof-card image to zoom.
+    4. Speaker notes toggle (press the NOTES button; hidden by default).
+    5. A catalogue of common slide layouts you can copy: title, section
+       divider, big-metric, quote, data-row, cards, two-column + screenshot,
+       compare table, closing/Q&A.
+
+  HOW TO USE — read templates/README.md first, then:
+    - For an AI Coding deck:  copy this folder to  ai-coding/<slug>/index.html
+      (keep the ../../assets/deck-runtime.js path — same depth).
+    - For a general deck:     copy index.html to   presentations/<name>.html
+      and change ../../assets/ to ../assets/ (presentations sits one level up).
+    - Replace placeholder SVG images with real files in an images/ folder and
+      use relative paths, e.g. <img src="images/foo.png">.
+    - Run `npm run quality:check` after adding the deck to a published folder.
+
+  Slide copy style: prefer fragment-style text without trailing 。 / . / ；
+  (keep punctuation inside quotes, URLs, versions, filenames, code).
+  ============================================================================
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deck Template · 标题占位</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================ */
+/* THEME TOKENS                                                  */
+/* Default = terminal (charcoal). Alternates via body[data-style] */
+/* Each theme defines colors + a font triple (display/body/mono).*/
+/* Add a new theme: copy a block, give it a new data-style name,  */
+/* then add it to the `styles` array + a toggle button below.     */
+/* ============================================================ */
+body {
+  /* Terminal · charcoal warm — DEFAULT (dark) */
+  --bg: #1a1715;
+  --bg-alt: #221e1b;
+  --bg-card: #2a2522;
+  --text: #ede0c9;
+  --text-sec: #b9a888;
+  --text-dim: #7a6c58;
+  --border: #3a322c;
+  --border-light: #2f2925;
+  --accent: #d68548;
+  --accent-deep: #a85d2c;
+  --accent-glow: rgba(214, 133, 72, 0.12);
+  --accent-soft: rgba(214, 133, 72, 0.04);
+  --accent-mid: rgba(214, 133, 72, 0.18);
+  --font-display: 'Newsreader', 'Noto Sans SC', serif;
+  --font-body: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --is-light: 0;
+}
+
+body[data-style="newspaper"] {
+  /* Warm cream + red ink (light) */
+  --bg: #f4ede0;
+  --bg-alt: #ece4d2;
+  --bg-card: #faf4e8;
+  --text: #1c1612;
+  --text-sec: #4a3a2a;
+  --text-dim: #8a7960;
+  --border: #b8a99a;
+  --border-light: #d8c8b0;
+  --accent: #8a3a3a;
+  --accent-deep: #6a2828;
+  --accent-glow: rgba(138, 58, 58, 0.10);
+  --accent-soft: rgba(138, 58, 58, 0.04);
+  --accent-mid: rgba(138, 58, 58, 0.18);
+  --font-display: 'Newsreader', 'Noto Serif SC', serif;
+  --font-body: 'IBM Plex Serif', 'Noto Serif SC', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --is-light: 1;
+}
+
+body[data-style="navy"] {
+  /* Near-white + deep blue (light) */
+  --bg: #f8f5ee;
+  --bg-alt: #f0ede0;
+  --bg-card: #ffffff;
+  --text: #1a1612;
+  --text-sec: #4a4640;
+  --text-dim: #8a8a85;
+  --border: #c8c0b0;
+  --border-light: #d8d4c8;
+  --accent: #1a3a8c;
+  --accent-deep: #0d2466;
+  --accent-glow: rgba(26, 58, 140, 0.08);
+  --accent-soft: rgba(26, 58, 140, 0.03);
+  --accent-mid: rgba(26, 58, 140, 0.14);
+  --font-display: 'Source Serif 4', 'Noto Serif SC', serif;
+  --font-body: 'Source Serif 4', 'Noto Serif SC', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --is-light: 1;
+}
+/* ============================================================ */
+/* END THEME TOKENS                                              */
+/* ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  font-feature-settings: "ss01", "ss02";
+}
+
+/* Subtle atmosphere on the background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, var(--accent-soft) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* HUD chrome — progress bar + slide counter */
+.progress { position: fixed; top: 0; left: 0; height: 1px; background: linear-gradient(90deg, var(--accent), var(--accent-deep)); transition: width 0.4s; z-index: 100; }
+.counter { position: fixed; bottom: 18px; right: 32px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); z-index: 100; letter-spacing: 0.5px; }
+.counter::before { content: "[ "; }
+.counter::after { content: " ]"; }
+
+/* Slide stage — one slide visible at a time, fade + lift transition */
+.deck { width: 100vw; height: 100vh; position: relative; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 88px 64px;
+  opacity: 0; transform: translateY(8px);
+  visibility: hidden;
+  transition: opacity 0.45s, transform 0.45s, visibility 0s linear 0.45s;
+  pointer-events: none;
+  overflow-y: auto;
+}
+.slide.active {
+  opacity: 1; transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.45s, transform 0.45s, visibility 0s linear 0s;
+}
+
+/* Quiet metadata strip — like a git log entry, top-left of each slide */
+.meta {
+  position: absolute;
+  top: 32px; left: 88px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  display: flex; gap: 12px; align-items: center;
+  z-index: 5;
+}
+.meta .meta-tag { color: var(--accent); }
+.meta::before { content: "$"; opacity: 0.4; }
+
+/* Typography */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(36px, 5.2vw, 68px);
+  line-height: 1.08;
+  color: var(--text);
+  font-style: italic;
+}
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+h3 {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(15px, 1.7vw, 19px);
+  line-height: 1.55;
+  color: var(--text-sec);
+  margin-bottom: 8px;
+}
+p { font-size: clamp(14px, 1.5vw, 18px); line-height: 1.65; color: var(--text-sec); }
+.hl { color: var(--accent); }
+.dim { color: var(--text-dim); }
+strong { color: var(--text); font-weight: 600; }
+img { max-width: 100%; }
+h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
+  overflow-wrap: anywhere;
+}
+
+/* TITLE slide */
+.title {
+  align-items: flex-start;
+  background: linear-gradient(170deg, var(--bg) 0%, var(--bg-alt) 100%);
+}
+.title .runner { font-family: var(--font-mono); font-size: 12px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; }
+.title h1 { font-size: clamp(44px, 6.5vw, 88px); margin-bottom: 28px; max-width: 95%; }
+.title h1 em { color: var(--accent); font-style: italic; }
+.title .subtitle { font-family: var(--font-display); font-style: italic; font-size: clamp(20px, 2.2vw, 28px); color: var(--text-sec); margin-bottom: 60px; max-width: 70ch; line-height: 1.5; }
+.title .author-block {
+  font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.9;
+  border-left: 2px solid var(--accent); padding-left: 18px;
+}
+.title .author-block strong { color: var(--text); font-weight: 600; }
+
+/* SECTION divider — markdown-heading inspired */
+.section {
+  align-items: flex-start;
+  background: var(--bg-alt);
+}
+.section .section-marker {
+  font-family: var(--font-mono); font-size: 14px; color: var(--accent);
+  letter-spacing: 2px; margin-bottom: 16px;
+}
+.section h1 {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 500;
+  font-size: clamp(40px, 5.5vw, 76px);
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.section h1 .hash { color: var(--accent); margin-right: 16px; opacity: 0.7; }
+.section .section-blurb { font-family: var(--font-display); font-style: italic; font-size: clamp(20px, 2.4vw, 30px); color: var(--text-sec); max-width: 70ch; line-height: 1.5; }
+.section .duration { position: absolute; bottom: 80px; left: 88px; font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: 1px; }
+/* Optional giant metric on a section slide */
+.section-metric {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(120px, 18vw, 240px);
+  color: var(--accent);
+  line-height: 0.9;
+  margin: 8px 0 24px;
+}
+.section-metric .unit { font-size: 0.32em; color: var(--text-sec); margin-left: 8px; }
+
+/* Quote — generous scale, restrained chrome */
+.quote {
+  font-family: var(--font-display); font-style: italic; font-weight: 300;
+  font-size: clamp(22px, 2.8vw, 36px);
+  line-height: 1.5;
+  color: var(--text);
+  border-left: 3px solid var(--accent);
+  padding: 4px 0 4px 28px;
+  margin: 20px 0;
+  max-width: 80ch;
+}
+.quote em { color: var(--accent); font-style: italic; font-weight: 600; }
+.quote-attr { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-top: 12px; padding-left: 31px; letter-spacing: 0.5px; }
+.quote-attr a { color: var(--text-sec); text-decoration: none; }
+.quote-attr a:hover { color: var(--accent); }
+
+/* Data callouts — a row of big numbers */
+.data-row {
+  display: flex; gap: 0; margin-top: 32px; max-width: 1100px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.data-cell {
+  flex: 1; padding: 32px 28px; position: relative;
+  border-right: 1px solid var(--border);
+}
+.data-cell:last-child { border-right: none; }
+.data-cell .data-num {
+  font-family: var(--font-mono); font-weight: 600;
+  font-size: clamp(36px, 4.5vw, 56px); color: var(--accent);
+  line-height: 1; margin-bottom: 12px;
+}
+.data-cell .data-unit { font-size: 0.5em; }
+.data-cell .data-label {
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  color: var(--text); margin-bottom: 6px; line-height: 1.4;
+}
+.data-cell .data-sub {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-dim); line-height: 1.5;
+}
+
+/* Cards — a flexible row of titled blocks */
+.cards { display: flex; gap: 16px; margin-top: 24px; max-width: 1100px; }
+.card { flex: 1; background: var(--bg-card); border: 1px solid var(--border); padding: 22px 24px; }
+.card.accent-card { border-color: var(--accent); }
+.card.accent-card .card-tag,
+.card.accent-card .card-title { color: var(--accent); }
+.card .card-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+.card .card-title { font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
+.card .card-desc { font-size: 13.5px; color: var(--text-sec); line-height: 1.6; }
+
+/* Two-column layout (e.g. text left, screenshot right). */
+/* NOTE: this is CSS grid, not flex — to change the split, override */
+/* grid-template-columns on .slide-2col, not flex on the children.  */
+.slide-2col {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.slide-2col .col-l { display: flex; flex-direction: column; gap: 14px; }
+.slide-2col .col-r { display: flex; align-items: center; }
+.slide-2col .col-r .screenshot { margin-top: 0; max-width: 100%; }
+
+/* Callback box — forward / back reference between slides */
+.callback-box {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 9px 14px;
+  margin-bottom: 18px;
+  background: var(--accent-soft);
+  border-left: 2px solid var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-sec);
+  letter-spacing: 0.3px;
+  max-width: 720px;
+}
+.callback-box .ref { color: var(--accent); font-weight: 600; letter-spacing: 1.5px; }
+.callback-box .arrow { color: var(--accent); opacity: 0.6; }
+
+/* Compare table */
+.table-wrap { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+.table-wrap.spaced { margin-top: 22px; }
+.compare-table {
+  width: 100%; max-width: 900px;
+  border-collapse: collapse;
+  font-family: var(--font-mono); font-size: 13px;
+}
+.compare-table th, .compare-table td { text-align: left; padding: 10px 14px; }
+.compare-table th { color: var(--accent); font-weight: 500; letter-spacing: 1px; }
+.compare-table tr { border-bottom: 1px solid var(--border-light); }
+.compare-table thead tr { border-bottom: 1.5px solid var(--border); }
+.compare-table tbody tr:last-child { border-bottom: none; }
+.compare-table .entity { color: var(--text); }
+.compare-table .muted { color: var(--text-sec); }
+
+/* Inline screenshot — click to pop up (lightbox). */
+.screenshot {
+  margin-top: 20px; max-width: 800px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.screenshot img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.screenshot .ss-cap {
+  font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
+  padding: 8px 12px; border-top: 1px solid var(--border-light);
+  letter-spacing: 0.5px;
+}
+.screenshot .ss-cap a, .quote-attr a {
+  color: inherit; text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+/* For tall vertical screenshots — cap visible height, fade out the bottom */
+.screenshot.tall .ss-frame { max-height: 320px; overflow: hidden; position: relative; }
+.screenshot.tall .ss-frame::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--bg-card));
+  pointer-events: none;
+}
+
+/* Closing / Q&A slide */
+.qa { align-items: center; justify-content: center; text-align: center; }
+.qa h1 { font-style: normal; }
+.qa .qa-sub { font-family: var(--font-mono); color: var(--text-dim); letter-spacing: 3px; margin-top: 14px; }
+.qa .qa-footer { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); line-height: 1.9; margin-top: 40px; }
+
+/* ============================================================ */
+/* IMAGE LIGHTBOX — built + wired by installImageLightbox() JS    */
+/* ============================================================ */
+.image-lightbox {
+  position: fixed; inset: 0; z-index: 500;
+  display: none; align-items: center; justify-content: center;
+  padding: 32px;
+  background: rgba(0, 0, 0, 0.82);
+}
+.image-lightbox.open { display: flex; }
+.image-lightbox-inner { max-width: min(94vw, 1600px); max-height: 92vh; display: grid; gap: 10px; justify-items: center; }
+.image-lightbox img { max-width: 100%; max-height: 84vh; object-fit: contain; background: #f8f6f2; border: 1px solid rgba(255, 255, 255, 0.22); }
+.image-lightbox-caption { max-width: min(94vw, 1200px); color: #d8d4c8; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; text-align: center; }
+
+/* ============================================================ */
+/* SPEAKER NOTES — hidden by default; NOTES button reveals them   */
+/* ============================================================ */
+.speaker-note {
+  display: none;
+  margin-top: 28px; padding: 16px 20px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-mid);
+  border-radius: 4px;
+  font-family: var(--font-body); font-size: 14px; line-height: 1.7;
+  color: var(--text-sec); max-width: 80ch;
+}
+.speaker-note::before {
+  content: "口播 · NOTES";
+  display: block;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+  color: var(--accent); letter-spacing: 2px; margin-bottom: 8px;
+}
+body.show-notes .speaker-note { display: block; }
+.notes-toggle {
+  position: fixed; bottom: 18px; left: 88px; z-index: 200;
+  background: var(--bg-alt); border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 6px 14px; border-radius: 3px; cursor: pointer;
+  font-size: 11px; font-family: var(--font-mono); letter-spacing: 1px;
+  transition: all 0.2s;
+}
+.notes-toggle:hover { border-color: var(--accent); color: var(--accent); }
+body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent); }
+
+/* ============================================================ */
+/* STYLE TOGGLE — top-right floating pill                         */
+/* ============================================================ */
+.style-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 200;
+  display: flex; gap: 2px; padding: 3px;
+  background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.5px;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  opacity: 0.7; transition: opacity 0.2s;
+}
+.style-toggle:hover { opacity: 1; }
+.style-toggle button {
+  border: none; background: transparent; color: var(--text-dim);
+  padding: 5px 10px; cursor: pointer; border-radius: 2px;
+  font-family: inherit; font-size: inherit; letter-spacing: inherit;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.style-toggle button:hover { color: var(--text); }
+.style-toggle button.active { background: var(--text); color: var(--bg); }
+.style-toggle .swatch { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.style-toggle button[data-style="terminal"] .swatch { background: #d68548; }
+.style-toggle button[data-style="newspaper"] .swatch { background: #8a3a3a; }
+.style-toggle button[data-style="navy"] .swatch { background: #1a3a8c; }
+
+/* ============================================================ */
+/* RESPONSIVE — laptop default; phone branch at <= 900px          */
+/* Always verify both 1440x900 and 390x844 (see CLAUDE.md).       */
+/* ============================================================ */
+@media (max-width: 900px) {
+  .slide { justify-content: flex-start; padding: 64px 32px 72px; }
+  .meta { top: 26px; left: 32px; right: 126px; flex-wrap: wrap; gap: 6px; line-height: 1.4; }
+  .style-toggle { top: 14px; right: 14px; opacity: 0.92; }
+  .style-toggle button { width: 28px; height: 28px; padding: 0; justify-content: center; }
+  .style-toggle .style-label { display: none; }
+  .style-toggle .swatch { width: 10px; height: 10px; }
+  .notes-toggle { left: 32px; }
+  .counter { right: 32px; }
+  .section .duration { left: 32px; bottom: 68px; max-width: calc(100vw - 64px); }
+  .data-row { flex-direction: column; }
+  .data-cell { border-right: none; border-bottom: 1px solid var(--border); }
+  .data-cell:last-child { border-bottom: none; }
+  .cards { flex-direction: column; }
+  .slide-2col { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<!-- HUD chrome: progress bar, slide counter, notes + style toggles -->
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+<button class="notes-toggle" id="notesToggle" type="button" aria-pressed="false">NOTES</button>
+<nav class="style-toggle" id="styleToggle" aria-label="Slide theme">
+  <button data-style="terminal" title="深炭灰 + 暖橙 (default)" aria-label="Use terminal theme"><span class="swatch"></span><span class="style-label">terminal</span></button>
+  <button data-style="newspaper" title="暖米黄 + 红墨" aria-label="Use newspaper theme"><span class="swatch"></span><span class="style-label">newspaper</span></button>
+  <button data-style="navy" title="近白 + 深蓝" aria-label="Use navy theme"><span class="swatch"></span><span class="style-label">navy</span></button>
+</nav>
+
+<div class="deck" id="deck">
+
+<!-- ============================================================ -->
+<!-- SLIDE 0 · Title  (the FIRST slide must carry class "active")  -->
+<!-- ============================================================ -->
+<div class="slide title active">
+  <div class="runner">系列名称 · 第 NN 期</div>
+  <h1>主标题 <em>关键词</em><br>副线 <em>关键词</em></h1>
+  <div class="subtitle">一句话副标题占位 —— 概括这场分享的主线</div>
+  <div class="author-block">
+    <strong>作者名 / Author</strong><br>
+    单位 / 角色<br>
+    联系方式 · github.com/your-handle
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1 · Section divider (use to open each chapter)          -->
+<!-- ============================================================ -->
+<div class="slide section">
+  <div class="section-marker">§ 1</div>
+  <h1><span class="hash">#</span> 章节标题</h1>
+  <div class="section-blurb">章节副述：用一句话点出这一段要回答的问题</div>
+  <div class="duration">约 5 分钟</div>
+  <div class="speaker-note">口播占位：这一节想让听众带走的一个判断是什么。speaker-note 默认隐藏，点右下 NOTES 显示。</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2 · Content + cards row                                 -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/1</span> · 三点结构</div>
+  <h2>一个观点，拆成三张卡</h2>
+  <h3>用 h3 放一行支撑性的副述，承接标题</h3>
+  <div class="cards">
+    <div class="card">
+      <div class="card-tag">point 01</div>
+      <div class="card-title">第一点标题</div>
+      <div class="card-desc">说明文字占位，控制在两三行，保持可扫读</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">point 02</div>
+      <div class="card-title">第二点标题</div>
+      <div class="card-desc">说明文字占位，控制在两三行，保持可扫读</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">point 03</div>
+      <div class="card-title">重点用 accent-card</div>
+      <div class="card-desc">高亮卡用主题强调色描边，引导视线落点</div>
+    </div>
+  </div>
+  <div class="speaker-note">口播占位：每张卡只讲一句，重点落在第三张。</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3 · Quote + data row                                    -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/1</span> · 引用 + 数据</div>
+  <div class="callback-box"><span class="ref">CALLBACK</span><span class="arrow">→</span> 可选：引用前后页的呼应关系</div>
+  <div class="quote">
+    一句值得停顿的话，<em>把强调词放进 em</em>，会变成主题色
+    <div class="quote-attr">— 出处 · <a href="https://example.com">example.com</a></div>
+  </div>
+  <div class="data-row">
+    <div class="data-cell">
+      <div class="data-num">42<span class="data-unit">%</span></div>
+      <div class="data-label">指标一</div>
+      <div class="data-sub">补充口径 / 时间窗</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">3.2<span class="data-unit">x</span></div>
+      <div class="data-label">指标二</div>
+      <div class="data-sub">补充口径 / 时间窗</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">405</div>
+      <div class="data-label">指标三</div>
+      <div class="data-sub">补充口径 / 时间窗</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 4 · Two-column: text left, screenshot right             -->
+<!-- Click the image to pop it up (lightbox). Replace the inline   -->
+<!-- SVG src with a real file, e.g. src="images/your-shot.png".    -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/1</span> · 图文两栏</div>
+  <h2>左文右图，图片可放大</h2>
+  <div class="slide-2col" style="margin-top: 22px;">
+    <div class="col-l">
+      <p>左栏放论述或要点。两栏默认是 <strong>2fr : 1fr</strong> 的 grid；要改比例就在 .slide-2col 上覆盖 grid-template-columns，不要给子元素加 flex。</p>
+      <p>右栏的截图点击会进入 lightbox 全屏预览，按 Esc 或点背景关闭，caption 自动取 .ss-cap 文字。</p>
+    </div>
+    <div class="col-r">
+      <div class="screenshot">
+        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='800'%20height='500'%3E%3Crect%20width='800'%20height='500'%20fill='%23e9e2d4'/%3E%3Crect%20x='1'%20y='1'%20width='798'%20height='498'%20fill='none'%20stroke='%23b8a99a'/%3E%3Ctext%20x='400'%20y='250'%20font-family='monospace'%20font-size='30'%20fill='%238a7960'%20text-anchor='middle'%20dominant-baseline='middle'%3Eimages/placeholder.png%3C/text%3E%3C/svg%3E" alt="placeholder screenshot — click to zoom">
+        <div class="ss-cap">图注占位 · 点击放大</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 5 · Compare table                                       -->
+<!-- ============================================================ -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/1</span> · 对比表</div>
+  <h2>需要并排比较时用表格</h2>
+  <div class="table-wrap spaced">
+    <table class="compare-table">
+      <thead>
+        <tr><th>维度</th><th>方案 A</th><th>方案 B</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="entity">成本</td><td class="muted">较低</td><td class="muted">较高</td></tr>
+        <tr><td class="entity">速度</td><td class="muted">中</td><td class="muted">快</td></tr>
+        <tr><td class="entity">可控性</td><td class="muted">高</td><td class="muted">中</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6 · Closing / Q&A                                       -->
+<!-- ============================================================ -->
+<div class="slide qa">
+  <h1><span class="hl">Q & A</span></h1>
+  <div class="qa-sub">— discussion —</div>
+  <div class="qa-footer">
+    作者名 · Author<br>
+    github.com/your-handle · 联系方式
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!--
+  Shared deck runtime: keyboard/click paging, progress, counter, hash deep-link,
+  notes toggle, theme switching + localStorage persistence.
+  Path is ../../assets/deck-runtime.js because this file sits two levels deep
+  (templates/deck/index.html). If you copy this to presentations/<name>.html
+  (one level deep), change it to ../assets/deck-runtime.js.
+-->
+<script src="../../assets/deck-runtime.js"></script>
+<script>
+// Image pop-up: any image matching the selector opens a full-screen overlay.
+// Add more selectors (comma-separated) if you introduce new image containers.
+function installImageLightbox() {
+  const imageSelector = '.screenshot img';
+  const lightbox = document.createElement('div');
+  lightbox.className = 'image-lightbox';
+  lightbox.setAttribute('role', 'dialog');
+  lightbox.setAttribute('aria-modal', 'true');
+  lightbox.innerHTML = '<div class="image-lightbox-inner"><img alt=""><div class="image-lightbox-caption"></div></div>';
+  document.body.appendChild(lightbox);
+
+  const lightboxImage = lightbox.querySelector('img');
+  const caption = lightbox.querySelector('.image-lightbox-caption');
+
+  function captionFor(image) {
+    const screenshot = image.closest('.screenshot');
+    if (screenshot) {
+      const cap = screenshot.querySelector('.ss-cap');
+      if (cap) return cap.textContent.trim();
+    }
+    return image.alt || '';
+  }
+
+  function close() {
+    lightbox.classList.remove('open');
+    lightboxImage.removeAttribute('src');
+    lightboxImage.alt = '';
+    caption.textContent = '';
+  }
+
+  document.addEventListener('click', (event) => {
+    const image = event.target.closest(imageSelector);
+    if (!image) return;
+    event.preventDefault();
+    event.stopPropagation();
+    lightboxImage.src = image.currentSrc || image.src;
+    lightboxImage.alt = image.alt || '';
+    caption.textContent = captionFor(image);
+    lightbox.classList.add('open');
+  }, true);
+
+  lightbox.addEventListener('click', close);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lightbox.classList.contains('open')) close();
+  });
+}
+
+window.createDeckRuntime({
+  notesToggleSelector: '#notesToggle',
+  styleToggleSelector: '#styleToggle',
+  styleStorageKey: 'deck-template-style',
+  defaultStyle: 'terminal',
+  styles: ['terminal', 'newspaper', 'navy'],
+});
+installImageLightbox();
+</script>
+</body>
+</html>

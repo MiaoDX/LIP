@@ -24,6 +24,10 @@ Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs
 
 Run `npm run quality:check` after source-layout changes. It updates `.quality-report.md` and checks that generated publish output has not been committed as source.
 
+### Deck template
+
+Start every new HTML/PPT deck from `templates/deck/index.html` (see `templates/README.md`). It carries the shared theme tokens + style switching, paging, image pop-up (lightbox), and speaker notes, plus a catalogue of common slide layouts. Copy it into a published source folder below, then adjust the `assets/deck-runtime.js` relative path for the destination depth.
+
 ### Canonical source locations
 
 - `presentations/`: general standalone decks. `npm run publish:copy` copies direct files and asset folders into `/LIP/share/`.
