@@ -858,7 +858,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 A</div>
   <h2>案例 A · qpos 索引</h2>
-  <h3>GitHub commit <code>102a593</code> · CI 上曾有 <code>mujoco-grasp-output</code> artifact（现已过期）</h3>
+  <h3>GitHub commit <code>102a593</code> · 临时分支重跑 CI，拿到新的 <code>mujoco-grasp-output</code> artifact</h3>
   <div class="slide-2col slide-2col--qpos mt-md">
     <div class="col-l">
       <div class="table-wrap">
@@ -880,12 +880,12 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     </div>
     <div class="col-r">
       <div class="media-frame media-frame--qpos-proof">
-        <img src="images/qpos-commit-102a593.png" alt="GitHub commit 102a593 截图，说明 qpos[5] 到 qpos[2] 的修复和 CI artifact 上传">
-        <div class="ss-cap">GitHub commit 证据 · <a href="https://github.com/MiaoDX/roboharness/commit/102a5936c378081369b06a431a11eb690bef4026">102a593</a> · qpos[5] → qpos[2] · CI run <a href="https://github.com/MiaoDX/roboharness/actions/runs/23974919781">23974919781</a> 曾上传 <span class="dim">mujoco-grasp-output</span></div>
+        <img src="images/qpos-ci-rerun-artifact.png" alt="GitHub Actions 临时分支重跑 CI 截图，显示成功并产出一个 artifact">
+        <div class="ss-cap">CI artifact 证据 · 基于 <a href="https://github.com/MiaoDX/roboharness/commit/102a5936c378081369b06a431a11eb690bef4026">102a593</a> + 仅改 workflow trigger · run <a href="https://github.com/MiaoDX/roboharness/actions/runs/26277040748">26277040748</a> · artifact <a href="https://github.com/MiaoDX/roboharness/actions/runs/26277040748/artifacts/7156126533">7156126533</a></div>
       </div>
     </div>
   </div>
-  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。右侧是真实 GitHub commit 截图：commit message 写明 qpos[5] 假设错误、正确是 qpos[2]，也写了 artifact upload 即使失败也要 always()。CI run 23974919781 当时有 mujoco-grasp-output artifact，但 4 月 4 日的 artifact 现在已过期，所以这一页用 commit 截图做稳定证据。</div>
+  <div class="speaker-note">60 秒以内讲完，为下一页 (B 案例) 做铺垫。根因来自 commit 102a593：commit message 写明 qpos[5] 假设错误、正确是 qpos[2]，也写了 artifact upload 即使失败也要 always()。右侧是 2026-05-22 临时分支重跑：只改 ci.yml trigger，不改业务代码，run 26277040748 成功并产出 mujoco-grasp-output artifact 7156126533。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 8 · 案例 B · 拇指朝下抓 bottle (page 9) — visual 救 metric         -->
