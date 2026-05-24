@@ -1,10 +1,12 @@
 # 60K Star 和 50 万美金，怎么选？
 
-> **状态：初稿 v2，等待 review。** 这篇还没发布，没有加入到 `ai-coding/index.md` 的列表里。审稿/截图/调整确认完成后，再决定是否正式发布。
+> **状态：初稿 v3，等待 review。** 这篇还没发布，没有加入到 `ai-coding/index.md` 的列表里。审稿/截图/调整确认完成后，再决定是否正式发布。
 >
 > 同目录的 `outline.md` 是讨论过程中的大纲，`screenshot-checklist.md` 是配图素材清单。
 >
-> v2 改动：按方案 A 重构——去掉"视角 N"标题、改成钩子小标题、段间补过渡。结构和论据不变。
+> v2 改动：按方案 A 重构——去掉"视角 N"标题、改成钩子小标题、段间补过渡。
+>
+> v3 改动：在引子段加入个人化背景（intuitive-flow + 推荐过别人 + 供应链危机），让"为什么我会写这篇文章"的动机更清楚。
 
 ---
 
@@ -14,9 +16,21 @@ GSD 不是一个糊弄人的项目。它是一个面向 Claude Code 的 meta-pro
 
 事件曝光后，长期 Collaborator trek-e 在几小时内完成 fork、迁移、改名、发新版的全套接管动作（`open-gsd/get-shit-done-redux`），代码层面几乎是无缝延续。
 
-但我看完整个事件，关注点不在"这人为什么跑路"。这件事 24 小时已经被各路加密媒体写烂了，结论都是"又一个 crypto rug pull"。
+我是从公司微信群看到这件事的——有人转发了一张 Reddit r/ClaudeAI 的截图。
 
-我更想聊的是另一个更结构性的问题：
+**这件事对我个人是切肤的。** 我自己有一套 AI coding 工作流叫 [`intuitive-flow`](https://github.com/MiaoDX/intuitive-flow)，GSD 在里面是 implementation 阶段的核心执行引擎。这个工具我推荐过给公司内外不少人。
+
+推荐它的理由很简单——它的 README 第一段写得就很 raw：
+
+> "I'm a solo developer. I don't write code — Claude Code does. Other spec-driven tools exist, but they're all built for 50-person engineering orgs — sprint ceremonies, story points, stakeholder syncs, Jira workflows. I'm not that."
+
+这种"不要花里胡哨的工作流，就想把事情干完"的态度，正好戳中我个人对 AI coding 工具的偏好。GSD 这名字本身就是这个意思——Get Shit Done。
+
+但 5/22 之后，这事多了一层新的意思：**我推荐过 GSD 给那么多人，他们都在用 npm 安装这个包——而原作者卷币跑路前，npm 发布权限还在他手里。** 这是供应链安全的灾难场景。trek-e 的紧急接管避免了最坏情况，但事件本身已经足够让我重新审视一个问题。
+
+不是"这个人为什么跑路"——这话题加密媒体在 24 小时内已经写烂了，结论都是"又一个 crypto rug pull"。
+
+我更想聊的是另一个结构性问题：
 
 **当 Claude Code 和 Codex 这种官方工具开始疯狂"借鉴"社区里优秀的做法时，独立开源维护者还有什么路可以走？**
 
