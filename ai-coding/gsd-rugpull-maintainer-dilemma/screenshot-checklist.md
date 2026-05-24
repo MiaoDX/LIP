@@ -22,7 +22,24 @@
 
 ---
 
-## 1. GSD 跑路告别信（hero 图）
+## 1. Reddit r/ClaudeAI 截图（hero 图 · 用户切入视角）
+
+**截图源**：用户会自己重新截一张。这是触发整篇文章的源头——公司微信群里有人转发的 Reddit r/ClaudeAI 的 mod-bot 贴。
+
+**原始链接状态**：未能稳定定位。AI Weekly 给出的原帖标题作为 fallback reference：
+> "r/ClaudeAI: 'Get Shit Done' AI Coding Tool Creator Pulls Crypto Rug Scam — Community Forks to get-shit-done-redux, Urges Immediate Removal of Original npm Packages"
+
+来源页面：https://aiweekly.co/alerts/get-shit-done-creator-rug-pulls-gsd-token-vanishes
+
+**截图什么**：r/ClaudeAI 的 ClaudeAI-mod-bot 发的事件公告帖（约 261 upvotes，57 comments）
+
+**用在**：文章开头作 hero 图，正好对应"我是从公司微信群看到这件事的——有人转发了一张 Reddit r/ClaudeAI 的截图"这句
+
+**操作建议**：用户在 r/ClaudeAI 翻最近 2-3 天 mod-bot 发的帖子可以找到原贴，按需重新截图
+
+---
+
+## 2. GSD 跑路告别信（备选 hero 图）
 
 **截图源**：原 X 推文应在 @official_taches 账号下，但**账号已删**，X 上抓不到。
 
