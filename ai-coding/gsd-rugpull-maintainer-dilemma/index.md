@@ -1,8 +1,10 @@
 # 60K Star 和 50 万美金，怎么选？
 
-> **状态：初稿 v1，等待 review。** 这篇还没发布，没有加入到 `ai-coding/index.md` 的列表里。审稿/截图/调整确认完成后，再决定是否正式发布。
+> **状态：初稿 v2，等待 review。** 这篇还没发布，没有加入到 `ai-coding/index.md` 的列表里。审稿/截图/调整确认完成后，再决定是否正式发布。
 >
 > 同目录的 `outline.md` 是讨论过程中的大纲，`screenshot-checklist.md` 是配图素材清单。
+>
+> v2 改动：按方案 A 重构——去掉"视角 N"标题、改成钩子小标题、段间补过渡。结构和论据不变。
 
 ---
 
@@ -20,7 +22,7 @@ GSD 不是一个糊弄人的项目。它是一个面向 Claude Code 的 meta-pro
 
 GSD 是个极端样本，但它的两难是所有 AI coding 开源项目作者面前的真问题。
 
-## 视角一：被吸收的不只是思想
+## 他的告别信里，有一句话是真的
 
 我先说一个不太好听的事实。
 
@@ -44,13 +46,15 @@ Lex 不是没意识到这一点。他做了 GSD v2，这个版本不是 v1 的�
 
 你做一个 skill，会被吸收（v1 的命运）。你做一个独立 CLI，会被卡商业模式（v2 的命运）。
 
-### 然后我们看看，跟 Lex 处境类似的人都去哪了
+## 那么，其他人都去哪了
+
+如果只有 Lex 一个人遇到了这种"被吸收"的处境，那这就是个人问题。但事实上跟他处境类似的人不少——而每个人选择的退路都不一样。
 
 **Den Delimarsky → Anthropic。** GitHub Spec Kit 的创建者，原 GitHub Principal Product Engineer。Spec Kit 在他手里冲到 61K+ stars，是整个 GitHub org 中 star 第二多的仓库。2026 年 1 月 9 日他发博客《Wrapping Up My Latest Microsoft Chapter》宣布离职，**两天后** 1 月 11 日发《Hello, Anthropic》："My next chapter is joining Anthropic (yes, that Anthropic) as a Member of Technical Staff."——这是"在大厂做火了 spec-driven，被另一个大厂挖走"。
 
 **Peter Steinberger → OpenAI。** OpenClaw（一个 Claude Code 开源替代）创始人，连续创业者。项目 3 个月内冲到 200K+ stars。2026 年 2 月 15 日 Sam Altman 在 X 公开宣布他加入 OpenAI，"to drive the next generation of personal agents"。这是"独立创业者做火了 harness，被竞品大厂直接挖走"。
 
-**Paul Gauthier → 沉默退场。** Aider 的创建者（前 Inktomi CTO，44K+ stars）。2025 年 8 月后没再亲手发过版，Issue #4613 标题就叫"Where is Paul?"（"He has gone dark on twitter, Paul are you OK???"）。他唯一回应：「I am currently busy with other projects.」社区已经分叉到 `dwash96/aider-ce`。没人收编他，他也没融到资，就这么静默地把项目交给了接盘人。
+**Paul Gauthier → 沉默退场。** Aider 的创建者（前 Inktomi CTO，44K+ stars）。2025 年 8 月后没再亲手发过版，Issue #4613 标题就叫"Where is Paul?"（"He has gone dark on twitter, Paul are you OK???"）。他唯一回应："I am currently busy with other projects."社区已经分叉到 `dwash96/aider-ce`。没人收编他，他也没融到资，就这么静默地把项目交给了接盘人。
 
 **Lex Christopherson → 卷币跑路。** 60K+ stars 项目的创始人，独立音乐人。没被收编，没融资，他选了第四种结局。
 
@@ -58,15 +62,15 @@ Lex 不是没意识到这一点。他做了 GSD v2，这个版本不是 v1 的�
 
 这不是一个人的道德崩塌，是一整个生态在压力下的群像。
 
-## 视角二：这不是个人选择，是诱因结构
+## 那他为什么偏偏选了发币这条路
 
-Lex 选了第五条路：**发币**。
+看完前三种结局，再回头看 Lex 的选择就更刺眼了。
 
-把 GSD 项目和 Solana 上的 $GSD 代币绑定，通过 Bags（一个创作者经济 launchpad）发行，进 DoraHacks 黑客松拿奖金，吸引用户买币推高估值，然后……卷走。
+Den 跳大厂、Peter 跳大厂、Paul 沉默退场——这些都是有代价但仍然体面的退路。Lex 为什么偏偏选了那条**毁掉自己十几年职业声誉**的路？
 
-这里有一个很多人会忽略的点：**这不只是个人道德问题，是结构性激励问题。**
+我觉得这里有一个很多人会忽略的点：**这不只是个人道德问题，是结构性激励问题。**
 
-你看这个组合：
+你看 Lex 面前的那个组合：
 
 - 真实身份（Lex Christopherson，公开音乐人，7000 万 Spotify 播放）
 - 真实产品（60K+ stars 开源项目）
@@ -86,11 +90,13 @@ Lex 跑了，但不能说"换一个人就不会跑"。**整个鼓励维护者发
 
 我不敢替你回答。我只能说，**这个选择本来就不该出现在桌面上**。
 
-## 视角三：trek-e —— 雷锋还能活多久？
+## Lex 走了，但代码不能没人维护
 
-这次事件里最让我尊敬的，不是任何一个跑路的人，也不是任何一个事后冷嘲热讽的 X 大 V，而是 trek-e。
+Lex 跑了。代码不会自己消失——所以 trek-e 出现了。
 
-他是谁？GitHub 自报名字 Tom Boucher，北卡州 Wake Forest 的硬件工程师。在原 GSD 项目里至少从 4 月 25 日起就是 Collaborator。Lex 4 月初私下消失之后，他一个人维持了仓库 6-7 周。跑路事件爆发当天，他几小时内完成了 fork、迁移 229 个 tags、77 个 issues、改 npm 包名、发声明。
+这次事件里最让我尊敬的，不是任何一个跑路的人，也不是任何一个事后冷嘲热讽的 X 大 V，而是这个北卡的硬件工程师。
+
+他是谁？GitHub 自报名字 Tom Boucher。在原 GSD 项目里至少从 4 月 25 日起就是 Collaborator。Lex 4 月初私下消失之后，他一个人维持了仓库 6-7 周。跑路事件爆发当天，他几小时内完成了 fork、迁移 229 个 tags、77 个 issues、改 npm 包名、发声明。
 
 他从这件事里得到什么？目前看起来：**什么都没有**。没有新代币，没有捐赠地址，没有商业化跟进，接管了一个 60K+ stars 但被 rug 污染过、未来商业前景未知的烂摊子。
 
@@ -106,11 +112,11 @@ trek-e 能扛 6-7 周，能扛 6-7 个月吗？当代码库的 issue 累积到 5
 
 如果不能，下一个 trek-e 会出现吗？
 
-**开源世界的"雷锋"是真实存在的，但他们承担的是个人代价。系统性来看，这个代价不可持续。** GSD 这次有 trek-e，下一次呢？
+**开源世界的"雷锋"是真实存在的，但他们承担的是个人代价。** GSD 这次有 trek-e，下一次呢？
 
-## 60K Star 和 50 万美金，怎么算账？
+## 让我们替 Lex 算一笔账
 
-让我尝试给 Lex 算一笔账。
+trek-e 在做加法，Lex 在做减法。我们替 Lex 把这笔减法算一下，看看亏不亏。
 
 **他放弃的：** 60K+ GitHub stars 项目（AI coding 圈真实的 reputation 资产）；10+ 年真实音乐家身份（7000 万 Spotify 播放、115 首发行）；项目处在巅峰期的潜在融资可能；Pulumi 等厂商的公开背书；Anthropic / OpenAI 收编邀请的可能性（参考 Den 和 Peter）；未来任何一个 YC 创业方向的可信度。
 
@@ -128,9 +134,11 @@ trek-e 能扛 6-7 周，能扛 6-7 个月吗？当代码库的 issue 累积到 5
 
 但在加密货币的环境里，这种焦虑会被立即兑现为一个"现在抛售"的具体选项——这是这个环境最危险的部分。它把"我想跑路"和"我能跑路"之间的距离压缩到了零。
 
-## 给所有"未来的 GSD 作者"
+## 如果你正在做一个 Claude Code 工具
 
-如果你正在做一个 AI coding 工具，正在被 Claude Code 的功能更新焦虑，正在被某个 launchpad 来人忽悠"上我们发币吧"——我想说三件事。
+说了这么多结构性问题，回到具体的人——如果你就是下一个有可能面对 Lex 处境的人，你该做什么。
+
+我没有完整答案，但有三件事可以分享。
 
 **1. 接受 commoditization 是常态。** 你做的好东西被大厂吸收，是赞美，不是悲剧。它说明你做对了。Den Delimarsky 的 Spec Kit 完成它的使命，他自己也找到了下一站。这不丢人，反而是 healthy exit。
 
@@ -138,7 +146,7 @@ trek-e 能扛 6-7 周，能扛 6-7 个月吗？当代码库的 issue 累积到 5
 
 **3. 把开源项目当"咨询牌照"而不是"变现工具"。** 它是你简历上最贵的一行，是你未来 10 年所有职业选择的杠杆——不是用来一次性兑现的支票。
 
-## 结尾
+## 写在最后
 
 GSD 不会是最后一个。在 Anthropic 和 OpenAI 互相竞争、互相吸收社区做法、互相挖人的时代，独立维护者的处境只会越来越紧。
 
