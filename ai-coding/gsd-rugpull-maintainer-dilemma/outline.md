@@ -49,9 +49,9 @@ GSD 跑路不是个人道德问题，是 AI coding 时代独立开源维护者**
 ### Q：写多长？
 **最终：2400-2600 字。** 不是大纲列出所有 repo（那是另一种文章），而是用 3-4 个对照案例支撑核心论点。
 
-### Q：要不要在引子加个人化背景？
-**最终（v3 新增）：加。** 用户主动要求加入"为什么这件事对作者本人切肤"的背景，包含：
-1. 怎么发现的（公司微信群里的 Reddit r/ClaudeAI 截图）
+### Q：要不要在引子加个人化背景？（v3 新增）
+**最终：加。** 用户主动要求加入"为什么这件事对作者本人切肤"的背景，包含：
+1. 怎么发现的（微信群里的 Reddit r/ClaudeAI 截图）
 2. 自己在用 GSD（`intuitive-flow` pipeline 把 GSD 当 implementation phase）
 3. 推荐过给公司内外不少人
 4. 推荐理由：GSD README 第一段"I'm a solo developer..."写得很 raw
@@ -59,6 +59,20 @@ GSD 跑路不是个人道德问题，是 AI coding 时代独立开源维护者**
 6. trek-e 接管避免了最坏情况，但事件本身已足够触发反思
 
 字数从 v2 的 2820 增至 v3 的约 3100。超过最初 2400-2600 目标，但用户明确要求加入，且这段让文章动机更清晰、个人 voice 更强。
+
+### Q：v2 段事实错误怎么处理？（v4 新增）
+**最终：选项 A——诚实修订 + 让论点更尖锐。** 调研发现 v3 的 v2 段有几处事实错误：
+1. v2 没被堵死——主要开发者 Jeremy McSpadden（Flux Labs CEO，3826 commits 是 Lex 的 3 倍）一直在做。
+2. v2 一直 provider-agnostic，支持 Codex / Gemini / 本地模型，不依赖 Claude Pro/Max 订阅 hack。
+3. Lex 跑路前 8 天（5/14）gsd-2 还发了 v3.0.0；跑路当天 jeremymcs 还在做仓库迁移；今天项目以 GSD Pi 名义在 `open-gsd/gsd-pi` 继续活着。
+
+**修订后论点反而更尖锐：** Lex 不是被环境逼走，是抛下还能继续的项目跑了。结构性压力是真的（用户反馈让我加入了赛道难做的实证：Aider 沉默 / Continue.dev 不死不活 / Warp 4-28 开源 + OpenAI 投资），但"难做"和"必须跑路发币"之间隔着无数其他可能。
+
+### Q：Reddit 截图来源
+**已确认。** 用户上传的截图底部署名 ClaudeAI-mod-bot · App MOD，加上 261↑ / 57💬 / 739↗ 的 Reddit 标准 voting & sharing 布局，确认是 r/ClaudeAI 子版块的 mod-bot 自动发布帖。原帖 URL 因 Reddit 反爬未能稳定定位，AI Weekly 的原帖标题作为 fallback reference。
+
+### Q：v3 引子里"公司微信群"
+**改成"一个微信群"。** 用户澄清是社区微信群，不是公司内部群。
 
 ## 文章里有意识地保留的张力
 
