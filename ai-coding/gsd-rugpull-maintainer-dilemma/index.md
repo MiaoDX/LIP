@@ -1,12 +1,14 @@
 # 60K Star 和 50 万美金，怎么选？
 
-> **状态：初稿 v3，等待 review。** 这篇还没发布，没有加入到 `ai-coding/index.md` 的列表里。审稿/截图/调整确认完成后，再决定是否正式发布。
+> **状态：初稿 v4，等待 review。** 这篇还没发布，没有加入到 `ai-coding/index.md` 的列表里。审稿/截图/调整确认完成后，再决定是否正式发布。
 >
 > 同目录的 `outline.md` 是讨论过程中的大纲，`screenshot-checklist.md` 是配图素材清单。
 >
 > v2 改动：按方案 A 重构——去掉"视角 N"标题、改成钩子小标题、段间补过渡。
 >
 > v3 改动：在引子段加入个人化背景（intuitive-flow + 推荐过别人 + 供应链危机），让"为什么我会写这篇文章"的动机更清楚。
+>
+> v4 改动：修正 v2 段的事实错误（v2 没被堵死，jeremymcs 还在做 GSD Pi），加入"独立 AI coding harness 赛道整体难做"的论据（Aider 沉默 / Continue 不死不活 / Warp 4-28 开源 + OpenAI 投资）。改"公司微信群"为"微信群"。
 
 ---
 
@@ -16,7 +18,7 @@ GSD 不是一个糊弄人的项目。它是一个面向 Claude Code 的 meta-pro
 
 事件曝光后，长期 Collaborator trek-e 在几小时内完成 fork、迁移、改名、发新版的全套接管动作（`open-gsd/get-shit-done-redux`），代码层面几乎是无缝延续。
 
-我是从公司微信群看到这件事的——有人转发了一张 Reddit r/ClaudeAI 的截图。
+我是从一个微信群看到这件事的——有人转发了一张 Reddit r/ClaudeAI 的截图。
 
 **这件事对我个人是切肤的。** 我自己有一套 AI coding 工作流叫 [`intuitive-flow`](https://github.com/MiaoDX/intuitive-flow)，GSD 在里面是 implementation 阶段的核心执行引擎。这个工具我推荐过给公司内外不少人。
 
@@ -54,11 +56,15 @@ GSD 的核心思想是什么？Context engineering、spec-driven development、s
 
 AI coding 工具的演化速度是历史上罕见的。一个开源项目从"被需要"到"被吸收"，可能只有 6 个月。
 
-Lex 不是没意识到这一点。他做了 GSD v2，这个版本不是 v1 的升级——是架构性转向：从"运行在 Claude Code 之上的 skill 集合"变成"独立 CLI，把 Claude Code 当 backend"，想从下游跳到 Claude Code 的上一层。
+Lex 不是没意识到这一点。他做了 GSD v2——这不是 v1 的升级，是架构性转向：从"运行在 Claude Code 之上的 skill 集合"变成"独立 CLI，把 Claude Code 当 backend"，想从下游跳到 Claude Code 的上一层。
 
-但 v2 的商业模式建立在"用户用 Claude Pro/Max 订阅来跑独立 harness"上。2026 年 Q1 Anthropic 开始系统性收紧这条路——1 月静默封 OAuth，2 月修改 ToS 明文禁止，4 月对 OpenClaw、OpenCode 等所有第三方 harness 全面断奶。v2 的路也被堵死了。
+要说，**这条路真的非常难**。在大厂围剿下，做独立 AI coding harness 这件事，整个赛道都不好过。Aider（44K+ stars）从 2025 年 8 月开始就没再亲手发过版，社区开 issue 问 "Where is Paul?" 也得不到正经回应。Continue.dev 拿了 YC、融了 $5.1M、产品做了 2 年，始终没真正出圈，典型的"不死不活"。连 Warp 这种 $73M 融资、70 万开发者的成熟商业公司，今年 4 月 28 日也宣布把整个 client AGPL 开源、让 OpenAI 做 founding sponsor——CEO Zach Lloyd 直白讲："we are competing with other highly funded, closed-source competitors"。独立做 closed-source AI coding 工具，硬刚不过 Anthropic、OpenAI、Cursor、Windsurf 这一票钱多人多的大厂和准大厂。
 
-你做一个 skill，会被吸收（v1 的命运）。你做一个独立 CLI，会被卡商业模式（v2 的命运）。
+所以 Lex 的焦虑不是凭空的——结构性压力是真的存在的。
+
+但**"难做"和"必须发币跑路"之间，隔着 Aider 的沉默、Continue 的坚持、Warp 的开源转型——也隔着 Lex 自己项目里那些还在做事的人。**
+
+事实上，gsd-2 在 5 月 14 日刚发了 v3.0.0；Lex 跑路当天，主要开发者 Jeremy McSpadden（Flux Labs CEO，commit 数是 Lex 的 3 倍）还在做仓库迁移工作；今天这个项目以 GSD Pi 的名义在 `open-gsd/gsd-pi` 继续活着，5/24 凌晨还在 push。trek-e 则接管了 v1 的 redux 分支。**v2 没被任何人堵死，是 Lex 自己跳船了。**
 
 ## 那么，其他人都去哪了
 
@@ -142,7 +148,7 @@ trek-e 在做加法，Lex 在做减法。我们替 Lex 把这笔减法算一下�
 
 但 Lex 选了一次性套现。
 
-为什么？我猜，跟项目本身的"被吸收"焦虑有关。当他看到 Claude Code 一周一个新功能，把他原本的"创新"一个个变成 default 配置时，那种"我的项目正在死去"的焦虑，可能比"做完 10 年得到 X"的远期收益更难承受。
+为什么？我猜，跟那种**身处一个谁都不看好的赛道**的焦虑有关。当他看到 Aider 沉默、Continue 不死不活、Warp 都被逼到开源，再看 Claude Code 一周一个新功能、把社区的"创新"一个个收编成 default 配置——那种"我做的所有努力可能注定无解"的焦虑，可能比"做完 10 年得到 X"的远期收益更难承受。
 
 **短期焦虑战胜长期理性，是人之常情。**
 
@@ -174,8 +180,11 @@ GSD 不会是最后一个。在 Anthropic 和 OpenAI 互相竞争、互相吸收
 
 - redux 仓库：https://github.com/open-gsd/get-shit-done-redux
 - trek-e 的事件声明：https://github.com/open-gsd/get-shit-done-redux/discussions/109
+- GSD Pi（v2/v3 的延续）：https://github.com/open-gsd/gsd-pi
 - Den Delimarsky 离职博客：https://den.dev/blog/microsoft-chapter-wrap/
 - Den Delimarsky 入职 Anthropic：https://den.dev/blog/anthropic/
 - Sam Altman 宣布 Peter Steinberger 加入 OpenAI：TechCrunch / CNBC 2026-02-15
 - Aider Issue #4613 "Where is Paul?"：https://github.com/Aider-AI/aider/issues/4613
+- Warp 开源公告（2026-04-28）：https://www.warp.dev/blog/warp-is-now-open-source
+- Continue.dev 融资信息：https://www.ycombinator.com/companies/continue
 - Bags Hackathon 公告：https://www.businesswire.com/news/home/20260310779306/
