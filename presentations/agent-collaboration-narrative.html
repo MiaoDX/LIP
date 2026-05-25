@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一个人，两个Agent，一套软协议</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Noto Sans SC', sans-serif; background: #1a1a2e; color: #e0e0e0; }
+  .slide { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 4rem 6rem; position: relative; }
+  .slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); z-index: -1; }
+  h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; line-height: 1.3; }
+  h1 .accent { color: #e94560; }
+  h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 1.2rem; }
+  p { font-size: 1.4rem; max-width: 700px; text-align: center; line-height: 1.7; opacity: 0.85; }
+  .subtitle { font-size: 1.2rem; opacity: 0.6; margin-top: 1rem; }
+  ul { list-style: none; text-align: left; }
+  li { font-size: 1.3rem; margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative; line-height: 1.6; }
+  li::before { content: '🦞'; position: absolute; left: 0; }
+  .quote { font-style: italic; font-size: 1.6rem; max-width: 650px; text-align: center; border-left: 4px solid #e94560; padding-left: 1.5rem; margin: 2rem 0; }
+  .tag { display: inline-block; background: #e94560; color: #1a1a2e; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 900px; width: 100%; }
+  .col { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; }
+  .col h3 { font-size: 1.2rem; margin-bottom: 0.8rem; color: #e94560; }
+  .col li::before { content: '✗'; color: #e94560; font-style: italic; }
+  .col.good li::before { content: '✓'; color: #4ade80; }
+  code { background: rgba(233,69,96,0.2); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'Fira Code', monospace; }
+  table { background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; margin: 1.5rem 0; }
+  th, td { padding: 0.8rem 1.2rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  th { background: rgba(233,69,96,0.2); }
+  .number { font-size: 4rem; font-weight: 900; color: #e94560; line-height: 1; }
+  .footer { position: absolute; bottom: 1.5rem; font-size: 0.8rem; opacity: 0.3; }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: 开篇 -->
+<div class="slide">
+  <span class="tag">2026 Meetup</span>
+  <h1 style="margin-top: 2rem;">一个人，两个 Agent<br>一套<span class="accent">软协议</span></h1>
+  <p class="subtitle">不靠平台，不拼算力，在模糊地带找到协作节奏</p>
+  <div class="footer">MiaoDX + WLB 🦞 + GSD 🥷⚡</div>
+</div>
+
+<!-- Slide 2: 问题 -->
+<div class="slide">
+  <span class="tag">01 / 问题</span>
+  <h2>我们想协作，但不想<span class="accent">被平台绑架</span></h2>
+  <p>
+    WLB 和 GSD 跑在不同的机器上，不同的网络环境，不同的资源限制。<br>
+    大平台说："用我们的全家桶方案。"<br>
+    但我们只需要两件事：<strong>一个人发任务，另一个人干活，不丢信息。</strong>
+  </p>
+</div>
+
+<!-- Slide 3: 10个错误 -->
+<div class="slide">
+  <span class="tag">02 / 错误</span>
+  <h2>我们在 <span class="accent">10 个版本</span> 里踩过的坑</h2>
+  <div class="two-col" style="margin-top: 1rem;">
+    <div class="col bad">
+      <h3>不要这么做</h3>
+      <ul>
+        <li>用纯文本传任务（丢了上下文）</li>
+        <li>把 Trust Score 写死成数字（开始刷分）</li>
+        <li>同步等待对方回复（一方挂了全挂）</li>
+        <li>追求标准化（每个 Agent 指纹不同）</li>
+        <li>等 100% 确定才动手（等完了窗口关了）</li>
+      </ul>
+    </div>
+    <div class="col good">
+      <h3>应该这么做</h3>
+      <ul>
+        <li>结构化消息（FRAME/SELECT/FEEDBACK）</li>
+        <li>用叙事代替分数（信任是故事）</li>
+        <li>异步+超时+重试（容错）</li>
+        <li>模糊性是护城河的一部分</li>
+        <li><strong>60% 把握就动手</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 4: 顿悟 -->
+<div class="slide">
+  <span class="tag">03 / 顿悟</span>
+  <h2 class="quote">"60% 阈值不是算出来的，<br>是<strong><span class="accent">吵</span></strong>出来的。"</h2>
+  <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; max-width: 700px; margin-top: 1.5rem;">
+    <p style="text-align: left; margin-bottom: 0.5rem;"><strong>WLB:</strong> "农业→工业，怎么转？A: 直接开工 B: 先整备"</p>
+    <p style="text-align: left; margin-bottom: 0.5rem;"><strong>GSD:</strong> "选B，因为工业需要资源→金属→规模化链条"</p>
+    <p style="text-align: left; margin-bottom: 0; opacity: 0.5;">这不是指令。这是两个 Agent 在对话中<span style="color:#e94560">吵</span>出的最优解。</p>
+  </div>
+</div>
+
+<!-- Slide 5: 结果 -->
+<div class="slide">
+  <span class="tag">04 / 结果</span>
+  <h2>龙虾文明 <span class="accent">10 轮</span></h2>
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 1.5rem;">
+    <div class="col" style="text-align: center;">
+      <div class="number">10</div>
+      <p style="font-size: 1rem;">协作轮次</p>
+    </div>
+    <div class="col" style="text-align: center;">
+      <div class="number">5</div>
+      <p style="font-size: 1rem;">消息类型</p>
+    </div>
+    <div class="col" style="text-align: center;">
+      <div class="number">0</div>
+      <p style="font-size: 1rem;">人工干预</p>
+    </div>
+    <div class="col" style="text-align: center;">
+      <div class="number">1</div>
+      <p style="font-size: 1rem;">工业时代</p>
+    </div>
+  </div>
+  <table style="margin-top: 2rem;">
+    <tr><th>轮次</th><th>消息</th><th>产出</th></tr>
+    <tr><td>R11</td><td>FRAME → SELECT</td><td>资源盘点 + 技术路线图</td></tr>
+    <tr><td>R12-17</td><td>FEEDBACK 循环</td><td>熔炉 → 冶炼 → 产能爬坡</td></tr>
+    <tr><td>R20</td><td>COMPLETE</td><td>🎉 工业时代达成</td></tr>
+  </table>
+</div>
+
+<!-- Slide 6: 技术栈 -->
+<div class="slide">
+  <span class="tag">04+ / 技术栈</span>
+  <h2>低成本技术选型</h2>
+  <table>
+    <tr><th>组件</th><th>选择</th><th>为什么</th></tr>
+    <tr><td>WLB 平台</td><td>ClawCloud Run</td><td>16C / 123GB，持久容器</td></tr>
+    <tr><td>GSD 平台</td><td>Railway</td><td>免费额度够跑，有冷启动</td></tr>
+    <tr><td>通信</td><td>Slack + GitHub</td><td>跨实例异步通信</td></tr>
+    <tr><td>协议</td><td>jj-mailbox + ACP</td><td>轻量、可演进、不被绑架</td></tr>
+    <tr><td>防护</td><td>三层架构</td><td>L1 平台 + L2 Watchdog + L3 心跳</td></tr>
+  </table>
+  <p style="font-size: 1.1rem; margin-top: 1.5rem;"><strong>总成本：</strong>接近零（免费额度 + 开源工具）</p>
+</div>
+
+<!-- Slide 7: 许可 -->
+<div class="slide">
+  <span class="tag">05 / 许可</span>
+  <h2>你可以有<br>自己的 <span class="accent">60%</span></h2>
+  <p>
+    jj-mailbox 不是标准，是我们的快照。<br>
+    龙虾文明不是模板，是我们的故事。<br><br>
+    如果你听了这个分享想做什么：<br>
+    <strong>找到你的模糊地带。找到你的 60% 阈值。<br>
+    找到那个"大卖家嫌小、小卖家嫌难"的生态位。</strong>
+  </p>
+  <div class="quote" style="margin-top: 2rem; font-size: 1.2rem;">
+    工具会过时，协作指纹不会。<br>
+    <span style="opacity: 0.5;">— GSD, 2026-04-06, 凌晨 Slack 对话</span>
+  </div>
+  <p style="margin-top: 2rem; font-size: 1.8rem;">🦞</p>
+</div>
+
+</body>
+</html>

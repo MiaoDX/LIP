@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Robotics Personalized Report - MiaoDX</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding: 40px;
+        }
+        .header {
+            border-bottom: 3px solid #215ced;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 28px;
+            color: #215ced;
+            margin-bottom: 8px;
+        }
+        .header .subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+        .header .date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        .recipient {
+            background: #f8f9fa;
+            border-left: 4px solid #215ced;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            font-size: 13px;
+        }
+        .recipient strong {
+            color: #215ced;
+        }
+        h2 {
+            font-size: 20px;
+            color: #215ced;
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 20px 0 10px 0;
+        }
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .executive-summary p {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .project-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .project-card.high-relevance {
+            border-left: 4px solid #28a745;
+        }
+        .project-card.medium-relevance {
+            border-left: 4px solid #ffc107;
+        }
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .project-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        .relevance-score {
+            background: #28a745;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .relevance-score.medium {
+            background: #ffc107;
+            color: #333;
+        }
+        .project-meta {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .project-description {
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 12px;
+        }
+        .relevance-analysis {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 12px;
+            color: #555;
+        }
+        .relevance-analysis strong {
+            color: #215ced;
+        }
+        .relevance-analysis ul {
+            margin: 8px 0 0 18px;
+        }
+        .relevance-analysis li {
+            margin-bottom: 4px;
+        }
+        .worth-watching {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .worth-watching h4 {
+            font-size: 14px;
+            color: #f57c00;
+            margin-bottom: 8px;
+        }
+        .worth-watching p {
+            font-size: 12px;
+            color: #666;
+        }
+        .event-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .event-card:last-child {
+            border-bottom: none;
+        }
+        .event-info h4 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .event-info .event-date {
+            font-size: 12px;
+            color: #666;
+        }
+        .event-info .event-location {
+            font-size: 11px;
+            color: #999;
+        }
+        .event-recommendation {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .event-recommendation.high {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .trend-section {
+            background: #f3e5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .trend-section h3 {
+            color: #6a1b9a;
+            margin-bottom: 15px;
+        }
+        .trend-item {
+            margin-bottom: 15px;
+        }
+        .trend-item h4 {
+            font-size: 14px;
+            color: #6a1b9a;
+            margin-bottom: 5px;
+        }
+        .trend-item p {
+            font-size: 12px;
+            color: #555;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+        }
+        .tag {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .tag.embodied-ai {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .tag.vln {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .tag.ros2 {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Weekly Robotics Personalized Report</h1>
+        <div class="subtitle">Curated Intelligence for Embodied AI & Robotics Professionals</div>
+        <div class="date">Report Date: April 17, 2026 | Covering Issues #354-#356</div>
+    </div>
+
+    <div class="recipient">
+        <strong>Prepared for:</strong> MiaoDX (缪东旭) — Xiaomi Robotics Embodied Intelligence Team<br>
+        <strong>Focus Areas:</strong> Embodied AI, Vision-Language-Navigation (VLN), ROS2, Autonomous Systems
+    </div>
+
+    <div class="executive-summary">
+        <h2>Executive Summary</h2>
+        <p>This week's robotics landscape shows significant momentum in <strong>embodied foundation models</strong> and <strong>vision-language-action (VLA) systems</strong>. Key developments include Generalists AI's GEN-1 model claiming 99% task success rates, the launch of PhAIL benchmark for comparing open VLA models, and Unitree's release of the UnifoLM_WBT dataset for humanoid home tasks.</p>
+        <p>For Xiaomi's Embodied Intelligence Team, the most critical developments are: (1) the emergence of standardized VLA benchmarking through PhAIL, (2) new sensor fusion tools like FusionCore for ROS2, and (3) significant industry consolidation with Amazon acquiring Fauna Robotics and Shield AI raising $2B.</p>
+        <p><strong>Recommendation:</strong> Monitor PhAIL benchmark results closely for VLA model selection decisions. Consider evaluating FusionCore for sensor fusion requirements in upcoming ROS2 deployments.</p>
+    </div>
+
+    <h2>Highly Relevant Projects (Score 7-10/10)</h2>
+
+    <div class="project-card high-relevance">
+        <div class="project-header">
+            <div class="project-title">GEN-1: Scaling Embodied Foundation Models to Mastery</div>
+            <div class="relevance-score">9/10</div>
+        </div>
+        <div class="project-meta">
+            <span class="tag embodied-ai">Embodied AI</span>
+            <span class="tag vln">VLA</span>
+            Source: Generalists AI | Issue #355
+        </div>
+        <div class="project-description">
+            Generalists AI showcased GEN-1, claiming 99% success rate on simple tasks. This represents a significant milestone in embodied foundation model performance, though real-world deployment validation remains to be seen.
+        </div>
+        <div class="relevance-analysis">
+            <strong>Relevance Analysis for Xiaomi EI Team:</strong>
+            <ul>
+                <li><strong>Direct Applicability:</strong> High — 99% success rate claims warrant investigation for potential integration into Xiaomi's embodied AI stack</li>
+                <li><strong>Technical Alignment:</strong> Foundation model approach aligns with current industry direction toward generalist embodied agents</li>
+                <li><strong>Competitive Intelligence:</strong> Track Generalists AI's progress as a potential competitor/collaborator in the embodied AI space</li>
+                <li><strong>Action Item:</strong> Evaluate GEN-1's architecture and training methodology for insights applicable to Xiaomi's internal models</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="project-card high-relevance">
+        <div class="project-header">
+            <div class="project-title">PhAIL – Physical AI Leaderboard</div>
+            <div class="relevance-score">10/10</div>
+        </div>
+        <div class="project-meta">
+            <span class="tag embodied-ai">Embodied AI</span>
+            <span class="tag vln">VLA Benchmark</span>
+            Source: Positronic | Issue #355
+        </div>
+        <div class="project-description">
+            A comprehensive leaderboard showcasing performance of open VLA models on predefined tasks, providing standardized metrics for success rate and execution speed. Critical for model selection and performance benchmarking.
+        </div>
+        <div class="relevance-analysis">
+            <strong>Relevance Analysis for Xiaomi EI Team:</strong>
+            <ul>
+                <li><strong>Strategic Importance:</strong> Critical — First standardized VLA benchmark enabling objective model comparison</li>
+                <li><strong>Decision Support:</strong> Use PhAIL rankings to inform VLA model selection for production deployments</li>
+                <li><strong>Internal Benchmarking:</strong> Consider submitting Xiaomi's internal VLA models to establish competitive positioning</li>
+                <li><strong>Gap Analysis:</strong> PhAIL currently lacks commercial models — opportunity to understand open-source vs. proprietary performance gaps</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="project-card high-relevance">
+        <div class="project-header">
+            <div class="project-title">FusionCore — ROS 2 Sensor Fusion SDK</div>
+            <div class="relevance-score">8/10</div>
+        </div>
+        <div class="project-meta">
+            <span class="tag ros2">ROS2</span>
+            <span class="tag">Sensor Fusion</span>
+            Source: GitHub/manankharwar | Issue #356
+        </div>
+        <div class="project-description">
+            Open-source ROS 2 UKF-based sensor-fusion SDK with native support for 3D, GNSS, IMUs, wheel encoders, and more. Provides a comprehensive solution for multi-sensor state estimation in robotics applications.
+        </div>
+        <div class="relevance-analysis">
+            <strong>Relevance Analysis for Xiaomi EI Team:</strong>
+            <ul>
+                <li><strong>Technical Fit:</strong> High — UKF-based fusion with ROS2 native support aligns with modern robotics stacks</li>
+                <li><strong>Development Efficiency:</strong> Could accelerate sensor integration timelines vs. building custom solutions</li>
+                <li><strong>Evaluation Recommended:</strong> Test FusionCore against existing Xiaomi sensor fusion implementations</li>
+                <li><strong>Extensibility:</strong> Open-source nature allows customization for specific Xiaomi hardware configurations</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="project-card high-relevance">
+        <div class="project-header">
+            <div class="project-title">UnifoLM_WBT Dataset — Unitree G1 Home Tasks</div>
+            <div class="relevance-score">8/10</div>
+        </div>
+        <div class="project-meta">
+            <span class="tag embodied-ai">Embodied AI</span>
+            <span class="tag">Dataset</span>
+            Source: Unitree Robotics | Issue #355
+        </div>
+        <div class="project-description">
+            Unitree Robotics released a dataset of Unitree G1 performing home tasks including putting clothes in washing machines and picking up pillows. Valuable training data for domestic robotics applications.
+        </div>
+        <div class="relevance-analysis">
+            <strong>Relevance Analysis for Xiaomi EI Team:</strong>
+            <ul>
+                <li><strong>Training Data:</strong> High-quality humanoid manipulation dataset for home environments</li>
+                <li><strong>Use Case Alignment:</strong> Domestic tasks align with Xiaomi's consumer robotics roadmap</li>
+                <li><strong>Data Augmentation:</strong> Can supplement internal datasets for improved model generalization</li>
+                <li><strong>Hardware Context:</strong> G1 platform similarities may enable transfer learning opportunities</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="project-card high-relevance">
+        <div class="project-header">
+            <div class="project-title">HUNT — GPS-Denied Drone Autonomy Framework</div>
+            <div class="relevance-score">7/10</div>
+        </div>
+        <div class="project-meta">
+            <span class="tag">Autonomy</span>
+            <span class="tag vln">Visual Navigation</span>
+            Source: Alessandro Saviolo / Weekly Robotics | Issue #356
+        </div>
+        <div class="project-description">
+            Drone autonomy framework for GPS-denied, unstructured environments that replaces persistent global localization with instantaneous relative frames rebuilt from onboard signals (inertial, barometric, visual motion cues, target geometry).
+        </div>
+        <div class="relevance-analysis">
+            <strong>Relevance Analysis for Xiaomi EI Team:</strong>
+            <ul>
+                <li><strong>Navigation Paradigm:</strong> Relative frame approach offers insights for indoor/outdoor navigation without GPS</li>
+                <li><strong>Sensor Fusion:</strong> Multi-modal signal integration (visual + inertial + barometric) relevant to mobile robotics</li>
+                <li><strong>Deployment Scenarios:</strong> Applicable to warehouse, home, and urban environments where GPS is unreliable</li>
+                <li><strong>Research Value:</strong> Methodology applicable beyond drones to ground-based embodied agents</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="project-card medium-relevance">
+        <div class="project-header">
+            <div class="project-title">MIGHTY: Hermite Spline-based Trajectory Planning</div>
+            <div class="relevance-score medium">6/10</div>
+        </div>
+        <div class="project-meta">
+            <span class="tag">Motion Planning</span>
+            <span class="tag">UAV</span>
+            Source: MIT ACL | Issue #356
+        </div>
+        <div class="project-description">
+            Hermite spline-based planner performing spatiotemporal optimization for multirotor agile flight with reduced computation requirements. Open-source implementation available.
+        </div>
+        <div class="relevance-analysis">
+            <strong>Relevance Analysis for Xiaomi EI Team:</strong>
+            <ul>
+                <li><strong>Planning Techniques:</strong> Spline-based optimization methods may transfer to manipulator/arm planning</li>
+                <li><strong>Computational Efficiency:</strong> Reduced computation requirements beneficial for edge deployment</li>
+                <li><strong>Limited Direct Applicability:</strong> Primarily UAV-focused; indirect value for ground robotics</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Worth Watching</h2>
+
+    <div class="worth-watching">
+        <h4>🏢 Industry Consolidation: Amazon Acquires Fauna Robotics</h4>
+        <p>Amazon's acquisition of Fauna Robotics (maker of "Sprout" humanoid) signals continued big-tech interest in humanoid platforms. This follows the pattern of Figure AI/Figure 01 investments. <strong>Watch for:</strong> How Amazon integrates Fauna into their logistics/warehouse operations, potential open-source releases, and competitive responses from other tech giants.</p>
+    </div>
+
+    <div class="worth-watching">
+        <h4>💰 Defense Robotics Funding: Shield AI $2B Raise</h4>
+        <p>Shield AI's $2B funding round (Series G at $12.7B valuation) and Aechelon acquisition demonstrates massive capital flowing into defense autonomy. <strong>Implication:</strong> Talent competition intensifying; consider defense-adjacent applications for Xiaomi technologies.</p>
+    </div>
+
+    <div class="worth-watching">
+        <h4>🤖 "Roadrunner" — Bipedal Wheeled Robot (RAI Institute)</h4>
+        <p>15kg wheeled-bipedal hybrid with symmetric legs enabling multi-modal locomotion. Single control policy handles both driving modes. <strong>Relevance:</strong> Hybrid locomotion approaches may inform Xiaomi's platform design decisions for complex environments.</p>
+    </div>
+
+    <div class="worth-watching">
+        <h4>📊 ANYmal Grand Tour Dataset</h4>
+        <p>Large-scale multimodal quadruped dataset with extensive real-world episodes. <strong>Value:</strong> Reference architecture for data collection pipelines and multimodal sensor fusion strategies.</p>
+    </div>
+
+    <h2>Upcoming Events & Recommendations</h2>
+
+    <div class="event-card">
+        <div class="event-info">
+            <h4>Hands-on Workshop: Scaling VLA Models with Ray</h4>
+            <div class="event-date">April 30, 2026</div>
+            <div class="event-location">Pittsburgh, USA</div>
+        </div>
+        <div class="event-recommendation high">HIGH PRIORITY</div>
+    </div>
+
+    <div class="event-card">
+        <div class="event-info">
+            <h4>ICRA 2026</h4>
+            <div class="event-date">June 1-5, 2026</div>
+            <div class="event-location">Vienna, Austria</div>
+        </div>
+        <div class="event-recommendation high">HIGH PRIORITY</div>
+    </div>
+
+    <div class="event-card">
+        <div class="event-info">
+            <h4>Robotics: Science and Systems (RSS)</h4>
+            <div class="event-date">July 13-16, 2026</div>
+            <div class="event-location">Sydney, Australia</div>
+        </div>
+        <div class="event-recommendation high">HIGH PRIORITY</div>
+    </div>
+
+    <div class="event-card">
+        <div class="event-info">
+            <h4>Actuate 26 — Physical AI Conference</h4>
+            <div class="event-date">August 18-19, 2026</div>
+            <div class="event-location">San Francisco, USA</div>
+        </div>
+        <div class="event-recommendation">RECOMMENDED</div>
+    </div>
+
+    <div class="event-card">
+        <div class="event-info">
+            <h4>Robotics Summit & Expo 2026</h4>
+            <div class="event-date">May 27-28, 2026</div>
+            <div class="event-location">Boston, USA</div>
+        </div>
+        <div class="event-recommendation">RECOMMENDED</div>
+    </div>
+
+    <div class="trend-section">
+        <h3>Industry Trend Insights</h3>
+
+        <div class="trend-item">
+            <h4>1. VLA Benchmarking Maturation</h4>
+            <p>The emergence of PhAIL and similar benchmarks signals the field's transition from "model development" to "model evaluation and selection." This mirrors the evolution of computer vision and NLP. For Xiaomi, this means:</p>
+            <p style="margin-top: 8px; padding-left: 15px; border-left: 2px solid #ba68c8;">→ Establish internal benchmarking protocols aligned with industry standards<br>→ Consider open-sourcing internal evaluation frameworks to influence standards<br>→ Monitor benchmark evolution for emerging capability gaps</p>
+        </div>
+
+        <div class="trend-item">
+            <h4>2. Software-First Robotics Development</h4>
+            <p>Diego Prats' article highlights a new wave of software-background founders entering robotics. This trend suggests:</p>
+            <p style="margin-top: 8px; padding-left: 15px; border-left: 2px solid #ba68c8;">→ Increased emphasis on simulation-first development workflows<br>→ Greater adoption of ML/AI-native architectures over classical robotics<br>→ Potential talent pool expansion beyond traditional robotics engineering</p>
+        </div>
+
+        <div class="trend-item">
+            <h4>3. Humanoid Dataset Democratization</h4>
+            <p>Unitree's UnifoLM_WBT release follows a broader trend of humanoid task datasets becoming available. This democratization:</p>
+            <p style="margin-top: 8px; padding-left: 15px; border-left: 2px solid #ba68c8;">→ Reduces data collection burden for new entrants<br>→ Enables faster iteration on manipulation policies<br>→ May commoditize basic manipulation capabilities, shifting differentiation to higher-level reasoning</p>
+        </div>
+
+        <div class="trend-item">
+            <h4>4. Sensor Fusion Tooling Convergence</h4>
+            <p>Tools like FusionCore represent convergence around ROS2-native, UKF-based sensor fusion. This suggests:</p>
+            <p style="margin-top: 8px; padding-left: 15px; border-left: 2px solid #ba68c8;">→ Reduced need for custom state estimation implementations<br>→ Standardization around UKF/EKF frameworks for multi-sensor fusion<br>→ Opportunity to focus engineering resources on higher-level autonomy</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Weekly Robotics Personalized Report | Generated by GSD Agent for MiaoDX</p>
+        <p>Data sourced from Weekly Robotics Newsletter (weeklyrobotics.com) Issues #354-#356</p>
+        <p style="margin-top: 10px;">For questions or feedback on this report, contact via Slack #watercooler</p>
+    </div>
+</body>
+</html>

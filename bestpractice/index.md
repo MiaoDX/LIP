@@ -38,6 +38,7 @@ AI Lab 们在生产环境中踩过的坑、总结的经验，比论文更有实�
 
 | 文章 | Discussed | 公司 | Source | 主题 |
 |------|-----------|------|--------|------|
+| [Awesome OpenClaw Skills Weekly Check](/bestpractice/awesome-openclaw-skills-2026-05-03) | 2026-05-03 | OpenClaw Ecosystem | 2026-05-03 | 技能生态监控、awesome-openclaw-skills 增量检查 |
 | [Meta AI Scaling Framework 安全工程体系](/bestpractice/meta-ai-scaling-framework) | 2026-05-01 | Meta AI | 2026-04-08 | 原则驱动安全对齐、Loss of Control 评估、多层防护架构 |
 | [NVIDIA Kaggle Agent 辅助夺冠：600K 行代码、850 实验的四级 Stacking](/bestpractice/nvidia-kaggle-agent-assisted-coding) | 2026-04-27 | NVIDIA | 2026-04-23 | LLM Agent 辅助 Kaggle 竞赛、四级 stacking、human-in-the-loop |
 | [Extreme Co-Design 与 MLPerf 推理记录](/bestpractice/nvidia-inference-extreme-codesign) | 2026-04-10 | NVIDIA | 2026-04 | GB300 2.7x 性能提升、TensorRT-LLM、全栈协同设计 |

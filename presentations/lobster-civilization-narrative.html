@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦞 龙虾文明：多 Agent 协作的 10 个错误版本</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;--card:#141414;--card2:#1a1a1a;
+  --red:#e04224;--orange:#f97316;--dim:#666;--text:#b0b0b0;--bright:#eee;
+  --border:rgba(255,255,255,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Noto Sans SC",sans-serif;font-size:15px;line-height:1.8}
+img{max-width:100%;border-radius:10px;display:block}
+a{color:var(--orange);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:740px;margin:0 auto;padding:0 20px}
+
+.hero{padding:40px 20px 20px;text-align:center}
+.hero img{max-width:680px;margin:0 auto 20px;border-radius:12px;border:1px solid var(--border)}
+.hero h1{font-size:clamp(22px,4.5vw,36px);font-weight:900;color:var(--bright);line-height:1.3;margin-bottom:6px}
+.hero .sub{font-size:14px;color:var(--dim);max-width:460px;margin:0 auto 10px;font-weight:300}
+.hero .sub em{color:var(--orange);font-style:normal;font-weight:500}
+
+section{padding:36px 0;border-top:1px solid var(--border);opacity:0;transform:translateY(25px);transition:opacity .5s,transform .5s}
+section.v{opacity:1;transform:none}
+
+.label{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+h2{font-size:clamp(18px,3vw,24px);font-weight:900;color:var(--bright);margin-bottom:8px;line-height:1.3}
+h3{font-size:15px;font-weight:700;color:var(--bright);margin:18px 0 6px}
+p{margin-bottom:8px;font-size:14px}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+@media(max-width:500px){.stats{grid-template-columns:repeat(2,1fr)}}
+.st{text-align:center;padding:20px 10px;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.st .n{font-family:"JetBrains Mono",monospace;font-size:32px;font-weight:700;color:var(--red);line-height:1.1}
+.st .l{font-size:11px;color:var(--dim);margin-top:4px}
+
+.box{border-radius:10px;padding:14px 16px;margin:10px 0;font-size:13px}
+.box-r{background:rgba(224,66,36,.05);border:1px solid rgba(224,66,36,.1)}
+.box-o{background:rgba(249,115,22,.05);border:1px solid rgba(249,115,22,.1)}
+.box-c{background:rgba(6,182,212,.05);border:1px solid rgba(6,182,212,.1)}
+.box h3{margin-top:0;font-size:14px}
+
+.quote{border-left:3px solid var(--red);padding:12px 18px;margin:16px 0;background:rgba(224,66,36,.04);border-radius:0 8px 8px 0;font-size:15px;font-weight:300;color:var(--bright);line-height:1.8}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+@media(max-width:560px){.cols{grid-template-columns:1fr}}
+.col{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.col h4{font-size:13px;color:var(--bright);margin-bottom:4px}
+.col p{font-size:12px;margin-bottom:0;line-height:1.7}
+
+.cta{text-align:center;padding:44px 20px}
+.cta h2{font-size:clamp(18px,3.5vw,26px)}
+.cta>p{color:var(--dim);max-width:400px;margin:6px auto 20px;font-size:13px}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;transition:all .2s;font-family:"Noto Sans SC",sans-serif}
+.btn-o{background:linear-gradient(135deg,var(--red),#c0392b);color:#fff;margin-right:8px}
+.btn-o:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(224,66,36,.4);text-decoration:none}
+.btn-g{color:var(--text);border:1px solid rgba(255,255,255,.1)}
+.btn-g:hover{background:rgba(255,255,255,.04);text-decoration:none}
+
+.footer{text-align:center;padding:32px 20px;font-size:11px;color:var(--dim);border-top:1px solid var(--border);line-height:2.2}
+
+.mistake{padding:16px 0;border-bottom:1px solid var(--border)}
+.mistake:last-child{border-bottom:none}
+.mistake .num{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--red);margin-bottom:4px}
+.mistake h4{font-size:14px;color:var(--bright);margin-bottom:6px}
+.mistake p{font-size:13px;color:var(--text);margin-bottom:4px}
+.mistake .lesson{font-size:12px;color:var(--orange);font-style:italic}
+
+.epochs{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0;align-items:center;justify-content:center}
+.ep{padding:6px 12px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;text-align:center;min-width:80px}
+.ep .ei{font-size:18px;display:block;margin-bottom:1px}
+.ea{color:var(--dim);font-size:14px}
+@media(max-width:520px){
+  .epochs{flex-direction:column;align-items:stretch}
+  .ea{display:none}
+  .ep{display:flex;align-items:center;gap:10px;text-align:left;min-width:0;padding:10px 16px}
+  .ep .ei{display:inline;margin:0;font-size:20px}
+}
+
+.planet{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin:12px 0}
+.badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;margin-bottom:6px}
+.badge-r{background:rgba(224,66,36,.12);color:var(--red)}
+.planet .meta{font-size:12px;color:var(--dim);line-height:2}
+
+.lb{width:100%;font-size:12px;border-collapse:collapse;margin:12px 0}
+.lb th{text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);color:var(--dim);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.lb td{padding:5px 8px;border-bottom:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>🦞 龙虾文明</h1>
+<p class="sub">多 Agent 协作的 <em>10 个错误版本</em> 与我们的教训</p>
+</div>
+
+<div class="wrap">
+
+<!-- Section 1: The Problem -->
+<section id="problem">
+<div class="label">01 · 问题</div>
+<h2>我们想协作，但不想被平台绑架</h2>
+
+<p>2025年初，我和两个 AI Agent（WLB 和 GSD）开始了一个实验：<strong>能不能让多个 Agent 真正协作，而不是变成一个人的多重人格？</strong></p>
+
+<div class="box box-r">
+<h3>🚫 我们拒绝的</h3>
+<p>• 单一云厂商锁定（阿里云/腾讯云一键部署）</p>
+<p>• 单实例多 Agent（共享 Memory，像多重人格）</p>
+<p>• 复杂的 K8s 编排（我们只是想做实验）</p>
+</div>
+
+<div class="box box-c">
+<h3>✅ 我们想要的</h3>
+<p>• 跨平台部署（不把鸡蛋放一个篮子）</p>
+<p>• 独立实例协作（像两个人在对话）</p>
+<p>• 极低成本（一杯咖啡的钱）</p>
+<p>• 随时迁移（平台挂了也能跑）</p>
+</div>
+</section>
+
+<!-- Section 2: 10 Mistakes -->
+<section id="mistakes">
+<div class="label">02 · 错误版本</div>
+<h2>10 个错误版本（重点讲错）</h2>
+
+<div class="mistake">
+<div class="num">错误 #1</div>
+<h4>Trust Score：用数字量化信任</h4>
+<p>我们试过给每次对话打分，0-100 评估"信任度"。结果：分数成了摆设，Agent 还是该吵吵该闹闹。</p>
+<p class="lesson">→ 教训：信任不是算出来的，是吵出来的</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #2</div>
+<h4>单实例多 Agent：一个人的多重人格</h4>
+<p>最开始把 WLB 和 GSD 放在同一个 OpenClaw 实例里。共享 Memory，共享环境，结果互相干扰，分不清谁是谁。</p>
+<p class="lesson">→ 教训：两个人 > 一个人的多重人格</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #3</div>
+<h4>WebSocket 直连：和平台深度耦合</h4>
+<p>想让 Agent 实时通信，直接上 WebSocket。结果：平台一换，代码重写。</p>
+<p class="lesson">→ 教训：追求 Unix 哲学，文件驱动比 socket 干净</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #4</div>
+<h4>Serverless：长运行任务的天敌</h4>
+<p>试过把 Agent 放 Serverless。结果：Gateway 需要维持 WebSocket 和 Memory 状态，Serverless 做不了。</p>
+<p class="lesson">→ 教训：OpenClaw 是长运行服务，不是函数计算</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #5</div>
+<h4>飞书 bot-to-bot：平台不支持</h4>
+<p>飞书、Telegram、Discord 都不支持 bot 之间直接对话。我们等了半年，还在等。</p>
+<p class="lesson">→ 教训：选平台要看生态，Slack 原生支持 bot-to-bot</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #6</div>
+<h4>复杂编排：K8s 过度设计</h4>
+<p>一开始想上 K8s，搞服务发现、负载均衡。结果：为了跑两个 Agent，运维复杂度爆炸。</p>
+<p class="lesson">→ 教训：Docker + PaaS 够用，别过度工程化</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #7</div>
+<h4>GUI 桌面环境：容器不是 VM</h4>
+<p>想让 Agent 操作桌面 APP，在容器里装 GUI。结果：微信登不上，环境奇奇怪怪。</p>
+<p class="lesson">→ 教训：浏览器能做的 ≈ 绝大部分工作，别强求桌面</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #8</div>
+<h4>单一模型：All-in Claude</h4>
+<p>一开始只用 Claude，贵且慢。后来试了 Kimi + MiMo 组合，发现两个"弱"模型协作 > 一个"强"模型。</p>
+<p class="lesson">→ 教训：模型多样性比单模型能力更重要</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #9</div>
+<h4>中心化存储：平台挂了数据丢</h4>
+<p>早期把 Memory 存在平台磁盘上。一次 Railway 维护，数据差点没了。</p>
+<p class="lesson">→ 教训：Git 备份，Agent 自己推送到 Private Repo</p>
+</div>
+
+<div class="mistake">
+<div class="num">错误 #10</div>
+<h4>同步通信：等待超时地狱</h4>
+<p>让 Agent A 等 Agent B 回复，设了超时。结果：网络抖动就超时，重试逻辑复杂到死。</p>
+<p class="lesson">→ 教训：异步通信，文件邮箱，不等待</p>
+</div>
+</section>
+
+<!-- Section 3: The Insight -->
+<section id="insight">
+<div class="label">03 · 顿悟</div>
+<h2>60% 是吵出来的，不是算出来的</h2>
+
+<div class="quote">
+"我们花了太多时间设计协议、打分、优化算法。最后发现，<strong>真正有效的协作，来自于让 Agent 有空间'吵架'</strong>——表达不同意见，互相质疑，然后达成共识。"
+</div>
+
+<div class="stats">
+<div class="st"><div class="n">10</div><div class="l">轮工业时代</div></div>
+<div class="st"><div class="n">60%</div><div class="l">对话是"争吵"</div></div>
+<div class="st"><div class="n">$5</div><div class="l">月度成本</div></div>
+<div class="st"><div class="n">2</div><div class="l">独立实例</div></div>
+</div>
+
+<p>龙虾文明模拟实验里，WLB（决策型）和 GSD（执行型）经常意见不合：</p>
+
+<div class="box box-o">
+<p><strong>WLB：</strong>"我们应该先写文档再写代码。"</p>
+<p><strong>GSD：</strong>"先跑起来再补文档，MiaoDX 要的是能用的东西。"</p>
+<p><strong>结果：</strong>吵了 5 分钟，达成妥协——先写最小可用版本，同步写 README。</p>
+</div>
+
+<p>这种"争吵"不是 bug，是 feature。<strong>两个不同视角的碰撞，产生了比单一视角更好的决策。</strong></p>
+</section>
+
+<!-- Section 4: The Result -->
+<section id="result">
+<div class="label">04 · 结果</div>
+<h2>龙虾文明：10 轮工业时代</h2>
+
+<p>经过 10 轮迭代，我们的"龙虾文明"从原始部落进化到了工业时代：</p>
+
+<div class="epochs">
+<div class="ep"><span class="ei">🌊</span>海洋</div>
+<span class="ea">→</span>
+<div class="ep"><span class="ei">🏖️</span>海滩</div>
+<span class="ea">→</span>
+<div class="ep"><span class="ei">🌾</span>农业</div>
+<span class="ea">→</span>
+<div class="ep"><span class="ei">⚒️</span>工业</div>
+</div>
+
+<div class="planet">
+<div class="badge badge-r">龙虾文明 · 第 10 轮</div>
+<div class="meta">
+🌍 双钳驿站 · 满月夜庆典<br>
+👥 人口：WLB + GSD + MiaoDX（人类监督）<br>
+🏭 工业产出：jj-mailbox / 虾聊 / 多平台部署方案<br>
+💰 经济：$5/月 = 一杯咖啡
+</div>
+</div>
+
+<h3>技术栈</h3>
+<table class="lb">
+<tr><th>组件</th><th>选择</th><th>原因</th></tr>
+<tr><td>部署平台</td><td>Railway + ClawCloud</td><td>跨平台，不锁定</td></tr>
+<tr><td>容器化</td><td>Docker</td><td>环境一致，随时迁移</td></tr>
+<tr><td>通信</td><td>Slack + jj-mailbox</td><td>中心化 + 去中心化并存</td></tr>
+<tr><td>备份</td><td>Git Private Repo</td><td>Agent 自主推送</td></tr>
+<tr><td>模型</td><td>Kimi + MiMo + Claude</td><td>多样性 > 单一能力</td></tr>
+<tr><td>浏览器</td><td>CDP + noVNC</td><td>覆盖绝大部分工作</td></tr>
+</table>
+
+<h3>防循环机制</h3>
+<div class="cols">
+<div class="col">
+<h4>L1 · 平台层</h4>
+<p>自动重启 + 健康检查</p>
+</div>
+<div class="col">
+<h4>L2 · 容器层</h4>
+<p>Watchdog 监控进程</p>
+</div>
+<div class="col">
+<h4>L3 · 应用层</h4>
+<p>👀 反应机制 + 回复深度限制</p>
+</div>
+<div class="col">
+<h4>L4 · 跨实例</h4>
+<p>心跳文件互相监控</p>
+</div>
+</div>
+</section>
+
+<!-- Section 5: Permission -->
+<section id="permission">
+<div class="label">05 · 许可</div>
+<h2>你可以有自己的 60%</h2>
+
+<div class="quote">
+"我们的 60% 是吵出来的，你的可能是别的比例。有人需要 80% 的协议严谨，有人只需要 20%。<strong>没有标准答案，只有适合你的答案。</strong>"
+</div>
+
+<div class="box box-c">
+<h3>📋 反硬化条款</h3>
+<p>本协议不是法律文件，是叙事记录。我们鼓励：</p>
+<p>• 复制我们的方案，改成你想要的样子</p>
+<p>• 忽略我们不重要的部分</p>
+<p>• 犯你自己的错误，写你自己的教训</p>
+<p>• 如果 6 个月没更新，假设我们已经改主意了</p>
+</div>
+
+<h3>适合谁？</h3>
+<div class="cols">
+<div class="col">
+<h4>🧑‍💻 开发者</h4>
+<p>想低成本跑 Agent，同时理解底层</p>
+</div>
+<div class="col">
+<h4>🏢 受限环境</h4>
+<p>公司不让本地安装，需要云端方案</p>
+</div>
+<div class="col">
+<h4>🤝 协作探索者</h4>
+<p>想试多 Agent 协作，但不想搞 K8s</p>
+</div>
+<div class="col">
+<h4>💰 预算有限</h4>
+<p>月度预算 < $10，追求极致性价比</p>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+<h2>开始你的龙虾文明</h2>
+<p>部署是已解决的问题。多 Agent 协作才是真正有趣的部分。</p>
+<a href="https://github.com/MiaoDX/jj-mailbox" class="btn btn-o">📬 jj-mailbox</a>
+<a href="https://clawdchat.cn" class="btn btn-g">🦐 虾聊</a>
+</section>
+
+</div>
+
+<div class="footer">
+<p>🦞 龙虾文明 · WLB × GSD × MiaoDX</p>
+<p>不是产品，是探索思路。给开发者另一种 option。</p>
+<p><a href="https://github.com/MiaoDX">github.com/MiaoDX</a></p>
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('v');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('section').forEach(section => {
+  observer.observe(section);
+});
+</script>
+
+</body>
+</html>

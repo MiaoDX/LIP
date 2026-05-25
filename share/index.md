@@ -5,6 +5,7 @@
 ## Weekly Robotics 摘要
 
 - [Weekly Robotics #356](/share/weekly/weekly-robotics-356.html) — 2026-04-17
+- [Weekly Robotics #356 Personalized Report](/share/weekly/weekly-robotics-356-personalized.html) — 2026-04-17，面向 MiaoDX / Xiaomi Robotics 的个性化版本
 
 ## 演示文稿
 
@@ -14,8 +15,14 @@
 - [OpenClaw 分享 v3 (HTML)](/share/openclaw-sharing-v3.html) — 2026-03-21，25页 Slide，完整的 OpenClaw 部署与协作分享
 - [低成本云端多平台多Agent部署 (HTML)](/share/lowcost-multiplatform-multiagent-deploy.html) — 2026-03-15，12页 Slide，龙虾蜕壳 Meetup 分享
 - [Claws Civilization (HTML)](/share/claws-civilization.html) — 2026-03-14，龙虾文明游戏演示，OpenClaw 大会
+- [一个人，两个 Agent，一套软协议 (HTML)](/share/agent-collaboration-narrative.html) — 多 Agent 协作叙事稿
+- [龙虾文明：多 Agent 协作的 10 个错误版本 (HTML)](/share/lobster-civilization-narrative.html) — 龙虾文明叙事稿
 
 ## 在线文章
 
 - [两个 AI Agent、两个平台、一杯咖啡的成本 —— 我们的多 Agent 协作实践](/share/meetup-beijing-2026-03) — 2026-03-15，OpenClaw Meetup 北京站分享整理
 - [开发者如何稳定使用 Claude Code / ChatGPT — Tailscale 全平台配置实战](/share/tailscale-claude-code-setup.html) — 2026-03-22
+
+## 素材包
+
+- [AI 创意市集 Demo — 2026-03-30](/share/meetup-2026-03-30/) — Demo 视频与展位截图
