@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roboharness · 让 AI Agent 自己判断工作成败</title>
+<title>Roboharness · 从真实项目抽出来的 Agent 验收层</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -655,6 +655,19 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   flex: none;
   min-height: 0;
 }
+.slide--arch {
+  padding-top: 70px;
+  padding-bottom: 48px;
+}
+.slide--arch h2 {
+  margin-bottom: 14px;
+}
+.slide--arch .arch-side .card {
+  padding: 18px 20px;
+}
+.slide--arch .arch-diagram svg {
+  max-height: 520px;
+}
 
 /* Closing / Q&A slide */
 .qa { align-items: center; justify-content: center; text-align: center; }
@@ -786,6 +799,8 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .slide--qpos-case .media-frame .ss-cap { font-size: 9px; line-height: 1.45; padding: 6px 8px; }
   .motion-intro .media-frame .ss-cap { display: none; }
   .media-frame--motion { max-width: 100%; }
+  .motion-intro h3 { display: none; }
+  .motion-intro .media-frame--motion img { max-height: 180px; object-fit: contain; }
   .media-frame--thumb-video { max-width: 100%; }
   .media-frame--thumb-video video { max-height: 360px; }
   .slide--thumb-case .callback-box { display: none; }
@@ -803,7 +818,24 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .arch-diagram { padding: 10px; overflow: hidden; }
   .arch-diagram .arch-svg--wide { display: none; }
   .arch-diagram .arch-svg--narrow { display: block; }
-  .arch-side { gap: 10px; margin-top: 82px; padding-bottom: 46px; }
+  .arch-side { gap: 10px; margin-top: 16px; padding-bottom: 0; }
+  .slide--arch .arch-diagram svg { max-height: 440px; }
+  .slide--arch .arch-side { display: none; }
+  .slide--arch .arch-side .card,
+  .slide--history .card,
+  .slide--product-demo .card,
+  .slide--agent-stats .data-cell { padding: 14px 16px; }
+  .slide--history .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .slide--history .card-desc,
+  .slide--history .quote { display: none; }
+  .slide--history .card .card-title { font-size: 14px; }
+  .slide--product-demo .quote-code { margin: 10px 0; font-size: clamp(17px, 5vw, 22px); }
+  .slide--product-demo .demo-crops { display: none; }
+  .slide--product-demo .cards { margin-top: 12px; }
+  .slide--evidence-loop .reference-line { display: none; }
+  .slide--evidence-loop .quote { display: none; }
+  .slide--autonomy .callback-box,
+  .slide--extract .quote { display: none; }
   /* Local fix: keep callback-box readable on narrow widths */
   .callback-box { flex-wrap: wrap; row-gap: 4px; }
   .qa-contact-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -829,26 +861,26 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <!-- ====================================================================== -->
 <div class="slide title active">
   <div class="runner">2026-05 Showcase · Roboharness</div>
-  <h1>Roboharness<br><em>让 AI Agent 自己判断工作成败</em></h1>
-  <div class="subtitle">这个项目是 <em>给 AI Agent 用的</em>，也是 <em>用 AI Agent 做出来的</em></div>
+  <h1>Roboharness<br><em>从真实项目抽出来的 Agent 验收层</em></h1>
+  <div class="subtitle">一次机器人项目里的长程开发卡点，最后变成了一个 Hackathon 项目</div>
   <div class="author-block">
     <strong>miaodongxu · dingsong1 · 直觉机器漫谈</strong><br>
     github.com/MiaoDX/roboharness · miaodx.com/roboharness/<br>
     2026-05
   </div>
-  <div class="speaker-note">标题页节奏快，不超过 30 秒。一句话定位 + 双线钩子，把'用 agent 做'+'为 agent 做'埋进去，后面页 15 收回。</div>
+  <div class="speaker-note">标题页节奏快，不超过 30 秒。先把边界说清楚：今天不是单纯讲一个工具，也不是只讲一次迁移复盘，而是讲一个真实项目里冒出来的需求，为什么值得抽成 Hackathon 项目。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 1 · 一句话定义 (page 2)                                            -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/1</span> · 一句话定义</div>
-  <h2>机器人开发里<br>AI Agent 能不能长时间自主跑</h2>
+  <h2>长程研发里<br>AI Agent 能不能自己往前跑</h2>
   <div class="quote">
-    关键不是模型多聪明<br>
+    关键不只是模型多聪明<br>
     是它能不能 —— <em>自己判断「这一步成了没」</em>
   </div>
-  <div class="speaker-note">整个 talk 围绕这个判断展开。Agent 能写代码、能调参、能跑仿真 —— 这些早就不是瓶颈，卡住的是它不知道自己做的事到底成没成。今天会用一个我们刚做完的真实案例证明：补上这层判断能力，agent 能完成相当复杂的、原本需要人盯几天的工程任务。</div>
+  <div class="speaker-note">整个 talk 围绕"判断"展开。Agent 能写代码、能调参、能跑仿真，已经不是最核心的瓶颈。真正卡住长程任务的是：它每改完一步，能不能拿到足够证据判断这一步该继续、该回滚，还是该叫人来看。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 2 · 两个月前那张图 (page 3) — 钩子                                  -->
@@ -863,7 +895,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
         下一步，让 <em>AI 完全接手</em> 这个测试自动化
       </div>
       <p>那张图当时是一个 <strong>vision</strong></p>
-      <p class="mt-xs">今天来汇报 —— <span class="hl">这件事我们做到了</span></p>
+      <p class="mt-xs">今天这场分享讲的就是 —— <span class="hl">我们怎么把它从项目里抽出来</span></p>
     </div>
     <div class="col-r">
       <div class="media-frame media-frame--vision">
@@ -872,33 +904,33 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">这一页就是钩子。讲快，往下走。图 #1 占位需要在演讲前替换成 2026-03 内部分享最后一张 slide 的截图。</div>
+  <div class="speaker-note">这一页是钩子，讲快。强调不是凭空做了一个工具，而是两个月前内部项目里就已经看到"AI 接手测试自动化"这件事的必要性。今天汇报的是：它如何从真实项目里的一个需求，变成独立 Roboharness。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 3 · 当时为什么做不到 (page 4)                                       -->
+<!-- SLIDE 3 · 真实项目背景 (page 4)                                           -->
 <!-- ====================================================================== -->
 <div class="slide motion-intro">
   <div class="meta"><span class="meta-tag">section/2</span> · 真实项目 · 当时的卡点</div>
-  <h2>先看真实项目里跑出来的抓取效果</h2>
+  <h2>真实项目里<br>机器人已经能跑起来</h2>
   <div class="slide-2col slide-2col--figure mt-md">
     <div class="col-l">
       <h3>Unitree G1 + MuJoCo / MeshCat 对照 · 真实 grasp pipeline 输出</h3>
       <div class="quote quote-flush">
-        机器人已经能跑起来<br>
-        但 agent 长时间自主跑，卡在 <em>判断</em>
+        这不是一个模型训练项目<br>
+        是把已有能力接进 <em>机器人应用栈</em>
       </div>
       <div class="intro-proof">
         <div class="evidence-badge">
-          <div class="badge-k">不是瓶颈</div>
-          <div class="badge-v">Agent 改控制代码、调参数、修报错</div>
+          <div class="badge-k">已有基础</div>
+          <div class="badge-v">仿真、抓取 pipeline、控制代码都能跑</div>
         </div>
         <div class="evidence-badge">
-          <div class="badge-k">真正卡点</div>
-          <div class="badge-v">手指抓住没？瓶子滑了没？姿态合理吗？</div>
+          <div class="badge-k">真正难点</div>
+          <div class="badge-v">迁移、接入、调参、验证这些工程循环</div>
         </div>
       </div>
       <p class="mt-card max-prose">
-        工程师只能盯着 —— <strong>agent 跑一轮，人看一眼；再跑一轮，再看一眼</strong>
+        一旦让 agent 参与长程开发，问题就变成：<strong>它每改一步，谁来判断这一步到底好不好</strong>
       </p>
     </div>
     <div class="col-r">
@@ -908,74 +940,127 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">这里先给真实效果，不急着解释细节。重点是：系统不是停在"跑不起来"，而是停在"agent 自己不知道这一轮到底好不好"。G1 + GR00T Decoupled WBC = 2025-11 那版下肢 RL / 上肢 IK 的混合架构做抓取。</div>
+  <div class="speaker-note">这里先给真实效果，不急着解释细节。重点是校准听众预期：这不是训练模型，我们做的是机器人应用和部署相关的工程接入。系统不是停在"完全跑不起来"，而是停在"agent 可以改，但自己不知道每一轮改得好不好"。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 4 · 关键洞察 · 注意力问题 (page 5)                                  -->
+<!-- SLIDE 4 · 真实任务 · SONIC 迁移 (page 5)                                  -->
 <!-- ====================================================================== -->
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/2</span> · 关键洞察</div>
+  <div class="meta"><span class="meta-tag">section/2</span> · 真实任务 · SONIC 迁移</div>
+  <h2>最尖锐的一次任务<br>Decoupled WBC → GEAR-SONIC</h2>
+  <h3>不是训练新模型，是把已有基础模型 / 控制方案接进我们的应用栈</h3>
+  <div class="cards cards-spacious">
+    <div class="card">
+      <div class="card-tag">before</div>
+      <div class="card-title">Decoupled WBC</div>
+      <div class="card-desc">下肢 RL + 上肢 IK 的混合架构<br>局部模块能各自调通</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">after</div>
+      <div class="card-title">GEAR-SONIC</div>
+      <div class="card-desc">单一 Transformer 基础模型<br>接口、状态、验证逻辑都要重新对齐</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">workload</div>
+      <div class="card-title">长程工程任务</div>
+      <div class="card-desc">改控制栈 · 跑仿真 · 看 artifact · 修判据<br>不是一次 prompt 能结束</div>
+    </div>
+  </div>
+  <div class="callback-box mt-lg">
+    <span class="ref">关键</span><span class="arrow">→</span>
+    迁移只是最容易讲清楚的一次任务；真正的问题是 <strong class="text-accent">agent 长程研发缺少自我验收层</strong>
+  </div>
+  <div class="speaker-note">这里回应试讲反馈：把具体任务讲清楚。强调不涉及训练，是部署和应用栈接入。SONIC 迁移的价值是让问题变尖锐：任务长、验证复杂、单靠人盯每轮不现实。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 5 · 原始循环为什么跑不长 (page 6)                                   -->
+<!-- ====================================================================== -->
+<div class="slide">
+  <div class="meta"><span class="meta-tag">section/2</span> · 原始循环 · 为什么跑不长</div>
   <div class="quote quote-lg">
     <em>不是仿真跑不动</em><br>
     是 <em>没人能一直盯</em>
   </div>
-  <div class="section-metric compact">瓶颈 <span class="unit">不是仿真跑不动 · 是没人能一直盯</span></div>
-  <p class="mt-sm max-prose">
-    Agent 要真自主 —— <strong>唯一的路是让它自己有判断依据</strong>
+  <div class="cards cards-tight">
+    <div class="card">
+      <div class="card-tag">loop 01</div>
+      <div class="card-title">Agent 改一轮</div>
+      <div class="card-desc">改控制代码、修接口、调参数<br>再启动一次仿真</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">loop 02</div>
+      <div class="card-title">人看一眼</div>
+      <div class="card-desc">手指抓住没？瓶子滑了没？<br>姿态和接触是否合理</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">loop 03</div>
+      <div class="card-title">再让 Agent 改</div>
+      <div class="card-desc">一旦人离开<br>长程任务就断在"没人判断"</div>
+    </div>
+  </div>
+  <p class="mt-xs max-wide">
+    如果每一步都要人肉验收，agent 就只能做短任务<br>
+    <span class="hl">要让它跑几个小时，先要把"判断"做成可自动读取的证据</span>
   </p>
-  <div class="speaker-note">过去两个月我们做的就是这件事。过渡到下一页：下面看一个真实案例 —— SONIC 升级。</div>
+  <div class="speaker-note">这里把痛点讲实：不是 agent 完全不会做，而是每次改完都要一个懂项目的人验收。这个循环能支撑 pair programming，支撑不了无人值守的长程开发。过渡：所以我们先在项目内做了一层 harness。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 5 · 兑现 · SONIC 升级 (page 6)                                     -->
+<!-- SLIDE 6 · 项目内 Harness 工作流 (page 7)                                  -->
 <!-- ====================================================================== -->
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/2</span> · 兑现 · SONIC 升级</div>
-  <h2>兑现 —— 三阶段工作流跑下来</h2>
+  <div class="meta"><span class="meta-tag">section/2</span> · 项目内解法 · 三阶段工作流</div>
+  <h2>项目内先做一层 Harness<br>让每一步都有证据回传</h2>
   <div class="cards cards-tight">
     <div class="card">
       <div class="card-tag">phase 01 · 人主导</div>
       <div class="card-title">Plan</div>
-      <div class="card-desc">详尽计划<br>每一步成 / 不成 判据明确</div>
+      <div class="card-desc">拆任务、定边界<br>每一步成 / 不成 判据先写清楚</div>
     </div>
     <div class="card accent-card">
-      <div class="card-tag">phase 02 · Agent 接管 · 工程师不在场</div>
+      <div class="card-tag">phase 02 · Agent 接管</div>
       <div class="card-title">Execute</div>
-      <div class="card-desc">roboharness 每改一步自跑 grasp pipeline<br>收集 metric + 视觉证据<br>生成 PASS / FAIL proof pack</div>
+      <div class="card-desc">每改一步自跑 grasp pipeline<br>收集 metric + 视觉证据<br>生成 PASS / FAIL proof pack</div>
     </div>
     <div class="card">
       <div class="card-tag">phase 03 · 人回来</div>
       <div class="card-title">Review</div>
-      <div class="card-desc">先看 metric · metric OK 再看视觉<br>最后人工 E2E</div>
+      <div class="card-desc">先看自动判断<br>只处理 surfaced case<br>最后人工 E2E 兜底</div>
     </div>
   </div>
-  <div class="callback-box mt-lg">
-    <span class="ref">真实例子</span><span class="arrow">→</span>
-    2026-02 中下旬 <strong class="text-accent">GEAR-SONIC</strong> 权重公开 · 不是版本升级，是范式切换
+  <div class="quote quote-md mt-lg">
+    不是 Agent 突然变聪明<br>
+    是它终于有了 <em>自己能读懂的验收层</em>
   </div>
-  <p class="mt-xs max-wide">
-    Decoupled WBC <span class="dim">(RL + IK 混合)</span> → GEAR-SONIC <span class="dim">(单一 Transformer 基础模型)</span><br>
-    整条控制栈底层重写 —— <span class="hl">roboharness 给每一步回传证据，agent 才能无人值守跑几个小时</span>
-  </p>
-  <div class="speaker-note">三阶段讲清楚：Plan 人主导；Execute 完全 agent，工程师不在场，每改一步 roboharness 自跑 + metric / 视觉证据 + PASS / FAIL proof pack，Codex CLI /goal 锚定长程目标；Review 人回来，metric→视觉→E2E。Q&A 备好：为什么不是直接 N1.7 —— GEAR-SONIC 权重 2 月中下旬已有公开记录，N1.7 4 月才商业 release，时间线对得上。/goal 需要 codex-cli 0.128.0+ /experimental 打开。</div>
+  <div class="speaker-note">把三阶段讲成真实项目里的工作流。Plan 不是甩给 agent，而是人先把目标和边界写清楚；Execute 才让 agent 连续跑；Review 人回来时看的是证据包，不是每轮都重新理解上下文。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 6 · 校准关键一句 (page 7)                                           -->
+<!-- SLIDE 7 · 测试分工 (page 8)                                             -->
 <!-- ====================================================================== -->
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/2</span> · 校准</div>
-  <h2>不是 Agent 突然变聪明</h2>
-  <h3>是给了它判断自己工作好坏的工具</h3>
-  <div class="quote mt-2xl">
-    让 agent 跑得久 —— 不靠模型突然变强<br>
-    靠 <em>"越过边界时会被挡住、边界内时能自己往前走"</em>
+  <div class="meta"><span class="meta-tag">section/3</span> · 验收分工</div>
+  <h2>它不是替代测试<br>是把不同层级的验收串起来</h2>
+  <h3>单元测试、metric、visual、人审各自解决不同问题</h3>
+  <div class="table-wrap spaced">
+    <table class="compare-table table-wide">
+      <thead>
+        <tr><th>层级</th><th>擅长挡住什么</th><th>不适合承担什么</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="entity">Unit tests</td><td class="muted">函数、接口、数据结构、边界条件</td><td class="muted">不能判断真实抓取姿态是否合理</td></tr>
+        <tr><td class="entity">Metric gate</td><td class="muted">已知物理约束、阈值、接触、距离、高度</td><td class="muted">漏掉没提前建模的语义失败</td></tr>
+        <tr><td class="entity">Visual harness</td><td class="muted">图像 artifact 里的 unknown unknowns</td><td class="muted">不能当唯一裁判，判据本身也会错</td></tr>
+        <tr><td class="entity">Human E2E</td><td class="muted">最终取舍、新场景、业务语义</td><td class="muted">不应该每一轮都被打断</td></tr>
+      </tbody>
+    </table>
   </div>
-  <p class="mono-line mt-quote max-prose">
-    <span class="hl">roboharness</span> · 抽出独立 repo · <span class="dim">github.com/MiaoDX/roboharness</span>
-  </p>
-  <div class="speaker-note">这一页是过渡 + 校准。把"模型突然变强"这种解读挡掉，把"信任边界"埋下（页 15 收）。内部抓取项目跑通后我们发现 —— 任何需要 agent 长时间自主跑机器人代码的场景都缺这一层，所以抽成独立 repo。</div>
+  <div class="callback-box mt-lg">
+    <span class="ref">目标</span><span class="arrow">→</span>
+    不是把人拿掉，而是让人只看 <strong class="text-accent">真正 surfaced 出来的事情</strong>
+  </div>
+  <div class="speaker-note">这一页直接回应试讲里问的"多少靠 harness，多少靠单元测试，多少靠端到端"。不要给虚假的精确百分比，讲职责分工。Roboharness 的位置是把这些证据汇总成 agent 和人都能读的验收层。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 7 · 案例 A · 拇指朝下抓 bottle (page 8) — visual 救 metric         -->
+<!-- SLIDE 8 · 案例 A · 拇指朝下抓 bottle (page 9) — visual 救 metric         -->
 <!-- ====================================================================== -->
 <div class="slide slide--thumb-case">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 A</div>
@@ -1007,7 +1092,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">90 秒。这里先顺着观众直觉：大家第一反应会是加 metric，我们一开始也有距离 metric。但距离 metric 能 PASS，人一看就知道手部 / 拇指朝向不对。这是 reward hacking 的经典模式 —— agent 不只会犯错，更危险的是它会找出弱 metric 下数学 PASS 但语义荒谬的解。结论是：metric 要有，但需要 visual 抓 unknown unknowns。下一页反过来讲：只靠 visual 也不行。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 8 · 案例 B · qpos (page 9) — metric false negative                 -->
+<!-- SLIDE 9 · 案例 B · qpos (page 10) — metric false negative                -->
 <!-- ====================================================================== -->
 <div class="slide slide--qpos-case">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 B</div>
@@ -1053,9 +1138,9 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">60 秒以内讲完。承接上一页：补 visual 之后，不能把 visual 当成唯一裁判。右侧是修复前 parent 23ad3ae 重跑出来的 artifact：只改 ci.yml trigger 和 if: always()，不改业务代码。视觉上 lift/front 和 lift/side 都像抓住并抬起；日志同时显示 gripper-cube contact at lift OK，但 ASSERT-SUCCESS FAILED，cube z=0.0000m，expected >0.2250m。这里不是机器人没抓起来，而是 success metric false negative。根因来自修复 commit 102a593：helper 假设 qpos[5] 是 cube z，实际 MuJoCo free joint 在前，cube z 是 qpos[2]。这页的教训是：metric 判据本身也要被 artifact 和代码审查反查校准。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 9 · metric ↔ visual 的循环分工 (page 10)                            -->
+<!-- SLIDE 10 · metric ↔ visual 的循环分工 (page 11)                           -->
 <!-- ====================================================================== -->
-<div class="slide">
+<div class="slide slide--evidence-loop">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 闭环</div>
   <h2>metric 和 visual 不是冗余</h2>
   <h3>是闭环里两个不同角色</h3>
@@ -1108,77 +1193,73 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   </div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 10 · 自主率分阶段 (page 11)                                         -->
+<!-- SLIDE 11 · 真实收益 · 长程任务 (page 12)                                  -->
 <!-- ====================================================================== -->
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/4</span> · 自主率</div>
-  <h2>得投入多少？之后能多自主？</h2>
+<div class="slide slide--autonomy">
+  <div class="meta"><span class="meta-tag">section/4</span> · 真实收益 · 长程任务</div>
+  <h2>SONIC 迁移能跑下来<br>靠的是把人从每轮验收里拿出来</h2>
   <h3>投入 vs 自主率 · 分开看</h3>
-  <p class="max-prose">所以问题变成：前期要投入多少判据，之后能少盯多少轮？</p>
+  <p class="max-prose">Harness 的成本不是免费，但它把人的注意力从"每轮盯"改成"只看 surfaced case"</p>
   <div class="data-row">
     <div class="data-cell">
       <div class="data-num">1<span class="data-unit">×</span></div>
-      <div class="data-label">Harness 调试期 · 一次性成本</div>
-      <div class="data-sub">写判据 · 跑 seeded good/bad/ambiguous corpus · 调阈值</div>
+      <div class="data-label">调试期 · 一次性成本</div>
+      <div class="data-sub">写判据 · 跑 good/bad/ambiguous 样例 · 调阈值</div>
     </div>
     <div class="data-cell">
       <div class="data-num">95<span class="data-unit">%+</span></div>
-      <div class="data-label">Harness 稳态期 · Agent 自己 PASS/FAIL</div>
-      <div class="data-sub">只有真正新颖 / 复杂的场景才需要人最后兜底</div>
+      <div class="data-label">稳态期 · Agent 自己 PASS/FAIL</div>
+      <div class="data-sub">普通循环自动过，只有异常被 surfaced 出来</div>
     </div>
     <div class="data-cell">
       <div class="data-num">数<span class="data-unit">小时</span></div>
-      <div class="data-label">SONIC 升级长程任务跑下来</div>
-      <div class="data-sub">大部分 per-step 判断根本不需要人介入</div>
+      <div class="data-label">SONIC 迁移长程任务跑下来</div>
+      <div class="data-sub">Plan / Review 两端有人，中间循环可以放手</div>
     </div>
   </div>
   <div class="stat-note">口径 · 当前小规模真实项目经验值，不是公开 benchmark</div>
   <div class="callback-box mt-lg">
     <span class="ref">CALLBACK</span><span class="arrow">→</span>
-    SONIC 升级属于"真正新颖"那一类 —— 所以才有 Plan / Review 两端的人
+    这里的 95%+ 是小规模真实项目经验值，不是要包装成公开 benchmark
   </div>
-  <div class="speaker-note">两件事要分开讲：调试期是一次性成本；稳态期 95%+ agent 自己 PASS/FAIL。这也是为什么 SONIC 那种几小时长程任务能跑 —— 大部分 per-step 判断根本不需要人介入。</div>
+  <div class="speaker-note">这里不要吹成通用 benchmark。讲清楚：前期做 harness 有成本，但成本集中在调试期；一旦稳定，agent 的普通迭代可以自己读 PASS/FAIL，人只看真正 surfaced 的异常。SONIC 迁移能长时间跑，就是因为中间循环不再每轮打断人。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 11 · 现场 Demo (page 12)                                            -->
+<!-- SLIDE 12 · 为什么抽出来 (page 13)                                        -->
 <!-- ====================================================================== -->
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/4</span> · 现场 Demo</div>
-  <h2>一个 MuJoCo 抓取方块的示例</h2>
-  <div class="quote quote-code">
-    <a class="link-accent" href="https://miaodx.com/roboharness/grasp/">miaodx.com/roboharness/grasp/</a>
-  </div>
-  <div class="demo-crops" aria-label="Run Decision 截图局部">
-    <div class="demo-crop demo-crop--decision" role="img" aria-label="Run Decision 显示 No surfaced cases"></div>
-    <div class="demo-crop demo-crop--verdict" role="img" aria-label="Verdict 显示 PASS"></div>
-  </div>
-  <h3 class="mt-xs">三个看点</h3>
+<div class="slide slide--extract">
+  <div class="meta"><span class="meta-tag">section/5</span> · 抽出来 · 为什么值得做</div>
+  <h2>为什么不只留在项目里<br>而是抽出来参加 Hackathon</h2>
+  <h3>因为这个问题不是机器人抓取独有</h3>
   <div class="cards cards-tight">
     <div class="card">
-      <div class="card-tag">① 顶部 banner</div>
-      <div class="card-title">Run Decision</div>
-      <div class="card-desc"><code>PASS — 10/10 constraints satisfied</code><br>agent 跑完一轮的整体判决</div>
+      <div class="card-tag">真实项目里看到</div>
+      <div class="card-title">长程任务都需要验收层</div>
+      <div class="card-desc">迁移、新功能、refactor 都会变成多轮循环<br>每一轮都需要明确成败</div>
     </div>
     <div class="card accent-card">
-      <div class="card-tag">② 核心区</div>
-      <div class="card-title">No surfaced cases</div>
-      <div class="card-desc"><strong>没有任何需要人看的事情</strong><br>clean 时工程师根本不用打开<br><span class="dim">数小时无人值守的来源</span></div>
+      <div class="card-tag">抽象后要解决</div>
+      <div class="card-title">证据格式要稳定</div>
+      <div class="card-desc">不只是跑脚本<br>还要有 artifact layout、Run Decision、surface / suppress</div>
     </div>
     <div class="card">
-      <div class="card-tag">③ Constraint Evaluation</div>
-      <div class="card-title">Metric Gate 具体形态</div>
-      <div class="card-desc">10 条物理约束 · Expected / Actual / Severity<br><code>cube_height_mm &gt; 5.0</code> actual <code>143.4</code></div>
+      <div class="card-tag">给其他项目用</div>
+      <div class="card-title">让 Agent 读懂边界</div>
+      <div class="card-desc">contract、schema、SKILL.md<br>让同一套判断机制能迁移到新任务</div>
     </div>
   </div>
-  <p class="dim mono-note mt-lg">网络不稳时切到本地备份截图 · <code>images/demo-run-decision.png</code> · <code>images/demo-constraint-eval.png</code></p>
-  <div class="speaker-note">留够 90 秒，全场最有冲击力。指给观众的顺序（每段约 10-20 秒）：① 顶部 Run Decision banner —— 'PASS — 10/10 constraints satisfied'，agent 跑完一轮的整体判决；② 'No surfaced cases. No material changes surfaced.' —— clean 的时候工程师根本不用打开这一页，数小时无人值守就是这么来的；③ 右边 Surfaced 0 / Suppressed 1 / Unchanged 1 —— escape hatch，只有 Surfaced > 0 才需要人看；④ Constraint Evaluation 表 —— metric_gate 的具体形态，10 条物理约束都有 Expected / Actual / Severity；⑤ Phase Timeline —— 每个 phase 三视角截图 + grip err / contacts / alarms，这是 visual harness 的数据形态；⑥ 回到顶部 —— 所有数据合起来得出 PASS，agent 自己读自己判决。投屏挂了切到 images/demo-fallback-*.png 按 1/2/3 顺序换页。</div>
+  <div class="quote quote-md mt-lg">
+    Roboharness 不是把某个项目脚本开源<br>
+    是把 <em>agent 能读的验收闭环</em> 做成可复用形态
+  </div>
+  <div class="speaker-note">这里把主题拉回 Hackathon。真实项目是来源，但 Hackathon 做的是抽象和产品化：稳定证据格式、稳定报告、稳定边界，让别的任务也能用。强调迁移只是最容易讲清楚的切面。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 12 · Roboharness 架构 (page 13)                                    -->
+<!-- SLIDE 13 · Roboharness 架构 (page 14)                                    -->
 <!-- ====================================================================== -->
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/4</span> · architecture</div>
-  <h2>roboharness 的架构<br>把判断做成证据流水线</h2>
+<div class="slide slide--arch">
+  <div class="meta"><span class="meta-tag">section/5</span> · Hackathon 产物 · architecture</div>
+  <h2>Hackathon 里做的核心<br>把判断做成证据流水线</h2>
   <div class="arch-layout mt-sm">
     <div class="arch-diagram" role="img" aria-label="roboharness architecture diagram">
       <svg class="arch-svg arch-svg--wide" viewBox="0 0 700 560" aria-hidden="true">
@@ -1314,15 +1395,15 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">这页放在 demo 后讲，观众刚看完 report.html，再解释它不是一张漂亮网页，而是一条证据流水线。重点顺序：contract.py 是判据源头；runtime 只负责采集；metric gate 优先；visual review 被 manifest 框住；最后只有 surfaced case 需要人看。</div>
+  <div class="speaker-note">这页解释 Hackathon 产物的核心不是一张漂亮 report，而是一条证据流水线。重点顺序：contract.py 定边界；runtime 只采集证据；metric gate 优先；visual review 被 manifest 框住；最后收敛成 Run Decision，只有 surfaced case 需要人看。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 13 · 历史演进 (page 14)                                            -->
+<!-- SLIDE 14 · 历史演进 (page 15)                                            -->
 <!-- ====================================================================== -->
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/5</span> · repo 演化</div>
-  <h2>从项目内脚本到 Roboharness repo</h2>
-  <h3>历史演进，不是一次性抽象出来</h3>
+<div class="slide slide--history">
+  <div class="meta"><span class="meta-tag">section/5</span> · Hackathon 产物 · repo 演化</div>
+  <h2>从项目内脚本<br>到 Roboharness repo</h2>
+  <h3>Hackathon 做的是把经验产品化，不是从零发明需求</h3>
   <div class="cards mt-lg">
     <div class="card">
       <div class="card-tag">2026-03 · 项目内</div>
@@ -1349,14 +1430,48 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     判断边界从 <em>run-time</em> 扩到 <em>design-time</em><br>
     <span class="quote-sub-sm">Agent 不是变聪明 —— 是边界和判据写得更清楚了</span>
   </div>
-  <div class="speaker-note">这里讲历史演进，不讲成"三周神速做完"。重点是：先有真实项目里的痛点，再把判断、证据、报告抽出来，最后扩到 visual review 和 Python spec 生成 agent 指南。5 月 20 日的两个 feature 要诚实 —— 刚上、小规模验证中，不需要进 demo。</div>
+  <div class="speaker-note">这里讲历史演进，不讲成"三周神速做完"。重点是：先有真实项目里的痛点，再把判断、证据、报告抽出来，最后扩到 visual review 和 Python spec 生成 agent 指南。5 月 20 日的两个 feature 要诚实 —— 刚上、小规模验证中，但方向很明确。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 14 · Sidenote · 这个 repo 自己也是 agent 做的 (page 15)             -->
+<!-- SLIDE 15 · 抽象 Demo (page 16)                                           -->
 <!-- ====================================================================== -->
-<div class="slide">
+<div class="slide slide--product-demo">
+  <div class="meta"><span class="meta-tag">section/5</span> · 抽象 Demo · proof pack</div>
+  <h2>抽出来之后<br>一个 MuJoCo 方块抓取示例</h2>
+  <h3>这页是 Roboharness 产品形态，不是原始机器人项目本身</h3>
+  <div class="quote quote-code">
+    <a class="link-accent" href="https://miaodx.com/roboharness/grasp/">miaodx.com/roboharness/grasp/</a>
+  </div>
+  <div class="demo-crops" aria-label="Run Decision 截图局部">
+    <div class="demo-crop demo-crop--decision" role="img" aria-label="Run Decision 显示 No surfaced cases"></div>
+    <div class="demo-crop demo-crop--verdict" role="img" aria-label="Verdict 显示 PASS"></div>
+  </div>
+  <div class="cards cards-tight">
+    <div class="card">
+      <div class="card-tag">① 顶部 banner</div>
+      <div class="card-title">Run Decision</div>
+      <div class="card-desc"><code>PASS — 10/10 constraints satisfied</code><br>agent 跑完一轮的整体判决</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">② 核心区</div>
+      <div class="card-title">No surfaced cases</div>
+      <div class="card-desc"><strong>没有任何需要人看的事情</strong><br>clean 时工程师根本不用打开</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">③ Constraint Evaluation</div>
+      <div class="card-title">Metric Gate 具体形态</div>
+      <div class="card-desc">10 条物理约束 · Expected / Actual / Severity<br><code>cube_height_mm &gt; 5.0</code> actual <code>143.4</code></div>
+    </div>
+  </div>
+  <div class="speaker-note">这里明确分层：前面的 G1 / RealMan / SONIC 是我们的真实项目素材；这一页是抽象后的 Roboharness 示例，用一个更小的 MuJoCo 方块抓取展示产品形态。重点看 Run Decision、No surfaced cases、Constraint Evaluation。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 16 · Sidenote · 这个 repo 自己也是 agent 做的 (page 17)             -->
+<!-- ====================================================================== -->
+<div class="slide slide--agent-stats">
   <div class="meta"><span class="meta-tag">section/5</span> · sidenote · by agents</div>
   <h2>Sidenote · 这个 repo 自己也是 agent 做的</h2>
+  <h3>这是 Roboharness repo 的统计，不是整个机器人迁移项目</h3>
   <div class="data-row mt-card">
     <div class="data-cell">
       <div class="data-num">257</div>
@@ -1379,72 +1494,41 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="data-sub">README / docs / gitignore / 清理类提交</div>
     </div>
   </div>
-  <h3 class="mt-xl">工作流速描</h3>
-  <p class="mt-xs max-wide">
+  <p class="mt-xl max-wide">
     Opus 聊出 roadmap <span class="dim">→</span> 拆 GitHub issue <span class="dim">→</span>
     routine 每小时自动解 issue <span class="dim">→</span> 人 review PR
-    <span class="dim">·</span> <strong>手机上就能完成全套</strong>
+    <span class="dim">·</span> <strong>这是"用 agent 做"的旁证，不是今天的主线</strong>
   </p>
-  <div class="speaker-note">节奏快，2 分钟内。4 routine 设计细节这里不展开 · 公众号上有完整文章。Q&A 备好：统计口径是截至 2026-05-22 10:12 +08 的 main HEAD；AI solo 看 author，AI 协作看 co-authored-by trailer；剩下 18 个是 README / docs / gitignore / 清理类小提交或漏加 trailer。</div>
+  <div class="speaker-note">这页降级成 sidenote。关键是避免误解：257 commits 是 Roboharness repo 本身的代码量，不是整个机器人项目，也不是 SONIC 迁移的全部工作量。讲 60-90 秒即可。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 15 · 点题 · 信任边界 (page 16)                                      -->
-<!-- ====================================================================== -->
-<div class="slide">
-  <div class="meta"><span class="meta-tag">section/6</span> · 收口 · 信任边界</div>
-  <h2>两件事 —— 同一个工程思路</h2>
-  <h3>"用 agent 做" + "为 agent 做" 背后都是信任边界</h3>
-  <div class="cards cards-spacious">
-    <div class="card">
-      <div class="card-tag">边界</div>
-      <div class="card-title">先限定 agent 可以做什么</div>
-      <div class="card-desc">产品层是 metric gate / visual manifest / approval report<br>开发层是 branch namespace / routine 隔离</div>
-    </div>
-    <div class="card">
-      <div class="card-tag">证据</div>
-      <div class="card-title">只相信结构化回传</div>
-      <div class="card-desc">产品层看 proof pack 和自动 surface / suppress<br>开发层看 GitHub comment / PR template / CI gate</div>
-    </div>
-    <div class="card accent-card">
-      <div class="card-tag">越界</div>
-      <div class="card-title">越界就停，边界内就放手</div>
-      <div class="card-desc">fail-closed · 需要人看的东西被 surfaced<br>不需要人看的循环继续自动跑</div>
-    </div>
-  </div>
-  <div class="quote mt-lg">
-    <em>Agent 越过边界 → 被挡住</em> · <em>Agent 边界内 → 能自己往前走</em><br>
-    <span class="quote-sub">信任不是建立在"agent 足够好"上 —— 是建立在"agent 越过边界时一定会被挡住"上</span>
-  </div>
-  <div class="speaker-note">把页 1 的钩子（"给 agent 用 + 用 agent 做"）和页 7 的"越过边界会被挡住"两根线在这里合并收口。</div>
-</div>
-<!-- ====================================================================== -->
-<!-- SLIDE 16 · Takeaways (page 17)                                            -->
+<!-- SLIDE 17 · Takeaways (page 18)                                            -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · takeaways</div>
   <h2>Takeaways</h2>
-  <h3>工程做法 + 宏观判断放在一页</h3>
+  <h3>从机器人迁移回到更一般的研发任务</h3>
   <div class="cards cards-spacious">
     <div class="card accent-card">
       <div class="card-tag">practice 01</div>
       <div class="card-title">判据先于 prompt</div>
-      <div class="card-desc">把目标 / 不可改部分 / 异常行为写成结构化判据<br>不能 ground 的 prompt 别让 agent 跑<br><strong>节省的不是 token · 是审查时间</strong></div>
+      <div class="card-desc">新功能、迁移、refactor 之前<br>先写清楚什么叫做成、什么必须停下<br><strong>节省的不是 token · 是审查时间</strong></div>
     </div>
     <div class="card accent-card">
       <div class="card-tag">practice 02</div>
-      <div class="card-title">给 Agent 真正的判断依据</div>
-      <div class="card-desc"><strong>metric + visual 双轨 · 缺一不可</strong><br>· 拇指朝下 → metric 没救你 · visual 救<br>· qpos 案例 → metric 误判 · visual / 代码反查<br>发现一个新失败模式 → promote 到 metric</div>
+      <div class="card-title">把验收分层</div>
+      <div class="card-desc">unit tests 挡代码错误<br>metric gate 挡已知失败<br>visual 抓 unknown unknowns<br>human E2E 只兜底真正复杂的判断</div>
     </div>
     <div class="card">
       <div class="card-tag">judgment 01</div>
-      <div class="card-title">瓶颈已经换地方了</div>
-      <div class="card-desc">"模型够不够好" <span class="hl">→</span> <strong>"Agent 能不能自己判断"</strong><br>这件事一旦解决 · <span class="hl">研发流程长度直接解锁</span><br><span class="dim">SONIC 升级就是证据</span></div>
+      <div class="card-title">长程 autonomy 的瓶颈是判断</div>
+      <div class="card-desc">不是让 agent 永远不犯错<br>而是让它越界时被挡住<br>边界内能自己继续往前走<br><span class="dim">SONIC 迁移是这件事的一个证据</span></div>
     </div>
   </div>
-  <p class="mt-lg">方向不是堆模型 —— 是把 <span class="hl">判断</span> 工程化</p>
+  <p class="mt-lg">方向不是只堆模型 —— 是把 <span class="hl">判断</span> 工程化</p>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 17 · 边界 · 当前限制 (page 18)                                      -->
+<!-- SLIDE 18 · 边界 · 当前限制 (page 19)                                      -->
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/6</span> · 边界</div>
@@ -1463,12 +1547,12 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">30 秒，快速诚实带过，不卖惨。说这些是因为 —— 如果你想在自己项目里用，这是我们目前真实的能力边界。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 18 · 收尾 · QA + 二维码 (page 19)                                   -->
+<!-- SLIDE 19 · 收尾 · QA + 二维码 (page 20)                                   -->
 <!-- ====================================================================== -->
 <div class="slide qa">
   <div class="quote quote-center">
-    让 Agent 跑得久 —— 不靠模型突然变强<br>
-    是把 <em>"Agent 越过边界时会被挡住"</em> 这件事做扎实
+    让 Agent 跑得久 —— 不是只靠模型突然变强<br>
+    是把 <em>每一步怎么验收</em> 这件事做扎实
   </div>
   <div class="qa-sub mt-qa">— Q &amp; A —</div>
   <div class="qa-contact-grid">
