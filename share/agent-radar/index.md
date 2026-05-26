@@ -4,6 +4,10 @@
 
 这个栏目用于承载自动化生成的每日情报，但不会追求“每天把所有新闻重复一遍”。更重要的是：只记录新增事实、关键变化、值得回看的技术材料，以及对 MiaoDX 当前 AI Agent / OPC 实践有复用价值的判断。
 
+## Latest
+
+- [Agent Radar Daily — 2026-05-25](daily/2026-05-25.md)：agent 治理面外置、Copilot 模型面收缩、LangSmith Auth Proxy、团队级 sandbox workflow。
+
 ## 栏目目标
 
 - 跟踪 OpenAI、Anthropic、Google DeepMind、Meta、NVIDIA、Microsoft、LangChain 等 TOP 实验室/平台的最新博客、文档、SDK 与案例。
@@ -62,7 +66,7 @@ share/agent-radar/
 
 ## 当前状态
 
-- [ ] 建立 `daily/` 首篇日报
+- [x] 建立 `daily/` 首篇日报
 - [ ] 建立 `labs/` 分析模板
 - [ ] 建立 `repo-scout/` 个性化 GitHub 推荐模板
 - [ ] 接入自动化任务：每天只写新增信息，避免重复刷屏
