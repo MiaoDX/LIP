@@ -83,17 +83,17 @@ Agent 改一轮，比如改控制代码、修接口、调参数，然后重新�
 
 ## Slide 07｜项目内 Harness 工作流
 
-于是我们先在项目内部做了一层 harness。
+所以现在我们在项目里跑这类长程任务时，基本会把流程拆成三段。
 
-这个工作流分三段。
+这不是一个概念图，而是我们希望展示的现状：人负责定义边界，agent 负责在边界里连续跑，人最后回来查证据。
 
-第一段是 Plan，人主导。这里不是把任务直接丢给 agent，而是人先拆任务、定边界，把每一步什么叫成、什么叫不成写清楚。
+第一段是 Plan，人主导。我们不会把任务直接丢给 agent，而是先拆任务、定边界，把每一步什么叫成、什么叫不成写清楚。
 
 第二段是 Execute，agent 接管。每改一步之后，它会自跑 grasp pipeline，收集 metric 和视觉证据，生成 PASS / FAIL proof pack。这里的关键是 proof pack，不是只有一行日志，而是有一组可以回看的证据。
 
 第三段是 Review，人回来。人不是每一轮都重新理解上下文，而是先看自动判断和 surfaced case，最后再做人工 E2E 兜底。
 
-所以这件事不是 agent 突然变聪明了，而是我们给了它一个自己能读懂的验收层。它越界的时候会被挡住，边界内的时候就能继续往前走。
+所以现在真正变掉的，是人的位置。人不再每一轮盯着仿真看，而是在开头把边界写清楚，在结尾看证据和 surfaced case。中间这段，agent 就有机会连续往前跑。
 
 [翻页]
 
@@ -133,7 +133,9 @@ Human E2E 仍然需要存在，尤其是新场景、业务语义、最终取舍�
 
 ## Slide 10｜案例 B：qpos 索引
 
-第二个案例反过来讲：只靠 visual 也不行。
+第二个案例要先划清来源。它不是前面那个内部机器人项目里的 case，而是我们把 Roboharness 迁出来、做成独立 repo 之后，在一个最简 MuJoCo cube grasp 示例里遇到的问题。
+
+这个例子想说明另一面：只靠 visual 也不行。
 
 右边这组 artifact 看起来是合理的。front 和 side 两个视角都像是抓住并抬起来了，视觉上会让人倾向于判断 PASS。
 
@@ -149,9 +151,7 @@ Human E2E 仍然需要存在，尤其是新场景、业务语义、最终取舍�
 
 ## Slide 11｜metric 和 visual 的闭环
 
-这页把前两个案例收一下。
-
-Metric 和 visual 不是冗余，它们在闭环里承担的是两个不同角色。
+这两个案例放在一起，其实想说明一件事：metric 和 visual 不是谁替代谁，它们在闭环里承担的是两个不同角色。
 
 Visual harness 更像发现器。它负责抓 unknown unknowns，也就是我们一开始没有想到、所以还没写成 metric 的失败模式。拇指朝下抓 bottle 就是这种情况。
 
@@ -193,7 +193,7 @@ Harness 的成本不是免费。前期要写判据，要跑 good、bad、ambiguo
 
 ## Slide 14｜架构
 
-这页看的是 Hackathon 里做的核心结构。
+Hackathon 里，我们把这套判断流程做成了一个更稳定的核心结构。
 
 最上面是 AI Coding Agent 或 CLI。它负责写控制代码、跑验证命令、读回 proof pack。
 
@@ -209,7 +209,7 @@ Harness 的成本不是免费。前期要写判据，要跑 good、bad、ambiguo
 
 ## Slide 15｜历史演进
 
-这里讲一下它怎么从项目内脚本变成 Roboharness repo。
+这条线后来从项目内脚本，一步一步变成了 Roboharness repo。
 
 第一阶段是 2026 年 3 月，项目内先把 grasp pipeline 跑起来。当时有 MuJoCo 和 MeshCat 对照，有人工盯图，也有少量 metric。问题不是不会跑，而是不会自己判。
 
@@ -219,21 +219,21 @@ Harness 的成本不是免费。前期要写判据，要跑 good、bad、ambiguo
 
 第四阶段是 Python spec 到 SKILL.md。contract.py 是手写真值，生成物只是 agent 指南。这样 agent 自己加载边界和判据，而不是每次靠人重新解释。
 
-所以这里不是“我们三周神速发明了一个框架”，而是：真实项目里的痛点先出现，然后在 Hackathon 里被产品化。
+所以这不是“我们三周神速发明了一个框架”，而是：真实项目里的痛点先出现，然后在 Hackathon 里被产品化。
 
 [翻页]
 
 ## Slide 16｜抽象 Demo
 
-这页是抽出来之后的一个小 demo：MuJoCo 方块抓取。
+抽出来之后，我们做了一个更小的 demo：MuJoCo 方块抓取。
 
-我要特别强调，这页不是原始机器人项目本身。前面的 G1、RealMan、SONIC 是我们的真实项目素材。这一页展示的是 Roboharness 抽象后的产品形态。
+我要特别强调，这不是原始机器人项目本身。前面的 G1、RealMan、SONIC 是我们的真实项目素材。这里展示的是 Roboharness 抽象后的产品形态。
 
-这里有三个看点。
+这个页面主要看三个位置。
 
 第一，顶部的 Run Decision。它会告诉 agent 这一轮整体判决是什么，比如 PASS，10 条约束都满足。
 
-第二，No surfaced cases。如果没有任何需要人看的事情，工程师其实不用打开这页。clean 的时候它就是给 agent 和 CI 看的。
+第二，No surfaced cases。如果没有任何需要人看的事情，工程师其实不用打开这个页面。clean 的时候它就是给 agent 和 CI 看的。
 
 第三，Constraint Evaluation。这里展示 metric gate 的具体形态：每条物理约束都有 expected、actual、severity。比如 cube_height_mm 大于 5.0，实际是 143.4。
 
@@ -243,7 +243,7 @@ Harness 的成本不是免费。前期要写判据，要跑 good、bad、ambiguo
 
 ## Slide 17｜Sidenote：这个 repo 自己也是 agent 做的
 
-这里是一个 sidenote。
+再补一个 sidenote。
 
 Roboharness 这个 repo 本身也大量由 agent 完成。这里的 257 个 commit，是 Roboharness repo 的统计，不是整个机器人迁移项目，也不是 SONIC 迁移的全部工作量。
 
@@ -251,7 +251,7 @@ Roboharness 这个 repo 本身也大量由 agent 完成。这里的 257 个 comm
 
 大概工作流是：先用 Opus 聊出 roadmap，再拆 GitHub issue，然后 routine 每小时自动解 issue，最后人 review PR。
 
-这页不是今天的主线，只是一个旁证：我们不仅在做“给 agent 用”的工具，也在真实使用 agent 来把这个 repo 推出来。但主线仍然是前面那件事：长程 agent 研发需要可审计的验收层。
+这个部分不是今天的主线，只是一个旁证：我们不仅在做“给 agent 用”的工具，也在真实使用 agent 来把这个 repo 推出来。但主线仍然是前面那件事：长程 agent 研发需要可审计的验收层。
 
 [翻页]
 
@@ -271,7 +271,7 @@ Roboharness 这个 repo 本身也大量由 agent 完成。这里的 257 个 comm
 
 ## Slide 19｜当前边界
 
-最后也诚实讲一下当前边界。
+到今天为止，当前边界也要讲清楚。
 
 目前已经验证得比较多的是 MuJoCo 加 RealMan / G1，任务类型主要是抓取、到达、移动这些机器人任务。
 

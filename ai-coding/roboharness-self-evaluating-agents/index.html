@@ -904,7 +904,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">这一页是钩子，讲快。强调不是凭空做了一个工具，而是两个月前内部项目里就已经看到"AI 接手测试自动化"这件事的必要性。今天汇报的是：它如何从真实项目里的一个需求，变成独立 Roboharness。</div>
+  <div class="speaker-note">开场钩子，节奏要快。强调不是凭空做了一个工具，而是两个月前内部项目里就已经看到"AI 接手测试自动化"这件事的必要性。今天汇报的是：它如何从真实项目里的一个需求，变成独立 Roboharness。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 3 · 真实项目背景 (page 4)                                           -->
@@ -1008,8 +1008,8 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <!-- SLIDE 6 · 项目内 Harness 工作流 (page 7)                                  -->
 <!-- ====================================================================== -->
 <div class="slide">
-  <div class="meta"><span class="meta-tag">section/2</span> · 项目内解法 · 三阶段工作流</div>
-  <h2>项目内先做一层 Harness<br>让每一步都有证据回传</h2>
+  <div class="meta"><span class="meta-tag">section/2</span> · 现状 · 三阶段工作流</div>
+  <h2>现在的工作流<br>人定边界，Agent 跑循环，人看证据</h2>
   <div class="cards cards-tight">
     <div class="card">
       <div class="card-tag">phase 01 · 人主导</div>
@@ -1028,10 +1028,10 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     </div>
   </div>
   <div class="quote quote-md mt-lg">
-    不是 Agent 突然变聪明<br>
-    是它终于有了 <em>自己能读懂的验收层</em>
+    当前现状<br>
+    Agent 在边界内连续跑，人只看证据和 surfaced case
   </div>
-  <div class="speaker-note">把三阶段讲成真实项目里的工作流。Plan 不是甩给 agent，而是人先把目标和边界写清楚；Execute 才让 agent 连续跑；Review 人回来时看的是证据包，不是每轮都重新理解上下文。</div>
+  <div class="speaker-note">按现状讲，不讲成概念抽象。真实项目里现在就是这三段：人先定目标和边界，Agent 在边界内连续跑验证，最后人看证据包和 surfaced case，而不是每一轮重新接管。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 7 · 测试分工 (page 8)                                             -->
@@ -1057,7 +1057,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     <span class="ref">目标</span><span class="arrow">→</span>
     不是把人拿掉，而是让人只看 <strong class="text-accent">真正 surfaced 出来的事情</strong>
   </div>
-  <div class="speaker-note">这一页直接回应试讲里问的"多少靠 harness，多少靠单元测试，多少靠端到端"。不要给虚假的精确百分比，讲职责分工。Roboharness 的位置是把这些证据汇总成 agent 和人都能读的验收层。</div>
+  <div class="speaker-note">直接回应试讲里问的"多少靠 harness，多少靠单元测试，多少靠端到端"。不要给虚假的精确百分比，讲职责分工。Roboharness 的位置是把这些证据汇总成 agent 和人都能读的验收层。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 8 · 案例 A · 拇指朝下抓 bottle (page 9) — visual 救 metric         -->
@@ -1089,7 +1089,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">90 秒。这里先顺着观众直觉：大家第一反应会是加 metric，我们一开始也有距离 metric。但距离 metric 能 PASS，人一看就知道手部 / 拇指朝向不对。这是 reward hacking 的经典模式 —— agent 不只会犯错，更危险的是它会找出弱 metric 下数学 PASS 但语义荒谬的解。结论是：metric 要有，但需要 visual 抓 unknown unknowns。下一页反过来讲：只靠 visual 也不行。</div>
+  <div class="speaker-note">先顺着观众直觉：大家第一反应会是加 metric，我们一开始也有距离 metric。但距离 metric 能 PASS，人一看就知道手部 / 拇指朝向不对。这是 reward hacking 的经典模式 —— agent 不只会犯错，更危险的是它会找出弱 metric 下数学 PASS 但语义荒谬的解。结论是：metric 要有，但需要 visual 抓 unknown unknowns。后面再反过来讲：只靠 visual 也不行。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 9 · 案例 B · qpos (page 10) — metric false negative                -->
@@ -1097,7 +1097,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide slide--qpos-case">
   <div class="meta"><span class="meta-tag">section/3</span> · 双轨证据 · 案例 B</div>
   <h2>案例 B · qpos 索引</h2>
-  <h3>视觉上 lift 基本合理，但 success metric 读错 MuJoCo 状态</h3>
+  <h3>Roboharness 独立 repo 后的最简 MuJoCo cube grasp 示例</h3>
   <div class="slide-2col slide-2col--qpos mt-md">
     <div class="col-l">
       <div class="table-wrap">
@@ -1131,11 +1131,11 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
             <div class="qpos-proof-label">lift · side · step 2600</div>
           </div>
         </div>
-        <div class="ss-cap">修复前 artifact · front / side 视觉像 PASS；日志：<span class="hl">contact OK</span> / <span class="danger-muted">ASSERT-SUCCESS FAILED</span> · run <a href="https://github.com/MiaoDX/roboharness/actions/runs/26278739873">26278739873</a></div>
+        <div class="ss-cap">独立 repo 最简示例 · 修复前 artifact · front / side 视觉像 PASS；日志：<span class="hl">contact OK</span> / <span class="danger-muted">ASSERT-SUCCESS FAILED</span> · run <a href="https://github.com/MiaoDX/roboharness/actions/runs/26278739873">26278739873</a></div>
       </div>
     </div>
   </div>
-  <div class="speaker-note">60 秒以内讲完。承接上一页：补 visual 之后，不能把 visual 当成唯一裁判。右侧是修复前 parent 23ad3ae 重跑出来的 artifact：只改 ci.yml trigger 和 if: always()，不改业务代码。视觉上 lift/front 和 lift/side 都像抓住并抬起；日志同时显示 gripper-cube contact at lift OK，但 ASSERT-SUCCESS FAILED，cube z=0.0000m，expected >0.2250m。这里不是机器人没抓起来，而是 success metric false negative。根因来自修复 commit 102a593：helper 假设 qpos[5] 是 cube z，实际 MuJoCo free joint 在前，cube z 是 qpos[2]。这页的教训是：metric 判据本身也要被 artifact 和代码审查反查校准。</div>
+  <div class="speaker-note">先划清来源：这个 case 不是 SONIC 迁移里的内部项目，而是 Roboharness 独立成 repo 后，在最简 MuJoCo cube grasp 示例里遇到的。右侧是修复前 parent 23ad3ae 重跑出来的 artifact：只改 ci.yml trigger 和 if: always()，不改业务代码。视觉上 lift/front 和 lift/side 都像抓住并抬起；日志同时显示 gripper-cube contact at lift OK，但 ASSERT-SUCCESS FAILED，cube z=0.0000m，expected >0.2250m。问题不是机器人没抓起来，而是 success metric false negative。根因来自修复 commit 102a593：helper 假设 qpos[5] 是 cube z，实际 MuJoCo free joint 在前，cube z 是 qpos[2]。教训是 metric 判据本身也要被 artifact 和代码审查反查校准。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 10 · metric ↔ visual 的循环分工 (page 11)                           -->
@@ -1395,7 +1395,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">这页解释 Hackathon 产物的核心不是一张漂亮 report，而是一条证据流水线。重点顺序：contract.py 定边界；runtime 只采集证据；metric gate 优先；visual review 被 manifest 框住；最后收敛成 Run Decision，只有 surfaced case 需要人看。</div>
+  <div class="speaker-note">解释 Hackathon 产物的核心不是一张漂亮 report，而是一条证据流水线。重点顺序：contract.py 定边界；runtime 只采集证据；metric gate 优先；visual review 被 manifest 框住；最后收敛成 Run Decision，只有 surfaced case 需要人看。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 14 · 历史演进 (page 15)                                            -->
@@ -1438,7 +1438,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide slide--product-demo">
   <div class="meta"><span class="meta-tag">section/5</span> · 抽象 Demo · proof pack</div>
   <h2>抽出来之后<br>一个 MuJoCo 方块抓取示例</h2>
-  <h3>这页是 Roboharness 产品形态，不是原始机器人项目本身</h3>
+  <h3>Roboharness 产品形态，不是原始机器人项目本身</h3>
   <div class="quote quote-code">
     <a class="link-accent" href="https://miaodx.com/roboharness/grasp/">miaodx.com/roboharness/grasp/</a>
   </div>
@@ -1463,7 +1463,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc">10 条物理约束 · Expected / Actual / Severity<br><code>cube_height_mm &gt; 5.0</code> actual <code>143.4</code></div>
     </div>
   </div>
-  <div class="speaker-note">这里明确分层：前面的 G1 / RealMan / SONIC 是我们的真实项目素材；这一页是抽象后的 Roboharness 示例，用一个更小的 MuJoCo 方块抓取展示产品形态。重点看 Run Decision、No surfaced cases、Constraint Evaluation。</div>
+  <div class="speaker-note">明确分层：前面的 G1 / RealMan / SONIC 是我们的真实项目素材；这里是抽象后的 Roboharness 示例，用一个更小的 MuJoCo 方块抓取展示产品形态。重点看 Run Decision、No surfaced cases、Constraint Evaluation。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 16 · Sidenote · 这个 repo 自己也是 agent 做的 (page 17)             -->
@@ -1499,7 +1499,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     routine 每小时自动解 issue <span class="dim">→</span> 人 review PR
     <span class="dim">·</span> <strong>这是"用 agent 做"的旁证，不是今天的主线</strong>
   </p>
-  <div class="speaker-note">这页降级成 sidenote。关键是避免误解：257 commits 是 Roboharness repo 本身的代码量，不是整个机器人项目，也不是 SONIC 迁移的全部工作量。讲 60-90 秒即可。</div>
+  <div class="speaker-note">保持 sidenote 权重。关键是避免误解：257 commits 是 Roboharness repo 本身的代码量，不是整个机器人项目，也不是 SONIC 迁移的全部工作量。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 17 · Takeaways (page 18)                                            -->
