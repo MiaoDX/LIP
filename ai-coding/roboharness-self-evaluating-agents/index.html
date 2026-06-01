@@ -180,7 +180,7 @@ p { font-size: clamp(14px, 1.5vw, 18px); line-height: 1.65; color: var(--text-se
 strong { color: var(--text); font-weight: 600; }
 img { max-width: 100%; }
 h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .mt-xs { margin-top: 6px; }
 .mt-sm { margin-top: 12px; }
@@ -220,6 +220,7 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .table-mid { max-width: 1000px; }
 .danger-muted { color: #b97f7f; }
 .link-accent { color: var(--accent); text-decoration: none; }
+.link-accent:hover { text-decoration: underline; text-underline-offset: 3px; }
 .text-accent { color: var(--accent); }
 .list-plain {
   margin: 12px 0 0 22px;
@@ -334,6 +335,12 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .card .card-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
 .card .card-title { font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
 .card .card-desc { font-size: 13.5px; color: var(--text-sec); line-height: 1.6; }
+.slide--history .cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.slide--history .card { padding: 18px 16px; }
 
 /* Two-column layout (e.g. text left, screenshot right). */
 /* NOTE: this is CSS grid, not flex — to change the split, override */
@@ -350,6 +357,7 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .slide-2col--figure { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
 .slide-2col--vision { grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.72fr); }
 .slide-2col--qpos { grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr); align-items: center; }
+.slide-2col--repo { grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.7fr); align-items: center; }
 
 /* Callback box — forward / back reference between slides */
 .callback-box {
@@ -419,6 +427,8 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .media-frame--hero { margin-top: 18px; max-width: 1100px; }
 .slide-2col .col-r .media-frame--vision { max-width: 420px; }
 .media-frame--motion { max-width: 660px; }
+.media-frame--groot { max-width: 440px; justify-self: end; }
+.media-frame--groot img { max-height: 380px; object-fit: contain; background: #fff; }
 .slide-2col .col-r .media-frame--qpos-proof { max-width: 650px; justify-self: end; }
 .media-frame--thumb-video { max-width: 520px; justify-self: end; }
 .media-frame--thumb-video video { aspect-ratio: 202 / 223; }
@@ -476,6 +486,46 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   gap: 14px;
   margin-top: 20px;
   max-width: 720px;
+}
+.task-proof {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.task-proof .media-frame { margin-top: 0; max-width: 100%; }
+.task-proof .media-frame img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: var(--bg-card);
+}
+.media-frame--task-wide img { max-height: 150px; }
+.media-frame--task-tall img { max-height: 290px; }
+.workflow-proof-grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.88fr) minmax(420px, 1.12fr);
+  gap: 24px;
+  align-items: start;
+  max-width: 1120px;
+  margin-top: 18px;
+}
+.workflow-phase-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.workflow-phase-stack .cards {
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 0;
+  max-width: none;
+}
+.workflow-phase-stack .card {
+  padding: 18px 20px;
+}
+.workflow-phase-stack .quote {
+  margin: 8px 0 0;
 }
 .evidence-badge {
   border: 1px solid var(--border);
@@ -674,6 +724,13 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .qa h1 { font-style: normal; }
 .qa .qa-sub { font-family: var(--font-mono); color: var(--text-dim); letter-spacing: 3px; margin-top: 14px; }
 .qa .qa-footer { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); line-height: 1.9; margin-top: 40px; }
+.qa .qa-mantra {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-style: italic;
+  color: var(--accent);
+  margin-top: 18px;
+}
 
 /* QR card pair on the QA slide (pattern from ai-coding/ultrathink-to-goal). */
 .qa-contact-grid {
@@ -785,7 +842,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .data-cell { padding: 24px 24px; }
   .data-cell .data-num { font-size: clamp(38px, 10vw, 48px); }
   .slide-2col { grid-template-columns: 1fr; }
-  .slide-2col--vision, .slide-2col--qpos { grid-template-columns: 1fr; }
+  .slide-2col--vision, .slide-2col--qpos, .slide-2col--repo { grid-template-columns: 1fr; }
   .intro-proof { grid-template-columns: 1fr; gap: 10px; }
   .motion-intro .slide-2col .col-r { order: -1; }
   .media-frame--vision { max-width: 100%; }
@@ -799,6 +856,9 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .slide--qpos-case .media-frame .ss-cap { font-size: 9px; line-height: 1.45; padding: 6px 8px; }
   .motion-intro .media-frame .ss-cap { display: none; }
   .media-frame--motion { max-width: 100%; }
+  .media-frame--groot { max-width: 100%; }
+  .media-frame--groot img { max-height: 190px; }
+  .slide-2col--repo .col-r { display: none; }
   .motion-intro h3 { display: none; }
   .motion-intro .media-frame--motion img { max-height: 180px; object-fit: contain; }
   .media-frame--thumb-video { max-width: 100%; }
@@ -812,6 +872,10 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .slide--thumb-case .media-frame .ss-cap { display: none; }
   .demo-crops { grid-template-columns: 1fr; gap: 10px; }
   .demo-crop { min-height: 116px; }
+  .workflow-proof-grid { display: block; margin-top: 16px; }
+  .workflow-phase-stack .cards { gap: 12px; }
+  .workflow-phase-stack .quote { margin-top: 16px; }
+  .task-proof { display: none; }
   .loop-row { grid-template-columns: 1fr; gap: 12px; }
   .loop-graphic { padding: 12px; min-height: 0; }
   .arch-layout { grid-template-columns: 1fr; }
@@ -838,8 +902,12 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .slide--extract .quote { display: none; }
   /* Local fix: keep callback-box readable on narrow widths */
   .callback-box { flex-wrap: wrap; row-gap: 4px; }
-  .qa-contact-grid { grid-template-columns: 1fr; gap: 14px; }
-  .qr-card img { width: 124px; height: 124px; }
+  .qa .quote { font-size: clamp(20px, 5.2vw, 24px); line-height: 1.5; margin: 10px 0; }
+  .qa .qa-mantra { font-size: clamp(20px, 5vw, 24px); margin-top: 12px; }
+  .qa-contact-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+  .qr-card { padding: 10px; }
+  .qr-card img { width: 106px; height: 106px; margin-bottom: 8px; }
+  .qa .qa-footer { margin-top: 18px; font-size: 10px; line-height: 1.55; }
 }
 </style>
 </head>
@@ -895,7 +963,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
         下一步，让 <em>AI 完全接手</em> 这个测试自动化
       </div>
       <p>那张图当时是一个 <strong>vision</strong></p>
-      <p class="mt-xs">今天这场分享讲的就是 —— <span class="hl">我们怎么把它从项目里抽出来</span></p>
+      <p class="mt-xs">今天是给大家汇报一下，<span class="hl">我们的确做到了，并且把它做成一个抽象拿出来了</span></p>
     </div>
     <div class="col-r">
       <div class="media-frame media-frame--vision">
@@ -904,7 +972,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       </div>
     </div>
   </div>
-  <div class="speaker-note">开场钩子，节奏要快。强调不是凭空做了一个工具，而是两个月前内部项目里就已经看到"AI 接手测试自动化"这件事的必要性。今天汇报的是：它如何从真实项目里的一个需求，变成独立 Roboharness。</div>
+  <div class="speaker-note">开场钩子，节奏要快。强调不是凭空做了一个工具，而是两个月前内部项目里就已经看到"AI 接手测试自动化"这件事的必要性。今天汇报的是：我们确实把它做出来了，并且从真实项目需求抽成了独立 Roboharness。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 3 · 真实项目背景 (page 4)                                           -->
@@ -930,7 +998,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
         </div>
       </div>
       <p class="mt-card max-prose">
-        一旦让 agent 参与长程开发，问题就变成：<strong>它每改一步，谁来判断这一步到底好不好</strong>
+        一旦让 agent 参与长程开发，问题就变成：<br><strong>它每改一步，谁来判断这一步到底好不好</strong>
       </p>
     </div>
     <div class="col-r">
@@ -947,30 +1015,42 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <!-- ====================================================================== -->
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/2</span> · 真实任务 · SONIC 迁移</div>
-  <h2>最尖锐的一次任务<br>Decoupled WBC → GEAR-SONIC</h2>
-  <h3>不是训练新模型，是把已有基础模型 / 控制方案接进我们的应用栈</h3>
-  <div class="cards cards-spacious">
-    <div class="card">
-      <div class="card-tag">before</div>
-      <div class="card-title">Decoupled WBC</div>
-      <div class="card-desc">下肢 RL + 上肢 IK 的混合架构<br>局部模块能各自调通</div>
+  <h2>最能暴露问题的一次迁移任务<br>Decoupled WBC → GEAR-SONIC</h2>
+  <h3>不是训练新模型，是把 NVIDIA GR00T WBC 里的基础模型 / 控制方案接进我们的应用栈</h3>
+  <div class="slide-2col slide-2col--repo mt-md">
+    <div class="col-l">
+      <div class="cards cards-tight">
+        <div class="card">
+          <div class="card-tag">before</div>
+          <div class="card-title">Decoupled WBC</div>
+          <div class="card-desc">下肢 RL + 上肢 IK 的混合架构<br>局部模块能各自调通</div>
+        </div>
+        <div class="card accent-card">
+          <div class="card-tag">after</div>
+          <div class="card-title">GEAR-SONIC</div>
+          <div class="card-desc">单一 Transformer 基础模型<br>接口、状态、验证逻辑都要重新对齐</div>
+        </div>
+        <div class="card">
+          <div class="card-tag">workload</div>
+          <div class="card-title">长程工程任务</div>
+          <div class="card-desc">改控制栈 · 跑仿真 · 看 artifact · 修判据<br>不是一次 prompt 能结束</div>
+        </div>
+      </div>
+      <div class="callback-box mt-lg">
+        <span class="ref">关键</span><span class="arrow">→</span>
+        迁移只是最容易讲清楚的一次任务；真正的问题是 <strong class="text-accent">agent 长程研发缺少自我验收层</strong>
+      </div>
     </div>
-    <div class="card accent-card">
-      <div class="card-tag">after</div>
-      <div class="card-title">GEAR-SONIC</div>
-      <div class="card-desc">单一 Transformer 基础模型<br>接口、状态、验证逻辑都要重新对齐</div>
-    </div>
-    <div class="card">
-      <div class="card-tag">workload</div>
-      <div class="card-title">长程工程任务</div>
-      <div class="card-desc">改控制栈 · 跑仿真 · 看 artifact · 修判据<br>不是一次 prompt 能结束</div>
+    <div class="col-r">
+      <div class="media-frame media-frame--groot">
+        <img src="images/nvidia-groot.png" alt="NVIDIA GR00T-WholeBodyControl GitHub repository screenshot">
+        <div class="ss-cap">
+          NVIDIA <a href="https://github.com/NVlabs/GR00T-WholeBodyControl">GR00T-WholeBodyControl</a> · 全身控制代码库，包含 Decoupled WBC、GEAR-SONIC、MotionBricks 等控制方案
+        </div>
+      </div>
     </div>
   </div>
-  <div class="callback-box mt-lg">
-    <span class="ref">关键</span><span class="arrow">→</span>
-    迁移只是最容易讲清楚的一次任务；真正的问题是 <strong class="text-accent">agent 长程研发缺少自我验收层</strong>
-  </div>
-  <div class="speaker-note">这里回应试讲反馈：把具体任务讲清楚。强调不涉及训练，是部署和应用栈接入。SONIC 迁移的价值是让问题变尖锐：任务长、验证复杂、单靠人盯每轮不现实。</div>
+  <div class="speaker-note">这里回应试讲反馈：把具体任务讲清楚。强调不涉及训练，是部署和应用栈接入。GR00T-WholeBodyControl 是 NVIDIA 的全身控制代码库，里面包括 Decoupled WBC、GEAR-SONIC、MotionBricks 等控制方案。SONIC 迁移的价值是让问题变尖锐：任务长、验证复杂、单靠人盯每轮不现实。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 5 · 原始循环为什么跑不长 (page 6)                                   -->
@@ -1010,26 +1090,40 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 <div class="slide">
   <div class="meta"><span class="meta-tag">section/2</span> · 现状 · 三阶段工作流</div>
   <h2>现在的工作流<br>人定边界，Agent 跑循环，人看证据</h2>
-  <div class="cards cards-tight">
-    <div class="card">
-      <div class="card-tag">phase 01 · 人主导</div>
-      <div class="card-title">Plan</div>
-      <div class="card-desc">拆任务、定边界<br>每一步成 / 不成 判据先写清楚</div>
+  <div class="workflow-proof-grid">
+    <div class="workflow-phase-stack">
+      <div class="cards cards-tight">
+        <div class="card">
+          <div class="card-tag">phase 01 · 人主导</div>
+          <div class="card-title">Plan</div>
+          <div class="card-desc">拆任务、定边界<br>每一步成 / 不成 判据先写清楚</div>
+        </div>
+        <div class="card accent-card">
+          <div class="card-tag">phase 02 · Agent 接管</div>
+          <div class="card-title">Execute</div>
+          <div class="card-desc">每改一步自跑 grasp pipeline<br>收集 metric + 视觉证据<br>生成 PASS / FAIL proof pack</div>
+        </div>
+        <div class="card">
+          <div class="card-tag">phase 03 · 人回来</div>
+          <div class="card-title">Review</div>
+          <div class="card-desc">先看自动判断<br>只处理 surfaced case<br>最后人工 E2E 兜底</div>
+        </div>
+      </div>
+      <div class="quote quote-md">
+        当前现状<br>
+        Agent 在边界内连续跑，人只看证据和 surfaced case
+      </div>
     </div>
-    <div class="card accent-card">
-      <div class="card-tag">phase 02 · Agent 接管</div>
-      <div class="card-title">Execute</div>
-      <div class="card-desc">每改一步自跑 grasp pipeline<br>收集 metric + 视觉证据<br>生成 PASS / FAIL proof pack</div>
+    <div class="task-proof" aria-label="Roboharness long-horizon task evidence">
+      <div class="media-frame media-frame--task-wide">
+        <img src="images/task_01.jpg" alt="Roboharness 长程研发任务的 task 截图一">
+        <div class="ss-cap">长程研发任务 · task_01 · Roboharness 把研发任务拆成可跑、可验收的连续步骤</div>
+      </div>
+      <div class="media-frame media-frame--task-tall">
+        <img src="images/task_02.png" alt="Roboharness 长程研发任务的 task 截图二">
+        <div class="ss-cap">长程研发任务 · task_02 · Agent 基于 evidence loop 推进代码、报告和 review</div>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-tag">phase 03 · 人回来</div>
-      <div class="card-title">Review</div>
-      <div class="card-desc">先看自动判断<br>只处理 surfaced case<br>最后人工 E2E 兜底</div>
-    </div>
-  </div>
-  <div class="quote quote-md mt-lg">
-    当前现状<br>
-    Agent 在边界内连续跑，人只看证据和 surfaced case
   </div>
   <div class="speaker-note">按现状讲，不讲成概念抽象。真实项目里现在就是这三段：人先定目标和边界，Agent 在边界内连续跑验证，最后人看证据包和 surfaced case，而不是每一轮重新接管。</div>
 </div>
@@ -1199,7 +1293,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="meta"><span class="meta-tag">section/4</span> · 真实收益 · 长程任务</div>
   <h2>SONIC 迁移能跑下来<br>靠的是把人从每轮验收里拿出来</h2>
   <h3>投入 vs 自主率 · 分开看</h3>
-  <p class="max-prose">Harness 的成本不是免费，但它把人的注意力从"每轮盯"改成"只看 surfaced case"</p>
+  <p class="max-prose">Harness 的成本不是免费，但它把人的注意力从「每轮盯」改成「只看 surfaced case」</p>
   <div class="data-row">
     <div class="data-cell">
       <div class="data-num">1<span class="data-unit">×</span></div>
@@ -1416,21 +1510,26 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="card-desc">checkpoint / artifact layout / report.html<br>Run Decision 汇总成 agent 可读结论<br><span class="dim">从一次项目经验变成可复用工具</span></div>
     </div>
     <div class="card">
-      <div class="card-tag">2026-05-20 · v1</div>
+      <div class="card-tag">视觉评审边界化</div>
       <div class="card-title">Agent Visual Review</div>
       <div class="card-desc">同一个 coding agent 在 bounded manifest 内看图<br>每个 visual dimension 都要声明 metric fallback 或原因<br><span class="dim">让"agent 看图"也有边界</span></div>
     </div>
     <div class="card">
-      <div class="card-tag">2026-05-20 · v0.3</div>
+      <div class="card-tag">Contract 生成 Agent 指南</div>
       <div class="card-title">Python spec → SKILL.md</div>
       <div class="card-desc"><code>contract.py</code> 是手写真值<br><code>roboharness contract generate</code> → SKILL.md / schemas / stubs<br><span class="dim">Agent 自己加载边界和判据</span></div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-tag">最近 · 内部 dogfood</div>
+      <div class="card-title">Roboharness 开始验收自己</div>
+      <div class="card-desc">内部 repo 已经接入 Roboharness<br>真实开发任务反过来喂给这套验收层<br><span class="dim">从 demo 走到日常使用</span></div>
     </div>
   </div>
   <div class="quote quote-md mt-lg">
     判断边界从 <em>run-time</em> 扩到 <em>design-time</em><br>
     <span class="quote-sub-sm">Agent 不是变聪明 —— 是边界和判据写得更清楚了</span>
   </div>
-  <div class="speaker-note">这里讲历史演进，不讲成"三周神速做完"。重点是：先有真实项目里的痛点，再把判断、证据、报告抽出来，最后扩到 visual review 和 Python spec 生成 agent 指南。5 月 20 日的两个 feature 要诚实 —— 刚上、小规模验证中，但方向很明确。</div>
+  <div class="speaker-note">这里讲历史演进，不讲成"三周神速做完"。重点是：先有真实项目里的痛点，再把判断、证据、报告抽出来，最后扩到 visual review 和 Python spec 生成 agent 指南。最近的关键变化是内部 repo 已经开始 dogfood Roboharness，说明它开始从 demo 进入日常开发闭环。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 15 · 抽象 Demo (page 16)                                           -->
@@ -1474,9 +1573,9 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <h3>这是 Roboharness repo 的统计，不是整个机器人迁移项目</h3>
   <div class="data-row mt-card">
     <div class="data-cell">
-      <div class="data-num">257</div>
-      <div class="data-label">commit · AI 主导完成</div>
-      <div class="data-sub">截至 2026-05-22 10:12 +08</div>
+      <div class="data-num">272</div>
+      <div class="data-label">commit · Roboharness repo</div>
+      <div class="data-sub">截至 2026-06-01 15:42 +08</div>
     </div>
     <div class="data-cell">
       <div class="data-num">172</div>
@@ -1484,12 +1583,12 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <div class="data-sub">Claude / Codex 直接 author</div>
     </div>
     <div class="data-cell">
-      <div class="data-num">67</div>
+      <div class="data-num">71</div>
       <div class="data-label">AI 协作</div>
       <div class="data-sub">co-authored-by trailer</div>
     </div>
     <div class="data-cell">
-      <div class="data-num">18</div>
+      <div class="data-num">29</div>
       <div class="data-label">人工账号小改 / 漏 trailer</div>
       <div class="data-sub">README / docs / gitignore / 清理类提交</div>
     </div>
@@ -1499,7 +1598,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     routine 每小时自动解 issue <span class="dim">→</span> 人 review PR
     <span class="dim">·</span> <strong>这是"用 agent 做"的旁证，不是今天的主线</strong>
   </p>
-  <div class="speaker-note">保持 sidenote 权重。关键是避免误解：257 commits 是 Roboharness repo 本身的代码量，不是整个机器人项目，也不是 SONIC 迁移的全部工作量。</div>
+  <div class="speaker-note">保持 sidenote 权重。关键是避免误解：272 commits 是 Roboharness repo 本身的代码量，不是整个机器人项目，也不是 SONIC 迁移的全部工作量。</div>
 </div>
 <!-- ====================================================================== -->
 <!-- SLIDE 17 · Takeaways (page 18)                                            -->
@@ -1554,6 +1653,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     让 Agent 跑得久 —— 不是只靠模型突然变强<br>
     是把 <em>每一步怎么验收</em> 这件事做扎实
   </div>
+  <div class="qa-mantra">Get ourselves out of the loop</div>
   <div class="qa-sub mt-qa">— Q &amp; A —</div>
   <div class="qa-contact-grid">
     <div class="qr-card">
