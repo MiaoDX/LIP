@@ -358,6 +358,7 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .slide-2col--vision { grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.72fr); }
 .slide-2col--qpos { grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr); align-items: center; }
 .slide-2col--repo { grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.7fr); align-items: center; }
+.slide-2col--flow { grid-template-columns: minmax(380px, 0.9fr) minmax(420px, 1.1fr); align-items: center; }
 
 /* Callback box — forward / back reference between slides */
 .callback-box {
@@ -564,6 +565,44 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 }
 .demo-crop--decision { background-position: left center; }
 .demo-crop--verdict { background-position: right center; }
+.flow-proof-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.flow-proof-stack .media-frame { margin-top: 0; max-width: 100%; }
+.flow-proof-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.flow-proof-strip img {
+  display: block;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  cursor: zoom-in;
+}
+.slide--flow-adoption .cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 0;
+  max-width: none;
+}
+.slide--flow-adoption .card { padding: 14px 16px; }
+.slide--flow-adoption .quote {
+  margin: 10px 0 0;
+  font-size: clamp(18px, 1.8vw, 23px);
+  line-height: 1.35;
+}
+.slide--flow-adoption { justify-content: center; }
+.slide--flow-adoption h2 { margin-bottom: 12px; }
+.slide--flow-adoption h3 { margin-bottom: 0; }
+.slide--flow-adoption .media-frame { margin-top: 0; }
 .stat-note {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -842,7 +881,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .data-cell { padding: 24px 24px; }
   .data-cell .data-num { font-size: clamp(38px, 10vw, 48px); }
   .slide-2col { grid-template-columns: 1fr; }
-  .slide-2col--vision, .slide-2col--qpos, .slide-2col--repo { grid-template-columns: 1fr; }
+  .slide-2col--vision, .slide-2col--qpos, .slide-2col--repo, .slide-2col--flow { grid-template-columns: 1fr; }
   .intro-proof { grid-template-columns: 1fr; gap: 10px; }
   .motion-intro .slide-2col .col-r { order: -1; }
   .media-frame--vision { max-width: 100%; }
@@ -896,6 +935,14 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .slide--product-demo .quote-code { margin: 10px 0; font-size: clamp(17px, 5vw, 22px); }
   .slide--product-demo .demo-crops { display: none; }
   .slide--product-demo .cards { margin-top: 12px; }
+  .slide--flow-adoption .media-frame .ss-cap,
+  .slide--flow-adoption .flow-proof-strip { display: none; }
+  .slide--flow-adoption .media-frame img { max-height: 150px; object-fit: contain; }
+  .slide--flow-adoption .quote { display: none; }
+  .slide--flow-adoption .cards { display: flex; flex-direction: column; gap: 10px; }
+  .slide--flow-adoption .cards .card:nth-child(3) { display: none; }
+  .slide--flow-adoption .card { padding: 13px 16px; }
+  .slide--flow-adoption .slide-2col { row-gap: 18px; }
   .slide--evidence-loop .reference-line { display: none; }
   .slide--evidence-loop .quote { display: none; }
   .slide--autonomy .callback-box,
@@ -1646,7 +1693,53 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <div class="speaker-note">30 秒，快速诚实带过，不卖惨。说这些是因为 —— 如果你想在自己项目里用，这是我们目前真实的能力边界。</div>
 </div>
 <!-- ====================================================================== -->
-<!-- SLIDE 19 · 收尾 · QA + 二维码 (page 20)                                   -->
+<!-- SLIDE 19 · 推广 · goal + intuitive-flow (page 20)                         -->
+<!-- ====================================================================== -->
+<div class="slide slide--flow-adoption">
+  <div class="meta"><span class="meta-tag">section/6</span> · try it · workflow</div>
+  <h2>如果想试这套工作流<br>从 <span class="hl">/goal + intuitive-flow</span> 开始</h2>
+  <h3>先让 agent 问清目标、边界和验收，再让它进入长程执行</h3>
+  <div class="slide-2col slide-2col--flow mt-md">
+    <div class="col-l">
+      <div class="media-frame">
+        <img src="images/intuitive-flow-default.jpg" alt="intuitive-flow default pipeline diagram">
+        <div class="ss-cap">intuitive-flow · fuzzy idea → plan → autoplan → GSD → /goal → verification</div>
+      </div>
+    </div>
+    <div class="col-r">
+      <div class="flow-proof-stack">
+        <div class="cards">
+          <div class="card accent-card">
+            <div class="card-tag">step 01</div>
+            <div class="card-title">把目标写进 /goal</div>
+            <div class="card-desc">不要只写“帮我做一下”<br>把 objective、non-goals、done condition 放到同一个入口</div>
+          </div>
+          <div class="card">
+            <div class="card-tag">step 02</div>
+            <div class="card-title">让 intuitive-flow 先反问</div>
+            <div class="card-desc">用 grill / office-hours、docs/plans、autoplan、GSD<br>把模糊想法压成可执行判断</div>
+          </div>
+          <div class="card">
+            <div class="card-tag">step 03</div>
+            <div class="card-title">用 proof pack 做 review</div>
+            <div class="card-desc">人不再逐轮盯过程<br>而是看 source of truth、运行证据、测试和 surfaced case</div>
+          </div>
+        </div>
+        <div class="quote">
+          这不是新框架<br>
+          是把我们现在用的长程研发方式，整理成同事也能复用的入口
+        </div>
+        <div class="flow-proof-strip" aria-label="intuitive-flow demo screenshots">
+          <img src="images/if-01.png" alt="intuitive-flow workflow demo screenshot one">
+          <img src="images/if-02.png" alt="intuitive-flow workflow demo screenshot two">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-note">这页是给同事的行动入口，不展开成教程。讲法：如果你想把今天这套验收层用到自己的长程研发任务里，不要先从工具名开始，而是先用 /goal 写清目标和完成条件，再让 intuitive-flow 帮你把模糊想法、计划、执行和 proof pack 串起来。</div>
+</div>
+<!-- ====================================================================== -->
+<!-- SLIDE 20 · 收尾 · QA + 二维码 (page 21)                                  -->
 <!-- ====================================================================== -->
 <div class="slide qa">
   <div class="quote quote-center">

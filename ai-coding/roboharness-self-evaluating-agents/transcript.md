@@ -37,7 +37,9 @@ Roboharness 要解决的，就是这个判断层。
 
 注意这里的重点不是“让 AI 完全接手开发”。这句话太大了，也不准确。真正的问题是：如果 agent 要参与一个长程研发任务，它必须能接手一部分验收和判断，否则它每一步都要把人叫回来。
 
-所以今天这场分享，其实就是来汇报这件事后来怎么往前走：我们不是凭空做了一个工具，而是在真实项目里确实遇到了这个问题，然后把它一步步抽成了 Roboharness。
+所以今天这场分享，其实就是来汇报这件事后来怎么往前走：我们的确做到了，让 AI 接手了很大一部分测试自动化；而且我们没有把它只留在项目脚本里，而是把它做成了一个抽象，拿出来变成了 Roboharness。
+
+换句话说，这不是凭空做了一个工具，而是一个真实项目里的卡点，后来一步步长成了这次 Hackathon 项目。
 
 [翻页]
 
@@ -85,13 +87,15 @@ Agent 改一轮，比如改控制代码、修接口、调参数，然后重新�
 
 所以现在我们在项目里跑这类长程任务时，基本会把流程拆成三段。
 
-这不是一个概念图，而是我们希望展示的现状：人负责定义边界，agent 负责在边界里连续跑，人最后回来查证据。
+这不是一个概念图，而是我们现在真实想要展示的工作流：人负责定义边界，agent 负责在边界里连续跑，人最后回来查证据。
 
 第一段是 Plan，人主导。我们不会把任务直接丢给 agent，而是先拆任务、定边界，把每一步什么叫成、什么叫不成写清楚。
 
 第二段是 Execute，agent 接管。每改一步之后，它会自跑 grasp pipeline，收集 metric 和视觉证据，生成 PASS / FAIL proof pack。这里的关键是 proof pack，不是只有一行日志，而是有一组可以回看的证据。
 
 第三段是 Review，人回来。人不是每一轮都重新理解上下文，而是先看自动判断和 surfaced case，最后再做人工 E2E 兜底。
+
+右边这两张 task 截图想表达的也是这件事：任务不是只被拆成待办事项，而是被拆成一串能跑、能验收、能回看证据的步骤。
 
 所以现在真正变掉的，是人的位置。人不再每一轮盯着仿真看，而是在开头把边界写清楚，在结尾看证据和 surfaced case。中间这段，agent 就有机会连续往前跑。
 
@@ -159,7 +163,9 @@ Metric gate 更像稳态护栏。它负责把已知失败模式自动挡住。�
 
 中间这个 promote 动作很关键：每发现一个新坑，就从 visual 那侧搬到 metric 那侧。这样系统不是每次都靠人看图，而是越来越多失败模式会变成自动化护栏。
 
-这就是我理解的 harness engineering：不是写一次测试就结束，而是不断把失败模式沉淀成 agent 和系统都能执行的边界。
+所以 Mitchell Hashimoto 讲 engineer the harness，我觉得在机器人这个场景里，几乎就是字面意义上的事。
+
+它不是写一次测试就结束，而是不断把失败模式沉淀成 agent 和系统都能执行的边界。
 
 [翻页]
 
@@ -215,11 +221,15 @@ Hackathon 里，我们把这套判断流程做成了一个更稳定的核心结�
 
 第二阶段是 2026 年 4 月，把验证层独立出来。checkpoint、artifact layout、report.html、Run Decision 这些开始从一次项目经验里抽出来，变成 agent 可以读的结论。
 
-第三阶段是 5 月 20 日左右，Agent Visual Review 进来。我们让同一个 coding agent 在 bounded manifest 里看图，并且每个 visual dimension 都要声明 metric fallback 或者解释为什么不能 metric 化。
+第三阶段是 Agent Visual Review 进来。我们让同一个 coding agent 在 bounded manifest 里看图，并且每个 visual dimension 都要声明 metric fallback，或者解释为什么这个维度暂时不能 metric 化。
 
 第四阶段是 Python spec 到 SKILL.md。contract.py 是手写真值，生成物只是 agent 指南。这样 agent 自己加载边界和判据，而不是每次靠人重新解释。
 
-所以这不是“我们三周神速发明了一个框架”，而是：真实项目里的痛点先出现，然后在 Hackathon 里被产品化。
+最近还有第五阶段：Roboharness 开始验收自己。内部 repo 已经接入 Roboharness，真实开发任务反过来喂给这套验收层。也就是说，它开始从 demo 走到日常使用。
+
+所以这不是“我们三周神速发明了一个框架”，而是：真实项目里的痛点先出现，然后判断、证据、报告被抽出来，最后边界从 run-time 扩到 design-time。
+
+Agent 不是突然变聪明了，是边界和判据写得更清楚了。
 
 [翻页]
 
@@ -228,6 +238,8 @@ Hackathon 里，我们把这套判断流程做成了一个更稳定的核心结�
 抽出来之后，我们做了一个更小的 demo：MuJoCo 方块抓取。
 
 我要特别强调，这不是原始机器人项目本身。前面的 G1、RealMan、SONIC 是我们的真实项目素材。这里展示的是 Roboharness 抽象后的产品形态。
+
+如果大家想之后自己看，页面在 miaodx.com/roboharness/grasp/。
 
 这个页面主要看三个位置。
 
@@ -245,9 +257,9 @@ Hackathon 里，我们把这套判断流程做成了一个更稳定的核心结�
 
 再补一个 sidenote。
 
-Roboharness 这个 repo 本身也大量由 agent 完成。这里的 257 个 commit，是 Roboharness repo 的统计，不是整个机器人迁移项目，也不是 SONIC 迁移的全部工作量。
+Roboharness 这个 repo 本身也大量由 agent 完成。这里的 272 个 commit，是 Roboharness repo 截至 2026 年 6 月 1 日下午 3 点 42 分的统计，不是整个机器人迁移项目，也不是 SONIC 迁移的全部工作量。
 
-其中 172 个是 AI solo，67 个是 AI 协作，也就是 co-authored-by trailer 里能看到 agent 参与。剩下 18 个是 README、docs、gitignore、清理类小提交，或者当时漏加了 trailer。
+其中 172 个是 AI solo，也就是 Claude 或 Codex 直接作为 author。71 个是 AI 协作，也就是 co-authored-by trailer 里能看到 agent 参与。剩下 29 个是 README、docs、gitignore、清理类小提交，或者当时漏加了 trailer。
 
 大概工作流是：先用 Opus 聊出 roadmap，再拆 GitHub issue，然后 routine 每小时自动解 issue，最后人 review PR。
 
@@ -285,14 +297,38 @@ Roboharness 这个 repo 本身也大量由 agent 完成。这里的 257 个 comm
 
 [翻页]
 
-## Slide 20｜Q&A
+## Slide 20｜从 /goal + intuitive-flow 开始
+
+最后，在 Q&A 之前，我想把这件事落到一个更具体的入口。
+
+如果大家想在自己的项目里试这套工作流，我建议不要从“装一个工具”开始，而是从 `/goal` 加 `intuitive-flow` 开始。
+
+左边这张图是我们最近在用的默认流程：先把模糊想法压成目标和边界，再形成计划和 source of truth，然后进入执行、验证、proof pack 和收尾。
+
+第一步，把目标写进 `/goal`。不要只写“帮我做一下”，而是把 objective、non-goals、done condition 放到同一个入口里。
+
+第二步，让 `intuitive-flow` 先反问。用 grill、office-hours、docs/plans、autoplan、GSD 这些东西，把模糊想法先压成可执行判断。
+
+第三步，用 proof pack 做 review。人不再逐轮盯过程，而是看 source of truth、运行证据、测试结果和 surfaced case。
+
+右边这两个截图就是我们现在实际使用里的 demo。它不是一个全新的框架，而是把我们现在用的长程研发方式，整理成同事也能复用的入口。
+
+所以如果今天只带走一个动作，就是：下一个稍微复杂一点的真实任务，先用 `/goal + intuitive-flow` 跑一次。
+
+[翻页]
+
+## Slide 21｜Q&A
 
 最后用一句话收尾。
 
 让 agent 跑得久，不是只靠模型突然变强，而是把每一步怎么验收这件事做扎实。
 
+换成一句英文，就是这页中间这句：Get ourselves out of the loop。不是把人从责任里拿掉，而是把人从每一轮机械验收里拿出来。
+
 如果我们能把目标、边界、证据和退出条件都工程化，agent 就不再只能做一次性的短任务，而是可以进入更长的研发循环。
 
 这就是 Roboharness 想做的事：从真实机器人项目里抽出来，但目标是服务更多长程 agent 研发任务。
+
+这里也放了公众号和个人微信，大家后面可以继续交流。
 
 谢谢大家，欢迎提问。
