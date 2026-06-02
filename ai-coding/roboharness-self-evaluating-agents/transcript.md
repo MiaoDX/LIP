@@ -303,6 +303,8 @@ Roboharness 这个 repo 本身也大量由 agent 完成。这里的 272 个 comm
 
 如果大家想在自己的项目里试这套工作流，我建议不要从“装一个工具”开始，而是从 `/goal` 加 `intuitive-flow` 开始。
 
+项目地址也放在这页上：github.com/MiaoDX/intuitive-flow。
+
 左边这张图是我们最近在用的默认流程：先把模糊想法压成目标和边界，再形成计划和 source of truth，然后进入执行、验证、proof pack 和收尾。
 
 第一步，把目标写进 `/goal`。不要只写“帮我做一下”，而是把 objective、non-goals、done condition 放到同一个入口里。

@@ -526,7 +526,9 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
   padding: 18px 20px;
 }
 .workflow-phase-stack .quote {
-  margin: 8px 0 0;
+  margin: 4px 0 0;
+  font-size: clamp(18px, 2vw, 25px);
+  line-height: 1.35;
 }
 .evidence-badge {
   border: 1px solid var(--border);
@@ -1157,8 +1159,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
         </div>
       </div>
       <div class="quote quote-md">
-        当前现状<br>
-        Agent 在边界内连续跑，人只看证据和 surfaced case
+        当前现状：Agent 连续跑，人只看证据和 surfaced case
       </div>
     </div>
     <div class="task-proof" aria-label="Roboharness long-horizon task evidence">
@@ -1703,7 +1704,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
     <div class="col-l">
       <div class="media-frame">
         <img src="images/intuitive-flow-default.jpg" alt="intuitive-flow default pipeline diagram">
-        <div class="ss-cap">intuitive-flow · fuzzy idea → plan → autoplan → GSD → /goal → verification</div>
+        <div class="ss-cap"><a href="https://github.com/MiaoDX/intuitive-flow/">github.com/MiaoDX/intuitive-flow</a> · fuzzy idea → plan → autoplan → GSD → /goal → verification</div>
       </div>
     </div>
     <div class="col-r">
