@@ -1,4 +1,5 @@
-import { defineConfig } from 'vitepress'
+import { defineConfigWithTheme } from 'vitepress'
+import type { DefaultTheme } from 'vitepress'
 import {
   authorBio,
   navByLocale,
@@ -9,7 +10,15 @@ import {
   socialLinks,
 } from '../site-map.mjs'
 
-export default defineConfig({
+type ThemeConfig = DefaultTheme.Config & {
+  authorBio?: {
+    name: string
+    desc: string
+    links?: Array<{ text: string; url: string }>
+  }
+}
+
+export default defineConfigWithTheme<ThemeConfig>({
   title: siteTitle,
   description: siteDescription,
   lang: 'zh-CN',
