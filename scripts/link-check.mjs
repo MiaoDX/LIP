@@ -28,6 +28,9 @@ const SCOPED_MARKDOWN_FILES = [
   'en/share/index.md',
   'en/stories/index.md',
   'bestpractice/index.md',
+  'openclaw/index.md',
+  'resources/config-guide.md',
+  'resources/index.md',
   'share/index.md',
   'share/agent-radar/index.md',
 ]
@@ -104,6 +107,12 @@ function publicPathToCandidates(path) {
   if (extname(withoutSlash) === '.md') {
     source.push(withoutSlash)
     dist.push(withoutSlash.replace(/\.md$/, '.html'))
+    return { source, dist }
+  }
+
+  if (extname(withoutSlash)) {
+    source.push(`public/${withoutSlash}`)
+    dist.push(withoutSlash)
     return { source, dist }
   }
 

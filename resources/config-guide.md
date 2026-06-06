@@ -2,7 +2,7 @@
 
 这份指南用于部署完成后的日常配置。完整安装步骤见
 [OpenClaw 双 Agent 部署指南](/resources/deployment-guide-v2)；可以先复制
-[`openclaw-config-template.json`](./openclaw-config-template.json)，再按自己的
+[`openclaw-config-template.json`](/resources/openclaw-config-template.json)，再按自己的
 provider、Slack、搜索和浏览器能力改值。
 
 ## 配置入口
@@ -10,7 +10,7 @@ provider、Slack、搜索和浏览器能力改值。
 | 场景 | 位置 | 说明 |
 |------|------|------|
 | Docker / Railway / ClawCloud Run | `/data/.openclaw/openclaw.json` | 主配置文件，建议随持久化卷保存 |
-| 本地模板 | `resources/openclaw-config-template.json` | 最小可读模板，用于初始化或对照 |
+| 配置模板 | `/resources/openclaw-config-template.json` | 最小可读模板，用于初始化或对照 |
 | Setup Wizard | `/setup` | 首次启动时写入模型、渠道和工具配置 |
 | Control UI | `/openclaw` | 日常调整 Agent、Cron、渠道和工具 |
 

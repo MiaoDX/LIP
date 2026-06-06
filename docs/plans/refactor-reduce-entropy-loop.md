@@ -162,3 +162,12 @@ each audit, verify, and commit each cycle separately.
   model/fallback/subagent settings, Slack, web search, CDP, Cron timezone, and
   save/check workflow; both sidebars expose the guide beside deployment, and
   both roadmaps mark the config-guide expansion complete.
+- 2026-06-06: Fourth loop Cycle 2 selected a P1 public-route verification
+  cleanup: `openclaw/index.md` linked readers to `/resources/`, but the
+  Chinese resources landing page did not exist, the config template lived in
+  `resources/` without being published as a static JSON file, and the scoped
+  link gate did not check the OpenClaw/resources first-read pages. The repo now
+  has `resources/index.md`, the English resources index no longer carries
+  placeholder copy, the template is served from `public/resources/`, and
+  `npm run link:check` covers `openclaw/index.md`, `resources/index.md`, and
+  `resources/config-guide.md`.
