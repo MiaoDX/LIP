@@ -1,4 +1,18 @@
-# Codebase Architecture Hardening
+---
+refactor_scope: codebase-architecture-hardening
+status: DONE
+accepted_severities:
+  - P0
+  - P1
+  - P2
+last_verified: 2026-06-06
+---
+
+# Refactor Scope: codebase architecture hardening
+
+## Status
+
+DONE
 
 ## Goal
 
@@ -6,9 +20,11 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 
 ## Current State
 
-- No `.planning/phases/*` execution source exists for this task.
-- This plan is the pre-execution source of truth for the hybrid pipeline run.
-- The user has already asked to execute, repeat the pass, and commit along the way.
+- This gate is complete.
+- The implementation finished in five passes and the accepted checklist is
+  represented by the current publish, quality, Marp, Slidev, and deploy
+  scripts.
+- No active architecture-hardening task remains in this gate.
 
 ## Architecture Vocabulary
 
@@ -17,7 +33,7 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 - **Seam**: source files and folders are transformed into `.vitepress/dist` through build scripts.
 - **Adapter**: each publish rule maps one canonical source location into one generated output location.
 
-## Big Issues To Fix
+## Completed Issues
 
 1. `publish:check` only verifies that standalone publish targets exist. It can pass when copied files or asset directories are stale.
 2. The local asset checker only reads `src` and `href`, so local references in `srcset`, CSS `url(...)`, or `@import` can miss the quality gate.
@@ -39,11 +55,11 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 - GitHub Pages deployment uses `npm run build:all` as the single build interface.
 - Verification commands pass after generated output is refreshed.
 
-## Execution Notes
+## Parked Cross-Seam / Future Ideas
 
-- Commit each coherent slice.
-- Avoid touching unrelated content edits in `ai-coding/ultrathink-to-goal/` except generated publish output.
-- Repeat the architecture audit after the first fixes and continue only if another big issue remains.
+- Further broad dead-link crawling remains outside this gate.
+- Future standalone deck visual QA belongs to the deck-specific runbook and
+  `/browse` evidence, not this publish-script hardening gate.
 
 ## Pass Log
 
@@ -52,3 +68,15 @@ Deepen the repo modules that publish and verify the LIP site so source layout ch
 - Pass 3: deepened standalone publish copy into a manifest-backed sync so removed sources clean up their generated files.
 - Pass 4: extended local reference validation to standalone CSS files so copied stylesheets cannot hide missing assets.
 - Pass 5: routed GitHub Pages deployment through `npm run build:all` so CI and local builds share the same interface.
+
+## Evidence Ladder
+
+- L1: `npm run test:publish-rules`.
+- L1: `npm run quality:check`.
+- L2: `npm run build:all`.
+
+## Stop Condition
+
+Stop because the accepted architecture-hardening issues have been implemented,
+the current scripts own the canonical behavior, and remaining cleanup ideas are
+outside this gate.
