@@ -1,18 +1,18 @@
 ---
 refactor_scope: reduce-entropy-loop
-status: DONE
+status: CONTINUE
 accepted_severities:
   - P0
   - P1
   - P2
-last_verified: 2026-06-06
+last_verified: null
 ---
 
 # Refactor Scope: reduce entropy loop
 
 ## Status
 
-DONE
+CONTINUE
 
 ## Target
 
@@ -75,6 +75,10 @@ the current repository state, refactor the highest-value bounded finding from
 each audit, verify, and commit each cycle separately.
 
 Reopened fifth-loop stop condition: run five fresh reduce-entropy audits from
+the current repository state, refactor the highest-value bounded finding from
+each audit, verify, and commit each cycle separately.
+
+Reopened sixth-loop stop condition: run five fresh reduce-entropy audits from
 the current repository state, refactor the highest-value bounded finding from
 each audit, verify, and commit each cycle separately.
 
@@ -240,3 +244,10 @@ each audit, verify, and commit each cycle separately.
   - `npm run link:check`
   - `npm run test:publish-rules`
   - `npm run quality:check`
+- 2026-06-06: Sixth loop reopened for five additional fresh audits.
+- 2026-06-06: Sixth loop Cycle 1 selected a P2 English home mirror drift
+  cleanup: `en/index.md` still sent the AI Coding hero action to the old dual
+  Agent story and described AI Coding as mostly OpenClaw, while the Chinese
+  home and English AI Coding index now expose Routines, Roboharness, and
+  Ultrathink/Goal as the current AI Coding surface. The English home now links
+  to `/en/ai-coding/` and summarizes the current AI Coding engineering focus.

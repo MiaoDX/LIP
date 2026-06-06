@@ -11,7 +11,7 @@ hero:
       link: /en/now/2026-04
     - theme: alt
       text: AI Coding Track
-      link: /en/stories/2026-03-dual-agent-start
+      link: /en/ai-coding/
     - theme: alt
       text: OpenClaw Track
       link: /en/openclaw/
@@ -51,8 +51,8 @@ I want to make the process transparent, letting more people see: AI Agents aren'
 
 ### [Part A — AI Coding](/en/ai-coding)
 
-- Real practices of AI-assisted programming, accumulating
-- Current cases focus on OpenClaw direction
+- Records AI Coding engineering practices around Claude Code Routines, Roboharness, and Ultrathink/Goal
+- Focuses on prompts, routines, harnesses, acceptance evidence, and long-running Agent workflows
 
 ### [Part B — OpenClaw](/en/openclaw)
 
