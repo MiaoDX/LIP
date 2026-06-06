@@ -17,6 +17,7 @@ const execFileAsync = promisify(execFile)
 const ROOT = process.cwd()
 const REPORT_FILE = join(ROOT, '.quality-report.md')
 const DIST_DIR = join(ROOT, '.vitepress', 'dist')
+const REPORT_TIMESTAMP_RE = /^生成时间: .+$/m
 
 async function exists(path) {
   try {
@@ -127,6 +128,32 @@ function nowInShanghai() {
   }).format(new Date())
 }
 
+async function existingReport() {
+  try {
+    return await readFile(REPORT_FILE, 'utf8')
+  } catch (error) {
+    if (error.code === 'ENOENT') return null
+    throw error
+  }
+}
+
+function normalizeReportTimestamp(source) {
+  return source.replace(REPORT_TIMESTAMP_RE, '生成时间: <timestamp>')
+}
+
+async function stableReport(source) {
+  const previous = await existingReport()
+  if (!previous) return source
+
+  const previousTimestamp = previous.match(REPORT_TIMESTAMP_RE)?.[0]
+  if (!previousTimestamp) return source
+
+  if (normalizeReportTimestamp(previous) === normalizeReportTimestamp(source)) {
+    return source.replace(REPORT_TIMESTAMP_RE, previousTimestamp)
+  }
+  return source
+}
+
 async function main() {
   const lessons = await Promise.all((await markdownFiles(join(ROOT, 'lessons'))).map(evaluateArticle))
   const drafts = await Promise.all((await markdownFiles(join(ROOT, 'drafts', 'lessons'))).map(evaluateArticle))
@@ -192,7 +219,8 @@ async function main() {
     ''
   )
 
-  await writeFile(REPORT_FILE, report.join('\n'))
+  const reportSource = await stableReport(report.join('\n'))
+  await writeFile(REPORT_FILE, reportSource)
   console.log(`报告已生成: ${relative(ROOT, REPORT_FILE)}`)
 
   const failed = gates.some((gate) => gate.status === 'FAIL')

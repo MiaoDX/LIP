@@ -34,7 +34,7 @@ Make standalone HTML under `/share/weekly/` publish from the canonical standalon
 
 ## Parked Cross-Seam / Future Ideas
 
-- README still contains older `claw-agents-shared` / submodule-oriented agent notes. That is a separate human/agent docs boundary cleanup.
+- README `claw-agents-shared` / submodule-oriented agent notes were cleaned up in `docs/plans/refactor-reduce-entropy-loop.md`.
 - A broader built-site dead-link checker may be useful, but this slice only fixes the confirmed weekly standalone HTML break.
 
 ## Evidence Ladder

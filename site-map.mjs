@@ -15,7 +15,7 @@ export const navByLocale = {
   ],
   en: [
     { text: 'Home', link: '/en/' },
-    { text: 'Monthly', link: '/en/now/2026-03' },
+    { text: 'Monthly', link: '/en/now/2026-04' },
     { text: 'AI Coding', link: '/en/ai-coding/' },
     { text: 'OpenClaw', link: '/en/openclaw/' },
     { text: 'Lessons', link: '/en/lessons/' },
@@ -113,6 +113,7 @@ export const sidebar = {
       text: 'Quick Start',
       items: [
         { text: 'Home', link: '/en/' },
+        { text: 'April 2026 Report', link: '/en/now/2026-04' },
         { text: 'March 2026 Report', link: '/en/now/2026-03' },
         { text: 'Roadmap', link: '/en/ROADMAP' },
       ],

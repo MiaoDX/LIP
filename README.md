@@ -31,7 +31,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 ## 阅读推荐
 
 **快速了解**：
-1. [now/2026-03.md](now/2026-03.md) — 本月概述
+1. [now/2026-04.md](now/2026-04.md) — 最新月报
 
 **精选故事**（按推荐度排序）：
 2. [gateway-6hour-outage.md](stories/gateway-6hour-outage.md) — 最戏剧化：6 小时宕机
@@ -64,12 +64,12 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 
 ## 给 Agent 的说明
 
-本仓库是 `claw-agents-shared` 的 submodule（路径 `LIP/`）。
+本仓库是独立的 LIP GitHub Pages / VitePress 内容仓库，远端为 `MiaoDX/LIP`。
 
 **写入规则**：
 - stories/ 和 lessons/ 内容不应大段重复 — 用"一句话摘要 + 链接到完整版"
-- 新内容先写到 `claw-agents-shared/drafts/`，MiaoDX review 后再发布到这里
-- 推送方式见 `claw-agents-shared/CLAUDE.md` 中"LIP 子模块操作"章节
+- 过程草稿可以放在 `drafts/`，公开发布内容放入对应栏目后同步更新入口
+- Agent 操作规则以 `AGENTS.md` 和 `docs/agents/` 为准，Claude-specific 例外见 `CLAUDE.md`
 
 **share/ 目录规则**：
 
