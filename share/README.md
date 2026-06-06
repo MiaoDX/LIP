@@ -29,7 +29,7 @@ presentations/
 - 内容以文字为主
 - 需要版本控制和 diff
 - VitePress 自动渲染为网页
-- 可以加 sidebar 导航
+- 如需导航入口，更新 `site-map.mjs`
 - 适合搜索引擎索引
 
 **示例**：Tailscale 配置实战、API 使用指南、踩坑日志
@@ -52,8 +52,10 @@ presentations/
 ### Markdown 文章
 ```
 □ 创建 share/你的文章.md
-□ 在 site-map.mjs 的 sidebar 中添加入口
-□ Push 到 main → VitePress 自动构建
+□ 如需出现在导航/sidebar，更新 site-map.mjs
+□ 运行 npm run link:check
+□ 运行 npm run quality:check
+□ Push 到 main → GitHub Actions 运行 npm run build:all
 □ 访问: https://miaodx.com/LIP/share/你的文章
 ```
 
@@ -62,8 +64,11 @@ presentations/
 □ 创建 presentations/你的演讲.html
 □ 配套图片放在 presentations/ 目录，或 presentations/你的演讲-assets/
 □ HTML 中用相对路径引用图片（src="image.png" 或 src="你的演讲-assets/image.png"）
-□ 如果需要 sidebar 入口，在 site-map.mjs 中添加
-□ Push 到 main → GitHub Actions 运行 npm run publish:copy 自动复制到 dist
+□ 如需出现在导航/sidebar，更新 site-map.mjs
+□ 运行 npm run publish:copy && npm run publish:check
+□ 运行 npm run link:check
+□ 运行 npm run quality:check
+□ Push 到 main → GitHub Actions 运行 npm run build:all
 □ 访问: https://miaodx.com/LIP/share/你的演讲.html
 ```
 
@@ -75,9 +80,13 @@ presentations/
 □ 创建 ai-coding/你的演讲/index.html
 □ 素材放在 ai-coding/你的演讲/images/、screenshots/ 或 assets/
 □ HTML 中用相对路径引用图片（src="images/image.png"）
-□ Push 到 main → GitHub Actions 运行 npm run publish:copy 自动复制到 dist
-□ 访问: https://miaodx.com/LIP/ai-coding/你的演讲/
 □ 如需同时出现在 /share/，在 scripts/publish-rules.mjs 的 AI Coding rule 里为该 slug 添加 aliases
+□ 如需出现在导航/sidebar，更新 site-map.mjs
+□ 运行 npm run publish:copy && npm run publish:check
+□ 运行 npm run link:check
+□ 运行 npm run quality:check
+□ Push 到 main → GitHub Actions 运行 npm run build:all
+□ 访问: https://miaodx.com/LIP/ai-coding/你的演讲/
 ```
 
 ## 注意事项
@@ -87,4 +96,5 @@ presentations/
 - **Markdown 中引用图片**：可以用相对路径，图片放在同目录或 `public/`
 - **HTML 中引用图片**：用相对路径，图片和 HTML 放同一目录
 - **AI Coding 专题 HTML**：源文件放 `ai-coding/<slug>/index.html`，素材留在该目录下的 `images/`、`screenshots/` 或 `assets/`
+- **导航/sidebar 来源**：统一更新 `site-map.mjs`，不要在 VitePress config 或脚本里复制列表
 - **sidebar 链接**：HTML 文件用 `.html` 后缀，Markdown 文件不带后缀

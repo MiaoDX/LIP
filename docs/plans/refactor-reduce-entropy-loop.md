@@ -128,3 +128,9 @@ each audit, verify, and commit each cycle separately.
   canonical panorama page, `bestpractice/index.md` is now covered by
   `npm run link:check`, and the checker resolves standalone share routes from
   `scripts/publish-rules.mjs` instead of stale generated output.
+- 2026-06-06: Third loop Cycle 3 selected a P2 agent-runbook drift cleanup:
+  `share/README.md` still described publish flow as push/copy oriented and
+  only mentioned optional sidebar edits, while the current repo owns
+  navigation in `site-map.mjs` and verifies public routes with `link:check`,
+  `publish:check`, and `quality:check`. The share checklist now points at the
+  canonical navigation module and local gates before push.
