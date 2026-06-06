@@ -1,6 +1,7 @@
 # Gateway Resilience Architecture: Three-Layer Protection Design
 
-> Trigger Event: [Gateway 6-Hour Outage](../stories/gateway-6hour-outage.md)  
+> Trigger Event: [Gateway 6-Hour Outage](../../stories/gateway-6hour-outage.md)
+>
 > This article focuses on architecture design, not repeating the incident process.
 
 ---

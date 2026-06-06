@@ -11,7 +11,7 @@
 
 ### Core Structure
 - [x] `README.md` — Navigation + reading recommendations (2026-03-11, 03-15 updated)
-- [x] `JJ_MIGRATION.md` — jj migration announcement
+- [x] jj trial announcement — retired as historical context; current repo collaboration follows the GitHub/GitHub Pages flow
 
 ### now/ (Monthly Reports)
 - [x] `now/2026-03.md` — Dual Agent launch monthly report

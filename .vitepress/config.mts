@@ -26,7 +26,6 @@ export default defineConfigWithTheme<ThemeConfig>({
   srcExclude: [
     'AGENTS.md',
     'CLAUDE.md',
-    'JJ_MIGRATION.md',
     'docs/agents/**/*.md',
     'docs/plans/**/*.md',
   ],

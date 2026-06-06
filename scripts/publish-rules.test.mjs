@@ -44,11 +44,17 @@ try {
 
   await mkdir('share/nested', { recursive: true })
   await writeFile('share/nested/generated.html', '<p>generated</p>')
+  await mkdir('public/images/demo', { recursive: true })
+  await writeFile('public/images/demo/README.md', '# Maintainer note')
 
   const sourceErrors = await publishRules.checkSourceOwnership()
   assert(
     sourceErrors.some((error) => error.includes('share/nested/generated.html')),
     'source ownership should detect nested generated share HTML'
+  )
+  assert(
+    sourceErrors.some((error) => error.includes('public/images/demo/README.md')),
+    'source ownership should detect public markdown passthrough notes'
   )
   assert(
     sourceErrors.some((error) => error.includes('assets/large.png')),
@@ -67,6 +73,7 @@ try {
   await writeFile('presentations/assets/nested.css', 'nested')
   await writeFile('presentations/assets/css-hero.png', 'css hero')
   await rm('share', { recursive: true, force: true })
+  await rm('public', { recursive: true, force: true })
   assert.deepEqual(await publishRules.checkSourceOwnership(), [])
 
   await publishRules.copyStandalone({ distDir: 'dist' })

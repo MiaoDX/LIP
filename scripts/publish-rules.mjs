@@ -40,6 +40,12 @@ export const sourceOwnershipRules = {
       recursive: true,
       message: 'share/**/*.html is generated publish output; move HTML sources to presentations/ or ai-coding/<slug>/index.html',
     },
+    {
+      dir: 'public',
+      fileExtensions: ['.md'],
+      recursive: true,
+      message: 'public/**/*.md is published as a static passthrough file and VitePress page; move maintainer notes to docs/agents/ or convert intentional public content to a site source page',
+    },
   ],
   localReferenceRoots: ['presentations', 'ai-coding', 'public/consult'],
 }

@@ -22,7 +22,6 @@ const REPORT_TIMESTAMP_RE = /^生成时间: .+$/m
 const OPERATIONAL_PUBLIC_OUTPUTS = [
   'AGENTS.html',
   'CLAUDE.html',
-  'JJ_MIGRATION.html',
   'docs/agents',
   'docs/plans',
 ]

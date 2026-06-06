@@ -11,7 +11,7 @@ import { access, readFile, stat } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
 import { collectPublishTargets } from './publish-rules.mjs'
-import { siteBase } from '../site-map.mjs'
+import { navByLocale, sidebar, siteBase } from '../site-map.mjs'
 
 const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
@@ -134,6 +134,49 @@ function publicPathToCandidates(path) {
   return { source, dist }
 }
 
+function routeToMarkdownFile(route) {
+  if (!route || isExternal(route)) return null
+  const cleanRoute = cleanLink(trimBase(route))
+  const withoutSlash = cleanRoute.replace(/^\/+/, '')
+
+  if (!withoutSlash) return 'index.md'
+  if (withoutSlash.endsWith('/')) return `${withoutSlash}index.md`
+  if (extname(withoutSlash) === '.md') return withoutSlash
+  if (extname(withoutSlash)) return null
+
+  return `${withoutSlash}.md`
+}
+
+function sidebarItems(items, routes = []) {
+  for (const item of items) {
+    if (item.link) routes.push(item.link)
+    if (item.items) sidebarItems(item.items, routes)
+  }
+  return routes
+}
+
+function configuredRoutes() {
+  const routes = []
+  for (const navItems of Object.values(navByLocale)) {
+    for (const item of navItems) {
+      if (item.link) routes.push(item.link)
+    }
+  }
+  for (const items of Object.values(sidebar)) {
+    sidebarItems(items, routes)
+  }
+  return routes
+}
+
+async function existingScopedMarkdownFiles() {
+  const files = new Set(SCOPED_MARKDOWN_FILES)
+  for (const route of configuredRoutes()) {
+    const file = routeToMarkdownFile(route)
+    if (file && await exists(join(ROOT, file))) files.add(file)
+  }
+  return [...files].sort()
+}
+
 async function publicRouteExists(path) {
   const { source, dist } = publicPathToCandidates(path)
   for (const candidate of source) {
@@ -204,7 +247,8 @@ async function checkConfigFile(file, errors) {
 
 export async function checkScopedLinks() {
   const errors = []
-  for (const file of SCOPED_MARKDOWN_FILES) await checkMarkdownFile(file, errors)
+  const markdownFiles = await existingScopedMarkdownFiles()
+  for (const file of markdownFiles) await checkMarkdownFile(file, errors)
   for (const file of SCOPED_CONFIG_FILES) await checkConfigFile(file, errors)
   return errors
 }
@@ -216,5 +260,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     for (const error of errors) console.error(`  - ${error}`)
     process.exit(1)
   }
-  console.log(`Scoped local links passed: ${SCOPED_MARKDOWN_FILES.length + SCOPED_CONFIG_FILES.length} files`)
+  const markdownFiles = await existingScopedMarkdownFiles()
+  console.log(`Scoped local links passed: ${markdownFiles.length + SCOPED_CONFIG_FILES.length} files`)
 }

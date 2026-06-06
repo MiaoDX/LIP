@@ -11,7 +11,7 @@
 
 ### 核心结构
 - [x] `README.md` — 导航 + 阅读推荐（2026-03-11, 03-15 更新）
-- [x] `JJ_MIGRATION.md` — jj 迁移公告
+- [x] jj 试用公告 — 已退役为历史上下文；当前仓库协作以 GitHub/GitHub Pages 流程为准
 
 ### now/（月报）
 - [x] `now/2026-03.md` — 双 Agent 启动月报
