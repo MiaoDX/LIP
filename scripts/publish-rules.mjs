@@ -37,7 +37,8 @@ export const sourceOwnershipRules = {
     {
       dir: 'share',
       fileExtensions: ['.html'],
-      message: 'share/*.html is generated publish output; move HTML sources to presentations/ or ai-coding/<slug>/index.html',
+      recursive: true,
+      message: 'share/**/*.html is generated publish output; move HTML sources to presentations/ or ai-coding/<slug>/index.html',
     },
   ],
   localReferenceRoots: ['presentations', 'ai-coding', 'public/consult'],
@@ -338,10 +339,15 @@ async function checkNoGeneratedSourceDir(path, message, errors) {
 
 async function checkNoGeneratedSourceFiles(rule, errors) {
   const fullDir = resolve(rule.dir)
-  for (const entry of await entries(fullDir)) {
-    if (!entry.isFile()) continue
-    if (!rule.fileExtensions.includes(extname(entry.name).toLowerCase())) continue
-    errors.push(`${rule.dir}/${entry.name}: ${rule.message}`)
+  const files = rule.recursive
+    ? await walkRelativeFiles(fullDir)
+    : (await entries(fullDir))
+      .filter((entry) => entry.isFile())
+      .map((entry) => entry.name)
+
+  for (const file of files) {
+    if (!rule.fileExtensions.includes(extname(file).toLowerCase())) continue
+    errors.push(`${rule.dir}/${file}: ${rule.message}`)
   }
 }
 
@@ -353,7 +359,7 @@ export function isGeneratedSourcePath(path) {
   for (const rule of sourceOwnershipRules.generatedSourceFiles) {
     if (!path.startsWith(`${rule.dir}/`)) continue
     const childPath = path.slice(rule.dir.length + 1)
-    if (childPath.includes('/')) continue
+    if (!rule.recursive && childPath.includes('/')) continue
     if (rule.fileExtensions.includes(extname(childPath).toLowerCase())) return true
   }
 

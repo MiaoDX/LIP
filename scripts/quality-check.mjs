@@ -87,10 +87,16 @@ function articleTable(rows) {
 
 async function trackedGeneratedOutputs() {
   const { stdout } = await execFileAsync('git', ['ls-files'], { cwd: ROOT })
-  return stdout
+  const tracked = stdout
     .split('\n')
     .filter(Boolean)
     .filter(isGeneratedSourcePath)
+
+  const existing = []
+  for (const file of tracked) {
+    if (await exists(join(ROOT, file))) existing.push(file)
+  }
+  return existing
 }
 
 async function publishOutputGate(sourceErrors) {
