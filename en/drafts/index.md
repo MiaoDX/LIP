@@ -1,8 +1,22 @@
 # Drafts
 
-Draft articles awaiting optimization.
+These articles have not reached publish quality yet. They stay here until the
+next review pass promotes, rewrites, or removes them.
 
-## Lessons (Draft)
+**Article quality standard:**
+1. Is the story complete, with trigger, process, and conclusion or lesson?
+2. Does it give readers practical value that can be reused?
+3. Does it align with the annual OPC / AI Agent collaboration goals?
 
-- [Gateway Resilience Architecture](/en/drafts/lessons/gateway-resilience) — Three-layer protection design
-- [Cross-Instance Collaboration](/en/drafts/lessons/cross-instance-collaboration) — Collaboration patterns across instances
+---
+
+## Optimization Queue
+
+| Article | Original Section | Issue | Organized |
+|---------|------------------|-------|-----------|
+| [Gateway Resilience Architecture](/en/drafts/lessons/gateway-resilience) | lessons | Configuration-heavy, needs deeper analysis and reusable lessons | 2026-03-11 |
+| [Cross-Instance Collaboration](/en/drafts/lessons/cross-instance-collaboration) | lessons | Too thin, overlaps with source story context | 2026-03-11 |
+
+---
+
+*Monthly cleanup: promote back to the formal section when ready, otherwise rewrite or remove.*

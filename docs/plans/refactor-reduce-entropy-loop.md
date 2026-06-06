@@ -251,3 +251,9 @@ each audit, verify, and commit each cycle separately.
   home and English AI Coding index now expose Routines, Roboharness, and
   Ultrathink/Goal as the current AI Coding surface. The English home now links
   to `/en/ai-coding/` and summarizes the current AI Coding engineering focus.
+- 2026-06-06: Sixth loop Cycle 2 selected a P2 English draft index mirror
+  cleanup: `en/drafts/index.md` was a first-read page covered by
+  `npm run link:check`, but it only listed two draft links while the Chinese
+  draft index documented quality standards, why each item stayed in draft, and
+  the monthly cleanup rule. The English draft index now carries the same
+  review criteria, optimization queue, and cleanup policy.
