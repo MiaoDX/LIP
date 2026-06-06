@@ -9,7 +9,8 @@
 
 import { access, readFile, stat } from 'node:fs/promises'
 import { constants } from 'node:fs'
-import { dirname, extname, join, normalize, relative } from 'node:path'
+import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
+import { collectPublishTargets } from './publish-rules.mjs'
 import { siteBase } from '../site-map.mjs'
 
 const ROOT = process.cwd()
@@ -19,6 +20,7 @@ const SCOPED_MARKDOWN_FILES = [
   'README.md',
   'index.md',
   'en/index.md',
+  'bestpractice/index.md',
   'share/index.md',
   'share/agent-radar/index.md',
 ]
@@ -29,6 +31,7 @@ const SCOPED_CONFIG_FILES = [
 
 const MARKDOWN_LINK_RE = /!?\[[^\]]*]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g
 const FIELD_LINK_RE = /\b(?:link|url):\s*['"]([^'"]+)['"]/g
+let publishTargets = null
 
 async function exists(path) {
   try {
@@ -46,6 +49,11 @@ async function isDir(path) {
     if (error.code === 'ENOENT') return false
     throw error
   }
+}
+
+async function expectedPublishTargets() {
+  publishTargets ??= await collectPublishTargets({ distDir: DIST_DIR })
+  return publishTargets
 }
 
 function cleanLink(link) {
@@ -104,6 +112,22 @@ async function publicRouteExists(path) {
   }
   for (const candidate of dist) {
     if (await exists(join(ROOT, DIST_DIR, candidate))) return true
+    if (await standaloneSourceExists(candidate)) return true
+  }
+  return false
+}
+
+async function standaloneSourceExists(distCandidate) {
+  const fullDest = join(ROOT, DIST_DIR, distCandidate)
+  for (const target of await expectedPublishTargets()) {
+    if (target.kind === 'file') {
+      if (target.dest === fullDest && await exists(target.src)) return true
+      continue
+    }
+
+    const relativeDest = relative(target.dest, fullDest)
+    if (!relativeDest || relativeDest.startsWith('..') || isAbsolute(relativeDest)) continue
+    if (await exists(join(target.src, relativeDest))) return true
   }
   return false
 }

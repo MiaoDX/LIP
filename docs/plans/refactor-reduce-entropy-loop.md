@@ -120,3 +120,11 @@ each audit, verify, and commit each cycle separately.
   `bestpractice/nvidia-agentic-extreme-codesign.md`, while neither route was
   linked from `bestpractice/index.md`. The richer `codesign` route is now the
   canonical public article and the shorter duplicate route was removed.
+- 2026-06-06: Third loop Cycle 2 selected a P1 false-green public navigation
+  cleanup: `bestpractice/index.md` had prominent links to missing
+  `/bestpractice/ai-lab-actions` and `/bestpractice/ai-engineering-blogs`
+  routes, but the scoped link gate did not check that landing page. The action
+  tracker route now exists, the duplicate engineering-blogs link points to the
+  canonical panorama page, `bestpractice/index.md` is now covered by
+  `npm run link:check`, and the checker resolves standalone share routes from
+  `scripts/publish-rules.mjs` instead of stale generated output.

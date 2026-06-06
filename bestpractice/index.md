@@ -74,7 +74,7 @@ AI Lab 们在生产环境中踩过的坑、总结的经验，比论文更有实�
 
 ## 全景图
 
-完整的企业列表和链接汇总见 [LIP: AI Engineering Blogs 全列表](/bestpractice/ai-engineering-blogs)
+完整的企业列表和链接汇总见 [AI Lab 工程实践全景图](/bestpractice/panorama)
 
 ### 精选推荐 ⭐⭐⭐
 
