@@ -1,18 +1,18 @@
 ---
 refactor_scope: reduce-entropy-loop
-status: CONTINUE
+status: DONE
 accepted_severities:
   - P0
   - P1
   - P2
-last_verified: null
+last_verified: 2026-06-06
 ---
 
 # Refactor Scope: reduce entropy loop
 
 ## Status
 
-CONTINUE
+DONE
 
 ## Target
 
@@ -99,3 +99,12 @@ recorded as parked.
 - 2026-06-06: Second loop Round 4 added `scripts/link-check.mjs`, exposed
   `npm run link:check`, and wired scoped navigation / first-read Markdown link
   validation into `npm run quality:check`.
+- 2026-06-06: Second loop Round 5 refreshed the root README content map to
+  include current AI Coding, OpenClaw, bestpractice, English, agent-doc,
+  script, template, public, and asset surfaces; README now also names the
+  public operational-doc boundary and consult-page source convention.
+- 2026-06-06: Final second-loop verification passed:
+  - `npm run link:check`
+  - `npm run test:publish-rules`
+  - `npm run quality:check`
+  - `npm run build:all`
