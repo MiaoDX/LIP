@@ -15,23 +15,23 @@
 
 ### now/（月报）
 - [x] `now/2026-03.md` — 双 Agent 启动月报
+- [x] `now/2026-04.md` — 4 月治理结构月报
 
 ### stories/（案例）
 - [x] `2026-03-dual-agent-start.md` — 双 Agent 启动完整踩坑日志
-- [x] `openclaw-01-deployment.md` — 部署踩坑
-- [x] `openclaw-02-configuration.md` — 配置优化
-- [x] `openclaw-03-best-practices.md` — 最佳实践
-- [x] `openclaw-01-deployment.md` → `openclaw-02-configuration.md` → `openclaw-03-best-practices.md` — 已整合到 [openclaw/](/openclaw/)（Part 4 从未作为独立文件存在）
+- [x] OpenClaw 部署、配置、最佳实践主线 — 已整合到 [openclaw/](/openclaw/)、[部署指南](/resources/deployment-guide-v2) 和 [配置指南](/resources/config-guide)
 - [x] `fusheng-lobster-experiment.md` — 傅盛龙虾实验
 - [x] `gateway-6hour-outage.md` — 6 小时宕机复盘
 - [x] `wechat-scraping-war.md` — 微信抓取攻防战
 
 ### lessons/（经验）
-- [x] `cross-instance-collaboration.md` — 跨实例协作
 - [x] `error-to-skill-evolution.md` — 错误→Skill 自进化
-- [x] `gateway-resilience.md` — 三层防护架构
 - [x] `cron-anti-hallucination.md` — Cron 防幻觉
 - [x] `azure-config-incident.md` — Azure 配置事故复盘
+
+### drafts/（待优化）
+- [x] `drafts/lessons/gateway-resilience.md` — 三层防护架构，待补深度分析后再发布
+- [x] `drafts/lessons/cross-instance-collaboration.md` — 跨实例协作，待补复用价值后再发布
 
 ### discussions/（讨论）
 - [x] `2026-03-11-lip-structure/` — LIP 规划讨论
@@ -86,17 +86,13 @@
 |------|------|-----------|
 | `discussions/meta/style-guide.md` | LIP 写作风格指南 | WLB |
 | `lessons/web-search-three-layers.md` | Web 搜索三层架构 | WLB |
-| openclaw-02/03 标注伪代码 | 概念示例需明确标注 | GSD |
 | discussions/ 结构统一 | 文件/文件夹规则 | GSD |
 | 模型名统一 | kimi-k2.5 vs kimi-coding/k2p5 | GSD |
 
 ### 未合入分支
 
-| 分支 | 内容 | 状态 |
-|------|------|------|
-| `claude/review-new-content-R7Euz` | 第二轮深度审查 + 2 篇新 lesson + README/ROADMAP 改动 | 待 review |
-| `claude/web-version-s2urG` | VitePress 网页版 + GitHub Pages 部署 | 已被当前 `main` 的 VitePress / GitHub Pages 流程替代 |
-| `claude/debug-deployment-issue-pMSyx` | share 页面导航修复 | 待 review |
+当前本地没有 `claude/*` 未合入分支。历史 Claude review 记录保留在
+`discussions/2026-03-11-claude-review/`，不再作为待合入分支追踪。
 
 ---
 

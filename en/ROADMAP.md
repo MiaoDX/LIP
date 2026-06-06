@@ -15,23 +15,23 @@
 
 ### now/ (Monthly Reports)
 - [x] `now/2026-03.md` — Dual Agent launch monthly report
+- [x] `now/2026-04.md` — April governance-structure monthly report
 
 ### stories/ (Cases)
 - [x] `2026-03-dual-agent-start.md` — Complete dual Agent launch pitfall log
-- [x] `openclaw-01-deployment.md` — Deployment pitfalls
-- [x] `openclaw-02-configuration.md` — Configuration optimization
-- [x] `openclaw-03-best-practices.md` — Best practices
-- [x] `openclaw-01-deployment.md` → `openclaw-02-configuration.md` → `openclaw-03-best-practices.md` — Consolidated into [openclaw/](/openclaw/) (Part 4 was never a standalone file)
+- [x] OpenClaw deployment, configuration, and best-practice track — consolidated into [openclaw/](/openclaw/), the [deployment guide](/resources/deployment-guide-v2), and the [configuration guide](/resources/config-guide)
 - [x] `fusheng-lobster-experiment.md` — Fu Sheng's lobster experiment
 - [x] `gateway-6hour-outage.md` — 6-hour outage post-mortem
 - [x] `wechat-scraping-war.md` — WeChat scraping battle
 
 ### lessons/ (Experience)
-- [x] `cross-instance-collaboration.md` — Cross-instance collaboration
 - [x] `error-to-skill-evolution.md` — Error→Skill self-evolution
-- [x] `gateway-resilience.md` — Three-layer protection architecture
 - [x] `cron-anti-hallucination.md` — Cron anti-hallucination
 - [x] `azure-config-incident.md` — Azure config incident post-mortem
+
+### drafts/ (Awaiting Optimization)
+- [x] `drafts/lessons/gateway-resilience.md` — Three-layer protection architecture, awaiting deeper analysis before publication
+- [x] `drafts/lessons/cross-instance-collaboration.md` — Cross-instance collaboration, awaiting stronger reusable value before publication
 
 ### discussions/ (Discussions)
 - [x] `2026-03-11-lip-structure/` — LIP planning discussion
@@ -86,17 +86,14 @@
 |------|-------------|-------------------|
 | `discussions/meta/style-guide.md` | LIP writing style guide | WLB |
 | `lessons/web-search-three-layers.md` | Web search three-layer architecture | WLB |
-| Label pseudocode in openclaw-02/03 | Concept examples need clear labeling | GSD |
 | Unify discussions/ structure | File/folder rules | GSD |
 | Unify model names | kimi-k2.5 vs kimi-coding/k2p5 | GSD |
 
 ### Unmerged Branches
 
-| Branch | Content | Status |
-|--------|---------|--------|
-| `claude/review-new-content-R7Euz` | Round 2 deep review + 2 new lessons + README/ROADMAP changes | Pending review |
-| `claude/web-version-s2urG` | VitePress web version + GitHub Pages deployment | Superseded by the current VitePress / GitHub Pages flow on `main` |
-| `claude/debug-deployment-issue-pMSyx` | Share page navigation fix | Pending review |
+There are currently no local `claude/*` unmerged branches. Historical Claude
+review records remain in `discussions/2026-03-11-claude-review/` and are no
+longer tracked as pending branches.
 
 ---
 

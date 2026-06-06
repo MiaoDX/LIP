@@ -264,3 +264,10 @@ each audit, verify, and commit each cycle separately.
   check those story pages directly. The Chinese and English story links now
   point to the draft follow-up, and both story pages are covered by
   `npm run link:check`.
+- 2026-06-06: Sixth loop Cycle 4 selected a P1 public-roadmap source-of-truth
+  cleanup: `ROADMAP.md` and `en/ROADMAP.md` still listed missing OpenClaw split
+  files, treated draft-only lesson files as published lessons, and tracked
+  `claude/*` branches that no longer exist locally. Both roadmaps now name the
+  current OpenClaw/resource routes, classify the two unfinished lessons under
+  drafts, and replace the stale unmerged-branch table with the current branch
+  state.
