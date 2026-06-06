@@ -27,6 +27,7 @@ const SCOPED_MARKDOWN_FILES = [
   'en/resources/index.md',
   'en/share/index.md',
   'en/stories/index.md',
+  'ai-coding/index.md',
   'bestpractice/index.md',
   'openclaw/index.md',
   'resources/config-guide.md',

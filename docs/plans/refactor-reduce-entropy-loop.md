@@ -171,3 +171,10 @@ each audit, verify, and commit each cycle separately.
   placeholder copy, the template is served from `public/resources/`, and
   `npm run link:check` covers `openclaw/index.md`, `resources/index.md`, and
   `resources/config-guide.md`.
+- 2026-06-06: Fourth loop Cycle 3 selected a P2 first-read drift cleanup:
+  `ai-coding/index.md` still described the section as mostly OpenClaw and
+  still accumulating, while the page already linked current Routines,
+  Roboharness, Ultrathink, and AI Coding for Research materials. The Chinese
+  AI Coding index now describes the current published surface and removes
+  stale "slides in progress" language; `npm run link:check` now covers the
+  Chinese AI Coding index alongside the English mirror.
