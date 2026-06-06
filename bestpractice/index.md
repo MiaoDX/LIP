@@ -41,6 +41,7 @@ AI Lab 们在生产环境中踩过的坑、总结的经验，比论文更有实�
 | [Awesome OpenClaw Skills Weekly Check](/bestpractice/awesome-openclaw-skills-2026-05-03) | 2026-05-03 | OpenClaw Ecosystem | 2026-05-03 | 技能生态监控、awesome-openclaw-skills 增量检查 |
 | [Meta AI Scaling Framework 安全工程体系](/bestpractice/meta-ai-scaling-framework) | 2026-05-01 | Meta AI | 2026-04-08 | 原则驱动安全对齐、Loss of Control 评估、多层防护架构 |
 | [NVIDIA Kaggle Agent 辅助夺冠：600K 行代码、850 实验的四级 Stacking](/bestpractice/nvidia-kaggle-agent-assisted-coding) | 2026-04-27 | NVIDIA | 2026-04-23 | LLM Agent 辅助 Kaggle 竞赛、四级 stacking、human-in-the-loop |
+| [Agentic Systems Extreme Co-Design](/bestpractice/nvidia-agentic-extreme-codesign) | 2026-05-06 | NVIDIA | 2026-05-05 | Agentic AI 推理经济学、上下文成本、七芯片平台协同 |
 | [Extreme Co-Design 与 MLPerf 推理记录](/bestpractice/nvidia-inference-extreme-codesign) | 2026-04-10 | NVIDIA | 2026-04 | GB300 2.7x 性能提升、TensorRT-LLM、全栈协同设计 |
 | [Rack-Scale Topology-Aware Scheduling](/bestpractice/nvidia-rack-scale-topology-scheduling) | 2026-04-15 | NVIDIA | 2026-04-07 | NVLink fabric、IMEX domain、机架级调度 |
 | [Forge 企业模型工程](/bestpractice/mistral-forge-enterprise-model-engineering) | 2026-04-14 | Mistral | 2026-03 | 私有知识锻造、模型资产化、强化学习 |

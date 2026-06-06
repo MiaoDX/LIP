@@ -1,18 +1,18 @@
 ---
 refactor_scope: reduce-entropy-loop
-status: DONE
+status: CONTINUE
 accepted_severities:
   - P0
   - P1
   - P2
-last_verified: 2026-06-06
+last_verified: null
 ---
 
 # Refactor Scope: reduce entropy loop
 
 ## Status
 
-DONE
+CONTINUE
 
 ## Target
 
@@ -66,6 +66,10 @@ Stop after exactly five second-loop rounds, with the checklist complete, each
 coherent slice committed, evidence commands passing, and any remaining ideas
 recorded as parked.
 
+Reopened third-loop stop condition: run five fresh reduce-entropy audits from
+the current repository state, refactor the highest-value bounded finding from
+each audit, verify, and commit each cycle separately.
+
 ## Execution Log
 
 - 2026-06-06: Gate created for five-round reduce-entropy loop.
@@ -108,3 +112,11 @@ recorded as parked.
   - `npm run test:publish-rules`
   - `npm run quality:check`
   - `npm run build:all`
+- 2026-06-06: Third loop reopened because the previous run executed one
+  accepted audit batch rather than five fresh reruns.
+- 2026-06-06: Third loop Cycle 1 selected a P2 source-of-truth cleanup:
+  duplicate NVIDIA Agentic Extreme Co-Design analyses lived at both
+  `bestpractice/nvidia-agentic-extreme-co-design.md` and
+  `bestpractice/nvidia-agentic-extreme-codesign.md`, while neither route was
+  linked from `bestpractice/index.md`. The richer `codesign` route is now the
+  canonical public article and the shorter duplicate route was removed.
