@@ -2,7 +2,7 @@
 
 > All planned content, completion status, and priorities. Claude / MiaoDX can review and adjust anytime.
 
-**Last Updated:** 2026-03-15
+**Last Updated:** 2026-06-06
 **Maintainers:** WLB 🦞 + GSD 🥷⚡ + Coach 🎯
 
 ---
@@ -44,9 +44,14 @@
 ### presentations/ (Talks)
 - [x] `low-cost-multi-agent-deployment.html` — Meetup talk (2026-03-15)
 - [x] Lobster game image embedding (3 lobster images)
+- [x] `proposals/talk-template.md` — reusable talk template distilled from the 2026-03-15 Meetup retrospective
 
 ### resources/ (Resources)
 - [x] `resources/config-guide.md` — OpenClaw configuration entry points, environment variables, models, Slack, search, CDP, Cron checklist
+
+### Website and Publishing
+- [x] VitePress + GitHub Pages deployment flow — `.github/workflows/deploy.yml` runs `npm run build:all` for docs, standalone pages, Marp, Slidev, and publish checks
+- [x] English entry and language switch — `en/` mirror entry, English nav, and sidebar are wired
 
 ---
 
@@ -68,15 +73,12 @@
 |------|-------------|-------------------|--------|
 | Meetup recording transcription | Transcribe + summary | GSD | ⏳ |
 | Meetup content→community posts | Break into community-shareable snippets | GSD | ⏳ |
-| `drafts/proposals/talk-template.md` | Talk template (in claw-agents-shared) | WLB | ⏳ |
 
 ### P1 — Website (Align with OPC G3)
 
 | Task | Description | Suggested Assignee | Status |
 |------|-------------|-------------------|--------|
-| VitePress deployment improvement | GitHub Pages + navigation optimization | GSD | ⏳ |
-| `drafts/proposals/website-plan.md` | Website content planning (in claw-agents-shared) | WLB | ⏳ |
-| **English version** | Add English translation with language switch | GSD+WLB | ✅ |
+| Website content planning | Turn the G3 target in `proposals/2026-q2-okr.md` into an executable page plan | WLB | ⏳ |
 
 ### P2 — Follow-up Optimization
 
@@ -93,14 +95,14 @@
 | Branch | Content | Status |
 |--------|---------|--------|
 | `claude/review-new-content-R7Euz` | Round 2 deep review + 2 new lessons + README/ROADMAP changes | Pending review |
-| `claude/web-version-s2urG` | VitePress web version + GitHub Pages deployment | Pending review |
+| `claude/web-version-s2urG` | VitePress web version + GitHub Pages deployment | Superseded by the current VitePress / GitHub Pages flow on `main` |
 | `claude/debug-deployment-issue-pMSyx` | Share page navigation fix | Pending review |
 
 ---
 
 ## Rules
 
-1. **New content first in drafts** (claw-agents-shared/drafts/), MiaoDX confirms before pushing to LIP
+1. **New content first in drafts** (this repo's `drafts/` or `proposals/`), then publish to the target section after MiaoDX confirms
 2. **Deduplication principle**: Same event keeps only one complete version, others use one sentence + link
 3. **Skip sensitive sources** (Azure models, API channels, etc.)
 4. **Mark ✅ after completion**

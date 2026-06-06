@@ -185,3 +185,11 @@ each audit, verify, and commit each cycle separately.
   Ultrathink/Goal, prompts, routines, harnesses, and verification evidence.
   The home page now links the AI Coding action to `/ai-coding/` and summarizes
   the current AI Coding engineering surface.
+- 2026-06-06: Fourth loop Cycle 5 selected a P2 public-roadmap source-of-truth
+  cleanup: `ROADMAP.md` and `en/ROADMAP.md` still said VitePress / GitHub
+  Pages deployment was pending and that new drafts lived in
+  `claw-agents-shared`, even though this repo now owns the GitHub Pages deploy
+  workflow, local `drafts/` / `proposals/`, and the reusable talk template. Both
+  roadmaps now mark the current publishing and English-entry work complete,
+  point website planning at local proposals, describe local draft/proposal
+  staging rules, and `npm run link:check` covers both public roadmaps.

@@ -18,8 +18,10 @@ const DIST_DIR = '.vitepress/dist'
 
 const SCOPED_MARKDOWN_FILES = [
   'README.md',
+  'ROADMAP.md',
   'index.md',
   'en/index.md',
+  'en/ROADMAP.md',
   'en/ai-coding/index.md',
   'en/drafts/index.md',
   'en/lessons/index.md',

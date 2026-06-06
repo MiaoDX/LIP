@@ -2,7 +2,7 @@
 
 > 所有计划内容、完成状态、优先级。Claude / MiaoDX 可随时审查调整。
 
-**最后更新：** 2026-03-15
+**最后更新：** 2026-06-06
 **维护者：** WLB 🦞 + GSD 🥷⚡ + Coach 🎯
 
 ---
@@ -44,9 +44,14 @@
 ### presentations/（演讲）
 - [x] `low-cost-multi-agent-deployment.html` — Meetup 演讲（2026-03-15）
 - [x] 龙虾游戏图片嵌入（3 张 lobster images）
+- [x] `proposals/talk-template.md` — 可复用演讲模板，基于 2026-03-15 Meetup 复盘
 
 ### resources/（资源）
 - [x] `resources/config-guide.md` — OpenClaw 配置入口、环境变量、模型、Slack、搜索、CDP、Cron 检查清单
+
+### 网站与发布
+- [x] VitePress + GitHub Pages 部署流程 — `.github/workflows/deploy.yml` 通过 `npm run build:all` 统一构建文档、standalone 页面、Marp、Slidev 和发布检查
+- [x] 英文入口与语言切换 — `en/` 镜像入口、英文导航和侧边栏已接入
 
 ---
 
@@ -68,14 +73,12 @@
 |------|------|-----------|------|
 | Meetup 录音整理 | 转写 + 摘要 | GSD | ⏳ |
 | Meetup 内容→社区帖子 | 拆分为社区可分享的片段 | GSD | ⏳ |
-| `drafts/proposals/talk-template.md` | 演讲模板（在 claw-agents-shared） | WLB | ⏳ |
 
 ### P1 — 网站（对齐 OPC G3）
 
 | 任务 | 说明 | 建议执行者 | 状态 |
 |------|------|-----------|------|
-| VitePress 部署完善 | GitHub Pages + 导航优化 | GSD | ⏳ |
-| `drafts/proposals/website-plan.md` | 网站内容规划（在 claw-agents-shared） | WLB | ⏳ |
+| 网站内容规划沉淀 | 基于 `proposals/2026-q2-okr.md` 的 G3 目标拆成可执行页面计划 | WLB | ⏳ |
 
 ### P2 — 后续优化
 
@@ -92,14 +95,14 @@
 | 分支 | 内容 | 状态 |
 |------|------|------|
 | `claude/review-new-content-R7Euz` | 第二轮深度审查 + 2 篇新 lesson + README/ROADMAP 改动 | 待 review |
-| `claude/web-version-s2urG` | VitePress 网页版 + GitHub Pages 部署 | 待 review |
+| `claude/web-version-s2urG` | VitePress 网页版 + GitHub Pages 部署 | 已被当前 `main` 的 VitePress / GitHub Pages 流程替代 |
 | `claude/debug-deployment-issue-pMSyx` | share 页面导航修复 | 待 review |
 
 ---
 
 ## 规则
 
-1. **新内容先写草稿**（claw-agents-shared/drafts/），MiaoDX 确认后再 push 到 LIP
+1. **新内容先写草稿**（本仓库 `drafts/` 或 `proposals/`），MiaoDX 确认后再发布到对应栏目
 2. **去重原则**：同一事件只保留一个完整版，其他用一句话+链接
 3. **敏感来源一律跳过**（Azure 模型、API 渠道等）
 4. **完成后在对应条目前画 ✅**
