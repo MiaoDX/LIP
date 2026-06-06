@@ -222,3 +222,10 @@ each audit, verify, and commit each cycle separately.
   only mentioned as plain text. The page now links the local assets directly,
   names the poster as an external online artifact, and is covered by
   `npm run link:check`.
+- 2026-06-06: Fifth loop Cycle 4 selected a P1 first-read source-of-truth
+  cleanup: the top navigation points readers to the April monthly pages, but
+  those pages were not covered by `npm run link:check`, and
+  `en/now/2026-04.md` still listed old `claw-agents-shared` scripts as key
+  artifacts. The English monthly page now names the current repo-owned deploy,
+  publish, link, and quality gates, and both current monthly pages are covered
+  by the scoped link gate.
