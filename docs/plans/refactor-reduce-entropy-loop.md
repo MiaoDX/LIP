@@ -271,3 +271,10 @@ each audit, verify, and commit each cycle separately.
   current OpenClaw/resource routes, classify the two unfinished lessons under
   drafts, and replace the stale unmerged-branch table with the current branch
   state.
+- 2026-06-06: Sixth loop Cycle 5 selected a P2 root README route-clarity
+  cleanup: the OpenClaw recommended-reading line collapsed deployment,
+  configuration, best practice, and cases into the same `/openclaw/` route even
+  though the repo now has separate deployment, configuration, resources, and
+  story entry points. The README now sends readers through the current
+  OpenClaw overview, deployment guide, configuration guide, resources index, and
+  case index.
