@@ -178,3 +178,10 @@ each audit, verify, and commit each cycle separately.
   AI Coding index now describes the current published surface and removes
   stale "slides in progress" language; `npm run link:check` now covers the
   Chinese AI Coding index alongside the English mirror.
+- 2026-06-06: Fourth loop Cycle 4 selected a P2 home-page source-of-truth
+  cleanup: `index.md` still sent the "AI Coding 主线" hero action to the dual
+  Agent story and described AI Coding as still mostly OpenClaw, after the
+  Chinese AI Coding index had been refreshed around Routines, Roboharness,
+  Ultrathink/Goal, prompts, routines, harnesses, and verification evidence.
+  The home page now links the AI Coding action to `/ai-coding/` and summarizes
+  the current AI Coding engineering surface.

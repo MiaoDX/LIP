@@ -11,7 +11,7 @@ hero:
       link: /now/2026-04
     - theme: alt
       text: AI Coding 主线
-      link: /stories/2026-03-dual-agent-start
+      link: /ai-coding/
     - theme: alt
       text: OpenClaw 主线
       link: /openclaw/
@@ -51,8 +51,8 @@ features:
 
 ### [Part A — AI Coding](/ai-coding)
 
-- 用 AI 辅助编程的真实实践，正在积累中
-- 目前案例集中在 OpenClaw 方向
+- 记录 Claude Code Routines、Roboharness、Ultrathink/Goal 等 AI Coding 工程化实践
+- 重点看 prompt、routine、harness、验收证据和长期 Agent 工作流
 
 ### [Part B — OpenClaw](/openclaw)
 
