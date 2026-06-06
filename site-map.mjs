@@ -130,7 +130,7 @@ export const sidebar = {
       collapsed: false,
       items: [
         { text: 'OpenClaw Overview', link: '/en/openclaw/' },
-        { text: 'Deployment Guide', link: '/en/resources/deployment-guide-v2' },
+        { text: 'Deployment Guide', link: '/resources/deployment-guide-v2' },
         { text: '📖 Stories', link: '/en/stories/' },
       ],
     },

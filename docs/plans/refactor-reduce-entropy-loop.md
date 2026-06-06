@@ -96,3 +96,6 @@ recorded as parked.
 - 2026-06-06: Second loop Round 3 moved the Agent Radar operating protocol
   from public `share/agent-radar/SYSTEM.md` to `docs/agents/agent-radar.md`
   and indexed it in `docs/agents/README.md`.
+- 2026-06-06: Second loop Round 4 added `scripts/link-check.mjs`, exposed
+  `npm run link:check`, and wired scoped navigation / first-read Markdown link
+  validation into `npm run quality:check`.

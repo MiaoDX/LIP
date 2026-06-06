@@ -11,6 +11,7 @@ import { constants } from 'node:fs'
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { basename, join, relative } from 'node:path'
+import { checkScopedLinks } from './link-check.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
 
 const execFileAsync = promisify(execFile)
@@ -137,6 +138,12 @@ async function operationalOutputGate() {
   return { status: 'PASS', detail: 'agent/process docs are excluded from public site output' }
 }
 
+async function scopedLinkGate() {
+  const errors = await checkScopedLinks()
+  if (errors.length) return { status: 'FAIL', detail: errors.join('; ') }
+  return { status: 'PASS', detail: 'scoped navigation and first-read links resolve locally' }
+}
+
 function nowInShanghai() {
   return new Intl.DateTimeFormat('sv-SE', {
     timeZone: 'Asia/Shanghai',
@@ -184,6 +191,7 @@ async function main() {
   const generatedOutputs = await trackedGeneratedOutputs()
   const publishGate = await publishOutputGate(sourceErrors)
   const operationalGate = await operationalOutputGate()
+  const linkGate = await scopedLinkGate()
 
   const gates = [
     {
@@ -205,6 +213,11 @@ async function main() {
       name: 'Public operational doc boundary',
       status: operationalGate.status,
       detail: operationalGate.detail,
+    },
+    {
+      name: 'Scoped local links',
+      status: linkGate.status,
+      detail: linkGate.detail,
     },
   ]
 
