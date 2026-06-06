@@ -93,3 +93,6 @@ recorded as parked.
   `docs/agents`, or `docs/plans` output remains in `.vitepress/dist`.
 - 2026-06-06: Second loop Round 2 removed stale `public/draft/index.html`;
   `rg` showed no current in-repo consumers beyond this loop gate.
+- 2026-06-06: Second loop Round 3 moved the Agent Radar operating protocol
+  from public `share/agent-radar/SYSTEM.md` to `docs/agents/agent-radar.md`
+  and indexed it in `docs/agents/README.md`.

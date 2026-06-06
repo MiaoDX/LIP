@@ -51,7 +51,6 @@ Agent Radar 分为三层，不同层级承担不同职责。
 ```text
 share/agent-radar/
 ├── index.md
-├── SYSTEM.md
 ├── daily/
 │   └── YYYY-MM-DD.md
 ├── weekly/
@@ -67,6 +66,9 @@ share/agent-radar/
 └── repo-scout/
     └── YYYY-MM-DD.md
 ```
+
+操作协议保存在 `docs/agents/agent-radar.md`；不要放回
+`share/agent-radar/`，那里是公开给读者看的栏目页面。
 
 ## 3. Daily 去重协议
 

@@ -3,6 +3,7 @@
 Repo-specific agent reference material lives here when it is too detailed for root `AGENTS.md` or `CLAUDE.md`.
 
 - `domain.md`: where to look for repo glossary and ADR context when those files exist.
+- `agent-radar.md`: operating protocol for the Agent Radar daily intelligence workflow.
 - `issue-tracker.md`: GitHub Issues workflow for `MiaoDX/LIP`.
 - `lsp-mcp.md`: repo-local JavaScript/TypeScript LSP status and agent-facing MCP notes.
 - `triage-labels.md`: canonical triage roles mapped to this repo's labels.
