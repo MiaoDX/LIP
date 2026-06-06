@@ -139,3 +139,9 @@ each audit, verify, and commit each cycle separately.
   `npm run link:check` only covered the English home page. The scoped link gate
   now also checks `en/ai-coding/`, `en/drafts/`, `en/lessons/`,
   `en/openclaw/`, `en/resources/`, `en/share/`, and `en/stories/` indexes.
+- 2026-06-06: Third loop Cycle 5 selected a P2 English mirror drift cleanup:
+  `en/ai-coding/index.md` still said the section was mostly OpenClaw and only
+  linked one March deck, while the Chinese AI Coding index already exposed the
+  current Routines, Roboharness, and Ultrathink materials. The English index now
+  mirrors the current AI Coding public surface with existing routes covered by
+  the scoped link gate.
