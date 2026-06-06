@@ -1,18 +1,18 @@
 ---
 refactor_scope: reduce-entropy-loop
-status: CONTINUE
+status: DONE
 accepted_severities:
   - P0
   - P1
   - P2
-last_verified: null
+last_verified: 2026-06-06
 ---
 
 # Refactor Scope: reduce entropy loop
 
 ## Status
 
-CONTINUE
+DONE
 
 ## Target
 
@@ -235,3 +235,8 @@ each audit, verify, and commit each cycle separately.
   Weekly Robotics reports, the 2026-04-26 Routines deck, collaboration
   narrative decks, the Beijing Meetup article, and the creative-market asset
   pack. The English share page now mirrors the current public share surface.
+- 2026-06-06: Final fifth-loop verification passed:
+  - `npm run build:all`
+  - `npm run link:check`
+  - `npm run test:publish-rules`
+  - `npm run quality:check`
