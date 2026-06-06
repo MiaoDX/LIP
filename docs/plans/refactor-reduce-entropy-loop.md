@@ -215,3 +215,10 @@ each audit, verify, and commit each cycle separately.
   while the repo already contained #357, #358, and #359. The landing page now
   surfaces #359 as latest, archives all current digest files, and is covered by
   `npm run link:check`.
+- 2026-06-06: Fifth loop Cycle 3 selected a P2 public source-ownership
+  cleanup: `share/meetup-2026-03-30/index.md` was linked from the share landing
+  page but described its poster source as a `miaodx.github.io` submodule path
+  outside the current repo, while its local video and screenshot assets were
+  only mentioned as plain text. The page now links the local assets directly,
+  names the poster as an external online artifact, and is covered by
+  `npm run link:check`.

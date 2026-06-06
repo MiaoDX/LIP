@@ -39,6 +39,7 @@ const SCOPED_MARKDOWN_FILES = [
   'resources/index.md',
   'share/index.md',
   'share/agent-radar/index.md',
+  'share/meetup-2026-03-30/index.md',
   'slides/index.md',
   'stories/index.md',
 ]
