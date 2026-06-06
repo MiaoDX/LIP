@@ -1,18 +1,18 @@
 ---
 refactor_scope: reduce-entropy-loop
-status: DONE
+status: CONTINUE
 accepted_severities:
   - P0
   - P1
   - P2
-last_verified: 2026-06-06
+last_verified: null
 ---
 
 # Refactor Scope: reduce entropy loop
 
 ## Status
 
-DONE
+CONTINUE
 
 ## Target
 
@@ -71,6 +71,10 @@ the current repository state, refactor the highest-value bounded finding from
 each audit, verify, and commit each cycle separately.
 
 Reopened fourth-loop stop condition: run five fresh reduce-entropy audits from
+the current repository state, refactor the highest-value bounded finding from
+each audit, verify, and commit each cycle separately.
+
+Reopened fifth-loop stop condition: run five fresh reduce-entropy audits from
 the current repository state, refactor the highest-value bounded finding from
 each audit, verify, and commit each cycle separately.
 
@@ -198,3 +202,10 @@ each audit, verify, and commit each cycle separately.
   - `npm run link:check`
   - `npm run test:publish-rules`
   - `npm run quality:check`
+- 2026-06-06: Fifth loop reopened for five additional fresh audits.
+- 2026-06-06: Fifth loop Cycle 1 selected a P1 false-green verification
+  cleanup: Chinese first-read index pages (`stories/index.md`,
+  `lessons/index.md`, `drafts/index.md`, and `slides/index.md`) contained many
+  public local links but were not covered by `npm run link:check`. The scoped
+  link gate now checks those indexes so missing routes in the main Chinese
+  story, lesson, draft, and slide entry points are caught locally.

@@ -31,11 +31,15 @@ const SCOPED_MARKDOWN_FILES = [
   'en/stories/index.md',
   'ai-coding/index.md',
   'bestpractice/index.md',
+  'drafts/index.md',
+  'lessons/index.md',
   'openclaw/index.md',
   'resources/config-guide.md',
   'resources/index.md',
   'share/index.md',
   'share/agent-radar/index.md',
+  'slides/index.md',
+  'stories/index.md',
 ]
 
 const SCOPED_CONFIG_FILES = [
