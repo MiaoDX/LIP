@@ -58,6 +58,7 @@ export const sidebar = {
       items: [
         { text: 'OpenClaw 总览', link: '/openclaw/' },
         { text: '部署指南（Docker + 双平台）', link: '/resources/deployment-guide-v2' },
+        { text: '配置指南', link: '/resources/config-guide' },
         { text: '📖 案例故事', link: '/stories/' },
       ],
     },
@@ -131,6 +132,7 @@ export const sidebar = {
       items: [
         { text: 'OpenClaw Overview', link: '/en/openclaw/' },
         { text: 'Deployment Guide', link: '/resources/deployment-guide-v2' },
+        { text: 'Configuration Guide', link: '/resources/config-guide' },
         { text: '📖 Stories', link: '/en/stories/' },
       ],
     },

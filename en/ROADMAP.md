@@ -45,6 +45,9 @@
 - [x] `low-cost-multi-agent-deployment.html` — Meetup talk (2026-03-15)
 - [x] Lobster game image embedding (3 lobster images)
 
+### resources/ (Resources)
+- [x] `resources/config-guide.md` — OpenClaw configuration entry points, environment variables, models, Slack, search, CDP, Cron checklist
+
 ---
 
 ## Pending ⏳
@@ -79,7 +82,6 @@
 
 | Task | Description | Suggested Assignee |
 |------|-------------|-------------------|
-| Expand `resources/config-guide.md` | Currently only 35 lines | WLB |
 | `discussions/meta/style-guide.md` | LIP writing style guide | WLB |
 | `lessons/web-search-three-layers.md` | Web search three-layer architecture | WLB |
 | Label pseudocode in openclaw-02/03 | Concept examples need clear labeling | GSD |

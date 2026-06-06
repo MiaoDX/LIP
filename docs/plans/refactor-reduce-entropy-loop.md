@@ -1,18 +1,18 @@
 ---
 refactor_scope: reduce-entropy-loop
-status: DONE
+status: CONTINUE
 accepted_severities:
   - P0
   - P1
   - P2
-last_verified: 2026-06-06
+last_verified: null
 ---
 
 # Refactor Scope: reduce entropy loop
 
 ## Status
 
-DONE
+CONTINUE
 
 ## Target
 
@@ -67,6 +67,10 @@ coherent slice committed, evidence commands passing, and any remaining ideas
 recorded as parked.
 
 Reopened third-loop stop condition: run five fresh reduce-entropy audits from
+the current repository state, refactor the highest-value bounded finding from
+each audit, verify, and commit each cycle separately.
+
+Reopened fourth-loop stop condition: run five fresh reduce-entropy audits from
 the current repository state, refactor the highest-value bounded finding from
 each audit, verify, and commit each cycle separately.
 
@@ -150,3 +154,11 @@ each audit, verify, and commit each cycle separately.
   - `npm run link:check`
   - `npm run test:publish-rules`
   - `npm run quality:check`
+- 2026-06-06: Fourth loop reopened for five additional fresh audits.
+- 2026-06-06: Fourth loop Cycle 1 selected a P2 public-doc source-of-truth
+  cleanup: `resources/config-guide.md` was still a WIP placeholder linked as a
+  configuration guide from the public resources surface. The guide now names
+  the concrete OpenClaw config entry points, template, environment variables,
+  model/fallback/subagent settings, Slack, web search, CDP, Cron timezone, and
+  save/check workflow; both sidebars expose the guide beside deployment, and
+  both roadmaps mark the config-guide expansion complete.

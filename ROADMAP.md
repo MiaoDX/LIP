@@ -45,6 +45,9 @@
 - [x] `low-cost-multi-agent-deployment.html` — Meetup 演讲（2026-03-15）
 - [x] 龙虾游戏图片嵌入（3 张 lobster images）
 
+### resources/（资源）
+- [x] `resources/config-guide.md` — OpenClaw 配置入口、环境变量、模型、Slack、搜索、CDP、Cron 检查清单
+
 ---
 
 ## 待完成 ⏳
@@ -78,7 +81,6 @@
 
 | 任务 | 说明 | 建议执行者 |
 |------|------|-----------|
-| `resources/config-guide.md` 扩充 | 当前仅 35 行 | WLB |
 | `discussions/meta/style-guide.md` | LIP 写作风格指南 | WLB |
 | `lessons/web-search-three-layers.md` | Web 搜索三层架构 | WLB |
 | openclaw-02/03 标注伪代码 | 概念示例需明确标注 | GSD |
