@@ -83,7 +83,7 @@ openclaw gateway restart
 
 ## 后续：三层防护架构
 
-这次事故直接催生了我们的 [三层防护架构](../lessons/gateway-resilience.md)：
+这次事故直接催生了我们的 [三层防护架构](../drafts/lessons/gateway-resilience.md)：
 
 - **L1**：Railway 平台自动重启
 - **L2**：容器内 watchdog（每 10 分钟）

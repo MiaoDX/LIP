@@ -43,6 +43,8 @@ const SCOPED_MARKDOWN_FILES = [
   'share/agent-radar/index.md',
   'share/meetup-2026-03-30/index.md',
   'slides/index.md',
+  'stories/gateway-6hour-outage.md',
+  'en/stories/gateway-6hour-outage.md',
   'stories/index.md',
 ]
 

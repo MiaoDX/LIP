@@ -257,3 +257,10 @@ each audit, verify, and commit each cycle separately.
   draft index documented quality standards, why each item stayed in draft, and
   the monthly cleanup rule. The English draft index now carries the same
   review criteria, optimization queue, and cleanup policy.
+- 2026-06-06: Sixth loop Cycle 3 selected a P1 false-green story-link cleanup:
+  the public Gateway outage stories linked their three-layer protection
+  follow-up to missing `lessons/gateway-resilience.md` routes, while the current
+  draft routes live under `drafts/lessons/` and the scoped link gate did not
+  check those story pages directly. The Chinese and English story links now
+  point to the draft follow-up, and both story pages are covered by
+  `npm run link:check`.
