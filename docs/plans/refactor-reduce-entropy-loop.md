@@ -229,3 +229,9 @@ each audit, verify, and commit each cycle separately.
   artifacts. The English monthly page now names the current repo-owned deploy,
   publish, link, and quality gates, and both current monthly pages are covered
   by the scoped link gate.
+- 2026-06-06: Fifth loop Cycle 5 selected a P2 English mirror drift cleanup:
+  `en/share/index.md` was already a first-read page covered by
+  `npm run link:check`, but it lagged the Chinese share index and omitted the
+  Weekly Robotics reports, the 2026-04-26 Routines deck, collaboration
+  narrative decks, the Beijing Meetup article, and the creative-market asset
+  pack. The English share page now mirrors the current public share surface.
