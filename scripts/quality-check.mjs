@@ -18,6 +18,13 @@ const ROOT = process.cwd()
 const REPORT_FILE = join(ROOT, '.quality-report.md')
 const DIST_DIR = join(ROOT, '.vitepress', 'dist')
 const REPORT_TIMESTAMP_RE = /^生成时间: .+$/m
+const OPERATIONAL_PUBLIC_OUTPUTS = [
+  'AGENTS.html',
+  'CLAUDE.html',
+  'JJ_MIGRATION.html',
+  'docs/agents',
+  'docs/plans',
+]
 
 async function exists(path) {
   try {
@@ -115,6 +122,21 @@ async function publishOutputGate(sourceErrors) {
   return { status: 'PASS', detail: 'standalone publish outputs match canonical sources' }
 }
 
+async function operationalOutputGate() {
+  if (!(await exists(DIST_DIR))) {
+    return { status: 'SKIP', detail: '.vitepress/dist does not exist; run npm run docs:build to verify public doc boundaries' }
+  }
+
+  const leaked = []
+  for (const path of OPERATIONAL_PUBLIC_OUTPUTS) {
+    if (await exists(join(DIST_DIR, path))) leaked.push(path)
+  }
+  if (leaked.length) {
+    return { status: 'FAIL', detail: `${leaked.join(', ')} should stay agent/process-only, not public site output` }
+  }
+  return { status: 'PASS', detail: 'agent/process docs are excluded from public site output' }
+}
+
 function nowInShanghai() {
   return new Intl.DateTimeFormat('sv-SE', {
     timeZone: 'Asia/Shanghai',
@@ -161,6 +183,7 @@ async function main() {
   const sourceErrors = await checkSourceOwnership()
   const generatedOutputs = await trackedGeneratedOutputs()
   const publishGate = await publishOutputGate(sourceErrors)
+  const operationalGate = await operationalOutputGate()
 
   const gates = [
     {
@@ -177,6 +200,11 @@ async function main() {
       name: 'Built standalone publish output',
       status: publishGate.status,
       detail: publishGate.detail,
+    },
+    {
+      name: 'Public operational doc boundary',
+      status: operationalGate.status,
+      detail: operationalGate.detail,
     },
   ]
 

@@ -23,6 +23,13 @@ export default defineConfigWithTheme<ThemeConfig>({
   description: siteDescription,
   lang: 'zh-CN',
   base: siteBase,
+  srcExclude: [
+    'AGENTS.md',
+    'CLAUDE.md',
+    'JJ_MIGRATION.md',
+    'docs/agents/**/*.md',
+    'docs/plans/**/*.md',
+  ],
   ignoreDeadLinks: true,
 
   locales: {
