@@ -209,3 +209,9 @@ each audit, verify, and commit each cycle separately.
   public local links but were not covered by `npm run link:check`. The scoped
   link gate now checks those indexes so missing routes in the main Chinese
   story, lesson, draft, and slide entry points are caught locally.
+- 2026-06-06: Fifth loop Cycle 2 selected a P1 public index
+  source-of-truth cleanup: `bestpractice/weekly-robotics/index.md` still
+  presented Weekly Robotics #356 as the latest issue and only archived #356,
+  while the repo already contained #357, #358, and #359. The landing page now
+  surfaces #359 as latest, archives all current digest files, and is covered by
+  `npm run link:check`.

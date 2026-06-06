@@ -20,6 +20,7 @@ const SCOPED_MARKDOWN_FILES = [
   'README.md',
   'ROADMAP.md',
   'index.md',
+  'bestpractice/weekly-robotics/index.md',
   'en/index.md',
   'en/ROADMAP.md',
   'en/ai-coding/index.md',

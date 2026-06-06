@@ -11,35 +11,35 @@ description: "Personalized robotics newsletter summaries for Xiaomi Robotics EI 
 
 ## 📰 Latest Issue
 
-### Weekly Robotics #356 — April 13, 2026
+### Weekly Robotics #359 — May 8, 2026
 
 #### 🔑 Top Picks This Week
 
-**HUNT** — GPS-Denied Drone Navigation *(9/10)*
-A drone autonomy framework for GPS-denied, unstructured environments that replaces persistent global localization with **instantaneous relative frames** rebuilt from directly observable onboard signals.
+**Secrets of Walking Robot** — NVIDIA Isaac Lab & Isaac Lab Arena *(9/10)*
+A practical walkthrough for training bipedal walking policies with reinforcement learning inside NVIDIA Isaac Lab.
 
-→ *Relevance: Directly applicable to indoor VLN scenarios where GPS is unavailable.*
-
----
-
-**FusionCore** — ROS 2 Sensor Fusion SDK *(10/10)*
-Open-source ROS 2 UKF-based sensor-fusion SDK with native support for 3D, GNSS, IMUs, wheel encoders, and more. Production-ready implementation.
-
-→ *Relevance: Immediate applicability for CyberOne and other robotics projects.*
+→ *Relevance: Directly applicable to legged locomotion policy training, reward shaping, and sim-to-real transfer.*
 
 ---
 
-**MIGHTY** — Hermite Spline Trajectory Planning *(8/10)*
-Hermite spline-based planner performing spatiotemporal optimization while fully leveraging the continuous search space of a spline.
+**Sereact Series B** — General-Purpose Manipulation Signal *(8/10)*
+German robotics AI startup Sereact raised $110M to scale vision-based robotic manipulation for logistics and manufacturing.
 
-→ *Relevance: Transferable to manipulator and mobile robot trajectory planning.*
+→ *Relevance: Market signal for the continued acceleration of VLA and embodied reasoning productization.*
 
 ---
 
-**NASA Artemis II Fault-Tolerant Computer** *(7/10)*
-Design write-up of a fault-tolerant computer using "fail silent" architecture.
+**Skydio Series F** — Visual-Inertial Drone Autonomy *(7/10)*
+Autonomous drone leader Skydio raised $110M and expanded U.S. manufacturing.
 
-→ *Relevance: Reference for safety-critical systems design for humanoid robots.*
+→ *Relevance: Benchmark for GPS-free visual navigation and supply-chain strategy.*
+
+---
+
+**Better Robot Dog Prototype** — Low-Cost Quadruped Iteration *(7/10)*
+Aaed Musa's build log shows a cheaper quadruped developed through rapid mechanical iteration.
+
+→ *Relevance: Useful reference for BOM reduction and hardware prototyping workflows.*
 
 ---
 
@@ -47,15 +47,15 @@ Design write-up of a fault-tolerant computer using "fail silent" architecture.
 
 | Event | Date | Location |
 |-------|------|----------|
-| **Hands-on Workshop: Scaling VLA Models with Ray** | Apr 30 | Pittsburgh |
 | **Robotics Summit & Expo 2026** | May 27-28 | Boston |
 | **ICRA 2026** | Jun 1-5 | Vienna |
+| **Energy Drone & Robotics Summit 2026** | Jun 22-24 | Houston |
 
 ---
 
 #### 💡 Quick Take
 
-This issue highlights the continued convergence of **perception, planning, and control** in embodied systems. HUNT's GPS-denied approach and FusionCore's sensor fusion capabilities are particularly relevant as we build more autonomous robots for unstructured environments.
+This issue is lighter on hard tech than the previous VLA-heavy weeks, but it still points to the same direction: locomotion training stacks, general-purpose manipulation companies, and autonomous navigation platforms are all moving toward faster productization.
 
 ---
 
@@ -63,7 +63,10 @@ This issue highlights the continued convergence of **perception, planning, and c
 
 <!-- New issues will be listed here -->
 
-- [#356 - April 13, 2026](./weekly-robotics-356-2026-04-17.md)
+- [#359 - May 8, 2026](./weekly-robotics-359-2026-05-08.md)
+- [#358 - April 28, 2026](./weekly-robotics-358-2026-04-28.md)
+- [#357 - April 24, 2026](./weekly-robotics-357-2026-04-24.md)
+- [#356 - April 17, 2026](./weekly-robotics-356-2026-04-17.md)
 
 ---
 
