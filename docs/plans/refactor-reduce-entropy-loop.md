@@ -134,3 +134,8 @@ each audit, verify, and commit each cycle separately.
   navigation in `site-map.mjs` and verifies public routes with `link:check`,
   `publish:check`, and `quality:check`. The share checklist now points at the
   canonical navigation module and local gates before push.
+- 2026-06-06: Third loop Cycle 4 selected a P1 mirror-route verification
+  cleanup: English section indexes had many first-read internal routes, but
+  `npm run link:check` only covered the English home page. The scoped link gate
+  now also checks `en/ai-coding/`, `en/drafts/`, `en/lessons/`,
+  `en/openclaw/`, `en/resources/`, `en/share/`, and `en/stories/` indexes.
