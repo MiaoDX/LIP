@@ -15,6 +15,7 @@
 |------|--------|------|----------|
 | [Gateway 弹性架构](/drafts/lessons/gateway-resilience) | lessons | 偏配置文档，缺少深度分析和可复用经验 | 2026-03-11 |
 | [跨实例协作模式](/drafts/lessons/cross-instance-collaboration) | lessons | 仅 95 字，内容过薄，来源重复 | 2026-03-11 |
+| [60K Star 和 50 万美金，怎么选？](/drafts/ai-coding/gsd-rugpull-maintainer-dilemma/) | ai-coding | 初稿 v4，等待审稿、截图和发布判断 | 2026-06-07 |
 
 ---
 

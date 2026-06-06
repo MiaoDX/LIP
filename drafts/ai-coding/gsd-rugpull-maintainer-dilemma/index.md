@@ -1,6 +1,6 @@
 # 60K Star 和 50 万美金，怎么选？
 
-> **状态：初稿 v4，等待 review。** 这篇还没发布，没有加入到 `ai-coding/index.md` 的列表里。审稿/截图/调整确认完成后，再决定是否正式发布。
+> **状态：初稿 v4，等待 review。** 这篇暂存在 Draft 区，没有加入到 `ai-coding/index.md` 的正式发布列表里。审稿/截图/调整确认完成后，再决定是否移回 `ai-coding/` 正式发布。
 >
 > 同目录的 `outline.md` 是讨论过程中的大纲，`screenshot-checklist.md` 是配图素材清单。
 >

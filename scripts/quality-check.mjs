@@ -10,7 +10,7 @@ import { access, readFile, readdir, stat, writeFile } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
-import { basename, join, relative } from 'node:path'
+import { basename, dirname, join, relative } from 'node:path'
 import { checkScopedLinks } from './link-check.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
 
@@ -46,6 +46,19 @@ async function markdownFiles(dir) {
   return files.sort()
 }
 
+async function draftArticleFiles() {
+  const files = await markdownFiles(join(ROOT, 'drafts', 'lessons'))
+  const aiCodingDir = join(ROOT, 'drafts', 'ai-coding')
+  if (!(await exists(aiCodingDir))) return files
+
+  for (const entry of await readdir(aiCodingDir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue
+    const indexFile = join(aiCodingDir, entry.name, 'index.md')
+    if (await exists(indexFile)) files.push(indexFile)
+  }
+  return files.sort()
+}
+
 function countMatches(source, regex) {
   return [...source.matchAll(regex)].length
 }
@@ -72,7 +85,7 @@ async function evaluateArticle(file) {
   if (checklists >= 1) score += 1
 
   return {
-    name: basename(file, '.md'),
+    name: basename(file) === 'index.md' ? basename(dirname(file)) : basename(file, '.md'),
     wordCount,
     headers,
     codeBlocks,
@@ -184,7 +197,7 @@ async function stableReport(source) {
 
 async function main() {
   const lessons = await Promise.all((await markdownFiles(join(ROOT, 'lessons'))).map(evaluateArticle))
-  const drafts = await Promise.all((await markdownFiles(join(ROOT, 'drafts', 'lessons'))).map(evaluateArticle))
+  const drafts = await Promise.all((await draftArticleFiles()).map(evaluateArticle))
 
   const sourceErrors = await checkSourceOwnership()
   const generatedOutputs = await trackedGeneratedOutputs()
