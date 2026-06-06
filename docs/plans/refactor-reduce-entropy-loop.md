@@ -91,3 +91,5 @@ recorded as parked.
   boundary` quality gate, verified `npm run build:all`, `npm run quality:check`,
   and confirmed no `AGENTS.html`, `CLAUDE.html`, `JJ_MIGRATION.html`,
   `docs/agents`, or `docs/plans` output remains in `.vitepress/dist`.
+- 2026-06-06: Second loop Round 2 removed stale `public/draft/index.html`;
+  `rg` showed no current in-repo consumers beyond this loop gate.
