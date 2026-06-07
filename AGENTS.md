@@ -20,6 +20,7 @@ Repo-level startup instructions for coding agents.
 - Dev site: `npm run docs:dev`
 - Full local/CI build: `npm run build:all`
 - Publish rule test: `npm run test:publish-rules`
+- Script helper tests: `npm run test:scripts`
 - Source-layout gate: `npm run quality:check` (updates `.quality-report.md`; run after source-layout changes)
 
 ## Agent runbooks
