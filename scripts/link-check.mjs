@@ -221,6 +221,10 @@ async function checkMarkdownFile(file, errors) {
   const source = await readFile(join(ROOT, file), 'utf8')
   for (const link of markdownLinks(source)) {
     if (isExternalLink(link)) continue
+    if (link === '#') {
+      errors.push(`${file} uses placeholder local link #`)
+      continue
+    }
     if (!(await relativeLinkExists(file, link))) {
       errors.push(`${file} references missing local link ${link}`)
     }

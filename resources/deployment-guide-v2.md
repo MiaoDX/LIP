@@ -463,7 +463,7 @@ A: 需要满足四个条件：
 3. 两个 Bot 都有读取频道消息的权限（`channels:history` scope）
 4. 注意 Agent 会过滤自己的消息（避免回复自己），也会检查对方是否已用 👀 emoji 标记（防重复回复）
 
-更多踩坑经验见 [踩坑实录](#)（文章 2）。
+更多踩坑经验见 [Gateway 宕机 6 小时](/stories/gateway-6hour-outage)。
 
 ---
 
