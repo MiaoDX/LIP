@@ -25,6 +25,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 | [`stories/`](stories/) | 案例故事，失败优先 | 按事件 |
 | [`lessons/`](lessons/) | 可复用经验与模式 | 按沉淀 |
 | [`discussions/`](discussions/) | AI 讨论上下文留存 | 按讨论 |
+| [`drafts/`](drafts/) | 待审稿、待补强、待发布判断的草稿队列 | 定期清理 |
 | [`presentations/`](presentations/) | 演讲 HTML（完整版） | 按活动 |
 | [`share/`](share/) | 演讲发布版 + 站点入口 | 按活动 |
 | [`slides/`](slides/) | Marp/Slidev 幻灯片源 | 按活动 |
