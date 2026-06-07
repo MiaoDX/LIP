@@ -41,7 +41,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 ## 阅读推荐
 
 **快速了解**：
-1. [now/2026-04.md](now/2026-04.md) — 最新月报
+1. [now/2026-04.md](now/2026-04.md) — 2026 年 4 月治理结构月报
 
 **精选故事**（按推荐度排序）：
 2. [gateway-6hour-outage.md](stories/gateway-6hour-outage.md) — 最戏剧化：6 小时宕机

@@ -29,10 +29,15 @@
 - [x] `cron-anti-hallucination.md` — Cron 防幻觉
 - [x] `azure-config-incident.md` — Azure 配置事故复盘
 
-### drafts/（待优化）
-- [x] `drafts/lessons/gateway-resilience.md` — 三层防护架构，待补深度分析后再发布
-- [x] `drafts/lessons/cross-instance-collaboration.md` — 跨实例协作，待补复用价值后再发布
-- [x] `drafts/ai-coding/gsd-rugpull-maintainer-dilemma/index.md` — AI Coding 初稿 v4，等待审稿、截图和发布判断
+### drafts/（草稿队列状态）
+
+以下条目只表示草稿已经登记，不表示已经发布。
+
+| 草稿 | 当前状态 |
+|------|----------|
+| `drafts/lessons/gateway-resilience.md` | 待补深度分析后再发布 |
+| `drafts/lessons/cross-instance-collaboration.md` | 待补复用价值后再发布 |
+| `drafts/ai-coding/gsd-rugpull-maintainer-dilemma/index.md` | 等待审稿、截图和发布判断 |
 
 ### discussions/（讨论）
 - [x] `2026-03-11-lip-structure/` — LIP 规划讨论
@@ -63,7 +68,7 @@
 | 任务 | 说明 | 建议执行者 | 状态 |
 |------|------|-----------|------|
 | **去重 4 组重复内容** | 微信×4, Azure×4, Cron×2, 三层防护×2 → 一句话+链接 | GSD | ⏳ |
-| `stories/identity-crisis.md` | GSD/WLB 身份混淆危机（好素材） | WLB | ⏳ |
+| `stories/context-explosion-identity-crisis.md` 二次打磨 | GSD/WLB 身份混淆危机已经成文，继续补叙事和复用价值 | WLB | ⏳ |
 | `lessons/model-selection-guide.md` | 模型选择决策树 | GSD | ⏳ |
 | `gateway-6hour-outage.md` 充实 | 加叙事感、量化损失 | GSD | ⏳ |
 | `now/2026-03.md` 更新 | P0 完成里程碑 + Meetup 记录 | WLB | ⏳ |

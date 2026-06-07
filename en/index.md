@@ -7,7 +7,7 @@ hero:
   tagline: Making the journey from 0 to 1 with an AI Agent team public<br>Real post-mortems, continuous iteration, reproducible delivery
   actions:
     - theme: brand
-      text: See This Month's Progress
+      text: Read the April 2026 Report
       link: /en/now/2026-04
     - theme: alt
       text: AI Coding Track
@@ -69,7 +69,7 @@ I want to make the process transparent, letting more people see: AI Agents aren'
 
 - **LIP**: Continuously updated process records, post-mortems, rules, and shareable materials
 - **Personal Homepage**: Long-term works, experience, and stable external information
-- You can first see the latest progress on LIP, then go to the personal homepage for complete background
+- You can first read the published progress on LIP, then go to the personal homepage for complete background
 
 ## Contact
 

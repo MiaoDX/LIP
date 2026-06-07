@@ -29,10 +29,16 @@
 - [x] `cron-anti-hallucination.md` — Cron anti-hallucination
 - [x] `azure-config-incident.md` — Azure config incident post-mortem
 
-### drafts/ (Awaiting Optimization)
-- [x] `drafts/lessons/gateway-resilience.md` — Three-layer protection architecture, awaiting deeper analysis before publication
-- [x] `drafts/lessons/cross-instance-collaboration.md` — Cross-instance collaboration, awaiting stronger reusable value before publication
-- [x] `drafts/ai-coding/gsd-rugpull-maintainer-dilemma/index.md` — AI Coding draft v4, awaiting review, screenshots, and publication decision
+### drafts/ (Draft Queue Status)
+
+These entries mean the drafts are tracked in the queue, not that they have been
+published.
+
+| Draft | Current Status |
+|-------|----------------|
+| `drafts/lessons/gateway-resilience.md` | awaiting deeper analysis before publication |
+| `drafts/lessons/cross-instance-collaboration.md` | awaiting stronger reusable value before publication |
+| `drafts/ai-coding/gsd-rugpull-maintainer-dilemma/index.md` | awaiting review, screenshots, and publication decision |
 
 ### discussions/ (Discussions)
 - [x] `2026-03-11-lip-structure/` — LIP planning discussion
@@ -63,7 +69,7 @@
 | Task | Description | Suggested Assignee | Status |
 |------|-------------|-------------------|--------|
 | **Deduplicate 4 duplicate groups** | WeChat×4, Azure×4, Cron×2, Three-layer protection×2 → one sentence + link | GSD | ⏳ |
-| `stories/identity-crisis.md` | GSD/WLB identity confusion crisis (good material) | WLB | ⏳ |
+| Polish `stories/context-explosion-identity-crisis.md` | The GSD/WLB identity-confusion story exists; strengthen narrative and reusable value | WLB | ⏳ |
 | `lessons/model-selection-guide.md` | Model selection decision tree | GSD | ⏳ |
 | Enrich `gateway-6hour-outage.md` | Add narrative, quantify losses | GSD | ⏳ |
 | Update `now/2026-03.md` | P0 completion milestone + Meetup record | WLB | ⏳ |
