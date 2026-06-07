@@ -10,7 +10,14 @@
 import { access, readFile, stat } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
-import { cleanLink, isExternalLink, markdownLinks, routeToMarkdownFile, trimBase } from './markdown-route-utils.mjs'
+import {
+  cleanLink,
+  isExternalLink,
+  markdownLinks,
+  routeToMarkdownFile,
+  routeToMarkdownFileCandidates,
+  trimBase,
+} from './markdown-route-utils.mjs'
 import { collectPublishTargets } from './publish-rules.mjs'
 import { navByLocale, sidebar, siteBase } from '../site-map.mjs'
 
@@ -150,8 +157,9 @@ function configuredRoutes() {
 async function existingScopedMarkdownFiles() {
   const files = new Set(SCOPED_MARKDOWN_FILES)
   for (const route of configuredRoutes()) {
-    const file = routeToMarkdownFile(route, { siteBase })
-    if (file && await exists(join(ROOT, file))) files.add(file)
+    for (const file of routeToMarkdownFileCandidates(route, { siteBase })) {
+      if (await exists(join(ROOT, file))) files.add(file)
+    }
   }
   for (const file of SCOPED_INDEX_LINK_FILES) {
     for (const linkedFile of await linkedMarkdownFiles(file)) files.add(linkedFile)
@@ -167,8 +175,9 @@ async function linkedMarkdownFiles(file) {
   for (const link of markdownLinks(source)) {
     if (isExternalLink(link) || !link.startsWith('/')) continue
 
-    const linkedFile = routeToMarkdownFile(link, { siteBase })
-    if (linkedFile && await exists(join(ROOT, linkedFile))) files.push(linkedFile)
+    for (const linkedFile of routeToMarkdownFileCandidates(link, { siteBase })) {
+      if (await exists(join(ROOT, linkedFile))) files.push(linkedFile)
+    }
   }
   return files
 }

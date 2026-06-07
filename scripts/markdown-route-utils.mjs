@@ -11,17 +11,21 @@ export function markdownLinks(source) {
 }
 
 export function routeToMarkdownFile(route, { siteBase = '/' } = {}) {
-  if (!route || isExternalLink(route)) return null
+  return routeToMarkdownFileCandidates(route, { siteBase })[0] || null
+}
+
+export function routeToMarkdownFileCandidates(route, { siteBase = '/' } = {}) {
+  if (!route || isExternalLink(route)) return []
 
   const cleanRoute = cleanLink(trimBase(route, siteBase))
   const withoutSlash = cleanRoute.replace(/^\/+/, '')
 
-  if (!withoutSlash) return 'index.md'
-  if (withoutSlash.endsWith('/')) return `${withoutSlash}index.md`
-  if (extname(withoutSlash) === '.md') return withoutSlash
-  if (extname(withoutSlash)) return null
+  if (!withoutSlash) return ['index.md']
+  if (withoutSlash.endsWith('/')) return [`${withoutSlash}index.md`]
+  if (extname(withoutSlash) === '.md') return [withoutSlash]
+  if (extname(withoutSlash)) return []
 
-  return `${withoutSlash}.md`
+  return [`${withoutSlash}.md`, `${withoutSlash}/index.md`]
 }
 
 export function trimBase(path, siteBase = '/') {

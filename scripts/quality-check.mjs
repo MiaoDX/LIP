@@ -12,7 +12,7 @@ import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { basename, dirname, join, relative } from 'node:path'
 import { checkScopedLinks } from './link-check.mjs'
-import { cleanLink, markdownLinks, routeToMarkdownFile, trimBase } from './markdown-route-utils.mjs'
+import { cleanLink, markdownLinks, routeToMarkdownFileCandidates, trimBase } from './markdown-route-utils.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
 import { siteBase } from '../site-map.mjs'
 
@@ -58,11 +58,10 @@ async function draftArticleFiles() {
     const route = cleanLink(trimBase(link, siteBase))
     if (!route.startsWith('/drafts/')) continue
 
-    const file = routeToMarkdownFile(route)
-    if (!file) continue
-
-    const fullPath = join(ROOT, file)
-    if (await exists(fullPath)) files.add(fullPath)
+    for (const file of routeToMarkdownFileCandidates(route)) {
+      const fullPath = join(ROOT, file)
+      if (await exists(fullPath)) files.add(fullPath)
+    }
   }
   return [...files].sort()
 }
