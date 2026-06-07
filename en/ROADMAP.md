@@ -2,7 +2,7 @@
 
 > All planned content, completion status, and priorities. Claude / MiaoDX can review and adjust anytime.
 
-**Last Updated:** 2026-06-06
+**Last Updated:** 2026-06-07
 **Maintainers:** WLB 🦞 + GSD 🥷⚡ + Coach 🎯
 
 ---
@@ -32,6 +32,7 @@
 ### drafts/ (Awaiting Optimization)
 - [x] `drafts/lessons/gateway-resilience.md` — Three-layer protection architecture, awaiting deeper analysis before publication
 - [x] `drafts/lessons/cross-instance-collaboration.md` — Cross-instance collaboration, awaiting stronger reusable value before publication
+- [x] `drafts/ai-coding/gsd-rugpull-maintainer-dilemma/index.md` — AI Coding draft v4, awaiting review, screenshots, and publication decision
 
 ### discussions/ (Discussions)
 - [x] `2026-03-11-lip-structure/` — LIP planning discussion

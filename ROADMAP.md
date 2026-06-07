@@ -2,7 +2,7 @@
 
 > 所有计划内容、完成状态、优先级。Claude / MiaoDX 可随时审查调整。
 
-**最后更新：** 2026-06-06
+**最后更新：** 2026-06-07
 **维护者：** WLB 🦞 + GSD 🥷⚡ + Coach 🎯
 
 ---
@@ -32,6 +32,7 @@
 ### drafts/（待优化）
 - [x] `drafts/lessons/gateway-resilience.md` — 三层防护架构，待补深度分析后再发布
 - [x] `drafts/lessons/cross-instance-collaboration.md` — 跨实例协作，待补复用价值后再发布
+- [x] `drafts/ai-coding/gsd-rugpull-maintainer-dilemma/index.md` — AI Coding 初稿 v4，等待审稿、截图和发布判断
 
 ### discussions/（讨论）
 - [x] `2026-03-11-lip-structure/` — LIP 规划讨论
