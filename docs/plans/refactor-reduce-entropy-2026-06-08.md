@@ -71,3 +71,6 @@ material P2 work.
   in both roadmaps, pointing the identity-crisis follow-up at the existing
   story, and adding the missing English draft queue row for the GSD rug-pull
   draft.
+- 2026-06-08: Removed the orphaned `assets/sharing-20260321/` March sharing
+  bundle after confirming it had no in-repo consumers or publish target. The
+  still-used deck assets remain in `presentations/`.
