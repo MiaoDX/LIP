@@ -24,15 +24,7 @@ const slug = computed(() => {
 })
 
 // 作者信息
-const authorBio = computed(() => frontmatter.value.authorBio || theme.value.authorBio || {
-  name: 'MiaoDX × AI Agents',
-  desc: '机器人研发工程师，OPC 实践者 — One Person, plus multi Claws。白天给机器人写 bug，其他时间和 AI Agents 一起做更多的事。',
-  links: [
-    { text: 'GitHub ↗', url: 'https://github.com/MiaoDX' },
-    { text: '博客 ↗', url: 'https://miaodx.com' },
-    { text: '所有案例 →', url: 'https://miaodx.com/LIP/' }
-  ]
-})
+const authorBio = computed(() => frontmatter.value.authorBio || theme.value.authorBio)
 
 // 导航
 const navItems = computed(() => theme.value.nav || [
@@ -65,7 +57,7 @@ const isEnglish = computed(() => lang.value === 'en-US' || route.path.startsWith
 const switchLang = () => {
   const currentPath = route.path
   // 移除 base 路径前缀，获取相对路径
-  const base = '/LIP'
+  const base = (theme.value.siteBase || '/').replace(/\/$/, '')
   let relativePath = currentPath
   if (relativePath.startsWith(base)) {
     relativePath = relativePath.slice(base.length)
@@ -74,11 +66,11 @@ const switchLang = () => {
   if (isEnglish.value) {
     // 从英文切换到中文：移除 /en 前缀
     const newPath = relativePath.replace(/^\/en/, '') || '/'
-    window.location.href = base + newPath
+    window.location.href = `${base}${newPath}`
   } else {
     // 从中文切换到英文：添加 /en 前缀
     const newPath = '/en' + relativePath
-    window.location.href = base + newPath
+    window.location.href = `${base}${newPath}`
   }
 }
 </script>

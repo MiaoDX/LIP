@@ -11,6 +11,7 @@ import {
 } from '../site-map.mjs'
 
 type ThemeConfig = DefaultTheme.Config & {
+  siteBase?: string
   authorBio?: {
     name: string
     desc: string
@@ -72,6 +73,7 @@ export default defineConfigWithTheme<ThemeConfig>({
 
   themeConfig: {
     authorBio,
+    siteBase,
     sidebar,
     socialLinks,
   },

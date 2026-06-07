@@ -10,11 +10,12 @@
 import { spawn } from 'node:child_process'
 import { rm } from 'node:fs/promises'
 import { join, relative } from 'node:path'
+import { siteBase } from '../site-map.mjs'
 
 const ROOT = process.cwd()
 const ENTRY = join(ROOT, 'slides', 'slides.md')
 const OUT = join(ROOT, '.vitepress', 'dist', 'slides', 'slidev')
-const BASE = '/LIP/slides/slidev/'
+const BASE = `${siteBase.replace(/\/$/, '')}/slides/slidev/`
 
 function run(cmd, args) {
   return new Promise((resolve, reject) => {
