@@ -12,8 +12,9 @@ import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { basename, dirname, join, relative } from 'node:path'
 import { checkScopedLinks } from './link-check.mjs'
-import { markdownLinks, routeToMarkdownFile } from './markdown-route-utils.mjs'
+import { cleanLink, markdownLinks, routeToMarkdownFile, trimBase } from './markdown-route-utils.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
+import { siteBase } from '../site-map.mjs'
 
 const execFileAsync = promisify(execFile)
 const ROOT = process.cwd()
@@ -54,9 +55,10 @@ async function draftArticleFiles() {
   const source = await readFile(indexFile, 'utf8')
   const files = new Set()
   for (const link of markdownLinks(source)) {
-    if (!link.startsWith('/drafts/')) continue
+    const route = cleanLink(trimBase(link, siteBase))
+    if (!route.startsWith('/drafts/')) continue
 
-    const file = routeToMarkdownFile(link)
+    const file = routeToMarkdownFile(route)
     if (!file) continue
 
     const fullPath = join(ROOT, file)
