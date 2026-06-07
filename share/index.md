@@ -4,6 +4,7 @@
 
 ## Weekly Robotics 摘要
 
+- [Weekly Robotics Digest Archive](/bestpractice/weekly-robotics/) — 已归档至 #359（2026-05-08）
 - [Weekly Robotics #356](/share/weekly/weekly-robotics-356.html) — 2026-04-17
 - [Weekly Robotics #356 Personalized Report](/share/weekly/weekly-robotics-356-personalized.html) — 2026-04-17，面向 MiaoDX / Xiaomi Robotics 的个性化版本
 

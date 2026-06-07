@@ -74,3 +74,7 @@ material P2 work.
 - 2026-06-08: Removed the orphaned `assets/sharing-20260321/` March sharing
   bundle after confirming it had no in-repo consumers or publish target. The
   still-used deck assets remain in `presentations/`.
+- 2026-06-08: Clarified the Weekly Robotics archive status: the public digest
+  index now says "latest checked-in issue" instead of promising live Friday
+  auto-generation, and both share indexes link to the Markdown archive through
+  #359.

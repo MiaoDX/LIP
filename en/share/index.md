@@ -4,6 +4,7 @@ Shareable files stored here.
 
 ## Weekly Robotics Digests
 
+- [Weekly Robotics Digest Archive](/bestpractice/weekly-robotics/) — archived through #359, May 8, 2026
 - [Weekly Robotics #356](/share/weekly/weekly-robotics-356.html) — April 17, 2026
 - [Weekly Robotics #356 Personalized Report](/share/weekly/weekly-robotics-356-personalized.html) — April 17, 2026, personalized for MiaoDX / Xiaomi Robotics
 
