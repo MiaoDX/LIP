@@ -14,7 +14,6 @@ import {
   cleanLink,
   isExternalLink,
   markdownLinks,
-  routeToMarkdownFile,
   routeToMarkdownFileCandidates,
   trimBase,
 } from './markdown-route-utils.mjs'
@@ -63,6 +62,13 @@ const SCOPED_CONFIG_FILES = [
 const SCOPED_INDEX_LINK_FILES = [
   'drafts/index.md',
   'en/drafts/index.md',
+]
+
+const GENERATED_ROUTES = [
+  {
+    route: '/slides/slidev/',
+    source: 'slides/slides.md',
+  },
 ]
 
 const FIELD_LINK_RE = /\b(?:link|url):\s*['"]([^'"]+)['"]/g
@@ -154,14 +160,17 @@ function configuredRoutes() {
   return routes
 }
 
-async function existingScopedMarkdownFiles() {
-  const files = new Set(SCOPED_MARKDOWN_FILES)
+async function existingScopedMarkdownFiles({
+  scopedMarkdownFiles = SCOPED_MARKDOWN_FILES,
+  scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
+} = {}) {
+  const files = new Set(scopedMarkdownFiles)
   for (const route of configuredRoutes()) {
     for (const file of routeToMarkdownFileCandidates(route, { siteBase })) {
       if (await exists(join(ROOT, file))) files.add(file)
     }
   }
-  for (const file of SCOPED_INDEX_LINK_FILES) {
+  for (const file of scopedIndexLinkFiles) {
     for (const linkedFile of await linkedMarkdownFiles(file)) files.add(linkedFile)
   }
   return [...files].sort()
@@ -183,6 +192,8 @@ async function linkedMarkdownFiles(file) {
 }
 
 async function publicRouteExists(path) {
+  if (await generatedRouteExists(path)) return true
+
   const { source, dist } = publicPathToCandidates(path)
   for (const candidate of source) {
     if (await exists(join(ROOT, candidate))) return true
@@ -209,9 +220,16 @@ async function standaloneSourceExists(distCandidate) {
   return false
 }
 
+async function generatedRouteExists(path) {
+  const cleanPath = cleanLink(trimBase(path, siteBase))
+  const match = GENERATED_ROUTES.find((route) => route.route === cleanPath)
+  return match ? exists(join(ROOT, match.source)) : false
+}
+
 async function relativeLinkExists(fromFile, link) {
   const clean = cleanLink(link)
   if (!clean) return true
+  if (await generatedRouteExists(clean)) return true
   if (clean.startsWith('/')) return publicRouteExists(clean)
 
   const target = normalize(join(dirname(fromFile), clean))
@@ -250,11 +268,15 @@ async function checkConfigFile(file, errors) {
   }
 }
 
-export async function checkScopedLinks() {
+export async function checkScopedLinks({
+  scopedMarkdownFiles = SCOPED_MARKDOWN_FILES,
+  scopedConfigFiles = SCOPED_CONFIG_FILES,
+  scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
+} = {}) {
   const errors = []
-  const markdownFiles = await existingScopedMarkdownFiles()
+  const markdownFiles = await existingScopedMarkdownFiles({ scopedMarkdownFiles, scopedIndexLinkFiles })
   for (const file of markdownFiles) await checkMarkdownFile(file, errors)
-  for (const file of SCOPED_CONFIG_FILES) await checkConfigFile(file, errors)
+  for (const file of scopedConfigFiles) await checkConfigFile(file, errors)
   return errors
 }
 
