@@ -52,6 +52,11 @@ const SCOPED_CONFIG_FILES = [
   'site-map.mjs',
 ]
 
+const SCOPED_INDEX_LINK_FILES = [
+  'drafts/index.md',
+  'en/drafts/index.md',
+]
+
 const MARKDOWN_LINK_RE = /!?\[[^\]]*]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g
 const FIELD_LINK_RE = /\b(?:link|url):\s*['"]([^'"]+)['"]/g
 let publishTargets = null
@@ -174,7 +179,24 @@ async function existingScopedMarkdownFiles() {
     const file = routeToMarkdownFile(route)
     if (file && await exists(join(ROOT, file))) files.add(file)
   }
+  for (const file of SCOPED_INDEX_LINK_FILES) {
+    for (const linkedFile of await linkedMarkdownFiles(file)) files.add(linkedFile)
+  }
   return [...files].sort()
+}
+
+async function linkedMarkdownFiles(file) {
+  if (!(await exists(join(ROOT, file)))) return []
+
+  const source = await readFile(join(ROOT, file), 'utf8')
+  const files = []
+  for (const link of markdownLinks(source)) {
+    if (isExternal(link) || !link.startsWith('/')) continue
+
+    const linkedFile = routeToMarkdownFile(link)
+    if (linkedFile && await exists(join(ROOT, linkedFile))) files.push(linkedFile)
+  }
+  return files
 }
 
 async function publicRouteExists(path) {
