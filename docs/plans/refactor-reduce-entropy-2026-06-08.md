@@ -1,10 +1,10 @@
 ---
 refactor_scope: reduce-entropy-2026-06-08
-status: ACTIVE
+status: DONE
 accepted_severities:
   - P1
   - P2
-last_verified: null
+last_verified: 2026-06-08
 ---
 
 # Refactor Scope: reduce entropy 2026-06-08
@@ -17,6 +17,9 @@ ACTIVE
 
 Continue the reduce-entropy loop after the completed 2026-06-06 gates, focusing
 only on current material drift that can still mislead future readers or agents.
+
+This gate is complete. A fresh saturation audit should start from current HEAD
+instead of adding unrelated findings to this historical checklist.
 
 ## Accepted Candidates
 
@@ -78,3 +81,5 @@ material P2 work.
   index now says "latest checked-in issue" instead of promising live Friday
   auto-generation, and both share indexes link to the Markdown archive through
   #359.
+- 2026-06-08: Final verification passed with `npm run build:all`; worktree was
+  clean afterward.
