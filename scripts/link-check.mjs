@@ -10,6 +10,7 @@
 import { access, readFile, stat } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
+import { cleanLink, isExternalLink, markdownLinks, routeToMarkdownFile, trimBase } from './markdown-route-utils.mjs'
 import { collectPublishTargets } from './publish-rules.mjs'
 import { navByLocale, sidebar, siteBase } from '../site-map.mjs'
 
@@ -57,7 +58,6 @@ const SCOPED_INDEX_LINK_FILES = [
   'en/drafts/index.md',
 ]
 
-const MARKDOWN_LINK_RE = /!?\[[^\]]*]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g
 const FIELD_LINK_RE = /\b(?:link|url):\s*['"]([^'"]+)['"]/g
 let publishTargets = null
 
@@ -84,21 +84,8 @@ async function expectedPublishTargets() {
   return publishTargets
 }
 
-function cleanLink(link) {
-  return decodeURI(link).split('#')[0].split('?')[0]
-}
-
-function isExternal(link) {
-  return /^(?:[a-z][a-z0-9+.-]*:|mailto:|tel:|#)/i.test(link)
-}
-
-function trimBase(path) {
-  if (siteBase !== '/' && path.startsWith(siteBase)) return `/${path.slice(siteBase.length)}`
-  return path
-}
-
 function publicPathToCandidates(path) {
-  const route = trimBase(path)
+  const route = trimBase(path, siteBase)
   const cleanRoute = cleanLink(route)
   const withoutSlash = cleanRoute.replace(/^\/+/, '')
   const source = []
@@ -139,19 +126,6 @@ function publicPathToCandidates(path) {
   return { source, dist }
 }
 
-function routeToMarkdownFile(route) {
-  if (!route || isExternal(route)) return null
-  const cleanRoute = cleanLink(trimBase(route))
-  const withoutSlash = cleanRoute.replace(/^\/+/, '')
-
-  if (!withoutSlash) return 'index.md'
-  if (withoutSlash.endsWith('/')) return `${withoutSlash}index.md`
-  if (extname(withoutSlash) === '.md') return withoutSlash
-  if (extname(withoutSlash)) return null
-
-  return `${withoutSlash}.md`
-}
-
 function sidebarItems(items, routes = []) {
   for (const item of items) {
     if (item.link) routes.push(item.link)
@@ -176,7 +150,7 @@ function configuredRoutes() {
 async function existingScopedMarkdownFiles() {
   const files = new Set(SCOPED_MARKDOWN_FILES)
   for (const route of configuredRoutes()) {
-    const file = routeToMarkdownFile(route)
+    const file = routeToMarkdownFile(route, { siteBase })
     if (file && await exists(join(ROOT, file))) files.add(file)
   }
   for (const file of SCOPED_INDEX_LINK_FILES) {
@@ -191,9 +165,9 @@ async function linkedMarkdownFiles(file) {
   const source = await readFile(join(ROOT, file), 'utf8')
   const files = []
   for (const link of markdownLinks(source)) {
-    if (isExternal(link) || !link.startsWith('/')) continue
+    if (isExternalLink(link) || !link.startsWith('/')) continue
 
-    const linkedFile = routeToMarkdownFile(link)
+    const linkedFile = routeToMarkdownFile(link, { siteBase })
     if (linkedFile && await exists(join(ROOT, linkedFile))) files.push(linkedFile)
   }
   return files
@@ -239,10 +213,6 @@ async function relativeLinkExists(fromFile, link) {
   return false
 }
 
-function markdownLinks(source) {
-  return [...source.matchAll(MARKDOWN_LINK_RE)].map((match) => match[1])
-}
-
 function configLinks(source) {
   return [...source.matchAll(FIELD_LINK_RE)].map((match) => match[1])
 }
@@ -250,7 +220,7 @@ function configLinks(source) {
 async function checkMarkdownFile(file, errors) {
   const source = await readFile(join(ROOT, file), 'utf8')
   for (const link of markdownLinks(source)) {
-    if (isExternal(link)) continue
+    if (isExternalLink(link)) continue
     if (!(await relativeLinkExists(file, link))) {
       errors.push(`${file} references missing local link ${link}`)
     }
@@ -260,7 +230,7 @@ async function checkMarkdownFile(file, errors) {
 async function checkConfigFile(file, errors) {
   const source = await readFile(join(ROOT, file), 'utf8')
   for (const link of configLinks(source)) {
-    if (isExternal(link)) continue
+    if (isExternalLink(link)) continue
     if (!(await publicRouteExists(link))) {
       errors.push(`${file} references missing public route ${link}`)
     }

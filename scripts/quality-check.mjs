@@ -12,6 +12,7 @@ import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { basename, dirname, join, relative } from 'node:path'
 import { checkScopedLinks } from './link-check.mjs'
+import { markdownLinks, routeToMarkdownFile } from './markdown-route-utils.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
 
 const execFileAsync = promisify(execFile)
@@ -19,7 +20,6 @@ const ROOT = process.cwd()
 const REPORT_FILE = join(ROOT, '.quality-report.md')
 const DIST_DIR = join(ROOT, '.vitepress', 'dist')
 const REPORT_TIMESTAMP_RE = /^生成时间: .+$/m
-const MARKDOWN_LINK_RE = /!?\[[^\]]*]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g
 const OPERATIONAL_PUBLIC_OUTPUTS = [
   'AGENTS.html',
   'CLAUDE.html',
@@ -53,11 +53,12 @@ async function draftArticleFiles() {
 
   const source = await readFile(indexFile, 'utf8')
   const files = new Set()
-  for (const [, link] of source.matchAll(MARKDOWN_LINK_RE)) {
+  for (const link of markdownLinks(source)) {
     if (!link.startsWith('/drafts/')) continue
 
-    const route = link.split('#')[0].split('?')[0].replace(/^\/+/, '')
-    const file = route.endsWith('/') ? `${route}index.md` : `${route}.md`
+    const file = routeToMarkdownFile(link)
+    if (!file) continue
+
     const fullPath = join(ROOT, file)
     if (await exists(fullPath)) files.add(fullPath)
   }
