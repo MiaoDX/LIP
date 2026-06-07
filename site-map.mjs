@@ -79,6 +79,7 @@ export const sidebar = {
         { text: 'Draft 入口', link: '/drafts/' },
         { text: 'Gateway 弹性架构', link: '/drafts/lessons/gateway-resilience' },
         { text: '跨实例协作模式', link: '/drafts/lessons/cross-instance-collaboration' },
+        { text: 'GSD Rug Pull 维护者困境', link: '/drafts/ai-coding/gsd-rugpull-maintainer-dilemma/' },
       ],
     },
     {
