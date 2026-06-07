@@ -19,6 +19,7 @@ const ROOT = process.cwd()
 const REPORT_FILE = join(ROOT, '.quality-report.md')
 const DIST_DIR = join(ROOT, '.vitepress', 'dist')
 const REPORT_TIMESTAMP_RE = /^生成时间: .+$/m
+const MARKDOWN_LINK_RE = /!?\[[^\]]*]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g
 const OPERATIONAL_PUBLIC_OUTPUTS = [
   'AGENTS.html',
   'CLAUDE.html',
@@ -47,16 +48,20 @@ async function markdownFiles(dir) {
 }
 
 async function draftArticleFiles() {
-  const files = await markdownFiles(join(ROOT, 'drafts', 'lessons'))
-  const aiCodingDir = join(ROOT, 'drafts', 'ai-coding')
-  if (!(await exists(aiCodingDir))) return files
+  const indexFile = join(ROOT, 'drafts', 'index.md')
+  if (!(await exists(indexFile))) return []
 
-  for (const entry of await readdir(aiCodingDir, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue
-    const indexFile = join(aiCodingDir, entry.name, 'index.md')
-    if (await exists(indexFile)) files.push(indexFile)
+  const source = await readFile(indexFile, 'utf8')
+  const files = new Set()
+  for (const [, link] of source.matchAll(MARKDOWN_LINK_RE)) {
+    if (!link.startsWith('/drafts/')) continue
+
+    const route = link.split('#')[0].split('?')[0].replace(/^\/+/, '')
+    const file = route.endsWith('/') ? `${route}index.md` : `${route}.md`
+    const fullPath = join(ROOT, file)
+    if (await exists(fullPath)) files.add(fullPath)
   }
-  return files.sort()
+  return [...files].sort()
 }
 
 function countMatches(source, regex) {
