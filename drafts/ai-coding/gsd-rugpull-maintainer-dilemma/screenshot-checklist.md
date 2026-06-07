@@ -7,7 +7,7 @@
 ## 优先级
 
 **必选 3 张**（保证文章成色）：
-- 图 1：GSD 告别信（hero 图）
+- 图 0：Reddit r/ClaudeAI 截图（hero 图）
 - 图 3+4：Den Delimarsky 两张并排（Microsoft 离职 + 入职 Anthropic）
 - 图 6：Aider "Where is Paul?"
 
@@ -16,13 +16,13 @@
 - 图 7：OpenCode PR "anthropic legal requests"
 
 **有就更好的 3 张**：
+- 图 1：GSD 告别信 / 事件报道页（hero 备选）
 - 图 5：Sam Altman 宣布 Steinberger
 - 图 8：Anthropic ToS 截图
-- 图 0：NullTX / Our Crypto Talk 事件报道页（hero 备选）
 
 ---
 
-## 1. Reddit r/ClaudeAI 截图（hero 图 · 用户切入视角）
+## 0. Reddit r/ClaudeAI 截图（hero 图 · 用户切入视角）
 
 **截图源**：用户会自己重新截一张。这是触发整篇文章的源头——一个微信群里有人转发的 Reddit r/ClaudeAI 的 mod-bot 贴。
 
@@ -39,7 +39,7 @@
 
 ---
 
-## 2. GSD 跑路告别信（备选 hero 图）
+## 1. GSD 跑路告别信（备选 hero 图）
 
 **截图源**：原 X 推文应在 @official_taches 账号下，但**账号已删**，X 上抓不到。
 
