@@ -84,6 +84,8 @@ try {
   await writeFile('bestpractice/visible.md', '# Visible')
   await writeFile('bestpractice/hidden.md', '# Hidden')
   await writeFile('bestpractice/panorama.md', '# Support page')
+  await mkdir('bestpractice/weekly', { recursive: true })
+  await writeFile('bestpractice/weekly/index.md', '# Weekly')
 
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['bestpractice/index.md'],
@@ -94,9 +96,12 @@ try {
       contentDir: 'bestpractice',
       excludeSlugs: ['index', 'panorama'],
     }],
-  }), ['bestpractice/index.md does not link current article /bestpractice/hidden'])
+  }), [
+    'bestpractice/index.md does not link current article /bestpractice/hidden',
+    'bestpractice/index.md does not link current article /bestpractice/weekly',
+  ])
 
-  await writeFile('bestpractice/index.md', '[Visible](/bestpractice/visible) [Hidden](/bestpractice/hidden)')
+  await writeFile('bestpractice/index.md', '[Visible](/bestpractice/visible) [Hidden](/bestpractice/hidden) [Weekly](/bestpractice/weekly/)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['bestpractice/index.md'],
     scopedConfigFiles: [],

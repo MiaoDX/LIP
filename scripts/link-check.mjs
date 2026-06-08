@@ -210,6 +210,21 @@ async function markdownFilesInDir(dir) {
   return files.sort()
 }
 
+async function publicIndexRoutesInDir(dir) {
+  const routes = []
+  for (const entry of await entries(dir)) {
+    if (entry.isFile() && entry.name.endsWith('.md')) {
+      routes.push(entry.name.replace(/\.md$/, ''))
+      continue
+    }
+
+    if (entry.isDirectory() && await exists(join(dir, entry.name, 'index.md'))) {
+      routes.push(entry.name)
+    }
+  }
+  return routes.sort()
+}
+
 function hasMarpFrontmatter(source) {
   const frontmatter = source.match(/^---\s*\n([\s\S]*?)\n---/)
   return frontmatter ? /^\s*marp:\s*true\s*$/m.test(frontmatter[1]) : false
@@ -381,8 +396,7 @@ async function checkIndexCoverageRule(rule, errors) {
 
   const source = await readFile(indexPath, 'utf8')
   const excluded = new Set(rule.excludeSlugs)
-  for (const file of await markdownFilesInDir(join(ROOT, rule.contentDir))) {
-    const slug = file.replace(/\.md$/, '')
+  for (const slug of await publicIndexRoutesInDir(join(ROOT, rule.contentDir))) {
     if (excluded.has(slug)) continue
 
     const route = `/${rule.contentDir}/${slug}`

@@ -2,6 +2,10 @@
 
 这里存放可分享的文件。
 
+## Agent Radar
+
+- [Agent Radar](/share/agent-radar/) — 面向 AI Agents、Coding Agents、Agent Infra 与 TOP AI Lab 实践的高信号日报归档，当前 checked-in 到 2026-05-26
+
 ## Weekly Robotics 摘要
 
 - [Weekly Robotics Digest Archive](/bestpractice/weekly-robotics/) — 已归档至 #359（2026-05-08）

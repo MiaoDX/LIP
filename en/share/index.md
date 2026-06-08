@@ -2,6 +2,10 @@
 
 Shareable files stored here.
 
+## Agent Radar
+
+- [Agent Radar](/share/agent-radar/) — daily archive for AI Agents, Coding Agents, Agent Infra, and TOP AI Lab practice, checked in through May 26, 2026
+
 ## Weekly Robotics Digests
 
 - [Weekly Robotics Digest Archive](/bestpractice/weekly-robotics/) — archived through #359, May 8, 2026

@@ -30,6 +30,12 @@ AI Lab 们在生产环境中踩过的坑、总结的经验，比论文更有实�
 
 每个分析的"对我们的借鉴"都已转化为具体行动项，带优先级和负责人。
 
+## 🤖 Weekly Robotics Archive
+
+**[→ Weekly Robotics Digest Archive](/bestpractice/weekly-robotics/)**
+
+面向机器人与 Embodied AI 的周报归档，当前 checked-in 到 #359（2026-05-08）。
+
 ---
 
 ## 专栏文章
