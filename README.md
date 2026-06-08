@@ -97,7 +97,7 @@ share/ 下有两种文件类型，用途不同：
 - **做演讲/Slide** → `presentations/your-talk.html`（配套图片放同目录，部署后访问 `/LIP/share/your-talk.html`）
 - **做 AI Coding 专题演讲项目** → `ai-coding/your-talk/index.html`（素材放 `images/`、`screenshots/` 或 `assets/`，部署后访问 `/LIP/ai-coding/your-talk/`）
 - **不要提交 `public/share/` 或根目录 `consult/`** → `npm run publish:check` 会检查这些 source-of-truth 规则
-- **咨询页** → `public/consult/*.html`（部署后访问 `/LIP/consult/...`）
+- **咨询页** → `public/consult/*.html`（部署后访问 `/LIP/consult/...`）；这是公开静态输出，不要放需要保密、登录或客户端密码保护的材料
 - 新增正式发布 Markdown 文章时，同步更新对应入口和 `site-map.mjs`；草稿先进入 `drafts/index.md`，只有需要一读导航时才加入 sidebar
 - 详见 `share/README.md`
 

@@ -98,12 +98,24 @@ try {
     'source ownership should detect placeholder standalone text'
   )
 
+  await writeFile('presentations/client-password.html', '<input type="password"><script>const CORRECT_PWD = "secret"</script>')
+  const passwordErrors = await publishRules.checkSourceOwnership()
+  assert(
+    passwordErrors.some((error) => error.includes('presentations/client-password.html contains a client-side password constant')),
+    'source ownership should detect client-side password constants'
+  )
+  assert(
+    passwordErrors.some((error) => error.includes('presentations/client-password.html contains a password input in static public output')),
+    'source ownership should detect password inputs in static public output'
+  )
+
   await writeFile('presentations/assets/large.png', 'large')
   await writeFile('presentations/assets/nested.css', 'nested')
   await writeFile('presentations/assets/css-hero.png', 'css hero')
   await rm('presentations/inline-raster.html')
   await rm('presentations/root-asset.html')
   await rm('presentations/placeholder.html')
+  await rm('presentations/client-password.html')
   await rm('presentations/assets/root.css')
   await rm('share', { recursive: true, force: true })
   await rm('public', { recursive: true, force: true })

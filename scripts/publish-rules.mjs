@@ -30,6 +30,10 @@ const HTML_PLACEHOLDER_PATTERNS = [
   { regex: /\bEvent name placeholder\b/i, message: 'contains placeholder text "Event name placeholder"' },
   { regex: /\bSynthesis placeholder\b/i, message: 'contains placeholder text "Synthesis placeholder"' },
 ]
+const CLIENT_SIDE_PASSWORD_PATTERNS = [
+  { regex: /\bconst\s+CORRECT_PWD\s*=/i, message: 'contains a client-side password constant' },
+  { regex: /<input\b[^>]*\btype=["']password["']/i, message: 'contains a password input in static public output' },
+]
 
 export const sourceOwnershipRules = {
   generatedSourceDirs: [
@@ -364,6 +368,14 @@ function checkHtmlPlaceholders(file, source, errors) {
   }
 }
 
+function checkClientSidePasswords(file, source, errors) {
+  for (const pattern of CLIENT_SIDE_PASSWORD_PATTERNS) {
+    if (pattern.regex.test(source)) {
+      errors.push(`${relative(ROOT, file)} ${pattern.message}; static GitHub Pages output cannot protect private consult material`)
+    }
+  }
+}
+
 async function checkFileLocalRefs(file, refs, errors) {
   for (const ref of refs) {
     const target = join(dirname(file), ref)
@@ -381,7 +393,10 @@ async function checkLocalRefs(rootDir, errors) {
     if (file.endsWith('.html') && RASTER_DATA_URI_RE.test(source)) {
       errors.push(`${relative(ROOT, file)} inlines a raster data URI; move the image to a local asset file`)
     }
-    if (file.endsWith('.html')) checkHtmlPlaceholders(file, source, errors)
+    if (file.endsWith('.html')) {
+      checkHtmlPlaceholders(file, source, errors)
+      checkClientSidePasswords(file, source, errors)
+    }
     const refs = file.endsWith('.html') ? localRefsInHtml(source) : localRefsInCss(source)
     const rootAssetRefs = file.endsWith('.html') ? rootAbsoluteAssetRefsInHtml(source) : rootAbsoluteAssetRefsInCss(source)
     checkRootAbsoluteAssetRefs(file, rootAssetRefs, errors)

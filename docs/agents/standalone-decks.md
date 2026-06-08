@@ -34,6 +34,9 @@ Consult pages live in `public/consult/` and publish to `/LIP/consult/`.
 
 - Do not recreate a parallel root `consult/` tree.
 - Keep PDFs and downloads there for VitePress public passthrough.
+- Treat everything in `public/consult/` as public static output. Do not place
+  private material there behind client-side password overlays or JavaScript
+  constants; GitHub Pages cannot enforce that boundary.
 
 ## Path rules
 
