@@ -2,13 +2,16 @@
 
 import assert from 'node:assert/strict'
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { execFile } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { promisify } from 'node:util'
 
 const originalRoot = process.cwd()
 const tempRoot = await mkdtemp(join(tmpdir(), 'lip-link-check-'))
 const moduleUrl = `${pathToFileURL(join(originalRoot, 'scripts', 'link-check.mjs')).href}?test=${Date.now()}`
+const execFileAsync = promisify(execFile)
 
 try {
   process.chdir(tempRoot)
@@ -113,7 +116,6 @@ try {
   await writeFile('ai-coding/index.md', '[Standalone deck](standalone-deck/)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['ai-coding/index.md'],
-    scopedMarkdownDirs: [],
     scopedConfigFiles: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
@@ -128,8 +130,7 @@ try {
     '[Missing live link](/missing-live)',
   ].join('\n'))
   assert.deepEqual(await checkScopedLinks({
-    scopedMarkdownFiles: [],
-    scopedMarkdownDirs: ['discussions'],
+    scopedMarkdownFiles: ['discussions/archive.md'],
     scopedConfigFiles: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
@@ -143,12 +144,23 @@ try {
     '[Existing live link](/share/source-backed)',
   ].join('\n'))
   assert.deepEqual(await checkScopedLinks({
-    scopedMarkdownFiles: [],
-    scopedMarkdownDirs: ['discussions'],
+    scopedMarkdownFiles: ['discussions/archive.md'],
     scopedConfigFiles: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), [])
+
+  await mkdir('docs/plans', { recursive: true })
+  await writeFile('README.md', '# Root')
+  await writeFile('docs/plans/private.md', '[Missing private link](/missing-private)')
+  await writeFile('public-sidecar.md', '[Missing public link](/missing-public)')
+  await execFileAsync('git', ['init'])
+  await execFileAsync('git', ['add', 'README.md', 'docs/plans/private.md', 'public-sidecar.md'])
+  assert.deepEqual(await checkScopedLinks({
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), ['public-sidecar.md references missing local link /missing-public'])
 
   await mkdir('bestpractice', { recursive: true })
   await writeFile('bestpractice/index.md', '[Visible](/bestpractice/visible)')

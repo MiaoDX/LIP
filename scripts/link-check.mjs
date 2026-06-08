@@ -9,7 +9,9 @@
 
 import { access, readFile, readdir, stat } from 'node:fs/promises'
 import { constants } from 'node:fs'
+import { execFile } from 'node:child_process'
 import { basename, dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
+import { promisify } from 'node:util'
 import {
   cleanLink,
   frontmatterLinks,
@@ -23,39 +25,7 @@ import { marpScanDirs, navByLocale, sidebar, siteBase } from '../site-map.mjs'
 
 const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
-
-const SCOPED_MARKDOWN_FILES = [
-  'README.md',
-  'ROADMAP.md',
-  'index.md',
-  'bestpractice/weekly-robotics/index.md',
-  'now/2026-04.md',
-  'en/index.md',
-  'en/ROADMAP.md',
-  'en/now/2026-04.md',
-  'en/ai-coding/index.md',
-  'en/drafts/index.md',
-  'en/lessons/index.md',
-  'en/openclaw/index.md',
-  'en/resources/index.md',
-  'en/share/index.md',
-  'en/stories/index.md',
-  'ai-coding/index.md',
-  'ai-coding/ultrathink-to-goal/README.md',
-  'bestpractice/index.md',
-  'drafts/index.md',
-  'lessons/index.md',
-  'openclaw/index.md',
-  'resources/config-guide.md',
-  'resources/index.md',
-  'share/index.md',
-  'share/agent-radar/index.md',
-  'share/meetup-2026-03-30/index.md',
-  'slides/index.md',
-  'stories/gateway-6hour-outage.md',
-  'en/stories/gateway-6hour-outage.md',
-  'stories/index.md',
-]
+const execFileAsync = promisify(execFile)
 
 const SCOPED_CONFIG_FILES = [
   'site-map.mjs',
@@ -66,8 +36,15 @@ const SCOPED_INDEX_LINK_FILES = [
   'en/drafts/index.md',
 ]
 
-const SCOPED_MARKDOWN_DIRS = [
-  'discussions',
+const PUBLIC_MARKDOWN_EXCLUDE_FILES = [
+  '.quality-report.md',
+  'AGENTS.md',
+  'CLAUDE.md',
+]
+
+const PUBLIC_MARKDOWN_EXCLUDE_DIRS = [
+  'docs/agents/',
+  'docs/plans/',
 ]
 
 const GENERATED_ROUTES = [
@@ -149,6 +126,25 @@ async function entries(path) {
     if (error.code === 'ENOENT') return []
     throw error
   }
+}
+
+async function trackedMarkdownFiles() {
+  try {
+    const { stdout } = await execFileAsync('git', ['ls-files', '*.md'], { cwd: ROOT })
+    return stdout.split('\n').filter(Boolean)
+  } catch {
+    return walkMarkdownFiles(ROOT)
+      .then((files) => files.map((file) => relative(ROOT, file)))
+  }
+}
+
+function isPublicMarkdownFile(file) {
+  if (PUBLIC_MARKDOWN_EXCLUDE_FILES.includes(file)) return false
+  return !PUBLIC_MARKDOWN_EXCLUDE_DIRS.some((dir) => file.startsWith(dir))
+}
+
+async function publicMarkdownFiles() {
+  return (await trackedMarkdownFiles()).filter(isPublicMarkdownFile).sort()
 }
 
 async function expectedPublishTargets() {
@@ -292,17 +288,11 @@ function configuredRoutes() {
 }
 
 async function existingScopedMarkdownFiles({
-  scopedMarkdownFiles = SCOPED_MARKDOWN_FILES,
-  scopedMarkdownDirs = SCOPED_MARKDOWN_DIRS,
+  scopedMarkdownFiles,
   scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
   indexCoverageRules = INDEX_COVERAGE_RULES,
 } = {}) {
-  const files = new Set(scopedMarkdownFiles)
-  for (const dir of scopedMarkdownDirs) {
-    for (const file of await walkMarkdownFiles(join(ROOT, dir))) {
-      files.add(relative(ROOT, file))
-    }
-  }
+  const files = new Set(scopedMarkdownFiles ?? await publicMarkdownFiles())
   for (const route of configuredRoutes()) {
     for (const file of routeToMarkdownFileCandidates(route, { siteBase })) {
       if (await exists(join(ROOT, file))) files.add(file)
@@ -460,8 +450,7 @@ async function checkIndexCoverage({
 }
 
 export async function checkScopedLinks({
-  scopedMarkdownFiles = SCOPED_MARKDOWN_FILES,
-  scopedMarkdownDirs = SCOPED_MARKDOWN_DIRS,
+  scopedMarkdownFiles,
   scopedConfigFiles = SCOPED_CONFIG_FILES,
   scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
   indexCoverageRules = INDEX_COVERAGE_RULES,
@@ -469,7 +458,6 @@ export async function checkScopedLinks({
   const errors = []
   const markdownFiles = await existingScopedMarkdownFiles({
     scopedMarkdownFiles,
-    scopedMarkdownDirs,
     scopedIndexLinkFiles,
     indexCoverageRules,
   })
