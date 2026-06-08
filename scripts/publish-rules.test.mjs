@@ -122,7 +122,24 @@ try {
   await mkdir('public/consult/pitch-assets', { recursive: true })
   await writeFile('public/consult/pitch-assets/shot.png', 'consult shot')
   await writeFile('public/consult/pitch.html', '<img src="pitch-assets/shot.png">')
+  await mkdir('templates/deck', { recursive: true })
+  await writeFile(
+    'templates/deck/index.html',
+    [
+      '<!-- Example only: <img src="images/your-shot.png"> -->',
+      '<script src="../../assets/deck-runtime.js"></script>',
+    ].join('\n')
+  )
+  await mkdir('assets', { recursive: true })
+  await writeFile('assets/deck-runtime.js', 'runtime')
   assert.deepEqual(await publishRules.checkSourceOwnership(), [])
+
+  await writeFile('templates/deck/index.html', '<script src="../../assets/missing-runtime.js"></script>')
+  assert(
+    (await publishRules.checkSourceOwnership()).some((error) => error.includes('templates/deck/index.html references missing local asset ../../assets/missing-runtime.js')),
+    'source ownership should detect missing template runtime assets'
+  )
+  await writeFile('templates/deck/index.html', '<!-- Example only: <img src="images/your-shot.png"> --><script src="../../assets/deck-runtime.js"></script>')
 
   await publishRules.copyStandalone({ distDir: 'dist' })
   assert.equal(await exists('dist/consult/pitch.html'), true, 'consult pages should publish')
