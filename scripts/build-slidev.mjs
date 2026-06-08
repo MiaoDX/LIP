@@ -16,6 +16,8 @@ const ROOT = process.cwd()
 const ENTRY = join(ROOT, 'slides', 'slides.md')
 const OUT = join(ROOT, '.vitepress', 'dist', 'slides', 'slidev')
 const BASE = `${siteBase.replace(/\/$/, '')}/slides/slidev/`
+const SLIDEV_CMD = process.env.SLIDEV_CMD || 'npx'
+const SLIDEV_ARGS = process.env.SLIDEV_CMD ? [] : ['slidev']
 
 function run(cmd, args) {
   return new Promise((resolve, reject) => {
@@ -32,7 +34,7 @@ function run(cmd, args) {
 async function main() {
   console.log(`Building Slidev deck -> ${relative(ROOT, OUT)}`)
   await rm(OUT, { recursive: true, force: true })
-  await run('npx', ['slidev', 'build', ENTRY, '--base', BASE, '--out', OUT])
+  await run(SLIDEV_CMD, [...SLIDEV_ARGS, 'build', ENTRY, '--base', BASE, '--out', OUT])
 }
 
 main().catch((error) => {
