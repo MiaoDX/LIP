@@ -69,14 +69,26 @@ try {
     'source ownership should detect missing CSS url assets'
   )
 
+  await writeFile('presentations/inline-raster.html', '<img src="data:image/png;base64,AAAA">')
+  assert(
+    (await publishRules.checkSourceOwnership()).some((error) => error.includes('presentations/inline-raster.html inlines a raster data URI')),
+    'source ownership should detect inlined raster data URIs'
+  )
+
   await writeFile('presentations/assets/large.png', 'large')
   await writeFile('presentations/assets/nested.css', 'nested')
   await writeFile('presentations/assets/css-hero.png', 'css hero')
+  await rm('presentations/inline-raster.html')
   await rm('share', { recursive: true, force: true })
   await rm('public', { recursive: true, force: true })
+  await mkdir('public/consult/pitch-assets', { recursive: true })
+  await writeFile('public/consult/pitch-assets/shot.png', 'consult shot')
+  await writeFile('public/consult/pitch.html', '<img src="pitch-assets/shot.png">')
   assert.deepEqual(await publishRules.checkSourceOwnership(), [])
 
   await publishRules.copyStandalone({ distDir: 'dist' })
+  assert.equal(await exists('dist/consult/pitch.html'), true, 'consult pages should publish')
+  assert.equal(await exists('dist/consult/pitch-assets/shot.png'), true, 'consult asset dirs should publish')
   let check = await publishRules.checkStandalone({ distDir: 'dist' })
   assert.deepEqual(check.missing, [])
   assert.deepEqual(check.stale, [])

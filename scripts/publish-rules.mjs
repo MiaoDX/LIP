@@ -21,6 +21,7 @@ const HTML_REF_RE = /\b(?:src|href|poster)=["']([^"']+)["']/gi
 const HTML_SRCSET_RE = /\bsrcset=["']([^"']+)["']/gi
 const CSS_URL_REF_RE = /\burl\(\s*(['"]?)(.*?)\1\s*\)/gi
 const CSS_IMPORT_REF_RE = /@import\s+(?:url\(\s*)?["']([^"']+)["']\s*\)?/gi
+const RASTER_DATA_URI_RE = /data:image\/(?:png|jpe?g|webp|gif);base64,/i
 
 export const sourceOwnershipRules = {
   generatedSourceDirs: [
@@ -73,6 +74,7 @@ export const publishRules = [
     sourceDir: 'public/consult',
     outDir: 'consult',
     fileExtensions: ['.html'],
+    copyChildDirs: true,
   },
   {
     name: 'shared standalone runtime assets',
@@ -331,6 +333,9 @@ async function checkLocalRefs(rootDir, errors) {
   for (const file of files) {
     if (!file.endsWith('.html') && !file.endsWith('.css')) continue
     const source = await readFile(file, 'utf8')
+    if (file.endsWith('.html') && RASTER_DATA_URI_RE.test(source)) {
+      errors.push(`${relative(ROOT, file)} inlines a raster data URI; move the image to a local asset file`)
+    }
     const refs = file.endsWith('.html') ? localRefsInHtml(source) : localRefsInCss(source)
     await checkFileLocalRefs(file, refs, errors)
   }
