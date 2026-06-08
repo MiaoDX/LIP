@@ -2,11 +2,11 @@
 
 > 面向 AI Agents、Coding Agents、Agent Infra 与 TOP AI Lab 实践的高信号日报入口。
 
-这个栏目用于承载自动化生成的每日情报，但不会追求“每天把所有新闻重复一遍”。更重要的是：只记录新增事实、关键变化、值得回看的技术材料，以及对 MiaoDX 当前 AI Agent / OPC 实践有复用价值的判断。
+这个栏目用于承载每日情报归档；自动化任务接入前，先按同一套去重和增量标准手动维护。它不会追求“每天把所有新闻重复一遍”，更重要的是：只记录新增事实、关键变化、值得回看的技术材料，以及对 MiaoDX 当前 AI Agent / OPC 实践有复用价值的判断。
 
 ## Latest
 
-- [Agent Radar Daily — 2026-05-25](daily/2026-05-25.md)：agent 治理面外置、Copilot 模型面收缩、LangSmith Auth Proxy、团队级 sandbox workflow。
+- [Agent Radar Daily — 2026-05-26](daily/2026-05-26.md)：constraint decay、约束基础设施、代码图谱 / skills / 会话编排等 agent 配套层信号。
 
 ## 栏目目标
 
@@ -69,6 +69,7 @@ share/agent-radar/
 ## 当前状态
 
 - [x] 建立 `daily/` 首篇日报
+- [x] 日报归档已检查到 2026-05-26
 - [ ] 建立 `labs/` 分析模板
 - [ ] 建立 `repo-scout/` 个性化 GitHub 推荐模板
 - [ ] 接入自动化任务：每天只写新增信息，避免重复刷屏
