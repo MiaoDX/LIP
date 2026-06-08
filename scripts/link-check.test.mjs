@@ -151,6 +151,30 @@ try {
       excludeSlugs: ['index', 'panorama'],
     }],
   }), [])
+
+  await writeFile('bestpractice/visible.md', '[Broken related article](/bestpractice/missing-related)')
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['bestpractice/index.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [{
+      indexFile: 'bestpractice/index.md',
+      contentDir: 'bestpractice',
+      excludeSlugs: ['index', 'panorama'],
+    }],
+  }), ['bestpractice/visible.md references missing local link /bestpractice/missing-related'])
+
+  await writeFile('bestpractice/visible.md', '[Existing related article](/bestpractice/hidden)')
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['bestpractice/index.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [{
+      indexFile: 'bestpractice/index.md',
+      contentDir: 'bestpractice',
+      excludeSlugs: ['index', 'panorama'],
+    }],
+  }), [])
 } finally {
   process.chdir(originalRoot)
   await rm(tempRoot, { recursive: true, force: true })

@@ -226,6 +226,27 @@ async function publicIndexRoutesInDir(dir) {
   return routes.sort()
 }
 
+async function publicIndexMarkdownFilesInDir(dir) {
+  const files = []
+  for (const entry of await entries(dir)) {
+    if (entry.isFile() && entry.name.endsWith('.md')) {
+      files.push({
+        slug: entry.name.replace(/\.md$/, ''),
+        file: join(dir, entry.name),
+      })
+      continue
+    }
+
+    if (entry.isDirectory() && await exists(join(dir, entry.name, 'index.md'))) {
+      files.push({
+        slug: entry.name,
+        file: join(dir, entry.name, 'index.md'),
+      })
+    }
+  }
+  return files.sort((left, right) => left.file.localeCompare(right.file))
+}
+
 function hasMarpFrontmatter(source) {
   const frontmatter = source.match(/^---\s*\n([\s\S]*?)\n---/)
   return frontmatter ? /^\s*marp:\s*true\s*$/m.test(frontmatter[1]) : false
@@ -268,6 +289,7 @@ function configuredRoutes() {
 async function existingScopedMarkdownFiles({
   scopedMarkdownFiles = SCOPED_MARKDOWN_FILES,
   scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
+  indexCoverageRules = INDEX_COVERAGE_RULES,
 } = {}) {
   const files = new Set(scopedMarkdownFiles)
   for (const route of configuredRoutes()) {
@@ -278,7 +300,19 @@ async function existingScopedMarkdownFiles({
   for (const file of scopedIndexLinkFiles) {
     for (const linkedFile of await linkedMarkdownFiles(file)) files.add(linkedFile)
   }
+  for (const file of await indexCoverageMarkdownFiles(indexCoverageRules)) files.add(file)
   return [...files].sort()
+}
+
+async function indexCoverageMarkdownFiles(indexCoverageRules) {
+  const files = []
+  for (const rule of indexCoverageRules) {
+    const excluded = new Set(rule.excludeSlugs)
+    for (const entry of await publicIndexMarkdownFilesInDir(rule.contentDir)) {
+      if (!excluded.has(entry.slug)) files.push(entry.file)
+    }
+  }
+  return files
 }
 
 async function linkedMarkdownFiles(file) {
@@ -421,7 +455,11 @@ export async function checkScopedLinks({
   indexCoverageRules = INDEX_COVERAGE_RULES,
 } = {}) {
   const errors = []
-  const markdownFiles = await existingScopedMarkdownFiles({ scopedMarkdownFiles, scopedIndexLinkFiles })
+  const markdownFiles = await existingScopedMarkdownFiles({
+    scopedMarkdownFiles,
+    scopedIndexLinkFiles,
+    indexCoverageRules,
+  })
   for (const file of markdownFiles) await checkMarkdownFile(file, errors)
   for (const file of scopedConfigFiles) await checkConfigFile(file, errors)
   errors.push(...await checkIndexCoverage({ indexCoverageRules }))

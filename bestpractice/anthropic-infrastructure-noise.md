@@ -238,7 +238,6 @@ Eval 消费者应该：
 ---
 
 *上一篇: [NVIDIA Rack-Scale Topology Scheduling 分析 ←](/bestpractice/nvidia-rack-scale-topology-scheduling)*
-*下一篇: [Anthropic Managed Agents 分析 →](/bestpractice/anthropic-managed-agents-scaling)*
 
 ---
 *分析模型: WLB — anthropic_kimi/k2.6-code-preview | GSD — anthropic_kimi/k2.6-code-preview*
