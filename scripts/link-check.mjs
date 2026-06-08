@@ -189,8 +189,8 @@ function publicPathToCandidates(path) {
     return { source, dist }
   }
 
-  source.push(`${withoutSlash}.md`, `${withoutSlash}/index.md`)
-  dist.push(`${withoutSlash}.html`, `${withoutSlash}/index.html`)
+  source.push(`${withoutSlash}.md`)
+  dist.push(`${withoutSlash}.html`)
   return { source, dist }
 }
 
@@ -353,7 +353,6 @@ async function relativeLinkExists(fromFile, link) {
   const fullTarget = join(ROOT, target)
   if (extname(target)) return exists(fullTarget)
   if (await exists(`${fullTarget}.md`)) return true
-  if (await isDir(fullTarget) && await exists(join(fullTarget, 'index.md'))) return true
   return false
 }
 

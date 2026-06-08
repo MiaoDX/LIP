@@ -71,6 +71,14 @@ try {
     indexCoverageRules: [],
   }), [])
 
+  await writeFile('README.md', '[Slashless directory route](/proposals)')
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['README.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), ['README.md references missing local link /proposals'])
+
   await writeFile(
     'home.md',
     [

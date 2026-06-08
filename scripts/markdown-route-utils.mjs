@@ -33,7 +33,7 @@ export function routeToMarkdownFileCandidates(route, { siteBase = '/' } = {}) {
   if (extname(withoutSlash) === '.md') return [withoutSlash]
   if (extname(withoutSlash)) return []
 
-  return [`${withoutSlash}.md`, `${withoutSlash}/index.md`]
+  return [`${withoutSlash}.md`]
 }
 
 export function trimBase(path, siteBase = '/') {

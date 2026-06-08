@@ -49,12 +49,12 @@ features:
 
 ## 两大内容主线
 
-### [Part A — AI Coding](/ai-coding)
+### [Part A — AI Coding](/ai-coding/)
 
 - 记录 Claude Code Routines、Roboharness、Ultrathink/Goal 等 AI Coding 工程化实践
 - 重点看 prompt、routine、harness、验收证据和长期 Agent 工作流
 
-### [Part B — OpenClaw](/openclaw)
+### [Part B — OpenClaw](/openclaw/)
 
 - 聚焦部署、配置、最佳实践、实战案例四条线
 - 目标是让个人或小团队低成本搭建可持续运行的 Agent 体系

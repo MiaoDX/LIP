@@ -49,12 +49,12 @@ I want to make the process transparent, letting more people see: AI Agents aren'
 
 ## Two Content Tracks
 
-### [Part A — AI Coding](/en/ai-coding)
+### [Part A — AI Coding](/en/ai-coding/)
 
 - Records AI Coding engineering practices around Claude Code Routines, Roboharness, and Ultrathink/Goal
 - Focuses on prompts, routines, harnesses, acceptance evidence, and long-running Agent workflows
 
-### [Part B — OpenClaw](/en/openclaw)
+### [Part B — OpenClaw](/en/openclaw/)
 
 - Focusing on deployment, configuration, best practices, and real-world cases
 - Goal: Enable individuals or small teams to build sustainable Agent systems at low cost
