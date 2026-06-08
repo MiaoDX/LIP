@@ -4,7 +4,10 @@ Standalone HTML apps and decks are copied into the built VitePress site by `scri
 
 Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs`. Update that module instead of duplicating section lists in VitePress config or build scripts.
 
-Run `npm run quality:check` after source-layout changes. It updates `.quality-report.md` and checks that generated publish output has not been committed as source.
+Run `npm run build:all` after source-layout changes. For a focused rerun, use
+`npm run quality:check` only after `.vitepress/dist` has already been built and
+standalone output has been copied; it updates `.quality-report.md` and checks
+that generated publish output has not been committed as source.
 
 ## Deck template
 

@@ -21,7 +21,7 @@ Repo-level startup instructions for coding agents.
 - Full local/CI build and repo gates: `npm run build:all`
 - Publish rule test: `npm run test:publish-rules`
 - Script helper tests: `npm run test:scripts`
-- Source-layout gate: `npm run quality:check` (updates `.quality-report.md`; run after source-layout changes)
+- Source-layout gate: `npm run build:all` in a clean checkout; use `npm run quality:check` only as a focused rerun after `.vitepress/dist` has been built/copied. It updates `.quality-report.md`.
 
 ## Agent runbooks
 

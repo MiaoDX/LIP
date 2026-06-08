@@ -67,9 +67,10 @@ containers).
    `docs/agents/standalone-decks.md` → *Visual verification* and the
    `.slide-2col` grid gotcha).
 
-5. **Run `npm run quality:check`** after adding the deck to a published
-   folder. It verifies local asset references and that no publish output was
-   committed as source.
+5. **Run `npm run build:all`** after adding the deck to a published folder.
+   For a focused rerun after build output already exists, `npm run
+   quality:check` verifies local asset references and that no publish output
+   was committed as source.
 
 ## Slide layouts included
 
