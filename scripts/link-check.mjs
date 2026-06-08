@@ -41,6 +41,7 @@ const SCOPED_MARKDOWN_FILES = [
   'en/share/index.md',
   'en/stories/index.md',
   'ai-coding/index.md',
+  'ai-coding/ultrathink-to-goal/README.md',
   'bestpractice/index.md',
   'drafts/index.md',
   'lessons/index.md',
