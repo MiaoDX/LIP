@@ -13,7 +13,8 @@
     "publish:copy": "node scripts/publish-rules.mjs copy",
     "publish:check": "node scripts/publish-rules.mjs check",
     "test:publish-rules": "node scripts/publish-rules.test.mjs",
-    "test:scripts": "npm run test:publish-rules && node scripts/markdown-route-utils.test.mjs && node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs && node scripts/build-slides.test.mjs && node scripts/build-slidev.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "test:scripts": "npm run typecheck && npm run test:publish-rules && node scripts/markdown-route-utils.test.mjs && node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs && node scripts/build-slides.test.mjs && node scripts/build-slidev.test.mjs",
     "link:check": "node scripts/link-check.mjs",
     "quality:check": "node scripts/quality-check.mjs",
     "build:all": "npm run test:scripts && npm run link:check && npm run docs:build && npm run publish:copy && npm run marp:build && npm run slides:build && npm run publish:check && npm run quality:check"

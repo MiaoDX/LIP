@@ -10,7 +10,7 @@ This repo is primarily Markdown/content plus Node-based VitePress, Marp, Slidev,
 - `.vitepress/**/*.mts`
 - `scripts/**/*.mjs`
 
-Run `npx tsc --noEmit` when changing TypeScript/VitePress config or JavaScript scripts that affect build behavior.
+Run `npm run typecheck` when changing TypeScript/VitePress config or JavaScript scripts that affect build behavior. `npm run test:scripts` and `npm run build:all` include this gate, so the normal full verifier catches config and script type drift.
 
 ## Agent-facing MCP
 
