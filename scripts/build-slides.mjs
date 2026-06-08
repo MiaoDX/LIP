@@ -9,7 +9,7 @@
  * theme (e.g. `theme: uncover`) keep rendering with that theme.
  */
 
-import { readdir, readFile, mkdir } from 'node:fs/promises'
+import { readdir, readFile, mkdir, rm } from 'node:fs/promises'
 import { join, relative, basename, extname } from 'node:path'
 import { spawn } from 'node:child_process'
 import { marpScanDirs } from '../site-map.mjs'
@@ -18,6 +18,8 @@ const ROOT = process.cwd()
 const OUT = join(ROOT, '.vitepress', 'dist', 'slides', 'marp')
 const THEME = join(ROOT, 'themes', 'lip-ink.css')
 const BUILD_PDF = process.env.MARP_PDF === '1'
+const MARP_CMD = process.env.MARP_CMD || 'npx'
+const MARP_ARGS = process.env.MARP_CMD ? [] : ['marp']
 
 const SCAN_DIRS = marpScanDirs
 const SKIP_DIRS = new Set(['node_modules', '.vitepress', '.git', 'dist'])
@@ -81,6 +83,7 @@ function run(cmd, args) {
 }
 
 async function main() {
+  await rm(OUT, { recursive: true, force: true })
   await mkdir(OUT, { recursive: true })
 
   const all = []
@@ -106,8 +109,8 @@ async function main() {
     const slug = slugOf(f)
     const html = join(OUT, slug + '.html')
     console.log(`  · ${relative(ROOT, f)} → ${slug}.${outs}`)
-    await run('npx', [
-      'marp',
+    await run(MARP_CMD, [
+      ...MARP_ARGS,
       f,
       '--theme-set',
       THEME,
@@ -118,8 +121,8 @@ async function main() {
     ])
     if (BUILD_PDF) {
       const pdf = join(OUT, slug + '.pdf')
-      await run('npx', [
-        'marp',
+      await run(MARP_CMD, [
+        ...MARP_ARGS,
         f,
         '--theme-set',
         THEME,
