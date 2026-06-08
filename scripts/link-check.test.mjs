@@ -49,7 +49,37 @@ try {
     scopedMarkdownFiles: ['slides/index.md'],
     scopedConfigFiles: [],
     scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
   }), ['slides/index.md references missing local link /share/missing.html'])
+
+  await mkdir('bestpractice', { recursive: true })
+  await writeFile('bestpractice/index.md', '[Visible](/bestpractice/visible)')
+  await writeFile('bestpractice/visible.md', '# Visible')
+  await writeFile('bestpractice/hidden.md', '# Hidden')
+  await writeFile('bestpractice/panorama.md', '# Support page')
+
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['bestpractice/index.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [{
+      indexFile: 'bestpractice/index.md',
+      contentDir: 'bestpractice',
+      excludeSlugs: ['index', 'panorama'],
+    }],
+  }), ['bestpractice/index.md does not link current article /bestpractice/hidden'])
+
+  await writeFile('bestpractice/index.md', '[Visible](/bestpractice/visible) [Hidden](/bestpractice/hidden)')
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['bestpractice/index.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [{
+      indexFile: 'bestpractice/index.md',
+      contentDir: 'bestpractice',
+      excludeSlugs: ['index', 'panorama'],
+    }],
+  }), [])
 } finally {
   process.chdir(originalRoot)
   await rm(tempRoot, { recursive: true, force: true })

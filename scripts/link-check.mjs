@@ -71,6 +71,44 @@ const GENERATED_ROUTES = [
   },
 ]
 
+const INDEX_COVERAGE_RULES = [
+  {
+    indexFile: 'stories/index.md',
+    contentDir: 'stories',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'lessons/index.md',
+    contentDir: 'lessons',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'resources/index.md',
+    contentDir: 'resources',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'bestpractice/index.md',
+    contentDir: 'bestpractice',
+    excludeSlugs: ['index', 'ai-lab-actions', 'panorama'],
+  },
+  {
+    indexFile: 'share/index.md',
+    contentDir: 'share',
+    excludeSlugs: ['index', 'README', 'meetup-multiagent-practice'],
+  },
+  {
+    indexFile: 'en/stories/index.md',
+    contentDir: 'en/stories',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'en/lessons/index.md',
+    contentDir: 'en/lessons',
+    excludeSlugs: ['index'],
+  },
+]
+
 const FIELD_LINK_RE = /\b(?:link|url):\s*['"]([^'"]+)['"]/g
 let publishTargets = null
 let marpSlugs = null
@@ -157,6 +195,14 @@ async function walkMarkdownFiles(dir, files = []) {
     else if (entry.isFile() && path.endsWith('.md')) files.push(path)
   }
   return files
+}
+
+async function markdownFilesInDir(dir) {
+  const files = []
+  for (const entry of await entries(dir)) {
+    if (entry.isFile() && entry.name.endsWith('.md')) files.push(entry.name)
+  }
+  return files.sort()
 }
 
 function hasMarpFrontmatter(source) {
@@ -311,15 +357,48 @@ async function checkConfigFile(file, errors) {
   }
 }
 
+function indexCoversRoute(source, route) {
+  return markdownLinks(source)
+    .map((link) => cleanLink(link))
+    .some((link) => link === route || link === `${route}/` || link === `${route}.html`)
+}
+
+async function checkIndexCoverageRule(rule, errors) {
+  const indexPath = join(ROOT, rule.indexFile)
+  if (!(await exists(indexPath))) return
+
+  const source = await readFile(indexPath, 'utf8')
+  const excluded = new Set(rule.excludeSlugs)
+  for (const file of await markdownFilesInDir(join(ROOT, rule.contentDir))) {
+    const slug = file.replace(/\.md$/, '')
+    if (excluded.has(slug)) continue
+
+    const route = `/${rule.contentDir}/${slug}`
+    if (!indexCoversRoute(source, route)) {
+      errors.push(`${rule.indexFile} does not link current article ${route}`)
+    }
+  }
+}
+
+async function checkIndexCoverage({
+  indexCoverageRules = INDEX_COVERAGE_RULES,
+} = {}) {
+  const errors = []
+  for (const rule of indexCoverageRules) await checkIndexCoverageRule(rule, errors)
+  return errors
+}
+
 export async function checkScopedLinks({
   scopedMarkdownFiles = SCOPED_MARKDOWN_FILES,
   scopedConfigFiles = SCOPED_CONFIG_FILES,
   scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
+  indexCoverageRules = INDEX_COVERAGE_RULES,
 } = {}) {
   const errors = []
   const markdownFiles = await existingScopedMarkdownFiles({ scopedMarkdownFiles, scopedIndexLinkFiles })
   for (const file of markdownFiles) await checkMarkdownFile(file, errors)
   for (const file of scopedConfigFiles) await checkConfigFile(file, errors)
+  errors.push(...await checkIndexCoverage({ indexCoverageRules }))
   return errors
 }
 
