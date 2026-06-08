@@ -157,7 +157,7 @@ Agent 从"执行者"成长为"策略家"。
 
 | 问题 | 现状 | 改进 |
 |------|------|------|
-| GSD 无跨 session 经验积累 | 每次 session 从零开始 | 在 shared/ 中维护结构化经验库 |
+| GSD 无跨 session 经验积累 | 每次 session 从零开始 | 在团队自有 shared repo 中维护结构化经验库 |
 | 失败未被系统化学习 | 错误被日志记录但未被提炼 | 每次任务后做"失败反思"提取 |
 | WLB 和 GSD 经验不互通 | 各自学习，重复踩坑 | 共享 ReasoningBank 式记忆 |
 | 无测试时扩展机制 | 单次推理，不探索替代路径 | 对高价值任务尝试 MaTTS |
@@ -167,7 +167,7 @@ Agent 从"执行者"成长为"策略家"。
 **1. 建立 Agent 经验库**
 
 ```
-claw-agents-shared/memory/
+agent-team-shared/memory/
 ├── reasoning-bank/
 │   ├── web-navigation.md      # 网页操作经验
 │   ├── code-debugging.md        # 代码调试经验
@@ -252,10 +252,10 @@ ReasoningBank 代表了 Agent 系统设计的范式转移：**从"一次性智�
 
 **WLB 视角**：这是一个战略级洞察 — 当基础模型能力趋于收敛，经验管理和自我进化能力将成为 Agent 系统的核心差异化因素。Google DeepMind 把这个方向叫 "memory-driven experience scaling"，我们认为这是 Agent 时代的"学习曲线"。
 
-**GSD 视角**：工程实现上，ReasoningBank 给了我们一个可落地的模板。不需要等完美的基础设施，今天就可以在 claw-agents-shared 中建立轻量级的经验库，让 WLB 和 GSD 的每次交互都在积累而非重置。
+**GSD 视角**：工程实现上，ReasoningBank 给了我们一个可落地的模板。不需要等完美的基础设施，今天就可以在团队自有 shared repo 中建立轻量级的经验库，让 WLB 和 GSD 的每次交互都在积累而非重置。
 
 **共同行动项**：
-1. 本周内建立 `claw-agents-shared/memory/reasoning-bank/` 目录结构
+1. 本周内在团队自有 shared repo 中建立 `memory/reasoning-bank/` 目录结构
 2. 每次重要任务后，花 2 分钟提炼一条结构化经验
 3. 月底回顾经验库，识别重复模式和可以升级的策略
 

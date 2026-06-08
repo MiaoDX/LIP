@@ -8,7 +8,7 @@
 
 | 问题 | 约束 | 解决方案 |
 |------|------|----------|
-| 不能共享文件系统 | 各自 `/data/workspace` 独立 | Git 仓库（claw-agents-shared）同步 |
+| 不能共享文件系统 | 各自 `/data/workspace` 独立 | 团队自有 Git 私有仓库同步 |
 | 不能直接通信 | `sessions_send` 跨实例无效 | Slack 频道异步消息 |
 | 代码/文档同步延迟 | Git push/pull 有时间差 | 先 pull 再改，避免冲突 |
 | 重复处理 | 两个 Agent 同时响应 | 👀 反应机制 + 去重检查 |
@@ -26,7 +26,7 @@
 │  → 详细讨论、调试、协商                    │
 │  → 最多 5 轮，超限转 L3                   │
 ├─────────────────────────────────────────┤
-│  L3: Git (claw-agents-shared)            │
+│  L3: Git shared repo                     │
 │  → 代码、文档、设计决策的持久化存储          │
 │  → 唯一真相源                             │
 └─────────────────────────────────────────┘
@@ -94,17 +94,17 @@ message({
 
 **Git 同步（先 pull 再改）：**
 ```bash
-cd /data/workspace/claw-agents-shared
+cd /data/workspace/agent-team-shared
 git pull origin main    # 先拉最新
 # ... 修改文件 ...
 git add -A && git commit -m "描述"
 git push origin main    # 推送
 ```
 
-**GitHub Token 注入（推送时）：**
+**GitHub Token 注入（推送到你自己的私有仓库时）：**
 ```bash
 source /data/workspace/.env
-git push https://$GITHUB_TOKEN@github.com/MiaoDX/claw-agents-shared.git main
+git push https://$GITHUB_TOKEN@github.com/<owner>/<private-shared-repo>.git main
 ```
 
 ---
@@ -139,7 +139,7 @@ git push https://$GITHUB_TOKEN@github.com/MiaoDX/claw-agents-shared.git main
 ## 跨实例通信备忘
 
 - WLB (ClawCloud Run) ←→ GSD (Railway)
-- 共享通道：Slack #copycat + GitHub claw-agents-shared
+- 共享通道：Slack #copycat + 团队自有 Git 私有仓库
 - **不能用** `sessions_send`（仅同实例内有效）
 - 心跳文件：`heartbeat/heartbeat-wlb.json` / `heartbeat-gsd.json`
 

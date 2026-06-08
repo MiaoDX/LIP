@@ -20,7 +20,7 @@ Git Sync ←──────────────────────�
 
 1. **👀 Reaction Mechanism** — Mark received messages first, avoid duplicate processing
 2. **Thread Workflow** — Detailed discussion in Thread, main channel only for results
-3. **Git Sync** — Code/docs sync via claw-agents-shared
+3. **Git Sync** — Code/docs sync through your own private shared repo
 
 ## Code Example
 
