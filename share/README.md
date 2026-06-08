@@ -53,9 +53,9 @@ presentations/
 ```
 □ 创建 share/你的文章.md
 □ 如需出现在导航/sidebar，更新 site-map.mjs
-□ 运行 npm run link:check
-□ 运行 npm run quality:check
-□ Push 到 main → GitHub Actions 运行 npm run build:all
+□ 运行 npm run build:all
+□ 已有构建输出后，如需聚焦复查再运行 npm run quality:check
+□ Push 到 main → GitHub Actions 也会运行 npm run build:all
 □ 访问: https://miaodx.com/LIP/share/你的文章
 ```
 
@@ -65,10 +65,9 @@ presentations/
 □ 配套图片放在 presentations/ 目录，或 presentations/你的演讲-assets/
 □ HTML 中用相对路径引用图片（src="image.png" 或 src="你的演讲-assets/image.png"）
 □ 如需出现在导航/sidebar，更新 site-map.mjs
-□ 运行 npm run publish:copy && npm run publish:check
-□ 运行 npm run link:check
-□ 运行 npm run quality:check
-□ Push 到 main → GitHub Actions 运行 npm run build:all
+□ 运行 npm run build:all
+□ 已有构建输出后，如需聚焦复查再运行 npm run quality:check
+□ Push 到 main → GitHub Actions 也会运行 npm run build:all
 □ 访问: https://miaodx.com/LIP/share/你的演讲.html
 ```
 
@@ -82,10 +81,9 @@ presentations/
 □ HTML 中用相对路径引用图片（src="images/image.png"）
 □ 如需同时出现在 /share/，在 scripts/publish-rules.mjs 的 AI Coding rule 里为该 slug 添加 aliases
 □ 如需出现在导航/sidebar，更新 site-map.mjs
-□ 运行 npm run publish:copy && npm run publish:check
-□ 运行 npm run link:check
-□ 运行 npm run quality:check
-□ Push 到 main → GitHub Actions 运行 npm run build:all
+□ 运行 npm run build:all
+□ 已有构建输出后，如需聚焦复查再运行 npm run quality:check
+□ Push 到 main → GitHub Actions 也会运行 npm run build:all
 □ 访问: https://miaodx.com/LIP/ai-coding/你的演讲/
 ```
 
