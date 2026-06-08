@@ -88,6 +88,7 @@ remaining observations are only future cleanup ideas outside this seam.
   - `npm run test:scripts`
   - `npm run quality:check` with `.vitepress/dist` temporarily absent exited 1
   - `npm run build:all`
-- 2026-06-08: Clarified agent/template guidance so clean-checkout verification
-  points at `npm run build:all`, with `npm run quality:check` described as a
-  focused rerun after built output exists.
+- 2026-06-08: Clarified root agent, README, template, and standalone-deck
+  guidance so clean-checkout verification points at `npm run build:all`, with
+  `npm run quality:check` described as a focused rerun after built output
+  exists.

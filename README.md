@@ -81,7 +81,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 - stories/ 和 lessons/ 内容不应大段重复 — 用"一句话摘要 + 链接到完整版"
 - 过程草稿可以放在 `drafts/`，公开发布内容放入对应栏目后同步更新入口
 - Agent 操作规则以 `AGENTS.md` 和 `docs/agents/` 为准，Claude-specific 例外见 `CLAUDE.md`
-- Agent/process 文档不会发布到 GitHub Pages；`npm run quality:check` 会检查公开输出边界和关键本地链接
+- Agent/process 文档不会发布到 GitHub Pages；`npm run build:all` 会完成公开输出边界、关键本地链接和发布规则检查。已有构建输出时，可用 `npm run quality:check` 做聚焦复查
 
 **share/ 目录规则**：
 
