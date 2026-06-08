@@ -5,7 +5,7 @@ accepted_severities:
   - P0
   - P1
   - P2
-last_verified: 2026-06-06
+last_verified: 2026-06-08
 ---
 
 # Refactor Scope: share weekly source ownership
@@ -31,15 +31,22 @@ Make standalone HTML under `/share/weekly/` publish from the canonical standalon
 - Extend source ownership checks so nested `share/**/*.html` is rejected.
 - Add a regression test for nested `share/**/*.html` ownership detection.
 - Verify the final build output contains both weekly HTML files.
+- Replace the placeholder `weekly-robotics-356.html` content with the checked-in
+  #356 digest content.
+- Extend source ownership checks so standalone HTML cannot keep scaffold
+  `href="#"` links or known placeholder text.
 
 ## Parked Cross-Seam / Future Ideas
 
 - README `claw-agents-shared` / submodule-oriented agent notes were cleaned up in `docs/plans/refactor-reduce-entropy-loop.md`.
 - A broader built-site dead-link checker may be useful, but this slice only fixes the confirmed weekly standalone HTML break.
+- Broader HTML content validation remains parked; this slice only gates the
+  confirmed placeholder patterns that reached linked public output.
 
 ## Evidence Ladder
 
 - L1: `npm run test:publish-rules`
+- L1: `rg -n "Article Title Placeholder|Summary placeholder|Event name placeholder|Synthesis placeholder|href=\"#\"" presentations/weekly .vitepress/dist/share/weekly`
 - L2: `npm run publish:copy && npm run publish:check`
 - L2: `npm run build:all`
 - L2: direct file existence checks in `.vitepress/dist/share/weekly/`
@@ -62,3 +69,9 @@ Stop when the accepted checklist is complete, all evidence commands pass, and `.
   - `npm run build:all`
   - `.vitepress/dist/share/weekly/weekly-robotics-356.html` exists
   - `.vitepress/dist/share/weekly/weekly-robotics-356-personalized.html` exists
+- 2026-06-08: Reopened from a fresh saturation audit after finding
+  `/share/weekly/weekly-robotics-356.html` linked from both share indexes while
+  the source and built output still contained visible scaffold placeholders.
+- 2026-06-08: Replaced the placeholder #356 standalone page with the checked-in
+  archive content and added a source-ownership regression for placeholder
+  standalone HTML links/text.

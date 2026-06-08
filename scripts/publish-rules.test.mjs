@@ -87,11 +87,23 @@ try {
     'source ownership should detect root-absolute CSS asset refs'
   )
 
+  await writeFile('presentations/placeholder.html', '<a href="#">Article Title Placeholder</a><p>Summary placeholder...</p>')
+  const placeholderErrors = await publishRules.checkSourceOwnership()
+  assert(
+    placeholderErrors.some((error) => error.includes('presentations/placeholder.html uses placeholder href="#"')),
+    'source ownership should detect placeholder standalone links'
+  )
+  assert(
+    placeholderErrors.some((error) => error.includes('presentations/placeholder.html contains placeholder text "Article Title Placeholder"')),
+    'source ownership should detect placeholder standalone text'
+  )
+
   await writeFile('presentations/assets/large.png', 'large')
   await writeFile('presentations/assets/nested.css', 'nested')
   await writeFile('presentations/assets/css-hero.png', 'css hero')
   await rm('presentations/inline-raster.html')
   await rm('presentations/root-asset.html')
+  await rm('presentations/placeholder.html')
   await rm('presentations/assets/root.css')
   await rm('share', { recursive: true, force: true })
   await rm('public', { recursive: true, force: true })

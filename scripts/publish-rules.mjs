@@ -23,6 +23,13 @@ const CSS_URL_REF_RE = /\burl\(\s*(['"]?)(.*?)\1\s*\)/gi
 const CSS_IMPORT_REF_RE = /@import\s+(?:url\(\s*)?["']([^"']+)["']\s*\)?/gi
 const RASTER_DATA_URI_RE = /data:image\/(?:png|jpe?g|webp|gif);base64,/i
 const ROOT_ABSOLUTE_ASSET_RE = /^\/(?!\/).+\.(?:png|jpe?g|svg|webp|gif|js|css|mp4|webm|pdf)$/i
+const HTML_PLACEHOLDER_PATTERNS = [
+  { regex: /\bhref=["']#["']/i, message: 'uses placeholder href="#"' },
+  { regex: /\bArticle Title Placeholder\b/i, message: 'contains placeholder text "Article Title Placeholder"' },
+  { regex: /\bSummary placeholder\b/i, message: 'contains placeholder text "Summary placeholder"' },
+  { regex: /\bEvent name placeholder\b/i, message: 'contains placeholder text "Event name placeholder"' },
+  { regex: /\bSynthesis placeholder\b/i, message: 'contains placeholder text "Synthesis placeholder"' },
+]
 
 export const sourceOwnershipRules = {
   generatedSourceDirs: [
@@ -349,6 +356,14 @@ function checkRootAbsoluteAssetRefs(file, refs, errors) {
   }
 }
 
+function checkHtmlPlaceholders(file, source, errors) {
+  for (const pattern of HTML_PLACEHOLDER_PATTERNS) {
+    if (pattern.regex.test(source)) {
+      errors.push(`${relative(ROOT, file)} ${pattern.message}`)
+    }
+  }
+}
+
 async function checkFileLocalRefs(file, refs, errors) {
   for (const ref of refs) {
     const target = join(dirname(file), ref)
@@ -366,6 +381,7 @@ async function checkLocalRefs(rootDir, errors) {
     if (file.endsWith('.html') && RASTER_DATA_URI_RE.test(source)) {
       errors.push(`${relative(ROOT, file)} inlines a raster data URI; move the image to a local asset file`)
     }
+    if (file.endsWith('.html')) checkHtmlPlaceholders(file, source, errors)
     const refs = file.endsWith('.html') ? localRefsInHtml(source) : localRefsInCss(source)
     const rootAssetRefs = file.endsWith('.html') ? rootAbsoluteAssetRefsInHtml(source) : rootAbsoluteAssetRefsInCss(source)
     checkRootAbsoluteAssetRefs(file, rootAssetRefs, errors)
