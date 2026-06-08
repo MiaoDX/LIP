@@ -113,6 +113,38 @@ try {
   await writeFile('ai-coding/index.md', '[Standalone deck](standalone-deck/)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['ai-coding/index.md'],
+    scopedMarkdownDirs: [],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), [])
+
+  await mkdir('discussions', { recursive: true })
+  await writeFile('discussions/archive.md', [
+    '```markdown',
+    '[Archived example](/missing-example)',
+    '```',
+    '',
+    '[Missing live link](/missing-live)',
+  ].join('\n'))
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: [],
+    scopedMarkdownDirs: ['discussions'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), ['discussions/archive.md references missing local link /missing-live'])
+
+  await writeFile('discussions/archive.md', [
+    '```markdown',
+    '[Archived example](/missing-example)',
+    '```',
+    '',
+    '[Existing live link](/share/source-backed)',
+  ].join('\n'))
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: [],
+    scopedMarkdownDirs: ['discussions'],
     scopedConfigFiles: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],

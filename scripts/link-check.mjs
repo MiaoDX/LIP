@@ -66,6 +66,10 @@ const SCOPED_INDEX_LINK_FILES = [
   'en/drafts/index.md',
 ]
 
+const SCOPED_MARKDOWN_DIRS = [
+  'discussions',
+]
+
 const GENERATED_ROUTES = [
   {
     route: '/slides/slidev/',
@@ -289,10 +293,16 @@ function configuredRoutes() {
 
 async function existingScopedMarkdownFiles({
   scopedMarkdownFiles = SCOPED_MARKDOWN_FILES,
+  scopedMarkdownDirs = SCOPED_MARKDOWN_DIRS,
   scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
   indexCoverageRules = INDEX_COVERAGE_RULES,
 } = {}) {
   const files = new Set(scopedMarkdownFiles)
+  for (const dir of scopedMarkdownDirs) {
+    for (const file of await walkMarkdownFiles(join(ROOT, dir))) {
+      files.add(relative(ROOT, file))
+    }
+  }
   for (const route of configuredRoutes()) {
     for (const file of routeToMarkdownFileCandidates(route, { siteBase })) {
       if (await exists(join(ROOT, file))) files.add(file)
@@ -451,6 +461,7 @@ async function checkIndexCoverage({
 
 export async function checkScopedLinks({
   scopedMarkdownFiles = SCOPED_MARKDOWN_FILES,
+  scopedMarkdownDirs = SCOPED_MARKDOWN_DIRS,
   scopedConfigFiles = SCOPED_CONFIG_FILES,
   scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
   indexCoverageRules = INDEX_COVERAGE_RULES,
@@ -458,6 +469,7 @@ export async function checkScopedLinks({
   const errors = []
   const markdownFiles = await existingScopedMarkdownFiles({
     scopedMarkdownFiles,
+    scopedMarkdownDirs,
     scopedIndexLinkFiles,
     indexCoverageRules,
   })

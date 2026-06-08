@@ -21,6 +21,21 @@ assert.deepEqual(
 )
 
 assert.deepEqual(
+  markdownLinks([
+    '[Live](/live)',
+    '',
+    '```markdown',
+    '[Example](/missing-example)',
+    '```',
+    '',
+    'Inline code: `[Example](/missing-inline)`',
+    '',
+    '[Also live](/also-live)',
+  ].join('\n')),
+  ['/live', '/also-live']
+)
+
+assert.deepEqual(
   frontmatterLinks([
     '---',
     'hero:',
