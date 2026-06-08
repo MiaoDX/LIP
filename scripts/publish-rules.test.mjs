@@ -75,10 +75,24 @@ try {
     'source ownership should detect inlined raster data URIs'
   )
 
+  await writeFile('presentations/root-asset.html', '<svg><image href="/images/demo.png"></image></svg>')
+  assert(
+    (await publishRules.checkSourceOwnership()).some((error) => error.includes('presentations/root-asset.html uses root-absolute standalone asset /images/demo.png')),
+    'source ownership should detect root-absolute HTML asset refs'
+  )
+
+  await writeFile('presentations/assets/root.css', '.hero { background: url("/images/demo.png"); }')
+  assert(
+    (await publishRules.checkSourceOwnership()).some((error) => error.includes('presentations/assets/root.css uses root-absolute standalone asset /images/demo.png')),
+    'source ownership should detect root-absolute CSS asset refs'
+  )
+
   await writeFile('presentations/assets/large.png', 'large')
   await writeFile('presentations/assets/nested.css', 'nested')
   await writeFile('presentations/assets/css-hero.png', 'css hero')
   await rm('presentations/inline-raster.html')
+  await rm('presentations/root-asset.html')
+  await rm('presentations/assets/root.css')
   await rm('share', { recursive: true, force: true })
   await rm('public', { recursive: true, force: true })
   await mkdir('public/consult/pitch-assets', { recursive: true })

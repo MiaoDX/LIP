@@ -22,6 +22,7 @@ const HTML_SRCSET_RE = /\bsrcset=["']([^"']+)["']/gi
 const CSS_URL_REF_RE = /\burl\(\s*(['"]?)(.*?)\1\s*\)/gi
 const CSS_IMPORT_REF_RE = /@import\s+(?:url\(\s*)?["']([^"']+)["']\s*\)?/gi
 const RASTER_DATA_URI_RE = /data:image\/(?:png|jpe?g|webp|gif);base64,/i
+const ROOT_ABSOLUTE_ASSET_RE = /^\/(?!\/).+\.(?:png|jpe?g|svg|webp|gif|js|css|mp4|webm|pdf)$/i
 
 export const sourceOwnershipRules = {
   generatedSourceDirs: [
@@ -289,6 +290,10 @@ function isLocalRef(ref) {
   return ref && !/^(?:[a-z][a-z0-9+.-]*:|#|\/)/i.test(ref)
 }
 
+function isRootAbsoluteAssetRef(ref) {
+  return ROOT_ABSOLUTE_ASSET_RE.test(cleanRef(ref))
+}
+
 function cleanRef(ref) {
   return ref.split('#')[0].split('?')[0]
 }
@@ -319,6 +324,31 @@ function localRefsInHtml(source) {
     .filter((ref) => ref && isLocalRef(ref))
 }
 
+function rootAbsoluteAssetRefsInCss(source) {
+  const refs = []
+  for (const match of source.matchAll(CSS_URL_REF_RE)) refs.push(match[2])
+  for (const match of source.matchAll(CSS_IMPORT_REF_RE)) refs.push(match[1])
+  return refs
+    .map(cleanRef)
+    .filter((ref) => ref && isRootAbsoluteAssetRef(ref))
+}
+
+function rootAbsoluteAssetRefsInHtml(source) {
+  const refs = []
+  for (const match of source.matchAll(HTML_REF_RE)) refs.push(match[1])
+  for (const match of source.matchAll(HTML_SRCSET_RE)) refs.push(...srcsetRefs(match[1]))
+  refs.push(...rootAbsoluteAssetRefsInCss(source))
+  return refs
+    .map(cleanRef)
+    .filter((ref) => ref && isRootAbsoluteAssetRef(ref))
+}
+
+function checkRootAbsoluteAssetRefs(file, refs, errors) {
+  for (const ref of refs) {
+    errors.push(`${relative(ROOT, file)} uses root-absolute standalone asset ${ref}; use a local relative asset path`)
+  }
+}
+
 async function checkFileLocalRefs(file, refs, errors) {
   for (const ref of refs) {
     const target = join(dirname(file), ref)
@@ -337,6 +367,8 @@ async function checkLocalRefs(rootDir, errors) {
       errors.push(`${relative(ROOT, file)} inlines a raster data URI; move the image to a local asset file`)
     }
     const refs = file.endsWith('.html') ? localRefsInHtml(source) : localRefsInCss(source)
+    const rootAssetRefs = file.endsWith('.html') ? rootAbsoluteAssetRefsInHtml(source) : rootAbsoluteAssetRefsInCss(source)
+    checkRootAbsoluteAssetRefs(file, rootAssetRefs, errors)
     await checkFileLocalRefs(file, refs, errors)
   }
 }
