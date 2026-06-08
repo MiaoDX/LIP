@@ -52,6 +52,8 @@ panorama table counts and evidence commands pass.
   table contains 19 overseas and 12 domestic companies.
 - 2026-06-08: Updated the Best Practice first-read panorama summary to 31
   companies, split as 19 overseas plus 12 domestic.
+- 2026-06-08: Follow-up saturation audit found the old 25-company count still
+  present in the VitePress sidebar label in `site-map.mjs`; updated it to 31.
 - 2026-06-08: Verification passed:
   - table-row count from `bestpractice/panorama.md`
   - `npm run link:check`
