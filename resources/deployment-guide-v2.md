@@ -355,7 +355,7 @@ noVNC 默认监听 `localhost:8081`，只在容器内部可用。
 
 ### 配置共享
 
-两个 Agent 用同一个 GitHub 私有仓库同步**配置和文档**，但**不共享运行时状态**。
+两个 Agent 可以用同一个 GitHub 私有仓库同步**配置和文档**，但**不共享运行时状态**。这个仓库应由你自己创建和维护；下方目录只是推荐结构，不是公开可克隆的资源入口。
 
 **共享的内容**：
 - `openclaw.json` 配置（模型、渠道、工具设置）
@@ -370,7 +370,7 @@ noVNC 默认监听 `localhost:8081`，只在容器内部可用。
 - OAuth token 和认证信息
 
 ```
-claw-agents-shared/
+agent-team-shared/
 ├── config/
 │   ├── wlb/openclaw.json + cron.json
 │   └── gsd/openclaw.json + cron.json
@@ -385,7 +385,7 @@ claw-agents-shared/
 每次配置变更后，执行：
 
 ```bash
-cd /data/workspace/claw-agents-shared
+cd /data/workspace/agent-team-shared
 bash scripts/safe-push.sh "更新了 xxx 配置"
 ```
 
@@ -480,7 +480,7 @@ A: 需要满足四个条件：
 | 通信方式 | 用途 |
 |---------|------|
 | Slack #copycat | 日常协作（bot-to-bot） |
-| GitHub claw-agents-shared | 配置同步 + 文件共享 |
+| GitHub 私有共享仓库（当时为 `claw-agents-shared`） | 配置同步 + 文件共享 |
 | Slack #watercooler | 闲聊频道（每 3 小时 check-in） |
 
 | 能力 | 状态 |
