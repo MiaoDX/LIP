@@ -15,6 +15,8 @@ try {
 
   await mkdir('share', { recursive: true })
   await writeFile('share/source-backed.md', '# Source-backed route')
+  await mkdir('ai-coding/standalone-deck', { recursive: true })
+  await writeFile('ai-coding/standalone-deck/index.html', '<h1>Standalone deck</h1>')
 
   await mkdir('slides', { recursive: true })
   await writeFile('slides/slides.md', '# Slidev source')
@@ -51,6 +53,31 @@ try {
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), ['slides/index.md references missing local link /share/missing.html'])
+
+  await mkdir('proposals', { recursive: true })
+  await writeFile('README.md', '[Missing directory route](proposals/)')
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['README.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), ['README.md references missing local link proposals/'])
+
+  await writeFile('proposals/index.md', '# Proposals')
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['README.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), [])
+
+  await writeFile('ai-coding/index.md', '[Standalone deck](standalone-deck/)')
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['ai-coding/index.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), [])
 
   await mkdir('bestpractice', { recursive: true })
   await writeFile('bestpractice/index.md', '[Visible](/bestpractice/visible)')

@@ -88,6 +88,11 @@ const INDEX_COVERAGE_RULES = [
     excludeSlugs: ['index'],
   },
   {
+    indexFile: 'proposals/index.md',
+    contentDir: 'proposals',
+    excludeSlugs: ['index'],
+  },
+  {
     indexFile: 'bestpractice/index.md',
     contentDir: 'bestpractice',
     excludeSlugs: ['index', 'ai-lab-actions', 'panorama'],
@@ -321,10 +326,17 @@ async function relativeLinkExists(fromFile, link) {
   if (await generatedRouteExists(clean)) return true
   if (clean.startsWith('/')) return publicRouteExists(clean)
 
+  if (clean.endsWith('/')) {
+    const target = normalize(join(dirname(fromFile), clean, 'index.md'))
+    if (await exists(join(ROOT, target))) return true
+    const route = `/${normalize(join(dirname(fromFile), clean)).replace(/\\/g, '/')}`
+    return publicRouteExists(route)
+  }
+
   const target = normalize(join(dirname(fromFile), clean))
   const fullTarget = join(ROOT, target)
-  if (await exists(fullTarget)) return true
-  if (!extname(target) && await exists(`${fullTarget}.md`)) return true
+  if (extname(target)) return exists(fullTarget)
+  if (await exists(`${fullTarget}.md`)) return true
   if (await isDir(fullTarget) && await exists(join(fullTarget, 'index.md'))) return true
   return false
 }

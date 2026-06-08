@@ -18,25 +18,25 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 
 | 目录 | 内容 | 更新频率 |
 |------|------|---------|
-| [`now/`](now/) | 月度时间线叙事 | 每月 |
+| `now/` | 月度时间线叙事 | 每月 |
 | [`ai-coding/`](ai-coding/) | AI Coding 专题页、项目式演讲、research/scripts/assets | 按项目 |
 | [`openclaw/`](openclaw/) | OpenClaw 主线入口，汇总部署、配置、案例 | 按专题 |
 | [`bestpractice/`](bestpractice/) | TOP Lab / Agent 工程实践拆解 | 按研究 |
 | [`stories/`](stories/) | 案例故事，失败优先 | 按事件 |
 | [`lessons/`](lessons/) | 可复用经验与模式 | 按沉淀 |
-| [`discussions/`](discussions/) | AI 讨论上下文留存 | 按讨论 |
+| `discussions/` | AI 讨论上下文留存 | 按讨论 |
 | [`drafts/`](drafts/) | 待审稿、待补强、待发布判断的草稿队列 | 定期清理 |
-| [`presentations/`](presentations/) | 演讲 HTML（完整版） | 按活动 |
+| `presentations/` | 演讲 HTML（完整版） | 按活动 |
 | [`share/`](share/) | 演讲发布版 + 站点入口 | 按活动 |
 | [`slides/`](slides/) | Marp/Slidev 幻灯片源 | 按活动 |
 | [`resources/`](resources/) | 工具/配置模板 | 按需 |
 | [`proposals/`](proposals/) | 技术提案 | 按需 |
 | [`en/`](en/) | 英文站点镜像入口与已翻译内容 | 按需 |
-| [`docs/agents/`](docs/agents/) | Agent runbooks，不作为公开内容发布 | 按工作流 |
-| [`scripts/`](scripts/) | VitePress、Marp、发布规则、质量门禁脚本 | 按工具 |
-| [`templates/`](templates/) | Standalone deck 起始模板 | 按模板 |
-| [`public/`](public/) | VitePress passthrough 资源；`public/consult/` 是咨询页源 | 按需 |
-| [`assets/`](assets/) | 共享运行时与 standalone deck 支撑资产 | 按需 |
+| `docs/agents/` | Agent runbooks，不作为公开内容发布 | 按工作流 |
+| `scripts/` | VitePress、Marp、发布规则、质量门禁脚本 | 按工具 |
+| [`templates/`](templates/README.md) | Standalone deck 起始模板 | 按模板 |
+| `public/` | VitePress passthrough 资源；`public/consult/` 是咨询页源 | 按需 |
+| `assets/` | 共享运行时与 standalone deck 支撑资产 | 按需 |
 
 ## 阅读推荐
 
