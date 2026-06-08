@@ -29,7 +29,8 @@ containers).
 ## How to use
 
 1. **Copy the template to its final home.** Final decks must live in a
-   published source folder (see `CLAUDE.md` → *Canonical source locations*):
+   published source folder (see `docs/agents/standalone-decks.md` →
+   *Canonical source locations*):
 
    - **AI Coding deck** → `ai-coding/<slug>/index.html`
      Same depth as the template, so keep the
@@ -63,7 +64,8 @@ containers).
 
 4. **Verify in a real browser** at both `1440x900` and `390x844` before
    declaring done — static inspection misses layout regressions (see
-   `CLAUDE.md` → *Visual verification* and the `.slide-2col` grid gotcha).
+   `docs/agents/standalone-decks.md` → *Visual verification* and the
+   `.slide-2col` grid gotcha).
 
 5. **Run `npm run quality:check`** after adding the deck to a published
    folder. It verifies local asset references and that no publish output was
