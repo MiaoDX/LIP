@@ -15,7 +15,7 @@ next review pass promotes, rewrites, or removes them.
 | Article | Original Section | Issue | Organized |
 |---------|------------------|-------|-----------|
 | [Gateway Resilience Architecture](/en/drafts/lessons/gateway-resilience) | lessons | Configuration-heavy, needs deeper analysis and reusable lessons | 2026-03-11 |
-| [Cross-Instance Collaboration](/en/drafts/lessons/cross-instance-collaboration) | lessons | Too thin, overlaps with source story context | 2026-03-11 |
+| [Cross-Instance Collaboration](/en/drafts/lessons/cross-instance-collaboration) | lessons | Expanded to v1.1; still needs an editorial call on independent reusable value | 2026-03-11 |
 | [60K Stars or $500K: Which Would You Choose?](/drafts/ai-coding/gsd-rugpull-maintainer-dilemma/) | ai-coding | Chinese draft v4, awaiting review, screenshots, and publication decision | 2026-06-07 |
 
 ---

@@ -11,6 +11,7 @@ import { constants } from 'node:fs'
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { basename, dirname, join, relative } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { checkScopedLinks } from './link-check.mjs'
 import { cleanLink, markdownLinks, routeToMarkdownFileCandidates, trimBase } from './markdown-route-utils.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
@@ -21,6 +22,7 @@ const ROOT = process.cwd()
 const REPORT_FILE = join(ROOT, '.quality-report.md')
 const DIST_DIR = join(ROOT, '.vitepress', 'dist')
 const REPORT_TIMESTAMP_RE = /^生成时间: .+$/m
+const WORD_SEGMENTER = new Intl.Segmenter(['zh', 'en'], { granularity: 'word' })
 const OPERATIONAL_PUBLIC_OUTPUTS = [
   'AGENTS.html',
   'CLAUDE.html',
@@ -77,23 +79,29 @@ function grade(score) {
   return 'D'
 }
 
+export function wordCount(source) {
+  return [...WORD_SEGMENTER.segment(source)]
+    .filter((segment) => segment.isWordLike)
+    .length
+}
+
 async function evaluateArticle(file) {
   const source = await readFile(file, 'utf8')
-  const wordCount = source.trim() ? source.trim().split(/\s+/).length : 0
+  const words = wordCount(source)
   const headers = countMatches(source, /^##/gm)
   const codeBlocks = countMatches(source, /^```/gm)
   const checklists = countMatches(source, /- \[/g)
 
   let score = 0
-  if (wordCount > 300) score += 2
-  if (wordCount > 800) score += 1
+  if (words > 300) score += 2
+  if (words > 800) score += 1
   if (headers >= 2) score += 2
   if (codeBlocks >= 2) score += 1
   if (checklists >= 1) score += 1
 
   return {
     name: basename(file) === 'index.md' ? basename(dirname(file)) : basename(file, '.md'),
-    wordCount,
+    words,
     headers,
     codeBlocks,
     checklists,
@@ -104,11 +112,11 @@ async function evaluateArticle(file) {
 
 function articleTable(rows) {
   const lines = [
-    '| 文章 | 字数 | 标题 | 代码块 | 清单 | 评分 | 等级 |',
+    '| 文章 | 词数 | 标题 | 代码块 | 清单 | 评分 | 等级 |',
     '|------|------|------|--------|------|--------|------|',
   ]
   for (const row of rows) {
-    lines.push(`| ${row.name} | ${row.wordCount} | ${row.headers} | ${row.codeBlocks} | ${row.checklists} | ${row.score}/7 | ${row.grade} |`)
+    lines.push(`| ${row.name} | ${row.words} | ${row.headers} | ${row.codeBlocks} | ${row.checklists} | ${row.score}/7 | ${row.grade} |`)
   }
   return lines
 }
@@ -287,7 +295,9 @@ async function main() {
   if (failed) process.exitCode = 1
 }
 
-main().catch((error) => {
-  console.error(error)
-  process.exit(1)
-})
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => {
+    console.error(error)
+    process.exit(1)
+  })
+}

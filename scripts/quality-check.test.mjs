@@ -4,12 +4,20 @@ import assert from 'node:assert/strict'
 import { execFile } from 'node:child_process'
 import { access, mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { promisify } from 'node:util'
 
 const execFileAsync = promisify(execFile)
+const moduleUrl = `${pathToFileURL(join(process.cwd(), 'scripts', 'quality-check.mjs')).href}?test=${Date.now()}`
 const distDir = join('.vitepress', 'dist')
 const hiddenDistDir = join('.vitepress', 'dist.__quality_check_test')
 const reportFile = '.quality-report.md'
+
+const { wordCount } = await import(moduleUrl)
+
+assert.equal(wordCount('跨实例协作模式'), 4)
+assert.equal(wordCount('Gateway 弹性架构：三层防护设计'), 6)
+assert.equal(wordCount(''), 0)
 
 try {
   await access(hiddenDistDir)
@@ -59,6 +67,7 @@ try {
   const report = await readFile(reportFile, 'utf8')
 
   assert.equal(result.exitCode, 1)
+  assert.match(report, /\| 文章 \| 词数 \| 标题 \| 代码块 \| 清单 \| 评分 \| 等级 \|/)
   assert.match(report, /\| Built standalone publish output \| SKIP \|/)
   assert.match(report, /\| Public operational doc boundary \| SKIP \|/)
 } finally {
