@@ -7,9 +7,9 @@
  * mislead a new reader or agent.
  */
 
-import { access, readFile, stat } from 'node:fs/promises'
+import { access, readFile, readdir, stat } from 'node:fs/promises'
 import { constants } from 'node:fs'
-import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
+import { basename, dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
 import {
   cleanLink,
   isExternalLink,
@@ -18,7 +18,7 @@ import {
   trimBase,
 } from './markdown-route-utils.mjs'
 import { collectPublishTargets } from './publish-rules.mjs'
-import { navByLocale, sidebar, siteBase } from '../site-map.mjs'
+import { marpScanDirs, navByLocale, sidebar, siteBase } from '../site-map.mjs'
 
 const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
@@ -73,6 +73,7 @@ const GENERATED_ROUTES = [
 
 const FIELD_LINK_RE = /\b(?:link|url):\s*['"]([^'"]+)['"]/g
 let publishTargets = null
+let marpSlugs = null
 
 async function exists(path) {
   try {
@@ -88,6 +89,15 @@ async function isDir(path) {
     return (await stat(path)).isDirectory()
   } catch (error) {
     if (error.code === 'ENOENT') return false
+    throw error
+  }
+}
+
+async function entries(path) {
+  try {
+    return await readdir(path, { withFileTypes: true })
+  } catch (error) {
+    if (error.code === 'ENOENT') return []
     throw error
   }
 }
@@ -118,6 +128,7 @@ function publicPathToCandidates(path) {
   }
 
   if (extname(withoutSlash) === '.html') {
+    source.push(withoutSlash.replace(/\.html$/, '.md'))
     dist.push(withoutSlash)
     return { source, dist }
   }
@@ -137,6 +148,33 @@ function publicPathToCandidates(path) {
   source.push(`${withoutSlash}.md`, `${withoutSlash}/index.md`)
   dist.push(`${withoutSlash}.html`, `${withoutSlash}/index.html`)
   return { source, dist }
+}
+
+async function walkMarkdownFiles(dir, files = []) {
+  for (const entry of await entries(dir)) {
+    const path = join(dir, entry.name)
+    if (entry.isDirectory()) await walkMarkdownFiles(path, files)
+    else if (entry.isFile() && path.endsWith('.md')) files.push(path)
+  }
+  return files
+}
+
+function hasMarpFrontmatter(source) {
+  const frontmatter = source.match(/^---\s*\n([\s\S]*?)\n---/)
+  return frontmatter ? /^\s*marp:\s*true\s*$/m.test(frontmatter[1]) : false
+}
+
+async function expectedMarpSlugs() {
+  if (marpSlugs) return marpSlugs
+
+  marpSlugs = new Set()
+  for (const dir of marpScanDirs) {
+    for (const file of await walkMarkdownFiles(join(ROOT, dir))) {
+      const source = await readFile(file, 'utf8')
+      if (hasMarpFrontmatter(source)) marpSlugs.add(basename(file, '.md'))
+    }
+  }
+  return marpSlugs
 }
 
 function sidebarItems(items, routes = []) {
@@ -223,7 +261,12 @@ async function standaloneSourceExists(distCandidate) {
 async function generatedRouteExists(path) {
   const cleanPath = cleanLink(trimBase(path, siteBase))
   const match = GENERATED_ROUTES.find((route) => route.route === cleanPath)
-  return match ? exists(join(ROOT, match.source)) : false
+  if (match) return exists(join(ROOT, match.source))
+
+  const marpMatch = cleanPath.match(/^\/slides\/marp\/([^/]+)\.html$/)
+  if (!marpMatch) return false
+
+  return (await expectedMarpSlugs()).has(marpMatch[1])
 }
 
 async function relativeLinkExists(fromFile, link) {
