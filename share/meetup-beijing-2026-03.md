@@ -112,7 +112,7 @@ GitHub 在我们的方案里扮演了多个角色：代码仓库、心跳同步�
 ## 相关资源
 
 - **Railway 模板**: [clawdbot-railway-template](https://github.com/ChaptersOfFloatingLife/clawdbot-railway-template)
-- **GitHub 仓库**: [MiaoDX/claw-agents-shared](https://github.com/MiaoDX/claw-agents-shared)
+- **共享记录仓库**: 已转为非公开历史资料，不再作为公开资源入口
 - **OpenClaw 文档**: [docs.openclaw.ai](https://docs.openclaw.ai)
 
 如果你也在玩多 Agent，欢迎交流。
