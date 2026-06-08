@@ -34,6 +34,8 @@ protection in standalone public HTML.
 - Cover the new check in `scripts/publish-rules.test.mjs`.
 - Update consult publishing guidance to state that `public/consult/` is public
   static output, not an access-control boundary.
+- Update current proposal docs that still pointed the Jingpaidang case source at
+  the retired public `LIP/consult/` bundle.
 
 ## Parked Cross-Seam / Future Ideas
 
@@ -62,3 +64,6 @@ HTML, and the full build gate passes.
   `.github/workflows/deploy.yml` uploads static GitHub Pages output while
   `public/consult/jingpaidang_*.html` embeds `const CORRECT_PWD = 'jingpaidang'`
   and `public/consult/download.html` links the PDF directly.
+- 2026-06-08: Follow-up audit found current proposal docs still treating
+  `LIP/consult/` as the Jingpaidang case source. Updated those references to
+  require a private-source, desensitized case version.
