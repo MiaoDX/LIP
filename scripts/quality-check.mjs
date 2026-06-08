@@ -283,7 +283,7 @@ async function main() {
   await writeFile(REPORT_FILE, reportSource)
   console.log(`报告已生成: ${relative(ROOT, REPORT_FILE)}`)
 
-  const failed = gates.some((gate) => gate.status === 'FAIL')
+  const failed = gates.some((gate) => gate.status !== 'PASS')
   if (failed) process.exitCode = 1
 }
 
