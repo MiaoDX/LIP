@@ -38,23 +38,27 @@ AI Lab 们在生产环境中踩过的坑、总结的经验，比论文更有实�
 
 | 文章 | Discussed | 公司 | Source | 主题 |
 |------|-----------|------|--------|------|
+| [NVIDIA Dynamo Multi-Turn Agentic Harness Support](/bestpractice/nvidia-dynamo-agentic-harness) | 2026-05-09 | NVIDIA | 2026-05-08 | 多轮 agentic harness、reasoning/tool-call parsing、KV cache |
+| [AlphaEvolve: Gemini-Powered Coding Agent](/bestpractice/deepmind-alphaevolve) | 2026-05-08 | Google DeepMind | 2026-05-07 | 算法发现、evolutionary search、生产级优化 |
+| [Agentic Systems Extreme Co-Design](/bestpractice/nvidia-agentic-extreme-codesign) | 2026-05-06 | NVIDIA | 2026-05-05 | Agentic AI 推理经济学、上下文成本、七芯片平台协同 |
+| [NVIDIA Dynamo Agentic Inference](/bestpractice/nvidia-dynamo-agentic-inference) | 2026-05-05 | NVIDIA | 2026-04-17 | agentic inference serving、KV cache、agent hints |
+| [Mistral CLI Agent Design](/bestpractice/mistral-cli-agent-design) | 2026-05-04 | Mistral | 2026-03-31 | 人类/Agent 共用 CLI、非交互接口、工具可组合性 |
 | [Awesome OpenClaw Skills Weekly Check](/bestpractice/awesome-openclaw-skills-2026-05-03) | 2026-05-03 | OpenClaw Ecosystem | 2026-05-03 | 技能生态监控、awesome-openclaw-skills 增量检查 |
 | [Meta AI Scaling Framework 安全工程体系](/bestpractice/meta-ai-scaling-framework) | 2026-05-01 | Meta AI | 2026-04-08 | 原则驱动安全对齐、Loss of Control 评估、多层防护架构 |
 | [NVIDIA Kaggle Agent 辅助夺冠：600K 行代码、850 实验的四级 Stacking](/bestpractice/nvidia-kaggle-agent-assisted-coding) | 2026-04-27 | NVIDIA | 2026-04-23 | LLM Agent 辅助 Kaggle 竞赛、四级 stacking、human-in-the-loop |
-| [Agentic Systems Extreme Co-Design](/bestpractice/nvidia-agentic-extreme-codesign) | 2026-05-06 | NVIDIA | 2026-05-05 | Agentic AI 推理经济学、上下文成本、七芯片平台协同 |
-| [Extreme Co-Design 与 MLPerf 推理记录](/bestpractice/nvidia-inference-extreme-codesign) | 2026-04-10 | NVIDIA | 2026-04 | GB300 2.7x 性能提升、TensorRT-LLM、全栈协同设计 |
+| [Decoupled DiLoCo](/bestpractice/google-deepmind-decoupled-diloco) | 2026-04-26 | Google DeepMind | 2026-04-24 | 去中心化联邦学习、大规模分布式训练 |
+| [Infrastructure Noise](/bestpractice/anthropic-infrastructure-noise) | 2026-04-23 | Anthropic | 2026-04-23 | 基础设施噪声、系统可靠性 |
+| [ReasoningBank：Agent 自进化](/bestpractice/google-reasoningbank-agent-self-evolving) | 2026-04-21 | Google | 2026-04-21 | Agent 经验学习、推理能力自增强 |
+| [Agent Skills 如何补知识差距](/bestpractice/google-deepmind-agent-skills-knowledge-gap) | 2026-04-15 | Google DeepMind | 2026-03-25 | AGENTS.md vs Skill、知识过期问题、更新机制 |
 | [Rack-Scale Topology-Aware Scheduling](/bestpractice/nvidia-rack-scale-topology-scheduling) | 2026-04-15 | NVIDIA | 2026-04-07 | NVLink fabric、IMEX domain、机架级调度 |
 | [Forge 企业模型工程](/bestpractice/mistral-forge-enterprise-model-engineering) | 2026-04-14 | Mistral | 2026-03 | 私有知识锻造、模型资产化、强化学习 |
 | [Voxtral TTS 多语言架构](/bestpractice/mistral-voxtral-tts) | 2026-04-14 | Mistral | 2026-03-23 | 流式推理、多语言 TTS、延迟优化 |
-| [V3/R1/V3.2 工程实践分析](/bestpractice/deepseek-v3-r1) | 2026-04 | DeepSeek | 2026-04-01 | FP8 训练、DualPipe、零回滚稳定性、RLVR、成本效率 |
-| [Gemini Embedding 模型更新](/bestpractice/google-gemini-embedding) | 2026-04-13 | Google | 2025-03-07 | Gemini Embedding、Text Embedding API、新一代稀疏架构 |
-| [ReasoningBank：Agent 自进化](/bestpractice/google-reasoningbank-agent-self-evolving) | 2026-04-21 | Google | 2026-04-21 | Agent 经验学习、推理能力自增强 |
-| [Agent-first Engineering 深度分析](/bestpractice/openai-agent-engineering) | 2026-03 | OpenAI | 2026-02 ~ 2026-03 | Harness Engineering、Skills、Shell、Compaction |
-| [Agent Skills 如何补知识差距](/bestpractice/google-deepmind-agent-skills-knowledge-gap) | 2026-04-15 | Google DeepMind | 2026-03-25 | AGENTS.md vs Skill、知识过期问题、更新机制 |
 | [LiteRT 端侧 AI 部署](/bestpractice/google-litert-on-device-ai) | 2026-04-14 | Google | 2026-01-28 | 移动端推理、量化策略、跨平台部署 |
 | [Gemini Robotics ER-1.6](/bestpractice/google-gemini-robotics-er-16) | 2026-04-14 | Google DeepMind | 2026-04-14 | 机器人视觉-语言-动作模型 |
-| [Decoupled DiLoCo](/bestpractice/google-deepmind-decoupled-diloco) | 2026-04-26 | Google DeepMind | 2026-04-24 | 去中心化联邦学习、大规模分布式训练 |
-| [Infrastructure Noise](/bestpractice/anthropic-infrastructure-noise) | 2026-04-23 | Anthropic | 2026-04-23 | 基础设施噪声、系统可靠性 |
+| [Gemini Embedding 模型更新](/bestpractice/google-gemini-embedding) | 2026-04-13 | Google | 2025-03-07 | Gemini Embedding、Text Embedding API、新一代稀疏架构 |
+| [Extreme Co-Design 与 MLPerf 推理记录](/bestpractice/nvidia-inference-extreme-codesign) | 2026-04-10 | NVIDIA | 2026-04 | GB300 2.7x 性能提升、TensorRT-LLM、全栈协同设计 |
+| [V3/R1/V3.2 工程实践分析](/bestpractice/deepseek-v3-r1) | 2026-04 | DeepSeek | 2026-04-01 | FP8 训练、DualPipe、零回滚稳定性、RLVR、成本效率 |
+| [Agent-first Engineering 深度分析](/bestpractice/openai-agent-engineering) | 2026-03 | OpenAI | 2026-02 ~ 2026-03 | Harness Engineering、Skills、Shell、Compaction |
 | [Harness 设计（长运行 Agent）](/bestpractice/anthropic-harness-design) | 2026-03 | Anthropic | 2025-11-26 / 2026-03-24 | Context Reset、Generator-Evaluator、Feature List |
 | [Context Engineering 深度分析](/bestpractice/anthropic-context-engineering) | 2025-09 | Anthropic | 2025-09-29 | Context Rot、Attention Budget、最小高信号 Token 集 |
 | [Multi-Agent Research System 深度分析](/bestpractice/anthropic-multi-agent-research) | 2025-06 | Anthropic | 2025-06-13 | Orchestrator-Worker 架构、并行化、Token 经济学 |
