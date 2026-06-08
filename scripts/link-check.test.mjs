@@ -71,6 +71,37 @@ try {
     indexCoverageRules: [],
   }), [])
 
+  await writeFile(
+    'home.md',
+    [
+      '---',
+      'hero:',
+      '  actions:',
+      '    - text: Read',
+      '      link: /missing-frontmatter-route',
+      'features:',
+      '  - title: Share',
+      '    link: /share/source-backed',
+      '---',
+      '',
+      '# Home',
+    ].join('\n')
+  )
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['home.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), ['home.md references missing local link /missing-frontmatter-route'])
+
+  await writeFile('missing-frontmatter-route.md', '# Now valid')
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: ['home.md'],
+    scopedConfigFiles: [],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), [])
+
   await writeFile('ai-coding/index.md', '[Standalone deck](standalone-deck/)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['ai-coding/index.md'],

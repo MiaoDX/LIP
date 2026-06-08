@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict'
 import {
   cleanLink,
+  frontmatterLinks,
   isExternalLink,
   markdownLinks,
   routeToMarkdownFile,
@@ -17,6 +18,25 @@ assert.deepEqual(
     '[Titled](/share/ "Share")',
   ].join('\n')),
   ['/resources/config-guide', './images/demo.png', '/share/']
+)
+
+assert.deepEqual(
+  frontmatterLinks([
+    '---',
+    'hero:',
+    '  actions:',
+    '    - text: Read',
+    '      link: /now/2026-04',
+    'features:',
+    '  - title: Share',
+    '    link: "/share/"',
+    'canonical:',
+    "  url: 'https://example.com/page'",
+    '---',
+    '',
+    '[Body](/body)',
+  ].join('\n')),
+  ['/now/2026-04', '/share/', 'https://example.com/page']
 )
 
 assert.equal(cleanLink('/drafts/?preview=1#queue'), '/drafts/')

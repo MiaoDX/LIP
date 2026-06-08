@@ -1,6 +1,8 @@
 import { extname } from 'node:path'
 
 const MARKDOWN_LINK_RE = /!?\[[^\]]*]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g
+const FRONTMATTER_RE = /^---\s*\n([\s\S]*?)\n---/
+const FRONTMATTER_LINK_RE = /^\s*(?:link|url):\s*['"]?([^'"\s]+)['"]?\s*$/gm
 
 export function cleanLink(link) {
   return decodeURI(link).split('#')[0].split('?')[0]
@@ -8,6 +10,12 @@ export function cleanLink(link) {
 
 export function markdownLinks(source) {
   return [...source.matchAll(MARKDOWN_LINK_RE)].map((match) => match[1])
+}
+
+export function frontmatterLinks(source) {
+  const frontmatter = source.match(FRONTMATTER_RE)?.[1]
+  if (!frontmatter) return []
+  return [...frontmatter.matchAll(FRONTMATTER_LINK_RE)].map((match) => match[1])
 }
 
 export function routeToMarkdownFile(route, { siteBase = '/' } = {}) {

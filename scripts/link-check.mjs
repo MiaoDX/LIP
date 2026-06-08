@@ -12,6 +12,7 @@ import { constants } from 'node:fs'
 import { basename, dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
 import {
   cleanLink,
+  frontmatterLinks,
   isExternalLink,
   markdownLinks,
   routeToMarkdownFileCandidates,
@@ -362,7 +363,7 @@ function configLinks(source) {
 
 async function checkMarkdownFile(file, errors) {
   const source = await readFile(join(ROOT, file), 'utf8')
-  for (const link of markdownLinks(source)) {
+  for (const link of [...markdownLinks(source), ...frontmatterLinks(source)]) {
     if (isExternalLink(link)) continue
     if (link === '#') {
       errors.push(`${file} uses placeholder local link #`)
