@@ -298,10 +298,6 @@ function isLocalRef(ref) {
   return ref && !/^(?:[a-z][a-z0-9+.-]*:|#|\/)/i.test(ref)
 }
 
-function isRootAbsoluteAssetRef(ref) {
-  return ROOT_ABSOLUTE_ASSET_RE.test(cleanRef(ref))
-}
-
 function cleanRef(ref) {
   return ref.split('#')[0].split('?')[0]
 }
@@ -313,44 +309,24 @@ function srcsetRefs(value) {
     .filter(Boolean)
 }
 
-function localRefsInCss(source) {
+function cssRefs(source) {
   const refs = []
   for (const match of source.matchAll(CSS_URL_REF_RE)) refs.push(match[2])
   for (const match of source.matchAll(CSS_IMPORT_REF_RE)) refs.push(match[1])
   return refs
-    .map(cleanRef)
-    .filter((ref) => ref && isLocalRef(ref))
 }
 
-function localRefsInHtml(source) {
+function refsInSource(source, { html = false } = {}) {
+  if (!html) return cssRefs(source).map(cleanRef).filter(Boolean)
+
   source = stripHtmlComments(source)
   const refs = []
   for (const match of source.matchAll(HTML_REF_RE)) refs.push(match[1])
   for (const match of source.matchAll(HTML_SRCSET_RE)) refs.push(...srcsetRefs(match[1]))
-  refs.push(...localRefsInCss(source))
+  refs.push(...cssRefs(source))
   return refs
     .map(cleanRef)
-    .filter((ref) => ref && isLocalRef(ref))
-}
-
-function rootAbsoluteAssetRefsInCss(source) {
-  const refs = []
-  for (const match of source.matchAll(CSS_URL_REF_RE)) refs.push(match[2])
-  for (const match of source.matchAll(CSS_IMPORT_REF_RE)) refs.push(match[1])
-  return refs
-    .map(cleanRef)
-    .filter((ref) => ref && isRootAbsoluteAssetRef(ref))
-}
-
-function rootAbsoluteAssetRefsInHtml(source) {
-  source = stripHtmlComments(source)
-  const refs = []
-  for (const match of source.matchAll(HTML_REF_RE)) refs.push(match[1])
-  for (const match of source.matchAll(HTML_SRCSET_RE)) refs.push(...srcsetRefs(match[1]))
-  refs.push(...rootAbsoluteAssetRefsInCss(source))
-  return refs
-    .map(cleanRef)
-    .filter((ref) => ref && isRootAbsoluteAssetRef(ref))
+    .filter(Boolean)
 }
 
 function stripHtmlComments(source) {
@@ -400,10 +376,10 @@ async function checkLocalRefs(rootDir, errors) {
       checkHtmlPlaceholders(file, source, errors)
       checkClientSidePasswords(file, source, errors)
     }
-    const refs = file.endsWith('.html') ? localRefsInHtml(source) : localRefsInCss(source)
-    const rootAssetRefs = file.endsWith('.html') ? rootAbsoluteAssetRefsInHtml(source) : rootAbsoluteAssetRefsInCss(source)
+    const refs = refsInSource(source, { html: file.endsWith('.html') })
+    const rootAssetRefs = refs.filter((ref) => ROOT_ABSOLUTE_ASSET_RE.test(ref))
     checkRootAbsoluteAssetRefs(file, rootAssetRefs, errors)
-    await checkFileLocalRefs(file, refs, errors)
+    await checkFileLocalRefs(file, refs.filter(isLocalRef), errors)
   }
 }
 
