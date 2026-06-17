@@ -3,19 +3,19 @@
   ============================================================================
   STANDALONE DECK TEMPLATE
   ============================================================================
-  Reusable starting point for HTML / PPT-style slide decks in this repo.
+  Reusable starting point for standalone HTML review decks in this repo.
   Distilled from ai-coding/ultrathink-to-goal/index.html.
 
   What this template gives you:
     1. Three switchable themes (font + color) via body[data-style] + a top-right
-       style toggle pill. See "THEME TOKENS" below.
+       style toggle pill. Default is navy; see "THEME TOKENS" below.
     2. Keyboard / click paging, progress bar, slide counter, deep-link hash —
        all handled by the shared assets/deck-runtime.js.
-    3. Image pop-up (lightbox): click any .screenshot/.proof-card image to zoom.
+    3. Image pop-up (lightbox): click any .media-frame/.screenshot image to zoom.
     4. Speaker notes toggle (press the NOTES button; hidden by default).
     5. A catalogue of common slide layouts you can copy: title, section
        divider, big-metric, quote, data-row, cards, two-column + screenshot,
-       compare table, closing/Q&A.
+       compare table, review closing slide.
 
   HOW TO USE — read templates/README.md first, then:
     - For an AI Coding deck:  copy this folder to  ai-coding/<slug>/index.html
@@ -51,13 +51,13 @@
 <style>
 /* ============================================================ */
 /* THEME TOKENS                                                  */
-/* Default = terminal (charcoal). Alternates via body[data-style] */
+/* Runtime default = navy. Terminal tokens below are the no-JS fallback. */
 /* Each theme defines colors + a font triple (display/body/mono).*/
 /* Add a new theme: copy a block, give it a new data-style name,  */
 /* then add it to the `styles` array + a toggle button below.     */
 /* ============================================================ */
 body {
-  /* Terminal · charcoal warm — DEFAULT (dark) */
+  /* Terminal · charcoal warm (dark alternate) */
   --bg: #1a1715;
   --bg-alt: #221e1b;
   --bg-card: #2a2522;
@@ -328,6 +328,7 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 }
 .slide-2col .col-l { display: flex; flex-direction: column; gap: 14px; }
 .slide-2col .col-r { display: flex; align-items: center; }
+.slide-2col .col-r .media-frame,
 .slide-2col .col-r .screenshot { margin-top: 0; max-width: 100%; }
 
 /* Callback box — forward / back reference between slides */
@@ -362,24 +363,56 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .compare-table .entity { color: var(--text); }
 .compare-table .muted { color: var(--text-sec); }
 
-/* Inline screenshot — click to pop up (lightbox). */
+/* Media frame — click images to pop up via deck runtime lightbox. */
+.media-frame,
 .screenshot {
   margin-top: 20px; max-width: 800px;
   border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
   background: var(--bg-card);
 }
-.screenshot img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.media-frame img,
+.screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: zoom-in;
+  background: #f7f4ee;
+}
+.media-frame video,
+.screenshot video {
+  display: block;
+  width: 100%;
+  max-height: 430px;
+  object-fit: contain;
+  background: #050505;
+}
+.media-frame.contain img,
+.screenshot.contain img {
+  max-height: 520px;
+  object-fit: contain;
+}
+.media-frame .ss-cap,
 .screenshot .ss-cap {
   font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);
   padding: 8px 12px; border-top: 1px solid var(--border-light);
   letter-spacing: 0.5px;
 }
+.media-frame .ss-cap a,
 .screenshot .ss-cap a, .quote-attr a {
   color: inherit; text-decoration: underline;
   text-decoration-thickness: 1px; text-underline-offset: 3px;
 }
 /* For tall vertical screenshots — cap visible height, fade out the bottom */
+.media-frame.tall .ss-frame,
 .screenshot.tall .ss-frame { max-height: 320px; overflow: hidden; position: relative; }
+.media-frame.tall img,
+.screenshot.tall img {
+  max-height: 570px;
+  object-fit: contain;
+}
+.media-frame.tall .ss-frame::after,
 .screenshot.tall .ss-frame::after {
   content: "";
   position: absolute; left: 0; right: 0; bottom: 0;
@@ -393,21 +426,6 @@ h1, h2, h3, p, .quote, .card-title, .card-desc, .data-label, .data-sub {
 .qa h1 { font-style: normal; }
 .qa .qa-sub { font-family: var(--font-mono); color: var(--text-dim); letter-spacing: 3px; margin-top: 14px; }
 .qa .qa-footer { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); line-height: 1.9; margin-top: 40px; }
-
-/* ============================================================ */
-/* IMAGE LIGHTBOX — built + wired by installImageLightbox() JS    */
-/* ============================================================ */
-.image-lightbox {
-  position: fixed; inset: 0; z-index: 500;
-  display: none; align-items: center; justify-content: center;
-  padding: 32px;
-  background: rgba(0, 0, 0, 0.82);
-}
-.image-lightbox.open { display: flex; }
-.image-lightbox-inner { max-width: min(94vw, 1600px); max-height: 92vh; display: grid; gap: 10px; justify-items: center; }
-.image-lightbox img { max-width: 100%; max-height: 84vh; object-fit: contain; background: #f8f6f2; border: 1px solid rgba(255, 255, 255, 0.22); }
-.image-lightbox-caption { max-width: min(94vw, 1200px); color: #d8d4c8; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; text-align: center; }
-
 /* ============================================================ */
 /* SPEAKER NOTES — hidden by default; NOTES button reveals them   */
 /* ============================================================ */
@@ -483,18 +501,36 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   .data-cell:last-child { border-bottom: none; }
   .cards { flex-direction: column; }
   .slide-2col { grid-template-columns: 1fr; }
+  .media-frame video,
+  .screenshot video { max-height: 360px; }
+  .media-frame.contain img,
+  .screenshot.contain img { max-height: 330px; }
+  .media-frame.tall img,
+  .screenshot.tall img { max-height: 300px; }
+}
+
+@media (max-height: 760px) and (min-width: 901px) {
+  .slide { padding-top: 62px; padding-bottom: 46px; }
+  h2 { margin-bottom: 18px; }
+  .quote { margin: 14px 0; }
+  .cards { margin-top: 18px; gap: 14px; }
+  .card { padding: 18px 20px; }
+  .data-row { margin-top: 24px; }
+  .data-cell { padding: 24px 22px; }
+  .media-frame.tall .ss-frame,
+  .screenshot.tall .ss-frame { max-height: 260px; }
 }
 </style>
 </head>
-<body>
+<body data-style="navy">
 <!-- HUD chrome: progress bar, slide counter, notes + style toggles -->
 <div class="progress" id="progress"></div>
 <div class="counter" id="counter"></div>
 <button class="notes-toggle" id="notesToggle" type="button" aria-pressed="false">NOTES</button>
 <nav class="style-toggle" id="styleToggle" aria-label="Slide theme">
-  <button data-style="terminal" title="深炭灰 + 暖橙 (default)" aria-label="Use terminal theme"><span class="swatch"></span><span class="style-label">terminal</span></button>
+  <button data-style="terminal" title="深炭灰 + 暖橙" aria-label="Use terminal theme"><span class="swatch"></span><span class="style-label">terminal</span></button>
   <button data-style="newspaper" title="暖米黄 + 红墨" aria-label="Use newspaper theme"><span class="swatch"></span><span class="style-label">newspaper</span></button>
-  <button data-style="navy" title="近白 + 深蓝" aria-label="Use navy theme"><span class="swatch"></span><span class="style-label">navy</span></button>
+  <button data-style="navy" title="近白 + 深蓝 (default)" aria-label="Use navy theme"><span class="swatch"></span><span class="style-label">navy</span></button>
 </nav>
 
 <div class="deck" id="deck">
@@ -507,9 +543,8 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
   <h1>主标题 <em>关键词</em><br>副线 <em>关键词</em></h1>
   <div class="subtitle">一句话副标题占位 —— 概括这场分享的主线</div>
   <div class="author-block">
-    <strong>作者名 / Author</strong><br>
-    单位 / 角色<br>
-    联系方式 · github.com/your-handle
+    Owner / Project<br>
+    Review scope / date
   </div>
 </div>
 
@@ -594,7 +629,7 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
       <p>右栏的截图点击会进入 lightbox 全屏预览，按 Esc 或点背景关闭，caption 自动取 .ss-cap 文字。</p>
     </div>
     <div class="col-r">
-      <div class="screenshot">
+      <div class="media-frame contain">
         <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='800'%20height='500'%3E%3Crect%20width='800'%20height='500'%20fill='%23e9e2d4'/%3E%3Crect%20x='1'%20y='1'%20width='798'%20height='498'%20fill='none'%20stroke='%23b8a99a'/%3E%3Ctext%20x='400'%20y='250'%20font-family='monospace'%20font-size='30'%20fill='%238a7960'%20text-anchor='middle'%20dominant-baseline='middle'%3Eimages/placeholder.png%3C/text%3E%3C/svg%3E" alt="placeholder screenshot — click to zoom">
         <div class="ss-cap">图注占位 · 点击放大</div>
       </div>
@@ -623,14 +658,13 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 </div>
 
 <!-- ============================================================ -->
-<!-- SLIDE 6 · Closing / Q&A                                       -->
+<!-- SLIDE 6 · Closing / review notes                              -->
 <!-- ============================================================ -->
 <div class="slide qa">
-  <h1><span class="hl">Q & A</span></h1>
-  <div class="qa-sub">— discussion —</div>
+  <h1><span class="hl">Review Notes</span></h1>
+  <div class="qa-sub">— decisions / risks / next steps —</div>
   <div class="qa-footer">
-    作者名 · Author<br>
-    github.com/your-handle · 联系方式
+    Review deck · standalone HTML
   </div>
 </div>
 
@@ -645,61 +679,14 @@ body.show-notes .notes-toggle { color: var(--accent); border-color: var(--accent
 -->
 <script src="../../assets/deck-runtime.js"></script>
 <script>
-// Image pop-up: any image matching the selector opens a full-screen overlay.
-// Add more selectors (comma-separated) if you introduce new image containers.
-function installImageLightbox() {
-  const imageSelector = '.screenshot img';
-  const lightbox = document.createElement('div');
-  lightbox.className = 'image-lightbox';
-  lightbox.setAttribute('role', 'dialog');
-  lightbox.setAttribute('aria-modal', 'true');
-  lightbox.innerHTML = '<div class="image-lightbox-inner"><img alt=""><div class="image-lightbox-caption"></div></div>';
-  document.body.appendChild(lightbox);
-
-  const lightboxImage = lightbox.querySelector('img');
-  const caption = lightbox.querySelector('.image-lightbox-caption');
-
-  function captionFor(image) {
-    const screenshot = image.closest('.screenshot');
-    if (screenshot) {
-      const cap = screenshot.querySelector('.ss-cap');
-      if (cap) return cap.textContent.trim();
-    }
-    return image.alt || '';
-  }
-
-  function close() {
-    lightbox.classList.remove('open');
-    lightboxImage.removeAttribute('src');
-    lightboxImage.alt = '';
-    caption.textContent = '';
-  }
-
-  document.addEventListener('click', (event) => {
-    const image = event.target.closest(imageSelector);
-    if (!image) return;
-    event.preventDefault();
-    event.stopPropagation();
-    lightboxImage.src = image.currentSrc || image.src;
-    lightboxImage.alt = image.alt || '';
-    caption.textContent = captionFor(image);
-    lightbox.classList.add('open');
-  }, true);
-
-  lightbox.addEventListener('click', close);
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && lightbox.classList.contains('open')) close();
-  });
-}
-
 window.createDeckRuntime({
   notesToggleSelector: '#notesToggle',
   styleToggleSelector: '#styleToggle',
-  styleStorageKey: 'deck-template-style',
-  defaultStyle: 'terminal',
+  styleStorageKey: 'deck-template-style-v2',
+  defaultStyle: 'navy',
   styles: ['terminal', 'newspaper', 'navy'],
+  lightboxSelector: '.media-frame img, .screenshot img',
 });
-installImageLightbox();
 </script>
 </body>
 </html>
