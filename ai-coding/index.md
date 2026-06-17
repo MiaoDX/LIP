@@ -8,6 +8,7 @@
 
 ## 分享材料
 
+- [出钳吧 · Roboclaws：给机器人以大脑](roboclaws-give-robots-the-mind/) — 2026 内部马拉松初版 deck，把开放式机器人任务组织成 task / skill / MCP tools / backend / report 的 Agent Skill Loop，包含 photo task、household cleanup、Nav2 pilot 的展示数据
 - [Roboharness · 给 AI Agent 装上自己判断自己工作的能力](roboharness-self-evaluating-agents/) — 2026-05 Showcase，20 页 deck，从内部抓取项目到独立 repo，metric + visual harness 双轨证据，SONIC 升级长程任务作为兑现案例
 - [从 Ultrathink 到 Goal：AI Coding 工程化的一年](ultrathink-to-goal/) — 2026-05，「汽车人 AI 进化论」第 09 期，50 min lecture，围绕 Skill / Context / Verification 和从 prompt 到 harness 的演进
 - [AI Coding for Research — 从工具到工作流](/share/AICodingRaiseLab.html) — 2026-03-24，Raise Lab 分享，25页 Slide
