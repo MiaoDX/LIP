@@ -26,10 +26,6 @@ export function frontmatterLinks(source) {
   return [...frontmatter.matchAll(FRONTMATTER_LINK_RE)].map((match) => match[1])
 }
 
-export function routeToMarkdownFile(route, { siteBase = '/' } = {}) {
-  return routeToMarkdownFileCandidates(route, { siteBase })[0] || null
-}
-
 export function routeToMarkdownFileCandidates(route, { siteBase = '/' } = {}) {
   if (!route || isExternalLink(route)) return []
 

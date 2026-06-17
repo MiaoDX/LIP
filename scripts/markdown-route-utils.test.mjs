@@ -6,7 +6,6 @@ import {
   frontmatterLinks,
   isExternalLink,
   markdownLinks,
-  routeToMarkdownFile,
   routeToMarkdownFileCandidates,
   trimBase,
 } from './markdown-route-utils.mjs'
@@ -58,8 +57,6 @@ assert.equal(cleanLink('/drafts/?preview=1#queue'), '/drafts/')
 assert.equal(trimBase('/LIP/drafts/', '/LIP/'), '/drafts/')
 assert.equal(trimBase('/drafts/', '/LIP/'), '/drafts/')
 
-assert.equal(routeToMarkdownFile('/LIP/', { siteBase: '/LIP/' }), 'index.md')
-assert.equal(routeToMarkdownFile('/resources/config-guide'), 'resources/config-guide.md')
 assert.deepEqual(routeToMarkdownFileCandidates('/drafts'), ['drafts.md'])
 assert.deepEqual(routeToMarkdownFileCandidates('/drafts/'), ['drafts/index.md'])
 assert.deepEqual(routeToMarkdownFileCandidates('/images/demo.png'), [])

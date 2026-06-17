@@ -6,7 +6,7 @@
  * standalone publish output generated from canonical source locations.
  */
 
-import { access, readFile, readdir, stat, writeFile } from 'node:fs/promises'
+import { access, readFile, readdir, writeFile } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'

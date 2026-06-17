@@ -276,10 +276,6 @@ export async function copyStandalone({ distDir = DIST_DIR } = {}) {
   return copied
 }
 
-export async function collectExpected({ distDir = DIST_DIR } = {}) {
-  return (await collectPublishTargets({ distDir })).map((target) => target.dest)
-}
-
 async function walkFiles(dir, files = []) {
   for (const entry of await entries(dir)) {
     const path = join(dir, entry.name)

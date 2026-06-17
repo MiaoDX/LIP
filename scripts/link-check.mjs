@@ -7,7 +7,7 @@
  * mislead a new reader or agent.
  */
 
-import { access, readFile, readdir, stat } from 'node:fs/promises'
+import { access, readFile, readdir } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { execFile } from 'node:child_process'
 import { basename, dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
@@ -110,15 +110,6 @@ async function exists(path) {
   }
 }
 
-async function isDir(path) {
-  try {
-    return (await stat(path)).isDirectory()
-  } catch (error) {
-    if (error.code === 'ENOENT') return false
-    throw error
-  }
-}
-
 async function entries(path) {
   try {
     return await readdir(path, { withFileTypes: true })
@@ -202,14 +193,6 @@ async function walkMarkdownFiles(dir, files = []) {
     else if (entry.isFile() && path.endsWith('.md')) files.push(path)
   }
   return files
-}
-
-async function markdownFilesInDir(dir) {
-  const files = []
-  for (const entry of await entries(dir)) {
-    if (entry.isFile() && entry.name.endsWith('.md')) files.push(entry.name)
-  }
-  return files.sort()
 }
 
 async function publicIndexRoutesInDir(dir) {
