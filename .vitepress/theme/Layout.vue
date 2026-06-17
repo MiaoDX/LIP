@@ -1,9 +1,7 @@
 <script setup>
 import { useData, useRoute, withBase } from 'vitepress'
 import { computed } from 'vue'
-import DefaultTheme from 'vitepress/theme'
 
-const { Layout } = DefaultTheme
 const { page, frontmatter, theme, lang } = useData()
 const route = useRoute()
 
