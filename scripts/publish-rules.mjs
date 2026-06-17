@@ -36,7 +36,7 @@ const CLIENT_SIDE_PASSWORD_PATTERNS = [
   { regex: /<input\b[^>]*\btype=["']password["']/i, message: 'contains a password input in static public output' },
 ]
 
-export const sourceOwnershipRules = {
+const sourceOwnershipRules = {
   generatedSourceDirs: [
     {
       path: 'public/share',
@@ -64,7 +64,7 @@ export const sourceOwnershipRules = {
   localReferenceRoots: ['presentations', 'ai-coding', 'public/consult', 'templates'],
 }
 
-export const publishRules = [
+const publishRules = [
   {
     name: 'share presentations',
     sourceDir: 'presentations',
