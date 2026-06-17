@@ -26,15 +26,7 @@ const slug = computed(() => {
 // 作者信息
 const authorBio = computed(() => frontmatter.value.authorBio || theme.value.authorBio)
 
-// 导航
-const navItems = computed(() => theme.value.nav || [
-  { text: '首页', link: '/' },
-  { text: '月报', link: '/now/2026-03' },
-  { text: '案例', link: '/stories/2026-03-dual-agent-start' },
-  { text: '经验', link: '/lessons/error-to-skill-evolution' },
-  { text: '分享', link: '/share/' },
-  { text: '个人主页', link: 'https://miaodx.com/' }
-])
+const navItems = computed(() => theme.value.nav || [])
 
 // 侧边栏 - 根据当前语言选择对应的侧边栏配置
 const sidebarItems = computed(() => {
