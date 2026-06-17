@@ -43,9 +43,8 @@ history.
   `claw-agents-shared`; do not rewrite them as repo guidance.
 - Broad dead-link validation across all historical content remains parked; the
   current local gate protects public navigation and first-read docs.
-- `ai-coding/roboharness-self-evaluating-agents/export-navy.html` is a local
-  launcher with no current public route; leave it alone unless deck ownership
-  asks for a source-layout change.
+- The formerly parked Roboharness `export-navy.html` local launcher was removed
+  later in `docs/plans/refactor-roboharness-export-launcher.md`.
 
 ## Evidence Ladder
 
