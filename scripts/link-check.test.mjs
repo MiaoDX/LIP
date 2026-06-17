@@ -45,23 +45,30 @@ try {
   const { checkScopedLinks } = await import(moduleUrl)
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['slides/index.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
   }), [])
 
   await writeFile('slides/index.md', '[Missing source-backed HTML route](/share/missing.html)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['slides/index.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), ['slides/index.md references missing local link /share/missing.html'])
+
+  assert.deepEqual(await checkScopedLinks({
+    scopedMarkdownFiles: [],
+    configuredRouteLinks: ['/share/source-backed', '/share/missing-configured'],
+    scopedIndexLinkFiles: [],
+    indexCoverageRules: [],
+  }), ['site-map.mjs references missing public route /share/missing-configured'])
 
   await mkdir('proposals', { recursive: true })
   await writeFile('README.md', '[Missing directory route](proposals/)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['README.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), ['README.md references missing local link proposals/'])
@@ -69,7 +76,7 @@ try {
   await writeFile('proposals/index.md', '# Proposals')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['README.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), [])
@@ -77,7 +84,7 @@ try {
   await writeFile('README.md', '[Slashless directory route](/proposals)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['README.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), ['README.md references missing local link /proposals'])
@@ -100,7 +107,7 @@ try {
   )
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['home.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), ['home.md references missing local link /missing-frontmatter-route'])
@@ -108,7 +115,7 @@ try {
   await writeFile('missing-frontmatter-route.md', '# Now valid')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['home.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), [])
@@ -116,7 +123,7 @@ try {
   await writeFile('ai-coding/index.md', '[Standalone deck](standalone-deck/)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['ai-coding/index.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), [])
@@ -131,7 +138,7 @@ try {
   ].join('\n'))
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['discussions/archive.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), ['discussions/archive.md references missing local link /missing-live'])
@@ -145,7 +152,7 @@ try {
   ].join('\n'))
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['discussions/archive.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), [])
@@ -157,7 +164,7 @@ try {
   await execFileAsync('git', ['init'])
   await execFileAsync('git', ['add', 'README.md', 'docs/plans/private.md', 'public-sidecar.md'])
   assert.deepEqual(await checkScopedLinks({
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [],
   }), ['public-sidecar.md references missing local link /missing-public'])
@@ -172,7 +179,7 @@ try {
 
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['bestpractice/index.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [{
       indexFile: 'bestpractice/index.md',
@@ -187,7 +194,7 @@ try {
   await writeFile('bestpractice/index.md', '[Visible](/bestpractice/visible) [Hidden](/bestpractice/hidden) [Weekly](/bestpractice/weekly/)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['bestpractice/index.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [{
       indexFile: 'bestpractice/index.md',
@@ -199,7 +206,7 @@ try {
   await writeFile('bestpractice/visible.md', '[Broken related article](/bestpractice/missing-related)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['bestpractice/index.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [{
       indexFile: 'bestpractice/index.md',
@@ -211,7 +218,7 @@ try {
   await writeFile('bestpractice/visible.md', '[Existing related article](/bestpractice/hidden)')
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['bestpractice/index.md'],
-    scopedConfigFiles: [],
+    configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
     indexCoverageRules: [{
       indexFile: 'bestpractice/index.md',

@@ -27,10 +27,6 @@ const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
 const execFileAsync = promisify(execFile)
 
-const SCOPED_CONFIG_FILES = [
-  'site-map.mjs',
-]
-
 const SCOPED_INDEX_LINK_FILES = [
   'drafts/index.md',
   'en/drafts/index.md',
@@ -97,7 +93,6 @@ const INDEX_COVERAGE_RULES = [
   },
 ]
 
-const FIELD_LINK_RE = /\b(?:link|url):\s*['"]([^'"]+)['"]/g
 let publishTargets = null
 let marpSlugs = null
 
@@ -272,11 +267,12 @@ function configuredRoutes() {
 
 async function existingScopedMarkdownFiles({
   scopedMarkdownFiles,
+  configuredRouteLinks = configuredRoutes(),
   scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
   indexCoverageRules = INDEX_COVERAGE_RULES,
 } = {}) {
   const files = new Set(scopedMarkdownFiles ?? await publicMarkdownFiles())
-  for (const route of configuredRoutes()) {
+  for (const route of configuredRouteLinks) {
     for (const file of routeToMarkdownFileCandidates(route, { siteBase })) {
       if (await exists(join(ROOT, file))) files.add(file)
     }
@@ -374,10 +370,6 @@ async function relativeLinkExists(fromFile, link) {
   return false
 }
 
-function configLinks(source) {
-  return [...source.matchAll(FIELD_LINK_RE)].map((match) => match[1])
-}
-
 async function checkMarkdownFile(file, errors) {
   const source = await readFile(join(ROOT, file), 'utf8')
   for (const link of [...markdownLinks(source), ...frontmatterLinks(source)]) {
@@ -392,12 +384,11 @@ async function checkMarkdownFile(file, errors) {
   }
 }
 
-async function checkConfigFile(file, errors) {
-  const source = await readFile(join(ROOT, file), 'utf8')
-  for (const link of configLinks(source)) {
-    if (isExternalLink(link)) continue
-    if (!(await publicRouteExists(link))) {
-      errors.push(`${file} references missing public route ${link}`)
+async function checkConfiguredRoutes(routes, errors) {
+  for (const route of routes) {
+    if (isExternalLink(route)) continue
+    if (!(await publicRouteExists(route))) {
+      errors.push(`site-map.mjs references missing public route ${route}`)
     }
   }
 }
@@ -434,18 +425,19 @@ async function checkIndexCoverage({
 
 export async function checkScopedLinks({
   scopedMarkdownFiles,
-  scopedConfigFiles = SCOPED_CONFIG_FILES,
+  configuredRouteLinks = configuredRoutes(),
   scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
   indexCoverageRules = INDEX_COVERAGE_RULES,
 } = {}) {
   const errors = []
   const markdownFiles = await existingScopedMarkdownFiles({
     scopedMarkdownFiles,
+    configuredRouteLinks,
     scopedIndexLinkFiles,
     indexCoverageRules,
   })
   for (const file of markdownFiles) await checkMarkdownFile(file, errors)
-  for (const file of scopedConfigFiles) await checkConfigFile(file, errors)
+  await checkConfiguredRoutes(configuredRouteLinks, errors)
   errors.push(...await checkIndexCoverage({ indexCoverageRules }))
   return errors
 }
@@ -458,5 +450,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     process.exit(1)
   }
   const markdownFiles = await existingScopedMarkdownFiles()
-  console.log(`Scoped local links passed: ${markdownFiles.length + SCOPED_CONFIG_FILES.length} files`)
+  console.log(`Scoped local links passed: ${markdownFiles.length} files`)
 }
