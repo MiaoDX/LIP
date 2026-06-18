@@ -8,7 +8,6 @@
     "docs:preview": "vitepress preview",
     "slides:dev": "slidev slides/slides.md --open",
     "slides:build": "node scripts/build-slidev.mjs",
-    "slides:export": "slidev export slides/slides.md",
     "marp:build": "node scripts/build-slides.mjs",
     "publish:copy": "node scripts/publish-rules.mjs copy",
     "publish:check": "node scripts/publish-rules.mjs check",
