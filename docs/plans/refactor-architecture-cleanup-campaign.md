@@ -49,6 +49,8 @@ names alive.
   including `docs/status/**` active capsules.
 - Move repeated filesystem existence, tolerant directory reads, and recursive
   file walks to `scripts/file-utils.mjs`.
+- Move repeated build-script child process execution to
+  `scripts/command-runner.mjs`.
 - Merge duplicate local filesystem helper modules only when a focused slice can
   preserve behavior and reduce caller knowledge.
 - Continue fresh discovery after the clear queue is exhausted.
@@ -56,10 +58,10 @@ names alive.
 ## Surface Metrics
 
 - Stale surfaces removed: 0
-- Duplicate concept owners merged: 3
-- Current callers migrated to one owner: 9
+- Duplicate concept owners merged: 4
+- Current callers migrated to one owner: 11
 - Tests/docs updated away from stale names: 6
-- New owners added: 1 internal file traversal owner
+- New owners added: 2 internal owners (`file-utils`, `command-runner`)
 - Public contracts touched: 0; operational public-output boundary preserved
 
 ## Parked Gates
@@ -93,4 +95,8 @@ slice requires a public migration decision or unavailable proof.
   helpers to `scripts/file-utils.mjs`. Focused proof passed:
   `node scripts/build-slides.test.mjs && node scripts/link-check.test.mjs &&
   node scripts/publish-rules.test.mjs && node scripts/quality-check.test.mjs`,
+  `npm run typecheck`, and `git diff --check`.
+- 2026-06-23: Moved repeated build-script child process execution to
+  `scripts/command-runner.mjs`. Focused proof passed:
+  `node scripts/build-slidev.test.mjs && node scripts/build-slides.test.mjs`,
   `npm run typecheck`, and `git diff --check`.

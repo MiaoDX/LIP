@@ -11,8 +11,8 @@
 
 import { readFile, mkdir, rm } from 'node:fs/promises'
 import { join, relative, basename, extname } from 'node:path'
-import { spawn } from 'node:child_process'
 import { pathToFileURL } from 'node:url'
+import { runCommand } from './command-runner.mjs'
 import { walkMarkdownFiles } from './file-utils.mjs'
 import { marpScanDirs } from '../site-map.mjs'
 
@@ -56,18 +56,6 @@ function assertUniqueSlugs(files) {
   throw new Error(lines.join('\n'))
 }
 
-function run(cmd, args) {
-  return new Promise((resolve, reject) => {
-    const p = spawn(cmd, args, {
-      stdio: 'inherit',
-      shell: process.platform === 'win32',
-    })
-    p.on('exit', (code) =>
-      code === 0 ? resolve() : reject(new Error(`${cmd} exited ${code}`))
-    )
-  })
-}
-
 async function main() {
   await rm(OUT, { recursive: true, force: true })
   await mkdir(OUT, { recursive: true })
@@ -95,7 +83,7 @@ async function main() {
     const slug = marpOutputSlug(f)
     const html = join(OUT, slug + '.html')
     console.log(`  · ${relative(ROOT, f)} → ${slug}.${outs}`)
-    await run(MARP_CMD, [
+    await runCommand(MARP_CMD, [
       ...MARP_ARGS,
       f,
       '--theme-set',
@@ -107,7 +95,7 @@ async function main() {
     ])
     if (BUILD_PDF) {
       const pdf = join(OUT, slug + '.pdf')
-      await run(MARP_CMD, [
+      await runCommand(MARP_CMD, [
         ...MARP_ARGS,
         f,
         '--theme-set',
