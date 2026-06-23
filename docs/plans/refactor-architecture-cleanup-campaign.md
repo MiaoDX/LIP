@@ -1,6 +1,6 @@
 ---
 refactor_scope: architecture-cleanup-campaign
-status: CONTINUE
+status: DONE
 accepted_severities:
   - P1
   - P2
@@ -39,7 +39,7 @@ Route, publish, link, and quality gates should expose one obvious owner for each
 repo concept. Tests should prove current owners instead of keeping stale private
 names alive.
 
-## Accepted Checklist
+## Completed Checklist
 
 - Move public route candidate logic to the Markdown route utility owner and
   migrate link checking to that owner.
@@ -51,9 +51,7 @@ names alive.
   file walks to `scripts/file-utils.mjs`.
 - Move repeated build-script child process execution to
   `scripts/command-runner.mjs`.
-- Merge duplicate local filesystem helper modules only when a focused slice can
-  preserve behavior and reduce caller knowledge.
-- Continue fresh discovery after the clear queue is exhausted.
+- Ran fresh discovery after the clear queue was exhausted.
 
 ## Surface Metrics
 
@@ -66,7 +64,10 @@ names alive.
 
 ## Parked Gates
 
-- None yet.
+- Broad public publish-rule shape changes: parked because no current stale
+  public contract or false-green proof was found.
+- Generic additional script splitting: parked as low value because remaining
+  candidates would mostly move code by size instead of reducing a live concept.
 
 ## Stop Condition
 
@@ -100,3 +101,9 @@ slice requires a public migration decision or unavailable proof.
   `scripts/command-runner.mjs`. Focused proof passed:
   `node scripts/build-slidev.test.mjs && node scripts/build-slides.test.mjs`,
   `npm run typecheck`, and `git diff --check`.
+- 2026-06-23: Fresh discovery handoff 1 after commit `1fbda4a` found no clear
+  safe P1/P2 stale-surface deletion, duplicate-owner merge, canonical-owner
+  move, or compatibility-shim removal. `npm run test:scripts` passed.
+- 2026-06-23: Fresh discovery handoff 2 after commit `1fbda4a` found no clear
+  safe P1/P2 slice after shrink attempts. `node scripts/link-check.mjs`,
+  `npm run publish:check`, and `npm run quality:check` passed.
