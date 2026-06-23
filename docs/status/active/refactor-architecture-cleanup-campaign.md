@@ -1,5 +1,5 @@
 ---
-status: active
+status: done
 source_gate: docs/plans/refactor-architecture-cleanup-campaign.md
 updated: 2026-06-23
 ---
@@ -8,23 +8,21 @@ updated: 2026-06-23
 
 ## Current Slice
 
-Run fresh discovery handoff 1 after publish source root migration.
+Campaign saturated after two consecutive no-clear discovery handoffs.
 
 ## Last Proof
 
-Shared standalone source root constants between publish copy rules and
-source-ownership checks. Focused proof passed: `npm run test:publish-rules`,
-`npm run typecheck`, and `git diff --check`.
+Fresh discovery handoff 2 after commit `faf8278` found no clear safe P1/P2
+slice after shrink attempts. Materiality gate returned `stop_recommended: true`
+for an empty candidate set.
 
 ## Next Candidate
 
-Fresh reduce-entropy discovery handoff after publish source root owner
-migration.
+None.
 
 ## Next Proof
 
-High-noise summary, targeted source/reference searches, materiality gate for any
-new candidates, and focused proof for any selected slice.
+Final focused proof: `npm run test:scripts` and `git diff --check`.
 
 ## Parked Gates
 
@@ -32,6 +30,8 @@ new candidates, and focused proof for any selected slice.
   false-green proof found.
 - Generic script splitting: low value unless it removes a duplicate owner or
   stale surface.
+- External-nav behavior in `.vitepress/config.mts` / theme runtime: parked as
+  runtime-facing behavior that needs a separate product/browser gate.
 
 ## Stop Condition
 

@@ -1,6 +1,6 @@
 ---
 refactor_scope: architecture-cleanup-campaign
-status: CONTINUE
+status: DONE
 accepted_severities:
   - P1
   - P2
@@ -112,6 +112,17 @@ slice requires a public migration decision or unavailable proof.
   publish-rule source root slice. Shared standalone source root constants
   between publish copy rules and source-ownership checks. Focused proof passed:
   `npm run test:publish-rules`, `npm run typecheck`, and `git diff --check`.
+- 2026-06-23: Fresh discovery handoff 1 after commit `faf8278` found no clear
+  safe P1/P2 slice after shrink attempts. Remaining observations were public
+  publish output paths, fixture-level checker overrides, or private arrays whose
+  extraction would add surface without removing a current surprise.
+  `npm run test:scripts` passed.
+- 2026-06-23: Fresh discovery handoff 2 after commit `faf8278` found no clear
+  safe P1/P2 slice after shrink attempts. Package/VitePress/theme and
+  source/output-boundary sweep found only documented public publish behavior,
+  low-value private arrays, or runtime-facing external-nav behavior that would
+  need a separate product/browser gate. Materiality gate returned
+  `stop_recommended: true` for an empty candidate set.
 - 2026-06-23: Baseline focused proof passed:
   `node scripts/markdown-route-utils.test.mjs && node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`
   and `npm run typecheck`.
