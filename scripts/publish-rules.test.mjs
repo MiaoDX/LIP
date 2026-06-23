@@ -1,19 +1,11 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict'
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
-import { pathToFileURL } from 'node:url'
+import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { exists } from './file-utils.mjs'
+import { withTempWorkspace } from './test-workspace.mjs'
 
-const originalRoot = process.cwd()
-const tempRoot = await mkdtemp(join(tmpdir(), 'lip-publish-rules-'))
-const moduleUrl = `${pathToFileURL(join(originalRoot, 'scripts', 'publish-rules.mjs')).href}?test=${Date.now()}`
-
-try {
-  process.chdir(tempRoot)
-
+await withTempWorkspace('lip-publish-rules-', async ({ moduleUrl }) => {
   await mkdir('presentations/assets', { recursive: true })
   await writeFile('presentations/assets/hero.png', 'hero')
   await writeFile('presentations/assets/small.png', 'small')
@@ -32,7 +24,7 @@ try {
     ].join('\n')
   )
 
-  const publishRules = await import(moduleUrl)
+  const publishRules = await import(moduleUrl('scripts', 'publish-rules.mjs'))
 
   await mkdir('share/nested', { recursive: true })
   await writeFile('share/nested/generated.html', '<p>generated</p>')
@@ -179,9 +171,6 @@ try {
   assert.equal(await exists('dist/share/index.html'), true, 'standalone copy should not remove non-standalone neighbors')
   check = await publishRules.checkStandalone({ distDir: 'dist' })
   assert.deepEqual(check.stale, [])
-} finally {
-  process.chdir(originalRoot)
-  await rm(tempRoot, { recursive: true, force: true })
-}
+})
 
 console.log('publish-rules tests passed')

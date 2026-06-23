@@ -1,21 +1,10 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict'
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
-import { execFile } from 'node:child_process'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
-import { pathToFileURL } from 'node:url'
-import { promisify } from 'node:util'
+import { mkdir, writeFile } from 'node:fs/promises'
+import { execFileAsync, withTempWorkspace } from './test-workspace.mjs'
 
-const originalRoot = process.cwd()
-const tempRoot = await mkdtemp(join(tmpdir(), 'lip-link-check-'))
-const moduleUrl = `${pathToFileURL(join(originalRoot, 'scripts', 'link-check.mjs')).href}?test=${Date.now()}`
-const execFileAsync = promisify(execFile)
-
-try {
-  process.chdir(tempRoot)
-
+await withTempWorkspace('lip-link-check-', async ({ moduleUrl }) => {
   await mkdir('share', { recursive: true })
   await writeFile('share/source-backed.md', '# Source-backed route')
   await mkdir('ai-coding/standalone-deck', { recursive: true })
@@ -42,7 +31,7 @@ try {
     ].join('\n')
   )
 
-  const { checkScopedLinks } = await import(moduleUrl)
+  const { checkScopedLinks } = await import(moduleUrl('scripts', 'link-check.mjs'))
   assert.deepEqual(await checkScopedLinks({
     scopedMarkdownFiles: ['slides/index.md'],
     configuredRouteLinks: [],
@@ -228,9 +217,6 @@ try {
       excludeSlugs: ['index', 'panorama'],
     }],
   }), [])
-} finally {
-  process.chdir(originalRoot)
-  await rm(tempRoot, { recursive: true, force: true })
-}
+})
 
 console.log('link-check tests passed')

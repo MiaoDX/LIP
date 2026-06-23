@@ -1,23 +1,14 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict'
-import { execFile } from 'node:child_process'
-import { chmod, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
+import { chmod, mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { promisify } from 'node:util'
+import { execFileAsync, withTempWorkspace } from './test-workspace.mjs'
 
-const execFileAsync = promisify(execFile)
-const originalRoot = process.cwd()
-const tempRoot = await mkdtemp(join(tmpdir(), 'lip-build-slidev-'))
-
-try {
-  process.chdir(tempRoot)
-
+await withTempWorkspace('lip-build-slidev-', async ({ originalRoot, tempRoot }) => {
   await mkdir(join('slides'), { recursive: true })
   await mkdir(join('.vitepress', 'dist', 'slides', 'slidev'), { recursive: true })
   await writeFile(join('.vitepress', 'dist', 'slides', 'slidev', 'stale.html'), 'stale')
-  await writeFile('site-map.mjs', "export const siteBase = '/LIP/'\n")
   await writeFile(join('slides', 'slides.md'), '# Slidev deck\n')
   await writeFile(
     'fake-slidev.mjs',
@@ -50,9 +41,6 @@ try {
 
   const output = await readFile(join('.vitepress', 'dist', 'slides', 'slidev', 'index.html'), 'utf8')
   assert.equal(output, 'built')
-} finally {
-  process.chdir(originalRoot)
-  await rm(tempRoot, { recursive: true, force: true })
-}
+})
 
 console.log('build-slidev tests passed')

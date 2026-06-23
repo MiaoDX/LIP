@@ -1,15 +1,12 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict'
-import { execFile } from 'node:child_process'
 import { access, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
-import { pathToFileURL } from 'node:url'
-import { promisify } from 'node:util'
 import { exists } from './file-utils.mjs'
+import { execFileAsync, repoModuleUrl } from './test-workspace.mjs'
 
-const execFileAsync = promisify(execFile)
-const moduleUrl = `${pathToFileURL(join(process.cwd(), 'scripts', 'quality-check.mjs')).href}?test=${Date.now()}`
+const moduleUrl = repoModuleUrl('scripts', 'quality-check.mjs')
 const distDir = join('.vitepress', 'dist')
 const hiddenDistDir = join('.vitepress', 'dist.__quality_check_test')
 const reportFile = '.quality-report.md'

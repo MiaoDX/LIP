@@ -8,27 +8,23 @@ updated: 2026-06-23
 
 ## Current Slice
 
-Shrink repeated script test workspace setup into a bounded internal helper if a
-safe slice remains after route-policy ownership is consolidated.
+Run fresh discovery handoff 1 after the initial queue is exhausted.
 
 ## Last Proof
 
-Moved scoped index and index coverage policy from `scripts/link-check.mjs` to
-`site-map.mjs`. Focused proof passed:
-`node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`,
-`npm run typecheck`, and `git diff --check`.
+Moved repeated script test command, module URL, temp workspace, cwd restore, and
+cleanup setup to `scripts/test-workspace.mjs`; removed stale fake `site-map.mjs`
+writes from build-script tests. Focused proof passed: `npm run test:scripts`
+and `git diff --check`.
 
 ## Next Candidate
 
-Shrink repeated script test workspace setup into a bounded internal helper if a
-safe slice remains after route-policy ownership is consolidated.
+Fresh reduce-entropy discovery from current `HEAD`.
 
 ## Next Proof
 
-Focused proof depends on the accepted helper scope; likely
-`node scripts/build-slides.test.mjs && node scripts/build-slidev.test.mjs &&
-node scripts/link-check.test.mjs && node scripts/publish-rules.test.mjs`,
-`npm run typecheck`, and `git diff --check`.
+High-noise summary, targeted source/reference searches, materiality gate for any
+new candidates, and focused proof for any selected slice.
 
 ## Parked Gates
 

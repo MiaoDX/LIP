@@ -56,19 +56,20 @@ names alive.
 ## Current Slice Queue
 
 - Move Slidev generated route/source ownership from link checking to the Slidev
-  build module.
+  build module. Done in `94d32c9`.
 - Move scoped index and index coverage policy from link checking to the site
-  map owner.
+  map owner. Done in `02f5b3b`.
 - Shrink repeated script test workspace setup into a bounded internal helper if
-  a safe slice remains after the route-policy moves.
+  a safe slice remains after the route-policy moves. Done in current slice.
 
 ## Surface Metrics
 
-- Stale surfaces removed: 0
-- Duplicate concept owners merged: 5
-- Current callers migrated to one owner: 13
-- Tests/docs updated away from stale names: 6
-- New owners added: 2 internal owners (`file-utils`, `command-runner`)
+- Stale surfaces removed: 2 stale fake `site-map.mjs` test writes
+- Duplicate concept owners merged: 6
+- Current callers migrated to one owner: 18
+- Tests/docs updated away from stale names: 8
+- New owners added: 3 internal owners (`file-utils`, `command-runner`,
+  `test-workspace`)
 - Public contracts touched: 0; operational public-output boundary preserved
 
 ## Parked Gates
@@ -98,6 +99,10 @@ slice requires a public migration decision or unavailable proof.
   `scripts/link-check.mjs` to `site-map.mjs`. Focused proof passed:
   `node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`,
   `npm run typecheck`, and `git diff --check`.
+- 2026-06-23: Moved repeated script test command, module URL, temp workspace,
+  cwd restore, and cleanup setup to `scripts/test-workspace.mjs`; removed stale
+  fake `site-map.mjs` writes from build-script tests. Focused proof passed:
+  `npm run test:scripts` and `git diff --check`.
 - 2026-06-23: Baseline focused proof passed:
   `node scripts/markdown-route-utils.test.mjs && node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`
   and `npm run typecheck`.
