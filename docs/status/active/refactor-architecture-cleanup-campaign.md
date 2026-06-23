@@ -8,18 +8,18 @@ updated: 2026-06-23
 
 ## Current Slice
 
-Run fresh discovery handoff 1 after tracked file owner migration.
+Run fresh discovery handoff 1 after publish source root migration.
 
 ## Last Proof
 
-Moved `git ls-files` command capture and parsing from link/quality gates to
-`scripts/file-utils.mjs`. Focused proof passed:
-`node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`,
+Shared standalone source root constants between publish copy rules and
+source-ownership checks. Focused proof passed: `npm run test:publish-rules`,
 `npm run typecheck`, and `git diff --check`.
 
 ## Next Candidate
 
-Fresh reduce-entropy discovery handoff after tracked file owner migration.
+Fresh reduce-entropy discovery handoff after publish source root owner
+migration.
 
 ## Next Proof
 

@@ -15,6 +15,10 @@ const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
 const PUBLISH_MANIFEST = '.standalone-publish-manifest.json'
 
+const PRESENTATIONS_SOURCE_DIR = 'presentations'
+const AI_CODING_SOURCE_DIR = 'ai-coding'
+const CONSULT_SOURCE_DIR = 'public/consult'
+const TEMPLATE_SOURCE_DIR = 'templates'
 const SHARE_EXTENSIONS = ['.html', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.gif']
 const AI_CODING_ASSET_DIRS = ['images', 'screenshots', 'assets']
 const HTML_REF_RE = /\b(?:src|href|poster)=["']([^"']+)["']/gi
@@ -61,20 +65,25 @@ const sourceOwnershipRules = {
       message: 'public/**/*.md is published as a static passthrough file and VitePress page; move maintainer notes to docs/agents/ or convert intentional public content to a site source page',
     },
   ],
-  localReferenceRoots: ['presentations', 'ai-coding', 'public/consult', 'templates'],
+  localReferenceRoots: [
+    PRESENTATIONS_SOURCE_DIR,
+    AI_CODING_SOURCE_DIR,
+    CONSULT_SOURCE_DIR,
+    TEMPLATE_SOURCE_DIR,
+  ],
 }
 
 const publishRules = [
   {
     name: 'share presentations',
-    sourceDir: 'presentations',
+    sourceDir: PRESENTATIONS_SOURCE_DIR,
     outDir: 'share',
     fileExtensions: SHARE_EXTENSIONS,
     copyChildDirs: true,
   },
   {
     name: 'AI Coding standalone pages',
-    sourceDir: 'ai-coding',
+    sourceDir: AI_CODING_SOURCE_DIR,
     outDir: 'ai-coding',
     entryFile: 'index.html',
     assetDirs: AI_CODING_ASSET_DIRS,
@@ -84,7 +93,7 @@ const publishRules = [
   },
   {
     name: 'consult pages',
-    sourceDir: 'public/consult',
+    sourceDir: CONSULT_SOURCE_DIR,
     outDir: 'consult',
     fileExtensions: ['.html'],
     copyChildDirs: true,
