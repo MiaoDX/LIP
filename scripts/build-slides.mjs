@@ -9,10 +9,11 @@
  * theme (e.g. `theme: uncover`) keep rendering with that theme.
  */
 
-import { readdir, readFile, mkdir, rm } from 'node:fs/promises'
+import { readFile, mkdir, rm } from 'node:fs/promises'
 import { join, relative, basename, extname } from 'node:path'
 import { spawn } from 'node:child_process'
 import { pathToFileURL } from 'node:url'
+import { walkMarkdownFiles } from './file-utils.mjs'
 import { marpScanDirs } from '../site-map.mjs'
 
 const ROOT = process.cwd()
@@ -24,22 +25,6 @@ const MARP_ARGS = process.env.MARP_CMD ? [] : ['marp']
 
 const SCAN_DIRS = marpScanDirs
 const SKIP_DIRS = new Set(['node_modules', '.vitepress', '.git', 'dist'])
-
-async function walk(dir, out = []) {
-  let entries
-  try {
-    entries = await readdir(dir, { withFileTypes: true })
-  } catch {
-    return out
-  }
-  for (const e of entries) {
-    if (SKIP_DIRS.has(e.name)) continue
-    const p = join(dir, e.name)
-    if (e.isDirectory()) await walk(p, out)
-    else if (e.isFile() && p.endsWith('.md')) out.push(p)
-  }
-  return out
-}
 
 export function hasMarpFrontmatter(src) {
   const fm = src.match(/^---\s*\n([\s\S]*?)\n---/)
@@ -88,7 +73,7 @@ async function main() {
   await mkdir(OUT, { recursive: true })
 
   const all = []
-  for (const d of SCAN_DIRS) await walk(join(ROOT, d), all)
+  for (const d of SCAN_DIRS) all.push(...await walkMarkdownFiles(join(ROOT, d), { skipDirs: SKIP_DIRS }))
 
   const marpFiles = []
   for (const f of all) {

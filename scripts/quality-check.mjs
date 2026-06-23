@@ -6,13 +6,13 @@
  * standalone publish output generated from canonical source locations.
  */
 
-import { access, readFile, readdir, writeFile } from 'node:fs/promises'
-import { constants } from 'node:fs'
+import { readFile, writeFile } from 'node:fs/promises'
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { basename, dirname, join, relative } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { checkScopedLinks } from './link-check.mjs'
+import { entries, exists } from './file-utils.mjs'
 import { cleanLink, markdownLinks, routeToMarkdownFileCandidates, trimBase } from './markdown-route-utils.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
 import { operationalPublicOutputPaths, siteBase } from '../site-map.mjs'
@@ -24,19 +24,10 @@ const DIST_DIR = join(ROOT, '.vitepress', 'dist')
 const REPORT_TIMESTAMP_RE = /^生成时间: .+$/m
 const WORD_SEGMENTER = new Intl.Segmenter(['zh', 'en'], { granularity: 'word' })
 
-async function exists(path) {
-  try {
-    await access(path, constants.F_OK)
-    return true
-  } catch {
-    return false
-  }
-}
-
 async function markdownFiles(dir) {
   if (!(await exists(dir))) return []
   const files = []
-  for (const entry of await readdir(dir, { withFileTypes: true })) {
+  for (const entry of await entries(dir)) {
     if (!entry.isFile() || !entry.name.endsWith('.md')) continue
     if (entry.name === 'index.md' || entry.name === '.quality-report.md') continue
     files.push(join(dir, entry.name))

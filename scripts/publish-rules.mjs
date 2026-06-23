@@ -7,9 +7,9 @@
  * verification pointed at this file instead of duplicating shell snippets.
  */
 
-import { access, cp, mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises'
-import { constants } from 'node:fs'
+import { cp, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises'
 import { dirname, extname, isAbsolute, join, relative } from 'node:path'
+import { entries, exists, walkFiles, walkRelativeFiles } from './file-utils.mjs'
 
 const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
@@ -96,24 +96,6 @@ const publishRules = [
     fileExtensions: ['.js'],
   },
 ]
-
-async function exists(path) {
-  try {
-    await access(path, constants.F_OK)
-    return true
-  } catch {
-    return false
-  }
-}
-
-async function entries(path) {
-  try {
-    return await readdir(path, { withFileTypes: true })
-  } catch (error) {
-    if (error.code === 'ENOENT') return []
-    throw error
-  }
-}
 
 function resolve(path) {
   return join(ROOT, path)
@@ -274,24 +256,6 @@ export async function copyStandalone({ distDir = DIST_DIR } = {}) {
   }
   await writePublishManifest(distDir, publishFiles)
   return copied
-}
-
-async function walkFiles(dir, files = []) {
-  for (const entry of await entries(dir)) {
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) await walkFiles(path, files)
-    else if (entry.isFile()) files.push(path)
-  }
-  return files
-}
-
-async function walkRelativeFiles(dir, currentDir = dir, files = []) {
-  for (const entry of await entries(currentDir)) {
-    const path = join(currentDir, entry.name)
-    if (entry.isDirectory()) await walkRelativeFiles(dir, path, files)
-    else if (entry.isFile()) files.push(relative(dir, path))
-  }
-  return files.sort()
 }
 
 function isLocalRef(ref) {

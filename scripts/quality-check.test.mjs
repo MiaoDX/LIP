@@ -6,6 +6,7 @@ import { access, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises
 import { dirname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { promisify } from 'node:util'
+import { exists } from './file-utils.mjs'
 
 const execFileAsync = promisify(execFile)
 const moduleUrl = `${pathToFileURL(join(process.cwd(), 'scripts', 'quality-check.mjs')).href}?test=${Date.now()}`
@@ -34,16 +35,6 @@ try {
 }
 
 let hidDist = false
-
-async function exists(path) {
-  try {
-    await access(path)
-    return true
-  } catch (error) {
-    if (error.code === 'ENOENT') return false
-    throw error
-  }
-}
 
 try {
   if (await exists(distDir)) {

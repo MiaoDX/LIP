@@ -7,12 +7,12 @@
  * mislead a new reader or agent.
  */
 
-import { access, readFile, readdir } from 'node:fs/promises'
-import { constants } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { execFile } from 'node:child_process'
 import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
 import { promisify } from 'node:util'
 import { hasMarpFrontmatter, marpOutputSlug } from './build-slides.mjs'
+import { entries, exists, walkMarkdownFiles } from './file-utils.mjs'
 import {
   cleanLink,
   frontmatterLinks,
@@ -101,24 +101,6 @@ const INDEX_COVERAGE_RULES = [
 let publishTargets = null
 let marpSlugs = null
 
-async function exists(path) {
-  try {
-    await access(path, constants.F_OK)
-    return true
-  } catch {
-    return false
-  }
-}
-
-async function entries(path) {
-  try {
-    return await readdir(path, { withFileTypes: true })
-  } catch (error) {
-    if (error.code === 'ENOENT') return []
-    throw error
-  }
-}
-
 async function trackedMarkdownFiles() {
   try {
     const { stdout } = await execFileAsync('git', ['ls-files', '*.md'], { cwd: ROOT })
@@ -141,15 +123,6 @@ async function publicMarkdownFiles() {
 async function expectedPublishTargets() {
   publishTargets ??= await collectPublishTargets({ distDir: DIST_DIR })
   return publishTargets
-}
-
-async function walkMarkdownFiles(dir, files = []) {
-  for (const entry of await entries(dir)) {
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) await walkMarkdownFiles(path, files)
-    else if (entry.isFile() && path.endsWith('.md')) files.push(path)
-  }
-  return files
 }
 
 async function publicIndexRoutesInDir(dir) {

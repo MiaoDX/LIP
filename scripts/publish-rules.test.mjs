@@ -1,23 +1,15 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict'
-import { access, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { exists } from './file-utils.mjs'
 
 const originalRoot = process.cwd()
 const tempRoot = await mkdtemp(join(tmpdir(), 'lip-publish-rules-'))
 const moduleUrl = `${pathToFileURL(join(originalRoot, 'scripts', 'publish-rules.mjs')).href}?test=${Date.now()}`
-
-async function exists(path) {
-  try {
-    await access(path)
-    return true
-  } catch {
-    return false
-  }
-}
 
 try {
   process.chdir(tempRoot)
