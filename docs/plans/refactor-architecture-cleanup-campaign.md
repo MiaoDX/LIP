@@ -65,8 +65,8 @@ names alive.
 ## Surface Metrics
 
 - Stale surfaces removed: 0
-- Duplicate concept owners merged: 4
-- Current callers migrated to one owner: 12
+- Duplicate concept owners merged: 5
+- Current callers migrated to one owner: 13
 - Tests/docs updated away from stale names: 6
 - New owners added: 2 internal owners (`file-utils`, `command-runner`)
 - Public contracts touched: 0; operational public-output boundary preserved
@@ -93,6 +93,10 @@ slice requires a public migration decision or unavailable proof.
 - 2026-06-23: Moved Slidev generated route/source ownership from
   `scripts/link-check.mjs` to `scripts/build-slidev.mjs`. Focused proof passed:
   `node scripts/build-slidev.test.mjs && node scripts/link-check.test.mjs`,
+  `npm run typecheck`, and `git diff --check`.
+- 2026-06-23: Moved scoped index and index coverage policy from
+  `scripts/link-check.mjs` to `site-map.mjs`. Focused proof passed:
+  `node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`,
   `npm run typecheck`, and `git diff --check`.
 - 2026-06-23: Baseline focused proof passed:
   `node scripts/markdown-route-utils.test.mjs && node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`

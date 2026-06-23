@@ -25,10 +25,12 @@ import {
 } from './markdown-route-utils.mjs'
 import { collectPublishTargets } from './publish-rules.mjs'
 import {
+  indexCoverageRules,
   marpScanDirs,
   navByLocale,
   operationalMarkdownSourceDirs,
   operationalMarkdownSourceFiles,
+  scopedIndexLinkFiles,
   sidebar,
   siteBase,
 } from '../site-map.mjs'
@@ -36,11 +38,6 @@ import {
 const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
 const execFileAsync = promisify(execFile)
-
-const SCOPED_INDEX_LINK_FILES = [
-  'drafts/index.md',
-  'en/drafts/index.md',
-]
 
 const PUBLIC_MARKDOWN_EXCLUDE_FILES = [
   '.quality-report.md',
@@ -51,49 +48,6 @@ const PUBLIC_MARKDOWN_EXCLUDE_DIRS = operationalMarkdownSourceDirs.map((dir) => 
 
 const GENERATED_ROUTES = [
   slidevGeneratedRoute,
-]
-
-const INDEX_COVERAGE_RULES = [
-  {
-    indexFile: 'stories/index.md',
-    contentDir: 'stories',
-    excludeSlugs: ['index'],
-  },
-  {
-    indexFile: 'lessons/index.md',
-    contentDir: 'lessons',
-    excludeSlugs: ['index'],
-  },
-  {
-    indexFile: 'resources/index.md',
-    contentDir: 'resources',
-    excludeSlugs: ['index'],
-  },
-  {
-    indexFile: 'proposals/index.md',
-    contentDir: 'proposals',
-    excludeSlugs: ['index'],
-  },
-  {
-    indexFile: 'bestpractice/index.md',
-    contentDir: 'bestpractice',
-    excludeSlugs: ['index', 'ai-lab-actions', 'panorama'],
-  },
-  {
-    indexFile: 'share/index.md',
-    contentDir: 'share',
-    excludeSlugs: ['index', 'README', 'meetup-multiagent-practice'],
-  },
-  {
-    indexFile: 'en/stories/index.md',
-    contentDir: 'en/stories',
-    excludeSlugs: ['index'],
-  },
-  {
-    indexFile: 'en/lessons/index.md',
-    contentDir: 'en/lessons',
-    excludeSlugs: ['index'],
-  },
 ]
 
 let publishTargets = null
@@ -196,8 +150,8 @@ function configuredRoutes() {
 async function existingScopedMarkdownFiles({
   scopedMarkdownFiles,
   configuredRouteLinks = configuredRoutes(),
-  scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
-  indexCoverageRules = INDEX_COVERAGE_RULES,
+  scopedIndexLinkFiles: scopedIndexFiles = scopedIndexLinkFiles,
+  indexCoverageRules: coverageRules = indexCoverageRules,
 } = {}) {
   const files = new Set(scopedMarkdownFiles ?? await publicMarkdownFiles())
   for (const route of configuredRouteLinks) {
@@ -205,10 +159,10 @@ async function existingScopedMarkdownFiles({
       if (await exists(join(ROOT, file))) files.add(file)
     }
   }
-  for (const file of scopedIndexLinkFiles) {
+  for (const file of scopedIndexFiles) {
     for (const linkedFile of await linkedMarkdownFiles(file)) files.add(linkedFile)
   }
-  for (const file of await indexCoverageMarkdownFiles(indexCoverageRules)) files.add(file)
+  for (const file of await indexCoverageMarkdownFiles(coverageRules)) files.add(file)
   return [...files].sort()
 }
 
@@ -344,29 +298,29 @@ async function checkIndexCoverageRule(rule, errors) {
 }
 
 async function checkIndexCoverage({
-  indexCoverageRules = INDEX_COVERAGE_RULES,
+  indexCoverageRules: coverageRules = indexCoverageRules,
 } = {}) {
   const errors = []
-  for (const rule of indexCoverageRules) await checkIndexCoverageRule(rule, errors)
+  for (const rule of coverageRules) await checkIndexCoverageRule(rule, errors)
   return errors
 }
 
 export async function checkScopedLinks({
   scopedMarkdownFiles,
   configuredRouteLinks = configuredRoutes(),
-  scopedIndexLinkFiles = SCOPED_INDEX_LINK_FILES,
-  indexCoverageRules = INDEX_COVERAGE_RULES,
+  scopedIndexLinkFiles: scopedIndexFiles = scopedIndexLinkFiles,
+  indexCoverageRules: coverageRules = indexCoverageRules,
 } = {}) {
   const errors = []
   const markdownFiles = await existingScopedMarkdownFiles({
     scopedMarkdownFiles,
     configuredRouteLinks,
-    scopedIndexLinkFiles,
-    indexCoverageRules,
+    scopedIndexLinkFiles: scopedIndexFiles,
+    indexCoverageRules: coverageRules,
   })
   for (const file of markdownFiles) await checkMarkdownFile(file, errors)
   await checkConfiguredRoutes(configuredRouteLinks, errors)
-  errors.push(...await checkIndexCoverage({ indexCoverageRules }))
+  errors.push(...await checkIndexCoverage({ indexCoverageRules: coverageRules }))
   return errors
 }
 

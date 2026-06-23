@@ -8,14 +8,14 @@ updated: 2026-06-23
 
 ## Current Slice
 
-Move scoped index and index coverage policy from `scripts/link-check.mjs` to
-`site-map.mjs`.
+Shrink repeated script test workspace setup into a bounded internal helper if a
+safe slice remains after route-policy ownership is consolidated.
 
 ## Last Proof
 
-Moved Slidev generated route/source ownership from `scripts/link-check.mjs` to
-`scripts/build-slidev.mjs`. Focused proof passed:
-`node scripts/build-slidev.test.mjs && node scripts/link-check.test.mjs`,
+Moved scoped index and index coverage policy from `scripts/link-check.mjs` to
+`site-map.mjs`. Focused proof passed:
+`node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`,
 `npm run typecheck`, and `git diff --check`.
 
 ## Next Candidate
@@ -25,7 +25,9 @@ safe slice remains after route-policy ownership is consolidated.
 
 ## Next Proof
 
-`node scripts/build-slidev.test.mjs && node scripts/link-check.test.mjs`,
+Focused proof depends on the accepted helper scope; likely
+`node scripts/build-slides.test.mjs && node scripts/build-slidev.test.mjs &&
+node scripts/link-check.test.mjs && node scripts/publish-rules.test.mjs`,
 `npm run typecheck`, and `git diff --check`.
 
 ## Parked Gates

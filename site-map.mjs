@@ -211,3 +211,51 @@ export const operationalPublicOutputPaths = [
   'CLAUDE.html',
   ...operationalMarkdownSourceDirs,
 ]
+
+export const scopedIndexLinkFiles = [
+  'drafts/index.md',
+  'en/drafts/index.md',
+]
+
+export const indexCoverageRules = [
+  {
+    indexFile: 'stories/index.md',
+    contentDir: 'stories',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'lessons/index.md',
+    contentDir: 'lessons',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'resources/index.md',
+    contentDir: 'resources',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'proposals/index.md',
+    contentDir: 'proposals',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'bestpractice/index.md',
+    contentDir: 'bestpractice',
+    excludeSlugs: ['index', 'ai-lab-actions', 'panorama'],
+  },
+  {
+    indexFile: 'share/index.md',
+    contentDir: 'share',
+    excludeSlugs: ['index', 'README', 'meetup-multiagent-practice'],
+  },
+  {
+    indexFile: 'en/stories/index.md',
+    contentDir: 'en/stories',
+    excludeSlugs: ['index'],
+  },
+  {
+    indexFile: 'en/lessons/index.md',
+    contentDir: 'en/lessons',
+    excludeSlugs: ['index'],
+  },
+]
