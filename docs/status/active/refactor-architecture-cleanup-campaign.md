@@ -5,9 +5,9 @@ Source gate: `docs/plans/refactor-architecture-cleanup-campaign.md`
 Latest user intent: high-autonomy architecture cleanup campaign with verified,
 atomic refactor slices.
 
-Current slice: commit verified public route candidate generation move.
+Current slice: commit verified Marp deck detection and slug calculation move.
 
-Last proof: `node scripts/markdown-route-utils.test.mjs && node
+Last proof: `node scripts/build-slides.test.mjs && node
 scripts/link-check.test.mjs` passed; `npm run typecheck` passed; `git diff
 --check` passed.
 
@@ -15,8 +15,8 @@ Next candidate: shrink duplicate filesystem helper ownership into a safe slice
 only if it reduces caller knowledge without changing public publish/link
 behavior.
 
-Next proof: focused script tests for touched modules, `npm run typecheck`, `git
-diff --check`.
+Next proof: `node scripts/build-slides.test.mjs && node
+scripts/link-check.test.mjs`, `npm run typecheck`, `git diff --check`.
 
 Parked work: none yet.
 

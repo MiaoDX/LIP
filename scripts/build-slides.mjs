@@ -12,6 +12,7 @@
 import { readdir, readFile, mkdir, rm } from 'node:fs/promises'
 import { join, relative, basename, extname } from 'node:path'
 import { spawn } from 'node:child_process'
+import { pathToFileURL } from 'node:url'
 import { marpScanDirs } from '../site-map.mjs'
 
 const ROOT = process.cwd()
@@ -40,20 +41,20 @@ async function walk(dir, out = []) {
   return out
 }
 
-function hasMarp(src) {
+export function hasMarpFrontmatter(src) {
   const fm = src.match(/^---\s*\n([\s\S]*?)\n---/)
   if (!fm) return false
   return /^\s*marp:\s*true\s*$/m.test(fm[1])
 }
 
-function slugOf(file) {
+export function marpOutputSlug(file) {
   return basename(file, extname(file))
 }
 
 function assertUniqueSlugs(files) {
   const filesBySlug = new Map()
   for (const file of files) {
-    const slug = slugOf(file)
+    const slug = marpOutputSlug(file)
     const group = filesBySlug.get(slug) || []
     group.push(file)
     filesBySlug.set(slug, group)
@@ -92,7 +93,7 @@ async function main() {
   const marpFiles = []
   for (const f of all) {
     const src = await readFile(f, 'utf8')
-    if (hasMarp(src)) marpFiles.push(f)
+    if (hasMarpFrontmatter(src)) marpFiles.push(f)
   }
 
   if (!marpFiles.length) {
@@ -106,7 +107,7 @@ async function main() {
     `Building ${marpFiles.length} slide deck(s) → ${relative(ROOT, OUT)} [${outs}]`
   )
   for (const f of marpFiles) {
-    const slug = slugOf(f)
+    const slug = marpOutputSlug(f)
     const html = join(OUT, slug + '.html')
     console.log(`  · ${relative(ROOT, f)} → ${slug}.${outs}`)
     await run(MARP_CMD, [
@@ -136,7 +137,9 @@ async function main() {
   console.log('✓ Done.')
 }
 
-main().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error(err)
+    process.exit(1)
+  })
+}

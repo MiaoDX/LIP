@@ -43,6 +43,8 @@ names alive.
 
 - Move public route candidate logic to the Markdown route utility owner and
   migrate link checking to that owner.
+- Move Marp deck detection and output slug calculation to the Marp builder owner
+  and migrate link checking to that owner.
 - Merge duplicate local filesystem helper modules only when a focused slice can
   preserve behavior and reduce caller knowledge.
 - Continue fresh discovery after the clear queue is exhausted.
@@ -50,9 +52,9 @@ names alive.
 ## Surface Metrics
 
 - Stale surfaces removed: 0
-- Duplicate concept owners merged: 0
-- Current callers migrated to one owner: 1
-- Tests/docs updated away from stale names: 1
+- Duplicate concept owners merged: 1
+- Current callers migrated to one owner: 2
+- Tests/docs updated away from stale names: 2
 - New owners added: 0
 - Public contracts touched: 0
 
@@ -74,4 +76,8 @@ slice requires a public migration decision or unavailable proof.
 - 2026-06-23: Moved public route candidate generation from link checking to the
   Markdown route utility owner. Focused proof passed:
   `node scripts/markdown-route-utils.test.mjs && node scripts/link-check.test.mjs`,
+  `npm run typecheck`, and `git diff --check`.
+- 2026-06-23: Moved Marp deck detection and output slug calculation from link
+  checking to the Marp builder owner. Focused proof passed:
+  `node scripts/build-slides.test.mjs && node scripts/link-check.test.mjs`,
   `npm run typecheck`, and `git diff --check`.

@@ -10,8 +10,9 @@
 import { access, readFile, readdir } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { execFile } from 'node:child_process'
-import { basename, dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
+import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
 import { promisify } from 'node:util'
+import { hasMarpFrontmatter, marpOutputSlug } from './build-slides.mjs'
 import {
   cleanLink,
   frontmatterLinks,
@@ -184,11 +185,6 @@ async function publicIndexMarkdownFilesInDir(dir) {
   return files.sort((left, right) => left.file.localeCompare(right.file))
 }
 
-function hasMarpFrontmatter(source) {
-  const frontmatter = source.match(/^---\s*\n([\s\S]*?)\n---/)
-  return frontmatter ? /^\s*marp:\s*true\s*$/m.test(frontmatter[1]) : false
-}
-
 async function expectedMarpSlugs() {
   if (marpSlugs) return marpSlugs
 
@@ -196,7 +192,7 @@ async function expectedMarpSlugs() {
   for (const dir of marpScanDirs) {
     for (const file of await walkMarkdownFiles(join(ROOT, dir))) {
       const source = await readFile(file, 'utf8')
-      if (hasMarpFrontmatter(source)) marpSlugs.add(basename(file, '.md'))
+      if (hasMarpFrontmatter(source)) marpSlugs.add(marpOutputSlug(file))
     }
   }
   return marpSlugs

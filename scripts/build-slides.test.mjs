@@ -5,11 +5,19 @@ import { execFile } from 'node:child_process'
 import { chmod, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { promisify } from 'node:util'
 
 const execFileAsync = promisify(execFile)
 const originalRoot = process.cwd()
 const tempRoot = await mkdtemp(join(tmpdir(), 'lip-build-slides-'))
+const moduleUrl = `${pathToFileURL(join(originalRoot, 'scripts', 'build-slides.mjs')).href}?test=${Date.now()}`
+
+const { hasMarpFrontmatter, marpOutputSlug } = await import(moduleUrl)
+
+assert.equal(hasMarpFrontmatter('---\nmarp: true\n---\n# Deck'), true)
+assert.equal(hasMarpFrontmatter('---\nmarp: false\n---\n# Deck'), false)
+assert.equal(marpOutputSlug('/tmp/slides/deck.md'), 'deck')
 
 try {
   process.chdir(tempRoot)
