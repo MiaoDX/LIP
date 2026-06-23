@@ -40,6 +40,49 @@ export function routeToMarkdownFileCandidates(route, { siteBase = '/' } = {}) {
   return [`${withoutSlash}.md`]
 }
 
+export function publicPathToCandidates(path, { siteBase = '/' } = {}) {
+  const route = trimBase(path, siteBase)
+  const cleanRoute = cleanLink(route)
+  const withoutSlash = cleanRoute.replace(/^\/+/, '')
+  const source = []
+  const dist = []
+
+  if (!withoutSlash) {
+    source.push('index.md')
+    dist.push('index.html')
+    return { source, dist }
+  }
+
+  if (withoutSlash.endsWith('/')) {
+    const stem = withoutSlash.slice(0, -1)
+    source.push(`${stem}/index.md`)
+    dist.push(`${stem}/index.html`)
+    return { source, dist }
+  }
+
+  if (extname(withoutSlash) === '.html') {
+    source.push(withoutSlash.replace(/\.html$/, '.md'))
+    dist.push(withoutSlash)
+    return { source, dist }
+  }
+
+  if (extname(withoutSlash) === '.md') {
+    source.push(withoutSlash)
+    dist.push(withoutSlash.replace(/\.md$/, '.html'))
+    return { source, dist }
+  }
+
+  if (extname(withoutSlash)) {
+    source.push(`public/${withoutSlash}`)
+    dist.push(withoutSlash)
+    return { source, dist }
+  }
+
+  source.push(`${withoutSlash}.md`)
+  dist.push(`${withoutSlash}.html`)
+  return { source, dist }
+}
+
 export function trimBase(path, siteBase = '/') {
   if (siteBase !== '/' && path.startsWith(siteBase)) return `/${path.slice(siteBase.length)}`
   return path

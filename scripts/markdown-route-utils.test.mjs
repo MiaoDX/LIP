@@ -6,6 +6,7 @@ import {
   frontmatterLinks,
   isExternalLink,
   markdownLinks,
+  publicPathToCandidates,
   routeToMarkdownFileCandidates,
   trimBase,
 } from './markdown-route-utils.mjs'
@@ -60,6 +61,23 @@ assert.equal(trimBase('/drafts/', '/LIP/'), '/drafts/')
 assert.deepEqual(routeToMarkdownFileCandidates('/drafts'), ['drafts.md'])
 assert.deepEqual(routeToMarkdownFileCandidates('/drafts/'), ['drafts/index.md'])
 assert.deepEqual(routeToMarkdownFileCandidates('/images/demo.png'), [])
+
+assert.deepEqual(publicPathToCandidates('/LIP/', { siteBase: '/LIP/' }), {
+  source: ['index.md'],
+  dist: ['index.html'],
+})
+assert.deepEqual(publicPathToCandidates('/LIP/share/demo.html', { siteBase: '/LIP/' }), {
+  source: ['share/demo.md'],
+  dist: ['share/demo.html'],
+})
+assert.deepEqual(publicPathToCandidates('/images/demo.png'), {
+  source: ['public/images/demo.png'],
+  dist: ['images/demo.png'],
+})
+assert.deepEqual(publicPathToCandidates('/share/demo'), {
+  source: ['share/demo.md'],
+  dist: ['share/demo.html'],
+})
 
 assert.equal(isExternalLink('https://example.com'), true)
 assert.equal(isExternalLink('mailto:hello@example.com'), true)
