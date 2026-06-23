@@ -189,3 +189,25 @@ export const marpScanDirs = [
   'ai-coding',
   'bestpractice',
 ]
+
+export const operationalMarkdownSourceFiles = [
+  'AGENTS.md',
+  'CLAUDE.md',
+]
+
+export const operationalMarkdownSourceDirs = [
+  'docs/agents',
+  'docs/plans',
+  'docs/status',
+]
+
+export const operationalMarkdownSrcExclude = [
+  ...operationalMarkdownSourceFiles,
+  ...operationalMarkdownSourceDirs.map((dir) => `${dir}/**/*.md`),
+]
+
+export const operationalPublicOutputPaths = [
+  'AGENTS.html',
+  'CLAUDE.html',
+  ...operationalMarkdownSourceDirs,
+]

@@ -15,7 +15,7 @@ import { pathToFileURL } from 'node:url'
 import { checkScopedLinks } from './link-check.mjs'
 import { cleanLink, markdownLinks, routeToMarkdownFileCandidates, trimBase } from './markdown-route-utils.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
-import { siteBase } from '../site-map.mjs'
+import { operationalPublicOutputPaths, siteBase } from '../site-map.mjs'
 
 const execFileAsync = promisify(execFile)
 const ROOT = process.cwd()
@@ -23,12 +23,6 @@ const REPORT_FILE = join(ROOT, '.quality-report.md')
 const DIST_DIR = join(ROOT, '.vitepress', 'dist')
 const REPORT_TIMESTAMP_RE = /^生成时间: .+$/m
 const WORD_SEGMENTER = new Intl.Segmenter(['zh', 'en'], { granularity: 'word' })
-const OPERATIONAL_PUBLIC_OUTPUTS = [
-  'AGENTS.html',
-  'CLAUDE.html',
-  'docs/agents',
-  'docs/plans',
-]
 
 async function exists(path) {
   try {
@@ -156,7 +150,7 @@ async function operationalOutputGate() {
   }
 
   const leaked = []
-  for (const path of OPERATIONAL_PUBLIC_OUTPUTS) {
+  for (const path of operationalPublicOutputPaths) {
     if (await exists(join(DIST_DIR, path))) leaked.push(path)
   }
   if (leaked.length) {

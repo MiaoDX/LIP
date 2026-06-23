@@ -23,7 +23,14 @@ import {
   trimBase,
 } from './markdown-route-utils.mjs'
 import { collectPublishTargets } from './publish-rules.mjs'
-import { marpScanDirs, navByLocale, sidebar, siteBase } from '../site-map.mjs'
+import {
+  marpScanDirs,
+  navByLocale,
+  operationalMarkdownSourceDirs,
+  operationalMarkdownSourceFiles,
+  sidebar,
+  siteBase,
+} from '../site-map.mjs'
 
 const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
@@ -36,14 +43,10 @@ const SCOPED_INDEX_LINK_FILES = [
 
 const PUBLIC_MARKDOWN_EXCLUDE_FILES = [
   '.quality-report.md',
-  'AGENTS.md',
-  'CLAUDE.md',
+  ...operationalMarkdownSourceFiles,
 ]
 
-const PUBLIC_MARKDOWN_EXCLUDE_DIRS = [
-  'docs/agents/',
-  'docs/plans/',
-]
+const PUBLIC_MARKDOWN_EXCLUDE_DIRS = operationalMarkdownSourceDirs.map((dir) => `${dir}/`)
 
 const GENERATED_ROUTES = [
   {

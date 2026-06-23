@@ -2,7 +2,7 @@
 
 import assert from 'node:assert/strict'
 import { execFile } from 'node:child_process'
-import { access, mkdir, readFile, rename, writeFile } from 'node:fs/promises'
+import { access, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { promisify } from 'node:util'
@@ -70,7 +70,20 @@ try {
   assert.match(report, /\| 文章 \| 词数 \| 标题 \| 代码块 \| 清单 \| 评分 \| 等级 \|/)
   assert.match(report, /\| Built standalone publish output \| SKIP \|/)
   assert.match(report, /\| Public operational doc boundary \| SKIP \|/)
+
+  await mkdir(join(distDir, 'docs', 'status', 'active'), { recursive: true })
+  await writeFile(join(distDir, 'docs', 'status', 'active', 'capsule.html'), '<h1>private</h1>')
+
+  try {
+    await execFileAsync('node', ['scripts/quality-check.mjs'])
+  } catch {
+    // Expected: the fake dist tree contains operational output.
+  }
+
+  const leakReport = await readFile(reportFile, 'utf8')
+  assert.match(leakReport, /\| Public operational doc boundary \| FAIL \| docs\/status should stay agent\/process-only, not public site output \|/)
 } finally {
+  await rm(distDir, { recursive: true, force: true })
   if (hidDist) await rename(hiddenDistDir, distDir)
   if (originalReport !== null) await writeFile(reportFile, originalReport)
 }

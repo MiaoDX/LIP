@@ -45,6 +45,8 @@ names alive.
   migrate link checking to that owner.
 - Move Marp deck detection and output slug calculation to the Marp builder owner
   and migrate link checking to that owner.
+- Move operational Markdown/public-output boundary lists to the site map owner,
+  including `docs/status/**` active capsules.
 - Merge duplicate local filesystem helper modules only when a focused slice can
   preserve behavior and reduce caller knowledge.
 - Continue fresh discovery after the clear queue is exhausted.
@@ -52,11 +54,11 @@ names alive.
 ## Surface Metrics
 
 - Stale surfaces removed: 0
-- Duplicate concept owners merged: 1
-- Current callers migrated to one owner: 2
-- Tests/docs updated away from stale names: 2
+- Duplicate concept owners merged: 2
+- Current callers migrated to one owner: 5
+- Tests/docs updated away from stale names: 4
 - New owners added: 0
-- Public contracts touched: 0
+- Public contracts touched: 0; operational public-output boundary preserved
 
 ## Parked Gates
 
@@ -80,4 +82,8 @@ slice requires a public migration decision or unavailable proof.
 - 2026-06-23: Moved Marp deck detection and output slug calculation from link
   checking to the Marp builder owner. Focused proof passed:
   `node scripts/build-slides.test.mjs && node scripts/link-check.test.mjs`,
+  `npm run typecheck`, and `git diff --check`.
+- 2026-06-23: Moved operational doc boundary lists to `site-map.mjs` and added
+  `docs/status/**` to the agent/process-only boundary. Focused proof passed:
+  `node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`,
   `npm run typecheck`, and `git diff --check`.

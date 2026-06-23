@@ -158,11 +158,13 @@ try {
   }), [])
 
   await mkdir('docs/plans', { recursive: true })
+  await mkdir('docs/status/active', { recursive: true })
   await writeFile('README.md', '# Root')
   await writeFile('docs/plans/private.md', '[Missing private link](/missing-private)')
+  await writeFile('docs/status/active/private.md', '[Missing private status link](/missing-status-private)')
   await writeFile('public-sidecar.md', '[Missing public link](/missing-public)')
   await execFileAsync('git', ['init'])
-  await execFileAsync('git', ['add', 'README.md', 'docs/plans/private.md', 'public-sidecar.md'])
+  await execFileAsync('git', ['add', 'README.md', 'docs/plans/private.md', 'docs/status/active/private.md', 'public-sidecar.md'])
   assert.deepEqual(await checkScopedLinks({
     configuredRouteLinks: [],
     scopedIndexLinkFiles: [],
