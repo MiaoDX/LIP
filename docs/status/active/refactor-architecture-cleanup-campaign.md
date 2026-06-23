@@ -8,18 +8,18 @@ updated: 2026-06-23
 
 ## Current Slice
 
-Run fresh discovery handoff 1 after the initial queue is exhausted.
+Run fresh discovery handoff 1 after tracked file owner migration.
 
 ## Last Proof
 
-Moved repeated script test command, module URL, temp workspace, cwd restore, and
-cleanup setup to `scripts/test-workspace.mjs`; removed stale fake `site-map.mjs`
-writes from build-script tests. Focused proof passed: `npm run test:scripts`
-and `git diff --check`.
+Moved `git ls-files` command capture and parsing from link/quality gates to
+`scripts/file-utils.mjs`. Focused proof passed:
+`node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`,
+`npm run typecheck`, and `git diff --check`.
 
 ## Next Candidate
 
-Fresh reduce-entropy discovery from current `HEAD`.
+Fresh reduce-entropy discovery handoff after tracked file owner migration.
 
 ## Next Proof
 

@@ -8,12 +8,10 @@
  */
 
 import { readFile } from 'node:fs/promises'
-import { execFile } from 'node:child_process'
 import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
-import { promisify } from 'node:util'
 import { hasMarpFrontmatter, marpOutputSlug } from './build-slides.mjs'
 import { slidevGeneratedRoute } from './build-slidev.mjs'
-import { entries, exists, walkMarkdownFiles } from './file-utils.mjs'
+import { entries, exists, trackedFiles, walkMarkdownFiles } from './file-utils.mjs'
 import {
   cleanLink,
   frontmatterLinks,
@@ -37,7 +35,6 @@ import {
 
 const ROOT = process.cwd()
 const DIST_DIR = '.vitepress/dist'
-const execFileAsync = promisify(execFile)
 
 const PUBLIC_MARKDOWN_EXCLUDE_FILES = [
   '.quality-report.md',
@@ -54,13 +51,7 @@ let publishTargets = null
 let marpSlugs = null
 
 async function trackedMarkdownFiles() {
-  try {
-    const { stdout } = await execFileAsync('git', ['ls-files', '*.md'], { cwd: ROOT })
-    return stdout.split('\n').filter(Boolean)
-  } catch {
-    return walkMarkdownFiles(ROOT)
-      .then((files) => files.map((file) => relative(ROOT, file)))
-  }
+  return trackedFiles(ROOT, ['*.md'])
 }
 
 function isPublicMarkdownFile(file) {

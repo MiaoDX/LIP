@@ -1,6 +1,10 @@
+import { execFile } from 'node:child_process'
 import { access, readdir } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { join, relative } from 'node:path'
+import { promisify } from 'node:util'
+
+const execFileAsync = promisify(execFile)
 
 export async function exists(path) {
   try {
@@ -37,6 +41,16 @@ export async function walkMarkdownFiles(dir, options = {}) {
 export async function walkRelativeFiles(dir, options = {}) {
   const files = await walkFiles(dir, options)
   return files.map((file) => relative(dir, file)).sort()
+}
+
+export async function trackedFiles(root, patterns = []) {
+  try {
+    const { stdout } = await execFileAsync('git', ['ls-files', ...patterns], { cwd: root })
+    return stdout.split('\n').filter(Boolean)
+  } catch {
+    return walkFiles(root)
+      .then((files) => files.map((file) => relative(root, file)).sort())
+  }
 }
 
 async function collectFiles(dir, files, { includeFile, skipDirs }) {

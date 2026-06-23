@@ -65,8 +65,8 @@ names alive.
 ## Surface Metrics
 
 - Stale surfaces removed: 2 stale fake `site-map.mjs` test writes
-- Duplicate concept owners merged: 6
-- Current callers migrated to one owner: 18
+- Duplicate concept owners merged: 7
+- Current callers migrated to one owner: 20
 - Tests/docs updated away from stale names: 8
 - New owners added: 3 internal owners (`file-utils`, `command-runner`,
   `test-workspace`)
@@ -103,6 +103,11 @@ slice requires a public migration decision or unavailable proof.
   cwd restore, and cleanup setup to `scripts/test-workspace.mjs`; removed stale
   fake `site-map.mjs` writes from build-script tests. Focused proof passed:
   `npm run test:scripts` and `git diff --check`.
+- 2026-06-23: Fresh discovery handoff 1 after commit `22dd7a6` found a safe P1
+  tracked-file owner slice. Moved `git ls-files` command capture and parsing
+  from link/quality gates to `scripts/file-utils.mjs`. Focused proof passed:
+  `node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`,
+  `npm run typecheck`, and `git diff --check`.
 - 2026-06-23: Baseline focused proof passed:
   `node scripts/markdown-route-utils.test.mjs && node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`
   and `npm run typecheck`.

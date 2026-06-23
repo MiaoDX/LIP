@@ -7,17 +7,14 @@
  */
 
 import { readFile, writeFile } from 'node:fs/promises'
-import { execFile } from 'node:child_process'
-import { promisify } from 'node:util'
 import { basename, dirname, join, relative } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { checkScopedLinks } from './link-check.mjs'
-import { entries, exists } from './file-utils.mjs'
+import { entries, exists, trackedFiles } from './file-utils.mjs'
 import { cleanLink, markdownLinks, routeToMarkdownFileCandidates, trimBase } from './markdown-route-utils.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
 import { operationalPublicOutputPaths, siteBase } from '../site-map.mjs'
 
-const execFileAsync = promisify(execFile)
 const ROOT = process.cwd()
 const REPORT_FILE = join(ROOT, '.quality-report.md')
 const DIST_DIR = join(ROOT, '.vitepress', 'dist')
@@ -107,11 +104,7 @@ function articleTable(rows) {
 }
 
 async function trackedGeneratedOutputs() {
-  const { stdout } = await execFileAsync('git', ['ls-files'], { cwd: ROOT })
-  const tracked = stdout
-    .split('\n')
-    .filter(Boolean)
-    .filter(isGeneratedSourcePath)
+  const tracked = (await trackedFiles(ROOT)).filter(isGeneratedSourcePath)
 
   const existing = []
   for (const file of tracked) {
