@@ -1,6 +1,6 @@
 ---
 refactor_scope: architecture-cleanup-campaign
-status: DONE
+status: CONTINUE
 accepted_severities:
   - P1
   - P2
@@ -53,11 +53,20 @@ names alive.
   `scripts/command-runner.mjs`.
 - Ran fresh discovery after the clear queue was exhausted.
 
+## Current Slice Queue
+
+- Move Slidev generated route/source ownership from link checking to the Slidev
+  build module.
+- Move scoped index and index coverage policy from link checking to the site
+  map owner.
+- Shrink repeated script test workspace setup into a bounded internal helper if
+  a safe slice remains after the route-policy moves.
+
 ## Surface Metrics
 
 - Stale surfaces removed: 0
 - Duplicate concept owners merged: 4
-- Current callers migrated to one owner: 11
+- Current callers migrated to one owner: 12
 - Tests/docs updated away from stale names: 6
 - New owners added: 2 internal owners (`file-utils`, `command-runner`)
 - Public contracts touched: 0; operational public-output boundary preserved
@@ -77,6 +86,14 @@ slice requires a public migration decision or unavailable proof.
 
 ## Evidence
 
+- 2026-06-23: Fresh discovery after campaign restart found three eligible
+  internal slices: Slidev generated route ownership, site-map index coverage
+  ownership, and script test harness deepening. Materiality gate accepted all
+  three as P1/P2 recurring rediscovery reductions.
+- 2026-06-23: Moved Slidev generated route/source ownership from
+  `scripts/link-check.mjs` to `scripts/build-slidev.mjs`. Focused proof passed:
+  `node scripts/build-slidev.test.mjs && node scripts/link-check.test.mjs`,
+  `npm run typecheck`, and `git diff --check`.
 - 2026-06-23: Baseline focused proof passed:
   `node scripts/markdown-route-utils.test.mjs && node scripts/link-check.test.mjs && node scripts/quality-check.test.mjs`
   and `npm run typecheck`.

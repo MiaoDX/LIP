@@ -9,13 +9,19 @@
 
 import { rm } from 'node:fs/promises'
 import { join, relative } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { runCommand } from './command-runner.mjs'
 import { siteBase } from '../site-map.mjs'
 
 const ROOT = process.cwd()
-const ENTRY = join(ROOT, 'slides', 'slides.md')
-const OUT = join(ROOT, '.vitepress', 'dist', 'slides', 'slidev')
-const BASE = `${siteBase.replace(/\/$/, '')}/slides/slidev/`
+export const slidevGeneratedRoute = {
+  route: '/slides/slidev/',
+  source: 'slides/slides.md',
+}
+
+const ENTRY = join(ROOT, slidevGeneratedRoute.source)
+const OUT = join(ROOT, '.vitepress', 'dist', ...slidevGeneratedRoute.route.split('/').filter(Boolean))
+const BASE = `${siteBase.replace(/\/$/, '')}${slidevGeneratedRoute.route}`
 const SLIDEV_CMD = process.env.SLIDEV_CMD || 'npx'
 const SLIDEV_ARGS = process.env.SLIDEV_CMD ? [] : ['slidev']
 
@@ -25,7 +31,9 @@ async function main() {
   await runCommand(SLIDEV_CMD, [...SLIDEV_ARGS, 'build', ENTRY, '--base', BASE, '--out', OUT])
 }
 
-main().catch((error) => {
-  console.error(error)
-  process.exit(1)
-})
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => {
+    console.error(error)
+    process.exit(1)
+  })
+}

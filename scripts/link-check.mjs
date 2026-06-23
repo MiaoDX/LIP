@@ -12,6 +12,7 @@ import { execFile } from 'node:child_process'
 import { dirname, extname, isAbsolute, join, normalize, relative } from 'node:path'
 import { promisify } from 'node:util'
 import { hasMarpFrontmatter, marpOutputSlug } from './build-slides.mjs'
+import { slidevGeneratedRoute } from './build-slidev.mjs'
 import { entries, exists, walkMarkdownFiles } from './file-utils.mjs'
 import {
   cleanLink,
@@ -49,10 +50,7 @@ const PUBLIC_MARKDOWN_EXCLUDE_FILES = [
 const PUBLIC_MARKDOWN_EXCLUDE_DIRS = operationalMarkdownSourceDirs.map((dir) => `${dir}/`)
 
 const GENERATED_ROUTES = [
-  {
-    route: '/slides/slidev/',
-    source: 'slides/slides.md',
-  },
+  slidevGeneratedRoute,
 ]
 
 const INDEX_COVERAGE_RULES = [
