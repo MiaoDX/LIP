@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Native Algorithm Engineering · MiaoDX</title>
+<meta name="description" content="MiaoDX 面向硬件 AI、机器人与算法工程架构团队的候选人沟通 brief：自动驾驶、机器人应用栈与可验证 Agent 研发闭环。">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+:root {
+  --bg: #f6f2ea;
+  --paper: #fffaf1;
+  --ink: #161411;
+  --soft: #5d554b;
+  --muted: #897d6f;
+  --rule: #d9cdbc;
+  --accent: #9f3d2f;
+  --blue: #246075;
+  --green: #38674f;
+  --amber: #9a681c;
+  --panel: #eee5d8;
+  --shadow: 0 18px 50px rgba(53, 42, 30, 0.08);
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); color: var(--ink); }
+body {
+  margin: 0;
+  font-family: Inter, "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.58;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.page {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: 34px clamp(20px, 5vw, 64px) 64px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--soft);
+  font-size: 13px;
+}
+.brand {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.nav a {
+  color: var(--soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.nav a:hover { color: var(--accent); border-color: currentColor; }
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: clamp(28px, 5vw, 62px);
+  padding: 54px 0 42px;
+  border-bottom: 1px solid var(--rule);
+}
+.eyebrow, .section-kicker, .tag, .label {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  margin-bottom: 20px;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+h1 em {
+  display: block;
+  color: var(--accent);
+  font-style: normal;
+}
+.lede {
+  max-width: 52em;
+  color: var(--soft);
+  font-size: clamp(17px, 2.1vw, 22px);
+  margin-bottom: 24px;
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 14px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+.btn.primary { background: var(--ink); color: var(--bg); }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary:hover { background: var(--accent); color: var(--bg); }
+.hero-card {
+  align-self: end;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+.hero-card h2 {
+  font-size: 20px;
+  line-height: 1.26;
+  margin-bottom: 16px;
+}
+.hero-card ul, .card ul {
+  margin: 0;
+  padding-left: 1.1em;
+}
+.hero-card li, .card li { margin: 7px 0; color: var(--soft); }
+.strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 30px 0 0;
+}
+.metric {
+  background: var(--paper);
+  padding: 18px;
+  min-height: 112px;
+}
+.metric strong {
+  display: block;
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.metric span { color: var(--soft); font-size: 13px; }
+.section {
+  padding: 46px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section-head {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 28px;
+  align-items: baseline;
+  margin-bottom: 24px;
+}
+.section-kicker {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+h2 {
+  font-size: clamp(26px, 4vw, 44px);
+  line-height: 1.12;
+  letter-spacing: 0;
+  margin-bottom: 0;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 22px;
+  min-width: 0;
+}
+.card.emphasis { border-top: 4px solid var(--accent); }
+.card.blue { border-top: 4px solid var(--blue); }
+.card.green { border-top: 4px solid var(--green); }
+.card.amber { border-top: 4px solid var(--amber); }
+.card h3 {
+  font-size: 22px;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+.card p { color: var(--soft); margin-bottom: 0; }
+.label {
+  display: inline-flex;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.quote {
+  padding: 24px 28px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 8px;
+  font-size: clamp(20px, 3vw, 31px);
+  line-height: 1.35;
+}
+.quote span { color: #efb5a9; }
+.case {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  gap: 20px;
+  align-items: stretch;
+  margin-bottom: 18px;
+}
+.case:last-child { margin-bottom: 0; }
+.case-media {
+  background: #1d1a16;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  min-height: 260px;
+  display: flex;
+}
+.case-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.case-media.contain img {
+  object-fit: contain;
+  background: #f8f5ee;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.link-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 11px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(255, 250, 241, 0.72);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+.link-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.timeline {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.step {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 18px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+.step .tag { color: var(--blue); font-size: 11px; font-weight: 700; }
+.step h3 { margin: 0 0 6px; font-size: 19px; }
+.step p { color: var(--soft); margin: 0; }
+.footer {
+  padding-top: 26px;
+  color: var(--muted);
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .page { padding-top: 24px; }
+  .topbar { align-items: flex-start; flex-direction: column; }
+  .nav { justify-content: flex-start; }
+  .hero, .section-head, .case, .grid-2, .grid-3, .strip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero { padding-top: 38px; }
+  h1 {
+    font-size: clamp(40px, 12vw, 52px);
+    line-height: 1.04;
+  }
+  .lede { font-size: 17px; }
+  .btn {
+    width: 100%;
+    min-height: 40px;
+  }
+  .hero-actions { gap: 10px; }
+  .case-media { min-height: 210px; }
+  .step { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <nav class="topbar" aria-label="页面导航">
+    <div class="brand">MiaoDX · Candidate Brief</div>
+    <div class="nav">
+      <a href="https://miaodx.com/">Homepage</a>
+      <a href="https://miaodx.com/resume/">Resume</a>
+      <a href="https://github.com/MiaoDX">GitHub</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">AI-Native Algorithm Engineering</div>
+      <h1>从算法工程<br><em>到 Agent 研发闭环</em></h1>
+      <p class="lede">我过去几年在自动驾驶感知系统和机器人应用栈里做算法工程化。最近一年，我把 AI coding 从“更快写代码”推进到“算法、仿真、metric、visual evidence、MCP、skill、report 组成可持续迭代的工程闭环”。</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="https://miaodx.com/resume/">查看简历</a>
+        <a class="btn" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">Roboharness Report</a>
+        <a class="btn" href="https://miaodx.com/LIP/ai-coding/roboclaws-give-robots-the-mind/">RoboClaws Report</a>
+      </div>
+      <div class="strip" aria-label="核心经历摘要">
+        <div class="metric"><strong>2019-2025</strong><span>自动驾驶与感知系统工程<br>DeepMotion.ai → XiaomiEV</span></div>
+        <div class="metric"><strong>2025-</strong><span>机器人应用栈与工厂项目 setup<br>规划、仿真、抓取、系统接入</span></div>
+        <div class="metric"><strong>8 weeks</strong><span>内部 AI coding 系列分享<br>harness / MCP / skill / workflow</span></div>
+        <div class="metric"><strong>2 cases</strong><span>Roboharness + RoboClaws<br>可验证机器人 Agent 工作流</span></div>
+      </div>
+    </div>
+    <aside class="hero-card">
+      <h2>我适合解决的问题</h2>
+      <ul>
+        <li>大团队算法迭代需要更快进入产品闭环</li>
+        <li>仿真、评测、数据和工程平台需要被 agent 调用</li>
+        <li>跨模块 pipeline 需要 metric、report、quota 和 regression 机制</li>
+        <li>AI coding 需要从个人提效走向团队级研发基础设施</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">01 / Positioning</div>
+      <h2>不是“会用 Codex”<br>而是把研发系统改成 AI-native</h2>
+    </div>
+    <div class="quote">我关心的是：<span>怎样让算法、仿真、评测、证据和工程交付进入同一个 agent 可运行闭环</span></div>
+    <div class="grid-3" style="margin-top:16px">
+      <article class="card emphasis">
+        <span class="label">System</span>
+        <h3>从单点算法到系统交付</h3>
+        <p>自动驾驶感知系统和机器人应用栈经验，让我更关注接口、资源、延迟、可观测性和产品化边界。</p>
+      </article>
+      <article class="card blue">
+        <span class="label">Harness</span>
+        <h3>从人工盯屏到自我验收</h3>
+        <p>把人脑里的验收判断拆成 metric、visual evidence、日志、artifact 和 report，让 agent 可以连续跑。</p>
+      </article>
+      <article class="card green">
+        <span class="label">Workflow</span>
+        <h3>从个人技巧到团队工作流</h3>
+        <p>通过 README / architecture / status / skill / report 分层，让人只看决策面，agent 负责中间执行面。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">02 / Evidence</div>
+      <h2>两个已经公开的机器人 Agent 案例</h2>
+    </div>
+
+    <article class="case">
+      <div class="card emphasis">
+        <span class="label">Case A · Roboharness</span>
+        <h3>从真实机器人项目抽出来的 Agent 验收层</h3>
+        <p>真实项目中，agent 能改代码、调参数、跑仿真，但长程任务会卡在“它不知道自己改完后是否真的变好”。Roboharness 把验收做成 metric + visual 的双轨证据流水线，让 agent 每轮都有 PASS / FAIL / surface-to-human 的判断依据。</p>
+        <ul style="margin-top:12px">
+          <li>机器人抓取规划从 16 秒优化到约 3 秒</li>
+          <li>视觉发现 unknown unknown，再沉淀成稳定 metric</li>
+          <li>artifact / report 让人不用每轮盯屏验收</li>
+        </ul>
+        <div class="links">
+          <a class="link-pill" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">完整 HTML report</a>
+          <a class="link-pill" href="https://github.com/MiaoDX/roboharness">GitHub repo</a>
+        </div>
+      </div>
+      <a class="case-media" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">
+        <img src="ai-native-algorithm-engineering-assets/roboharness-g1-comparison.gif" alt="Unitree G1 robot grasp simulation comparison">
+      </a>
+    </article>
+
+    <article class="case">
+      <div class="card blue">
+        <span class="label">Case B · RoboClaws</span>
+        <h3>给机器人开放任务一个可维护的大脑</h3>
+        <p>给机器人接一个大模型不等于拥有智能。RoboClaws 把开放任务组织成 task / skill / MCP tool / backend / report 的边界，让机器人任务能运行、能失败、能留下证据、能被下一轮改进。</p>
+        <ul style="margin-top:12px">
+          <li>Skill 承载策略经验，MCP 保持稳定能力边界</li>
+          <li>runtime map 和 report 保存 agent 的世界记忆</li>
+          <li>同一套 contract 可迁移到仿真和真机方向</li>
+        </ul>
+        <div class="links">
+          <a class="link-pill" href="https://miaodx.com/LIP/ai-coding/roboclaws-give-robots-the-mind/">完整 HTML report</a>
+          <a class="link-pill" href="https://github.com/MiaoDX/roboclaws">GitHub repo</a>
+        </div>
+      </div>
+      <a class="case-media contain" href="https://miaodx.com/LIP/ai-coding/roboclaws-give-robots-the-mind/">
+        <img src="ai-native-algorithm-engineering-assets/roboclaws-runtime-map.png" alt="RoboClaws runtime map and report evidence">
+      </a>
+    </article>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">03 / Team Fit</div>
+      <h2>我能为硬件 AI / 算法工程架构团队承担的 scope</h2>
+    </div>
+    <div class="grid-2">
+      <article class="card emphasis">
+        <span class="label">Scope 01</span>
+        <h3>算法实验与评测 Agent Loop</h3>
+        <p>把内部计算、数据、训练、仿真和评测平台封装成 agent 可调用的稳定能力，让 research idea 能自动开任务、跑 baseline、收集指标、生成报告。</p>
+      </article>
+      <article class="card blue">
+        <span class="label">Scope 02</span>
+        <h3>跨模块 Pipeline 可观测性</h3>
+        <p>用工程视角拆解 pipeline 的延迟、资源、quota、退化和责任边界，让多个算法模块在同一产品目标下优化。</p>
+      </article>
+      <article class="card green">
+        <span class="label">Scope 03</span>
+        <h3>仿真到产品的证据协议</h3>
+        <p>把 demo、仿真、真机 pilot、human review 统一成可审计证据，避免“看起来成功”的假阳性进入长期迭代。</p>
+      </article>
+      <article class="card amber">
+        <span class="label">Scope 04</span>
+        <h3>团队级 AI Coding Workflow</h3>
+        <p>帮助团队建立计划、对齐、实现、review、降熵和文档分层机制，让 AI coding 从个人习惯变成可复制的工程制度。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">04 / Conversation</div>
+      <h2>下一轮沟通我会主动对齐的几个问题</h2>
+    </div>
+    <div class="timeline">
+      <div class="step">
+        <div class="tag">Question 01</div>
+        <div>
+          <h3>这个团队最终 owner 哪类指标</h3>
+          <p>用户体验、算法效果、pipeline 性能、交付稳定性，还是研发迭代效率？不同答案对应不同架构抓手。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="tag">Question 02</div>
+        <div>
+          <h3>算法团队和工程架构团队的边界如何定义</h3>
+          <p>当 A/B 两个团队都能做一件事时，谁负责规则、quota、验收、回归和长期维护？</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="tag">Question 03</div>
+        <div>
+          <h3>内部是否已经有统一仿真 / 评测 / 数据平台</h3>
+          <p>如果已有，我可以把它们封装给 agent；如果没有，我会先从最小闭环建立 report 和 metric 协议。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="tag">Question 04</div>
+        <div>
+          <h3>AI agent 是个人效率工具，还是准备进入研发基础设施</h3>
+          <p>如果目标是后者，需要的不只是 prompt，而是权限边界、工具封装、证据格式、回归机制和团队共识。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">05 / Links</div>
+      <h2>进一步了解</h2>
+    </div>
+    <div class="grid-3">
+      <article class="card emphasis">
+        <span class="label">Profile</span>
+        <h3>个人主页</h3>
+        <p>公开构建 AI 协作与自动化系统，持续记录 AI coding、OpenClaw、机器人和多 Agent 实践。</p>
+        <div class="links"><a class="link-pill" href="https://miaodx.com/">miaodx.com</a></div>
+      </article>
+      <article class="card blue">
+        <span class="label">Resume</span>
+        <h3>中文简历</h3>
+        <p>自动驾驶、感知系统、机器人与 AI coding 工程化经历。</p>
+        <div class="links"><a class="link-pill" href="https://miaodx.com/resume/">resume</a></div>
+      </article>
+      <article class="card green">
+        <span class="label">Learn In Public</span>
+        <h3>LIP 内容仓库</h3>
+        <p>演讲、案例、复盘、项目报告和公开学习记录。</p>
+        <div class="links"><a class="link-pill" href="https://miaodx.com/LIP/">miaodx.com/LIP</a></div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>MiaoDX · AI-Native Algorithm Engineering Brief</span>
+    <span>Updated 2026-06-29</span>
+  </footer>
+</main>
+</body>
+</html>
