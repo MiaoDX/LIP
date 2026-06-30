@@ -14,6 +14,16 @@ Run `npm run typecheck` when changing TypeScript/VitePress config or JavaScript 
 
 ## Agent-facing MCP
 
-No Serena or equivalent MCP symbol server is checked into this repo today.
+Serena is initialized for this workspace through `.serena/project.yml`, and the
+current Codex session can activate the `LIP` project with Serena `1.5.1` in
+`codex` context.
 
-Do not add a guessed `.mcp.json`. Serena installation and activation depend on the host agent CLI and the current upstream Serena transport/setup instructions. If symbol-level MCP support is needed, confirm the current Serena setup path first, then add a repo-scoped config that contains no secrets.
+There is still no checked-in `.mcp.json` host entry. Do not add a guessed one:
+Serena installation and activation depend on the host agent CLI and the current
+upstream Serena transport/setup instructions. If a shared host entry is needed,
+confirm the current Serena setup path first, then add a repo-scoped config that
+contains no secrets.
+
+`.serena/project.local.yml`, `.serena/cache/`, and `.serena/memories/` are
+local-only. Do not commit machine-local overrides, cache output, or session
+memories.

@@ -18,6 +18,8 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 
 | 目录 | 内容 | 更新频率 |
 |------|------|---------|
+| [`ARCHITECTURE.md`](ARCHITECTURE.md) | 发布架构、source owner、build flow、proof boundary | 架构变化时 |
+| [`STATUS.md`](STATUS.md) | 当前状态、支持命令、维护重点、已知 blocker | 状态变化时 |
 | `now/` | 月度时间线叙事 | 每月 |
 | [`ai-coding/`](ai-coding/) | AI Coding 专题页、项目式演讲、research/scripts/assets | 按项目 |
 | [`openclaw/`](openclaw/) | OpenClaw 主线入口，汇总部署、配置、案例 | 按专题 |
@@ -33,6 +35,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 | [`proposals/`](proposals/) | 技术提案 | 按需 |
 | [`en/`](en/) | 英文站点镜像入口与已翻译内容 | 按需 |
 | `docs/agents/` | Agent runbooks，不作为公开内容发布 | 按工作流 |
+| [`docs/human/README.md`](docs/human/README.md) | 给人看的补充说明，避免根文档膨胀 | 按需 |
 | `scripts/` | VitePress、Marp、发布规则、质量门禁脚本 | 按工具 |
 | [`templates/`](templates/README.md) | Standalone deck 起始模板 | 按模板 |
 | `public/` | VitePress passthrough 资源；`public/consult/` 是咨询页源 | 按需 |
@@ -81,6 +84,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 - stories/ 和 lessons/ 内容不应大段重复 — 用"一句话摘要 + 链接到完整版"
 - 过程草稿可以放在 `drafts/`，公开发布内容放入对应栏目后同步更新入口
 - Agent 操作规则以 `AGENTS.md` 和 `docs/agents/` 为准，Claude-specific 例外见 `CLAUDE.md`
+- 人类当前态和架构说明以 `ARCHITECTURE.md`、`STATUS.md`、`docs/human/` 为准；不要把 agent runbook 当作公开项目真相
 - Agent/process 文档不会发布到 GitHub Pages；`npm run build:all` 会完成公开输出边界、关键本地链接和发布规则检查。已有构建输出时，可用 `npm run quality:check` 做聚焦复查
 
 **share/ 目录规则**：

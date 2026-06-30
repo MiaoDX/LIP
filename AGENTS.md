@@ -5,6 +5,8 @@ Repo-level startup instructions for coding agents.
 ## Read first
 
 - `README.md` for project purpose, content map, and publishing conventions.
+- `ARCHITECTURE.md` for source owners, build flow, and proof boundaries.
+- `STATUS.md` for current maintenance focus, supported commands, and known blockers.
 - `docs/agents/README.md` for repo-specific agent runbooks.
 - `CONTEXT.md` and `docs/adr/` when present. Absence is not a problem; see `docs/agents/domain.md`.
 
