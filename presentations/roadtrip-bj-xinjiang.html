@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京 → 新疆 14 天自驾路线 · 环形单向穿越 · v3 (含看点 + 美食)</title>
+<title>北京 → 新疆 14 天自驾路线 · 环形单向穿越 · v4 (高亮无视角跳变)</title>
 <style>
 :root {
   --bg: #f5f3ee;
@@ -626,12 +626,13 @@ function highlightDay(day) {
     el.classList.add('active');
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
+  // Clear previous, add new highlights (no auto-zoom; map stays put)
   document.querySelectorAll('.segment-path').forEach(s => s.classList.remove('day-highlight'));
   const segIdx = DAY_TO_SEG_IDX[day] || [];
   segIdx.forEach(i => {
     document.querySelector(`.segment-path[data-idx="${i}"]`)?.classList.add('day-highlight');
   });
-  if (segIdx.length > 0) zoomToSegments(segIdx.map(i => SEGMENTS[i]));
+  // zoomToSegments removed per user feedback — map视角乱跳
 }
 
 function zoomToSegments(segs) {
