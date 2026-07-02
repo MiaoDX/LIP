@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京 → 新疆 14 天自驾路线 · 环形单向穿越</title>
+<title>北京 → 新疆 14 天自驾路线 · 环形单向穿越 · v3 (含看点 + 美食)</title>
 <style>
 :root {
   --bg: #f5f3ee;
@@ -102,6 +102,27 @@ body {
 .day-item .day-sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
 .day-item .day-km { float: right; font-size: 12px; color: var(--muted); font-weight: 500; }
 .day-item .day-km .km-val { color: var(--accent); font-weight: 700; }
+
+.poi-section {
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px dashed var(--border);
+  font-size: 11.5px;
+}
+.poi-group {
+  margin-bottom: 4px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+  line-height: 1.6;
+}
+.poi-label {
+  font-weight: 600; color: #4b5563; margin-right: 2px; flex-shrink: 0;
+  font-size: 11.5px;
+}
+.poi-tag {
+  background: #f3f4f6; padding: 1px 8px; border-radius: 11px;
+  font-size: 11px; white-space: nowrap; color: #374151;
+  border: 1px solid #e5e7eb;
+}
+.poi-tag.see { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+.poi-tag.eat { background: #fef3c7; border-color: #fde68a; color: #92400e; }
 
 .reset-btn {
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
@@ -318,6 +339,24 @@ const DAY_TO_SEG_IDX = {
   11: [17], 12: [18, 19], 13: [20], 14: []
 };
 
+// 每段路线 / 每天的"看点 + 吃"标注（按 day 索引）
+const POIS = {
+  1:  { see: ["🌾 草原天路东段", "⛰️ 阴山外景", "🐂 牧区牛羊"],         eat: ["🍖 手把肉", "🥛 奶茶 + 炒米", "🍜 莜面"] },
+  2:  { see: ["🏞️ 黄河河套", "⛰️ 阴山山脉", "🌅 河套日落"],         eat: ["🐟 黄河鲤鱼", "🍜 巴盟面筋"] },
+  3:  { see: ["🌄 戈壁日落", "🚀 酒泉卫星发射中心（路过）", "🏜️ 巴丹吉林沙漠边缘"], eat: ["🍜 路餐（服务区）", "🍖 沿途清真"] },
+  4:  { see: ["🏛️ 黑城遗址", "🏜️ 雅丹魔鬼城", "🌲 胡杨林（9-10月才美，7月意义不大）"], eat: ["🍚 手抓饭", "🍈 哈密瓜（7月正好）", "🫓 烤馕"] },
+  5:  { see: ["🌋 火焰山", "🍇 葡萄沟", "🏜️ 库木塔格沙漠", "🏔️ 天山背景"],   eat: ["🍈 哈密瓜", "🍇 吐鲁番葡萄", "🥟 大盘鸡", "🍖 烤羊肉"] },
+  6:  { see: ["🏔️ 可可托海国家地质公园", "🏞️ 额尔齐斯河大峡谷", "🗻 神钟山"],   eat: ["🐟 冷水鱼（乔尔泰）", "🥔 富蕴土豆"] },
+  7:  { see: ["🏞️ 喀纳斯湖三湾（神仙湾/月亮湾/卧龙湾）", "🌲 禾木村清晨炊烟", "⛰️ 雪山倒影"],   eat: ["🍶 图瓦奶酒（卡瓦斯）", "🫓 馕", "🍖 烤肉"] },
+  8:  { see: ["🌅 五彩滩日落", "🗿 乌尔禾魔鬼城", "🏞️ 禾木村河谷"],          eat: ["🐟 布尔津烤鱼（狗鱼）", "🥗 克拉玛依凉皮"] },
+  9:  { see: ["💎 赛里木湖（蓝宝石色）", "🌉 果子沟大桥", "🌸 湖边花海"],   eat: ["🐟 高白鲑鱼（赛里木湖特产）"] },
+  10: { see: ["🌉 果子沟大桥", "🌾 伊犁河谷", "💜 薰衣草庄园（6-7月最好）", "🏛️ 伊宁老城"],   eat: ["🍖 伊犁手抓肉", "🥛 马奶酒", "🍦 薰衣草冰激凌"] },
+  11: { see: ["🌾 那拉提空中草原", "🐎 天马故乡", "🌳 雪岭云杉"],         eat: ["🍖 烤全羊", "🍶 马奶酒", "🥛 酸奶疙瘩"] },
+  12: { see: ["🌲 巩乃斯林场", "🗻 天山神秘大峡谷", "🏛️ 库车老城（龟兹文化）", "🕌 库车清真寺"],   eat: ["🍑 库车小白杏", "🍖 馕坑肉", "🍚 库车拌面"] },
+  13: { see: ["🏞️ 博斯腾湖", "🏯 铁门关", "🌅 孔雀河"],                 eat: ["🍐 库尔勒香梨", "🐟 烤鱼", "🍖 尉犁罗布羊"] },
+  14: { see: ["✈️ 4h 直飞"],                                       eat: ["🍱 机场简餐"] }
+};
+
 const LABEL_OFFSETS = {
   "北京": [14, -16], "乌兰察布": [14, 4], "巴彦淖尔": [14, 4],
   "额济纳旗": [14, 4], "哈密": [14, 4], "鄯善": [18, -12],
@@ -471,11 +510,18 @@ function renderDayList() {
     const kmDisplay = d.km > 0
       ? `<span class="day-km"><span class="km-val">${d.km}</span> km · ${d.dur}h</span>`
       : `<span class="day-km">✈ ${d.dur}h</span>`;
+    const poi = POIS[d.day] || { see: [], eat: [] };
+    const seeTags = poi.see.map(s => `<span class="poi-tag see">${s}</span>`).join('');
+    const eatTags = poi.eat.map(e => `<span class="poi-tag eat">${e}</span>`).join('');
     item.innerHTML = `
       <span class="day-num ${numClass}">${d.day}</span>
       <span class="day-title">${d.title}</span>
       ${kmDisplay}
       <div class="day-sub">${d.desc}</div>
+      <div class="poi-section">
+        <div class="poi-group"><span class="poi-label">🏔️ 看</span>${seeTags}</div>
+        <div class="poi-group"><span class="poi-label">🍽️ 吃</span>${eatTags}</div>
+      </div>
     `;
     list.appendChild(item);
   });
@@ -486,10 +532,15 @@ const tooltip = document.getElementById('tooltip');
 const mapCard = document.getElementById('map-card');
 
 function showSegmentTooltip(e, seg) {
+  const poi = POIS[seg.day] || { see: [], eat: [] };
+  const seeLine = poi.see.slice(0, 3).join(' · ');
+  const eatLine = poi.eat.slice(0, 2).join(' · ');
   const content = `<div class="tt-title">${seg.from} → ${seg.to}</div>
     <div class="tt-row"><span class="tt-label">道路距离</span><span class="tt-val">${seg.road} km</span></div>
     <div class="tt-row"><span class="tt-label">驾车时长</span><span class="tt-val">${seg.dur} h</span></div>
     <div class="tt-row"><span class="tt-label">Day</span><span class="tt-val">D${seg.day}</span></div>
+    ${seeLine ? `<div style="margin-top:6px;font-size:11px;color:#9ca3af;">🏔️ ${seeLine}</div>` : ''}
+    ${eatLine ? `<div style="font-size:11px;color:#9ca3af;">🍽️ ${eatLine}</div>` : ''}
     ${seg.road > 350 ? '<div class="tt-warn">⚠ 超过 350km 安全缓冲，需中途充电</div>' : ''}`;
   tooltip.innerHTML = content;
   tooltip.className = 'visible';
