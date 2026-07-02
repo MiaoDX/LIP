@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京 → 新疆 14 天自驾路线 · 环形单向穿越</title>
+<title>北京 → 新疆 14 天自驾路线 · 环形单向穿越 · v2 (高德真实距离)</title>
 <style>
 :root {
   --bg: #f5f3ee;
@@ -166,7 +166,8 @@ body {
   <div class="meta">
     <span><span class="badge badge-green">0704 周六出发</span></span>
     <span><span class="badge badge-orange">0717 周五返京</span></span>
-    <span><span class="badge badge-red">总里程 <span id="total-km">5863</span> km</span></span>
+    <span><span class="badge badge-red">总里程 <span id="total-km">6032</span> km</span></span>
+    <span><span class="badge badge-red">总时长 <span id="total-h">80.9</span> h</span></span>
     <span>🚙 轿车 · 电车 · 两人轮换</span>
     <span>⚡ 实际续航 400-450 km（含空调）</span>
   </div>
@@ -177,7 +178,7 @@ body {
   <button id="btn-road" class="active" onclick="setMode('road')">道路距离（OSRM）</button>
   <button id="btn-line" onclick="setMode('line')">直线距离</button>
   <button id="btn-both" onclick="setMode('both')">对比显示</button>
-  <span class="note">数据来源：OpenStreetMap Routing Machine（OSRM）· 建议用高德 API 替换</span>
+  <span class="note">✅ 道路距离：高德路径规划 API（strategy=11 推荐路线）· 直线距离：Haversine 公式 · 驾车时长：高德实时估算</span>
 </div>
 
 <div class="main">
@@ -213,23 +214,23 @@ body {
     <div class="risk-box">
       <h3>⚡ 电车关键风险段</h3>
       <div class="risk-item">
-        <div class="r-where">D4 额济纳旗 → 哈密 · 678 km</div>
+        <div class="r-where">D4 额济纳旗 → 哈密 · 684 km</div>
         <div class="r-why">G7 京新高速 + 风沙 · 需中途充 1-2 次</div>
       </div>
       <div class="risk-item">
-        <div class="r-where">D5 哈密 → 富蕴 · 1077 km（分 4 段）</div>
-        <div class="r-why">吐乌大高速 + 阜康到富蕴 416 km 桩少</div>
+        <div class="r-where">D5 哈密 → 富蕴 · 1094 km（分 4 段）</div>
+        <div class="r-why">吐乌大高速 + 阜康到富蕴 425 km 桩少</div>
       </div>
       <div class="risk-item">
-        <div class="r-where">D6 富蕴 → 喀纳斯 · 409 km</div>
+        <div class="r-where">D6 富蕴 → 喀纳斯 · 410 km</div>
         <div class="r-why">阿尔泰山腹地 · 桩稀 · 雨天推一天</div>
       </div>
       <div class="risk-item">
-        <div class="r-where">D12 那拉提 → 库车 · 360 km</div>
+        <div class="r-where">D12 那拉提 → 库车 · 386 km</div>
         <div class="r-why">巩乃斯林场 · 桩稀疏 · 满电出发</div>
       </div>
       <div style="margin-top:10px;font-size:11px;color:#9a3412;font-style:italic;">
-        实际续航 400-450 km（含空调）· 单段 ≤ 350 km（留缓冲）
+        实际续航 400-450 km（含空调）· 单段 ≤ 350 km（留缓冲）· 数据：高德路径规划
       </div>
     </div>
 
@@ -280,29 +281,29 @@ const PROVINCES = [
   { name: "内蒙古", path: "M 500,200 L 600,180 L 700,160 L 800,140 L 900,120 L 1000,100 L 1100,80 L 1200,60 L 1300,40 L 1400,20 L 1400,0 L 1300,0 L 1200,0 L 1100,0 L 1000,0 L 900,0 L 800,0 L 700,0 L 600,0 L 500,0 L 400,0 L 300,0 L 200,0 L 100,0 L 0,0 L 0,50 L 0,100 L 50,120 L 100,140 L 150,160 L 200,180 L 250,200 L 300,220 L 350,240 L 400,260 L 450,280 L 500,300 L 550,320 L 600,340 L 650,360 L 700,380 L 750,400 L 800,420 L 850,440 L 900,460 L 950,480 L 1000,500 L 1050,520 L 1100,540 L 1150,560 L 1200,580 L 1250,600 L 1300,620 L 1350,640 L 1400,660 L 1400,700 L 1400,750 L 1400,800 L 1400,850 L 1400,900 L 1300,900 L 1200,900 L 1100,900 L 1000,900 L 900,900 L 800,900 L 700,900 L 600,900 L 500,900 L 400,900 L 300,900 L 200,900 L 100,900 L 0,900 L 0,850 L 0,800 L 0,750 L 0,700 L 0,650 L 0,600 L 0,550 L 0,500 L 0,450 L 0,400 L 0,350 L 0,300 L 0,250 L 0,200 L 50,180 L 100,160 L 150,140 L 200,120 L 250,100 L 300,80 L 350,60 L 400,40 L 450,20 L 500,0 Z" },
 ];
 
-// Route segments with OSRM data
+// Route segments with high-accuracy Amap data (road + duration)
 const SEGMENTS = [
-  { from: "北京", to: "乌兰察布", flng: 116.41, flat: 39.91, tlng: 113.11, tlat: 41.04, road: 352, line: 306, day: 1, type: "stay" },
-  { from: "乌兰察布", to: "巴彦淖尔", flng: 113.11, flat: 41.04, tlng: 107.39, tlat: 40.74, road: 545, line: 482, day: 2, type: "stay" },
-  { from: "巴彦淖尔", to: "额济纳旗", flng: 107.39, flat: 40.74, tlng: 101.07, tlat: 41.97, road: 660, line: 545, day: 3, type: "stay" },
-  { from: "额济纳旗", to: "哈密", flng: 101.07, flat: 41.97, tlng: 93.51, tlat: 42.83, road: 678, line: 628, day: 4, type: "stay" },
-  { from: "哈密", to: "鄯善", flng: 93.51, flat: 42.83, tlng: 90.21, tlat: 42.87, road: 316, line: 269, day: 5, type: "transit" },
-  { from: "鄯善", to: "吐鲁番", flng: 90.21, flat: 42.87, tlng: 89.18, tlat: 42.96, road: 95, line: 84, day: 5, type: "transit" },
-  { from: "吐鲁番", to: "阜康", flng: 89.18, flat: 42.96, tlng: 87.99, tlat: 44.16, road: 250, line: 164, day: 5, type: "transit" },
-  { from: "阜康", to: "富蕴", flng: 87.99, flat: 44.16, tlng: 89.51, tlat: 47.00, road: 416, line: 337, day: 5, type: "stay" },
-  { from: "富蕴", to: "喀纳斯", flng: 89.51, flat: 47.00, tlng: 87.04, tlat: 48.65, road: 409, line: 260, day: 6, type: "stay" },
-  { from: "喀纳斯", to: "禾木", flng: 87.04, flat: 48.65, tlng: 87.43, tlat: 48.48, road: 76, line: 34, day: 7, type: "stay" },
-  { from: "禾木", to: "布尔津", flng: 87.43, flat: 48.48, tlng: 86.86, tlat: 47.71, road: 141, line: 96, day: 8, type: "transit" },
-  { from: "布尔津", to: "五彩滩", flng: 86.86, flat: 47.71, tlng: 86.86, tlat: 47.70, road: 2, line: 1, day: 8, type: "transit" },
-  { from: "五彩滩", to: "乌尔禾", flng: 86.86, flat: 47.70, tlng: 85.69, tlat: 46.10, road: 219, line: 199, day: 8, type: "transit" },
-  { from: "乌尔禾", to: "克拉玛依", flng: 85.69, flat: 46.10, tlng: 84.89, tlat: 45.59, road: 93, line: 84, day: 8, type: "stay" },
-  { from: "克拉玛依", to: "赛里木湖", flng: 84.89, flat: 45.59, tlng: 81.18, tlat: 44.62, road: 459, line: 310, day: 9, type: "stay" },
-  { from: "赛里木湖", to: "果子沟", flng: 81.18, flat: 44.62, tlng: 81.07, tlat: 44.43, road: 96, line: 23, day: 10, type: "transit" },
-  { from: "果子沟", to: "伊宁", flng: 81.07, flat: 44.43, tlng: 81.32, tlat: 43.92, road: 104, line: 60, day: 10, type: "stay" },
-  { from: "伊宁", to: "那拉提", flng: 81.32, flat: 43.92, tlng: 84.43, tlat: 43.32, road: 279, line: 259, day: 11, type: "stay" },
-  { from: "那拉提", to: "巩乃斯", flng: 84.43, flat: 43.32, tlng: 84.78, tlat: 43.21, road: 30, line: 31, day: 12, type: "transit" },
-  { from: "巩乃斯", to: "库车", flng: 84.78, flat: 43.21, tlng: 82.96, tlat: 41.71, road: 360, line: 224, day: 12, type: "stay" },
-  { from: "库车", to: "库尔勒", flng: 82.96, flat: 41.71, tlng: 86.06, tlat: 41.76, road: 286, line: 257, day: 13, type: "stay" },
+  { from: "北京", to: "乌兰察布", flng: 116.41, flat: 39.91, tlng: 113.11, tlat: 41.04, road: 350, line: 306, dur: 4.7, day: 1, type: "stay" },
+  { from: "乌兰察布", to: "巴彦淖尔", flng: 113.11, flat: 41.04, tlng: 107.39, tlat: 40.74, road: 549, line: 482, dur: 5.8, day: 2, type: "stay" },
+  { from: "巴彦淖尔", to: "额济纳旗", flng: 107.39, flat: 40.74, tlng: 101.07, tlat: 41.97, road: 681, line: 545, dur: 7.8, day: 3, type: "stay" },
+  { from: "额济纳旗", to: "哈密", flng: 101.07, flat: 41.97, tlng: 93.51, tlat: 42.83, road: 684, line: 628, dur: 8.0, day: 4, type: "stay" },
+  { from: "哈密", to: "鄯善", flng: 93.51, flat: 42.83, tlng: 90.21, tlat: 42.87, road: 316, line: 269, dur: 4.6, day: 5, type: "transit" },
+  { from: "鄯善", to: "吐鲁番", flng: 90.21, flat: 42.87, tlng: 89.18, tlat: 42.96, road: 94, line: 84, dur: 1.4, day: 5, type: "transit" },
+  { from: "吐鲁番", to: "阜康", flng: 89.18, flat: 42.96, tlng: 87.99, tlat: 44.16, road: 259, line: 164, dur: 3.1, day: 5, type: "transit" },
+  { from: "阜康", to: "富蕴", flng: 87.99, flat: 44.16, tlng: 89.51, tlat: 47.00, road: 425, line: 337, dur: 5.0, day: 5, type: "stay" },
+  { from: "富蕴", to: "喀纳斯", flng: 89.51, flat: 47.00, tlng: 87.04, tlat: 48.65, road: 410, line: 260, dur: 6.3, day: 6, type: "stay" },
+  { from: "喀纳斯", to: "禾木", flng: 87.04, flat: 48.65, tlng: 87.43, tlat: 48.48, road: 170, line: 34, dur: 4.1, day: 7, type: "stay" },
+  { from: "禾木", to: "布尔津", flng: 87.43, flat: 48.48, tlng: 86.86, tlat: 47.71, road: 140, line: 96, dur: 2.3, day: 8, type: "transit" },
+  { from: "布尔津", to: "五彩滩", flng: 86.86, flat: 47.71, tlng: 86.86, tlat: 47.70, road: 1, line: 1, dur: 0.1, day: 8, type: "transit" },
+  { from: "五彩滩", to: "乌尔禾", flng: 86.86, flat: 47.70, tlng: 85.69, tlat: 46.10, road: 231, line: 199, dur: 2.7, day: 8, type: "transit" },
+  { from: "乌尔禾", to: "克拉玛依", flng: 85.69, flat: 46.10, tlng: 84.89, tlat: 45.59, road: 91, line: 84, dur: 1.4, day: 8, type: "stay" },
+  { from: "克拉玛依", to: "赛里木湖", flng: 84.89, flat: 45.59, tlng: 81.18, tlat: 44.62, road: 462, line: 310, dur: 5.4, day: 9, type: "stay" },
+  { from: "赛里木湖", to: "果子沟", flng: 81.18, flat: 44.62, tlng: 81.07, tlat: 44.43, road: 96, line: 23, dur: 1.7, day: 10, type: "transit" },
+  { from: "果子沟", to: "伊宁", flng: 81.07, flat: 44.43, tlng: 81.32, tlat: 43.92, road: 102, line: 60, dur: 1.7, day: 10, type: "stay" },
+  { from: "伊宁", to: "那拉提", flng: 81.32, flat: 43.92, tlng: 84.43, tlat: 43.32, road: 288, line: 259, dur: 4.1, day: 11, type: "stay" },
+  { from: "那拉提", to: "巩乃斯", flng: 84.43, flat: 43.32, tlng: 84.78, tlat: 43.21, road: 30, line: 31, dur: 0.7, day: 12, type: "transit" },
+  { from: "巩乃斯", to: "库车", flng: 84.78, flat: 43.21, tlng: 82.96, tlat: 41.71, road: 356, line: 224, dur: 6.6, day: 12, type: "stay" },
+  { from: "库车", to: "库尔勒", flng: 82.96, flat: 41.71, tlng: 86.06, tlat: 41.76, road: 297, line: 257, dur: 3.5, day: 13, type: "stay" },
 ];
 
 const CITIES = [
@@ -331,20 +332,20 @@ const CITIES = [
 ];
 
 const DAY_SUMMARIES = [
-  { day: 1, title: "北京 → 乌兰察布", km: 352, desc: "G7 京新高速起点 · 草原天路", stays: "乌兰察布" },
-  { day: 2, title: "乌兰察布 → 巴彦淖尔", km: 545, desc: "阴山 + 黄河 · 充 1 次", stays: "巴彦淖尔" },
-  { day: 3, title: "巴彦淖尔 → 额济纳旗", km: 660, desc: "戈壁日落 · 充 1 次", stays: "额济纳旗" },
-  { day: 4, title: "额济纳旗 → 哈密", km: 678, desc: "G7 京新穿越 · 充 1-2 次 ⚠", stays: "哈密" },
-  { day: 5, title: "哈密 → 鄯善 → 吐鲁番 → 阜康 → 富蕴", km: 1077, desc: "火焰山+葡萄沟路过 · 充 1 次", stays: "富蕴" },
-  { day: 6, title: "富蕴 → 可可托海 → 喀纳斯", km: 409, desc: "额尔齐斯河大峡谷 · 充 1-2 次 ⚠", stays: "喀纳斯" },
-  { day: 7, title: "喀纳斯 → 禾木", km: 76, desc: "清晨炊烟 · 住禾木", stays: "禾木" },
-  { day: 8, title: "禾木 → 布尔津 → 五彩滩 → 乌尔禾 → 克拉玛依", km: 455, desc: "魔鬼城 + 五彩滩", stays: "克拉玛依" },
-  { day: 9, title: "克拉玛依 → 赛里木湖", km: 459, desc: "高山湖泊 · 充 1 次", stays: "赛里木湖" },
-  { day: 10, title: "赛里木湖 → 果子沟 → 伊宁", km: 280, desc: "果子沟大桥 · 伊犁河谷", stays: "伊宁" },
-  { day: 11, title: "伊宁 → 那拉提", km: 279, desc: "空中草原", stays: "那拉提" },
-  { day: 12, title: "那拉提 → 巩乃斯 → 库车", km: 390, desc: "天山神秘大峡谷 · 充 1 次 ⚠", stays: "库车" },
-  { day: 13, title: "库车 → 库尔勒", km: 286, desc: "博斯腾湖", stays: "库尔勒" },
-  { day: 14, title: "库尔勒 ✈ 北京", km: 0, desc: "4h 直飞 · 每天 1 班", stays: "—" },
+  { day: 1, title: "北京 → 乌兰察布", km: 350, dur: 4.7, desc: "G7 京新高速起点 · 草原天路", stays: "乌兰察布" },
+  { day: 2, title: "乌兰察布 → 巴彦淖尔", km: 549, dur: 5.8, desc: "阴山 + 黄河 · 充 1 次", stays: "巴彦淖尔" },
+  { day: 3, title: "巴彦淖尔 → 额济纳旗", km: 681, dur: 7.8, desc: "戈壁日落 · 充 1 次", stays: "额济纳旗" },
+  { day: 4, title: "额济纳旗 → 哈密", km: 684, dur: 8.0, desc: "G7 京新穿越 · 充 1-2 次 ⚠", stays: "哈密" },
+  { day: 5, title: "哈密 → 鄯善 → 吐鲁番 → 阜康 → 富蕴", km: 1094, dur: 14.1, desc: "火焰山+葡萄沟路过 · 充 1 次", stays: "富蕴" },
+  { day: 6, title: "富蕴 → 可可托海 → 喀纳斯", km: 410, dur: 6.3, desc: "额尔齐斯河大峡谷 · 充 1-2 次 ⚠", stays: "喀纳斯" },
+  { day: 7, title: "喀纳斯 → 禾木", km: 170, dur: 4.1, desc: "清晨炊烟 · 住禾木", stays: "禾木" },
+  { day: 8, title: "禾木 → 布尔津 → 五彩滩 → 乌尔禾 → 克拉玛依", km: 463, dur: 6.5, desc: "魔鬼城 + 五彩滩", stays: "克拉玛依" },
+  { day: 9, title: "克拉玛依 → 赛里木湖", km: 462, dur: 5.4, desc: "高山湖泊 · 充 1 次", stays: "赛里木湖" },
+  { day: 10, title: "赛里木湖 → 果子沟 → 伊宁", km: 198, dur: 3.4, desc: "果子沟大桥 · 伊犁河谷", stays: "伊宁" },
+  { day: 11, title: "伊宁 → 那拉提", km: 288, dur: 4.1, desc: "空中草原", stays: "那拉提" },
+  { day: 12, title: "那拉提 → 巩乃斯 → 库车", km: 386, dur: 7.3, desc: "天山神秘大峡谷 · 充 1 次 ⚠", stays: "库车" },
+  { day: 13, title: "库车 → 库尔勒", km: 297, dur: 3.5, desc: "博斯腾湖", stays: "库尔勒" },
+  { day: 14, title: "库尔勒 ✈ 北京", km: 0, dur: 4.0, desc: "4h 直飞 · 每天 1 班", stays: "—" },
 ];
 
 let currentMode = 'road';
@@ -511,7 +512,7 @@ function renderDayList() {
     item.onclick = () => highlightDay(i + 1);
 
     const numClass = d.day === 1 ? 'start' : (d.day === 14 ? 'start' : 'stay');
-    const kmDisplay = d.km > 0 ? `<span class="day-km"><span class="km-val">${d.km}</span> km</span>` : '';
+    const kmDisplay = d.km > 0 ? `<span class="day-km"><span class="km-val">${d.km}</span> km · ${d.dur}h</span>` : `<span class="day-km">✈ ${d.dur}h</span>`;
 
     item.innerHTML = `
       <span class="day-num ${numClass}">${d.day}</span>
@@ -531,12 +532,14 @@ function showSegmentTooltip(e, seg, idx) {
   const rect = mapCard.getBoundingClientRect();
   const road = seg.road;
   const line = seg.line;
+  const dur = seg.dur;
   const diff = road - line;
   const ratio = ((road / line) - 1) * 100;
 
   let content = `<div class="tt-title">${seg.from} → ${seg.to}</div>`;
   if (currentMode === 'road' || currentMode === 'both') {
     content += `<div class="tt-row"><span class="tt-label">道路距离</span><span class="tt-val">${road} km</span></div>`;
+    if (dur) content += `<div class="tt-row"><span class="tt-label">驾车时长</span><span class="tt-val">${dur} h</span></div>`;
   }
   if (currentMode === 'line' || currentMode === 'both') {
     content += `<div class="tt-row"><span class="tt-label">直线距离</span><span class="tt-val">${line} km</span></div>`;
@@ -587,7 +590,9 @@ function setMode(mode) {
 
 function updateTotal() {
   const total = SEGMENTS.reduce((sum, s) => sum + (currentMode === 'line' ? s.line : s.road), 0);
+  const totalH = SEGMENTS.reduce((sum, s) => sum + (s.dur || 0), 0);
   document.getElementById('total-km').textContent = Math.round(total);
+  document.getElementById('total-h').textContent = totalH.toFixed(1);
 }
 
 function highlightDay(day) {
