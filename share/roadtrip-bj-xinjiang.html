@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京 → 新疆 15 天自驾路线 · 环形单向穿越 · V6 / V7 双版本</title>
+<title>北京自驾路线 5 版本对比 · V6/V7 新疆 + V8-A/B/C 东北/沿海/内蒙避暑</title>
 <style>
 :root {
   --bg: #f5f3ee;
@@ -253,6 +253,9 @@ body {
         <span class="version-switch">
           <button class="version-btn active" data-version="v6" onclick="switchVersion('v6')">V6 · 经典北疆</button>
           <button class="version-btn" data-version="v7" onclick="switchVersion('v7')">V7 · 强南疆</button>
+          <button class="version-btn" data-version="v8a" onclick="switchVersion('v8a')">V8-A · 东北+沿海</button>
+          <button class="version-btn" data-version="v8b" onclick="switchVersion('v8b')">V8-B · 东北+草原</button>
+          <button class="version-btn" data-version="v8c" onclick="switchVersion('v8c')">V8-C · 沿海+草原</button>
         </span>
       </h1>
       <div class="header sub" id="route-sub">15 天 · 京新 G7 → 吐鲁番/天池 → 北疆核心 → 独库 → 库尔勒（V6: 经典北疆，无南疆）</div>
@@ -492,6 +495,310 @@ const V6_LABEL_OFFSETS = {
 
 
 // ============================================================
+// V8-A DATA — 东北 + 沿海 15 天（避暑 7 月首选）
+// 北京 → 北戴河 → 兴城 → 锦州 → 沈阳 → 长白山 → 延吉/防川
+//      → 长春 → 哈尔滨 → 沈阳 → 山海关 → 威海 → 青岛 → 飞机
+// 总 5490km / 60h 行车 + 1 飞机段（D15 青岛→北京）
+// ============================================================
+
+const V8A_SEGMENTS = [
+  { from: "北京", to: "秦皇岛", flng: 116.41, flat: 39.91, tlng: 119.59, tlat: 39.94, road: 300, dur: 3.5, day: 1, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "秦皇岛", to: "兴城", flng: 119.59, flat: 39.94, tlng: 120.71, tlat: 40.61, road: 180, dur: 2.5, day: 2, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "兴城", to: "锦州", flng: 120.71, flat: 40.61, tlng: 121.13, tlat: 41.10, road: 200, dur: 2.5, day: 2, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "锦州", to: "沈阳", flng: 121.13, flat: 41.10, tlng: 123.43, tlat: 41.80, road: 230, dur: 2.8, day: 3, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "沈阳", to: "长白山", flng: 123.43, flat: 41.80, tlng: 128.05, tlat: 42.40, road: 480, dur: 5.5, day: 4, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "长白山", to: "延吉", flng: 128.05, flat: 42.40, tlng: 129.51, tlat: 42.91, road: 350, dur: 4.5, day: 6, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "延吉", to: "防川", flng: 129.51, flat: 42.91, tlng: 130.40, tlat: 42.85, road: 200, dur: 2.5, day: 7, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "防川", to: "延吉", flng: 130.40, flat: 42.85, tlng: 129.51, tlat: 42.91, road: 200, dur: 2.5, day: 7, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "延吉", to: "长春", flng: 129.51, flat: 42.91, tlng: 125.32, tlat: 43.89, road: 400, dur: 4.5, day: 8, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "长春", to: "哈尔滨", flng: 125.32, flat: 43.89, tlng: 126.64, tlat: 45.80, road: 280, dur: 3.0, day: 9, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "哈尔滨", to: "沈阳", flng: 126.64, flat: 45.80, tlng: 123.43, tlat: 41.80, road: 560, dur: 5.5, day: 11, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "沈阳", to: "山海关", flng: 123.43, flat: 41.80, tlng: 119.75, tlat: 40.00, road: 400, dur: 4.0, day: 12, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "山海关", to: "威海", flng: 119.75, flat: 40.00, tlng: 122.10, tlat: 37.51, road: 350, dur: 4.0, day: 13, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "威海", to: "青岛", flng: 122.10, flat: 37.51, tlng: 120.38, tlat: 36.07, road: 250, dur: 3.0, day: 15, type: "stay", rt: "highway", ad: "green", night: true },
+  // D15 青岛→北京 飞机
+];
+
+const V8A_CITIES = [
+  { name: "北京", lng: 116.41, lat: 39.91, day: "起点", type: "start" },
+  { name: "秦皇岛", lng: 119.59, lat: 39.94, day: "D1 宿", type: "stay" },
+  { name: "兴城", lng: 120.71, lat: 40.61, day: "D2 路过", type: "transit" },
+  { name: "锦州", lng: 121.13, lat: 41.10, day: "D2 路过", type: "transit" },
+  { name: "沈阳", lng: 123.43, lat: 41.80, day: "D3 宿", type: "stay" },
+  { name: "长白山", lng: 128.05, lat: 42.40, day: "D4-D5", type: "stay" },
+  { name: "延吉", lng: 129.51, lat: 42.91, day: "D6 宿", type: "stay" },
+  { name: "防川", lng: 130.40, lat: 42.85, day: "D7 路过", type: "transit" },
+  { name: "长春", lng: 125.32, lat: 43.89, day: "D8 宿", type: "stay" },
+  { name: "哈尔滨", lng: 126.64, lat: 45.80, day: "D9-D10", type: "stay" },
+  { name: "山海关", lng: 119.75, lat: 40.00, day: "D12 宿", type: "stay" },
+  { name: "威海", lng: 122.10, lat: 37.51, day: "D13-D14", type: "stay" },
+  { name: "青岛", lng: 120.38, lat: 36.07, day: "D15 宿", type: "stay" },
+];
+
+const V8A_DAY_SUMMARIES = [
+  { day: 1, title: "北京 → 秦皇岛/北戴河", km: 300, dur: 3.5, rt: "highway", ad: "green", night: true, desc: "G1 京哈高速 · 沿途看海", stays: "秦皇岛" },
+  { day: 2, title: "秦皇岛 → 兴城古城 → 锦州", km: 380, dur: 5.0, rt: "highway", ad: "green", night: true, desc: "山海关 + 兴城古城 + 辽沈战役纪念馆", stays: "锦州" },
+  { day: 3, title: "锦州 → 沈阳", km: 230, dur: 2.8, rt: "highway", ad: "green", night: true, desc: "G1 京哈 · 抵沈阳半日游", stays: "沈阳" },
+  { day: 4, title: "沈阳 → 长白山", km: 480, dur: 5.5, rt: "mixed", ad: "yellow", night: true, desc: "G1212 沈吉高速 + 抚松方向国道 · 桩稀 ⚠", stays: "二道白河" },
+  { day: 5, title: "长白山一日游", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "天池 + 长白瀑布 + 绿渊潭 + 温泉", stays: "二道白河" },
+  { day: 6, title: "长白山 → 延吉", km: 350, dur: 4.5, rt: "highway", ad: "green", night: true, desc: "G11 鹤大高速 · 抵延吉尝冷面烤肉", stays: "延吉" },
+  { day: 7, title: "延吉 → 防川/珲春/图们 一日游", km: 400, dur: 5.0, rt: "highway", ad: "green", night: true, desc: "中朝俄三国边境 + 一眼望三国", stays: "延吉" },
+  { day: 8, title: "延吉 → 长春", km: 400, dur: 4.5, rt: "highway", ad: "green", night: true, desc: "G12 珲乌高速 · 伪满皇宫", stays: "长春" },
+  { day: 9, title: "长春 → 哈尔滨", km: 280, dur: 3.0, rt: "highway", ad: "green", night: true, desc: "G1 京哈 · 抵哈尔滨看夜景", stays: "哈尔滨" },
+  { day: 10, title: "哈尔滨一日游", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "中央大街 + 圣索菲亚 + 松花江 + 太阳岛", stays: "哈尔滨" },
+  { day: 11, title: "哈尔滨 → 沈阳 (返程段)", km: 560, dur: 5.5, rt: "highway", ad: "green", night: true, desc: "G1 京哈 · 沈阳中转休整", stays: "沈阳" },
+  { day: 12, title: "沈阳 → 山海关", km: 400, dur: 4.0, rt: "highway", ad: "green", night: true, desc: "G1 京哈 · 山海关古城", stays: "山海关" },
+  { day: 13, title: "山海关 → 威海", km: 350, dur: 4.0, rt: "highway", ad: "green", night: true, desc: "G18 荣乌高速 · 抵威海看海", stays: "威海" },
+  { day: 14, title: "威海一日游", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "刘公岛 + 成山头 + 海滨公园", stays: "威海" },
+  { day: 15, title: "威海 → 青岛 ✈ 北京", km: 250, dur: 3.0, rt: "highway", ad: "green", night: false, desc: "G15 沈海高速 → 青岛机场 → 1.5h 飞北京", stays: "—" },
+];
+
+const V8A_DAY_TO_SEG_IDX = {
+  1: [0], 2: [1, 2], 3: [3], 4: [4], 5: [],
+  6: [5], 7: [6, 7], 8: [8], 9: [9], 10: [],
+  11: [10], 12: [11], 13: [12], 14: [], 15: [13]
+};
+
+const V8A_POIS = {
+  1:  { see: ["🏖️ 北戴河老虎石公园 1-2h", "🌅 碧螺塔酒吧公园 30min", "🦀 浅水湾浴场"], eat: ["🦐 蒸海鲜大排档", "🌯 麻酱烧饼 + 凉皮", "🍺 青岛啤酒 (本地)"] },
+  2:  { see: ["🏯 山海关古城 1-2h（必看·老龙头/天下第一关）", "🏯 兴城古城 1h（明代古城）", "⛩️ 锦州辽沈战役纪念馆 1.5h"], eat: ["🍖 兴城全羊", "🔥 锦州烧烤 (必吃)", "🥟 东北饺子"] },
+  3:  { see: ["🏯 沈阳故宫 1.5h（清初皇宫）", "🏛️ 张氏帅府 1.5h（张作霖/张学良故居）", "🌳 北陵公园 1h"], eat: ["🍗 老四季鸡架", "🍖 李连贵熏肉大饼", "🥘 锅包肉"] },
+  4:  { see: ["🌲 抚顺赫图阿拉城 过路", "🌾 吉林省东部山区"], eat: ["🍖 沿途清真", "🥔 东北土豆"] },
+  5:  { see: ["💎 长白山天池 2-3h（必看·看运气）", "💦 长白瀑布 1h", "🌊 绿渊潭 30min", "🌲 地下森林 1h", "♨️ 蓝景温泉（泡汤）"], eat: ["🐟 冷水鱼（乔尔泰）", "🍖 满族饽饽", "🍚 朝鲜族冷面"] },
+  6:  { see: ["🏫 延边大学 1h（异域风情）", "⛰️ 帽儿山 1h", "🌃 延吉夜景"], eat: ["🍜 全州拌饭（必吃）", "🍖 元奶奶包肉/本达人", "🍶 米酒"] },
+  7:  { see: ["🌍 防川一眼望三国（中朝俄） 1h", "⛰️ 珲春敬信湿地", "🏞️ 图们江边"], eat: ["🍜 朝鲜族冷面", "🍖 串店", "🍶 米酒"] },
+  8:  { see: ["🏛️ 伪满皇宫 1.5h", "🎬 长影世纪城（可选·半日）", "🌳 南湖公园"], eat: ["🥘 满族八大碗", "🍖 锅包肉", "🍜 朝鲜冷面"] },
+  9:  { see: ["🌃 哈尔滨夜景（到晚上再看）"], eat: ["🍺 哈尔滨啤酒", "🌭 秋林红肠", "🥘 得莫利炖鱼"] },
+  10: { see: ["🏛️ 中央大街 2h（必看·俄式步行街）", "⛪ 圣索菲亚教堂 30min", "🌉 松花江/防洪纪念塔 1h", "🌳 太阳岛 1-2h", "🦁 哈尔滨虎林园（可选）"], eat: ["🥘 锅包肉（必吃）", "🌭 哈尔滨红肠（秋林/商委）", "🍺 哈尔滨啤酒", "🍦 马迭尔冰棍（冬天更爽）"] },
+  11: { see: ["🌆 沈阳半日（中街/张氏帅府）"], eat: ["🍖 李连贵熏肉大饼", "🍗 老四季鸡架"] },
+  12: { see: ["🏯 山海关古城 2-3h（老龙头/天下第一关/角山长城）"], eat: ["🍜 浑锅（山海关特色火锅）", "🥟 包子"] },
+  13: { see: ["🌃 威海夜景（海滨公园）"], eat: ["🥟 鲅鱼水饺（必吃）", "🦐 海鲜烧烤", "🍺 青岛啤酒"] },
+  14: { see: ["🏝️ 刘公岛 3-4h（甲午战争遗址·必看）", "🌅 成山头 2-3h（中国最早看见日出的地方）", "🏖️ 威海国际海水浴场", "🌊 华夏城 2h"], eat: ["🥟 鲅鱼水饺", "🦐 蒸海鲜", "🍲 海鲜疙瘩汤", "🍺 青岛啤酒"] },
+  15: { see: ["✈️ 青岛机场 → 北京"], eat: ["🍱 机场简餐"] }
+};
+
+const V8A_ALT_STAYS = {
+  1:  ["秦皇岛", "北戴河", "南戴河", "唐山"],
+  2:  ["锦州", "葫芦岛", "兴城", "秦皇岛"],
+  3:  ["沈阳", "鞍山", "盘锦"],
+  4:  ["二道白河", "松江河", "抚松", "靖宇"],
+  5:  ["二道白河", "松江河", "万良"],
+  6:  ["延吉", "图们", "龙井"],
+  7:  ["延吉", "珲春", "图们"],
+  8:  ["长春", "吉林市", "松原"],
+  9:  ["哈尔滨", "肇东", "大庆"],
+  10: ["哈尔滨", "大庆", "尚志"],
+  11: ["沈阳", "铁岭", "四平"],
+  12: ["山海关", "秦皇岛", "葫芦岛"],
+  13: ["威海", "烟台", "蓬莱"],
+  14: ["威海", "烟台", "青岛"],
+  15: [],
+};
+
+const V8A_LABEL_OFFSETS = {
+  "北京": [14, -16], "秦皇岛": [14, 4], "兴城": [-14, 4], "锦州": [14, 4],
+  "沈阳": [14, 4], "长白山": [14, 4], "延吉": [14, -2], "防川": [14, 4],
+  "长春": [14, 4], "哈尔滨": [14, 4], "山海关": [14, 4], "威海": [14, 4], "青岛": [-14, 4],
+};
+
+// ============================================================
+// V8-B DATA — 东北 + 内蒙东部 15 天（草原 + 火山 + 俄式）
+// 北京 → 秦皇岛 → 兴城 → 锦州 → 沈阳 → 长白山 → 延吉/防川
+//      → 长春 → 哈尔滨 → 扎龙 → 海拉尔 → 满洲里 → 阿尔山
+//      → 乌兰浩特 → ✈ 北京
+// 总 5380km / 60h + 1 飞机段（D15 乌兰浩特→北京）
+// ============================================================
+
+const V8B_SEGMENTS = [
+  { from: "北京", to: "秦皇岛", flng: 116.41, flat: 39.91, tlng: 119.59, tlat: 39.94, road: 300, dur: 3.5, day: 1, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "秦皇岛", to: "兴城", flng: 119.59, flat: 39.94, tlng: 120.71, tlat: 40.61, road: 180, dur: 2.5, day: 2, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "兴城", to: "锦州", flng: 120.71, flat: 40.61, tlng: 121.13, tlat: 41.10, road: 200, dur: 2.5, day: 2, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "锦州", to: "沈阳", flng: 121.13, flat: 41.10, tlng: 123.43, tlat: 41.80, road: 230, dur: 2.8, day: 3, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "沈阳", to: "长白山", flng: 123.43, flat: 41.80, tlng: 128.05, tlat: 42.40, road: 480, dur: 5.5, day: 4, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "长白山", to: "延吉", flng: 128.05, flat: 42.40, tlng: 129.51, tlat: 42.91, road: 350, dur: 4.5, day: 6, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "延吉", to: "长春", flng: 129.51, flat: 42.91, tlng: 125.32, tlat: 43.89, road: 400, dur: 4.5, day: 8, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "长春", to: "哈尔滨", flng: 125.32, flat: 43.89, tlng: 126.64, tlat: 45.80, road: 280, dur: 3.0, day: 9, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "哈尔滨", to: "齐齐哈尔", flng: 126.64, flat: 45.80, tlng: 123.92, tlat: 47.35, road: 350, dur: 4.0, day: 10, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "齐齐哈尔", to: "海拉尔", flng: 123.92, flat: 47.35, tlng: 119.73, tlat: 49.21, road: 500, dur: 6.0, day: 11, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "海拉尔", to: "满洲里", flng: 119.73, flat: 49.21, tlng: 117.45, tlat: 49.60, road: 200, dur: 2.5, day: 12, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "满洲里", to: "阿尔山", flng: 117.45, flat: 49.60, tlng: 119.95, tlat: 47.18, road: 450, dur: 6.0, day: 13, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "阿尔山", to: "乌兰浩特", flng: 119.95, flat: 47.18, tlng: 122.04, tlat: 46.07, road: 300, dur: 4.0, day: 14, type: "stay", rt: "highway", ad: "green", night: true },
+  // D15 乌兰浩特 → 北京 飞机
+];
+
+const V8B_CITIES = [
+  { name: "北京", lng: 116.41, lat: 39.91, day: "起点", type: "start" },
+  { name: "秦皇岛", lng: 119.59, lat: 39.94, day: "D1 宿", type: "stay" },
+  { name: "兴城", lng: 120.71, lat: 40.61, day: "D2 路过", type: "transit" },
+  { name: "锦州", lng: 121.13, lat: 41.10, day: "D2 宿", type: "stay" },
+  { name: "沈阳", lng: 123.43, lat: 41.80, day: "D3 宿", type: "stay" },
+  { name: "长白山", lng: 128.05, lat: 42.40, day: "D4-D5", type: "stay" },
+  { name: "延吉", lng: 129.51, lat: 42.91, day: "D6 宿", type: "stay" },
+  { name: "长春", lng: 125.32, lat: 43.89, day: "D8 宿", type: "stay" },
+  { name: "哈尔滨", lng: 126.64, lat: 45.80, day: "D9 宿", type: "stay" },
+  { name: "齐齐哈尔", lng: 123.92, lat: 47.35, day: "D10 宿", type: "stay" },
+  { name: "海拉尔", lng: 119.73, lat: 49.21, day: "D11 宿", type: "stay" },
+  { name: "满洲里", lng: 117.45, lat: 49.60, day: "D12 宿", type: "stay" },
+  { name: "阿尔山", lng: 119.95, lat: 47.18, day: "D13 宿", type: "stay" },
+  { name: "乌兰浩特", lng: 122.04, lat: 46.07, day: "D14 宿", type: "stay" },
+];
+
+const V8B_DAY_SUMMARIES = [
+  { day: 1, title: "北京 → 秦皇岛/北戴河", km: 300, dur: 3.5, rt: "highway", ad: "green", night: true, desc: "G1 京哈 · 沿海起手", stays: "秦皇岛" },
+  { day: 2, title: "秦皇岛 → 兴城古城 → 锦州", km: 380, dur: 5.0, rt: "highway", ad: "green", night: true, desc: "山海关 + 兴城古城 + 辽沈战役纪念馆", stays: "锦州" },
+  { day: 3, title: "锦州 → 沈阳", km: 230, dur: 2.8, rt: "highway", ad: "green", night: true, desc: "G1 京哈 · 沈阳半日", stays: "沈阳" },
+  { day: 4, title: "沈阳 → 长白山", km: 480, dur: 5.5, rt: "mixed", ad: "yellow", night: true, desc: "G1212 + 国道 · 桩稀 ⚠", stays: "二道白河" },
+  { day: 5, title: "长白山一日游", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "天池 + 瀑布 + 温泉", stays: "二道白河" },
+  { day: 6, title: "长白山 → 延吉", km: 350, dur: 4.5, rt: "highway", ad: "green", night: true, desc: "G11 · 延吉冷面烤肉", stays: "延吉" },
+  { day: 7, title: "延吉 → 防川/珲春 一日游", km: 400, dur: 5.0, rt: "highway", ad: "green", night: true, desc: "中朝俄三国边境", stays: "延吉" },
+  { day: 8, title: "延吉 → 长春", km: 400, dur: 4.5, rt: "highway", ad: "green", night: true, desc: "G12 珲乌 · 伪满皇宫", stays: "长春" },
+  { day: 9, title: "长春 → 哈尔滨", km: 280, dur: 3.0, rt: "highway", ad: "green", night: true, desc: "G1 · 抵哈尔滨看夜景", stays: "哈尔滨" },
+  { day: 10, title: "哈尔滨 → 齐齐哈尔 (扎龙)", km: 350, dur: 4.0, rt: "highway", ad: "green", night: true, desc: "扎龙丹顶鹤自然保护区 + 齐齐哈尔烤肉", stays: "齐齐哈尔" },
+  { day: 11, title: "齐齐哈尔 → 海拉尔 (呼伦贝尔)", km: 500, dur: 6.0, rt: "highway", ad: "green", night: true, desc: "G10 绥满高速 · 抵呼伦贝尔大草原", stays: "海拉尔" },
+  { day: 12, title: "海拉尔 → 满洲里", km: 200, dur: 2.5, rt: "highway", ad: "green", night: true, desc: "中俄边境 · 套娃广场 · 国门 · 俄式建筑", stays: "满洲里" },
+  { day: 13, title: "满洲里 → 阿尔山", km: 450, dur: 6.0, rt: "mixed", ad: "yellow", night: true, desc: "S203 · 阿尔山火山/天池/温泉/石塘林", stays: "阿尔山" },
+  { day: 14, title: "阿尔山 → 乌兰浩特", km: 300, dur: 4.0, rt: "highway", ad: "green", night: true, desc: "兴安盟 · 成吉思汗庙", stays: "乌兰浩特" },
+  { day: 15, title: "乌兰浩特 ✈ 北京", km: 0, dur: 2.0, rt: "highway", ad: "green", night: false, desc: "乌兰浩特→北京 经停呼和浩特 · 每天 1 班", stays: "—" },
+];
+
+const V8B_DAY_TO_SEG_IDX = {
+  1: [0], 2: [1, 2], 3: [3], 4: [4], 5: [],
+  6: [5], 7: [6], 8: [7], 9: [8], 10: [9],
+  11: [10], 12: [11], 13: [12], 14: [13], 15: []
+};
+
+const V8B_POIS = {
+  1:  { see: ["🏖️ 北戴河老虎石 1-2h", "🌅 碧螺塔 30min"], eat: ["🦐 蒸海鲜", "🍺 青岛啤酒"] },
+  2:  { see: ["🏯 山海关古城 1-2h", "🏯 兴城古城 1h", "⛩️ 辽沈战役纪念馆 1.5h"], eat: ["🍖 兴城全羊", "🔥 锦州烧烤"] },
+  3:  { see: ["🏯 沈阳故宫 1.5h", "🏛️ 张氏帅府 1.5h"], eat: ["🍗 老四季鸡架", "🥘 锅包肉"] },
+  4:  { see: ["🌲 抚顺赫图阿拉城"], eat: ["🍖 沿途清真"] },
+  5:  { see: ["💎 长白山天池 2-3h", "💦 长白瀑布", "♨️ 蓝景温泉"], eat: ["🐟 冷水鱼", "🍖 满族饽饽"] },
+  6:  { see: ["🏫 延边大学 1h", "⛰️ 帽儿山 1h"], eat: ["🍜 全州拌饭", "🍖 元奶奶包肉"] },
+  7:  { see: ["🌍 防川一眼望三国", "⛰️ 珲春敬信湿地"], eat: ["🍜 朝鲜冷面", "🍖 串店"] },
+  8:  { see: ["🏛️ 伪满皇宫 1.5h"], eat: ["🥘 满族八大碗", "🍖 锅包肉"] },
+  9:  { see: ["🌃 哈尔滨夜景"], eat: ["🍺 哈尔滨啤酒", "🌭 秋林红肠"] },
+  10: { see: ["🦅 扎龙丹顶鹤自然保护区 2-3h（必看·6-9 月放飞表演）", "🌾 嫩江湿地"], eat: ["🍖 齐齐哈尔烤肉（芭比Q）", "🥟 东北饺子"] },
+  11: { see: ["🌾 呼伦贝尔大草原（世界四大草原之一）", "🏛️ 海拉尔西山森林公园", "🐎 蒙古马场"], eat: ["🍖 手把肉（必吃）", "🥛 奶茶 + 炒米", "🍚 蒙古馅饼"] },
+  12: { see: ["🕌 套娃广场 2h", "🏛️ 国门景区 1.5h", "⛪ 卢布里餐厅/俄式建筑", "🌃 中苏步行街夜景"], eat: ["🥩 卢布里俄式西餐（必吃）", "🍖 蒙古手把肉", "🥛 奶茶", "🍺 俄罗斯啤酒"] },
+  13: { see: ["🌋 阿尔山天池 1.5h（必看·火山口湖）", "♨️ 阿尔山温泉（泡汤）", "🌲 石塘林 1h", "💦 三潭峡 1h", "🌳 驼峰岭天池 2h"], eat: ["🍲 阿尔山矿泉鱼", "🍖 蒙古手把肉", "🥛 奶茶"] },
+  14: { see: ["⛩️ 成吉思汗庙 1.5h", "🌳 葛根庙 1h"], eat: ["🥟 蒙古馅饼", "🍖 手把肉"] },
+  15: { see: ["✈️ 2h 飞回北京"], eat: ["🍱 机场简餐"] }
+};
+
+const V8B_ALT_STAYS = {
+  1:  ["秦皇岛", "北戴河", "唐山"],
+  2:  ["锦州", "葫芦岛", "兴城"],
+  3:  ["沈阳", "鞍山", "盘锦"],
+  4:  ["二道白河", "松江河", "抚松"],
+  5:  ["二道白河", "松江河"],
+  6:  ["延吉", "图们", "龙井"],
+  7:  ["延吉", "珲春", "图们"],
+  8:  ["长春", "吉林市"],
+  9:  ["哈尔滨", "肇东"],
+  10: ["齐齐哈尔", "大庆", "安达"],
+  11: ["海拉尔", "牙克石", "鄂温克"],
+  12: ["满洲里", "海拉尔", "扎赉诺尔"],
+  13: ["阿尔山", "伊尔施", "五岔沟"],
+  14: ["乌兰浩特", "白城", "突泉"],
+  15: [],
+};
+
+const V8B_LABEL_OFFSETS = {
+  "北京": [14, -16], "秦皇岛": [14, 4], "兴城": [-14, 4], "锦州": [14, 4],
+  "沈阳": [14, 4], "长白山": [14, 4], "延吉": [14, -2],
+  "长春": [14, 4], "哈尔滨": [14, 4], "齐齐哈尔": [14, 4], "海拉尔": [14, 4],
+  "满洲里": [-14, 4], "阿尔山": [14, 4], "乌兰浩特": [14, 4],
+};
+
+// ============================================================
+// V8-C DATA — 沿海 + 内蒙草原 12 天（短途轻量）
+// 北京 → 张家口 → 锡林郭勒 → 克什克腾 → 赤峰 → 承德
+//      → 秦皇岛 → 威海 → 青岛 → ✈ 北京
+// 总 4380km / 50h + 1 飞机段（D12 青岛→北京）
+// ============================================================
+
+const V8C_SEGMENTS = [
+  { from: "北京", to: "张家口", flng: 116.41, flat: 39.91, tlng: 114.88, tlat: 40.82, road: 200, dur: 2.5, day: 1, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "张家口", to: "锡林郭勒", flng: 114.88, flat: 40.82, tlng: 116.09, tlat: 43.93, road: 500, dur: 6.0, day: 1, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "锡林郭勒", to: "克什克腾旗", flng: 116.09, flat: 43.93, tlng: 117.55, tlat: 43.27, road: 450, dur: 5.5, day: 3, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "克什克腾旗", to: "赤峰", flng: 117.55, flat: 43.27, tlng: 118.89, tlat: 42.26, road: 250, dur: 3.0, day: 5, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "赤峰", to: "承德", flng: 118.89, flat: 42.26, tlng: 117.93, tlat: 40.97, road: 350, dur: 4.0, day: 6, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "承德", to: "秦皇岛", flng: 117.93, flat: 40.97, tlng: 119.59, tlat: 39.94, road: 350, dur: 4.0, day: 8, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "秦皇岛", to: "威海", flng: 119.59, flat: 39.94, tlng: 122.10, tlat: 37.51, road: 500, dur: 5.0, day: 9, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "威海", to: "青岛", flng: 122.10, flat: 37.51, tlng: 120.38, tlat: 36.07, road: 250, dur: 3.0, day: 11, type: "stay", rt: "highway", ad: "green", night: true },
+  // D12 青岛 → 北京 飞机
+];
+
+const V8C_CITIES = [
+  { name: "北京", lng: 116.41, lat: 39.91, day: "起点", type: "start" },
+  { name: "张家口", lng: 114.88, lat: 40.82, day: "D1 路过", type: "transit" },
+  { name: "锡林郭勒", lng: 116.09, lat: 43.93, day: "D1 宿", type: "stay" },
+  { name: "克什克腾旗", lng: 117.55, lat: 43.27, day: "D3 宿", type: "stay" },
+  { name: "赤峰", lng: 118.89, lat: 42.26, day: "D5 宿", type: "stay" },
+  { name: "承德", lng: 117.93, lat: 40.97, day: "D6 宿", type: "stay" },
+  { name: "秦皇岛", lng: 119.59, lat: 39.94, day: "D8 宿", type: "stay" },
+  { name: "威海", lng: 122.10, lat: 37.51, day: "D9 宿", type: "stay" },
+  { name: "青岛", lng: 120.38, lat: 36.07, day: "D11 宿", type: "stay" },
+];
+
+const V8C_DAY_SUMMARIES = [
+  { day: 1, title: "北京 → 张家口 → 锡林郭勒", km: 700, dur: 8.5, rt: "highway", ad: "green", night: true, desc: "G6 京藏 → 锡张高速 · 抵草原", stays: "锡林浩特" },
+  { day: 2, title: "锡林郭勒草原一日游", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "平顶山 + 贝子庙 + 九曲湾", stays: "锡林浩特" },
+  { day: 3, title: "锡林郭勒 → 克什克腾旗", km: 450, dur: 5.5, rt: "mixed", ad: "yellow", night: true, desc: "S105 省道 · 草原过渡到丘陵", stays: "经棚镇" },
+  { day: 4, title: "克什克腾一日游", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "达里湖 + 阿斯哈图石林 + 热水塘温泉", stays: "经棚镇" },
+  { day: 5, title: "克什克腾 → 赤峰", km: 250, dur: 3.0, rt: "highway", ad: "green", night: true, desc: "G16 · 红山文化", stays: "赤峰" },
+  { day: 6, title: "赤峰 → 承德", km: 350, dur: 4.0, rt: "highway", ad: "green", night: true, desc: "G45 大广高速 · 抵避暑山庄", stays: "承德" },
+  { day: 7, title: "承德一日游", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "避暑山庄 + 外八庙（必看·清朝皇家园林）", stays: "承德" },
+  { day: 8, title: "承德 → 秦皇岛", km: 350, dur: 4.0, rt: "highway", ad: "green", night: true, desc: "G1 京哈 · 山海关/北戴河", stays: "秦皇岛" },
+  { day: 9, title: "秦皇岛 → 威海", km: 500, dur: 5.0, rt: "highway", ad: "green", night: true, desc: "G18 荣乌高速 · 抵威海", stays: "威海" },
+  { day: 10, title: "威海一日游", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "刘公岛 + 成山头 + 海滨", stays: "威海" },
+  { day: 11, title: "威海 → 青岛", km: 250, dur: 3.0, rt: "highway", ad: "green", night: true, desc: "G15 沈海 · 栈桥/八大关/崂山", stays: "青岛" },
+  { day: 12, title: "青岛 ✈ 北京", km: 0, dur: 1.5, rt: "highway", ad: "green", night: false, desc: "1.5h 直飞北京", stays: "—" },
+];
+
+const V8C_DAY_TO_SEG_IDX = {
+  1: [0, 1], 2: [], 3: [2], 4: [], 5: [3], 6: [4],
+  7: [], 8: [5], 9: [6], 10: [], 11: [7], 12: []
+};
+
+const V8C_POIS = {
+  1:  { see: ["🏯 大境门 30min", "🏛️ 张北草原"], eat: ["🥟 莜面窝窝", "🫓 烧饼 + 肉"] },
+  2:  { see: ["🌾 平顶山 1-2h（必看·草原火山口）", "⛩️ 贝子庙 1h", "🐎 草原骑马（可选）", "🌅 九曲湾日落"], eat: ["🍖 手把肉（必吃）", "🥛 奶茶 + 炒米", "🍚 蒙古馅饼"] },
+  3:  { see: ["🌾 西乌珠穆沁草原"], eat: ["🍖 沿途牧家乐"] },
+  4:  { see: ["🌊 达里湖 1-2h（华子鱼/鸟类）", "🗻 阿斯哈图石林 2-3h（冰川石林·必看）", "♨️ 热水塘温泉（泡汤）"], eat: ["🐟 达里湖华子鱼（必吃）", "🍖 烤全羊"] },
+  5:  { see: ["🏛️ 红山文化博物馆 1h", "⛰️ 红山森林公园 1h"], eat: ["🍖 赤峰烤全羊", "🥟 对夹"] },
+  6:  { see: ["⛰️ 磬锤峰森林公园 过路"], eat: ["🍜 承德凉粉（必吃）", "🥟 荞面饸饹"] },
+  7:  { see: ["🏛️ 避暑山庄 4-6h（必看·中国现存最大皇家园林）", "⛩️ 外八庙 2-3h（普陀宗乘之庙/须弥福寿之庙）", "🏯 普宁寺 1h"], eat: ["🍖 烤全羊", "🍜 承德凉粉", "🥟 饸饹"] },
+  8:  { see: ["🏯 山海关古城 1-2h", "🌅 北戴河老虎石 1h"], eat: ["🍲 山海关浑锅", "🦐 蒸海鲜"] },
+  9:  { see: ["🌃 威海夜景"], eat: ["🥟 鲅鱼水饺", "🍺 青岛啤酒"] },
+  10: { see: ["🏝️ 刘公岛 3-4h（甲午战争遗址）", "🌅 成山头 2-3h（中国最早看见日出的地方）"], eat: ["🥟 鲅鱼水饺", "🦐 海鲜烧烤"] },
+  11: { see: ["🌉 栈桥 30min", "🌳 八大关 1h", "🍺 啤酒博物馆 2h", "⛰️ 崂山（可选·半日）"], eat: ["🍺 青岛啤酒（必喝·袋装鲜啤）", "🦐 鲅鱼水饺", "🥗 辣炒蛤蜊"] },
+  12: { see: ["✈️ 1.5h 飞回北京"], eat: ["🍱 机场简餐"] }
+};
+
+const V8C_ALT_STAYS = {
+  1:  ["锡林浩特", "张家口", "太仆寺旗"],
+  2:  ["锡林浩特", "西乌旗"],
+  3:  ["经棚镇", "克旗", "巴林右旗"],
+  4:  ["经棚镇", "克旗", "热水塘"],
+  5:  ["赤峰", "翁牛特旗", "敖汉旗"],
+  6:  ["承德", "隆化", "滦平"],
+  7:  ["承德", "兴隆"],
+  8:  ["秦皇岛", "北戴河", "山海关"],
+  9:  ["威海", "烟台", "蓬莱"],
+  10: ["威海", "烟台", "青岛"],
+  11: ["青岛", "日照", "连云港"],
+  12: [],
+};
+
+const V8C_LABEL_OFFSETS = {
+  "北京": [14, -16], "张家口": [14, 4], "锡林郭勒": [14, -2],
+  "克什克腾旗": [-14, 4], "赤峰": [14, 4], "承德": [14, 4],
+  "秦皇岛": [14, 4], "威海": [14, 4], "青岛": [-14, 4],
+};
+
+
+// ============================================================
 // V7 DATA — 强南疆：去程更直（D5 哈密→乌鲁木齐 跳过吐鲁番+天池）
 // 末尾新增 1.5 天南疆（D13 库车→阿克苏 / D14 阿克苏→喀什）
 // 总 6541 km / ~89h（vs V6 6032 km / 75.5h）
@@ -628,21 +935,29 @@ const V7_LABEL_OFFSETS = {
 };
 
 // ============== CURRENT DATA (URL hash switches v6/v7) ==============
-let currentVersion = (location.hash === '#v7') ? 'v7' : 'v6';
+const VALID_VERSIONS = ['v6', 'v7', 'v8a', 'v8b', 'v8c'];
+let currentVersion = VALID_VERSIONS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'v6';
 let currentData = {};
 
 function loadData(version) {
-  if (version === 'v7') {
-    return {
-      segments: V7_SEGMENTS, cities: V7_CITIES,
-      day_summaries: V7_DAY_SUMMARIES, day_to_seg_idx: V7_DAY_TO_SEG_IDX,
-      pois: V7_POIS, alt_stays: V7_ALT_STAYS, label_offsets: V7_LABEL_OFFSETS
-    };
-  }
+  const VLABEL = {
+    'v6': 'V6 · 经典北疆',
+    'v7': 'V7 · 强南疆',
+    'v8a': 'V8-A · 东北+沿海',
+    'v8b': 'V8-B · 东北+草原',
+    'v8c': 'V8-C · 沿海+草原',
+  };
+  if (!VLABEL[version]) version = 'v6';
+  const prefix = version.toUpperCase();
   return {
-    segments: V6_SEGMENTS, cities: V6_CITIES,
-    day_summaries: V6_DAY_SUMMARIES, day_to_seg_idx: V6_DAY_TO_SEG_IDX,
-    pois: V6_POIS, alt_stays: V6_ALT_STAYS, label_offsets: V6_LABEL_OFFSETS
+    version_label: VLABEL[version],
+    segments: window[prefix + '_SEGMENTS'],
+    cities: window[prefix + '_CITIES'],
+    day_summaries: window[prefix + '_DAY_SUMMARIES'],
+    day_to_seg_idx: window[prefix + '_DAY_TO_SEG_IDX'],
+    pois: window[prefix + '_POIS'],
+    alt_stays: window[prefix + '_ALT_STAYS'],
+    label_offsets: window[prefix + '_LABEL_OFFSETS'],
   };
 }
 
@@ -965,10 +1280,14 @@ function renderAll() {
   // Title
   const titleEl = document.getElementById('route-title');
   if (titleEl) {
-    const tags = currentVersion === 'v7'
-      ? '<span class="badge badge-red">V7 · 强南疆</span><span class="badge badge-green">去程更直</span>'
-      : '<span class="badge badge-red">V6 · 经典北疆</span>';
-    titleEl.innerHTML = tags;
+    const TL = {
+      V6: '<span class="badge badge-red">V6 · 经典北疆</span>',
+      V7: '<span class="badge badge-red">V7 · 强南疆</span><span class="badge badge-green">去程更直</span>',
+      V8A: '<span class="badge badge-red">V8-A · 东北+沿海</span><span class="badge badge-green">避暑</span>',
+      V8B: '<span class="badge badge-red">V8-B · 东北+草原</span><span class="badge badge-green">最丰富</span>',
+      V8C: '<span class="badge badge-red">V8-C · 沿海+草原</span><span class="badge badge-green">轻量</span>',
+    };
+    titleEl.innerHTML = TL[currentVersion.toUpperCase()] || TL.V6;
   }
   // Update header sub if any
   const subEl = document.getElementById('route-sub');
@@ -999,7 +1318,7 @@ renderAll();
 
 window.addEventListener('hashchange', () => {
   const h = location.hash.replace('#', '');
-  if (h === 'v6' || h === 'v7') switchVersion(h);
+  if (VALID_VERSIONS.includes(h)) switchVersion(h);
 });
 
 </script>
