@@ -940,24 +940,19 @@ let currentVersion = VALID_VERSIONS.includes(location.hash.slice(1)) ? location.
 let currentData = {};
 
 function loadData(version) {
-  const VLABEL = {
-    'v6': 'V6 · 经典北疆',
-    'v7': 'V7 · 强南疆',
-    'v8a': 'V8-A · 东北+沿海',
-    'v8b': 'V8-B · 东北+草原',
-    'v8c': 'V8-C · 沿海+草原',
+  const data = {
+    'v6':  { label: 'V6 · 经典北疆',  segs: V6_SEGMENTS,  cities: V6_CITIES,  ds: V6_DAY_SUMMARIES,  idx: V6_DAY_TO_SEG_IDX,  pois: V6_POIS,  alt: V6_ALT_STAYS,  lo: V6_LABEL_OFFSETS  },
+    'v7':  { label: 'V7 · 强南疆',    segs: V7_SEGMENTS,  cities: V7_CITIES,  ds: V7_DAY_SUMMARIES,  idx: V7_DAY_TO_SEG_IDX,  pois: V7_POIS,  alt: V7_ALT_STAYS,  lo: V7_LABEL_OFFSETS  },
+    'v8a': { label: 'V8-A · 东北+沿海', segs: V8A_SEGMENTS, cities: V8A_CITIES, ds: V8A_DAY_SUMMARIES, idx: V8A_DAY_TO_SEG_IDX, pois: V8A_POIS, alt: V8A_ALT_STAYS, lo: V8A_LABEL_OFFSETS },
+    'v8b': { label: 'V8-B · 东北+草原', segs: V8B_SEGMENTS, cities: V8B_CITIES, ds: V8B_DAY_SUMMARIES, idx: V8B_DAY_TO_SEG_IDX, pois: V8B_POIS, alt: V8B_ALT_STAYS, lo: V8B_LABEL_OFFSETS },
+    'v8c': { label: 'V8-C · 沿海+草原', segs: V8C_SEGMENTS, cities: V8C_CITIES, ds: V8C_DAY_SUMMARIES, idx: V8C_DAY_TO_SEG_IDX, pois: V8C_POIS, alt: V8C_ALT_STAYS, lo: V8C_LABEL_OFFSETS },
   };
-  if (!VLABEL[version]) version = 'v6';
-  const prefix = version.toUpperCase();
+  const d = data[version] || data['v6'];
   return {
-    version_label: VLABEL[version],
-    segments: window[prefix + '_SEGMENTS'],
-    cities: window[prefix + '_CITIES'],
-    day_summaries: window[prefix + '_DAY_SUMMARIES'],
-    day_to_seg_idx: window[prefix + '_DAY_TO_SEG_IDX'],
-    pois: window[prefix + '_POIS'],
-    alt_stays: window[prefix + '_ALT_STAYS'],
-    label_offsets: window[prefix + '_LABEL_OFFSETS'],
+    version_label: d.label,
+    segments: d.segs, cities: d.cities,
+    day_summaries: d.ds, day_to_seg_idx: d.idx,
+    pois: d.pois, alt_stays: d.alt, label_offsets: d.lo,
   };
 }
 
