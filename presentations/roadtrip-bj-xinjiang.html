@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京 → 新疆 15 天自驾路线 · 环形单向穿越 · v6</title>
+<title>北京 → 新疆 15 天自驾路线 · 环形单向穿越 · V6 / V7 双版本</title>
 <style>
 :root {
   --bg: #f5f3ee;
@@ -37,6 +37,37 @@ body {
 }
 .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
 .header .meta { color: var(--muted); font-size: 13px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+.version-switch {
+  display: inline-flex;
+  margin-left: 16px;
+  vertical-align: middle;
+  gap: 6px;
+}
+.version-btn {
+  font-size: 12px;
+  padding: 4px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.version-btn:hover { border-color: var(--accent); color: var(--accent); }
+.version-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.header .sub {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
 .badge {
   display: inline-block; padding: 2px 10px; border-radius: 12px;
   font-size: 12px; font-weight: 600;
@@ -218,7 +249,14 @@ body {
 <div class="container">
 
 <div class="header">
-  <h1>🚗 北京 → 新疆 15 天自驾路线</h1>
+  <h1>🚗 北京 → 新疆 15 天自驾路线
+        <span class="version-switch">
+          <button class="version-btn active" data-version="v6" onclick="switchVersion('v6')">V6 · 经典北疆</button>
+          <button class="version-btn" data-version="v7" onclick="switchVersion('v7')">V7 · 强南疆</button>
+        </span>
+      </h1>
+      <div class="header sub" id="route-sub">15 天 · 京新 G7 → 吐鲁番/天池 → 北疆核心 → 独库 → 库尔勒（V6: 经典北疆，无南疆）</div>
+      <div id="route-title"><span class="badge badge-red">V6 · 经典北疆</span></div>
   <div class="meta">
     <span><span class="badge badge-green">0704 周六出发</span></span>
     <span><span class="badge badge-orange">0718 周六返京</span></span>
@@ -324,7 +362,7 @@ const PROVINCES_PATHS = {"provinces":[{"name":"新疆维吾尔自治区","paths"
 // 路段: from/to/flng/flat/tlng/tlat/road(km)/dur(h)/day/type/road_type(highway/mixed/mountain)/ad_friendly/night_safe
 // ad_friendly: green=全程 AD OK / yellow=部分 AD / red=手动
 // night_safe: true=建议 21:00 前抵达（夜路）/ false=安全
-const SEGMENTS = [
+const V6_SEGMENTS = [
   { from: "北京", to: "乌兰察布", flng: 116.41, flat: 39.91, tlng: 113.11, tlat: 41.04, road: 350, dur: 4.7, day: 1, type: "stay", rt: "highway", ad: "green", night: true },
   { from: "乌兰察布", to: "巴彦淖尔", flng: 113.11, flat: 41.04, tlng: 107.39, tlat: 40.74, road: 549, dur: 5.8, day: 2, type: "stay", rt: "highway", ad: "green", night: true },
   { from: "巴彦淖尔", to: "额济纳旗", flng: 107.39, flat: 40.74, tlng: 101.07, tlat: 41.97, road: 681, dur: 7.8, day: 3, type: "stay", rt: "highway", ad: "green", night: true },
@@ -348,7 +386,7 @@ const SEGMENTS = [
   { from: "库车", to: "库尔勒", flng: 82.96, flat: 41.71, tlng: 86.06, tlat: 41.76, road: 297, dur: 3.5, day: 14, type: "stay", rt: "highway", ad: "green", night: false },
 ];
 
-const CITIES = [
+const V6_CITIES = [
   { name: "北京", lng: 116.41, lat: 39.91, day: "起点", type: "start" },
   { name: "乌兰察布", lng: 113.11, lat: 41.04, day: "D1 宿", type: "stay" },
   { name: "巴彦淖尔", lng: 107.39, lat: 40.74, day: "D2 宿", type: "stay" },
@@ -373,7 +411,7 @@ const CITIES = [
   { name: "库尔勒", lng: 86.06, lat: 41.76, day: "D14 宿", type: "stay" },
 ];
 
-const DAY_SUMMARIES = [
+const V6_DAY_SUMMARIES = [
   { day: 1, title: "北京 → 乌兰察布", km: 350, dur: 4.7, rt: "highway", ad: "green", night: true, desc: "G7 京新起点 · 草原天路", stays: "乌兰察布" },
   { day: 2, title: "乌兰察布 → 巴彦淖尔", km: 549, dur: 5.8, rt: "highway", ad: "green", night: true, desc: "阴山 + 黄河 · 充 1 次", stays: "巴彦淖尔" },
   { day: 3, title: "巴彦淖尔 → 额济纳旗", km: 681, dur: 7.8, rt: "highway", ad: "green", night: true, desc: "戈壁日落 · 充 1 次", stays: "额济纳旗" },
@@ -391,7 +429,7 @@ const DAY_SUMMARIES = [
   { day: 15, title: "库尔勒 ✈ 北京", km: 0, dur: 4.0, rt: "highway", ad: "green", night: false, desc: "4h 直飞 · 每天 1 班", stays: "—" },
 ];
 
-const DAY_TO_SEG_IDX = {
+const V6_DAY_TO_SEG_IDX = {
   1: [0], 2: [1], 3: [2], 4: [3],
   5: [4, 5], 6: [6, 7], 7: [8], 8: [9],
   9: [10, 11, 12, 13], 10: [14], 11: [15, 16],
@@ -399,7 +437,7 @@ const DAY_TO_SEG_IDX = {
 };
 
 // 看点 + 吃 + 建议停留时间
-const POIS = {
+const V6_POIS = {
   1:  { see: ["🌾 草原天路东段 30min", "⛰️ 阴山外景 15min", "🐂 牧区牛羊 5min"],         eat: ["🍖 手把肉", "🥛 奶茶 + 炒米", "🍜 莜面"] },
   2:  { see: ["🏞️ 黄河河套 30min", "⛰️ 阴山山脉 过路", "🌅 河套日落"],         eat: ["🐟 黄河鲤鱼", "🍜 巴盟面筋"] },
   3:  { see: ["🌄 戈壁日落 20min", "🚀 酒泉卫星发射中心 过路", "🏜️ 巴丹吉林沙漠边缘 过路"], eat: ["🍜 路餐（服务区）", "🍖 沿途清真"] },
@@ -418,7 +456,7 @@ const POIS = {
 };
 
 // 备选住宿（地级市/大县城）：终点附近 2-3 个备选，赶不到时可以中途住宿
-const ALT_STAYS = {
+const V6_ALT_STAYS = {
   1:  ["乌兰察布", "集宁区", "呼和浩特"],
   2:  ["巴彦淖尔", "临河区", "包头"],
   3:  ["额济纳旗", "达来呼布", "酒泉"],
@@ -440,7 +478,7 @@ const ROAD_LABELS = { highway: "高速", mixed: "高速+国道", mountain: "山�
 const ROAD_COLORS = { highway: "#1e40af", mixed: "#92400e", mountain: "#991b1b" };
 const AD_LABELS = { green: "🟢 AD", yellow: "🟡 部分 AD", red: "🔴 手动" };
 
-const LABEL_OFFSETS = {
+const V6_LABEL_OFFSETS = {
   "北京": [14, -16], "乌兰察布": [14, 4], "巴彦淖尔": [14, 4],
   "额济纳旗": [14, 4], "哈密": [14, 4], "鄯善": [18, -12],
   "吐鲁番": [-10, -16], "阜康": [-14, -10], "富蕴": [10, 6],
@@ -449,6 +487,164 @@ const LABEL_OFFSETS = {
   "赛里木湖": [-10, -14], "果子沟": [-10, 14], "伊宁": [14, -2],
   "那拉提": [14, 4], "巩乃斯": [14, -10], "库车": [-14, 0], "库尔勒": [14, 4],
 };
+
+
+
+
+// ============================================================
+// V7 DATA — 强南疆：去程更直（D5 哈密→乌鲁木齐 跳过吐鲁番+天池）
+// 末尾新增 1.5 天南疆（D13 库车→阿克苏 / D14 阿克苏→喀什）
+// 总 6541 km / ~89h（vs V6 6032 km / 75.5h）
+// ============================================================
+
+const V7_SEGMENTS = [
+  { from: "北京", to: "乌兰察布", flng: 116.41, flat: 39.91, tlng: 113.11, tlat: 41.04, road: 350, dur: 4.7, day: 1, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "乌兰察布", to: "巴彦淖尔", flng: 113.11, flat: 41.04, tlng: 107.39, tlat: 40.74, road: 549, dur: 5.8, day: 2, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "巴彦淖尔", to: "额济纳旗", flng: 107.39, flat: 40.74, tlng: 101.07, tlat: 41.97, road: 681, dur: 7.8, day: 3, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "额济纳旗", to: "哈密", flng: 101.07, flat: 41.97, tlng: 93.51, tlat: 42.83, road: 684, dur: 8.0, day: 4, type: "stay", rt: "highway", ad: "green", night: true },
+  // D5: 哈密→乌鲁木齐 跳过吐鲁番/天池/阜康
+  { from: "哈密", to: "乌鲁木齐", flng: 93.51, flat: 42.83, tlng: 87.62, tlat: 43.83, road: 700, dur: 7.5, day: 5, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "乌鲁木齐", to: "富蕴", flng: 87.62, flat: 43.83, tlng: 89.51, tlat: 47.00, road: 450, dur: 5.5, day: 6, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "富蕴", to: "喀纳斯", flng: 89.51, flat: 47.00, tlng: 87.04, tlat: 48.65, road: 410, dur: 6.0, day: 7, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "喀纳斯", to: "禾木", flng: 87.04, flat: 48.65, tlng: 87.43, tlat: 48.48, road: 170, dur: 4.1, day: 8, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "禾木", to: "布尔津", flng: 87.43, flat: 48.48, tlng: 86.86, tlat: 47.71, road: 140, dur: 2.3, day: 9, type: "transit", rt: "mixed", ad: "yellow", night: false },
+  { from: "布尔津", to: "乌尔禾", flng: 86.86, flat: 47.71, tlng: 85.69, tlat: 46.10, road: 232, dur: 2.8, day: 9, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "乌尔禾", to: "克拉玛依", flng: 85.69, flat: 46.10, tlng: 84.89, tlat: 45.59, road: 91, dur: 1.4, day: 9, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "克拉玛依", to: "赛里木湖", flng: 84.89, flat: 45.59, tlng: 81.18, tlat: 44.62, road: 462, dur: 5.5, day: 10, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "赛里木湖", to: "伊宁", flng: 81.18, flat: 44.62, tlng: 81.32, tlat: 43.92, road: 198, dur: 2.5, day: 11, type: "transit", rt: "mixed", ad: "yellow", night: false },
+  { from: "伊宁", to: "那拉提", flng: 81.32, flat: 43.92, tlng: 84.43, tlat: 43.32, road: 288, dur: 4.1, day: 11, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "那拉提", to: "巴音布鲁克", flng: 84.43, flat: 43.32, tlng: 84.78, tlat: 43.21, road: 80, dur: 1.8, day: 12, type: "transit", rt: "mountain", ad: "red", night: false },
+  { from: "巴音布鲁克", to: "库车", flng: 84.78, flat: 43.21, tlng: 82.96, tlat: 41.71, road: 306, dur: 5.5, day: 12, type: "stay", rt: "mountain", ad: "red", night: true },
+  // D13: 库车→阿克苏 (缓冲日，可去温宿大峡谷)
+  { from: "库车", to: "阿克苏", flng: 82.96, flat: 41.71, tlng: 80.26, tlat: 41.17, road: 280, dur: 3.2, day: 13, type: "stay", rt: "highway", ad: "green", night: true },
+  // D14: 阿克苏→喀什 (南疆核心！)
+  { from: "阿克苏", to: "喀什", flng: 80.26, flat: 41.17, tlng: 75.99, tlat: 39.47, road: 470, dur: 5.0, day: 14, type: "stay", rt: "highway", ad: "green", night: true },
+  // D15: 喀什✈北京 (无 SEGMENT，靠 renderAirReturn)
+];
+
+const V7_CITIES = [
+  { name: "北京", lng: 116.41, lat: 39.91, day: "起点", type: "start" },
+  { name: "乌兰察布", lng: 113.11, lat: 41.04, day: "D1 宿", type: "stay" },
+  { name: "巴彦淖尔", lng: 107.39, lat: 40.74, day: "D2 宿", type: "stay" },
+  { name: "额济纳旗", lng: 101.07, lat: 41.97, day: "D3 宿", type: "stay" },
+  { name: "哈密", lng: 93.51, lat: 42.83, day: "D4 宿", type: "stay" },
+  { name: "乌鲁木齐", lng: 87.62, lat: 43.83, day: "D5 宿", type: "stay" },
+  { name: "富蕴", lng: 89.51, lat: 47.00, day: "D6 宿", type: "stay" },
+  { name: "喀纳斯", lng: 87.04, lat: 48.65, day: "D7 宿", type: "stay" },
+  { name: "禾木", lng: 87.43, lat: 48.48, day: "D8 宿", type: "stay" },
+  { name: "布尔津", lng: 86.86, lat: 47.71, day: "D9 路过", type: "transit" },
+  { name: "乌尔禾", lng: 85.69, lat: 46.10, day: "D9 路过", type: "transit" },
+  { name: "克拉玛依", lng: 84.89, lat: 45.59, day: "D9 宿", type: "stay" },
+  { name: "赛里木湖", lng: 81.18, lat: 44.62, day: "D10 宿", type: "stay" },
+  { name: "伊宁", lng: 81.32, lat: 43.92, day: "D11 路过", type: "transit" },
+  { name: "那拉提", lng: 84.43, lat: 43.32, day: "D11 宿", type: "stay" },
+  { name: "巴音布鲁克", lng: 84.78, lat: 43.21, day: "D12 路过", type: "transit" },
+  { name: "库车", lng: 82.96, lat: 41.71, day: "D12 宿", type: "stay" },
+  { name: "阿克苏", lng: 80.26, lat: 41.17, day: "D13 宿", type: "stay" },
+  { name: "喀什", lng: 75.99, lat: 39.47, day: "D14 宿", type: "stay" },
+];
+
+const V7_DAY_SUMMARIES = [
+  { day: 1, title: "北京 → 乌兰察布", km: 350, dur: 4.7, rt: "highway", ad: "green", night: true, desc: "G7 京新起点 · 草原天路", stays: "乌兰察布" },
+  { day: 2, title: "乌兰察布 → 巴彦淖尔", km: 549, dur: 5.8, rt: "highway", ad: "green", night: true, desc: "阴山 + 黄河 · 充 1 次", stays: "巴彦淖尔" },
+  { day: 3, title: "巴彦淖尔 → 额济纳旗", km: 681, dur: 7.8, rt: "highway", ad: "green", night: true, desc: "戈壁日落 · 充 1 次", stays: "额济纳旗" },
+  { day: 4, title: "额济纳旗 → 哈密", km: 684, dur: 8.0, rt: "highway", ad: "green", night: true, desc: "G7 京新穿越 · 充 1-2 次", stays: "哈密" },
+  { day: 5, title: "哈密 → 乌鲁木齐 (G30)", km: 700, dur: 7.5, rt: "highway", ad: "green", night: true, desc: "V7 改动：连霍高速 7.5h 直达 · 跳过吐鲁番/天池", stays: "乌鲁木齐" },
+  { day: 6, title: "乌鲁木齐 → 富蕴 (G216)", km: 450, dur: 5.5, rt: "highway", ad: "green", night: true, desc: "卡拉麦里有蹄类保护区 · 火烧山", stays: "富蕴" },
+  { day: 7, title: "富蕴 → 可可托海 → 喀纳斯", km: 410, dur: 6.0, rt: "mixed", ad: "yellow", night: true, desc: "阿尔泰山 · 桩稀 · 充 1-2 次 ⚠", stays: "喀纳斯" },
+  { day: 8, title: "喀纳斯 → 禾木", km: 170, dur: 4.1, rt: "mixed", ad: "yellow", night: true, desc: "清晨炊烟 · 住禾木", stays: "禾木" },
+  { day: 9, title: "禾木 → 布尔津 → 五彩滩 → 乌尔禾 → 克拉玛依", km: 463, dur: 6.5, rt: "mixed", ad: "yellow", night: true, desc: "五彩滩 + 魔鬼城", stays: "克拉玛依" },
+  { day: 10, title: "克拉玛依 → 赛里木湖", km: 462, dur: 5.5, rt: "highway", ad: "green", night: true, desc: "高山湖泊 · 充 1 次", stays: "赛里木湖" },
+  { day: 11, title: "赛里木湖 → 伊宁 → 那拉提 (一日穿)", km: 486, dur: 6.6, rt: "mixed", ad: "yellow", night: true, desc: "V7 改动：果子沟 + 薰衣草 + 伊宁老城 + 空中草原", stays: "那拉提" },
+  { day: 12, title: "那拉提 → 巴音布鲁克 → 库车 (独库)", km: 386, dur: 7.3, rt: "mountain", ad: "red", night: true, desc: "九曲十八弯 + 天山神秘大峡谷", stays: "库车" },
+  { day: 13, title: "库车 → 阿克苏 (G3012)", km: 280, dur: 3.2, rt: "highway", ad: "green", night: true, desc: "缓冲日 · 温宿大峡谷可选 · 库车小白杏 7 月正好", stays: "阿克苏" },
+  { day: 14, title: "阿克苏 → 喀什 (G3012) · 南疆核心", km: 470, dur: 5.0, rt: "highway", ad: "green", night: true, desc: "V7 新增：艾提尕尔清真寺 + 高台民居 + 大巴扎 + 烤全羊", stays: "喀什" },
+  { day: 15, title: "喀什 ✈ 北京", km: 0, dur: 7.0, rt: "highway", ad: "green", night: false, desc: "V7 新增：经停乌鲁木齐 · 7h · 每天 1 班", stays: "—" },
+];
+
+const V7_DAY_TO_SEG_IDX = {
+  1: [0], 2: [1], 3: [2], 4: [3],
+  5: [4], 6: [5], 7: [6], 8: [7],
+  9: [8, 9, 10], 10: [11], 11: [12, 13],
+  12: [14, 15], 13: [16], 14: [17], 15: []
+};
+
+const V7_POIS = {
+  1:  { see: ["🌾 草原天路东段 30min", "⛰️ 阴山外景 15min", "🐂 牧区牛羊 5min"],         eat: ["🍖 手把肉", "🥛 奶茶 + 炒米", "🍜 莜面"] },
+  2:  { see: ["🏞️ 黄河河套 30min", "⛰️ 阴山山脉 过路", "🌅 河套日落"],         eat: ["🐟 黄河鲤鱼", "🍜 巴盟面筋"] },
+  3:  { see: ["🌄 戈壁日落 20min", "🚀 酒泉卫星发射中心 过路", "🏜️ 巴丹吉林沙漠边缘 过路"], eat: ["🍜 路餐（服务区）", "🍖 沿途清真"] },
+  4:  { see: ["🏛️ 黑城遗址 1h", "🏜️ 雅丹魔鬼城 30min", "🌲 胡杨林（7 月意义不大）"], eat: ["🍚 手抓饭", "🍈 哈密瓜（7 月正好）", "🫓 烤馕"] },
+  // V7 D5 改动：跳过吐鲁番/天池，直达乌鲁木齐
+  5:  { see: ["🌪️ 达坂城风车阵 30min", "🏔️ 天山东段远眺", "🌅 百里风区日落", "🏜️ 柴窝堡湖"],         eat: ["🍖 沿途清真", "🍚 哈密瓜（带后备箱）", "🫓 烤馕"] },
+  // V7 D6 改动：乌鲁木齐→富蕴
+  6:  { see: ["🏜️ 卡拉麦里有蹄类自然保护区（普氏野马/鹅喉羚）", "🌋 火烧山 30min", "🌾 古尔班通古特沙漠边缘", "🏔️ 天山北麓"], eat: ["🍖 富蕴羊肉", "🥔 富蕴土豆", "🐟 冷水鱼"] },
+  7:  { see: ["🏔️ 可可托海地质公园 2h", "🏞️ 额尔齐斯河大峡谷 1h", "🗻 神钟山 30min"],   eat: ["🐟 冷水鱼（乔尔泰）", "🥔 富蕴土豆"] },
+  8:  { see: ["🏞️ 喀纳斯湖三湾 3h", "🌲 禾木村清晨炊烟（建议早 6:30 到观景台）", "⛰️ 雪山倒影"],   eat: ["🍶 图瓦奶酒（卡瓦斯）", "🫓 馕", "🍖 烤肉"] },
+  9:  { see: ["🌅 五彩滩日落（必看·日落 21:30 前赶到）", "🗿 乌尔禾魔鬼城 1h"],                eat: ["🐟 布尔津烤鱼（狗鱼）", "🥗 克拉玛依凉皮"] },
+  10: { see: ["💎 赛里木湖（蓝宝石色） 2-3h", "🌸 湖边花海"],            eat: ["🐟 高白鲑鱼（赛里木湖特产）"] },
+  // V7 D11 改动：合并果子沟+伊宁+那拉提
+  11: { see: ["🌉 果子沟大桥 30min", "💜 薰衣草庄园（7 月正好） 1h", "🏛️ 伊宁老城（汉人街/六星街） 1h", "🌾 那拉提空中草原 3-4h"],   eat: ["🍖 伊犁手抓肉", "🥛 马奶酒", "🍦 薰衣草冰激凌"] },
+  12: { see: ["🐎 巴音布鲁克天鹅湖 + 九曲十八弯 2-3h（必看）", "🗻 天山神秘大峡谷 2h", "🏛️ 库车老城（龟兹文化） 1h", "🕌 库车清真寺 30min"],   eat: ["🍑 库车小白杏（7 月正好）", "🍖 馕坑肉", "🍚 库车拌面"] },
+  // V7 D13 新增：库车→阿克苏（缓冲日）
+  13: { see: ["🏞️ 温宿大峡谷（可选·门票 60）", "🌅 多浪河日落", "🏛️ 阿克苏老城 1h", "🌳 塔克拉玛干沙漠边缘"],   eat: ["🍐 阿克苏冰糖心苹果（7 月刚下树）", "🍖 烤全羊", "🍚 抓饭"] },
+  // V7 D14 新增：阿克苏→喀什（南疆核心！）
+  14: { see: ["🕌 艾提尕尔清真寺（喀什噶尔灵魂）", "🏛️ 高台民居（生土建筑）", "🎨 喀什噶尔老城 1-2h", "🛍️ 大巴扎（夜市美食）", "💎 慕士塔格冰川（远眺）", "🏔️ 白沙湖（路过）"],   eat: ["🍖 喀什烤全羊（必吃）", "🍚 喀什抓饭（黄萝卜+羊肉）", "🍶 鸽子汤（巷子深处）", "🍈 喀什无花果（7 月正好）", "🫓 馕（品种极多）"] },
+  15: { see: ["✈️ 7h 经停乌鲁木齐"],                                       eat: ["🍱 机场简餐"] }
+};
+
+const V7_ALT_STAYS = {
+  1:  ["乌兰察布", "集宁区", "呼和浩特"],
+  2:  ["巴彦淖尔", "临河区", "包头"],
+  3:  ["额济纳旗", "达来呼布", "酒泉"],
+  4:  ["哈密", "伊州区", "敦煌"],
+  // V7 D5 改动：备选吐鲁番/鄯善
+  5:  ["乌鲁木齐", "吐鲁番", "鄯善"],
+  // V7 D6 改动：备选阜康/奇台
+  6:  ["富蕴", "可可托海镇", "阜康"],
+  7:  ["喀纳斯", "贾登峪", "布尔津"],
+  8:  ["禾木", "贾登峪", "布尔津"],
+  9:  ["克拉玛依", "独山子", "乌尔禾"],
+  10: ["赛里木湖", "霍尔果斯", "精河县"],
+  // V7 D11 改动：备选新源/巩留
+  11: ["那拉提", "新源县", "巩留县"],
+  12: ["库车", "拜城县", "新和县"],
+  // V7 D13 改动：备选拜城/温宿
+  13: ["阿克苏", "拜城县", "温宿县"],
+  // V7 D14 改动：备选疏附/疏勒
+  14: ["喀什", "疏附县", "疏勒县"],
+  15: [],
+};
+
+const V7_LABEL_OFFSETS = {
+  "北京": [14, -16], "乌兰察布": [14, 4], "巴彦淖尔": [14, 4],
+  "额济纳旗": [14, 4], "哈密": [14, 4],
+  "乌鲁木齐": [-12, 4],
+  "富蕴": [10, 6],
+  "喀纳斯": [-10, -2], "禾木": [12, 8], "布尔津": [-14, 4],
+  "乌尔禾": [14, 4], "克拉玛依": [14, 4],
+  "赛里木湖": [-10, -14], "伊宁": [14, -2],
+  "那拉提": [14, 4], "巴音布鲁克": [14, -10], "库车": [-14, 0],
+  "阿克苏": [14, 4], "喀什": [-14, 4],
+};
+
+// ============== CURRENT DATA (URL hash switches v6/v7) ==============
+let currentVersion = (location.hash === '#v7') ? 'v7' : 'v6';
+let currentData = {};
+
+function loadData(version) {
+  if (version === 'v7') {
+    return {
+      segments: V7_SEGMENTS, cities: V7_CITIES,
+      day_summaries: V7_DAY_SUMMARIES, day_to_seg_idx: V7_DAY_TO_SEG_IDX,
+      pois: V7_POIS, alt_stays: V7_ALT_STAYS, label_offsets: V7_LABEL_OFFSETS
+    };
+  }
+  return {
+    segments: V6_SEGMENTS, cities: V6_CITIES,
+    day_summaries: V6_DAY_SUMMARIES, day_to_seg_idx: V6_DAY_TO_SEG_IDX,
+    pois: V6_POIS, alt_stays: V6_ALT_STAYS, label_offsets: V6_LABEL_OFFSETS
+  };
+}
 
 // ============== RENDER ==============
 function renderProvinces() {
@@ -465,7 +661,7 @@ function renderProvinces() {
 
 function renderRoute() {
   const g = document.getElementById('route-group');
-  SEGMENTS.forEach((seg, i) => {
+  currentData.segments.forEach((seg, i) => {
     const [x1, y1] = proj(seg.flng, seg.flat);
     const [x2, y2] = proj(seg.tlng, seg.tlat);
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -487,7 +683,7 @@ function renderRoute() {
     line.addEventListener('mouseleave', hideTooltip);
     g.appendChild(line);
   });
-  const last = SEGMENTS[SEGMENTS.length - 1];
+  const last = currentData.segments[currentData.segments.length - 1];
   const [lx, ly] = proj(last.tlng, last.tlat);
   const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
   arrow.setAttribute('points', `${lx-8},${ly-6} ${lx+8},${ly} ${lx-8},${ly+6}`);
@@ -497,7 +693,9 @@ function renderRoute() {
 
 function renderAirReturn() {
   const g = document.getElementById('air-return');
-  const [ax1, ay1] = proj(86.06, 41.76);
+  // Last city = end of route
+  const lastCity = currentData.cities[currentData.cities.length - 1];
+  const [ax1, ay1] = proj(lastCity.lng, lastCity.lat);
   const [ax2, ay2] = proj(116.41, 39.91);
   const midX = (ax1 + ax2) / 2;
   const midY = Math.min(ay1, ay2) - 100;
@@ -518,13 +716,14 @@ function renderAirReturn() {
   label.setAttribute('text-anchor', 'middle');
   label.setAttribute('font-size', '11');
   label.setAttribute('fill', '#7f8c8d');
-  label.textContent = '✈ D15 库尔勒 → 北京（4h 直飞）';
+  const daySummary = currentData.day_summaries[currentData.day_summaries.length - 1];
+  label.textContent = `✈ D${daySummary.day} ${lastCity.name} → 北京（${daySummary.dur}h 直飞）`;
   g.appendChild(label);
 }
 
 function renderCities() {
   const g = document.getElementById('cities-group');
-  CITIES.forEach(city => {
+  currentData.cities.forEach(city => {
     const [cx, cy] = proj(city.lng, city.lat);
     const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     c.setAttribute('cx', cx);
@@ -552,9 +751,9 @@ function renderCities() {
 
 function renderLabels() {
   const g = document.getElementById('labels-group');
-  CITIES.forEach(city => {
+  currentData.cities.forEach(city => {
     const [cx, cy] = proj(city.lng, city.lat);
-    const off = LABEL_OFFSETS[city.name] || [10, 4];
+    const off = currentData.label_offsets[city.name] || [10, 4];
     const [dx, dy] = off;
     const anchor = dx < 0 ? 'end' : 'start';
     const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -586,7 +785,7 @@ function renderLabels() {
 
 function renderDayList() {
   const list = document.getElementById('day-list');
-  DAY_SUMMARIES.forEach(d => {
+  currentData.day_summaries.forEach(d => {
     const item = document.createElement('div');
     item.className = 'day-item';
     item.setAttribute('data-day', d.day);
@@ -604,10 +803,10 @@ function renderDayList() {
     const nightTag = d.night && d.km > 0
       ? `<span class="ad-tag ad-night" title="建议 21:00 前抵达，避免夜路">🌙 ≤21:00</span>`
       : '';
-    const poi = POIS[d.day] || { see: [], eat: [] };
+    const poi = currentData.pois[d.day] || { see: [], eat: [] };
     const seeTags = poi.see.map(s => `<span class="poi-tag see">${s}</span>`).join('');
     const eatTags = poi.eat.map(e => `<span class="poi-tag eat">${e}</span>`).join('');
-    const altStays = ALT_STAYS[d.day] || [];
+    const altStays = currentData.alt_stays[d.day] || [];
     const altStaysHtml = altStays.length > 0
       ? `<div class="stay-section">
            <span class="stay-label">🏨 备选住宿：</span>
@@ -635,7 +834,7 @@ const tooltip = document.getElementById('tooltip');
 const mapCard = document.getElementById('map-card');
 
 function showSegmentTooltip(e, seg) {
-  const poi = POIS[seg.day] || { see: [], eat: [] };
+  const poi = currentData.pois[seg.day] || { see: [], eat: [] };
   const seeLine = poi.see.slice(0, 2).join(' · ');
   const eatLine = poi.eat.slice(0, 1).join(' · ');
   const warns = [];
@@ -737,24 +936,72 @@ function highlightDay(day) {
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   document.querySelectorAll('.segment-path').forEach(s => s.classList.remove('day-highlight'));
-  const segIdx = DAY_TO_SEG_IDX[day] || [];
+  const segIdx = currentData.day_to_seg_idx[day] || [];
   segIdx.forEach(i => {
     document.querySelector(`.segment-path[data-idx="${i}"]`)?.classList.add('day-highlight');
   });
 }
 
 // ============== INIT ==============
-renderProvinces();
-renderRoute();
-renderAirReturn();
-renderCities();
-renderLabels();
-renderDayList();
+function renderAll() {
+  // Clear SVG groups
+  ['route-group', 'air-return', 'cities-group', 'labels-group'].forEach(id => {
+    const g = document.getElementById(id);
+    if (g) while (g.firstChild) g.removeChild(g.firstChild);
+  });
+  // Clear day list
+  const list = document.getElementById('day-list');
+  if (list) list.innerHTML = '';
+  // Re-render
+  renderRoute();
+  renderAirReturn();
+  renderCities();
+  renderLabels();
+  renderDayList();
+  // Header totals
+  const segs = currentData.segments;
+  document.getElementById('total-km').textContent = segs.reduce((s, x) => s + x.road, 0);
+  document.getElementById('total-h').textContent = segs.reduce((s, x) => s + x.dur, 0).toFixed(1);
+  // Title
+  const titleEl = document.getElementById('route-title');
+  if (titleEl) {
+    const tags = currentVersion === 'v7'
+      ? '<span class="badge badge-red">V7 · 强南疆</span><span class="badge badge-green">去程更直</span>'
+      : '<span class="badge badge-red">V6 · 经典北疆</span>';
+    titleEl.innerHTML = tags;
+  }
+  // Update header sub if any
+  const subEl = document.getElementById('route-sub');
+  if (subEl) subEl.textContent = currentVersion === 'v7'
+    ? '15 天 · 京新 G7 高速直达 → 北疆核心 → 独库 → 南疆喀什（V7: 强南疆，去程跳过吐鲁番/天池）'
+    : '15 天 · 京新 G7 → 吐鲁番/天池 → 北疆核心 → 独库 → 库尔勒（V6: 经典北疆，无南疆）';
+  // Update URL hash
+  if (location.hash !== '#' + currentVersion) {
+    history.replaceState(null, '', '#' + currentVersion);
+  }
+  // Update version buttons
+  document.querySelectorAll('.version-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.version === currentVersion);
+  });
+}
 
-document.getElementById('total-km').textContent =
-  SEGMENTS.reduce((sum, s) => sum + s.road, 0);
-document.getElementById('total-h').textContent =
-  SEGMENTS.reduce((sum, s) => sum + s.dur, 0).toFixed(1);
+function switchVersion(v) {
+  if (v === currentVersion) return;
+  currentVersion = v;
+  currentData = loadData(v);
+  resetView();
+  renderAll();
+}
+
+currentData = loadData(currentVersion);
+renderProvinces();
+renderAll();
+
+window.addEventListener('hashchange', () => {
+  const h = location.hash.replace('#', '');
+  if (h === 'v6' || h === 'v7') switchVersion(h);
+});
+
 </script>
 </body>
 </html>
