@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京自驾路线 7 版本对比 · V6/V7 新疆 + 东北环线 15 天 + V8-A/B/C/D 东北/沿海/内蒙避暑 + V9 东北 14 天 (长白山两天 · 跳过鸡头 · 7/5 出发版)</title>
+<title>北京自驾路线 8 版本对比 · V6/V7 新疆 + V8-A/B/C/D + V9 东北 14 天 + V10 东北 16 天 (大连段 + 7/3 出发·当前追踪)</title>
 <style>
 :root {
   --bg: #f5f3ee;
@@ -262,7 +262,7 @@ body {
 <div class="container">
 
 <div class="header">
-  <h1>🚗 北京 → 东北 14 天自驾路线 ⭐ V9
+  <h1>🚗 北京 → 东北 16 天自驾路线 ⭐ V10
         <span class="version-switch">
           <button class="version-btn" data-version="v6" onclick="switchVersion('v6')">V6 · 经典北疆</button>
           <button class="version-btn" data-version="v7" onclick="switchVersion('v7')">V7 · 东北环线 15 天</button>
@@ -271,9 +271,10 @@ body {
           <button class="version-btn" data-version="v8c" onclick="switchVersion('v8c')">V8-C · 沿海+草原</button>
           <button class="version-btn" data-version="v8d" onclick="switchVersion('v8d')">V8-D · 纯东北大圈</button>
           <button class="version-btn active" data-version="v9" onclick="switchVersion('v9')">V9 · 长白山两天 · 跳过鸡头 ⭐</button>
+          <button class="version-btn" data-version="v10" onclick="switchVersion('v10')">V10 · +大连段 ⭐⭐ 当前</button>
         </span>
       </h1>
-      <div class="header sub" id="route-sub">14 天 · 北京 → 秦皇岛 → 锦州 → 沈阳 → 长白山(北+西 两天) → 延吉/防川 → 镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京 · 总 4,240 km（不含防川 400km 往返）</div>
+      <div class="header sub" id="route-sub">16 天 · 北京 → 秦皇岛 → 锦州 → <strong>大连(新增 D3-D4 旅顺)</strong> → 沈阳(补故宫) → 长白山(北+西 两天) → 延吉/防川 → 镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京 · 总 4,520 km（含防川往返）</div>
       <div id="route-title"><span class="badge badge-red">V6 · 经典北疆</span></div>
   <div class="meta">
     <span><span class="badge badge-green">0704 周六出发</span></span>
@@ -949,6 +950,144 @@ const V9_ALT_STAYS = {
   14: [ { name: "北京·已到家", addr: "—", price: "—", note: "D14 终到北京", charge: "—" } ]
 };
 
+// V10 DATA — 东北 16 天 · 大连段插入 + 沈阳故宫补 (7/3 出发版 · 实际行程追踪)
+// 北京 → 秦皇岛 → 山海关/兴城/锦州 → 大连(新增) → 沈阳 → 二道白河 → 长白山北/西
+//      → 延吉/防川 → 牡丹江/镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京
+// 总 4,520km / ~52h（含防川往返 400km）+ 旅顺一日游
+
+const V10_SEGMENTS = [
+  { from: "北京", to: "秦皇岛", flng: 116.41, flat: 39.91, tlng: 119.59, tlat: 39.94, road: 300, dur: 3.5, day: 1, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "秦皇岛", to: "山海关", flng: 119.59, flat: 39.94, tlng: 119.75, tlat: 40.0, road: 30, dur: 0.5, day: 2, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "山海关", to: "兴城", flng: 119.75, flat: 40.0, tlng: 120.71, tlat: 40.61, road: 150, dur: 2.0, day: 2, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "兴城", to: "锦州", flng: 120.71, flat: 40.61, tlng: 121.13, tlat: 41.1, road: 200, dur: 2.5, day: 2, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "锦州", to: "大连", flng: 121.13, flat: 41.1, tlng: 121.62, tlat: 38.92, road: 380, dur: 4.5, day: 3, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "大连", to: "沈阳", flng: 121.62, flat: 38.92, tlng: 123.43, tlat: 41.8, road: 400, dur: 4.5, day: 5, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "沈阳", to: "二道白河", flng: 123.43, flat: 41.8, tlng: 128.05, tlat: 42.4, road: 480, dur: 5.5, day: 6, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "二道白河", to: "延吉", flng: 128.05, flat: 42.4, tlng: 129.51, tlat: 42.91, road: 350, dur: 4.5, day: 9, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "延吉", to: "防川", flng: 129.51, flat: 42.91, tlng: 130.4, tlat: 42.85, road: 200, dur: 2.5, day: 10, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "防川", to: "延吉", flng: 130.4, flat: 42.85, tlng: 129.51, tlat: 42.91, road: 200, dur: 2.5, day: 10, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "延吉", to: "牡丹江", flng: 129.51, flat: 42.91, tlng: 129.6, tlat: 44.58, road: 350, dur: 4.0, day: 11, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "牡丹江", to: "镜泊湖", flng: 129.6, flat: 44.58, tlng: 128.83, tlat: 44.05, road: 100, dur: 1.5, day: 11, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "镜泊湖", to: "哈尔滨", flng: 128.83, flat: 44.05, tlng: 126.64, tlat: 45.8, road: 300, dur: 3.5, day: 12, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "哈尔滨", to: "松原", flng: 126.64, flat: 45.8, tlng: 124.83, tlat: 45.18, road: 350, dur: 4.0, day: 13, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "松原", to: "长春", flng: 124.83, flat: 45.18, tlng: 125.32, tlat: 43.89, road: 200, dur: 2.5, day: 14, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "长春", to: "沈阳", flng: 125.32, flat: 43.89, tlng: 123.43, tlat: 41.8, road: 300, dur: 3.0, day: 15, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "沈阳", to: "北京", flng: 123.43, flat: 41.8, tlng: 116.41, tlat: 39.91, road: 700, dur: 7.0, day: 16, type: "stay", rt: "highway", ad: "green", night: true }
+];
+
+const V10_DAY_SUMMARIES = [
+  { day: 1, title: "北京 → 秦皇岛/北戴河", km: 300, dur: 3.5, rt: "highway", ad: "green", night: true, desc: "G1 京哈 · 沿海起手", stays: "秦皇岛" },
+  { day: 2, title: "秦皇岛 → 山海关 → 兴城 → 锦州", km: 380, dur: 5.0, rt: "highway", ad: "green", night: true, desc: "山海关古城(老龙头)+ 兴城古城 + 锦州辽沈战役纪念馆", stays: "锦州" },
+  { day: 3, title: "锦州 → 大连（横切到海边）⭐", km: 380, dur: 4.5, rt: "highway", ad: "green", night: true, desc: "G1 → G15 沈海高速 · 大连天气比东北好，避开雨带 · 今晚住大连", stays: "大连" },
+  { day: 4, title: "大连一日（旅顺半日 + 市内半日）", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "7/6 阴转多云·适合户外 · 上午旅顺近代史(白玉山/东鸡冠山/军港/日俄监狱) · 下午回市内老虎滩 + 星海湾夜景", stays: "大连" },
+  { day: 5, title: "大连 → 沈阳", km: 400, dur: 4.5, rt: "highway", ad: "green", night: true, desc: "G15 → G1 京哈 · 顺便补 V9 没看的沈阳故宫/张氏帅府", stays: "沈阳" },
+  { day: 6, title: "沈阳一日补 + → 二道白河", km: 480, dur: 5.5, rt: "mixed", ad: "yellow", night: true, desc: "上午沈阳故宫+张氏帅府(雨天室内) · 下午 G1212 → 二道白河(桩稀)", stays: "二道白河" },
+  { day: 7, title: "长白山北坡（天池+瀑布）", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "⚠ 7/9 多云转阴 → 看天池 10-20% · 重点放绿渊潭+瀑布+地下森林", stays: "二道白河" },
+  { day: 8, title: "长白山西坡 + 漂流/半天休", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "⚠ 7/10 多云转中雨 · 西坡 1442 台阶(视野宽) + 下午漂流 / 二道白河半休", stays: "二道白河" },
+  { day: 9, title: "二道白河 → 延吉", km: 350, dur: 4.5, rt: "highway", ad: "green", night: true, desc: "⚠ 7/11 小雨 · G11 鹤大 · 朝鲜族冷面烤肉", stays: "延吉" },
+  { day: 10, title: "延吉 → 防川/珲春 一日游", km: 400, dur: 5.0, rt: "highway", ad: "green", night: true, desc: "⚠ 7/12 小雨 · 中朝俄三国边境 + 一眼望三国", stays: "延吉" },
+  { day: 11, title: "延吉 → 牡丹江 → 镜泊湖", km: 450, dur: 5.5, rt: "mixed", ad: "yellow", night: true, desc: "⚠ 7/13 中雨转小雨 · G11 + 县道 · 吊水楼瀑布", stays: "镜泊湖" },
+  { day: 12, title: "镜泊湖 → 哈尔滨", km: 300, dur: 3.5, rt: "highway", ad: "green", night: true, desc: "7/14 小雨 · 中央大街 + 圣索菲亚 + 松花江 + 太阳岛", stays: "哈尔滨" },
+  { day: 13, title: "哈尔滨 → 松原（直接走松嫩平原）", km: 350, dur: 4.0, rt: "highway", ad: "green", night: true, desc: "⚠ 7/15 小雨转多云 · G1 + G45 · 沿途松嫩草原替代齐齐哈尔看草原", stays: "松原" },
+  { day: 14, title: "松原 → 长春（查干湖）", km: 200, dur: 2.5, rt: "highway", ad: "green", night: true, desc: "⚠ 7/16 多云转晴 · 查干湖 + 蒙古族风情 + 长春伪满皇宫", stays: "长春" },
+  { day: 15, title: "长春 → 沈阳（路过不玩）", km: 300, dur: 3.0, rt: "highway", ad: "green", night: true, desc: "7/17 多云 · G1 京哈 · 补伪满皇宫 → 沈阳路过(不住重复)", stays: "沈阳" },
+  { day: 16, title: "沈阳 → 北京（冲刺日）", km: 700, dur: 7.0, rt: "highway", ad: "green", night: true, desc: "7/18 多云转阴 · G1 京哈直达 · ⚠ 700km 全程高速 充 2 次 · 最后冲刺", stays: "北京" }
+];
+
+const V10_CITIES = [
+  { name: "北京", lng: 116.41, lat: 39.91, day: "起点/终点", type: "start" },
+  { name: "秦皇岛", lng: 119.59, lat: 39.94, day: "D1 宿", type: "stay" },
+  { name: "山海关", lng: 119.75, lat: 40.0, day: "D2 路过", type: "transit" },
+  { name: "兴城", lng: 120.71, lat: 40.61, day: "D2 路过", type: "transit" },
+  { name: "锦州", lng: 121.13, lat: 41.1, day: "D2 宿", type: "stay" },
+  { name: "大连", lng: 121.62, lat: 38.92, day: "D3-D4 宿", type: "stay" },
+  { name: "沈阳", lng: 123.43, lat: 41.8, day: "D5 宿 / D15 路宿", type: "stay" },
+  { name: "二道白河", lng: 128.05, lat: 42.4, day: "D6-D8 宿", type: "stay" },
+  { name: "延吉", lng: 129.51, lat: 42.91, day: "D9-D10 宿", type: "stay" },
+  { name: "防川", lng: 130.4, lat: 42.85, day: "D10 路过", type: "transit" },
+  { name: "牡丹江", lng: 129.6, lat: 44.58, day: "D11 路过", type: "transit" },
+  { name: "镜泊湖", lng: 128.83, lat: 44.05, day: "D11 宿", type: "stay" },
+  { name: "哈尔滨", lng: 126.64, lat: 45.8, day: "D12 宿", type: "stay" },
+  { name: "松原", lng: 124.83, lat: 45.18, day: "D13 宿", type: "stay" },
+  { name: "长春", lng: 125.32, lat: 43.89, day: "D14 宿", type: "stay" }
+];
+
+const V10_DAY_TO_SEG_IDX = {
+  1: [0],
+  2: [1, 2, 3],
+  3: [4],
+  4: [],
+  5: [5],
+  6: [6],
+  7: [],
+  8: [],
+  9: [7],
+  10: [8, 9],
+  11: [10, 11],
+  12: [12],
+  13: [13],
+  14: [14],
+  15: [15],
+  16: [16]
+};
+
+const V10_LABEL_OFFSETS = {
+  "北京": [14, -16],
+  "秦皇岛": [14, 4],
+  "山海关": [14, 6],
+  "兴城": [-14, 4],
+  "锦州": [14, 4],
+  "大连": [14, 8],
+  "沈阳": [14, 4],
+  "二道白河": [14, 4],
+  "延吉": [14, -2],
+  "防川": [14, 4],
+  "牡丹江": [14, 4],
+  "镜泊湖": [-14, 4],
+  "哈尔滨": [14, 4],
+  "松原": [14, 4],
+  "长春": [14, 4]
+};
+
+const V10_POIS = {
+  1: { see: ["🏖️ 北戴河老虎石公园 1-2h", "🌅 碧螺塔酒吧公园 30min", "🦀 浅水湾浴场"], eat: ["🦐 海港区·海鲜大排档(本地人推)·蒸海鲜", "🌯 文化路·麻酱烧饼 + 凉皮", "🍺 青岛啤酒 (本地)", "🍜 老二位麻酱烧饼 (老字号·游客少)"] },
+  2: { see: ["🏯 山海关古城 1-2h(必看·老龙头/天下第一关)", "🏯 兴城古城 1h(明代古城)", "⛩️ 锦州辽沈战役纪念馆 1.5h"], eat: ["🔥 锦州烧烤 (必吃·人民街一带)", "🍖 兴城全羊(南关地区·本地老店)", "🥟 东北饺子 (锦州大厦附近)", "🍲 沟帮子熏鸡 (锦州老字号·可打包带走)"] },
+  3: { see: ["🌊 G15 沈海高速 · 大连天气比东北好"], eat: ["🦞 *正黄旗海鲜烧烤大排档*（开发区店）— 厚皮海肠捞饭+海胆蒸蛋+烤大鲍鱼", "🐟 *日月明海鲜坊·延安路店* — 16 年大连本地老字号·海肠捞饭+海胆豆腐", "🦐 *星海渔港·观海餐厅*（星海广场店）— 一线海景高端档", "🍱 靠海吃饭·海鲜烧烤 (大连湾/付家庄附近本地小店)"] },
+  4: { see: ["🏯 *旅顺半日游*(白玉山俯瞰军港 / 东鸡冠山北堡垒 / 日俄监狱旧址博物馆 / 留声机博物馆 / 033 潜艇博物馆)", "🌅 *星海广场+星海湾* (亚洲最大广场·跨海大桥远观)", "🦭 *老虎滩海洋公园* (5 馆联票 ¥220·极地动物+珊瑚礁)", "🍷 中山广场欧式建筑群 + 俄罗斯风情街"], eat: ["🦞 正黄旗海鲜烧烤 (厚皮海肠捞饭)", "🐟 日月明海鲜坊 (海胆捞饭+三鲜焖子)", "🦐 星海渔港·观海餐厅 (晚宴高端档)", "🥢 牟传仁大连老菜馆 (海肠捞饭+鲅鱼水饺·大连菜)", "🥟 林子旺·虾爬肉小馄饨 (本地特色·游客少)", "🍵 俄罗斯餐厅 (海港城·俄式面包·红菜汤)"] },
+  5: { see: ["🛣️ G15 → G1 京哈 · 5.5h · 补 V9 没看的沈阳故宫"], eat: ["🍗 老四季鸡架 (沈阳·品牌·再来一次)", "🥟 那家老院饺子馆 (中街·煸馅饺子+锅包肉)", "🍖 李连贵熏肉大饼 (沈阳老字号)"] },
+  6: { see: ["🏯 沈阳故宫 1.5h(雨天室内)", "🏛️ 张氏帅府 1.5h", "🌳 北陵公园 1h"], eat: ["🍗 老四季鸡架·中街店 (鸡架+抻面)", "🥟 那家老院饺子馆 (煸馅饺子+冰花饺子+锅包肉)", "🍖 普云楼原味斋烤鸭 (辽宁老字号)", "🦆 鹿鸣春香鸡 (清初关东四绝菜)"] },
+  7: { see: ["💎 长白山天池 2-3h(看运气·雨 10-20%概率)", "💦 长白瀑布 1h", "🌊 绿渊潭 30min", "🌲 谷底森林 1h", "♨️ 蓝景温泉(泡汤)"], eat: ["🐟 二道白河·老朴狗肉汤 (本地老店)", "🍶 关东酒巷·满族饽饽+冷水鱼", "🥟 东北饺子馆", "🍚 朝鲜族冷面"] },
+  8: { see: ["🏔️ 长白山西坡 1442 台阶 3-4h(视野宽)", "🌸 高山花园 7月开放", "🛶 松花江第一漂/长白山天池第一漂 1-2h", "🌆 二道白河小镇 慢半天"], eat: ["🐟 乔尔泰冷水鱼(酒店餐厅或镇上)", "🍖 满族饽饽", "🍚 朝鲜族石锅拌饭", "🦆 鸭绿江鱼"] },
+  9: { see: ["🏫 延边大学 1h(异域风情)", "⛰️ 帽儿山 1h", "🌃 延吉夜景"], eat: ["🍜 全州拌饭·参花街总店(参花路142号·24h·人均~50)", "🥩 元奶奶包饭·新兴旗舰店(参鸡汤必点)", "🍡 丰茂烤串·全国首店(自动烤串)", "🐔 张师傅参鸡汤·公园路店(要排队)", "🛒 西市场(辣白菜+米肠+打糕)"] },
+  10: { see: ["🌍 防川一眼望三国(中朝俄) 1h", "⛰️ 珲春敬信湿地", "🏞️ 图们江边"], eat: ["🍜 珲春朝鲜族冷面", "🍖 串店", "🍶 米酒", "🐟 珲春大坡湖鱼"] },
+  11: { see: ["💦 镜泊湖吊水楼瀑布 1.5h(必看)", "🌲 火山口地下森林 1h"], eat: ["🐟 镜泊胜景酒店餐厅(镜泊湖鱼锅)", "🐟 镜泊湖全鱼宴", "🍖 老黑山铁锅炖"] },
+  12: { see: ["🏛️ 中央大街 2h(必看·俄式步行街)", "⛪ 圣索菲亚教堂 30min", "🌉 松花江/防洪纪念塔 1h", "🌳 太阳岛 1-2h"], eat: ["🍖 老厨家·中央大街店(友谊路总店·正宗锅包肉·人均~80-100)", "🌭 商委红肠 / 秋林红肠", "🥖 老昌春饼", "🍦 马迭尔冰棍 (中央大街)"] },
+  13: { see: ["🌾 松嫩平原沿途草原", "🌅 查干湖夏景 1h"], eat: ["🐟 查干湖全鱼宴", "🐏 前郭尔罗斯·手把肉", "🥟 蒙古族馅饼", "🥛 蒙古族奶茶+牛肉干"] },
+  14: { see: ["🌊 查干湖 2-3h(夏景+蒙古族风情)", "🏛️ 伪满皇宫(长春) 1.5h"], eat: ["🍖 春发合饭庄 (吉林老字号·锅包肉+雪衣豆沙·人均62)", "🥘 王记酱骨头 (长春老牌)", "🥘 真不同酱菜"] },
+  15: { see: ["🏛️ 伪满皇宫 1.5h(长春)", "🌆 沈阳路过(中街路过)"], eat: ["🥘 满族八大碗", "🍖 锅包肉", "🍗 老四季鸡架"] },
+  16: { see: ["🛣️ G1 京哈 7h 冲刺", "🌅 山海关路过"], eat: ["🥟 服务区简餐", "🍜 沈阳出发饺子", "☕ 抵京火锅庆祝"] }
+};
+
+const V10_ALT_STAYS = {
+  1: [ { name: "秦皇岛国海宾馆", addr: "秦皇岛海港区文化路", price: "¥280-380", note: "MiaoDX 已住过这家·国营老牌·体验好", charge: "无桩/附近服务区" } ],
+  2: [ { name: "锦州大厦宾馆", addr: "锦州市古塔区中央大街", price: "¥220-280", note: "MiaoDX 已住过·说不太好·太旧", charge: "无桩" } ],
+  3: [ { name: "大连富丽华大酒店", addr: "大连商业区·距中山广场 3 分钟车程", price: "¥600-900", note: "老牌五星·6 餐厅+SPA·对标国海宾馆档次", charge: "需问前台" }, { name: "大连雅乐轩酒店", addr: "大连市中心·距中山广场 5 分钟步行", price: "¥400-550", note: "万豪系·性价比高·室内泳池", charge: "需问前台" }, { name: "大连华南广场桔子水晶酒店", addr: "甘井子区中华西路 111 号", price: "¥400-500", note: "华住旗下四星·智能客房", charge: "需问前台" }, { name: "速8/如家(友好广场/青泥洼桥地铁站附近)", addr: "中山区·地铁 2 号线友好广场站", price: "¥220-300", note: "经济型·去各景点地铁方便", charge: "无桩" } ],
+  4: [ { name: "同 D3 任选一", addr: "大连市内", price: "¥220-900", note: "D3 已入住·继续住·避免换酒店", charge: "—" } ],
+  5: [ { name: "大连二次过路·直接选沈阳", addr: "见沈阳选项", price: "—", note: "D5 直接从大连开沈阳·不中间停留·住沈阳", charge: "—" } ],
+  6: [ { name: "见 D6/D7 二道白河选项", addr: "二道白河镇", price: "—", note: "D6 早上沈阳看故宫+帅府·下午直冲二道白河·晚上到", charge: "—" } ],
+  7: [ { name: "长白山北坡集散中心二道白河亚朵酒店", addr: "安图县长白山大街与赤松路交叉口", price: "¥308起", note: "2024开业·4.8分·距北坡集散中心 6 分钟步行", charge: "有桩" }, { name: "长白山在之禾度假酒店", addr: "安图二道白河镇滨河路 1 号", price: "¥600-900", note: "管家服务+SPA+充电桩", charge: "有桩" }, { name: "如家精选·长白山二道白河网红街店", addr: "二道白河镇长青路 18 号", price: "¥220-300", note: "经济型·2024 装修·距北坡 3.2km", charge: "无桩/附近有桩" } ],
+  8: [ { name: "同 D7 任选一", addr: "二道白河镇", price: "¥220-900", note: "D7 已入住·继续住", charge: "—" } ],
+  9: [ { name: "延吉恐龙温泉酒店", addr: "延吉·朝鲜族民俗园恐龙王国店", price: "¥500-700", note: "2025开业·主题房+温泉池·朝鲜族主题", charge: "需问前台" }, { name: "锦江之星延吉火车站市政府酒店", addr: "延吉火车站旁", price: "¥280-350", note: "连锁稳定·距延吉站1.5km", charge: "无桩" }, { name: "汉庭酒店延吉百货大楼店", addr: "延吉人民路 181 号阳光大厦", price: "¥220-280", note: "经济型·距朝阳川机场约 24min", charge: "无桩" } ],
+  10: [ { name: "同 D9 任选一", addr: "延吉市内", price: "¥220-700", note: "D9 已入住·继续住", charge: "—" } ],
+  11: [ { name: "镜泊胜景酒店", addr: "镜泊湖景区北门口", price: "¥350-450", note: "2026 新开四钻·步行直达检票口", charge: "有桩" }, { name: "镜泊湖镜泊人家宾馆", addr: "镜泊湖世界地质公园北门外", price: "¥280-380", note: "2019 装修·8000 平·近吊水楼瀑布", charge: "需问前台" }, { name: "镜泊湖半山·泊景度假酒店", addr: "吊水楼瀑布附近", price: "¥300-500", note: "半山景观度假酒店", charge: "需问前台" } ],
+  12: [ { name: "哈尔滨中央大街索菲亚美居酒店", addr: "中央大街·圣索菲亚旁", price: "¥400-550", note: "雅高系 4 星·紧邻中央大街+圣索菲亚", charge: "需问前台" }, { name: "哈尔滨中央大街英迪格酒店", addr: "哈尔滨中心", price: "¥700-1000", note: "IHG 4 星偏上·露台+酒吧", charge: "需问前台" }, { name: "速8沈阳中街故宫张氏帅府店(同款哈)", addr: "中央大街附近", price: "¥200-280", note: "经济型·位置好", charge: "无桩" } ],
+  13: [ { name: "松原查干湖宾馆", addr: "查干湖畔", price: "¥280-380", note: "老牌国营·靠近查干湖·类似国海宾馆档次", charge: "需问前台" }, { name: "松原松花江大酒店", addr: "松原市内", price: "¥400-500", note: "4星·配套齐全", charge: "需问前台" }, { name: "前郭尔罗斯蒙餐主题酒店", addr: "前郭尔罗斯蒙古族自治县", price: "¥300-450", note: "蒙古族特色主题", charge: "需问前台" } ],
+  14: [ { name: "长春香格里拉国际大酒店", addr: "长春繁华商业区", price: "¥500-800", note: "4-5星·距伪满皇宫3.7km·PM2.5过滤+加湿器", charge: "有桩" }, { name: "Holiday Inn 长春净月假日酒店", addr: "净月区", price: "¥400-550", note: "假日品牌·稳定", charge: "需问前台" }, { name: "春发合饭庄附近连锁酒店", addr: "长春各区", price: "¥280-400", note: "多家连锁可选·价位灵活", charge: "—" } ],
+  15: [ { name: "沈阳三次过路·建议换: 沈阳君悦酒店", addr: "沈河区青年大街·华润大厦", price: "¥700-1000", note: "君悦品牌·新建·避免 D3 重复体验", charge: "需问前台" }, { name: "沈阳铂尔曼酒店", addr: "沈河区北站路", price: "¥450-600", note: "雅高系·4星·位置好", charge: "需问前台" }, { name: "沈阳北约客维景国际大酒店", addr: "沈河区惠工街", price: "¥400-550", note: "老牌·稳", charge: "需问前台" }, { name: "辽宁大厦(可再选·连续住)", addr: "皇姑区黄河南大街105号", price: "¥380-450", note: "MiaoDX 已住过·稳妥", charge: "需问前台" } ],
+  16: [ { name: "北京·已到家", addr: "—", price: "—", note: "D16 终到北京·结束行程", charge: "—" } ]
+};
+
+
 
 
 
@@ -1163,8 +1302,8 @@ const V7_LABEL_OFFSETS = {
 };
 
 // ============== CURRENT DATA (URL hash switches v6/v7) ==============
-const VALID_VERSIONS = ['v6', 'v7', 'v8a', 'v8b', 'v8c', 'v8d', 'v9'];
-let currentVersion = VALID_VERSIONS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'v9';
+const VALID_VERSIONS = ['v6', 'v7', 'v8a', 'v8b', 'v8c', 'v8d', 'v9', 'v10'];
+let currentVersion = VALID_VERSIONS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'v10';
 let currentData = {};
 
 function loadData(version) {
@@ -1176,8 +1315,9 @@ function loadData(version) {
     'v8c': { label: 'V8-C · 沿海+草原', segs: V8C_SEGMENTS, cities: V8C_CITIES, ds: V8C_DAY_SUMMARIES, idx: V8C_DAY_TO_SEG_IDX, pois: V8C_POIS, alt: V8C_ALT_STAYS, lo: V8C_LABEL_OFFSETS },
     'v8d': { label: 'V8-D · 纯东北大圈', segs: V8D_SEGMENTS, cities: V8D_CITIES, ds: V8D_DAY_SUMMARIES, idx: V8D_DAY_TO_SEG_IDX, pois: V8D_POIS, alt: V8D_ALT_STAYS, lo: V8D_LABEL_OFFSETS },
     'v9':  { label: 'V9 · 东北 14 天 · 长白山两天 + 跳过鸡头',  segs: V9_SEGMENTS,  cities: V9_CITIES,  ds: V9_DAY_SUMMARIES,  idx: V9_DAY_TO_SEG_IDX,  pois: V9_POIS,  alt: V9_ALT_STAYS,  lo: V9_LABEL_OFFSETS  },
+    'v10': { label: 'V10 · 大连段插入 · 7/3 出发版 ⭐',  segs: V10_SEGMENTS,  cities: V10_CITIES,  ds: V10_DAY_SUMMARIES,  idx: V10_DAY_TO_SEG_IDX,  pois: V10_POIS,  alt: V10_ALT_STAYS,  lo: V10_LABEL_OFFSETS  },
   };
-  const d = data[version] || data['v9'];
+  const d = data[version] || data['v10'];
   return {
     version_label: d.label,
     segments: d.segs, cities: d.cities,
@@ -1525,7 +1665,8 @@ function renderAll() {
       V8B: '<span class="badge badge-red">V8-B · 东北+草原</span><span class="badge badge-green">最丰富</span>',
       V8C: '<span class="badge badge-red">V8-C · 沿海+草原</span><span class="badge badge-green">轻量</span>',
       V8D: '<span class="badge badge-red">V8-D · 纯东北大圈</span><span class="badge badge-green">全程自驾</span>',
-      V9: '<span class="badge badge-red">V9 · 东北 14 天</span><span class="badge badge-green">长白山两天 · 跳过鸡头 · 7/5 出发现行</span>',
+      V9: '<span class="badge badge-red">V9 · 东北 14 天</span><span class="badge badge-green">长白山两天 · 跳过鸡头</span>',
+      V10: '<span class="badge badge-red">V10 · 东北 16 天</span><span class="badge badge-green">+大连段 · 7/3 出发现行追踪 · 当前 ⭐</span>',
     };
     titleEl.innerHTML = TL[currentVersion.toUpperCase()] || TL.V6;
   }
