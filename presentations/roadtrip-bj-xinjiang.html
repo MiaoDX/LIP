@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京自驾路线 9 版本对比 · V6/V7 + V8-A/B/C/D + V9 东北 + V10 大连+ V11 全国宾馆级·当前追踪</title>
+<title>北京自驾路线 9 版本对比 · V6/V7 + V8-A/B/C/D + V9 东北 + V10 大连 + V11 全程国宾级·当前追踪</title>
 <style>
 :root {
   --bg: #f5f3ee;
@@ -43,8 +43,10 @@ body {
   margin-left: 16px;
   vertical-align: middle;
   gap: 6px;
+  max-width: 100%;
 }
 .version-btn {
+  flex: 0 0 auto;
   font-size: 12px;
   padding: 4px 12px;
   border: 1.5px solid var(--border);
@@ -53,6 +55,7 @@ body {
   color: var(--muted);
   cursor: pointer;
   font-weight: 600;
+  white-space: nowrap;
   transition: all 0.15s;
 }
 .version-btn:hover { border-color: var(--accent); color: var(--accent); }
@@ -78,6 +81,18 @@ body {
 
 .main { display: grid; grid-template-columns: 1fr 380px; gap: 20px; }
 @media (max-width: 1000px) { .main { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  body { padding: 20px; }
+  .header { padding: 24px 28px; overflow: hidden; }
+  .header h1 { line-height: 1.45; }
+  .version-switch {
+    display: flex;
+    margin: 10px 0 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+}
 
 .map-card {
   background: var(--card); border-radius: var(--radius);
@@ -270,18 +285,18 @@ body {
           <button class="version-btn" data-version="v8b" onclick="switchVersion('v8b')">V8-B · 东北+草原</button>
           <button class="version-btn" data-version="v8c" onclick="switchVersion('v8c')">V8-C · 沿海+草原</button>
           <button class="version-btn" data-version="v8d" onclick="switchVersion('v8d')">V8-D · 纯东北大圈</button>
-          <button class="version-btn active" data-version="v9" onclick="switchVersion('v9')">V9 · 长白山两天 · 跳过鸡头 ⭐</button>
+          <button class="version-btn" data-version="v9" onclick="switchVersion('v9')">V9 · 长白山两天 · 跳过鸡头 ⭐</button>
           <button class="version-btn" data-version="v10" onclick="switchVersion('v10')">V10 · +大连段 ⭐⭐</button>
           <button class="version-btn active" data-version="v11" onclick="switchVersion('v11')">V11 · 全程国宾级 🏛⭐⭐⭐</button>
         </span>
       </h1>
-      <div class="header sub" id="route-sub"><strong>🏛 V11 = 全程国宾级酒店版</strong> · 16 天 · 北京 → 秦皇岛 → 锦州 → <strong>大连(棒棰岛国宾馆)</strong> → <strong>沈阳(辽宁大厦国宾馆)</strong> → 长白山(北+西 两天) → 延吉(白山大厦) → 镜泊湖(老国宾馆) → <strong>哈尔滨(马迭尔/太阳岛)</strong> → 松原(查干湖) → <strong>长春(南湖宾馆·吉林省国宾馆)</strong> → 沈阳 → 北京 · 总 4,520 km</div>
-      <div id="route-title"><span class="badge badge-red">V6 · 经典北疆</span></div>
+      <div class="header sub" id="route-sub">V11 全程国宾级酒店版 · 16 天 · 北京 → 秦皇岛 → 锦州 → 大连(棒棰岛国宾馆) → 沈阳(辽宁大厦国宾馆) → 长白山(北+西 两天) → 延吉(白山大厦) → 镜泊湖(老国宾馆) → 哈尔滨(马迭尔/太阳岛) → 松原(查干湖) → 长春(南湖宾馆·吉林省国宾馆) → 沈阳 → 北京 · 跨城主线 4,990 km / 58.0 h</div>
+      <div id="route-title"><span class="badge badge-red">V11 · 东北 16 天</span><span class="badge badge-green">全程国宾级 🏛 · 当前 ⭐</span></div>
   <div class="meta">
-    <span><span class="badge badge-green">0704 周六出发</span></span>
+    <span><span class="badge badge-green">0703 周五出发</span></span>
     <span><span class="badge badge-orange">0718 周六返京</span></span>
-    <span><span class="badge badge-red">总里程 <span id="total-km">6032</span> km</span></span>
-    <span><span class="badge badge-red">总时长 <span id="total-h">75.5</span> h</span></span>
+    <span><span class="badge badge-red">总里程 <span id="total-km">4990</span> km</span></span>
+    <span><span class="badge badge-red">总时长 <span id="total-h">58.0</span> h</span></span>
     <span>🚙 轿车 · 电车 · 两人轮换</span>
     <span>⚡ 实际续航 400-450 km（含空调）</span>
     <button class="reset-btn" onclick="resetView()">↺ 重置地图视图</button>
@@ -313,37 +328,37 @@ body {
   <div class="sidebar">
     <div class="day-list" id="day-list"></div>
 
-    <div class="risk-box">
+    <div class="risk-box" id="risk-box">
       <h3>⚡ 电车关键风险段</h3>
       <div class="risk-item">
-        <div class="r-where">D4 额济纳旗 → 哈密 · 684 km <span class="road-tag highway">高速</span></div>
-        <div class="r-why">G7 京新高速 + 风沙 · 需中途充 1-2 次</div>
+        <div class="r-where">D16 沈阳 → 北京 · 700 km <span class="road-tag highway">高速</span></div>
+        <div class="r-why">G1 京哈直达 · 当天需充 2 次 · 最后冲刺日</div>
       </div>
       <div class="risk-item">
-        <div class="r-where">D6 吐鲁番 → 富蕴 · 684 km <span class="road-tag mixed">混合</span></div>
-        <div class="r-why">吐乌大高速 + 阜康到富蕴 425 km 国道桩少 ⚠</div>
+        <div class="r-where">D6 沈阳 → 二道白河 · 480 km <span class="road-tag mixed">高速+国道</span></div>
+        <div class="r-why">上午沈阳补景点后进山 · 后半段桩密度需复核</div>
       </div>
       <div class="risk-item">
-        <div class="r-where">D7 富蕴 → 喀纳斯 · 410 km <span class="road-tag mixed">混合</span></div>
-        <div class="r-why">阿尔泰山腹地 · 国道桩稀 · 雨天推一天</div>
+        <div class="r-where">D11 延吉 → 牡丹江 → 镜泊湖 · 450 km <span class="road-tag mixed">高速+县道</span></div>
+        <div class="r-why">中雨转小雨 · 进镜泊湖前县道和夜路风险更高</div>
       </div>
       <div class="risk-item">
-        <div class="r-where">D13 那拉提 → 库车 · 386 km <span class="road-tag mountain">山路</span></div>
-        <div class="r-why">巩乃斯林场 + 独库北段 · 国道桩稀疏 ⚠</div>
+        <div class="r-where">D10 延吉 → 防川往返 · 400 km <span class="road-tag highway">高速</span></div>
+        <div class="r-why">当天往返边境，雨天可降级为珲春/图们轻量版</div>
       </div>
       <div style="margin-top:10px;font-size:11px;color:#9a3412;font-style:italic;">
-        实际续航 400-450 km（含空调）· 单段 ≤ 350 km（留缓冲）
+        4,990 km 为跨城主线口径 · 国宾级酒店绕行/本地游览驾驶未计入
       </div>
     </div>
 
-    <div class="discuss-box">
+    <div class="discuss-box" id="discuss-box">
       <h3>💬 讨论点（你和老婆可以勾选）</h3>
-      <label><input type="checkbox"> D5 火焰山/葡萄沟 是否下车各停 1-2h？</label>
-      <label><input type="checkbox"> D7 阿尔泰山下雨 → 推一天可接受？</label>
-      <label><input type="checkbox"> D9 五彩滩 + 乌尔禾魔鬼城 是否各停 30 分钟？</label>
-      <label><input type="checkbox"> D15 库尔勒直飞北京（每天 1 班）是否接受？</label>
-      <label><input type="checkbox"> 是否需要备选路线（如独库公路电车版）？</label>
-      <label><input type="checkbox"> 是否考虑南疆喀什（需 +5 天）？</label>
+      <label><input type="checkbox"> 国宾级酒店是否都按实际可订状态确认？</label>
+      <label><input type="checkbox"> D6 沈阳补景点后再开二道白河，是否改成纯赶路？</label>
+      <label><input type="checkbox"> D7/D8 长白山天气差时，北坡/西坡是否都保留？</label>
+      <label><input type="checkbox"> D10 防川往返 400 km，雨天是否改珲春/图们轻量版？</label>
+      <label><input type="checkbox"> D16 沈阳 → 北京 700 km，是否拆成秦皇岛/锦州中转？</label>
+      <label><input type="checkbox"> 是否继续更新实际入住/餐厅/充电点记录？</label>
     </div>
   </div>
 </div>
@@ -515,7 +530,7 @@ const V6_LABEL_OFFSETS = {
 // V8-A DATA — 东北 + 沿海 15 天（避暑 7 月首选）
 // 北京 → 北戴河 → 兴城 → 锦州 → 沈阳 → 长白山 → 延吉/防川
 //      → 长春 → 哈尔滨 → 沈阳 → 山海关 → 威海 → 青岛 → 飞机
-// 总 5490km / 60h 行车 + 1 飞机段（D15 青岛→北京）
+// 总 4380km / 50.3h 自驾 + 1 飞机段（D15 青岛→北京）
 // ============================================================
 
 const V8A_SEGMENTS = [
@@ -623,7 +638,7 @@ const V8A_LABEL_OFFSETS = {
 // 北京 → 秦皇岛 → 兴城 → 锦州 → 沈阳 → 长白山 → 延吉/防川
 //      → 长春 → 哈尔滨 → 扎龙 → 海拉尔 → 满洲里 → 阿尔山
 //      → 乌兰浩特 → ✈ 北京
-// 总 5380km / 60h + 1 飞机段（D15 乌兰浩特→北京）
+// 总 4620km / 56.3h 自驾 + 2h 飞机段（D15 乌兰浩特→北京）
 // ============================================================
 
 const V8B_SEGMENTS = [
@@ -633,6 +648,8 @@ const V8B_SEGMENTS = [
   { from: "锦州", to: "沈阳", flng: 121.13, flat: 41.10, tlng: 123.43, tlat: 41.80, road: 230, dur: 2.8, day: 3, type: "stay", rt: "highway", ad: "green", night: true },
   { from: "沈阳", to: "长白山", flng: 123.43, flat: 41.80, tlng: 128.05, tlat: 42.40, road: 480, dur: 5.5, day: 4, type: "stay", rt: "mixed", ad: "yellow", night: true },
   { from: "长白山", to: "延吉", flng: 128.05, flat: 42.40, tlng: 129.51, tlat: 42.91, road: 350, dur: 4.5, day: 6, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "延吉", to: "防川", flng: 129.51, flat: 42.91, tlng: 130.40, tlat: 42.85, road: 200, dur: 2.5, day: 7, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "防川", to: "延吉", flng: 130.40, flat: 42.85, tlng: 129.51, tlat: 42.91, road: 200, dur: 2.5, day: 7, type: "stay", rt: "highway", ad: "green", night: true },
   { from: "延吉", to: "长春", flng: 129.51, flat: 42.91, tlng: 125.32, tlat: 43.89, road: 400, dur: 4.5, day: 8, type: "stay", rt: "highway", ad: "green", night: true },
   { from: "长春", to: "哈尔滨", flng: 125.32, flat: 43.89, tlng: 126.64, tlat: 45.80, road: 280, dur: 3.0, day: 9, type: "stay", rt: "highway", ad: "green", night: true },
   { from: "哈尔滨", to: "齐齐哈尔", flng: 126.64, flat: 45.80, tlng: 123.92, tlat: 47.35, road: 350, dur: 4.0, day: 10, type: "stay", rt: "highway", ad: "green", night: true },
@@ -651,6 +668,7 @@ const V8B_CITIES = [
   { name: "沈阳", lng: 123.43, lat: 41.80, day: "D3 宿", type: "stay" },
   { name: "长白山", lng: 128.05, lat: 42.40, day: "D4-D5", type: "stay" },
   { name: "延吉", lng: 129.51, lat: 42.91, day: "D6 宿", type: "stay" },
+  { name: "防川", lng: 130.40, lat: 42.85, day: "D7 路过", type: "transit" },
   { name: "长春", lng: 125.32, lat: 43.89, day: "D8 宿", type: "stay" },
   { name: "哈尔滨", lng: 126.64, lat: 45.80, day: "D9 宿", type: "stay" },
   { name: "齐齐哈尔", lng: 123.92, lat: 47.35, day: "D10 宿", type: "stay" },
@@ -680,8 +698,8 @@ const V8B_DAY_SUMMARIES = [
 
 const V8B_DAY_TO_SEG_IDX = {
   1: [0], 2: [1, 2], 3: [3], 4: [4], 5: [],
-  6: [5], 7: [6], 8: [7], 9: [8], 10: [9],
-  11: [10], 12: [11], 13: [12], 14: [13], 15: []
+  6: [5], 7: [6, 7], 8: [8], 9: [9], 10: [10],
+  11: [11], 12: [12], 13: [13], 14: [14], 15: []
 };
 
 const V8B_POIS = {
@@ -722,7 +740,7 @@ const V8B_ALT_STAYS = {
 
 const V8B_LABEL_OFFSETS = {
   "北京": [14, -16], "秦皇岛": [14, 4], "兴城": [-14, 4], "锦州": [14, 4],
-  "沈阳": [14, 4], "长白山": [14, 4], "延吉": [14, -2],
+  "沈阳": [14, 4], "长白山": [14, 4], "延吉": [14, -2], "防川": [14, 4],
   "长春": [14, 4], "哈尔滨": [14, 4], "齐齐哈尔": [14, 4], "海拉尔": [14, 4],
   "满洲里": [-14, 4], "阿尔山": [14, 4], "乌兰浩特": [14, 4],
 };
@@ -730,7 +748,7 @@ const V8B_LABEL_OFFSETS = {
 // ============================================================
 // V8-D DATA — 纯东北+草原 大圈 14 天（跳过承德/赤峰，绕鸡头一圈+大连+秦皇岛）
 // 张家口→锡林郭勒→阿尔山→满洲里→海拉尔→齐齐哈尔→哈尔滨→长春→长白山→延吉→大连→秦皇岛→北京
-// 总 5710km / ~67h（D3 D6 D12 三个较长单日）
+// 总 5520km / 65.5h（D3 D6 D12 三个较长单日）
 // ============================================================
 
 const V8D_SEGMENTS = [
@@ -827,7 +845,7 @@ const V8D_ALT_STAYS = {
 // V9 DATA — 东北 14 天 · 长白山两天 + 跳过鸡头 (沈阳→二道白河直冲 · 回程走松原/长春)
 // 北京 → 秦皇岛 → 山海关/兴城/锦州 → 沈阳 → 长白山北 → 长白山西 → 延吉/防川
 //      → 牡丹江/镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京
-// 总 4,240km / ~46h（最后 700km 冲刺）+ 防川往返 400km
+// 总 4440km / 51.8h（最后 700km 冲刺；含防川往返 400km）
 
 const V9_SEGMENTS = [
   { from: "北京", to: "秦皇岛", flng: 116.41, flat: 39.91, tlng: 119.59, tlat: 39.94, road: 300, dur: 3.5, day: 1, type: "stay", rt: "highway", ad: "green", night: true },
@@ -954,7 +972,7 @@ const V9_ALT_STAYS = {
 // V10 DATA — 东北 16 天 · 大连段插入 + 沈阳故宫补 (7/3 出发版 · 实际行程追踪)
 // 北京 → 秦皇岛 → 山海关/兴城/锦州 → 大连(新增) → 沈阳 → 二道白河 → 长白山北/西
 //      → 延吉/防川 → 牡丹江/镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京
-// 总 4,520km / ~52h（含防川往返 400km）+ 旅顺一日游
+// 跨城主线 4,990km / 58.0h（含防川往返 400km；未计大连/长白山本地游览驾驶）
 
 const V10_SEGMENTS = [
   { from: "北京", to: "秦皇岛", flng: 116.41, flat: 39.91, tlng: 119.59, tlat: 39.94, road: 300, dur: 3.5, day: 1, type: "stay", rt: "highway", ad: "green", night: true },
@@ -1240,7 +1258,7 @@ const V8D_LABEL_OFFSETS = {
 // V8-C DATA — 沿海 + 内蒙草原 12 天（短途轻量）
 // 北京 → 张家口 → 锡林郭勒 → 克什克腾 → 赤峰 → 承德
 //      → 秦皇岛 → 威海 → 青岛 → ✈ 北京
-// 总 4380km / 50h + 1 飞机段（D12 青岛→北京）
+// 总 2850km / 33.0h 自驾 + 1.5h 飞机段（D12 青岛→北京）
 // ============================================================
 
 const V8C_SEGMENTS = [
@@ -1328,7 +1346,7 @@ const V8C_LABEL_OFFSETS = {
 // V7 DATA — 东北环线 15 天（电车往返 · 不重复环线）
 // 跳过承德/赤峰/大连/鸡头（黑河/五大连池），回程走齐齐哈尔/松原草原
 // 节奏：上午玩 + 中午吃午饭 + 下午开车到下一站
-// 总 5,310 km / ~62h（D2 380 / D7 350 / D9 450 / D11 350 / D15 700 几个较长单日）
+// 总 4,960 km / 58.3h（D9 450 / D15 700 为长距离日）
 // ============================================================
 
 const V7_SEGMENTS = [
@@ -1440,7 +1458,7 @@ const V7_LABEL_OFFSETS = {
   "长春": [14, 4],
 };
 
-// ============== CURRENT DATA (URL hash switches v6/v7) ==============
+// ============== CURRENT DATA (URL hash switches versions) ==============
 const VALID_VERSIONS = ['v6', 'v7', 'v8a', 'v8b', 'v8c', 'v8d', 'v9', 'v10', 'v11'];
 let currentVersion = VALID_VERSIONS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'v11';
 let currentData = {};
@@ -1464,6 +1482,127 @@ function loadData(version) {
     day_summaries: d.ds, day_to_seg_idx: d.idx,
     pois: d.pois, alt_stays: d.alt, label_offsets: d.lo,
   };
+}
+
+const VERSION_SUBTITLES = {
+  v6: '15 天 · 京新 G7 → 吐鲁番/天池 → 北疆核心 → 独库 → 库尔勒 ✈ 北京（V6: 经典北疆，无南疆）',
+  v7: '15 天 · 北京 → 秦皇岛 → 锦州 → 沈阳（故宫+帅府）→ 吉林市 → 长白山（+1 天）→ 延吉/防川（一眼望三国）→ 镜泊湖 → 哈尔滨 → 齐齐哈尔（扎龙+草原）→ 松原（查干湖）→ 长春 → 沈阳 → 北京',
+  v8a: '15 天 · 北京 → 秦皇岛 → 锦州 → 沈阳 → 长白山 → 延吉/防川 → 长春 → 哈尔滨 → 沈阳 → 山海关 → 威海 → 青岛 ✈ 北京',
+  v8b: '15 天 · 北京 → 秦皇岛 → 锦州 → 沈阳 → 长白山 → 延吉/防川 → 长春 → 哈尔滨 → 齐齐哈尔 → 海拉尔 → 满洲里 → 阿尔山 → 乌兰浩特 ✈ 北京',
+  v8c: '12 天 · 北京 → 张家口 → 锡林郭勒 → 克什克腾 → 赤峰 → 承德 → 秦皇岛 → 威海 → 青岛 ✈ 北京',
+  v8d: '14 天 · 北京 → 张家口 → 锡林浩特 → 阿尔山 → 满洲里 → 海拉尔 → 齐齐哈尔 → 哈尔滨 → 长春 → 长白山 → 延吉/防川 → 大连 → 秦皇岛 → 北京',
+  v9: '14 天 · 北京 → 秦皇岛 → 锦州 → 沈阳 → 二道白河 → 长白山北/西两天 → 延吉/防川 → 镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京',
+  v10: '16 天 · 北京 → 秦皇岛 → 锦州 → 大连(D3-D4 旅顺) → 沈阳(补故宫) → 长白山(北+西 两天) → 延吉/防川 → 镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京 · 跨城主线 4,990 km / 58.0 h',
+  v11: 'V11 全程国宾级酒店版 · 16 天 · 北京 → 秦皇岛 → 锦州 → 大连(棒棰岛国宾馆) → 沈阳(辽宁大厦国宾馆) → 长白山(北+西 两天) → 延吉(白山大厦) → 镜泊湖(老国宾馆) → 哈尔滨(马迭尔/太阳岛) → 松原(查干湖) → 长春(南湖宾馆·吉林省国宾馆) → 沈阳 → 北京 · 跨城主线 4,990 km / 58.0 h',
+};
+
+const VERSION_RISK_OVERRIDES = {
+  v10: [
+    { where: 'D16 沈阳 → 北京 · 700 km', rt: 'highway', label: '高速', why: 'G1 京哈直达 · 当天需充 2 次 · 最后冲刺日' },
+    { where: 'D6 沈阳 → 二道白河 · 480 km', rt: 'mixed', label: '高速+国道', why: '上午沈阳补景点后进山 · 后半段桩密度需复核' },
+    { where: 'D11 延吉 → 牡丹江 → 镜泊湖 · 450 km', rt: 'mixed', label: '高速+县道', why: '中雨转小雨 · 进镜泊湖前县道和夜路风险更高' },
+    { where: 'D10 延吉 → 防川往返 · 400 km', rt: 'highway', label: '高速', why: '当天往返边境，雨天可降级为珲春/图们轻量版' },
+  ],
+  v11: [
+    { where: 'D16 沈阳 → 北京 · 700 km', rt: 'highway', label: '高速', why: 'G1 京哈直达 · 当天需充 2 次 · 最后冲刺日' },
+    { where: 'D6 沈阳 → 二道白河 · 480 km', rt: 'mixed', label: '高速+国道', why: '上午沈阳补景点后进山 · 后半段桩密度需复核' },
+    { where: 'D11 延吉 → 牡丹江 → 镜泊湖 · 450 km', rt: 'mixed', label: '高速+县道', why: '中雨转小雨 · 进镜泊湖前县道和夜路风险更高' },
+    { where: 'D10 延吉 → 防川往返 · 400 km', rt: 'highway', label: '高速', why: '当天往返边境，雨天可降级为珲春/图们轻量版' },
+  ],
+};
+
+const VERSION_RISK_NOTES = {
+  v10: '4,990 km 为跨城主线口径 · 大连/长白山本地游览驾驶未计入',
+  v11: '4,990 km 为跨城主线口径 · 国宾级酒店绕行/本地游览驾驶未计入',
+};
+
+const VERSION_DISCUSSION_POINTS = {
+  v6: [
+    'D5 火焰山/葡萄沟 是否下车各停 1-2h？',
+    'D7 阿尔泰山下雨 → 推一天可接受？',
+    'D9 五彩滩 + 乌尔禾魔鬼城 是否各停 30 分钟？',
+    'D15 库尔勒直飞北京（每天 1 班）是否接受？',
+    '是否需要备选路线（如独库公路电车版）？',
+    '是否考虑南疆喀什（需 +5 天）？',
+  ],
+  v10: [
+    'D4 大连旅顺/市内本地驾驶是否单独记入总里程？',
+    'D6 沈阳补景点后再开二道白河，是否改成纯赶路？',
+    'D7/D8 长白山天气差时，北坡/西坡是否都保留？',
+    'D10 防川往返 400 km，雨天是否改珲春/图们轻量版？',
+    'D16 沈阳 → 北京 700 km，是否拆成秦皇岛/锦州中转？',
+    '是否把住宿/餐厅继续更新为实际记录？',
+  ],
+  v11: [
+    '国宾级酒店是否都按实际可订状态确认？',
+    'D4 大连旅顺/市内本地驾驶是否单独记入总里程？',
+    'D6 沈阳补景点后再开二道白河，是否改成纯赶路？',
+    'D10 防川往返 400 km，雨天是否改珲春/图们轻量版？',
+    'D16 沈阳 → 北京 700 km，是否拆成秦皇岛/锦州中转？',
+    '是否继续更新实际入住/餐厅/充电点记录？',
+  ],
+};
+
+function isFlightDay(daySummary) {
+  return /✈|直飞|飞机|飞回|飞北京/.test(`${daySummary.title} ${daySummary.desc}`);
+}
+
+function flightDurationLabel(daySummary) {
+  const match = `${daySummary.title} ${daySummary.desc}`.match(/(\d+(?:\.\d+)?)h/);
+  const hours = match ? match[1] : daySummary.dur.toFixed(1);
+  return `${hours}h 飞机`;
+}
+
+function buildRiskItems() {
+  if (VERSION_RISK_OVERRIDES[currentVersion]) return VERSION_RISK_OVERRIDES[currentVersion];
+  return currentData.day_summaries
+    .filter(d => d.km > 0 && (d.km >= 450 || d.rt !== 'highway'))
+    .sort((a, b) => (b.km + (b.rt === 'highway' ? 0 : 80)) - (a.km + (a.rt === 'highway' ? 0 : 80)))
+    .slice(0, 4)
+    .map(d => ({
+      where: `D${d.day} ${d.title} · ${d.km} km`,
+      rt: d.rt,
+      label: ROAD_LABELS[d.rt],
+      why: d.desc,
+    }));
+}
+
+function buildDiscussionPoints() {
+  if (VERSION_DISCUSSION_POINTS[currentVersion]) return VERSION_DISCUSSION_POINTS[currentVersion];
+  const points = currentData.day_summaries
+    .filter(d => d.km >= 450)
+    .slice(0, 4)
+    .map(d => `D${d.day} ${d.title} ${d.km} km，是否需要拆分或增加中转？`);
+  const flight = currentData.day_summaries.find(isFlightDay);
+  if (flight) points.push(`D${flight.day} ${flight.title}，机票/还车/行李时间是否确认？`);
+  points.push('是否继续补充住宿、餐厅和充电点的实际记录？');
+  return points.slice(0, 6);
+}
+
+function renderAdvisoryBoxes() {
+  const riskBox = document.getElementById('risk-box');
+  if (riskBox) {
+    const risks = buildRiskItems();
+    const note = VERSION_RISK_NOTES[currentVersion] || '实际续航 400-450 km（含空调）· 长距离日优先确认补能点';
+    riskBox.innerHTML = `
+      <h3>⚡ 电车关键风险段</h3>
+      ${risks.map(r => `
+        <div class="risk-item">
+          <div class="r-where">${r.where} <span class="road-tag ${r.rt}">${r.label}</span></div>
+          <div class="r-why">${r.why}</div>
+        </div>
+      `).join('')}
+      <div style="margin-top:10px;font-size:11px;color:#9a3412;font-style:italic;">${note}</div>
+    `;
+  }
+
+  const discussBox = document.getElementById('discuss-box');
+  if (discussBox) {
+    discussBox.innerHTML = `
+      <h3>💬 讨论点（你和老婆可以勾选）</h3>
+      ${buildDiscussionPoints().map(point => `<label><input type="checkbox"> ${point}</label>`).join('')}
+    `;
+  }
 }
 
 // ============== RENDER ==============
@@ -1513,7 +1652,9 @@ function renderRoute() {
 
 function renderAirReturn() {
   const g = document.getElementById('air-return');
-  // Last city = end of route
+  const daySummary = currentData.day_summaries[currentData.day_summaries.length - 1];
+  if (!isFlightDay(daySummary)) return;
+  // Flight versions end at the last mapped city, then return to Beijing by air.
   const lastCity = currentData.cities[currentData.cities.length - 1];
   const [ax1, ay1] = proj(lastCity.lng, lastCity.lat);
   const [ax2, ay2] = proj(116.41, 39.91);
@@ -1536,8 +1677,7 @@ function renderAirReturn() {
   label.setAttribute('text-anchor', 'middle');
   label.setAttribute('font-size', '11');
   label.setAttribute('fill', '#7f8c8d');
-  const daySummary = currentData.day_summaries[currentData.day_summaries.length - 1];
-  label.textContent = `✈ D${daySummary.day} ${lastCity.name} → 北京（${daySummary.dur}h 直飞）`;
+  label.textContent = `✈ D${daySummary.day} ${lastCity.name} → 北京（${flightDurationLabel(daySummary)}）`;
   g.appendChild(label);
 }
 
@@ -1610,10 +1750,11 @@ function renderDayList() {
     item.className = 'day-item';
     item.setAttribute('data-day', d.day);
     item.onclick = () => highlightDay(d.day);
-    const numClass = d.day === 1 || d.day === 15 ? 'start' : 'stay';
+    const numClass = d.day === 1 || d.day === currentData.day_summaries.length ? 'start' : 'stay';
+    const flightDay = isFlightDay(d);
     const kmDisplay = d.km > 0
       ? `<span class="day-km"><span class="km-val">${d.km}</span> km · ${d.dur}h</span>`
-      : `<span class="day-km">✈ ${d.dur}h</span>`;
+      : `<span class="day-km">${flightDay ? `✈ ${flightDurationLabel(d)}` : '休整'}</span>`;
     const roadTag = d.km > 0
       ? `<span class="road-tag ${d.rt}">${ROAD_LABELS[d.rt]}</span>`
       : '';
@@ -1791,6 +1932,7 @@ function renderAll() {
   renderCities();
   renderLabels();
   renderDayList();
+  renderAdvisoryBoxes();
   // Header totals
   const segs = currentData.segments;
   document.getElementById('total-km').textContent = segs.reduce((s, x) => s + x.road, 0);
@@ -1809,13 +1951,11 @@ function renderAll() {
       V10: '<span class="badge badge-red">V10 · 东北 16 天</span><span class="badge badge-green">+大连段</span>',
       V11: '<span class="badge badge-red">V11 · 东北 16 天</span><span class="badge badge-green">全程国宾级 🏛 · 大连棒棰岛+沈阳辽宁大厦+长春南湖+哈尔滨马迭尔 · 当前 ⭐</span>',
     };
-    titleEl.innerHTML = TL[currentVersion.toUpperCase()] || TL.V6;
+    titleEl.innerHTML = TL[currentVersion.toUpperCase()] || TL.V11;
   }
   // Update header sub if any
   const subEl = document.getElementById('route-sub');
-  if (subEl) subEl.textContent = currentVersion === 'v7'
-    ? '15 天 · 北京 → 秦皇岛 → 锦州 → 沈阳（故宫+帅府）→ 吉林市 → 长白山（+1 天）→ 延吉/防川（一眼望三国）→ 镜泊湖 → 哈尔滨 → 齐齐哈尔（扎龙+草原）→ 松原（查干湖）→ 长春 → 沈阳 → 北京'
-    : '15 天 · 京新 G7 → 吐鲁番/天池 → 北疆核心 → 独库 → 库尔勒（V6: 经典北疆，无南疆）';
+  if (subEl) subEl.textContent = VERSION_SUBTITLES[currentVersion] || VERSION_SUBTITLES.v11;
   // Update URL hash
   if (location.hash !== '#' + currentVersion) {
     history.replaceState(null, '', '#' + currentVersion);
@@ -1824,6 +1964,7 @@ function renderAll() {
   document.querySelectorAll('.version-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.version === currentVersion);
   });
+  document.querySelector('.version-btn.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
 }
 
 function switchVersion(v) {
