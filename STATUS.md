@@ -1,6 +1,6 @@
 # LIP Status
 
-Last reviewed: 2026-06-29
+Last reviewed: 2026-07-14
 
 ## Current State
 
@@ -12,6 +12,8 @@ Last reviewed: 2026-06-29
   `npm run build:all`.
 - The recent architecture cleanup campaign is marked done in
   `docs/status/active/refactor-architecture-cleanup-campaign.md`.
+- The V12 Northeast/grassland road-trip page is the current standalone route
+  deck and has passed desktop/mobile browser verification.
 
 ## Supported Commands
 
@@ -31,6 +33,7 @@ Last reviewed: 2026-06-29
   `docs/human/`, or `docs/agents/` by audience.
 - Continue content quality work from `ROADMAP.md`, especially deduplication,
   draft promotion decisions, and talk/share material refinement.
+- Keep the road-trip share entry aligned with the current verified route deck.
 - Preserve the public/agent boundary: `docs/agents/`, `docs/plans/`, and
   `docs/status/` should stay out of generated public site output.
 

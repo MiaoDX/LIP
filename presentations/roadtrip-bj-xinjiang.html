@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京自驾路线 9 版本对比 · V6/V7 + V8-A/B/C/D + V9 东北 + V10 大连 + V11 全程国宾级·当前追踪</title>
+<title>东北自驾路线 10 版本对比 · V6/V7 + V8-A/B/C/D + V9-V11 + V12 草原缓冲·当前追踪</title>
 <style>
 :root {
   --bg: #f5f3ee;
@@ -35,12 +35,16 @@ body {
   background: var(--card); border-radius: var(--radius);
   padding: 24px 28px; box-shadow: var(--shadow); margin-bottom: 20px;
 }
-.header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.header h1 {
+  font-size: 22px; font-weight: 700; margin-bottom: 6px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+}
 .header .meta { color: var(--muted); font-size: 13px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
 
 .version-switch {
   display: inline-flex;
-  margin-left: 16px;
+  flex-wrap: wrap;
+  margin-left: 0;
   vertical-align: middle;
   gap: 6px;
   max-width: 100%;
@@ -277,7 +281,7 @@ body {
 <div class="container">
 
 <div class="header">
-  <h1>🚗 北京 → 东北 16 天自驾路线 ⭐ V11
+  <h1>🚗 东北 / 草原自驾路线 ⭐ V12
         <span class="version-switch">
           <button class="version-btn" data-version="v6" onclick="switchVersion('v6')">V6 · 经典北疆</button>
           <button class="version-btn" data-version="v7" onclick="switchVersion('v7')">V7 · 东北环线 15 天</button>
@@ -287,16 +291,17 @@ body {
           <button class="version-btn" data-version="v8d" onclick="switchVersion('v8d')">V8-D · 纯东北大圈</button>
           <button class="version-btn" data-version="v9" onclick="switchVersion('v9')">V9 · 长白山两天 · 跳过鸡头 ⭐</button>
           <button class="version-btn" data-version="v10" onclick="switchVersion('v10')">V10 · +大连段 ⭐⭐</button>
-          <button class="version-btn active" data-version="v11" onclick="switchVersion('v11')">V11 · 全程国宾级 🏛⭐⭐⭐</button>
+          <button class="version-btn" data-version="v11" onclick="switchVersion('v11')">V11 · 全程国宾级 🏛⭐⭐⭐</button>
+          <button class="version-btn active" data-version="v12" onclick="switchVersion('v12')">V12 · 草原缓冲后长白山 ⭐⭐⭐⭐</button>
         </span>
       </h1>
-      <div class="header sub" id="route-sub">V11 全程国宾级酒店版 · 16 天 · 北京 → 秦皇岛 → 锦州 → 大连(棒棰岛国宾馆) → 沈阳(辽宁大厦国宾馆) → 长白山(北+西 两天) → 延吉(白山大厦) → 镜泊湖(老国宾馆) → 哈尔滨(马迭尔/太阳岛) → 松原(查干湖) → 长春(南湖宾馆·吉林省国宾馆) → 沈阳 → 北京 · 跨城主线 4,990 km / 58.0 h</div>
-      <div id="route-title"><span class="badge badge-red">V11 · 东北 16 天</span><span class="badge badge-green">全程国宾级 🏛 · 当前 ⭐</span></div>
+      <div class="header sub" id="route-sub">V12 沈阳起算草原缓冲版 · 10 天 · 沈阳 → 通辽/科尔沁 → 乌兰浩特/科右前旗 → 阿尔山 → 白城 → 查干湖/松原 → 长春/吉林 → 二道白河 → 长白山北坡 → 长白山机动/延吉 · 长白山延后到 7/17 前后</div>
+      <div id="route-title"><span class="badge badge-red">V12 · 草原缓冲后长白山</span><span class="badge badge-green">沈阳起算 · 当前 ⭐</span></div>
   <div class="meta">
-    <span><span class="badge badge-green">0703 周五出发</span></span>
-    <span><span class="badge badge-orange">0718 周六返京</span></span>
-    <span><span class="badge badge-red">总里程 <span id="total-km">4990</span> km</span></span>
-    <span><span class="badge badge-red">总时长 <span id="total-h">58.0</span> h</span></span>
+    <span><span class="badge badge-green">0709 周四沈阳起算</span></span>
+    <span><span class="badge badge-orange">0718 周六长白山机动</span></span>
+    <span><span class="badge badge-red">总里程 <span id="total-km">2550</span> km</span></span>
+    <span><span class="badge badge-red">总时长 <span id="total-h">32.0</span> h</span></span>
     <span>🚙 轿车 · 电车 · 两人轮换</span>
     <span>⚡ 实际续航 400-450 km（含空调）</span>
     <button class="reset-btn" onclick="resetView()">↺ 重置地图视图</button>
@@ -1458,9 +1463,101 @@ const V7_LABEL_OFFSETS = {
   "长春": [14, 4],
 };
 
+// V12 DATA — 沈阳起算 · 草原缓冲后再去长白山 (7/9 当前追踪)
+// 沈阳 → 通辽/科尔沁 → 乌兰浩特/科右前旗 → 阿尔山 → 白城
+//      → 查干湖/松原 → 长春/吉林 → 二道白河 → 长白山北坡 → 延吉
+// 核心：把长白山推迟到 7/17 前后，避开连续雨和身体不适窗口。
+
+const V12_SEGMENTS = [
+  { from: "沈阳", to: "通辽", flng: 123.43, flat: 41.80, tlng: 122.26, tlat: 43.62, road: 300, dur: 3.5, day: 2, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "通辽", to: "乌兰浩特", flng: 122.26, flat: 43.62, tlng: 122.04, tlat: 46.07, road: 430, dur: 5.0, day: 3, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "乌兰浩特", to: "阿尔山", flng: 122.04, flat: 46.07, tlng: 119.95, tlat: 47.18, road: 300, dur: 4.0, day: 4, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "阿尔山", to: "白城", flng: 119.95, flat: 47.18, tlng: 122.84, tlat: 45.62, road: 370, dur: 5.0, day: 6, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "白城", to: "查干湖", flng: 122.84, flat: 45.62, tlng: 124.30, tlat: 45.22, road: 230, dur: 3.0, day: 7, type: "transit", rt: "highway", ad: "green", night: false },
+  { from: "查干湖", to: "长春", flng: 124.30, flat: 45.22, tlng: 125.32, tlat: 43.89, road: 190, dur: 2.5, day: 7, type: "stay", rt: "highway", ad: "green", night: true },
+  { from: "长春", to: "二道白河", flng: 125.32, flat: 43.89, tlng: 128.05, tlat: 42.40, road: 480, dur: 5.5, day: 8, type: "stay", rt: "mixed", ad: "yellow", night: true },
+  { from: "二道白河", to: "延吉", flng: 128.05, flat: 42.40, tlng: 129.51, tlat: 42.91, road: 250, dur: 3.5, day: 10, type: "stay", rt: "highway", ad: "green", night: true },
+];
+
+const V12_DAY_SUMMARIES = [
+  { day: 1, title: "沈阳休整", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "7/9 当前状态 · 住沈阳 · 补电/洗衣/睡觉 · 不赶夜路", stays: "沈阳" },
+  { day: 2, title: "沈阳 → 通辽", km: 300, dur: 3.5, rt: "highway", ad: "green", night: true, desc: "7/10 · 草原过渡第一站 · 通辽有雨，重点换环境和蒙餐", stays: "通辽" },
+  { day: 3, title: "通辽 → 乌兰浩特/科右前旗", km: 430, dur: 5.0, rt: "mixed", ad: "yellow", night: true, desc: "7/11 · 科尔沁草原感受线 · 不强排骑马/越野/长徒步", stays: "乌兰浩特/科右前旗" },
+  { day: 4, title: "乌兰浩特 → 阿尔山", km: 300, dur: 4.0, rt: "mixed", ad: "yellow", night: true, desc: "7/12 · 下午只做阿尔山火车站、小镇和补电", stays: "阿尔山/伊尔施" },
+  { day: 5, title: "阿尔山国家森林公园", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "7/13 · 轻量森林草原日 · 驼峰岭天池/三潭峡/石塘林/不冻河", stays: "阿尔山/伊尔施" },
+  { day: 6, title: "阿尔山 → 白城", km: 370, dur: 5.0, rt: "mixed", ad: "yellow", night: true, desc: "7/14 · 从草原/林区往吉林回收 · 不硬开到长春", stays: "白城" },
+  { day: 7, title: "白城 → 查干湖/松原 → 长春", km: 420, dur: 5.5, rt: "highway", ad: "green", night: true, desc: "7/15 · 查干湖作轻量草原/湿地补偿 · 累就住松原，不累到长春", stays: "长春/松原" },
+  { day: 8, title: "长春/吉林 → 二道白河", km: 480, dur: 5.5, rt: "mixed", ad: "yellow", night: true, desc: "7/16 · 住二道白河 · 只做小镇休整、补电和长白山门票预约", stays: "二道白河" },
+  { day: 9, title: "长白山北坡", km: 0, dur: 0, rt: "highway", ad: "green", night: true, desc: "7/17 · 北坡优先 · 天池看运气，瀑布/绿渊潭/谷底森林保底", stays: "二道白河" },
+  { day: 10, title: "长白山机动 / → 延吉", km: 250, dur: 3.5, rt: "highway", ad: "green", night: true, desc: "7/18 · 身体状态好再考虑西坡或温泉 · 否则休整后转延吉", stays: "延吉/二道白河" },
+];
+
+const V12_CITIES = [
+  { name: "沈阳", lng: 123.43, lat: 41.80, day: "D1 起算", type: "start" },
+  { name: "通辽", lng: 122.26, lat: 43.62, day: "D2 宿", type: "stay" },
+  { name: "乌兰浩特", lng: 122.04, lat: 46.07, day: "D3 宿", type: "stay" },
+  { name: "阿尔山", lng: 119.95, lat: 47.18, day: "D4-D5 宿", type: "stay" },
+  { name: "白城", lng: 122.84, lat: 45.62, day: "D6 宿", type: "stay" },
+  { name: "查干湖", lng: 124.30, lat: 45.22, day: "D7 路过", type: "transit" },
+  { name: "长春", lng: 125.32, lat: 43.89, day: "D7 宿", type: "stay" },
+  { name: "二道白河", lng: 128.05, lat: 42.40, day: "D8-D10", type: "stay" },
+  { name: "延吉", lng: 129.51, lat: 42.91, day: "D10 可宿", type: "stay" },
+];
+
+const V12_DAY_TO_SEG_IDX = {
+  1: [],
+  2: [0],
+  3: [1],
+  4: [2],
+  5: [],
+  6: [3],
+  7: [4, 5],
+  8: [6],
+  9: [],
+  10: [7],
+};
+
+const V12_LABEL_OFFSETS = {
+  "沈阳": [14, 4],
+  "通辽": [-14, 4],
+  "乌兰浩特": [14, 4],
+  "阿尔山": [-14, 4],
+  "白城": [14, 4],
+  "查干湖": [-14, 4],
+  "长春": [14, 4],
+  "二道白河": [14, 4],
+  "延吉": [14, -2],
+};
+
+const V12_POIS = {
+  1: { see: ["🛌 沈阳休整", "⚡ 满电出发", "🧺 洗衣补给"], eat: ["🍗 老四季鸡架", "🥟 那家老院饺子", "🍖 李连贵熏肉大饼"] },
+  2: { see: ["🌾 科尔沁草原过渡", "🌆 通辽市区轻量散步"], eat: ["🐏 手把肉", "🥛 奶茶 + 炒米", "🍚 蒙古馅饼"] },
+  3: { see: ["🌾 科尔沁草原沿途", "🏞️ 大青沟/珠日河只作天气好时备选", "🏛️ 乌兰浩特夜宿"], eat: ["🍖 蒙餐", "🥟 蒙古馅饼", "🥛 奶茶"] },
+  4: { see: ["🚉 阿尔山火车站", "🏘️ 阿尔山小镇", "⚡ 伊尔施/阿尔山补电"], eat: ["🍲 阿尔山矿泉鱼", "🍖 蒙古手把肉", "🥛 奶茶"] },
+  5: { see: ["🌋 驼峰岭天池", "💦 三潭峡", "🌲 石塘林", "🏞️ 不冻河"], eat: ["🍲 林区炖菜", "🐟 矿泉鱼", "🍖 手把肉"] },
+  6: { see: ["🌅 草原/林区回收路", "🏙️ 白城轻量过夜"], eat: ["🥟 东北饺子", "🍲 铁锅炖", "🍖 烤羊肉"] },
+  7: { see: ["🌊 查干湖夏景", "🌾 松嫩平原湿地", "🏛️ 长春可补伪满皇宫"], eat: ["🐟 查干湖全鱼宴", "🐏 前郭尔罗斯手把肉", "🥘 长春酱骨头"] },
+  8: { see: ["🌲 二道白河小镇", "🌳 美人松公园", "🎫 预约北坡门票"], eat: ["🐟 冷水鱼", "🥟 东北饺子", "🍚 朝鲜族冷面"] },
+  9: { see: ["💎 长白山天池(看运气)", "💦 长白瀑布", "🌊 绿渊潭", "🌲 谷底森林"], eat: ["🐟 冷水鱼", "🍖 满族饽饽", "🍚 朝鲜族石锅拌饭"] },
+  10: { see: ["🏔️ 西坡/温泉二选一", "🌆 二道白河继续休整", "🏫 延吉夜景可选"], eat: ["🍜 延吉冷面", "🥩 元奶奶包饭", "🍡 丰茂烤串"] },
+};
+
+const V12_ALT_STAYS = {
+  1: [ { name: "辽宁大厦", addr: "沈阳皇姑区黄河南大街105号", price: "¥380-450", note: "沈阳休整锚点·补电/洗衣/睡觉优先", charge: "需问前台" } ],
+  2: [ { name: "通辽市区连锁酒店", addr: "科尔沁区市中心", price: "¥250-450", note: "只住一晚，优先选有停车/附近快充", charge: "附近快充" } ],
+  3: [ { name: "乌兰浩特/科右前旗市区酒店", addr: "乌兰浩特或科右前旗", price: "¥250-500", note: "科尔沁到阿尔山的缓冲夜", charge: "需查附近桩" } ],
+  4: [ { name: "阿尔山/伊尔施镇酒店", addr: "阿尔山市或伊尔施镇", price: "¥300-700", note: "优先住两晚，减少换酒店", charge: "需问前台/附近桩" } ],
+  5: [ { name: "同 D4 任选一", addr: "阿尔山/伊尔施", price: "¥300-700", note: "阿尔山国家森林公园后继续住", charge: "—" } ],
+  6: [ { name: "白城市区酒店", addr: "白城市区", price: "¥220-450", note: "回收中转，不硬开长春", charge: "附近快充" } ],
+  7: [ { name: "长春市区酒店", addr: "长春市区", price: "¥300-700", note: "不累到长春；累就改住松原/查干湖", charge: "有桩优先" }, { name: "松原/查干湖宾馆", addr: "松原或查干湖", price: "¥280-450", note: "身体累时的保守落点", charge: "需查附近桩" } ],
+  8: [ { name: "长白山北坡集散中心二道白河亚朵酒店", addr: "安图县长白山大街与赤松路交叉口", price: "¥308起", note: "距北坡集散中心近·有桩优先", charge: "有桩" }, { name: "长白山在之禾度假酒店", addr: "二道白河镇滨河路1号", price: "¥600-900", note: "休整和温泉机动更舒服", charge: "有桩" } ],
+  9: [ { name: "同 D8 任选一", addr: "二道白河镇", price: "¥300-900", note: "北坡后继续住，留机动", charge: "—" } ],
+  10: [ { name: "延吉白山大厦酒店", addr: "延吉友谊路66号", price: "¥280-450", note: "若当天转延吉，优先选市中心好停车", charge: "需问前台" }, { name: "继续住二道白河", addr: "二道白河镇", price: "¥300-900", note: "身体状态不好时继续休整", charge: "—" } ],
+};
+
 // ============== CURRENT DATA (URL hash switches versions) ==============
-const VALID_VERSIONS = ['v6', 'v7', 'v8a', 'v8b', 'v8c', 'v8d', 'v9', 'v10', 'v11'];
-let currentVersion = VALID_VERSIONS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'v11';
+const VALID_VERSIONS = ['v6', 'v7', 'v8a', 'v8b', 'v8c', 'v8d', 'v9', 'v10', 'v11', 'v12'];
+let currentVersion = VALID_VERSIONS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'v12';
 let currentData = {};
 
 function loadData(version) {
@@ -1474,8 +1571,9 @@ function loadData(version) {
     'v9':  { label: 'V9 · 东北 14 天 · 长白山两天 + 跳过鸡头',  segs: V9_SEGMENTS,  cities: V9_CITIES,  ds: V9_DAY_SUMMARIES,  idx: V9_DAY_TO_SEG_IDX,  pois: V9_POIS,  alt: V9_ALT_STAYS,  lo: V9_LABEL_OFFSETS  },
     'v10': { label: 'V10 · 大连段插入 · 7/3 出发版 ⭐',  segs: V10_SEGMENTS,  cities: V10_CITIES,  ds: V10_DAY_SUMMARIES,  idx: V10_DAY_TO_SEG_IDX,  pois: V10_POIS,  alt: V10_ALT_STAYS,  lo: V10_LABEL_OFFSETS  },
     'v11': { label: 'V11 · 大连+沈阳+长春+哈尔滨 全程国宾级 ⭐⭐',  segs: V11_SEGMENTS,  cities: V11_CITIES,  ds: V11_DAY_SUMMARIES,  idx: V11_DAY_TO_SEG_IDX,  pois: V11_POIS,  alt: V11_ALT_STAYS,  lo: V11_LABEL_OFFSETS  },
+    'v12': { label: 'V12 · 沈阳起算草原缓冲后长白山 ⭐⭐⭐', segs: V12_SEGMENTS, cities: V12_CITIES, ds: V12_DAY_SUMMARIES, idx: V12_DAY_TO_SEG_IDX, pois: V12_POIS, alt: V12_ALT_STAYS, lo: V12_LABEL_OFFSETS },
   };
-  const d = data[version] || data['v11'];
+  const d = data[version] || data['v12'];
   return {
     version_label: d.label,
     segments: d.segs, cities: d.cities,
@@ -1494,6 +1592,7 @@ const VERSION_SUBTITLES = {
   v9: '14 天 · 北京 → 秦皇岛 → 锦州 → 沈阳 → 二道白河 → 长白山北/西两天 → 延吉/防川 → 镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京',
   v10: '16 天 · 北京 → 秦皇岛 → 锦州 → 大连(D3-D4 旅顺) → 沈阳(补故宫) → 长白山(北+西 两天) → 延吉/防川 → 镜泊湖 → 哈尔滨 → 松原 → 长春 → 沈阳 → 北京 · 跨城主线 4,990 km / 58.0 h',
   v11: 'V11 全程国宾级酒店版 · 16 天 · 北京 → 秦皇岛 → 锦州 → 大连(棒棰岛国宾馆) → 沈阳(辽宁大厦国宾馆) → 长白山(北+西 两天) → 延吉(白山大厦) → 镜泊湖(老国宾馆) → 哈尔滨(马迭尔/太阳岛) → 松原(查干湖) → 长春(南湖宾馆·吉林省国宾馆) → 沈阳 → 北京 · 跨城主线 4,990 km / 58.0 h',
+  v12: 'V12 沈阳起算草原缓冲版 · 10 天 · 沈阳 → 通辽/科尔沁 → 乌兰浩特/科右前旗 → 阿尔山 → 白城 → 查干湖/松原 → 长春/吉林 → 二道白河 → 长白山北坡 → 长白山机动/延吉 · 长白山延后到 7/17 前后',
 };
 
 const VERSION_RISK_OVERRIDES = {
@@ -1509,11 +1608,18 @@ const VERSION_RISK_OVERRIDES = {
     { where: 'D11 延吉 → 牡丹江 → 镜泊湖 · 450 km', rt: 'mixed', label: '高速+县道', why: '中雨转小雨 · 进镜泊湖前县道和夜路风险更高' },
     { where: 'D10 延吉 → 防川往返 · 400 km', rt: 'highway', label: '高速', why: '当天往返边境，雨天可降级为珲春/图们轻量版' },
   ],
+  v12: [
+    { where: 'D8 长春/吉林 → 二道白河 · 480 km', rt: 'mixed', label: '高速+国道', why: '进长白山前最后一段 · 早出发，晚上只休整不进景区' },
+    { where: 'D3 通辽 → 乌兰浩特 · 430 km', rt: 'mixed', label: '高速+省道', why: '科尔沁草原过渡日 · 有雨时不强排户外项目' },
+    { where: 'D6 阿尔山 → 白城 · 370 km', rt: 'mixed', label: '林区+高速', why: '从草原/林区回收 · 不硬开到长春' },
+    { where: 'D10 长白山机动 → 延吉 · 250 km', rt: 'highway', label: '高速', why: '身体状态不好就继续二道白河，延吉顺延' },
+  ],
 };
 
 const VERSION_RISK_NOTES = {
   v10: '4,990 km 为跨城主线口径 · 大连/长白山本地游览驾驶未计入',
   v11: '4,990 km 为跨城主线口径 · 国宾级酒店绕行/本地游览驾驶未计入',
+  v12: '2,550 km 为沈阳起算到延吉主线口径 · 草原/长白山本地游览驾驶未计入',
 };
 
 const VERSION_DISCUSSION_POINTS = {
@@ -1540,6 +1646,14 @@ const VERSION_DISCUSSION_POINTS = {
     'D10 防川往返 400 km，雨天是否改珲春/图们轻量版？',
     'D16 沈阳 → 北京 700 km，是否拆成秦皇岛/锦州中转？',
     '是否继续更新实际入住/餐厅/充电点记录？',
+  ],
+  v12: [
+    'D2-D3 通辽/科尔沁有雨，是否只做轻量草原过渡？',
+    'D4-D5 阿尔山是否住两晚，减少换酒店？',
+    'D7 白城后身体累时，是否改住松原而不是硬到长春？',
+    'D9 北坡天气差时，是否把天池预期降级为瀑布/绿渊潭保底？',
+    'D10 身体状态不好时，是否继续二道白河而不是转延吉？',
+    '后续返京是否等长白山后再单独重排？',
   ],
 };
 
@@ -1950,12 +2064,13 @@ function renderAll() {
       V9: '<span class="badge badge-red">V9 · 东北 14 天</span><span class="badge badge-green">长白山两天 · 跳过鸡头</span>',
       V10: '<span class="badge badge-red">V10 · 东北 16 天</span><span class="badge badge-green">+大连段</span>',
       V11: '<span class="badge badge-red">V11 · 东北 16 天</span><span class="badge badge-green">全程国宾级 🏛 · 大连棒棰岛+沈阳辽宁大厦+长春南湖+哈尔滨马迭尔 · 当前 ⭐</span>',
+      V12: '<span class="badge badge-red">V12 · 草原缓冲后长白山</span><span class="badge badge-green">沈阳起算 · 通辽/阿尔山/查干湖 · 当前 ⭐</span>',
     };
-    titleEl.innerHTML = TL[currentVersion.toUpperCase()] || TL.V11;
+    titleEl.innerHTML = TL[currentVersion.toUpperCase()] || TL.V12;
   }
   // Update header sub if any
   const subEl = document.getElementById('route-sub');
-  if (subEl) subEl.textContent = VERSION_SUBTITLES[currentVersion] || VERSION_SUBTITLES.v11;
+  if (subEl) subEl.textContent = VERSION_SUBTITLES[currentVersion] || VERSION_SUBTITLES.v12;
   // Update URL hash
   if (location.hash !== '#' + currentVersion) {
     history.replaceState(null, '', '#' + currentVersion);
@@ -1964,7 +2079,6 @@ function renderAll() {
   document.querySelectorAll('.version-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.version === currentVersion);
   });
-  document.querySelector('.version-btn.active')?.scrollIntoView({ block: 'nearest', inline: 'center' });
 }
 
 function switchVersion(v) {

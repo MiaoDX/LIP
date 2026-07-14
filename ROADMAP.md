@@ -2,7 +2,7 @@
 
 > 所有计划内容、完成状态、优先级。Claude / MiaoDX 可随时审查调整。
 
-**最后更新：** 2026-06-07
+**最后更新：** 2026-07-14
 **维护者：** WLB 🦞 + GSD 🥷⚡ + Coach 🎯
 
 ---
@@ -51,6 +51,7 @@
 - [x] `low-cost-multi-agent-deployment.html` — Meetup 演讲（2026-03-15）
 - [x] 龙虾游戏图片嵌入（3 张 lobster images）
 - [x] `proposals/talk-template.md` — 可复用演讲模板，基于 2026-03-15 Meetup 复盘
+- [x] `roadtrip-bj-xinjiang.html` V12 — 沈阳起算草原缓冲后长白山路线，完成桌面/手机视觉验收（2026-07-14）
 
 ### resources/（资源）
 - [x] `resources/config-guide.md` — OpenClaw 配置入口、环境变量、模型、Slack、搜索、CDP、Cron 检查清单
