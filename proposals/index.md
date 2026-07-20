@@ -11,6 +11,7 @@
 | [变现渠道调研报告](/proposals/monetization-research) | G2 宣讲变现渠道调研 |
 | [LIP 可分享事件候选清单](/proposals/shareable-events-candidates) | 可发布事件池和优先级草案 |
 | [演讲模板](/proposals/talk-template) | 可复用演讲准备框架 |
+| [Compute Module V2](/proposals/compute-module-v2) | 概念、可观察语义与最小非规范实现提示 |
 | [Unified WebSocket Notification Layer v2](/proposals/unified-websocket-gateway-v2) | 历史技术架构提案 |
 
 ## 使用约定
