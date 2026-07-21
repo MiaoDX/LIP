@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consult Library · MiaoDX</title>
+<meta name="description" content="MiaoDX 公开咨询与沟通材料索引，聚合端侧模型评测、AI-Native 算法工程和多 Agent 实践材料。">
+<meta property="og:title" content="MiaoDX Consult Library">
+<meta property="og:description" content="端侧模型评测、AI-Native 算法工程与多 Agent 实践材料">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://miaodx.com/LIP/consult/">
+<meta property="og:image" content="https://miaodx.com/LIP/consult/consult-index-assets/library-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://miaodx.com/LIP/consult/">
+<style>
+:root {
+  --bg: #f5f3ee;
+  --paper: #fff;
+  --ink: #172027;
+  --soft: #515d64;
+  --muted: #6e787d;
+  --rule: #d7d9d5;
+  --panel: #e9ebe7;
+  --red: #a33b2e;
+  --blue: #1f6275;
+  --green: #386a52;
+  --yellow: #a36c16;
+  --focus: #236e8a;
+}
+* { box-sizing: border-box; }
+html { color: var(--ink); background: var(--bg); }
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.55;
+}
+button, input { font: inherit; }
+a { color: inherit; text-underline-offset: 3px; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.shell {
+  width: min(100% - 40px, 1120px);
+  margin: 0 auto;
+}
+.topbar {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid var(--rule);
+}
+.brand {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--soft);
+  font-size: 13px;
+}
+.topnav a { text-decoration: none; }
+.topnav a:hover { color: var(--red); }
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 36px;
+  padding: 56px 0 40px;
+}
+.kicker {
+  margin: 0 0 12px;
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  margin-bottom: 16px;
+  font-size: 48px;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+.intro-copy {
+  max-width: 700px;
+  margin-bottom: 0;
+  color: var(--soft);
+  font-size: 18px;
+}
+.intro-meta {
+  min-width: 180px;
+  padding-left: 20px;
+  border-left: 3px solid var(--blue);
+}
+.intro-meta strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 30px;
+  line-height: 1;
+}
+.intro-meta span { display: block; color: var(--soft); font-size: 13px; }
+.share-library {
+  min-height: 38px;
+  margin-top: 14px;
+  padding: 7px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  color: var(--paper);
+  background: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 750;
+}
+.share-library:hover { border-color: var(--red); background: var(--red); }
+.library {
+  padding: 30px 0 56px;
+  border-top: 1px solid var(--rule);
+}
+.library-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+.library-head h2 { margin-bottom: 0; font-size: 26px; }
+.result-status { margin: 0; color: var(--muted); font-size: 13px; }
+.controls {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+.search-label,
+.filter-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--soft);
+  font-size: 12px;
+  font-weight: 750;
+}
+.search-input {
+  width: 100%;
+  height: 44px;
+  padding: 9px 12px;
+  border: 1px solid #b9bfbc;
+  border-radius: 4px;
+  color: var(--ink);
+  background: var(--paper);
+}
+.search-input::placeholder { color: #7b8589; }
+.filters {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #c5c9c6;
+  border-radius: 5px;
+  background: var(--panel);
+}
+.filter-button {
+  min-height: 34px;
+  padding: 6px 11px;
+  border: 0;
+  border-radius: 3px;
+  color: var(--soft);
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.filter-button:hover { color: var(--ink); background: rgba(255, 255, 255, 0.65); }
+.filter-button[aria-pressed="true"] { color: var(--paper); background: var(--ink); }
+.document-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.document-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--paper);
+}
+.document-card[data-category="evaluation"] { border-top: 4px solid var(--red); }
+.document-card[data-category="engineering"] { border-top: 4px solid var(--blue); }
+.document-card[data-category="pitch"] { border-top: 4px solid var(--green); }
+.document-media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--rule);
+  background: #111820;
+}
+.document-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.document-card[data-category="evaluation"] .document-media img { object-fit: contain; }
+.document-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.document-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.document-kind {
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.document-card[data-category="evaluation"] .document-kind { color: var(--red); }
+.document-card[data-category="engineering"] .document-kind { color: var(--blue); }
+.document-card[data-category="pitch"] .document-kind { color: var(--green); }
+.document-body h3 {
+  margin-bottom: 10px;
+  font-size: 21px;
+  line-height: 1.24;
+}
+.document-description {
+  margin-bottom: 16px;
+  color: var(--soft);
+  font-size: 14px;
+}
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: auto 0 18px;
+  padding: 0;
+  list-style: none;
+}
+.topics li {
+  padding: 4px 7px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--soft);
+  background: #f8f8f5;
+  font-size: 11px;
+}
+.document-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.open-link {
+  min-height: 38px;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  color: var(--paper);
+  background: var(--ink);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 750;
+}
+.open-link:hover { border-color: var(--red); background: var(--red); }
+.copy-link {
+  width: 40px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #aeb5b2;
+  border-radius: 4px;
+  color: var(--ink);
+  background: var(--paper);
+  cursor: pointer;
+  font-size: 18px;
+}
+.copy-link:hover { border-color: var(--blue); color: var(--blue); }
+.empty-state {
+  padding: 44px 20px;
+  border: 1px dashed #aeb5b2;
+  color: var(--soft);
+  text-align: center;
+}
+.empty-state strong { display: block; margin-bottom: 5px; color: var(--ink); }
+.footer {
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 12px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+[hidden] { display: none !important; }
+@media (max-width: 900px) {
+  .intro { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .intro-meta { max-width: 240px; }
+  .controls { grid-template-columns: minmax(0, 1fr); }
+  .filters { width: fit-content; max-width: 100%; flex-wrap: wrap; }
+  .document-grid { grid-template-columns: minmax(0, 1fr); }
+  .document-card { display: grid; grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.18fr); }
+  .document-media { height: 100%; aspect-ratio: auto; border-right: 1px solid var(--rule); border-bottom: 0; }
+}
+@media (max-width: 620px) {
+  .shell { width: min(100% - 28px, 1120px); }
+  .topbar { align-items: flex-start; padding: 16px 0; }
+  .topnav { gap: 11px; flex-wrap: wrap; justify-content: flex-end; }
+  .intro { gap: 24px; padding: 38px 0 32px; }
+  h1 { font-size: 38px; }
+  .intro-copy { font-size: 16px; }
+  .library-head { align-items: flex-end; }
+  .filters { width: 100%; }
+  .filter-button { flex: 1 1 46%; }
+  .document-card { display: flex; }
+  .document-media { aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--rule); }
+  .footer { align-items: flex-start; flex-direction: column; justify-content: center; padding: 18px 0; }
+}
+</style>
+</head>
+<body>
+<header class="shell topbar">
+  <a class="brand" href="../">MiaoDX · Consult Library</a>
+  <nav class="topnav" aria-label="站点导航">
+    <a href="https://miaodx.com/">主页</a>
+    <a href="https://miaodx.com/resume/">简历</a>
+    <a href="https://github.com/MiaoDX">GitHub</a>
+  </nav>
+</header>
+
+<main class="shell">
+  <section class="intro" aria-labelledby="page-title">
+    <div>
+      <p class="kicker">Public working briefs</p>
+      <h1 id="page-title">咨询资料库</h1>
+      <p class="intro-copy">面向具体团队、技术议题与合作场景整理的公开沟通材料。每份内容都可以独立打开，也可以复制直链分享。</p>
+    </div>
+    <aside class="intro-meta" aria-label="资料库摘要">
+      <strong>3</strong>
+      <span>份公开材料 · 持续更新</span>
+      <button class="share-library" id="share-library" type="button">复制目录链接</button>
+    </aside>
+  </section>
+
+  <section class="library" aria-labelledby="library-title">
+    <div class="library-head">
+      <h2 id="library-title">全部材料</h2>
+      <p class="result-status" id="result-status" role="status" aria-live="polite">显示 3 份</p>
+    </div>
+
+    <div class="controls">
+      <div>
+        <label class="search-label" for="document-search">搜索材料</label>
+        <input class="search-input" id="document-search" type="search" placeholder="搜索标题、主题或关键词" autocomplete="off">
+      </div>
+      <div>
+        <span class="filter-label" id="filter-label">筛选主题</span>
+        <div class="filters" role="group" aria-labelledby="filter-label">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button class="filter-button" type="button" data-filter="evaluation" aria-pressed="false">模型评测</button>
+          <button class="filter-button" type="button" data-filter="engineering" aria-pressed="false">算法工程</button>
+          <button class="filter-button" type="button" data-filter="pitch" aria-pressed="false">Agent 实践</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="document-grid" id="document-grid">
+      <article class="document-card" data-category="evaluation" data-search="端侧模型评测体系 on-device model evaluation 部署后一致性 量化 芯片 生命周期评测 具身 agent 语音 全双工">
+        <figure class="document-media">
+          <img src="on-device-model-evaluation-assets/roboharness-g1-comparison-poster.png" alt="Unitree G1 在 Meshcat 和 MuJoCo 中的评测对比" loading="eager">
+        </figure>
+        <div class="document-body">
+          <div class="document-meta"><span class="document-kind">Model Evaluation Brief</span><time datetime="2026-07-21">2026-07-21</time></div>
+          <h3>端侧模型评测体系</h3>
+          <p class="document-description">从部署后的交付物出发，讨论跨芯片与量化一致性、全生命周期评测流水线，以及具身和语音交互指标。</p>
+          <ul class="topics"><li>部署后一致性</li><li>生命周期评测</li><li>具身与 Agent</li><li>语音交互</li></ul>
+          <div class="document-actions">
+            <a class="open-link" href="on-device-model-evaluation.html">打开材料</a>
+            <button class="copy-link" type="button" data-url="https://miaodx.com/LIP/consult/on-device-model-evaluation.html" title="复制端侧模型评测材料直链"><span aria-hidden="true">&#10697;</span><span class="sr-only">复制端侧模型评测材料直链</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="document-card" data-category="engineering" data-search="ai-native 算法工程架构 agent 研发闭环 端侧系统 robotharness roboclaws mcp 仿真 评测 证据">
+        <figure class="document-media">
+          <img src="ai-native-algorithm-engineering-assets/roboclaws-runtime-map.png" alt="RoboClaws runtime metric map" loading="lazy">
+        </figure>
+        <div class="document-body">
+          <div class="document-meta"><span class="document-kind">Engineering Brief</span><time datetime="2026-06-30">2026-06-30</time></div>
+          <h3>AI-Native 算法工程架构</h3>
+          <p class="document-description">连接算法、OS、端侧资源、仿真评测与产品准出，把 AI coding 推进到可运行、可验证的团队级研发闭环。</p>
+          <ul class="topics"><li>端侧系统工程</li><li>Agent Loop</li><li>MCP</li><li>证据协议</li></ul>
+          <div class="document-actions">
+            <a class="open-link" href="ai-native-algorithm-engineering.html">打开材料</a>
+            <button class="copy-link" type="button" data-url="https://miaodx.com/LIP/consult/ai-native-algorithm-engineering.html" title="复制 AI-Native 算法工程材料直链"><span aria-hidden="true">&#10697;</span><span class="sr-only">复制 AI-Native 算法工程材料直链</span></button>
+          </div>
+        </div>
+      </article>
+
+      <article class="document-card" data-category="pitch" data-search="真格 token grant 一个人 多 agent multi claws openclaw 协作 系统 公开实践 pitch">
+        <figure class="document-media">
+          <img src="consult-index-assets/zhenfund-token-grant-cover.png" alt="真格 Token Grant 演示封面" loading="lazy">
+        </figure>
+        <div class="document-body">
+          <div class="document-meta"><span class="document-kind">Grant Pitch Deck</span><time datetime="2026-03-27">2026-03-27</time></div>
+          <h3>一个人 + 多 Agent</h3>
+          <p class="document-description">真格 Token Grant 沟通 deck，呈现多 Claw 独立协作系统、运行数据、投入证明、阶段里程碑与公开复用方向。</p>
+          <ul class="topics"><li>Multi-Agent</li><li>OpenClaw</li><li>运行证据</li><li>Grant Pitch</li></ul>
+          <div class="document-actions">
+            <a class="open-link" href="zhenfund-token-grant-pitch.html">打开材料</a>
+            <button class="copy-link" type="button" data-url="https://miaodx.com/LIP/consult/zhenfund-token-grant-pitch.html" title="复制真格 Token Grant 材料直链"><span aria-hidden="true">&#10697;</span><span class="sr-only">复制真格 Token Grant 材料直链</span></button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="empty-state" id="empty-state" hidden>
+      <strong>没有匹配的材料</strong>
+      <span>尝试更短的关键词或切换主题</span>
+    </div>
+  </section>
+</main>
+
+<footer class="shell footer">
+  <span>MiaoDX · Public Consult Materials</span>
+  <span id="copy-feedback" role="status" aria-live="polite">Updated 2026-07-21</span>
+</footer>
+
+<script>
+const cards = [...document.querySelectorAll('.document-card')]
+const filterButtons = [...document.querySelectorAll('.filter-button')]
+const searchInput = document.getElementById('document-search')
+const resultStatus = document.getElementById('result-status')
+const emptyState = document.getElementById('empty-state')
+const copyFeedback = document.getElementById('copy-feedback')
+let activeFilter = 'all'
+
+function normalize(value) {
+  return value.trim().toLocaleLowerCase('zh-CN')
+}
+
+function applyFilters() {
+  const query = normalize(searchInput.value)
+  let visibleCount = 0
+
+  cards.forEach(card => {
+    const matchesFilter = activeFilter === 'all' || card.dataset.category === activeFilter
+    const matchesSearch = !query || normalize(card.dataset.search).includes(query)
+    const isVisible = matchesFilter && matchesSearch
+    card.hidden = !isVisible
+    if (isVisible) visibleCount += 1
+  })
+
+  resultStatus.textContent = `显示 ${visibleCount} 份`
+  emptyState.hidden = visibleCount !== 0
+}
+
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    activeFilter = button.dataset.filter
+    filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)))
+    applyFilters()
+  })
+})
+
+searchInput.addEventListener('input', applyFilters)
+
+async function copyText(value, message) {
+  let copied = false
+
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await Promise.race([
+        navigator.clipboard.writeText(value),
+        new Promise((resolve, reject) => window.setTimeout(() => reject(new Error('Clipboard timeout')), 500))
+      ])
+      copied = true
+    } catch {}
+  }
+
+  if (!copied) {
+    const fallback = document.createElement('textarea')
+    fallback.value = value
+    fallback.setAttribute('readonly', '')
+    fallback.style.position = 'fixed'
+    fallback.style.opacity = '0'
+    document.body.appendChild(fallback)
+    fallback.select()
+    document.execCommand('copy')
+    fallback.remove()
+  }
+
+  copyFeedback.textContent = message
+  window.setTimeout(() => { copyFeedback.textContent = 'Updated 2026-07-21' }, 2200)
+}
+
+document.getElementById('share-library').addEventListener('click', () => {
+  copyText('https://miaodx.com/LIP/consult/', '目录链接已复制')
+})
+
+document.querySelectorAll('.copy-link').forEach(button => {
+  button.addEventListener('click', () => {
+    copyText(button.dataset.url, '材料直链已复制')
+  })
+})
+</script>
+</body>
+</html>

@@ -13,7 +13,7 @@
   --paper: #fffaf1;
   --ink: #161411;
   --soft: #5d554b;
-  --muted: #897d6f;
+  --muted: #766b5e;
   --rule: #d9cdbc;
   --accent: #9f3d2f;
   --blue: #246075;
@@ -233,12 +233,20 @@ h2 {
 }
 .case:last-child { margin-bottom: 0; }
 .case-media {
+  position: relative;
   background: #1d1a16;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--rule);
   min-height: 260px;
   display: flex;
+}
+.media-toggle {
+  width: 100%;
+  padding: 0;
+  appearance: none;
+  cursor: pointer;
+  font: inherit;
 }
 .case-media img {
   width: 100%;
@@ -248,7 +256,31 @@ h2 {
 }
 .case-media.contain img {
   object-fit: contain;
-  background: #f8f5ee;
+  background: #101722;
+}
+.media-toggle-icon {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(22, 20, 17, 0.82);
+  font-size: 19px;
+  line-height: 1;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+}
+.media-toggle:hover .media-toggle-icon,
+.media-toggle:focus-visible .media-toggle-icon {
+  background: var(--accent);
+}
+.media-toggle:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
 }
 .links {
   display: flex;
@@ -337,7 +369,7 @@ h2 {
     <div>
       <div class="eyebrow">On-Device Model Evaluation</div>
       <h1>端侧模型的<br><em>评测体系</em></h1>
-      <p class="lede">云端模型的评测对象是权重，端侧模型的评测对象是“最终交付到设备上的那个东西”。同一份权重换个芯片、换个量化方案、换个内存预算，表现就不一样。我过去几年做的正是这件事：在有限端侧资源里定义指标、建立准出、把验收做成可以连续跑的流水线，只是被测对象从感知模型换成了语言与多模态模型。</p>
+      <p class="lede">云端评测通常围绕服务化模型能力，端侧评测还必须覆盖“最终交付到设备上的那个东西”。同一份权重换个芯片、换个量化方案、换个内存预算，表现就不一样。我过去几年做的正是这件事：在有限端侧资源里定义指标、建立准出、把验收做成可以连续跑的流水线，只是被测对象从感知模型换成了语言与多模态模型。</p>
       <div class="hero-actions">
         <a class="btn primary" href="https://miaodx.com/resume/">查看简历</a>
         <a class="btn" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">Roboharness Report</a>
@@ -399,7 +431,7 @@ h2 {
       <ul style="margin-top:12px">
         <li>从下游任务倒推出标准 benchmark 里没有的判据，再补进评测口径</li>
         <li>长程流水线任务的真正难点，是阶段之间的隐性交接条件需要被显式度量</li>
-        <li>仿真程序化生成的场景数据天然规避测试集泄露，也便于控制场景分布与难度</li>
+        <li>仿真程序化生成可以降低直接样本泄露风险，也便于按场景、模板与 seed 隔离评测分布</li>
       </ul>
     </article>
 
@@ -429,9 +461,10 @@ h2 {
           <a class="link-pill" href="https://github.com/MiaoDX/roboharness">GitHub repo</a>
         </div>
       </div>
-      <a class="case-media" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">
-        <img src="on-device-model-evaluation-assets/roboharness-g1-comparison.gif" alt="Unitree G1 robot grasp simulation comparison">
-      </a>
+      <button class="case-media contain media-toggle" type="button" aria-label="播放 Unitree G1 双框架仿真对比" aria-pressed="false" data-poster="on-device-model-evaluation-assets/roboharness-g1-comparison-poster.png" data-animation="on-device-model-evaluation-assets/roboharness-g1-comparison.gif">
+        <img src="on-device-model-evaluation-assets/roboharness-g1-comparison-poster.png" alt="Unitree G1 同一次运行在 Meshcat 与 MuJoCo 中的仿真对比">
+        <span class="media-toggle-icon" aria-hidden="true">&#9654;</span>
+      </button>
     </article>
 
     <article class="card green" style="margin-top:18px">
@@ -470,7 +503,7 @@ h2 {
       <article class="card amber">
         <span class="label">Scope 04</span>
         <h3>语音与全双工交互评测</h3>
-        <p>语音质量与识别准确率之外，真正难评的是交互行为：该打断时是否打断、误触发率、被打断后能否接续，公开基准在这块基本是空白。</p>
+        <p>语音质量与识别准确率之外，真正难评的是交互行为：该打断时是否打断、误触发率、被打断后能否接续。已有全双工 benchmark 开始覆盖 turn-taking，但真实场景中的统一评测口径仍不成熟。</p>
       </article>
       <article class="card emphasis">
         <span class="label">Scope 05</span>
@@ -561,5 +594,19 @@ h2 {
     <span>Updated 2026-07-21</span>
   </footer>
 </main>
+<script>
+const mediaToggle = document.querySelector('.media-toggle')
+if (mediaToggle) {
+  const image = mediaToggle.querySelector('img')
+  const icon = mediaToggle.querySelector('.media-toggle-icon')
+  mediaToggle.addEventListener('click', () => {
+    const isPlaying = mediaToggle.getAttribute('aria-pressed') === 'true'
+    image.src = isPlaying ? mediaToggle.dataset.poster : mediaToggle.dataset.animation
+    mediaToggle.setAttribute('aria-pressed', String(!isPlaying))
+    mediaToggle.setAttribute('aria-label', isPlaying ? '播放 Unitree G1 双框架仿真对比' : '暂停 Unitree G1 双框架仿真对比')
+    icon.innerHTML = isPlaying ? '&#9654;' : '&#9632;'
+  })
+}
+</script>
 </body>
 </html>
