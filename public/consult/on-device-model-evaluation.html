@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On-Device Model Evaluation · MiaoDX</title>
+<meta name="description" content="MiaoDX 面向端侧大模型团队的沟通 brief：部署后一致性评测、全生命周期评测流水线、具身与 Agent 指标设计。">
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+:root {
+  --bg: #f6f2ea;
+  --paper: #fffaf1;
+  --ink: #161411;
+  --soft: #5d554b;
+  --muted: #897d6f;
+  --rule: #d9cdbc;
+  --accent: #9f3d2f;
+  --blue: #246075;
+  --green: #38674f;
+  --amber: #9a681c;
+  --panel: #eee5d8;
+  --shadow: 0 18px 50px rgba(53, 42, 30, 0.08);
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); color: var(--ink); }
+body {
+  margin: 0;
+  font-family: Inter, "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.58;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.page {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: 34px clamp(20px, 5vw, 64px) 64px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--soft);
+  font-size: 13px;
+}
+.brand {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.nav a {
+  color: var(--soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.nav a:hover { color: var(--accent); border-color: currentColor; }
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: clamp(28px, 5vw, 62px);
+  padding: 54px 0 42px;
+  border-bottom: 1px solid var(--rule);
+}
+.eyebrow, .section-kicker, .tag, .label {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  margin-bottom: 20px;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+h1 em {
+  display: block;
+  color: var(--accent);
+  font-style: normal;
+}
+.lede {
+  max-width: 52em;
+  color: var(--soft);
+  font-size: clamp(17px, 2.1vw, 22px);
+  margin-bottom: 24px;
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 14px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+.btn.primary { background: var(--ink); color: var(--bg); }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary:hover { background: var(--accent); color: var(--bg); }
+.hero-card {
+  align-self: end;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+.hero-card h2 {
+  font-size: 20px;
+  line-height: 1.26;
+  margin-bottom: 16px;
+}
+.hero-card ul, .card ul {
+  margin: 0;
+  padding-left: 1.1em;
+}
+.hero-card li, .card li { margin: 7px 0; color: var(--soft); }
+.strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 30px 0 0;
+}
+.metric {
+  background: var(--paper);
+  padding: 18px;
+  min-height: 112px;
+}
+.metric strong {
+  display: block;
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.metric span { color: var(--soft); font-size: 13px; }
+.section {
+  padding: 46px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section-head {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 28px;
+  align-items: baseline;
+  margin-bottom: 24px;
+}
+.section-kicker {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+h2 {
+  font-size: clamp(26px, 4vw, 44px);
+  line-height: 1.12;
+  letter-spacing: 0;
+  margin-bottom: 0;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 22px;
+  min-width: 0;
+}
+.card.emphasis { border-top: 4px solid var(--accent); }
+.card.blue { border-top: 4px solid var(--blue); }
+.card.green { border-top: 4px solid var(--green); }
+.card.amber { border-top: 4px solid var(--amber); }
+.card h3 {
+  font-size: 22px;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+.card p { color: var(--soft); margin-bottom: 0; }
+.label {
+  display: inline-flex;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.quote {
+  padding: 24px 28px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 8px;
+  font-size: clamp(20px, 3vw, 31px);
+  line-height: 1.35;
+}
+.quote span { color: #efb5a9; }
+.case {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  gap: 20px;
+  align-items: stretch;
+  margin-bottom: 18px;
+}
+.case:last-child { margin-bottom: 0; }
+.case-media {
+  background: #1d1a16;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  min-height: 260px;
+  display: flex;
+}
+.case-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.case-media.contain img {
+  object-fit: contain;
+  background: #f8f5ee;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.link-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 11px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(255, 250, 241, 0.72);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+.link-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.timeline {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.step {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 18px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+.step .tag { color: var(--blue); font-size: 11px; font-weight: 700; }
+.step h3 { margin: 0 0 6px; font-size: 19px; }
+.step p { color: var(--soft); margin: 0; }
+.footer {
+  padding-top: 26px;
+  color: var(--muted);
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .page { padding-top: 24px; }
+  .topbar { align-items: flex-start; flex-direction: column; }
+  .nav { justify-content: flex-start; }
+  .hero, .section-head, .case, .grid-2, .grid-3, .strip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero { padding-top: 38px; }
+  h1 {
+    font-size: clamp(40px, 12vw, 52px);
+    line-height: 1.04;
+  }
+  .lede { font-size: 17px; }
+  .btn {
+    width: 100%;
+    min-height: 40px;
+  }
+  .hero-actions { gap: 10px; }
+  .case-media { min-height: 210px; }
+  .step { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <nav class="topbar" aria-label="页面导航">
+    <div class="brand">MiaoDX · On-Device Model Evaluation</div>
+    <div class="nav">
+      <a href="https://miaodx.com/">Homepage</a>
+      <a href="https://miaodx.com/resume/">Resume</a>
+      <a href="https://github.com/MiaoDX">GitHub</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">On-Device Model Evaluation</div>
+      <h1>端侧模型的<br><em>评测体系</em></h1>
+      <p class="lede">云端模型的评测对象是权重，端侧模型的评测对象是“最终交付到设备上的那个东西”。同一份权重换个芯片、换个量化方案、换个内存预算，表现就不一样。我过去几年做的正是这件事：在有限端侧资源里定义指标、建立准出、把验收做成可以连续跑的流水线，只是被测对象从感知模型换成了语言与多模态模型。</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="https://miaodx.com/resume/">查看简历</a>
+        <a class="btn" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">Roboharness Report</a>
+        <a class="btn" href="https://miaodx.com/LIP/">LIP 内容仓库</a>
+      </div>
+      <div class="strip" aria-label="核心经历摘要">
+        <div class="metric"><strong>2019-2025</strong><span>自动驾驶感知系统<br>性能优化、发版管理、感知准出</span></div>
+        <div class="metric"><strong>9 人</strong><span>从 0 到 1 组建感知系统团队<br>梯队、分工与协作 contract</span></div>
+        <div class="metric"><strong>2025-</strong><span>具身模型的数据与评测<br>VLN 仿真数据生成 + 云端评测</span></div>
+        <div class="metric"><strong>Open</strong><span>Roboharness 开源项目<br>Agent 自验收 harness 与证据流水线</span></div>
+      </div>
+    </div>
+    <aside class="hero-card">
+      <h2>端侧团队特有的评测问题</h2>
+      <ul>
+        <li>评测对象是部署后的产物，指标里天然带着延迟、内存、功耗和量化损失</li>
+        <li>“能力密度”这类技术叙事，需要跨代际、跨尺寸可比的能力度量作为地基</li>
+        <li>文本、多模态、语音多条模型线，需要共用一套评测基础设施而不是各做各的</li>
+        <li>评测要同时服务内部迭代信号、开源社区可信度、客户验收和对外榜单</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">01 / Positioning</div>
+      <h2>评测的瓶颈<br>通常不在指标学，在 harness</h2>
+    </div>
+    <div class="quote">我关心的是：<span>怎样让能力、资源约束、证据和准出进入同一套可复现、可无人值守连续运行的评测体系</span></div>
+    <div class="grid-3" style="margin-top:16px">
+      <article class="card emphasis">
+        <span class="label">Object</span>
+        <h3>评测的是交付物，不是权重</h3>
+        <p>端侧模型真正被用户使用的形态，是经过量化、编译、芯片适配之后的产物。评测口径如果停在权重层，跨芯片一致性、量化退化和资源超限都会滞后到集成期才暴露。</p>
+      </article>
+      <article class="card blue">
+        <span class="label">Metric</span>
+        <h3>指标要从下游任务倒推</h3>
+        <p>公开 benchmark 是必要但远不充分的。真正决定下游成败的维度，往往不在榜单里，需要从实际使用它的那个环节反推出来，再补进评测集。</p>
+      </article>
+      <article class="card green">
+        <span class="label">Harness</span>
+        <h3>从人工盯屏到自动准出</h3>
+        <p>把人脑里的验收判断拆成 metric、证据、报告和门禁，评测才能从“发版前突击跑一轮”变成每个 checkpoint 都在跑的常态化基础设施。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">02 / Evidence</div>
+      <h2>四段和评测直接相关的经历</h2>
+    </div>
+
+    <article class="card emphasis" style="margin-bottom:18px">
+      <span class="label">Case A · VLN Evaluation</span>
+      <h3>具身导航模型：当标准指标不足以判断任务成败</h3>
+      <p>去年团队开始做 VLN 模型，我主要负责数据与评测两块。评测跑的是 Habitat / VLNCE 这类标准 VLN 指标，数据侧则是在仿真环境里做不同场景的导航数据生成与加速。做下来最关键的一个认识是：标准指标判定“到达”成功，不等于任务成功——例如智能体停在了目标点，但停止时的朝向不对，下游的 local manipulation 就无法接续。</p>
+      <ul style="margin-top:12px">
+        <li>从下游任务倒推出标准 benchmark 里没有的判据，再补进评测口径</li>
+        <li>长程流水线任务的真正难点，是阶段之间的隐性交接条件需要被显式度量</li>
+        <li>仿真程序化生成的场景数据天然规避测试集泄露，也便于控制场景分布与难度</li>
+      </ul>
+    </article>
+
+    <article class="card amber" style="margin-bottom:18px">
+      <span class="label">Case B · Release Gate</span>
+      <h3>自动驾驶感知：端侧资源约束下的质量收口与准出</h3>
+      <p>在感知系统团队，我负责感知的发版管理、性能优化与准出。工作重心不是单个算法的效果归属，而是让多个模块在有限端侧资源里稳定完成部署、集成、发版：模型部署框架、资源预算、性能画像、端侧数据通路优化，以及跨模块的质量收口。</p>
+      <ul style="margin-top:12px">
+        <li>把用户体验、算法效果、pipeline 延迟、资源占用和发版风险组织进同一套全局约束</li>
+        <li>提供部署、性能分析和准出工具，让算法团队在明确的 contract 内迭代</li>
+        <li>准出是一套工业级的机制问题，不是发版前的一次性检查</li>
+      </ul>
+    </article>
+
+    <article class="case">
+      <div class="card blue">
+        <span class="label">Case C · Roboharness</span>
+        <h3>把验收做成可以无人值守连续跑的证据流水线</h3>
+        <p>真实项目里，agent 能改代码、调参数、跑仿真，但长程任务会卡在“它不知道自己改完后是否真的变好”。Roboharness 把验收做成 metric 加 visual evidence 的双轨流水线，每一轮都给出 PASS / FAIL / surface-to-human 的判断依据，CI 自动出报告。</p>
+        <ul style="margin-top:12px">
+          <li>机器人抓取规划从 16 秒优化到约 3 秒</li>
+          <li>先用视觉发现 unknown unknown，再把它沉淀成稳定 metric</li>
+          <li>artifact 与 report 留痕，人不必每轮盯屏验收</li>
+        </ul>
+        <div class="links">
+          <a class="link-pill" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">完整 HTML report</a>
+          <a class="link-pill" href="https://github.com/MiaoDX/roboharness">GitHub repo</a>
+        </div>
+      </div>
+      <a class="case-media" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">
+        <img src="on-device-model-evaluation-assets/roboharness-g1-comparison.gif" alt="Unitree G1 robot grasp simulation comparison">
+      </a>
+    </article>
+
+    <article class="card green" style="margin-top:18px">
+      <span class="label">Case D · Team 0 to 1</span>
+      <h3>从零组建一个 9 人的系统团队</h3>
+      <p>感知系统团队是我从零搭起来的，最后到 9 人规模。早期团队的难点不在招人，在于把职责边界、协作 contract 和质量标准先立住：让团队的产出对研发决策真的有影响力，而不是被当成发版前的验收工位。</p>
+      <ul style="margin-top:12px">
+        <li>早期定标准的窗口期很短，标准立得晚就再也插不进去</li>
+        <li>成员画像与梯队要按“定指标、建平台、管数据质量”分层配置</li>
+        <li>团队价值要靠“建议被采纳后的效果回溯”来证明，而不是靠出报告的数量</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">03 / Team Fit</div>
+      <h2>和端侧大模型团队的连接点</h2>
+    </div>
+    <div class="grid-2">
+      <article class="card emphasis">
+        <span class="label">Scope 01</span>
+        <h3>部署后一致性评测</h3>
+        <p>同一份权重跨芯片、跨量化方案、跨推理框架的能力一致性验证，以及延迟、内存、功耗进入评测口径后的门禁设计。</p>
+      </article>
+      <article class="card blue">
+        <span class="label">Scope 02</span>
+        <h3>全生命周期评测流水线</h3>
+        <p>预训练、SFT、对齐各阶段需要不同形态的评测：轻量探针、日常回归、里程碑全量、发版评审套件，用同一套基础设施分层承载。</p>
+      </article>
+      <article class="card green">
+        <span class="label">Scope 03</span>
+        <h3>具身与 Agent 的指标设计</h3>
+        <p>长程任务的阶段交接条件、工具调用正确性、任务耗时与交互次数、可靠性而非单次运气，都需要进入同一套可复现的 report。</p>
+      </article>
+      <article class="card amber">
+        <span class="label">Scope 04</span>
+        <h3>语音与全双工交互评测</h3>
+        <p>语音质量与识别准确率之外，真正难评的是交互行为：该打断时是否打断、误触发率、被打断后能否接续，公开基准在这块基本是空白。</p>
+      </article>
+      <article class="card emphasis">
+        <span class="label">Scope 05</span>
+        <h3>客户 POC 与交付验收</h3>
+        <p>手机、座舱这类客户侧验收有自己的一套语言。我此前在整车行业做量产准出，理解甲方在验收时到底看什么、卡什么。</p>
+      </article>
+      <article class="card blue">
+        <span class="label">Scope 06</span>
+        <h3>评测团队自身的产能</h3>
+        <p>评测是典型的长程低频保养型工作，很适合交给 routine 化的 agent 承载。让评测团队自己先用上 AI coding 工作流，是成本、效率与准确度三角里最容易被忽略的一条边。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">04 / Discussion Anchors</div>
+      <h2>适合进一步展开的技术议题</h2>
+    </div>
+    <div class="timeline">
+      <div class="step">
+        <div class="tag">Anchor 01</div>
+        <div>
+          <h3>能力密度叙事的度量学地基</h3>
+          <p>要论证能力密度随时间提升，先要回答分子怎么定义、分母怎么归一、不同代际之间如何保持可比。这套度量做扎实了，它就是技术叙事的支撑而不只是宣传口径。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="tag">Anchor 02</div>
+        <div>
+          <h3>评测的四类受众如何分层</h3>
+          <p>内部迭代信号、开源社区可信度、客户 POC 验收、对外榜单，这四类对评测的要求并不一致，甚至互相拉扯。分层承载比试图用一套指标同时满足四方更现实。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="tag">Anchor 03</div>
+        <div>
+          <h3>跨芯片、跨量化的一致性门禁</h3>
+          <p>端侧适配越多，权重与交付物之间的偏差面就越大。哪些退化可接受、哪些必须卡住，需要一套明确阈值和自动化验证，而不是靠集成期人工发现。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="tag">Anchor 04</div>
+        <div>
+          <h3>长程任务的阶段交接条件</h3>
+          <p>流水线式任务里，上一阶段“达标”常常不等于下一阶段“可用”。停止朝向这类隐性前置条件如何被识别、被度量、被写进评测集，是具身与 Agent 评测的共同难点。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="tag">Anchor 05</div>
+        <div>
+          <h3>评测集的换血与防泄露机制</h3>
+          <p>基准饱和与测试集泄露是必然发生的事。真正要设计的是私有集隔离、程序化生成、时间切片和定期退役补充的常态机制，而不是一次性的去重检查。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">05 / Links</div>
+      <h2>进一步了解</h2>
+    </div>
+    <div class="grid-3">
+      <article class="card emphasis">
+        <span class="label">Profile</span>
+        <h3>个人主页</h3>
+        <p>公开构建 AI 协作与自动化系统，持续记录 AI coding、机器人与多 Agent 实践。</p>
+        <div class="links"><a class="link-pill" href="https://miaodx.com/">miaodx.com</a></div>
+      </article>
+      <article class="card blue">
+        <span class="label">Resume</span>
+        <h3>中文简历</h3>
+        <p>自动驾驶、感知系统、具身模型数据与评测、AI coding 工程化经历。</p>
+        <div class="links"><a class="link-pill" href="https://miaodx.com/resume/">resume</a></div>
+      </article>
+      <article class="card green">
+        <span class="label">Learn In Public</span>
+        <h3>LIP 内容仓库</h3>
+        <p>演讲、案例、复盘、项目报告和公开学习记录。</p>
+        <div class="links"><a class="link-pill" href="https://miaodx.com/LIP/">miaodx.com/LIP</a></div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>MiaoDX · On-Device Model Evaluation Brief</span>
+    <span>Updated 2026-07-21</span>
+  </footer>
+</main>
+</body>
+</html>
