@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>On-Device Model Evaluation · MiaoDX</title>
-<meta name="description" content="MiaoDX 面向端侧大模型团队的沟通 brief：部署后一致性评测、全生命周期评测流水线、具身与 Agent 指标设计。">
+<meta name="description" content="MiaoDX 面向多模态与具身大模型团队的沟通 brief：真实世界与长程任务的指标设计、具身 VLA 评测、全生命周期评测流水线、端侧交付一致性准出。">
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
@@ -367,9 +367,9 @@ h2 {
 
   <section class="hero">
     <div>
-      <div class="eyebrow">On-Device Model Evaluation</div>
-      <h1>端侧模型的<br><em>评测体系</em></h1>
-      <p class="lede">云端评测通常围绕服务化模型能力，端侧评测还必须覆盖“最终交付到设备上的那个东西”。同一份权重换个芯片、换个量化方案、换个内存预算，表现就不一样。我过去几年做的正是这件事：在有限端侧资源里定义指标、建立准出、把验收做成可以连续跑的流水线，只是被测对象从感知模型换成了语言与多模态模型。</p>
+      <div class="eyebrow">Model Evaluation · Multimodal & Embodied</div>
+      <h1>真实世界任务的<br><em>模型评测体系</em></h1>
+      <p class="lede">越靠近真实世界、越是长程任务，标准指标就越是必要但远不充分。导航到达了但停止朝向不对、操作完成了但中间状态丢了、模型很强但端侧跑不动——这些决定成败的维度往往不在榜单里。我过去几年做的正是把这类维度找出来、变成可度量的指标、建立准出、做成可以连续跑的评测流水线，覆盖感知、导航、操作与端侧交付。</p>
       <div class="hero-actions">
         <a class="btn primary" href="https://miaodx.com/resume/">查看简历</a>
         <a class="btn" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">Roboharness Report</a>
@@ -383,11 +383,11 @@ h2 {
       </div>
     </div>
     <aside class="hero-card">
-      <h2>端侧团队特有的评测问题</h2>
+      <h2>全栈模型团队的评测难点</h2>
       <ul>
-        <li>评测对象是部署后的产物，指标里天然带着延迟、内存、功耗和量化损失</li>
-        <li>“能力密度”这类技术叙事，需要跨代际、跨尺寸可比的能力度量作为地基</li>
-        <li>文本、多模态、语音多条模型线，需要共用一套评测基础设施而不是各做各的</li>
+        <li>具身与长程任务，真正决定成败的是隐性中间状态，标准指标很难覆盖</li>
+        <li>文本、多模态、语音、具身多条模型线，需要共用一套评测基础设施而不是各做各的</li>
+        <li>端侧交付要把延迟、内存、功耗、量化损失一起纳入评测口径</li>
         <li>评测要同时服务内部迭代信号、开源社区可信度、客户验收和对外榜单</li>
       </ul>
     </aside>
@@ -401,19 +401,19 @@ h2 {
     <div class="quote">我关心的是：<span>怎样让能力、资源约束、证据和准出进入同一套可复现、可无人值守连续运行的评测体系</span></div>
     <div class="grid-3" style="margin-top:16px">
       <article class="card emphasis">
-        <span class="label">Object</span>
-        <h3>评测的是交付物，不是权重</h3>
-        <p>端侧模型真正被用户使用的形态，是经过量化、编译、芯片适配之后的产物。评测口径如果停在权重层，跨芯片一致性、量化退化和资源超限都会滞后到集成期才暴露。</p>
+        <span class="label">Metric</span>
+        <h3>长程任务里，标准指标远不充分</h3>
+        <p>越靠近真实世界，决定成败的维度越是不在榜单里：导航到达了但朝向不对、操作完成了但上下文状态丢了。这些维度要从下游任务倒推出来，再补进评测口径。</p>
       </article>
       <article class="card blue">
-        <span class="label">Metric</span>
-        <h3>指标要从下游任务倒推</h3>
-        <p>公开 benchmark 是必要但远不充分的。真正决定下游成败的维度，往往不在榜单里，需要从实际使用它的那个环节反推出来，再补进评测集。</p>
-      </article>
-      <article class="card green">
         <span class="label">Harness</span>
         <h3>从人工盯屏到自动准出</h3>
         <p>把人脑里的验收判断拆成 metric、证据、报告和门禁，评测才能从“发版前突击跑一轮”变成每个 checkpoint 都在跑的常态化基础设施。</p>
+      </article>
+      <article class="card green">
+        <span class="label">Delivery</span>
+        <h3>端侧评测的是交付物，不是权重</h3>
+        <p>模型真正被使用的形态，是经过量化、编译、芯片适配之后的产物。评测口径若停在权重层，跨芯片一致性、量化退化和资源超限都会滞后到集成期才暴露。</p>
       </article>
     </div>
   </section>
@@ -430,7 +430,7 @@ h2 {
       <p>去年团队开始做 VLN 模型，我主要负责数据与评测两块。评测跑的是 Habitat / VLNCE 这类标准 VLN 指标，数据侧则是在仿真环境里做不同场景的导航数据生成与加速。做下来最关键的一个认识是：标准指标判定“到达”成功，不等于任务成功——例如智能体停在了目标点，但停止时的朝向不对，下游的 local manipulation 就无法接续。</p>
       <ul style="margin-top:12px">
         <li>从下游任务倒推出标准 benchmark 里没有的判据，再补进评测口径</li>
-        <li>长程流水线任务的真正难点，是阶段之间的隐性交接条件需要被显式度量</li>
+        <li>长程任务的真正难点，是阶段交接条件与中间状态（朝向、记忆、上下文）需要被显式度量，而这类维度在导航与操作评测里是共通的</li>
         <li>仿真程序化生成可以降低直接样本泄露风险，也便于按场景、模板与 seed 隔离评测分布</li>
       </ul>
     </article>
@@ -482,23 +482,23 @@ h2 {
   <section class="section">
     <div class="section-head">
       <div class="section-kicker">03 / Team Fit</div>
-      <h2>和端侧大模型团队的连接点</h2>
+      <h2>和多模态 / 具身模型团队的连接点</h2>
     </div>
     <div class="grid-2">
       <article class="card emphasis">
         <span class="label">Scope 01</span>
-        <h3>部署后一致性评测</h3>
-        <p>同一份权重跨芯片、跨量化方案、跨推理框架的能力一致性验证，以及延迟、内存、功耗进入评测口径后的门禁设计。</p>
+        <h3>具身 VLA 与 Agent 指标设计</h3>
+        <p>长程操作的阶段交接条件、上下文记忆保持、工具调用正确性、任务耗时与交互次数、可靠性而非单次运气，都需要进入同一套可复现的 report，而不是只看最终成功率。</p>
       </article>
       <article class="card blue">
         <span class="label">Scope 02</span>
-        <h3>全生命周期评测流水线</h3>
-        <p>预训练、SFT、对齐各阶段需要不同形态的评测：轻量探针、日常回归、里程碑全量、发版评审套件，用同一套基础设施分层承载。</p>
+        <h3>真机与仿真的证据一致性</h3>
+        <p>把 demo、仿真、真机 pilot、human review 统一成可审计证据，避免“看起来成功”的假阳性进入长期迭代，也让仿真里涨的分能对应真机上的收益。</p>
       </article>
       <article class="card green">
         <span class="label">Scope 03</span>
-        <h3>具身与 Agent 的指标设计</h3>
-        <p>长程任务的阶段交接条件、工具调用正确性、任务耗时与交互次数、可靠性而非单次运气，都需要进入同一套可复现的 report。</p>
+        <h3>全生命周期评测流水线</h3>
+        <p>预训练、SFT、对齐各阶段需要不同形态的评测：轻量探针、日常回归、里程碑全量、发版评审套件，用同一套基础设施分层承载。</p>
       </article>
       <article class="card amber">
         <span class="label">Scope 04</span>
@@ -507,8 +507,8 @@ h2 {
       </article>
       <article class="card emphasis">
         <span class="label">Scope 05</span>
-        <h3>客户 POC 与交付验收</h3>
-        <p>手机、座舱这类客户侧验收有自己的一套语言。我此前在整车行业做量产准出，理解甲方在验收时到底看什么、卡什么。</p>
+        <h3>端侧交付一致性与客户验收</h3>
+        <p>同一份权重跨芯片、跨量化、跨推理框架的一致性门禁，加上手机、座舱这类客户侧验收。我此前在整车行业做量产准出，理解甲方在验收时到底看什么、卡什么。</p>
       </article>
       <article class="card blue">
         <span class="label">Scope 06</span>
@@ -548,8 +548,8 @@ h2 {
       <div class="step">
         <div class="tag">Anchor 04</div>
         <div>
-          <h3>长程任务的阶段交接条件</h3>
-          <p>流水线式任务里，上一阶段“达标”常常不等于下一阶段“可用”。停止朝向这类隐性前置条件如何被识别、被度量、被写进评测集，是具身与 Agent 评测的共同难点。</p>
+          <h3>具身长程任务的中间状态如何度量</h3>
+          <p>流水线式任务里，上一阶段“达标”常常不等于下一阶段“可用”：导航的停止朝向、操作的上下文记忆保持、阶段间的隐性前置条件，如何被识别、被度量、被写进评测集，是具身 VLA 与 Agent 评测的共同难点，也直接影响长程任务的成功率归因。</p>
         </div>
       </div>
       <div class="step">
