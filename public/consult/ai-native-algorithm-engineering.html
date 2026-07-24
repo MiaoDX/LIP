@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-Native Algorithm Engineering · MiaoDX</title>
-<meta name="description" content="MiaoDX 面向硬件 AI、机器人与算法工程架构团队的沟通 brief：端侧算法系统工程、机器人应用栈与可验证 Agent 研发闭环。">
+<title>AI-Native Engineering · MiaoDX</title>
+<meta name="description" content="MiaoDX 的 AI-Native 工程工作介绍：算法工程化、VLN 数据管线与云端批量评测，以及 Agent 驱动的可验证研发闭环。">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
 :root {
@@ -18,7 +18,6 @@
   --blue: #246075;
   --green: #38674f;
   --amber: #9a681c;
-  --panel: #eee5d8;
   --shadow: 0 18px 50px rgba(53, 42, 30, 0.08);
 }
 * { box-sizing: border-box; }
@@ -69,7 +68,7 @@ a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; 
   padding: 54px 0 42px;
   border-bottom: 1px solid var(--rule);
 }
-.eyebrow, .section-kicker, .tag, .label {
+.eyebrow, .section-kicker, .label {
   font-family: "JetBrains Mono", monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -132,11 +131,37 @@ h1 em {
   line-height: 1.26;
   margin-bottom: 16px;
 }
-.hero-card ul, .card ul {
+.card ul {
   margin: 0;
   padding-left: 1.1em;
 }
-.hero-card li, .card li { margin: 7px 0; color: var(--soft); }
+.card li { margin: 7px 0; color: var(--soft); }
+.hero-tracks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.hero-tracks h2, .agent-bridge { grid-column: 1 / -1; }
+.hero-track {
+  padding-top: 14px;
+  border-top: 3px solid var(--accent);
+}
+.hero-track.blue { border-color: var(--blue); }
+.hero-track strong {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 17px;
+  line-height: 1.25;
+}
+.hero-track span, .agent-bridge {
+  color: var(--soft);
+  font-size: 13px;
+}
+.agent-bridge {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
 .strip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -272,23 +297,70 @@ h2 {
   border-color: var(--accent);
   color: var(--accent);
 }
-.timeline {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
+.outcome {
+  display: block;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
 }
-.step {
+.loop-flow {
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 18px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  counter-reset: loop;
+}
+.loop-step {
+  position: relative;
+  min-height: 168px;
+  padding: 18px 16px;
+  border-top: 4px solid var(--blue);
   background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 18px 20px;
+  counter-increment: loop;
 }
-.step .tag { color: var(--blue); font-size: 11px; font-weight: 700; }
-.step h3 { margin: 0 0 6px; font-size: 19px; }
-.step p { color: var(--soft); margin: 0; }
+.loop-step::before {
+  content: "0" counter(loop);
+  display: block;
+  margin-bottom: 18px;
+  color: var(--blue);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.loop-step::after {
+  content: "\2192";
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  z-index: 1;
+  width: 20px;
+  color: var(--accent);
+  text-align: center;
+  transform: translateY(-50%);
+}
+.loop-step:last-child::after { content: none; }
+.loop-step h3 { margin-bottom: 8px; font-size: 17px; line-height: 1.25; }
+.loop-step p { margin: 0; color: var(--soft); font-size: 13px; }
+.design-note {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 28px;
+  margin-top: 18px;
+  padding: 22px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.design-note strong {
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.design-note p { margin: 0; color: var(--soft); }
 .footer {
   padding-top: 26px;
   color: var(--muted);
@@ -302,7 +374,7 @@ h2 {
   .page { padding-top: 24px; }
   .topbar { align-items: flex-start; flex-direction: column; }
   .nav { justify-content: flex-start; }
-  .hero, .section-head, .case, .grid-2, .grid-3, .strip {
+  .hero, .section-head, .case, .grid-2, .grid-3, .strip, .design-note {
     grid-template-columns: minmax(0, 1fr);
   }
   .hero { padding-top: 38px; }
@@ -317,14 +389,26 @@ h2 {
   }
   .hero-actions { gap: 10px; }
   .case-media { min-height: 210px; }
-  .step { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .loop-flow { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .loop-step { min-height: 0; padding: 18px 20px; }
+  .loop-step::before { margin-bottom: 8px; }
+  .loop-step::after {
+    content: "\2193";
+    top: auto;
+    right: auto;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .hero-tracks { grid-template-columns: minmax(0, 1fr); }
+  .hero-tracks h2, .agent-bridge { grid-column: auto; }
 }
 </style>
 </head>
 <body>
 <main class="page">
   <nav class="topbar" aria-label="页面导航">
-    <div class="brand">MiaoDX · AI-Native Algorithm Engineering</div>
+    <div class="brand">MiaoDX · AI-Native Engineering</div>
     <div class="nav">
       <a href="https://miaodx.com/">Homepage</a>
       <a href="https://miaodx.com/resume/">Resume</a>
@@ -334,83 +418,137 @@ h2 {
 
   <section class="hero">
     <div>
-      <div class="eyebrow">AI-Native Algorithm Engineering</div>
-      <h1>算法工程架构<br><em>进入 Agent 研发闭环</em></h1>
-      <p class="lede">我过去几年站在算法、OS、端侧资源、仿真评测和产品交付之间，把自动驾驶感知和机器人能力做成可部署、可验证、可持续迭代的系统。最近一年，我把 AI coding 从“更快写代码”推进到“算法、仿真、metric、visual evidence、MCP、skill、report 组成可运行闭环”。</p>
+      <div class="eyebrow">AI-Native Engineering</div>
+      <h1>算法工程化 ×<br><em>数据与评测</em></h1>
+      <p class="lede">我长期站在算法、数据、评测和产品交付之间：一条线把算法能力送进受资源约束的产品系统；另一条线把 VLN 数据管线和云端批量评测做成可规模化的迭代基础设施。现在，我进一步把这些能力改造成 Agent 可调用、可观测、可验收的研发闭环</p>
       <div class="hero-actions">
         <a class="btn primary" href="https://miaodx.com/resume/">查看简历</a>
         <a class="btn" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">Roboharness Report</a>
         <a class="btn" href="https://miaodx.com/LIP/ai-coding/roboclaws-give-robots-the-mind/">RoboClaws Report</a>
       </div>
       <div class="strip" aria-label="核心经历摘要">
-        <div class="metric"><strong>2019-2025</strong><span>自动驾驶与感知系统工程<br>量产感知、系统集成、产品闭环</span></div>
-        <div class="metric"><strong>2025-</strong><span>机器人应用栈与真实场景接入<br>规划、仿真、抓取、系统联调</span></div>
-        <div class="metric"><strong>8 weeks</strong><span>AI coding 系列分享与实践沉淀<br>harness / MCP / skill / workflow</span></div>
-        <div class="metric"><strong>3 layers</strong><span>端侧系统工程 + Roboharness + RoboClaws<br>从交付到 Agent 闭环</span></div>
+        <div class="metric"><strong>2019-2025</strong><span>自动驾驶感知系统工程<br>部署、性能、集成与准出</span></div>
+        <div class="metric"><strong>VLN Data</strong><span>仿真数据管线性能优化<br>生成吞吐与任务稳定性</span></div>
+        <div class="metric"><strong>Cloud Eval</strong><span>算法云端批量评测<br>任务执行、指标与回归</span></div>
+        <div class="metric"><strong>Open Proof</strong><span>Roboharness + RoboClaws<br>可验证 Agent 研发实践</span></div>
       </div>
     </div>
-    <aside class="hero-card">
-      <h2>适合切入的工程问题</h2>
-      <ul>
-        <li>算法工程架构需要连接算法团队、OS、端侧资源和产品准出</li>
-        <li>仿真、评测、数据、训练和内部平台需要被 agent 安全调用</li>
-        <li>跨模块 pipeline 需要资源预算、性能画像、回归和准出机制</li>
-        <li>AI coding 需要从个人提效走向团队级研发基础设施</li>
-      </ul>
+    <aside class="hero-card hero-tracks" aria-label="两条工作主线">
+      <h2>两条主线，一个迭代闭环</h2>
+      <div class="hero-track">
+        <strong>01 算法工程化</strong>
+        <span>让算法进入真实系统，稳定完成部署、集成、优化与交付</span>
+      </div>
+      <div class="hero-track blue">
+        <strong>02 数据与评测</strong>
+        <span>让数据生产和批量评测成为可信、可规模化的迭代引擎</span>
+      </div>
+      <p class="agent-bridge">Agent 不是第三条业务线，而是重新组织任务、基础设施、证据和决策的运行方式</p>
     </aside>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <div class="section-kicker">01 / Positioning</div>
-      <h2>不是“会用 Codex”<br>而是把算法工程系统改成 AI-native</h2>
+      <div class="section-kicker">01 / Two Tracks</div>
+      <h2>把算法做成系统<br>把数据与评测做成反馈系统</h2>
     </div>
-    <div class="quote">我关心的是：<span>怎样让算法、端侧资源、仿真、评测、证据和工程交付进入同一个 agent 可运行闭环</span></div>
-    <div class="grid-3" style="margin-top:16px">
+    <div class="quote">共同目标是：<span>缩短一个想法抵达“经过验证的产品改进”之间的距离</span></div>
+    <div class="grid-2" style="margin-top:16px">
       <article class="card emphasis">
-        <span class="label">System</span>
-        <h3>从单点算法到系统交付</h3>
-        <p>自动驾驶感知系统和机器人应用栈经验，让我更关注接口、资源约束、延迟、可观测性、版本准出和产品化边界。</p>
+        <span class="label">Track 01 · Algorithm Engineering</span>
+        <h3>算法工程化</h3>
+        <p>把研究结果推进到可部署、可集成、可优化、可准出的产品能力，处理模型部署、模块接口、端侧资源、pipeline 性能、系统稳定性和版本质量</p>
+        <span class="outcome">产出：在真实约束下可持续交付的算法系统</span>
       </article>
       <article class="card blue">
-        <span class="label">Harness</span>
-        <h3>从人工盯屏到自我验收</h3>
-        <p>把人脑里的验收判断拆成 metric、visual evidence、日志、artifact 和 report，让 agent 可以连续跑。</p>
-      </article>
-      <article class="card green">
-        <span class="label">Cadence</span>
-        <h3>从单点 SOTA 到节奏管理</h3>
-        <p>小团队更适合用稳定的评测节奏跟进业界最佳实践，在阶段目标达成后切换到下一个瓶颈。</p>
+        <span class="label">Track 02 · Data &amp; Evaluation</span>
+        <h3>数据与评测</h3>
+        <p>把数据生成、处理性能、批量评测、指标汇总、失败分析和回归验证组织成可规模化的基础设施，为算法迭代持续提供可信信号</p>
+        <span class="outcome">产出：可复现、可比较、能推动下一轮决策的反馈</span>
       </article>
     </div>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <div class="section-kicker">02 / Evidence</div>
-      <h2>端侧系统工程 + 两个公开机器人 Agent 案例</h2>
+      <div class="section-kicker">02 / Career Evidence</div>
+      <h2>两条主线都来自<br>真实系统里的长期问题</h2>
     </div>
+    <div class="grid-2">
+      <article class="card amber">
+        <span class="label">Track 01 · Perception System</span>
+        <h3>多模块算法进入有限端侧资源</h3>
+        <p>在自动驾驶感知系统团队，我负责让多个感知模块稳定完成部署、集成、发版和准出，包括模型部署框架、资源预算、性能画像、端侧数据通路优化和跨模块质量收口</p>
+        <ul style="margin-top:12px">
+          <li>从全局视角拆解 pipeline 延迟、资源占用和模块边界</li>
+          <li>建设部署、性能分析和准出工具，支撑算法团队持续迭代</li>
+          <li>把单点算法结果收口为可以稳定交付的产品系统</li>
+        </ul>
+      </article>
+      <article class="card blue">
+        <span class="label">Track 02 · VLN Data &amp; Evaluation</span>
+        <h3>数据管线性能与云端批量评测</h3>
+        <p>在 Vision-and-Language Navigation（VLN）项目中，我负责数据与评测两块：优化仿真数据生成管线的性能，并建设算法云端批量评测流程</p>
+        <ul style="margin-top:12px">
+          <li>提升不同仿真场景下的数据生成吞吐与任务稳定性</li>
+          <li>让批量任务执行、标准指标汇总和结果对比形成稳定流水线</li>
+          <li>从下游任务反推评测缺口，把隐性交接条件变成明确判据</li>
+        </ul>
+        <div class="links">
+          <a class="link-pill" href="on-device-model-evaluation.html">查看端侧模型评测材料</a>
+        </div>
+      </article>
+    </div>
+  </section>
 
-    <article class="card amber" style="margin-bottom:18px">
-      <span class="label">Case 0 · Perception System</span>
-      <h3>自动驾驶感知系统：把多模块算法交付到有限端侧资源</h3>
-      <p>在感知系统团队，我负责的不是单个算法效果，而是让多个感知模块在有限端侧资源里稳定完成部署、集成、发版和准出：模型部署框架、资源预算、性能画像、端侧数据通路优化，以及跨模块质量收口。</p>
-      <ul style="margin-top:12px">
-        <li>用全局视角拆解 pipeline 延迟、资源占用和模块责任边界</li>
-        <li>提供部署、性能分析和准出工具，让算法团队在 contract 内迭代</li>
-        <li>关注产品交付质量，而不是替算法团队抢单点模型效果归属</li>
-      </ul>
-    </article>
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">03 / AI-Native Loop</div>
+      <h2>Agent 不是第三条主线<br>而是两条主线新的运行方式</h2>
+    </div>
+    <div class="quote">把算法工程与数据评测基础设施改造成 <span>Agent 可理解、可调用、可观测、可验收</span> 的系统</div>
+    <div class="loop-flow" style="margin-top:18px" aria-label="Agent 驱动的研发闭环">
+      <article class="loop-step">
+        <h3>目标与约束</h3>
+        <p>明确产品目标、资源预算、质量门槛和人工决策边界</p>
+      </article>
+      <article class="loop-step">
+        <h3>规划与调度</h3>
+        <p>组织实验和工程任务，选择工具、数据、环境与执行顺序</p>
+      </article>
+      <article class="loop-step">
+        <h3>基础设施执行</h3>
+        <p>调用数据、算力、训练、仿真、评测、部署和真实环境能力</p>
+      </article>
+      <article class="loop-step">
+        <h3>证据与归因</h3>
+        <p>收集指标、日志、产物和视觉证据，对比 baseline 并定位退化</p>
+      </article>
+      <article class="loop-step">
+        <h3>迭代与决策</h3>
+        <p>确定性问题自动进入下一轮，不确定问题带着证据提交给人</p>
+      </article>
+    </div>
+    <div class="design-note">
+      <strong>Implementation, not boundary</strong>
+      <p>MCP 是能力接口的一种实现，Roboharness 是验收层的公开案例，report 是证据载体之一；稳定不变的是清晰的能力边界、可观测执行和证据驱动决策</p>
+    </div>
+  </section>
 
+  <section class="section">
+    <div class="section-head">
+      <div class="section-kicker">04 / Open Proof</div>
+      <h2>两个公开项目<br>验证这套运行方式</h2>
+    </div>
     <article class="case">
       <div class="card emphasis">
-        <span class="label">Case A · Roboharness</span>
-        <h3>从真实机器人项目抽出来的 Agent 验收层</h3>
-        <p>真实项目中，agent 能改代码、调参数、跑仿真，但长程任务会卡在“它不知道自己改完后是否真的变好”。Roboharness 把验收做成 metric + visual 的双轨证据流水线，让 agent 每轮都有 PASS / FAIL / surface-to-human 的判断依据。</p>
+        <span class="label">Roboharness · Evaluation &amp; Evidence</span>
+        <h3>让 Agent 知道改完之后是否真的变好</h3>
+        <p>Roboharness 把 metric 与 visual evidence 组织成双轨证据流水线，让每轮任务都有 PASS、FAIL 或 surface-to-human 的判断依据</p>
         <ul style="margin-top:12px">
           <li>机器人抓取规划从 16 秒优化到约 3 秒</li>
-          <li>视觉发现 unknown unknown，再沉淀成稳定 metric</li>
-          <li>artifact / report 让人不用每轮盯屏验收</li>
+          <li>先用视觉发现 unknown unknown，再沉淀成稳定 metric</li>
+          <li>artifact 与 report 留痕，人不必每轮盯屏验收</li>
         </ul>
         <div class="links">
           <a class="link-pill" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">完整 HTML report</a>
@@ -424,13 +562,13 @@ h2 {
 
     <article class="case">
       <div class="card blue">
-        <span class="label">Case B · RoboClaws</span>
-        <h3>给机器人开放任务一个可维护的大脑</h3>
-        <p>给机器人接一个大模型不等于拥有智能。RoboClaws 把开放任务组织成 task / skill / MCP tool / backend / report 的边界，让机器人任务能运行、能失败、能留下证据、能被下一轮改进。</p>
+        <span class="label">RoboClaws · Orchestration &amp; Runtime</span>
+        <h3>让开放任务能运行、能失败、能继续改进</h3>
+        <p>RoboClaws 用 task、skill、tool、backend 和 report 组织开放任务，让策略经验、稳定能力、运行状态与证据各自拥有清晰边界</p>
         <ul style="margin-top:12px">
-          <li>Skill 承载策略经验，MCP 保持稳定能力边界</li>
-          <li>runtime map 和 report 保存任务状态、运行轨迹和待处理对象</li>
-          <li>同一套 contract 可迁移到仿真和真机方向</li>
+          <li>Skill 承载策略经验，工具层保持稳定能力边界</li>
+          <li>runtime map 保存任务状态、运行轨迹和待处理对象</li>
+          <li>同一套 contract 可以连接仿真、云端服务和真机方向</li>
         </ul>
         <div class="links">
           <a class="link-pill" href="https://miaodx.com/LIP/ai-coding/roboclaws-give-robots-the-mind/">完整 HTML report</a>
@@ -441,107 +579,35 @@ h2 {
         <img src="ai-native-algorithm-engineering-assets/roboclaws-runtime-map.png" alt="RoboClaws runtime map and report evidence">
       </a>
     </article>
-
-    <article class="card green" style="margin-top:18px">
-      <span class="label">Design Choice</span>
-      <h3>MCP 是能力边界，Agent SDK / Codex / Claude Code 是不同层级 harness</h3>
-      <p>我不会默认自研 planner。当前开放任务复杂度下，通用 agent 已经能把自然语言目标拆成动作阶段，工程重点更应该放在 MCP 能力边界、可观测性、失败恢复、评测指标和 evidence report 上。</p>
-    </article>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <div class="section-kicker">03 / Team Fit</div>
-      <h2>和硬件 AI / 算法工程架构团队的连接点</h2>
+      <div class="section-kicker">05 / Work Together</div>
+      <h2>适合从这些问题<br>开始具体讨论</h2>
     </div>
-    <div class="grid-2">
+    <div class="grid-3">
       <article class="card emphasis">
-        <span class="label">Scope 01</span>
-        <h3>端侧算法系统工程</h3>
-        <p>连接算法、OS、硬件资源和交付准出：模型部署框架、资源预算、性能画像、版本质量和跨模块收口。</p>
+        <span class="label">Algorithm to Product</span>
+        <h3>算法怎样稳定进入产品</h3>
+        <p>模型有效，但部署、资源、pipeline、跨模块集成或发版质量仍然限制交付</p>
       </article>
       <article class="card blue">
-        <span class="label">Scope 02</span>
-        <h3>算法实验与评测 Agent Loop</h3>
-        <p>把内部计算、数据、训练、仿真和评测平台封装成 agent 可调用的稳定能力，让 research idea 能自动开任务、跑对照实验、收集指标、生成报告。</p>
+        <span class="label">Data &amp; Evaluation at Scale</span>
+        <h3>数据与评测怎样规模化</h3>
+        <p>数据生成或批量评测吞吐不足，指标分散，结果难复现，失败案例无法进入回归</p>
       </article>
       <article class="card green">
-        <span class="label">Scope 03</span>
-        <h3>跨模块 Pipeline 可观测性</h3>
-        <p>用工程视角拆解 pipeline 的延迟、资源预算、退化和责任边界，让多个算法模块在同一产品目标下优化。</p>
-      </article>
-      <article class="card amber">
-        <span class="label">Scope 04</span>
-        <h3>仿真到产品的证据协议</h3>
-        <p>把 demo、仿真、真机 pilot、human review 统一成可审计证据，避免“看起来成功”的假阳性进入长期迭代。</p>
-      </article>
-      <article class="card emphasis">
-        <span class="label">Scope 05</span>
-        <h3>算法团队协作 Contract</h3>
-        <p>更倾向提供评测基准、性能画像、工具和验收协议；只有在性能约束明确时，才一起讨论模型部署方案调整，而不是默认抢单点模型效果归属。</p>
-      </article>
-      <article class="card blue">
-        <span class="label">Scope 06</span>
-        <h3>团队级 AI Coding Workflow</h3>
-        <p>共建计划、对齐、实现、review、降熵和文档分层机制，让 AI coding 从个人习惯变成可复制的工程制度。</p>
+        <span class="label">Agent-Ready Infrastructure</span>
+        <h3>研发基础设施怎样进入 Agent 闭环</h3>
+        <p>已有数据、训练、仿真、评测与部署平台，需要变成可安全调用、可观测、可验收的能力</p>
       </article>
     </div>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <div class="section-kicker">04 / Discussion Anchors</div>
-      <h2>适合进一步展开的技术议题</h2>
-    </div>
-    <div class="timeline">
-      <div class="step">
-        <div class="tag">Anchor 01</div>
-        <div>
-          <h3>全局资源预算和准出权怎样落地</h3>
-          <p>端侧产品需要有人把用户体验、算法效果、pipeline 延迟、资源占用和发版风险组织进同一套全局约束。</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="tag">Anchor 02</div>
-        <div>
-          <h3>模型部署方案的协作边界</h3>
-          <p>工程架构团队可以提供工具、性能画像和候选建议；真正挑战既有算法方案时，需要明确质量、归属和团队协作成本。</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="tag">Anchor 03</div>
-        <div>
-          <h3>开放任务如何做 eval</h3>
-          <p>语义地图准确性、任务耗时、推理耗时、工具调用次数、环境交互次数和任务完成比例，都可以进入同一套 report。</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="tag">Anchor 04</div>
-        <div>
-          <h3>平台能力如何被 agent 安全调用</h3>
-          <p>仿真、评测、数据、训练和内部工具需要明确权限、输入输出、资源边界、失败路径和 report 格式，才能进入长程自动化。</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="tag">Anchor 05</div>
-        <div>
-          <h3>主模型选择如何平衡产品红线和端侧约束</h3>
-          <p>自研模型、候选开源模型、端侧尺寸、延迟、成本和合规红线，需要在业务 team 和模型 team 之间形成可讨论的决策面。</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="tag">Anchor 06</div>
-        <div>
-          <h3>AI coding 如何进入研发基础设施</h3>
-          <p>从个人 prompt 到团队工作流，需要权限边界、工具封装、证据格式、回归机制和共识沉淀一起演进。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div class="section-kicker">05 / Links</div>
+      <div class="section-kicker">06 / Links</div>
       <h2>进一步了解</h2>
     </div>
     <div class="grid-3">
@@ -554,7 +620,7 @@ h2 {
       <article class="card blue">
         <span class="label">Resume</span>
         <h3>中文简历</h3>
-        <p>自动驾驶、感知系统、机器人与 AI coding 工程化经历。</p>
+        <p>自动驾驶感知系统、VLN 数据与评测、机器人和 AI coding 工程化经历</p>
         <div class="links"><a class="link-pill" href="https://miaodx.com/resume/">resume</a></div>
       </article>
       <article class="card green">
@@ -567,8 +633,8 @@ h2 {
   </section>
 
   <footer class="footer">
-    <span>MiaoDX · AI-Native Algorithm Engineering Brief</span>
-    <span>Updated 2026-06-30</span>
+    <span>MiaoDX · AI-Native Engineering Brief</span>
+    <span>Updated 2026-07-24</span>
   </footer>
 </main>
 </body>
