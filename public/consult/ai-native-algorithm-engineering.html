@@ -3,8 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-Native Engineering · MiaoDX</title>
+<title>AI-Native 工程：算法 × 数据评测 · MiaoDX</title>
 <meta name="description" content="MiaoDX 的 AI-Native 工程工作介绍：算法工程化、VLN 数据管线与云端批量评测，以及 Agent 驱动的可验证研发闭环。">
+<meta property="og:title" content="AI-Native 工程：算法 × 数据评测">
+<meta property="og:description" content="从算法工程化、VLN 数据管线与云端批量评测，到 Agent 驱动的可验证研发闭环。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://miaodx.com/LIP/consult/ai-native-algorithm-engineering.html">
+<meta property="og:image" content="https://miaodx.com/LIP/consult/ai-native-algorithm-engineering-assets/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://miaodx.com/LIP/consult/ai-native-algorithm-engineering.html">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
 :root {
@@ -12,7 +21,7 @@
   --paper: #fffaf1;
   --ink: #161411;
   --soft: #5d554b;
-  --muted: #897d6f;
+  --muted: #766b5e;
   --rule: #d9cdbc;
   --accent: #9f3d2f;
   --blue: #246075;
@@ -232,6 +241,11 @@ h2 {
   margin-bottom: 10px;
 }
 .card p { color: var(--soft); margin-bottom: 0; }
+.card .evidence-list {
+  margin-top: 14px;
+  padding-left: 1.15em;
+}
+.evidence-list li { margin: 6px 0; }
 .label {
   display: inline-flex;
   color: var(--muted);
@@ -288,7 +302,6 @@ h2 {
   border-color: var(--accent);
   color: var(--accent);
 }
-.card p.signals { margin-top: 16px; color: var(--ink); font-weight: 700; }
 .loop-flow {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -325,7 +338,24 @@ h2 {
   transform: translateY(-50%);
 }
 .loop-step:last-child::after { content: none; }
-.loop-step h3 { margin-bottom: 0; font-size: 17px; line-height: 1.25; }
+.loop-step h3 { margin-bottom: 7px; font-size: 17px; line-height: 1.25; }
+.loop-step p { margin: 0; color: var(--soft); font-size: 13px; }
+.conversation-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin-top: 24px;
+  padding: 24px 0 2px;
+  border-top: 1px solid var(--rule);
+}
+.conversation-cta h3 { margin-bottom: 6px; font-size: 24px; line-height: 1.25; }
+.conversation-cta p { max-width: 620px; margin-bottom: 0; color: var(--soft); }
+.conversation-actions {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 10px;
+}
 .footer {
   padding-top: 26px;
   color: var(--muted);
@@ -339,20 +369,32 @@ h2 {
   .page { padding-top: 24px; }
   .topbar { align-items: flex-start; flex-direction: column; }
   .nav { justify-content: flex-start; }
-  .hero, .section-head, .case, .grid-2, .grid-3, .strip {
+  .hero, .section-head, .case, .grid-2, .grid-3 {
     grid-template-columns: minmax(0, 1fr);
   }
-  .hero { padding-top: 38px; }
+  .hero { padding: 30px 0; }
+  .hero-card { display: none; }
   h1 {
     font-size: clamp(40px, 12vw, 52px);
     line-height: 1.04;
   }
   .lede { font-size: 17px; }
-  .btn {
-    width: 100%;
+  .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .hero-actions .btn {
     min-height: 40px;
   }
-  .hero-actions { gap: 10px; }
+  .hero-actions .btn.primary { grid-column: 1 / -1; }
+  .strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 22px;
+  }
+  .metric { min-height: 132px; padding: 14px 10px; }
+  .metric strong { font-size: 22px; line-height: 1.05; }
+  .metric span { font-size: 11px; }
   .case-media { min-height: 210px; }
   .loop-flow { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .loop-step { min-height: 0; padding: 18px 20px; }
@@ -367,6 +409,9 @@ h2 {
   }
   .hero-tracks { grid-template-columns: minmax(0, 1fr); }
   .hero-tracks h2, .agent-bridge { grid-column: auto; }
+  .conversation-cta { align-items: flex-start; flex-direction: column; }
+  .conversation-actions { width: 100%; }
+  .conversation-actions .btn { flex: 1; }
 }
 </style>
 </head>
@@ -421,13 +466,19 @@ h2 {
         <span class="label">Track 01 · Perception System</span>
         <h3>多模块算法进入有限端侧资源</h3>
         <p>负责自动驾驶感知系统的部署、性能、集成与准出，把多模块算法收口到端侧产品</p>
-        <p class="signals">资源预算 · 性能画像 · 跨模块收口</p>
+        <ul class="evidence-list">
+          <li>建设部署、性能分析与准出工具，支撑算法团队在资源约束内迭代</li>
+          <li>从 pipeline 全局拆解延迟、资源占用和跨模块责任边界</li>
+        </ul>
       </article>
       <article class="card blue">
         <span class="label">Track 02 · VLN Data &amp; Evaluation</span>
         <h3>数据管线性能与云端批量评测</h3>
         <p>负责 VLN 仿真数据管线性能优化和算法云端批量评测</p>
-        <p class="signals">生成吞吐 · 任务稳定 · 指标与回归</p>
+        <ul class="evidence-list">
+          <li>让批量任务执行、标准指标汇总和结果对比形成稳定流水线</li>
+          <li>从下游任务反推评测缺口，把隐性交接条件变成明确判据</li>
+        </ul>
         <div class="links">
           <a class="link-pill" href="on-device-model-evaluation.html">查看端侧模型评测材料</a>
         </div>
@@ -443,18 +494,23 @@ h2 {
     <div class="loop-flow" aria-label="Agent 驱动的研发闭环">
       <article class="loop-step">
         <h3>定义目标与门槛</h3>
+        <p>明确产品目标、资源预算、质量门槛和人工决策边界</p>
       </article>
       <article class="loop-step">
         <h3>编排实验与工程任务</h3>
+        <p>选择工具、数据、环境与执行顺序，组织对照实验</p>
       </article>
       <article class="loop-step">
         <h3>调用研发基础设施</h3>
+        <p>连接数据、算力、训练、仿真、评测与部署能力</p>
       </article>
       <article class="loop-step">
         <h3>汇总证据与定位退化</h3>
+        <p>对比 baseline，收集指标、日志、产物与视觉证据</p>
       </article>
       <article class="loop-step">
         <h3>自动迭代或提交决策</h3>
+        <p>确定性问题继续执行，不确定问题带着证据交给人</p>
       </article>
     </div>
   </section>
@@ -479,7 +535,7 @@ h2 {
         </div>
       </div>
       <a class="case-media" href="https://miaodx.com/LIP/ai-coding/roboharness-self-evaluating-agents/">
-        <img src="ai-native-algorithm-engineering-assets/roboharness-g1-comparison.gif" alt="Unitree G1 robot grasp simulation comparison">
+        <img src="ai-native-algorithm-engineering-assets/roboharness-g1-comparison.gif" alt="Unitree G1 robot grasp simulation comparison" loading="lazy" decoding="async" fetchpriority="low">
       </a>
     </article>
 
@@ -498,7 +554,7 @@ h2 {
         </div>
       </div>
       <a class="case-media contain" href="https://miaodx.com/LIP/ai-coding/roboclaws-give-robots-the-mind/">
-        <img src="ai-native-algorithm-engineering-assets/roboclaws-runtime-map.png" alt="RoboClaws runtime map and report evidence">
+        <img src="ai-native-algorithm-engineering-assets/roboclaws-runtime-map.png" alt="RoboClaws runtime map and report evidence" loading="lazy" decoding="async" fetchpriority="low">
       </a>
     </article>
   </section>
@@ -525,11 +581,22 @@ h2 {
         <p>已有数据、训练、仿真、评测与部署平台，需要变成可安全调用、可观测、可验收的能力</p>
       </article>
     </div>
+    <div class="conversation-cta">
+      <div>
+        <span class="label">Start a Conversation</span>
+        <h3>带着具体问题继续讨论</h3>
+        <p>算法交付、数据评测或 Agent 研发基础设施，都可以从一个真实瓶颈开始</p>
+      </div>
+      <div class="conversation-actions">
+        <a class="btn primary" href="https://miaodx.com/LIP/#联系方式">联系交流</a>
+        <a class="btn" href="index.html">查看全部材料</a>
+      </div>
+    </div>
   </section>
 
   <footer class="footer">
     <span>MiaoDX · AI-Native Engineering Brief</span>
-    <span>Updated 2026-07-24</span>
+    <span>Updated 2026-07-26</span>
   </footer>
 </main>
 </body>
