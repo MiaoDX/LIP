@@ -15,7 +15,8 @@
 ## Goal
 
 Create a public, externally shareable HTML deck that explains the 2022-2026
-progression from perception engineering through robotics and agent systems.
+progression from perception engineering through robotics and agent systems,
+with a focused zoom into the most recent half-year.
 
 ## Scope
 
@@ -43,9 +44,9 @@ progression from perception engineering through robotics and agent systems.
 3. 2022-2023 H1 engineering foundations
 4. 2023 H2-2024 H2 production quality and performance
 5. 2025 robotics delivery, data, model, and evaluation
-6. 2026 grasping, RoboClaws, and AI Coding
-7. Reusable capability system and metric evidence
-8. Discussion close: current positioning and conversation prompts
+6. 2026 H1-to-now three-lane zoom: robot body, agent brain, and infrastructure
+7. End-to-end loop across GR00T manipulation, Roboclaws, and Executor
+8. Discussion close: control boundaries, evidence levels, and reusable workflows
 
 ## Non-goals
 
@@ -75,10 +76,12 @@ progression from perception engineering through robotics and agent systems.
 
 ## Shipped Evidence
 
-- `presentations/work-timeline.html`: eight-slide public standalone deck
+- `presentations/work-timeline.html`: the single eight-slide public standalone
+  deck, including the expanded recent-half-year view
 - `share/index.md`: public discovery link
 - Browser proof: all eight slides rendered at 1440x900 and 390x844 with no
-  horizontal overflow; long mobile slides verified at both top and bottom
+  horizontal overflow; the expanded panorama and recent-work slides were
+  verified at mobile top and bottom
 - Interaction proof: theme filters, milestone detail, keyboard paging, notes,
   counters, and theme switching load without console errors
 - Repository proof: `npm run build:all` passed and copied the deck to

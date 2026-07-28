@@ -372,6 +372,44 @@ body.show-notes .speaker-note { display: block; }
 .share-line { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
 .share-line span { padding: 6px 9px; border: 1px solid var(--line); border-radius: 3px; color: var(--text-dim); font-size: 10px; }
 
+/* 2026 zoom */
+.recent-zoom { margin-top: 12px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.zoom-head,
+.zoom-row { display: grid; grid-template-columns: 150px repeat(3, minmax(0, 1fr)); }
+.zoom-head { min-height: 34px; color: var(--text-dim); font: 600 10px/34px var(--font-mono); }
+.zoom-head span { padding: 0 15px; border-left: 1px solid var(--line-soft); }
+.zoom-head span:first-child { border-left: 0; }
+.zoom-row { border-top: 1px solid var(--line-soft); }
+.lane-label { padding: 14px 14px 12px 0; }
+.lane-label b { display: block; color: var(--lane); font: 600 11px/1.2 var(--font-mono); }
+.lane-label strong { display: block; margin-top: 7px; font-size: 13px; line-height: 1.3; }
+.lane-label small { display: block; margin-top: 4px; color: var(--text-dim); font: 500 9px/1.35 var(--font-mono); }
+.zoom-cell { min-width: 0; padding: 13px 15px 12px; border-left: 1px solid var(--line-soft); background: color-mix(in srgb, var(--lane) 3%, transparent); }
+.zoom-cell h3 { margin-bottom: 4px; color: var(--text); font-size: 13px; }
+.zoom-cell p { margin-bottom: 0; color: var(--text-dim); font-size: 10px; line-height: 1.5; }
+.zoom-proof-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 14px; border: 1px solid var(--line); background: var(--surface); }
+.zoom-proof { padding: 12px 14px; border-right: 1px solid var(--line); }
+.zoom-proof:last-child { border-right: 0; }
+.zoom-proof b { display: block; color: var(--proof); font: 600 15px/1.25 var(--font-mono); }
+.zoom-proof span { display: block; margin-top: 4px; color: var(--text-dim); font-size: 9px; line-height: 1.4; }
+
+/* Current system loop */
+.system-flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin-top: 22px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.system-node { position: relative; min-width: 0; min-height: 148px; padding: 18px 17px 16px; border-right: 1px solid var(--line-soft); }
+.system-node:last-child { border-right: 0; }
+.system-node:not(:last-child)::after { content: '→'; position: absolute; right: -10px; top: 62px; z-index: 2; width: 19px; height: 19px; background: var(--bg); color: var(--delivery); font: 600 17px/19px var(--font-mono); text-align: center; }
+.system-node .node-step { color: var(--node); font: 600 10px/1 var(--font-mono); }
+.system-node h3 { margin-top: 14px; font-size: 15px; }
+.system-node p { margin-bottom: 0; font-size: 10px; line-height: 1.55; }
+.system-node .owner { display: inline-block; margin-top: 10px; color: var(--node); font: 500 8px/1.3 var(--font-mono); }
+.system-boundaries { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }
+.system-boundary { padding: 0 24px 0 0; border-right: 1px solid var(--line); }
+.system-boundary + .system-boundary { padding-left: 24px; }
+.system-boundary:last-child { border-right: 0; }
+.system-boundary b { display: block; color: var(--boundary); font: 600 10px/1.2 var(--font-mono); }
+.system-boundary p { margin: 7px 0 0; font-size: 11px; line-height: 1.5; }
+.system-thesis { margin-top: 18px; padding: 12px 15px; border-left: 4px solid var(--influence); background: var(--surface-alt); color: var(--text); font-size: 13px; line-height: 1.5; }
+
 /* Capability system */
 .capability-system { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 20px; border: 1px solid var(--line); }
 .capability {
@@ -460,6 +498,21 @@ body.show-notes .speaker-note { display: block; }
   .transfer-strip { align-items: flex-start; flex-wrap: wrap; }
   .agent-layout { grid-template-columns: 1fr; gap: 16px; }
   .stack-layer { grid-template-columns: 90px 1fr; }
+  .zoom-head { display: none; }
+  .zoom-row { grid-template-columns: 1fr; }
+  .lane-label { padding: 16px 0 10px; }
+  .zoom-cell { padding: 11px 13px; border-top: 1px solid var(--line-soft); border-left: 3px solid var(--lane); }
+  .zoom-proof-strip { grid-template-columns: 1fr; }
+  .zoom-proof { border-right: 0; border-bottom: 1px solid var(--line); }
+  .zoom-proof:last-child { border-bottom: 0; }
+  .system-flow { grid-template-columns: 1fr; }
+  .system-node { min-height: auto; padding: 17px 0; border-right: 0; border-bottom: 1px solid var(--line-soft); }
+  .system-node:last-child { border-bottom: 0; }
+  .system-node:not(:last-child)::after { content: '↓'; right: 17px; top: auto; bottom: -10px; }
+  .system-boundaries { grid-template-columns: 1fr; }
+  .system-boundary,
+  .system-boundary + .system-boundary { padding: 14px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  .system-boundary:last-child { border-bottom: 0; }
   .capability { min-height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
   .capability:last-child { border-bottom: 0; }
   .capability:not(:last-child)::after { content: '↓'; right: 20px; top: auto; bottom: -10px; }
@@ -516,9 +569,9 @@ body.show-notes .speaker-note { display: block; }
         <span>工站 · 数据 · 模型 · 评测</span>
       </div>
       <div class="stage-block" style="--stage: var(--influence)">
-        <div class="year">2026 H1</div>
-        <strong>Agent 化</strong>
-        <span>抓取 · Skill · Harness · 分享</span>
+        <div class="year">2026 H1 → NOW</div>
+        <strong>机器人智能系统</strong>
+        <span>身体 · 大脑 · 研发基础设施</span>
       </div>
     </div>
     <div class="speaker-note">开场只讲一个判断：看似跨了自动驾驶、机器人、AI Coding 三个领域，底层一直在做同一件事——让复杂系统可交付、可度量、可复用。</div>
@@ -665,71 +718,57 @@ body.show-notes .speaker-note { display: block; }
   </section>
 
   <section class="slide" data-index="06">
-    <div class="eyebrow">STAGE 04 · 2026 H1</div>
-    <h2>从机器人技能，走向机器人 Agent</h2>
-    <p class="lead">一边证明真实动作能力，一边建设能组织 Skill、工具和验收的“机器人大脑”</p>
-    <div class="agent-layout">
-      <div class="grasp-proof">
-        <div>
-          <div class="metric">&gt;90%</div>
-          <div class="metric-label">抓取成功率 · 初版约一个半月完成</div>
-        </div>
-        <div class="grasp-sequence" aria-label="机器人抓取流程">
-          <span>PERCEIVE</span><span>6DOF</span><span>PLAN</span><span>ACT</span>
-        </div>
+    <div class="eyebrow">STAGE 04 · 2026 H1 → NOW</div>
+    <h2>半年内，把机器人智能补成三层系统</h2>
+    <p class="lead">不是同时做三个项目，而是并行补齐身体、大脑与研发基础设施</p>
+    <div class="recent-zoom" aria-label="2026 最近半年三泳道时间线">
+      <div class="zoom-head" aria-hidden="true"><span>TRACK</span><span>JAN—MAR</span><span>APR—MAY</span><span>JUN—JUL</span></div>
+      <div class="zoom-row" style="--lane: var(--delivery)">
+        <div class="lane-label"><b>BODY</b><strong>机器人身体</strong><small>gr00t-wholebodycontrol</small></div>
+        <div class="zoom-cell"><h3>从算法组件到安全抓取链路</h3><p>碰撞感知 IK · 轨迹验证 · MotionGen · 分阶段执行</p></div>
+        <div class="zoom-cell"><h3>从单机能力到任务化运行时</h3><p>G1 / Realman · GR00T WBC 集成 · 部署与证据接口</p></div>
+        <div class="zoom-cell"><h3>向多本体与可信验证推进</h3><p>G2 仿真契约 · FoundationPose · 仿真与硬件证明分层</p></div>
       </div>
-      <div>
-        <div class="agent-stack" aria-label="RoboClaws 分层架构">
-          <div class="stack-layer" style="--layer: var(--influence)"><b>GOAL</b><span>自然语言目标与开放任务</span></div>
-          <div class="stack-layer" style="--layer: var(--engineering)"><b>AGENT</b><span>规划、状态管理与工具调用</span></div>
-          <div class="stack-layer" style="--layer: var(--platform)"><b>SKILL / MCP</b><span>可组合的机器人能力与环境接口</span></div>
-          <div class="stack-layer" style="--layer: var(--delivery)"><b>HARNESS</b><span>仿真、Digital Twin 与结果验收</span></div>
-        </div>
-        <div class="share-line" aria-label="公开分享与影响">
-          <span>Agentic Coding 首期分享</span>
-          <span>AI 创意市集决赛</span>
-          <span>AI Coding 工程化分享</span>
-          <span>内部 Hackathon 一等奖</span>
-        </div>
+      <div class="zoom-row" style="--lane: var(--platform)">
+        <div class="lane-label"><b>BRAIN</b><strong>机器人大脑</strong><small>roboclaws</small></div>
+        <div class="zoom-cell"><h3>先定义 Agent 与机器人的边界</h3><p>需要看到什么 · 可以调用什么 · 如何证明任务完成</p></div>
+        <div class="zoom-cell"><h3>从环境探索到 Skill + MCP</h3><p>多 Agent / VLM 原型 · 自主循环 · 能力工具化</p></div>
+        <div class="zoom-cell"><h3>进入家庭开放任务</h3><p>建图 · 清理 · 开放目标 · Operator Console · Eval</p></div>
+      </div>
+      <div class="zoom-row" style="--lane: var(--engineering)">
+        <div class="lane-label"><b>INFRA</b><strong>研发基础设施</strong><small>executor</small></div>
+        <div class="zoom-cell"><h3>从零散工具走向统一入口</h3><p>日志、数据、仿真与配置收进同一 CLI</p></div>
+        <div class="zoom-cell"><h3>让 Agent 能操作研发系统</h3><p>Skill 接入 · 研发协作 · 仿真报告与流水线</p></div>
+        <div class="zoom-cell"><h3>把流程变成可恢复工作流</h3><p>云端运行 · 批量仿真 / 重建 · 资源与结果回收</p></div>
       </div>
     </div>
-    <div class="speaker-note">抓取成功率证明底层动作能力，RoboClaws 解决上层开放任务。Harness 则负责回答“到底完成了没有”，这是从 Demo 走向系统的关键。</div>
+    <div class="zoom-proof-strip" aria-label="最近半年代表性结果">
+      <div class="zoom-proof" style="--proof: var(--delivery)"><b>&gt;90% · 约 1.5 月</b><span>首版抓取链路阶段成果</span></div>
+      <div class="zoom-proof" style="--proof: var(--platform)"><b>3 类家庭任务面</b><span>建图 · 开放目标 · 清理</span></div>
+      <div class="zoom-proof" style="--proof: var(--engineering)"><b>CLI + SKILL + WORKFLOW</b><span>AI Coding 从写代码走向运行系统</span></div>
+    </div>
+    <div class="speaker-note">这一页是整个时间线的局部放大。身体层把抓取做成任务系统，大脑层把开放目标做成可审计执行，基础设施层把研发过程变成 Agent 可调用的工作流。G2 只代表仿真契约和验证推进，不代表已完成真机部署。</div>
   </section>
 
   <section class="slide" data-index="07">
-    <div class="eyebrow">THE REUSABLE SYSTEM · 跨领域能力</div>
-    <h2>项目在变化，解决问题的方法持续复用</h2>
-    <div class="capability-system" aria-label="跨领域能力演进">
-      <article class="capability" style="--cap: var(--engineering)">
-        <div class="cap-num">01 / STRUCTURE</div>
-        <h3>工程结构化</h3>
-        <p>统一代码与框架<br>划清平台和模块边界<br>降低协作成本</p>
-      </article>
-      <article class="capability" style="--cap: var(--delivery)">
-        <div class="cap-num">02 / DELIVERY</div>
-        <h3>量产交付</h3>
-        <p>风险前置<br>性能与稳定性治理<br>把问题闭环到版本</p>
-      </article>
-      <article class="capability" style="--cap: var(--platform)">
-        <div class="cap-num">03 / PLATFORM</div>
-        <h3>平台与评测</h3>
-        <p>测试左移<br>可观测与自动分析<br>让迭代可重复</p>
-      </article>
-      <article class="capability" style="--cap: var(--influence)">
-        <div class="cap-num">04 / SCALE</div>
-        <h3>团队规模化</h3>
-        <p>文档、培训与分享<br>跨团队连接<br>把个人经验变成公共资产</p>
-      </article>
+    <div class="eyebrow">THE CURRENT SYSTEM · 三个 REPO，一条闭环</div>
+    <h2>从自然语言目标，到可验证的机器人行动</h2>
+    <p class="lead">一个负责决策，一个负责行动，一个负责让研发过程规模化</p>
+    <div class="system-flow" aria-label="机器人智能端到端闭环">
+      <article class="system-node" style="--node: var(--influence)"><div class="node-step">01 / GOAL</div><h3>开放目标</h3><p>用户描述想完成的事情，而不是指定动作序列</p><span class="owner">USER → ROBOCLAWS</span></article>
+      <article class="system-node" style="--node: var(--platform)"><div class="node-step">02 / PLAN</div><h3>Agent 决策</h3><p>用 Skill 组织策略，通过 MCP 调用受控能力</p><span class="owner">ROBOCLAWS</span></article>
+      <article class="system-node" style="--node: var(--delivery)"><div class="node-step">03 / ACT</div><h3>任务化动作</h3><p>感知、6D 位姿、运动规划、抓取与放置</p><span class="owner">GR00T MANIPULATION</span></article>
+      <article class="system-node" style="--node: var(--delivery)"><div class="node-step">04 / WORLD</div><h3>环境执行</h3><p>仿真、Digital Twin 与机器人按证据等级分层</p><span class="owner">SIM → ROBOT</span></article>
+      <article class="system-node" style="--node: var(--platform)"><div class="node-step">05 / VERIFY</div><h3>结果验收</h3><p>Agent View、轨迹、报告与 Eval 回答是否完成</p><span class="owner">ROBOCLAWS</span></article>
+      <article class="system-node" style="--node: var(--engineering)"><div class="node-step">06 / SCALE</div><h3>批量迭代</h3><p>运行、恢复、收集证据，再进入下一轮改进</p><span class="owner">EXECUTOR</span></article>
     </div>
-    <div class="metric-tape" aria-label="代表性量化结果">
-      <div style="--metric: var(--engineering)"><strong>95%</strong><span>静态检查覆盖</span></div>
-      <div style="--metric: var(--delivery)"><strong>−50%</strong><span>关键时延 P99</span></div>
-      <div style="--metric: var(--platform)"><strong>100%</strong><span>量产 Crash 闭环</span></div>
-      <div style="--metric: var(--delivery)"><strong>−40%+</strong><span>机器人流程耗时</span></div>
-      <div style="--metric: var(--platform)"><strong>2×</strong><span>VLN 数据管线</span></div>
-      <div style="--metric: var(--influence)"><strong>&gt;90%</strong><span>机器人抓取成功率</span></div>
+    <div class="system-boundaries">
+      <div class="system-boundary" style="--boundary: var(--platform)"><b>OPEN DECISION</b><p>Agent 可以面对开放目标，但只能在明确能力边界内行动</p></div>
+      <div class="system-boundary" style="--boundary: var(--delivery)"><b>DETERMINISTIC ACTION</b><p>机器人动作由任务、规划和控制契约承接，不让模型直接越过安全边界</p></div>
+      <div class="system-boundary" style="--boundary: var(--engineering)"><b>EVIDENCE & SCALE</b><p>每次执行留下可比较证据，再通过自动化工作流扩大实验规模</p></div>
     </div>
-    <div class="speaker-note">这页是能力总结，不是项目总结。四个能力模块可以迁移到新的复杂系统：先结构化，再交付，再平台化，最后通过团队和知识机制放大。</div>
+    <div class="system-thesis"><b>AI Coding 的下一步</b>　不只是帮助写代码，而是开始驱动机器人研发系统本身</div>
+    <div class="speaker-note">讲这一页时沿箭头走一遍：RoboClaws 管开放决策，GR00T manipulation 管确定性动作，Executor 管批量研发闭环。最重要的不是三个仓库，而是开放智能、确定性控制和证据体系之间的边界。</div>
   </section>
 
   <section class="slide closing" data-index="08">
@@ -740,25 +779,25 @@ body.show-notes .speaker-note { display: block; }
     <div class="closing-grid">
       <article class="discussion">
         <div class="num">01</div>
-        <h3>复杂工程如何规模化</h3>
-        <p>从个人经验走向框架、工具和组织机制</p>
+        <h3>开放决策如何连接确定性控制</h3>
+        <p>让 Agent 有自主性，同时守住机器人动作边界</p>
       </article>
       <article class="discussion">
         <div class="num">02</div>
-        <h3>能力如何跨领域迁移</h3>
-        <p>从自动驾驶量产到机器人产品与模型研发</p>
+        <h3>仿真证据如何接近真机可信度</h3>
+        <p>为 Digital Twin、仿真和真实执行建立清晰证据等级</p>
       </article>
       <article class="discussion">
         <div class="num">03</div>
-        <h3>机器人如何 Agent 化</h3>
-        <p>Skill、MCP、Harness 与真实环境闭环</p>
+        <h3>个人流程如何变成团队能力</h3>
+        <p>用 CLI、Skill 和 Workflow 沉淀可复用研发系统</p>
       </article>
     </div>
     <div class="contact-line">
       <div><a href="https://miaodx.com">miaodx.com</a> · <a href="https://github.com/MiaoDX">github.com/MiaoDX</a></div>
       <span>Engineering systems that can learn, ship, and scale</span>
     </div>
-    <div class="speaker-note">收束时邀请对方从三个问题进入讨论。不要再复述时间线，把话题交给听众最关心的工程规模化、跨域迁移或机器人 Agent。</div>
+    <div class="speaker-note">收束时邀请对方从三个具体问题进入讨论。不要再复述时间线，把话题交给听众最关心的 Agent 控制边界、仿真证据可信度或团队研发工作流。</div>
   </section>
 </main>
 
@@ -829,10 +868,11 @@ const periods = [
     ],
   },
   {
-    label: '2026 H1',
+    label: '2026 H1→NOW',
     events: [
-      { track: 'delivery', title: '机器人抓取 0→1', detail: '完成 6DoF、规划和多本体迁移的抓取链路', metric: '成功率 >90%' },
-      { track: 'influence', title: 'RoboClaws / AI Coding', detail: '推进 Skill、MCP、Agent 与 Harness，并对外输出方法', metric: 'Hackathon 一等奖' },
+      { track: 'delivery', title: '机器人身体', detail: '把感知、6D 位姿、规划与控制组织成任务化抓取链路，并向多本体验证推进', metric: '首版 >90%' },
+      { track: 'platform', title: '机器人大脑', detail: '用 Skill、MCP、Agent View 与 Eval 支撑建图、开放目标和家庭清理', metric: '3 类任务面' },
+      { track: 'engineering', title: '研发基础设施', detail: '把云端运行、仿真、重建和结果回收变成 Agent 可调用的工作流', metric: 'CLI · Skill · Workflow' },
     ],
   },
 ];
