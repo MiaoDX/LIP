@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从感知工程到机器人智能 · 2022–2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f3ed;
+  --surface: #ffffff;
+  --surface-alt: #ebe8df;
+  --text: #1d211f;
+  --text-soft: #555c58;
+  --text-dim: #7d837f;
+  --line: #c9c7bf;
+  --line-soft: #dedcd4;
+  --engineering: #2957a4;
+  --delivery: #c1492e;
+  --platform: #1f7a72;
+  --influence: #ad7a16;
+  --font-display: 'Noto Serif SC', serif;
+  --font-body: 'Noto Sans SC', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+body[data-style="contrast"] {
+  --bg: #f7f7f4;
+  --surface: #ffffff;
+  --surface-alt: #e6e8e6;
+  --text: #111412;
+  --text-soft: #3f4642;
+  --text-dim: #69706c;
+  --line: #aeb4b0;
+  --line-soft: #d3d7d4;
+  --engineering: #174ea6;
+  --delivery: #b5321c;
+  --platform: #006f66;
+  --influence: #8a6500;
+}
+
+body[data-style="night"] {
+  --bg: #171a19;
+  --surface: #202422;
+  --surface-alt: #292e2b;
+  --text: #f1f1eb;
+  --text-soft: #c3c9c5;
+  --text-dim: #929a95;
+  --line: #4a514d;
+  --line-soft: #333936;
+  --engineering: #76a9ff;
+  --delivery: #ff8b70;
+  --platform: #62c7ba;
+  --influence: #e7bd58;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; }
+body {
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  letter-spacing: 0;
+}
+button, a { font: inherit; }
+button { letter-spacing: 0; }
+a { color: inherit; }
+
+.progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 120;
+  height: 3px;
+  background: var(--delivery);
+  transition: width 280ms ease;
+}
+.counter {
+  position: fixed;
+  right: 26px;
+  bottom: 20px;
+  z-index: 120;
+  color: var(--text-dim);
+  font: 500 11px/1 var(--font-mono);
+}
+.notes-toggle {
+  position: fixed;
+  left: 22px;
+  bottom: 16px;
+  z-index: 120;
+  min-width: 72px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--text-dim);
+  font: 500 10px/1 var(--font-mono);
+  cursor: pointer;
+}
+.notes-toggle:hover,
+.notes-toggle:focus-visible { border-color: var(--delivery); color: var(--text); outline: none; }
+.style-toggle {
+  position: fixed;
+  top: 18px;
+  right: 24px;
+  z-index: 120;
+  display: flex;
+  gap: 7px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+}
+.style-toggle button {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.style-toggle button[data-style="paper"] { background: #f5f3ed; }
+.style-toggle button[data-style="contrast"] { background: #ffffff; }
+.style-toggle button[data-style="night"] { background: #171a19; }
+.style-toggle button.active { outline: 2px solid var(--delivery); outline-offset: 2px; }
+
+.deck { position: relative; width: 100vw; height: 100vh; }
+.slide {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 72px 76px 62px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 320ms ease, transform 320ms ease, visibility 0s linear 320ms;
+}
+.slide.active {
+  z-index: 2;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 320ms ease, transform 320ms ease, visibility 0s;
+}
+.slide::after {
+  content: attr(data-index);
+  position: absolute;
+  right: 74px;
+  top: 60px;
+  z-index: -1;
+  color: var(--line-soft);
+  font: 600 112px/1 var(--font-mono);
+}
+.eyebrow {
+  margin-bottom: 12px;
+  color: var(--delivery);
+  font: 600 11px/1.3 var(--font-mono);
+  text-transform: uppercase;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1, h2 { font-family: var(--font-display); letter-spacing: 0; }
+h1 { max-width: 1050px; margin-bottom: 18px; font-size: 62px; line-height: 1.12; font-weight: 700; }
+h2 { margin-bottom: 12px; font-size: 38px; line-height: 1.18; font-weight: 700; }
+h3 { margin-bottom: 7px; font-size: 17px; line-height: 1.35; }
+p { color: var(--text-soft); font-size: 16px; line-height: 1.65; }
+.lead { max-width: 880px; margin-bottom: 24px; color: var(--text-soft); font-size: 20px; line-height: 1.6; }
+.mono { font-family: var(--font-mono); }
+.speaker-note {
+  display: none;
+  max-width: 900px;
+  margin-top: 18px;
+  padding: 13px 16px;
+  border-left: 3px solid var(--influence);
+  background: var(--surface-alt);
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.65;
+}
+body.show-notes .speaker-note { display: block; }
+
+/* Cover */
+.cover { justify-content: space-between; padding-top: 96px; padding-bottom: 84px; }
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: 72px 72px;
+  opacity: 0.34;
+}
+.cover h1 { max-width: 980px; font-size: 68px; }
+.cover h1 span { color: var(--delivery); }
+.cover-meta { color: var(--text-dim); font: 500 12px/1.7 var(--font-mono); }
+.stage-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 1200px;
+  border-top: 2px solid var(--line);
+}
+.stage-block { position: relative; min-height: 104px; padding: 19px 22px 0 0; }
+.stage-block::before { content: ''; position: absolute; top: -6px; left: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--stage); }
+.stage-block .year { color: var(--stage); font: 600 11px/1 var(--font-mono); }
+.stage-block strong { display: block; margin-top: 10px; font-size: 16px; }
+.stage-block span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 12px; line-height: 1.45; }
+
+/* Panorama */
+.panorama-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 16px; }
+.panorama-head h2 { margin-bottom: 0; }
+.track-filters {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface);
+}
+.track-filter {
+  padding: 7px 11px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+}
+.track-filter:last-child { border-right: 0; }
+.track-filter.active { background: var(--text); color: var(--bg); }
+.track-filter:focus-visible { outline: 2px solid var(--delivery); outline-offset: 2px; }
+.panorama-grid {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.period-column { min-width: 0; padding: 12px 7px 13px; border-right: 1px solid var(--line-soft); }
+.period-column:last-child { border-right: 0; }
+.period-label { margin-bottom: 11px; color: var(--text); font: 600 11px/1 var(--font-mono); }
+.milestone {
+  display: block;
+  width: 100%;
+  min-height: 50px;
+  margin: 0 0 7px;
+  padding: 8px 7px;
+  border: 1px solid color-mix(in srgb, var(--track) 46%, var(--line));
+  border-left: 3px solid var(--track);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--track) 7%, var(--surface));
+  color: var(--text-soft);
+  text-align: left;
+  font-size: 10px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.milestone:hover,
+.milestone:focus-visible { border-color: var(--track); color: var(--text); outline: none; }
+.milestone[hidden] { display: none; }
+.event-inspector {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  min-height: 74px;
+  margin-top: 14px;
+  padding: 13px 16px;
+  border-left: 4px solid var(--inspector, var(--engineering));
+  background: var(--surface-alt);
+}
+.inspector-period { color: var(--inspector, var(--engineering)); font: 600 13px/1.4 var(--font-mono); }
+.inspector-copy { color: var(--text-soft); font-size: 13px; line-height: 1.55; }
+.inspector-metric { color: var(--text); font: 600 13px/1.4 var(--font-mono); white-space: nowrap; }
+
+/* Stage layouts */
+.phase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.phase {
+  min-width: 0;
+  padding: 22px 24px 20px 0;
+  border-right: 1px solid var(--line);
+}
+.phase + .phase { padding-left: 24px; }
+.phase:last-child { border-right: 0; }
+.phase time { display: block; margin-bottom: 10px; color: var(--engineering); font: 600 12px/1 var(--font-mono); }
+.phase ul, .year-panel ul { margin: 13px 0 0; padding-left: 18px; color: var(--text-soft); }
+.phase li, .year-panel li { margin-bottom: 8px; font-size: 13px; line-height: 1.55; }
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.stat { padding: 15px 17px; border-right: 1px solid var(--line); }
+.stat:last-child { border-right: 0; }
+.stat strong { display: block; color: var(--stat, var(--engineering)); font: 600 24px/1.1 var(--font-mono); }
+.stat span { display: block; margin-top: 6px; color: var(--text-dim); font-size: 11px; line-height: 1.45; }
+
+.governance-loop {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 18px 0 20px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.loop-step { position: relative; padding: 16px 24px 16px 16px; border-right: 1px solid var(--line); }
+.loop-step:last-child { border-right: 0; }
+.loop-step:not(:last-child)::after { content: '→'; position: absolute; right: 7px; top: 15px; color: var(--delivery); font: 600 16px/1 var(--font-mono); }
+.loop-step b { display: block; font: 600 11px/1.3 var(--font-mono); }
+.loop-step span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; line-height: 1.4; }
+.compact-timeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.compact-item { padding-top: 12px; border-top: 3px solid var(--delivery); }
+.compact-item time { color: var(--delivery); font: 600 11px/1 var(--font-mono); }
+.compact-item p { margin: 8px 0 0; font-size: 12px; line-height: 1.55; }
+
+/* 2025 */
+.year-bridge {
+  display: grid;
+  grid-template-columns: 1fr 96px 1fr;
+  align-items: stretch;
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.year-panel { padding: 22px 24px 20px 0; }
+.year-panel:last-child { padding-left: 24px; padding-right: 0; }
+.year-panel time { color: var(--platform); font: 600 12px/1 var(--font-mono); }
+.year-panel .big-result { margin-top: 15px; color: var(--text); font: 600 26px/1.2 var(--font-mono); }
+.year-panel .big-result span { color: var(--platform); }
+.bridge-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  background: var(--surface-alt);
+  color: var(--platform);
+  font: 600 11px/1.45 var(--font-mono);
+  text-align: center;
+}
+.bridge-mark b { margin-bottom: 6px; font-size: 24px; }
+.transfer-strip { display: flex; align-items: center; gap: 12px; margin-top: 16px; color: var(--text-dim); font-size: 12px; }
+.transfer-strip b { color: var(--text); }
+.transfer-arrow { color: var(--platform); font: 600 16px/1 var(--font-mono); }
+
+/* 2026 */
+.agent-layout { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 42px; align-items: stretch; margin-top: 18px; }
+.grasp-proof { display: flex; flex-direction: column; justify-content: space-between; padding: 25px; border: 1px solid var(--line); background: var(--surface); }
+.grasp-proof .metric { color: var(--delivery); font: 600 52px/1 var(--font-mono); }
+.grasp-proof .metric-label { margin-top: 8px; color: var(--text-soft); font-size: 13px; }
+.grasp-sequence { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 24px; border-top: 1px solid var(--line); }
+.grasp-sequence span { padding-top: 11px; color: var(--text-dim); font: 500 9px/1.3 var(--font-mono); }
+.grasp-sequence span::before { content: ''; display: block; width: 7px; height: 7px; margin: -15px 0 7px; border-radius: 50%; background: var(--delivery); }
+.agent-stack { display: grid; gap: 8px; }
+.stack-layer { display: grid; grid-template-columns: 120px 1fr; align-items: center; min-height: 62px; padding: 11px 15px; border-left: 4px solid var(--layer); background: color-mix(in srgb, var(--layer) 8%, var(--surface)); }
+.stack-layer b { color: var(--layer); font: 600 11px/1.3 var(--font-mono); }
+.stack-layer span { color: var(--text-soft); font-size: 12px; line-height: 1.5; }
+.share-line { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+.share-line span { padding: 6px 9px; border: 1px solid var(--line); border-radius: 3px; color: var(--text-dim); font-size: 10px; }
+
+/* Capability system */
+.capability-system { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 20px; border: 1px solid var(--line); }
+.capability {
+  position: relative;
+  min-height: 180px;
+  padding: 20px;
+  border-right: 1px solid var(--line);
+  background: var(--surface);
+}
+.capability:last-child { border-right: 0; }
+.capability:not(:last-child)::after { content: '→'; position: absolute; z-index: 2; right: -10px; top: 75px; width: 19px; height: 19px; background: var(--bg); color: var(--delivery); font: 600 17px/19px var(--font-mono); text-align: center; }
+.capability .cap-num { color: var(--cap); font: 600 11px/1 var(--font-mono); }
+.capability h3 { margin-top: 17px; }
+.capability p { margin-bottom: 0; font-size: 12px; line-height: 1.55; }
+.metric-tape { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin-top: 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.metric-tape div { padding: 12px 10px; border-right: 1px solid var(--line-soft); }
+.metric-tape div:last-child { border-right: 0; }
+.metric-tape strong { display: block; color: var(--metric, var(--delivery)); font: 600 18px/1 var(--font-mono); }
+.metric-tape span { display: block; margin-top: 6px; color: var(--text-dim); font-size: 9px; line-height: 1.4; }
+
+/* Closing */
+.closing { justify-content: space-between; padding-top: 92px; padding-bottom: 82px; }
+.closing h1 { max-width: 1120px; font-size: 54px; }
+.closing-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 0; max-width: 1180px; border-top: 1px solid var(--line); }
+.discussion { padding: 20px 30px 0 0; }
+.discussion + .discussion { padding-left: 30px; border-left: 1px solid var(--line); }
+.discussion .num { color: var(--influence); font: 600 11px/1 var(--font-mono); }
+.discussion h3 { margin-top: 14px; font-size: 16px; }
+.discussion p { font-size: 12px; }
+.contact-line { display: flex; justify-content: space-between; align-items: flex-end; color: var(--text-dim); font: 500 11px/1.6 var(--font-mono); }
+.contact-line a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--influence); }
+
+@media (max-height: 760px) and (min-width: 901px) {
+  .slide { padding-top: 54px; padding-bottom: 48px; }
+  .slide::after { top: 44px; font-size: 86px; }
+  h1 { font-size: 50px; }
+  h2 { font-size: 32px; }
+  .lead { margin-bottom: 15px; font-size: 17px; }
+  .phase { padding-top: 15px; padding-bottom: 13px; }
+  .phase li, .year-panel li { margin-bottom: 5px; }
+  .stat-strip, .metric-tape { margin-top: 12px; }
+}
+
+@media (max-width: 900px) {
+  .counter { right: 16px; bottom: 15px; }
+  .notes-toggle { left: 14px; bottom: 10px; }
+  .style-toggle { top: auto; right: auto; bottom: 10px; left: 100px; }
+  .slide,
+  .cover,
+  .closing {
+    justify-content: flex-start;
+    padding: 58px 20px 72px;
+  }
+  .slide::after { right: 17px; top: 50px; font-size: 62px; }
+  .eyebrow { margin-top: 7px; }
+  h1, .cover h1, .closing h1 { font-size: 38px; line-height: 1.18; }
+  h2 { font-size: 28px; }
+  .lead { font-size: 16px; line-height: 1.55; }
+  .cover { gap: 32px; }
+  .cover-meta { margin-top: 6px; }
+  .stage-rail { grid-template-columns: 1fr 1fr; width: 100%; border-top: 0; }
+  .stage-block { min-height: 110px; padding: 17px 14px 12px; border-top: 2px solid var(--line); }
+  .panorama-head { display: block; }
+  .track-filters { margin-top: 12px; }
+  .track-filter { padding: 7px 8px; font-size: 10px; }
+  .panorama-grid { display: block; border-bottom: 0; }
+  .period-column { display: grid; grid-template-columns: 62px 1fr; gap: 7px; padding: 10px 0; border-right: 0; border-bottom: 1px solid var(--line-soft); }
+  .period-label { grid-row: 1 / span 3; margin: 8px 0 0; }
+  .milestone { min-height: auto; margin-bottom: 0; font-size: 11px; }
+  .event-inspector { grid-template-columns: 1fr; gap: 6px; }
+  .inspector-metric { white-space: normal; }
+  .phase-grid, .compact-timeline, .capability-system { grid-template-columns: 1fr; }
+  .phase { padding: 18px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  .phase + .phase { padding-left: 0; }
+  .phase:last-child { border-bottom: 0; }
+  .stat-strip { grid-template-columns: 1fr 1fr; }
+  .stat:nth-child(2) { border-right: 0; }
+  .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .governance-loop { grid-template-columns: 1fr; }
+  .loop-step { border-right: 0; border-bottom: 1px solid var(--line); }
+  .loop-step:not(:last-child)::after { content: '↓'; top: auto; right: 14px; bottom: -10px; background: var(--surface); }
+  .compact-item { margin-top: 3px; }
+  .year-bridge { grid-template-columns: 1fr; }
+  .year-panel, .year-panel:last-child { padding: 20px 0; }
+  .bridge-mark { min-height: 70px; border: 1px solid var(--line); }
+  .transfer-strip { align-items: flex-start; flex-wrap: wrap; }
+  .agent-layout { grid-template-columns: 1fr; gap: 16px; }
+  .stack-layer { grid-template-columns: 90px 1fr; }
+  .capability { min-height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .capability:last-child { border-bottom: 0; }
+  .capability:not(:last-child)::after { content: '↓'; right: 20px; top: auto; bottom: -10px; }
+  .metric-tape { grid-template-columns: 1fr 1fr 1fr; }
+  .metric-tape div:nth-child(3) { border-right: 0; }
+  .metric-tape div:nth-child(-n+3) { border-bottom: 1px solid var(--line-soft); }
+  .closing { gap: 34px; }
+  .closing-grid { grid-template-columns: 1fr; }
+  .discussion, .discussion + .discussion { padding: 18px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .contact-line { display: block; }
+  .contact-line span { display: block; margin-top: 7px; }
+}
+
+@media print {
+  body { overflow: visible; }
+  .deck { height: auto; }
+  .slide { position: relative; min-height: 100vh; visibility: visible; opacity: 1; transform: none; page-break-after: always; }
+  .progress, .counter, .notes-toggle, .style-toggle { display: none; }
+}
+</style>
+</head>
+<body data-style="paper">
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+<button class="notes-toggle" id="notesToggle" type="button" aria-pressed="false">NOTES</button>
+<nav class="style-toggle" id="styleToggle" aria-label="切换配色">
+  <button data-style="paper" title="纸张配色" aria-label="使用纸张配色"></button>
+  <button data-style="contrast" title="高对比配色" aria-label="使用高对比配色"></button>
+  <button data-style="night" title="夜间配色" aria-label="使用夜间配色"></button>
+</nav>
+
+<main class="deck" id="deck">
+  <section class="slide cover active" data-index="01">
+    <div>
+      <div class="eyebrow">WORK TIMELINE · 2022—2026</div>
+      <h1>从感知工程<br>到<span>机器人智能</span></h1>
+      <p class="lead">四年半，沿着同一条主线持续推进：把复杂系统做成可交付、可验证、可复用的工程能力</p>
+      <div class="cover-meta">MiaoDX / Engineering · Robotics · Agent Systems</div>
+    </div>
+    <div class="stage-rail" aria-label="四阶段工作演进">
+      <div class="stage-block" style="--stage: var(--engineering)">
+        <div class="year">2022 H1—2023 H1</div>
+        <strong>工程基础设施</strong>
+        <span>多平台 · 框架 · 发版 · 仿真</span>
+      </div>
+      <div class="stage-block" style="--stage: var(--delivery)">
+        <div class="year">2023 H2—2024</div>
+        <strong>量产质量治理</strong>
+        <span>性能 · Crash · 测试 · 平台</span>
+      </div>
+      <div class="stage-block" style="--stage: var(--platform)">
+        <div class="year">2025</div>
+        <strong>机器人产品化</strong>
+        <span>工站 · 数据 · 模型 · 评测</span>
+      </div>
+      <div class="stage-block" style="--stage: var(--influence)">
+        <div class="year">2026 H1</div>
+        <strong>Agent 化</strong>
+        <span>抓取 · Skill · Harness · 分享</span>
+      </div>
+    </div>
+    <div class="speaker-note">开场只讲一个判断：看似跨了自动驾驶、机器人、AI Coding 三个领域，底层一直在做同一件事——让复杂系统可交付、可度量、可复用。</div>
+  </section>
+
+  <section class="slide" data-index="02">
+    <div class="panorama-head">
+      <div>
+        <div class="eyebrow">THE PANORAMA · 点击节点查看细节</div>
+        <h2>九个半年，一条连续的能力曲线</h2>
+      </div>
+      <div class="track-filters" role="group" aria-label="按主题筛选时间线">
+        <button class="track-filter active" type="button" data-filter="all" aria-pressed="true">全部</button>
+        <button class="track-filter" type="button" data-filter="engineering" aria-pressed="false">技术</button>
+        <button class="track-filter" type="button" data-filter="delivery" aria-pressed="false">交付</button>
+        <button class="track-filter" type="button" data-filter="platform" aria-pressed="false">平台</button>
+        <button class="track-filter" type="button" data-filter="influence" aria-pressed="false">影响</button>
+      </div>
+    </div>
+    <div class="panorama-grid" id="panorama" aria-label="2022至2026工作时间线"></div>
+    <div class="event-inspector" id="eventInspector" aria-live="polite">
+      <div class="inspector-period">READING GUIDE</div>
+      <div class="inspector-copy">先看阶段变化，再用主题筛选追踪同一能力如何跨领域复用</div>
+      <div class="inspector-metric">4 stages / 9 halves</div>
+    </div>
+    <div class="speaker-note">这页是讨论入口。现场可以先讲四阶段总览，也可以按“技术、交付、平台、影响”筛选，让听众追问自己感兴趣的线。</div>
+  </section>
+
+  <section class="slide" data-index="03">
+    <div class="eyebrow">STAGE 01 · 2022 H1—2023 H1</div>
+    <h2>先把感知研发变成可持续的工程系统</h2>
+    <p class="lead">从多平台移植切入，逐步补齐代码、框架、发版、仿真、性能工具和知识协作</p>
+    <div class="phase-grid">
+      <article class="phase">
+        <time>2022 H1</time>
+        <h3>统一多平台开发</h3>
+        <ul>
+          <li>覆盖多种计算平台与车型环境</li>
+          <li>推动双系统代码进入 one-repo</li>
+          <li>建立 on-call、重放仿真与固定发版节奏</li>
+        </ul>
+      </article>
+      <article class="phase">
+        <time>2022 H2</time>
+        <h3>迈入量产平台</h3>
+        <ul>
+          <li>完成 ORIN QNX 量产适配</li>
+          <li>跑通关键驾驶任务并支撑阶段交付</li>
+          <li>推广 ComputeModule 和自动化性能分析</li>
+        </ul>
+      </article>
+      <article class="phase">
+        <time>2023 H1</time>
+        <h3>框架与工具升级</h3>
+        <ul>
+          <li>ComputeModule 支持动态 Unit DAG</li>
+          <li>推进低配性能、YUV 输入与时延专项</li>
+          <li>与基础设施团队共建热点定位工具</li>
+        </ul>
+      </article>
+    </div>
+    <div class="stat-strip">
+      <div class="stat" style="--stat: var(--engineering)"><strong>1→N</strong><span>一套代码支持多平台、多车型</span></div>
+      <div class="stat" style="--stat: var(--platform)"><strong>95%</strong><span>静态检查覆盖率</span></div>
+      <div class="stat" style="--stat: var(--influence)"><strong>3×</strong><span>首期跨团队工程培训</span></div>
+      <div class="stat" style="--stat: var(--delivery)"><strong>90→160+</strong><span>跨团队技术协作群规模</span></div>
+    </div>
+    <div class="speaker-note">这一阶段的成果不是一个单独功能，而是把团队每天依赖的工程底座逐步做出来。数字重点讲 95% 静态检查覆盖和协作规模增长。</div>
+  </section>
+
+  <section class="slide" data-index="04">
+    <div class="eyebrow">STAGE 02 · 2023 H2—2024 H2</div>
+    <h2>从解决问题，升级为治理问题</h2>
+    <p class="lead">把性能、Crash、测试和复盘串成闭环，让量产质量从个人经验变成平台能力</p>
+    <div class="governance-loop" aria-label="量产质量治理闭环">
+      <div class="loop-step"><b>RELEASE</b><span>风险识别与版本节奏</span></div>
+      <div class="loop-step"><b>DAILY SIL</b><span>运行时检查与拦截</span></div>
+      <div class="loop-step"><b>DIL</b><span>稳定性能压测</span></div>
+      <div class="loop-step"><b>PROFILING</b><span>耗时、时延与 GPU</span></div>
+      <div class="loop-step"><b>CRASH LOOP</b><span>自动分发、复盘、闭环</span></div>
+    </div>
+    <div class="compact-timeline">
+      <article class="compact-item">
+        <time>2023 H2</time>
+        <p>高低配性能治理，ASAN/UBSAN 进入 Daily SIL，Crash 统一分发与复盘</p>
+      </article>
+      <article class="compact-item">
+        <time>2024 H1</time>
+        <p>SOP 风险处置、内存静态化、LLM Code Review 与跨团队质量委员会</p>
+      </article>
+      <article class="compact-item">
+        <time>2024 H2</time>
+        <p>GPU 单 Stream 调度、Daily Nsys、DIL 压测和自动 Crash 路由</p>
+      </article>
+    </div>
+    <div class="stat-strip">
+      <div class="stat" style="--stat: var(--delivery)"><strong>400→200ms</strong><span>BEV 车道线 P99 时延</span></div>
+      <div class="stat" style="--stat: var(--platform)"><strong>−50%</strong><span>红绿灯模块内存申请</span></div>
+      <div class="stat" style="--stat: var(--engineering)"><strong>−40%</strong><span>红绿灯模块 CPU</span></div>
+      <div class="stat" style="--stat: var(--influence)"><strong>100%</strong><span>量产感知 Crash 解决率</span></div>
+    </div>
+    <div class="speaker-note">这一页强调“治理”的含义：不是亲自修完每个问题，而是让发现、分发、验证和复盘形成稳定闭环。指标只选最能说明系统效果的四个。</div>
+  </section>
+
+  <section class="slide" data-index="05">
+    <div class="eyebrow">STAGE 03 · 2025</div>
+    <h2>把量产工程方法迁移到机器人</h2>
+    <p class="lead">上半年聚焦工厂交付，下半年转向数据、模型与评测，完成第二次能力重组</p>
+    <div class="year-bridge">
+      <article class="year-panel">
+        <time>2025 H1 · ROBOT DELIVERY</time>
+        <h3>从 0 到 1 搭建工站交付与测试</h3>
+        <div class="big-result"><span>V2—V4</span> 零延期</div>
+        <ul>
+          <li>累计完成 300+ 组全流程测试</li>
+          <li>CPU P90 优化超过 40%</li>
+          <li>单次作业 3.5 分钟缩短至 2 分钟内</li>
+          <li>建立机器人测试流程、看板与性能报表</li>
+        </ul>
+      </article>
+      <div class="bridge-mark" aria-label="能力迁移">
+        <b>→</b>
+        METHOD<br>TRANSFER
+      </div>
+      <article class="year-panel">
+        <time>2025 H2 · DATA / MODEL / EVAL</time>
+        <h3>让模型研发走向可重复迭代</h3>
+        <div class="big-result"><span>2×</span> 数据管线</div>
+        <ul>
+          <li>完成仿真环境和多平台部署升级</li>
+          <li>特定强化学习工作负载提升 15×</li>
+          <li>建立自动指令生成与云端批量评测</li>
+          <li>形成两项机器人数据与效能专利</li>
+        </ul>
+      </article>
+    </div>
+    <div class="transfer-strip">
+      <b>迁移的不是代码，而是方法</b>
+      <span class="transfer-arrow">→</span><span>先可观测</span>
+      <span class="transfer-arrow">→</span><span>再标准化</span>
+      <span class="transfer-arrow">→</span><span>最后自动评测</span>
+    </div>
+    <div class="speaker-note">转岗不是重新开始。自动驾驶阶段积累的性能、测试和闭环方法，被重新组合到机器人交付和 VLN 评测中。</div>
+  </section>
+
+  <section class="slide" data-index="06">
+    <div class="eyebrow">STAGE 04 · 2026 H1</div>
+    <h2>从机器人技能，走向机器人 Agent</h2>
+    <p class="lead">一边证明真实动作能力，一边建设能组织 Skill、工具和验收的“机器人大脑”</p>
+    <div class="agent-layout">
+      <div class="grasp-proof">
+        <div>
+          <div class="metric">&gt;90%</div>
+          <div class="metric-label">抓取成功率 · 初版约一个半月完成</div>
+        </div>
+        <div class="grasp-sequence" aria-label="机器人抓取流程">
+          <span>PERCEIVE</span><span>6DOF</span><span>PLAN</span><span>ACT</span>
+        </div>
+      </div>
+      <div>
+        <div class="agent-stack" aria-label="RoboClaws 分层架构">
+          <div class="stack-layer" style="--layer: var(--influence)"><b>GOAL</b><span>自然语言目标与开放任务</span></div>
+          <div class="stack-layer" style="--layer: var(--engineering)"><b>AGENT</b><span>规划、状态管理与工具调用</span></div>
+          <div class="stack-layer" style="--layer: var(--platform)"><b>SKILL / MCP</b><span>可组合的机器人能力与环境接口</span></div>
+          <div class="stack-layer" style="--layer: var(--delivery)"><b>HARNESS</b><span>仿真、Digital Twin 与结果验收</span></div>
+        </div>
+        <div class="share-line" aria-label="公开分享与影响">
+          <span>Agentic Coding 首期分享</span>
+          <span>AI 创意市集决赛</span>
+          <span>AI Coding 工程化分享</span>
+          <span>内部 Hackathon 一等奖</span>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-note">抓取成功率证明底层动作能力，RoboClaws 解决上层开放任务。Harness 则负责回答“到底完成了没有”，这是从 Demo 走向系统的关键。</div>
+  </section>
+
+  <section class="slide" data-index="07">
+    <div class="eyebrow">THE REUSABLE SYSTEM · 跨领域能力</div>
+    <h2>项目在变化，解决问题的方法持续复用</h2>
+    <div class="capability-system" aria-label="跨领域能力演进">
+      <article class="capability" style="--cap: var(--engineering)">
+        <div class="cap-num">01 / STRUCTURE</div>
+        <h3>工程结构化</h3>
+        <p>统一代码与框架<br>划清平台和模块边界<br>降低协作成本</p>
+      </article>
+      <article class="capability" style="--cap: var(--delivery)">
+        <div class="cap-num">02 / DELIVERY</div>
+        <h3>量产交付</h3>
+        <p>风险前置<br>性能与稳定性治理<br>把问题闭环到版本</p>
+      </article>
+      <article class="capability" style="--cap: var(--platform)">
+        <div class="cap-num">03 / PLATFORM</div>
+        <h3>平台与评测</h3>
+        <p>测试左移<br>可观测与自动分析<br>让迭代可重复</p>
+      </article>
+      <article class="capability" style="--cap: var(--influence)">
+        <div class="cap-num">04 / SCALE</div>
+        <h3>团队规模化</h3>
+        <p>文档、培训与分享<br>跨团队连接<br>把个人经验变成公共资产</p>
+      </article>
+    </div>
+    <div class="metric-tape" aria-label="代表性量化结果">
+      <div style="--metric: var(--engineering)"><strong>95%</strong><span>静态检查覆盖</span></div>
+      <div style="--metric: var(--delivery)"><strong>−50%</strong><span>关键时延 P99</span></div>
+      <div style="--metric: var(--platform)"><strong>100%</strong><span>量产 Crash 闭环</span></div>
+      <div style="--metric: var(--delivery)"><strong>−40%+</strong><span>机器人流程耗时</span></div>
+      <div style="--metric: var(--platform)"><strong>2×</strong><span>VLN 数据管线</span></div>
+      <div style="--metric: var(--influence)"><strong>&gt;90%</strong><span>机器人抓取成功率</span></div>
+    </div>
+    <div class="speaker-note">这页是能力总结，不是项目总结。四个能力模块可以迁移到新的复杂系统：先结构化，再交付，再平台化，最后通过团队和知识机制放大。</div>
+  </section>
+
+  <section class="slide closing" data-index="08">
+    <div>
+      <div class="eyebrow">LET'S TALK · 讨论入口</div>
+      <h1>我关心的始终不是<br>“做过多少项目”<br>而是<span style="color: var(--influence)">如何让复杂系统持续进化</span></h1>
+    </div>
+    <div class="closing-grid">
+      <article class="discussion">
+        <div class="num">01</div>
+        <h3>复杂工程如何规模化</h3>
+        <p>从个人经验走向框架、工具和组织机制</p>
+      </article>
+      <article class="discussion">
+        <div class="num">02</div>
+        <h3>能力如何跨领域迁移</h3>
+        <p>从自动驾驶量产到机器人产品与模型研发</p>
+      </article>
+      <article class="discussion">
+        <div class="num">03</div>
+        <h3>机器人如何 Agent 化</h3>
+        <p>Skill、MCP、Harness 与真实环境闭环</p>
+      </article>
+    </div>
+    <div class="contact-line">
+      <div><a href="https://miaodx.com">miaodx.com</a> · <a href="https://github.com/MiaoDX">github.com/MiaoDX</a></div>
+      <span>Engineering systems that can learn, ship, and scale</span>
+    </div>
+    <div class="speaker-note">收束时邀请对方从三个问题进入讨论。不要再复述时间线，把话题交给听众最关心的工程规模化、跨域迁移或机器人 Agent。</div>
+  </section>
+</main>
+
+<script src="../assets/deck-runtime.js"></script>
+<script>
+const trackColors = {
+  engineering: 'var(--engineering)',
+  delivery: 'var(--delivery)',
+  platform: 'var(--platform)',
+  influence: 'var(--influence)',
+};
+
+const periods = [
+  {
+    label: '2022 H1',
+    events: [
+      { track: 'engineering', title: '多平台 one-repo', detail: '统一多平台、多车型感知代码，降低并行维护成本', metric: '一套代码 / 多平台' },
+      { track: 'platform', title: '发版与重放仿真', detail: '建立固定发版、报告、对比视频和 record 重放机制', metric: '每周两次固定节奏' },
+    ],
+  },
+  {
+    label: '2022 H2',
+    events: [
+      { track: 'delivery', title: 'ORIN QNX 量产适配', detail: '完成量产平台适配并跑通关键驾驶任务', metric: '量产平台落地' },
+      { track: 'engineering', title: 'ComputeModule', detail: '推动感知工程重构并推广统一计算模块框架', metric: '框架化起点' },
+    ],
+  },
+  {
+    label: '2023 H1',
+    events: [
+      { track: 'engineering', title: '动态 Unit DAG', detail: '升级 ComputeModule，支撑高低配与行泊一体架构', metric: 'clang-tidy 95%' },
+      { track: 'influence', title: '跨团队工程协作', detail: '通过文档、培训和技术群降低协作门槛', metric: '技术群 160+' },
+    ],
+  },
+  {
+    label: '2023 H2',
+    events: [
+      { track: 'platform', title: 'Daily SIL 质量门', detail: '将运行时检查接入日常仿真，建立 Crash 分发与复盘', metric: '质量左移' },
+      { track: 'delivery', title: '高低配性能治理', detail: '系统优化绑核、部署、消息和时间戳语义', metric: '满足主动安全时延' },
+    ],
+  },
+  {
+    label: '2024 H1',
+    events: [
+      { track: 'delivery', title: 'SOP 性能攻坚', detail: '处理封版风险并完成关键模块时延优化', metric: 'P99 400→200ms' },
+      { track: 'platform', title: '内存静态化', detail: '把内存和 CPU 优化方案落到实际感知模块', metric: '内存 −50% / CPU −40%' },
+    ],
+  },
+  {
+    label: '2024 H2',
+    events: [
+      { track: 'engineering', title: 'GPU 单 Stream 调度', detail: '降低多模型任务相互干扰，支撑新平台交付', metric: '调度受控' },
+      { track: 'platform', title: 'DIL + Crash 自动路由', detail: '升级稳定压测平台并按模块自动分发问题', metric: 'Crash 闭环 100%' },
+    ],
+  },
+  {
+    label: '2025 H1',
+    events: [
+      { track: 'delivery', title: '机器人工站 V2—V4', detail: '完成连续版本交付和 300+ 组全流程测试', metric: '零延期 / 流程 −40%+' },
+      { track: 'platform', title: '测试体系 0→1', detail: '建立机器人测试流程、任务看板与性能报表', metric: 'CPU P90 <60%' },
+    ],
+  },
+  {
+    label: '2025 H2',
+    events: [
+      { track: 'platform', title: 'VLN 数据与评测', detail: '升级数据管线，建设自动指令生成和云端批量评测', metric: '数据 2× / workload 15×' },
+      { track: 'influence', title: '专利与 AI 课程', detail: '沉淀机器人数据方法并推动 AI 辅助编程', metric: '2 项专利' },
+    ],
+  },
+  {
+    label: '2026 H1',
+    events: [
+      { track: 'delivery', title: '机器人抓取 0→1', detail: '完成 6DoF、规划和多本体迁移的抓取链路', metric: '成功率 >90%' },
+      { track: 'influence', title: 'RoboClaws / AI Coding', detail: '推进 Skill、MCP、Agent 与 Harness，并对外输出方法', metric: 'Hackathon 一等奖' },
+    ],
+  },
+];
+
+const panorama = document.querySelector('#panorama');
+const inspector = document.querySelector('#eventInspector');
+
+periods.forEach((period) => {
+  const column = document.createElement('div');
+  column.className = 'period-column';
+  const label = document.createElement('div');
+  label.className = 'period-label';
+  label.textContent = period.label;
+  column.appendChild(label);
+
+  period.events.forEach((event) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'milestone';
+    button.dataset.track = event.track;
+    button.style.setProperty('--track', trackColors[event.track]);
+    button.textContent = event.title;
+    button.addEventListener('click', () => {
+      inspector.style.setProperty('--inspector', trackColors[event.track]);
+      inspector.querySelector('.inspector-period').textContent = period.label;
+      inspector.querySelector('.inspector-copy').textContent = event.detail;
+      inspector.querySelector('.inspector-metric').textContent = event.metric;
+    });
+    column.appendChild(button);
+  });
+
+  panorama.appendChild(column);
+});
+
+document.querySelectorAll('.track-filter').forEach((filter) => {
+  filter.addEventListener('click', () => {
+    document.querySelectorAll('.track-filter').forEach((item) => {
+      item.classList.remove('active');
+      item.setAttribute('aria-pressed', 'false');
+    });
+    filter.classList.add('active');
+    filter.setAttribute('aria-pressed', 'true');
+    const selected = filter.dataset.filter;
+    document.querySelectorAll('.milestone').forEach((event) => {
+      event.hidden = selected !== 'all' && event.dataset.track !== selected;
+    });
+  });
+});
+
+window.createDeckRuntime({
+  notesToggleSelector: '#notesToggle',
+  styleToggleSelector: '#styleToggle',
+  styleStorageKey: 'public-work-timeline-style-v1',
+  defaultStyle: 'paper',
+  styles: ['paper', 'contrast', 'night'],
+  clickZones: true,
+});
+</script>
+</body>
+</html>
