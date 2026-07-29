@@ -330,22 +330,24 @@ body.show-notes .speaker-note { display: block; }
 .decision-cell p { margin: 0; color: var(--text-dim); font-size: 12px; line-height: 1.5; }
 .evidence-badge { display: inline-block; margin-bottom: 9px; padding: 4px 7px; border: 1px solid color-mix(in srgb, var(--lane) 55%, var(--line)); color: var(--lane); font: 600 10px/1.2 var(--font-mono); }
 
-/* Current system layers */
-.system-layers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 20px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.system-layer { min-width: 0; padding: 18px 20px 17px; border-right: 1px solid var(--line-soft); }
-.system-layer:first-child { padding-left: 0; }
-.system-layer:last-child { padding-right: 0; border-right: 0; }
-.layer-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.layer-heading b { color: var(--layer); font: 600 11px/1.3 var(--font-mono); }
-.layer-heading .evidence-badge { flex: none; margin: 0; }
-.system-layer h3 { margin: 12px 0 0; font-size: 18px; }
-.layer-steps { display: grid; grid-template-columns: 1fr 1fr; margin-top: 14px; border-top: 1px solid var(--line-soft); }
-.layer-step { min-width: 0; padding: 13px 14px 0 0; }
-.layer-step + .layer-step { padding-left: 14px; border-left: 1px solid var(--line-soft); }
-.layer-step small { display: block; color: var(--layer); font: 600 10px/1.2 var(--font-mono); }
-.layer-step strong { display: block; margin-top: 7px; font-size: 15px; line-height: 1.3; }
-.layer-step p { margin: 6px 0 0; color: var(--text-dim); font-size: 12px; line-height: 1.5; }
-.system-thesis { margin-top: 18px; padding: 13px 16px; border-left: 4px solid var(--influence); background: var(--surface-alt); color: var(--text); font-size: 14px; line-height: 1.5; }
+/* AI Coding evolution */
+.evolution-track {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.evolution-step { position: relative; min-width: 0; padding: 20px 24px 18px; border-left: 1px solid var(--line-soft); }
+.evolution-step:first-child { padding-left: 0; border-left: 0; }
+.evolution-step:last-child { padding-right: 0; }
+.evolution-step:not(:last-child)::after { content: '→'; position: absolute; top: 18px; right: 8px; color: var(--stage); font: 600 16px/1 var(--font-mono); }
+.evolution-step time { display: block; color: var(--stage); font: 600 11px/1.2 var(--font-mono); }
+.evolution-step h3 { margin: 13px 0 7px; padding-right: 16px; font-size: 16px; }
+.evolution-step p { min-height: 58px; margin: 0; color: var(--text-soft); font-size: 12px; line-height: 1.55; }
+.evolution-limit { margin-top: 14px; padding-top: 11px; border-top: 1px solid var(--line-soft); color: var(--text-dim); font-size: 11px; line-height: 1.45; }
+.evolution-limit b { display: block; margin-bottom: 5px; color: var(--stage); font: 600 10px/1.2 var(--font-mono); }
+.evolution-thesis { margin-top: 18px; padding: 13px 16px; border-left: 4px solid var(--influence); background: var(--surface-alt); color: var(--text); font-size: 14px; line-height: 1.5; }
 
 /* Closing */
 .closing { justify-content: space-between; padding-top: 92px; padding-bottom: 82px; }
@@ -418,13 +420,13 @@ body.show-notes .speaker-note { display: block; }
   .decision-cell .cell-label { display: block; margin-bottom: 6px; }
   .decision-cell h3 { font-size: 15px; }
   .decision-cell p { font-size: 13px; }
-  .system-layers { grid-template-columns: 1fr; }
-  .system-layer,
-  .system-layer:first-child,
-  .system-layer:last-child { padding: 17px 0; border-right: 0; border-bottom: 1px solid var(--line-soft); }
-  .system-layer:last-child { border-bottom: 0; }
-  .layer-heading { align-items: center; }
-  .layer-step p { font-size: 12px; }
+  .evolution-track { grid-template-columns: 1fr; }
+  .evolution-step,
+  .evolution-step:first-child,
+  .evolution-step:last-child { padding: 17px 0; border-left: 0; border-bottom: 1px solid var(--line-soft); }
+  .evolution-step:last-child { border-bottom: 0; }
+  .evolution-step:not(:last-child)::after { content: '↓'; top: auto; right: 8px; bottom: -10px; padding: 0 4px; background: var(--bg); }
+  .evolution-step p { min-height: auto; font-size: 13px; }
   .closing { gap: 34px; }
   .closing-grid { grid-template-columns: 1fr; }
   .discussion, .discussion + .discussion { padding: 18px 0; border-left: 0; border-bottom: 1px solid var(--line); }
@@ -518,8 +520,8 @@ body.show-notes .speaker-note { display: block; }
         <div class="capability-cell is-emerging"><small>2026</small><h3>从写代码到驱动系统</h3><p>RoboHarness · Agent SDK · Workflow</p></div>
       </div>
     </div>
-    <div class="matrix-thesis"><b>迁移的不是代码</b>　而是让复杂系统可观测、可验证、可交接的方法</div>
-    <div class="speaker-note">这页不再罗列九个半年的项目，而是展示四条能力线如何穿越领域。AI Coding 是后期出现的新线，但它复用了早期自动化、验收和工程治理的基础。</div>
+    <div class="matrix-thesis"><b>最重要的迁移不是代码</b>　而是让复杂系统可观测、可验证、可交接的方法</div>
+    <div class="speaker-note">这页不再罗列九个半年的项目，而是展示四条能力线如何穿越领域。代码和成熟组件也有复用，但真正穿越五年的是自动化、验收和工程治理方法。</div>
   </section>
 
   <section class="slide" data-index="03">
@@ -607,7 +609,7 @@ body.show-notes .speaker-note { display: block; }
   <section class="slide" data-index="05">
     <div class="eyebrow">STAGE 03 · 2025</div>
     <h2>把量产工程方法迁移到机器人</h2>
-    <p class="lead">上半年聚焦工厂交付，下半年转向数据、模型与评测，完成第二次能力重组</p>
+    <p class="lead">2—3 周补齐新领域知识并进入核心交付：不等“学会机器人”，先用熟悉的交付与验证方法接住问题</p>
     <div class="year-bridge">
       <article class="year-panel">
         <time>2025 H1 · ROBOT DELIVERY</time>
@@ -617,7 +619,7 @@ body.show-notes .speaker-note { display: block; }
           <li>累计完成 300+ 组全流程测试</li>
           <li>CPU P90 优化超过 40%</li>
           <li>单次作业 3.5 分钟缩短至 2 分钟内</li>
-          <li>建立机器人测试流程、看板与性能报表</li>
+          <li>同时闭环算法、控制、现场环境与网络问题</li>
         </ul>
       </article>
       <div class="bridge-mark" aria-label="能力迁移">
@@ -629,22 +631,19 @@ body.show-notes .speaker-note { display: block; }
         <h3>让模型研发走向可重复迭代</h3>
         <div class="big-result"><span>2×</span> 数据管线</div>
         <ul>
-          <li>完成仿真环境和多平台部署升级</li>
-          <li>特定强化学习工作负载提升 15×</li>
-          <li>建立自动指令生成与云端批量评测</li>
-          <li>形成两项机器人数据与效能专利</li>
+          <li>定位环境栈瓶颈，升级 GPU Driver 并处理容器兼容</li>
+          <li>特定强化学习负载提升 15×</li>
+          <li>VLM 生成导航指令，云端多轮、多模型并行评测</li>
+          <li>成熟推理框架复用到机器人 OCC 与板端部署</li>
         </ul>
       </article>
     </div>
     <div class="transfer-strip">
-      <b>同一条验收链持续升级</b>
-      <span class="transfer-arrow">→</span><span>Replay</span>
-      <span class="transfer-arrow">→</span><span>SIL / DIL</span>
-      <span class="transfer-arrow">→</span><span>Robot Test</span>
-      <span class="transfer-arrow">→</span><span>VLN Eval</span>
-      <span class="transfer-arrow">→</span><span>RoboHarness</span>
+      <b>跨域迁移的两类资产</b>
+      <span class="transfer-arrow">→</span><span>方法：SIL / DIL → Robot Test → VLN Eval</span>
+      <span class="transfer-arrow">+</span><span>组件：成熟推理框架 → 机器人部署</span>
     </div>
-    <div class="speaker-note">转岗不是重新开始。自动驾驶的重放、SIL 和 DIL，迁移为机器人专项测试与 VLN 自动评测，之后继续演进为 RoboHarness 的机器可读验收层。</div>
+    <div class="speaker-note">转岗不是无缝切换：从感知团队负责人回到一线，在 2—3 周内补位项目协调和现场交付。迁移过来的既有重放、SIL、DIL 等验证方法，也有可复用的推理框架。15× 案例的关键不是修改模型，而是识别出瓶颈在 Driver 与环境栈。</div>
   </section>
 
   <section class="slide" data-index="06">
@@ -676,37 +675,37 @@ body.show-notes .speaker-note { display: block; }
   </section>
 
   <section class="slide" data-index="07">
-    <div class="eyebrow">THE CURRENT SYSTEM · 三层能力，一条证据闭环</div>
-    <h2>从自然语言目标，到分层可验证的机器人行动</h2>
-    <p class="lead">开放决策、确定性动作和验收扩展各守边界，再用证据连成端到端闭环</p>
-    <div class="system-layers" aria-label="机器人智能三层能力闭环">
-      <article class="system-layer" style="--layer: var(--platform)">
-        <div class="layer-heading"><b>OPEN DECISION</b><span class="evidence-badge">SIM VERIFIED · ROBOT WIP</span></div>
-        <h3>RoboClaws</h3>
-        <div class="layer-steps">
-          <div class="layer-step"><small>01 / GOAL</small><strong>开放目标</strong><p>用户描述想完成的事，不指定动作序列</p></div>
-          <div class="layer-step"><small>02 / PLAN</small><strong>Agent 决策</strong><p>Skill 组织策略，MCP 暴露受控能力</p></div>
-        </div>
+    <div class="eyebrow">THE SECOND THROUGH-LINE · 2024—NOW</div>
+    <h2>AI Coding 的进化，不是“模型更会写代码”</h2>
+    <p class="lead">AI 承担的工程责任持续外扩：从给建议，到连接工具、驱动系统，再到自己读懂验收证据</p>
+    <div class="evolution-track" aria-label="2024至2026 AI Coding 责任边界演进">
+      <article class="evolution-step" style="--stage: var(--engineering)">
+        <time>2024 H1 · REVIEW</time>
+        <h3>LLM 进入 Code Review</h3>
+        <p>Change 完成 SIL 后自动 Review，由人工复核和决策</p>
+        <div class="evolution-limit"><b>BOTTLENECK</b>能给建议，不能验证系统结果</div>
       </article>
-      <article class="system-layer" style="--layer: var(--delivery)">
-        <div class="layer-heading"><b>DETERMINISTIC ACTION</b><span class="evidence-badge">HARDWARE VERIFIED · SCOPED</span></div>
-        <h3>GR00T Manipulation</h3>
-        <div class="layer-steps">
-          <div class="layer-step"><small>03 / ACT</small><strong>任务化动作</strong><p>感知、6D 位姿、规划、抓取与放置</p></div>
-          <div class="layer-step"><small>04 / WORLD</small><strong>分层执行</strong><p>仿真、Digital Twin 与真机分层验证</p></div>
-        </div>
+      <article class="evolution-step" style="--stage: var(--platform)">
+        <time>2025 H2 · CONNECT</time>
+        <h3>从个人工具进入团队</h3>
+        <p>接入内部模型平台，开始用 Claude Code 处理数据、部署与评测工作</p>
+        <div class="evolution-limit"><b>BOTTLENECK</b>看得到代码，看不到外部研发系统</div>
       </article>
-      <article class="system-layer" style="--layer: var(--engineering)">
-        <div class="layer-heading"><b>EVIDENCE & SCALE</b><span class="evidence-badge">TEAM PLATFORM · 2026 EXTENDED</span></div>
-        <h3>RoboHarness + Executor</h3>
-        <div class="layer-steps">
-          <div class="layer-step"><small>05 / VERIFY</small><strong>结果验收</strong><p>Metric、Visual Harness 与 Eval 判定是否完成</p></div>
-          <div class="layer-step"><small>06 / SCALE</small><strong>批量迭代</strong><p>Executor 运行、恢复并收集下一轮证据</p></div>
-        </div>
+      <article class="evolution-step" style="--stage: var(--delivery)">
+        <time>2026 H1 · ACT</time>
+        <h3>Agent 开始驱动机器人研发</h3>
+        <p>调用仿真、云端与机器人工具，迭代抓取、WBC 和开放任务</p>
+        <div class="evolution-limit"><b>BOTTLENECK</b>能跑很久，但人还要逐轮判定好坏</div>
+      </article>
+      <article class="evolution-step" style="--stage: var(--influence)">
+        <time>NOW · VERIFY / SCALE</time>
+        <h3>把“什么叫做成”工程化</h3>
+        <p>RoboHarness 输出 Metric + Visual 证据，Executor 恢复任务并承接批量运行</p>
+        <div class="evolution-limit"><b>NEXT BOUNDARY</b>从单次验收走向团队可复用的研发闭环</div>
       </article>
     </div>
-    <div class="system-thesis"><b>AI Coding 的下一步</b>　从生成代码，到机器可验收，再到驱动研发系统 · RoboHarness 贯穿 Verify，Executor 承接 Scale</div>
-    <div class="speaker-note">这里讲的是三个能力边界，不是三个人独立完成的项目。RoboClaws 管开放决策，GR00T Manipulation 管确定性动作，RoboHarness 与 Executor 分别承接验收和规模化运行。Executor 是 2023 年开始的多人团队平台，这里展示的是 2026 年面向机器人和 Agent 工作流的扩展。</div>
+    <div class="evolution-thesis"><b>瓶颈持续迁移</b>　代码生成 → 上下文与工具 → 结果验证 → 研发系统规模化</div>
+    <div class="speaker-note">这条线从 2024 年的 LLM Code Review 开始，不是 2026 年突然出现的。每一次升级都来自上一阶段的瓶颈：Review 给建议但无法验证，Coding Agent 看代码但连不上系统，Agent 连上系统后又需要人类逐轮判定。RoboHarness 和 Executor 分别回答验收与规模化运行问题。</div>
   </section>
 
   <section class="slide closing" data-index="08">
@@ -717,13 +716,13 @@ body.show-notes .speaker-note { display: block; }
     <div class="closing-grid">
       <article class="discussion">
         <div class="num">01</div>
-        <h3>开放决策如何连接确定性控制</h3>
-        <p>让 Agent 有自主性，同时守住机器人动作边界</p>
+        <h3>复杂系统的能力如何跨域迁移</h3>
+        <p>区分可复用组件、工程方法和新领域必须重学的部分</p>
       </article>
       <article class="discussion">
         <div class="num">02</div>
-        <h3>仿真证据如何接近真机可信度</h3>
-        <p>为 Digital Twin、仿真和真实执行建立清晰证据等级</p>
+        <h3>验收证据到什么程度才足够可信</h3>
+        <p>为回放、SIL / DIL、Digital Twin、仿真和真机建立证据等级</p>
       </article>
       <article class="discussion">
         <div class="num">03</div>
@@ -735,7 +734,7 @@ body.show-notes .speaker-note { display: block; }
       <div><a href="https://miaodx.com">miaodx.com</a> · <a href="https://github.com/MiaoDX">github.com/MiaoDX</a></div>
       <span>Engineering systems that can learn, ship, and scale</span>
     </div>
-    <div class="speaker-note">收束时邀请对方从三个具体问题进入讨论。不要再复述时间线，把话题交给听众最关心的 Agent 控制边界、仿真证据可信度或团队研发工作流。</div>
+    <div class="speaker-note">收束时邀请对方从三个具体问题进入讨论。不要再复述时间线，把话题交给听众最关心的跨域迁移、证据可信度或团队研发工作流。</div>
   </section>
 </main>
 
