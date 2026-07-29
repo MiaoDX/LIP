@@ -248,8 +248,8 @@ body.show-notes .speaker-note { display: block; }
 .phase + .phase { padding-left: 24px; }
 .phase:last-child { border-right: 0; }
 .phase time { display: block; margin-bottom: 10px; color: var(--engineering); font: 600 12px/1 var(--font-mono); }
-.phase ul, .year-panel ul { margin: 13px 0 0; padding-left: 18px; color: var(--text-soft); }
-.phase li, .year-panel li { margin-bottom: 8px; font-size: 13px; line-height: 1.55; }
+.phase ul { margin: 13px 0 0; padding-left: 18px; color: var(--text-soft); }
+.phase li { margin-bottom: 8px; font-size: 13px; line-height: 1.55; }
 .stat-strip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -262,55 +262,111 @@ body.show-notes .speaker-note { display: block; }
 .stat strong { display: block; color: var(--stat, var(--engineering)); font: 600 24px/1.1 var(--font-mono); }
 .stat span { display: block; margin-top: 6px; color: var(--text-dim); font-size: 11px; line-height: 1.45; }
 
-.governance-loop {
+/* Delivery governance */
+.pressure-rail {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin: 18px 0 20px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-}
-.loop-step { position: relative; padding: 16px 24px 16px 16px; border-right: 1px solid var(--line); }
-.loop-step:last-child { border-right: 0; }
-.loop-step:not(:last-child)::after { content: '→'; position: absolute; right: 7px; top: 15px; color: var(--delivery); font: 600 16px/1 var(--font-mono); }
-.loop-step b { display: block; font: 600 11px/1.3 var(--font-mono); }
-.loop-step span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; line-height: 1.4; }
-.decision-cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.decision-case { padding-top: 12px; border-top: 3px solid var(--delivery); }
-.decision-case time { color: var(--delivery); font: 600 11px/1 var(--font-mono); }
-.decision-case h3 { margin: 9px 0 5px; font-size: 15px; line-height: 1.35; }
-.decision-case p { margin: 0; color: var(--text-soft); font-size: 12px; line-height: 1.5; }
-.decision-case .case-mechanism { display: block; margin-top: 8px; color: var(--text); font-size: 12px; font-weight: 600; }
-
-/* 2025 */
-.year-bridge {
-  display: grid;
-  grid-template-columns: 1fr 96px 1fr;
-  align-items: stretch;
-  margin-top: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 14px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
-.year-panel { padding: 22px 24px 20px 0; }
-.year-panel:last-child { padding-left: 24px; padding-right: 0; }
-.year-panel time { color: var(--platform); font: 600 12px/1 var(--font-mono); }
-.year-panel .big-result { margin-top: 15px; color: var(--text); font: 600 26px/1.2 var(--font-mono); }
-.year-panel .big-result span { color: var(--platform); }
-.bridge-mark {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-  background: var(--surface-alt);
-  color: var(--platform);
-  font: 600 11px/1.45 var(--font-mono);
-  text-align: center;
+.pressure-signal { padding: 14px 18px 13px 0; }
+.pressure-signal + .pressure-signal { padding-left: 18px; border-left: 1px solid var(--line); }
+.pressure-signal b { display: block; color: var(--delivery); font: 600 20px/1.1 var(--font-mono); }
+.pressure-signal span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 11px; line-height: 1.45; }
+.delivery-system {
+  display: grid;
+  grid-template-columns: minmax(150px, .72fr) minmax(0, 2fr) minmax(150px, .72fr);
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
-.bridge-mark b { margin-bottom: 6px; font-size: 24px; }
-.transfer-strip { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-dim); font-size: 13px; }
-.transfer-strip b { color: var(--text); }
-.transfer-arrow { color: var(--platform); font: 600 16px/1 var(--font-mono); }
+.system-state { display: flex; flex-direction: column; justify-content: center; min-height: 142px; padding: 18px; background: var(--surface-alt); }
+.system-state b { color: var(--delivery); font: 600 10px/1.2 var(--font-mono); }
+.system-state strong { display: block; margin-top: 10px; font-size: 17px; line-height: 1.4; }
+.system-state span { display: block; margin-top: 7px; color: var(--text-dim); font-size: 11px; line-height: 1.5; }
+.system-state.after { background: color-mix(in srgb, var(--platform) 9%, var(--surface)); }
+.system-state.after b { color: var(--platform); }
+.system-state .system-number { color: var(--platform); font: 600 32px/1 var(--font-mono); }
+.system-core { padding: 18px; border-right: 1px solid var(--line); border-left: 1px solid var(--line); }
+.governance-loop { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.loop-step { position: relative; min-width: 0; padding-right: 22px; }
+.loop-step + .loop-step { padding-left: 14px; border-left: 1px solid var(--line-soft); }
+.loop-step:not(:last-child)::after { content: '→'; position: absolute; right: 6px; top: 0; color: var(--delivery); font: 600 15px/1 var(--font-mono); }
+.loop-step b { display: block; font: 600 11px/1.3 var(--font-mono); }
+.loop-step span { display: block; margin-top: 6px; color: var(--text-dim); font-size: 10px; line-height: 1.4; }
+.system-thesis { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line-soft); color: var(--text-soft); font-size: 12px; line-height: 1.55; }
+.system-thesis b { color: var(--text); }
+.system-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; border: 1px solid var(--line); }
+.system-proof { padding: 13px 16px; border-right: 1px solid var(--line); }
+.system-proof:last-child { border-right: 0; }
+.system-proof strong { display: block; color: var(--delivery); font: 600 20px/1.15 var(--font-mono); }
+.system-proof span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 11px; line-height: 1.45; }
+
+/* Resource governance */
+.resource-equation {
+  display: grid;
+  grid-template-columns: 1fr 86px 1fr;
+  align-items: center;
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.resource-side { padding: 18px 0; text-align: center; }
+.resource-side b { display: block; color: var(--engineering); font: 600 38px/1 var(--font-mono); }
+.resource-side strong { display: block; margin-top: 8px; font-size: 14px; }
+.resource-arrow { color: var(--delivery); font: 600 28px/1 var(--font-mono); text-align: center; }
+.method-lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.method-lane { min-width: 0; padding: 18px 20px 16px 0; }
+.method-lane + .method-lane { padding-left: 20px; border-left: 1px solid var(--line); }
+.method-lane b { display: block; color: var(--engineering); font: 600 11px/1.2 var(--font-mono); }
+.method-lane h3 { margin: 8px 0 10px; }
+.method-lane span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 11px; line-height: 1.45; }
+.effort-band { display: grid; grid-template-columns: repeat(3, .6fr) 1.6fr; margin-top: 16px; border: 1px solid var(--line); background: var(--surface); }
+.effort-item { padding: 13px 16px; border-right: 1px solid var(--line); }
+.effort-item strong { display: block; color: var(--influence); font: 600 19px/1.15 var(--font-mono); }
+.effort-item span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; }
+.effort-thesis { display: flex; align-items: center; padding: 13px 18px; color: var(--text-soft); font-size: 12px; line-height: 1.5; }
+.effort-thesis b { color: var(--text); }
+
+/* Robot transfer */
+.role-shift { display: grid; grid-template-columns: 1fr 52px 1fr 52px 1fr; align-items: center; margin-top: 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.shift-node { padding: 13px 10px; text-align: center; }
+.shift-node b { display: block; color: var(--platform); font: 600 11px/1.2 var(--font-mono); }
+.shift-node span { display: block; margin-top: 5px; color: var(--text-soft); font-size: 12px; }
+.shift-arrow { color: var(--platform); font: 600 20px/1 var(--font-mono); text-align: center; }
+.transfer-pipeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.transfer-stage { position: relative; min-width: 0; padding: 18px 22px 17px 0; }
+.transfer-stage + .transfer-stage { padding-left: 22px; border-left: 1px solid var(--line); }
+.transfer-stage:not(:last-child)::after { content: '→'; position: absolute; top: 18px; right: 8px; color: var(--platform); font: 600 16px/1 var(--font-mono); }
+.transfer-stage time { color: var(--platform); font: 600 11px/1.2 var(--font-mono); }
+.transfer-stage h3 { margin: 9px 0 7px; }
+.transfer-stage .stage-result { color: var(--text); font: 600 24px/1.15 var(--font-mono); }
+.transfer-stage p { margin: 7px 0 0; font-size: 11px; line-height: 1.5; }
+.field-band { display: grid; grid-template-columns: 1.35fr repeat(4, minmax(0, .65fr)); margin-top: 15px; border: 1px solid var(--line); }
+.field-result, .field-scope { padding: 12px 14px; }
+.field-result { background: color-mix(in srgb, var(--platform) 8%, var(--surface)); }
+.field-result strong { color: var(--platform); font: 600 18px/1.2 var(--font-mono); }
+.field-result span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; }
+.field-scope { display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--line); color: var(--text-soft); font-size: 11px; text-align: center; }
+
+/* Data and evaluation */
+.decision-layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(220px, .7fr); margin-top: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.decision-flywheel { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.fly-step { position: relative; min-width: 0; padding: 22px 23px 20px 0; }
+.fly-step + .fly-step { padding-left: 23px; border-left: 1px solid var(--line-soft); }
+.fly-step:not(:last-child)::after { content: '→'; position: absolute; right: 7px; top: 21px; color: var(--influence); font: 600 16px/1 var(--font-mono); }
+.fly-step b { color: var(--influence); font: 600 11px/1.2 var(--font-mono); }
+.fly-step h3 { margin: 10px 0 7px; font-size: 15px; }
+.fly-step p { margin: 0; font-size: 11px; line-height: 1.5; }
+.decision-callout { display: flex; flex-direction: column; justify-content: center; padding: 20px 22px; border-left: 1px solid var(--line); background: var(--surface-alt); }
+.decision-callout b { color: var(--influence); font: 600 10px/1.2 var(--font-mono); }
+.decision-callout strong { margin-top: 10px; font-family: var(--font-display); font-size: 21px; line-height: 1.45; }
+.signal-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; border: 1px solid var(--line); }
+.signal { padding: 13px 16px; border-right: 1px solid var(--line); }
+.signal:last-child { border-right: 0; }
+.signal strong { display: block; color: var(--platform); font: 600 20px/1.15 var(--font-mono); }
+.signal span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; line-height: 1.45; }
 
 /* 2026 decision matrix */
 .decision-matrix { margin-top: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -358,6 +414,9 @@ body.show-notes .speaker-note { display: block; }
 .discussion .num { color: var(--influence); font: 600 11px/1 var(--font-mono); }
 .discussion h3 { margin-top: 14px; font-size: 16px; }
 .discussion p { font-size: 12px; }
+.proof-inline { display: grid; grid-template-columns: auto 1fr auto 1fr; align-items: baseline; gap: 5px 8px; margin: 10px 0 7px; }
+.proof-inline b { color: var(--influence); font: 600 20px/1 var(--font-mono); }
+.proof-inline span { color: var(--text-dim); font-size: 10px; }
 .contact-line { display: flex; justify-content: space-between; align-items: flex-end; color: var(--text-dim); font: 500 11px/1.6 var(--font-mono); }
 .contact-line a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--influence); }
 
@@ -368,7 +427,7 @@ body.show-notes .speaker-note { display: block; }
   h2 { font-size: 32px; }
   .lead { margin-bottom: 15px; font-size: 17px; }
   .phase { padding-top: 15px; padding-bottom: 13px; }
-  .phase li, .year-panel li { margin-bottom: 5px; }
+  .phase li { margin-bottom: 5px; }
   .stat-strip { margin-top: 12px; }
 }
 
@@ -405,14 +464,48 @@ body.show-notes .speaker-note { display: block; }
   .stat-strip { grid-template-columns: 1fr 1fr; }
   .stat:nth-child(2) { border-right: 0; }
   .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .governance-loop { grid-template-columns: 1fr; }
-  .loop-step { border-right: 0; border-bottom: 1px solid var(--line); }
-  .loop-step:not(:last-child)::after { content: '↓'; top: auto; right: 14px; bottom: -10px; background: var(--surface); }
-  .decision-cases { grid-template-columns: 1fr; gap: 14px; }
-  .year-bridge { grid-template-columns: 1fr; }
-  .year-panel, .year-panel:last-child { padding: 20px 0; }
-  .bridge-mark { min-height: 70px; border: 1px solid var(--line); }
-  .transfer-strip { align-items: flex-start; flex-wrap: wrap; }
+  .pressure-rail,
+  .system-proof-grid,
+  .method-lanes,
+  .transfer-pipeline,
+  .signal-grid { grid-template-columns: 1fr; }
+  .pressure-signal,
+  .pressure-signal + .pressure-signal { padding: 12px 0; border-left: 0; border-bottom: 1px solid var(--line-soft); }
+  .pressure-signal:last-child { border-bottom: 0; }
+  .delivery-system { grid-template-columns: 1fr; }
+  .system-state { min-height: auto; }
+  .system-core { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .governance-loop { grid-template-columns: 1fr 1fr; gap: 14px 0; }
+  .loop-step:nth-child(3) { padding-left: 0; border-left: 0; }
+  .loop-step:not(:last-child)::after { content: none; }
+  .system-proof,
+  .signal { border-right: 0; border-bottom: 1px solid var(--line); }
+  .system-proof:last-child,
+  .signal:last-child { border-bottom: 0; }
+  .resource-equation { grid-template-columns: 1fr 48px 1fr; }
+  .resource-side b { font-size: 29px; }
+  .method-lane,
+  .method-lane + .method-lane { padding: 16px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .method-lane:last-child { border-bottom: 0; }
+  .effort-band { grid-template-columns: 1fr 1fr 1fr; }
+  .effort-item { padding: 12px 9px; }
+  .effort-thesis { grid-column: 1 / -1; border-top: 1px solid var(--line); }
+  .role-shift { grid-template-columns: 1fr 30px 1fr; }
+  .role-shift .shift-node:last-child { grid-column: 1 / -1; border-top: 1px solid var(--line); }
+  .role-shift .shift-arrow:nth-child(4) { display: none; }
+  .transfer-stage,
+  .transfer-stage + .transfer-stage { padding: 17px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .transfer-stage:last-child { border-bottom: 0; }
+  .transfer-stage:not(:last-child)::after { content: '↓'; top: auto; right: 8px; bottom: -10px; padding: 0 4px; background: var(--bg); }
+  .field-band { grid-template-columns: 1fr 1fr; }
+  .field-result { grid-column: 1 / -1; }
+  .field-scope { min-height: 42px; border-top: 1px solid var(--line); }
+  .field-scope:nth-child(2n) { border-left: 0; }
+  .decision-layout { grid-template-columns: 1fr; }
+  .decision-flywheel { grid-template-columns: 1fr 1fr; }
+  .fly-step:nth-child(3) { padding-left: 0; border-left: 0; }
+  .fly-step:not(:last-child)::after { content: none; }
+  .decision-callout { border-top: 1px solid var(--line); border-left: 0; }
   .decision-head { display: none; }
   .decision-row { display: block; padding: 14px 0; }
   .decision-lane { padding: 0 0 10px; }
@@ -568,85 +661,149 @@ body.show-notes .speaker-note { display: block; }
 
   <section class="slide" data-index="04">
     <div class="eyebrow">STAGE 02 · 2023 H2—2024 H2</div>
-    <h2>从解决问题，升级为治理问题</h2>
-    <p class="lead">既处理多模型并发失稳，也把性能、Crash、测试和复盘串成可持续治理闭环</p>
-    <div class="governance-loop" aria-label="量产质量治理闭环">
-      <div class="loop-step"><b>RELEASE</b><span>风险识别与版本节奏</span></div>
-      <div class="loop-step"><b>DAILY SIL</b><span>运行时检查与拦截</span></div>
-      <div class="loop-step"><b>DIL</b><span>稳定性能压测</span></div>
-      <div class="loop-step"><b>PROFILING</b><span>耗时、时延与 GPU</span></div>
-      <div class="loop-step"><b>CRASH LOOP</b><span>自动分发、复盘、闭环</span></div>
+    <h2>让高频变更，仍然能够稳定交付</h2>
+    <p class="lead">算法效果会波动，系统依赖会互相影响，真正的挑战是让快与稳同时成立</p>
+    <div class="pressure-rail" aria-label="感知研发交付压力">
+      <div class="pressure-signal"><b>百人级</b><span>研发与上下游共同协作</span></div>
+      <div class="pressure-signal"><b>多模块</b><span>局部涨点不等于系统体验提升</span></div>
+      <div class="pressure-signal"><b>高频变更</b><span>每次合入都可能引入效果或稳定性回退</span></div>
     </div>
-    <div class="decision-cases">
-      <article class="decision-case">
-        <time>2023 H2 · SHIFT LEFT</time>
-        <h3>问题进入发版后才集中暴露</h3>
-        <p>判断：不能继续依赖上车后排查</p>
-        <span class="case-mechanism">留下 Daily SIL · ASAN/UBSAN · Crash 复盘</span>
-      </article>
-      <article class="decision-case">
-        <time>2024 H1 · RECOVER</time>
-        <h3>封版前两周才收到 CPU 性能风险</h3>
-        <p>判断：先恢复交付，再把资源风险量化</p>
-        <span class="case-mechanism">留下资源监控 · 压测 · 内存静态化</span>
-      </article>
-      <article class="decision-case">
-        <time>2024 H2 · SYSTEMIZE</time>
-        <h3>多任务进入共享资源后帧率失稳</h3>
-        <p>判断：局部优化不够，必须控制调度与干扰</p>
-        <span class="case-mechanism">留下 GPU 调度 · Daily Nsys · 自动路由</span>
-      </article>
+    <div class="delivery-system" aria-label="从发版后救火到测试左移">
+      <div class="system-state before">
+        <b>BEFORE</b>
+        <strong>问题进入发版后才集中暴露</strong>
+        <span>路测不可用 · Crash 易遗漏 · 研发与测试口径不一致</span>
+      </div>
+      <div class="system-core">
+        <div class="governance-loop">
+          <div class="loop-step"><b>CHANGE</b><span>合入与版本节奏</span></div>
+          <div class="loop-step"><b>DAILY SIL</b><span>回放与运行时检查</span></div>
+          <div class="loop-step"><b>AUTO ROUTE</b><span>按模块自动分发</span></div>
+          <div class="loop-step"><b>REVIEW</b><span>复盘并回到规则</span></div>
+        </div>
+        <p class="system-thesis"><b>测试左移</b>　尽可能在低成本环境中拦截问题，再把一次修复沉淀为长期规则</p>
+      </div>
+      <div class="system-state after">
+        <b>AFTER</b>
+        <strong class="system-number">100%</strong>
+        <span>2024 H2 量产感知 Crash 闭环率，流程推广到更多模块</span>
+      </div>
     </div>
-    <div class="stat-strip">
-      <div class="stat" style="--stat: var(--delivery)"><strong>400→200ms</strong><span>BEV 车道线 P99 时延</span></div>
-      <div class="stat" style="--stat: var(--platform)"><strong>−50%</strong><span>红绿灯模块内存申请</span></div>
-      <div class="stat" style="--stat: var(--engineering)"><strong>−40%</strong><span>红绿灯模块 CPU</span></div>
-      <div class="stat" style="--stat: var(--influence)"><strong>100%</strong><span>量产感知 Crash 解决率</span></div>
+    <div class="system-proof-grid">
+      <div class="system-proof"><strong>H1 · 95%+</strong><span>阶段性 Crash 问题解决率</span></div>
+      <div class="system-proof"><strong>研发分支</strong><span>风险在进入发版分支前暴露</span></div>
+      <div class="system-proof"><strong>持续运行</strong><span>流程不再依赖个人逐条推动</span></div>
     </div>
-    <div class="speaker-note">先讲转折：新任务进入共享资源后，局部运行正常，但系统帧率失稳。直接恢复手段是耗时优化、主动丢帧、多组测试和锁定配置；同期再把调度、观测、压测、分发和复盘建设成长期治理能力。这里讲方法，不展开内部模型和版本。</div>
+    <div class="speaker-note">先讲为什么需要这套体系：模型驱动研发有黑盒特性，局部指标提升可能造成系统体验退化；高频变更又让人工检查无法扩展。重点不是列工具，而是展示 Change、SIL、自动路由和复盘如何把风险前移，并让流程逐渐脱离关键人。</div>
   </section>
 
   <section class="slide" data-index="05">
-    <div class="eyebrow">STAGE 03 · 2025</div>
-    <h2>把量产工程方法迁移到机器人</h2>
-    <p class="lead">2—3 周补齐新领域知识并进入核心交付：不等“学会机器人”，先用熟悉的交付与验证方法接住问题</p>
-    <div class="year-bridge">
-      <article class="year-panel">
-        <time>2025 H1 · ROBOT DELIVERY</time>
-        <h3>从 0 到 1 搭建工站交付与测试</h3>
-        <div class="big-result"><span>V2—V4</span> 零延期</div>
-        <ul>
-          <li>累计完成 300+ 组全流程测试</li>
-          <li>CPU P90 优化超过 40%</li>
-          <li>单次作业 3.5 分钟缩短至 2 分钟内</li>
-          <li>同时闭环算法、控制、现场环境与网络问题</li>
-        </ul>
+    <div class="eyebrow">STAGE 02 · PERFORMANCE GOVERNANCE</div>
+    <h2>性能优化不是找热点，而是治理资源</h2>
+    <p class="lead">同样的硬件，通过预算、观测与调度承载更多模型和功能</p>
+    <div class="resource-equation" aria-label="受限算力平台的功能交付">
+      <div class="resource-side"><b>&lt; 1/5</b><strong>高配算力</strong></div>
+      <div class="resource-arrow">→</div>
+      <div class="resource-side"><b>≈ 80%</b><strong>主要功能</strong></div>
+    </div>
+    <div class="method-lanes" aria-label="性能优化三步方法">
+      <article class="method-lane">
+        <b>01 · DEFINE</b>
+        <h3>定指标</h3>
+        <span>不同工况帧率</span>
+        <span>端到端时延约束</span>
+        <span>CPU / GPU / 内存预算</span>
       </article>
-      <div class="bridge-mark" aria-label="能力迁移">
-        <b>→</b>
-        METHOD<br>TRANSFER
-      </div>
-      <article class="year-panel">
-        <time>2025 H2 · DATA / MODEL / EVAL</time>
-        <h3>让模型研发走向可重复迭代</h3>
-        <div class="big-result"><span>2×</span> 数据管线</div>
-        <ul>
-          <li>定位环境栈瓶颈，升级 GPU Driver 并处理容器兼容</li>
-          <li>特定强化学习负载提升 15×</li>
-          <li>VLM 生成导航指令，云端多轮、多模型并行评测</li>
-          <li>成熟推理框架复用到机器人 OCC 与板端部署</li>
-        </ul>
+      <article class="method-lane">
+        <b>02 · OBSERVE</b>
+        <h3>搭监控</h3>
+        <span>Trace · Metrics · Perf · Nsys</span>
+        <span>DIL 性能金标准</span>
+        <span>Daily 自动报告</span>
+      </article>
+      <article class="method-lane">
+        <b>03 · CONTROL</b>
+        <h3>做优化</h3>
+        <span>任务错峰与 GPU 调度</span>
+        <span>内存静态化与数据格式</span>
+        <span>DAG 并行与主动丢帧</span>
       </article>
     </div>
-    <div class="transfer-strip">
-      <b>跨域迁移的两类资产</b>
-      <span class="transfer-arrow">→</span><span>方法：SIL / DIL → Robot Test → VLN Eval</span>
-      <span class="transfer-arrow">+</span><span>组件：成熟推理框架 → 机器人部署</span>
+    <div class="effort-band">
+      <div class="effort-item"><strong>8 个月</strong><span>持续系统优化</span></div>
+      <div class="effort-item"><strong>30+</strong><span>跨团队讨论</span></div>
+      <div class="effort-item"><strong>40+</strong><span>优化项</span></div>
+      <div class="effort-thesis"><b>系统目标：</b>不是榨干单个节点，而是让研发、测试和量产对齐同一份资源事实</div>
     </div>
-    <div class="speaker-note">转岗不是无缝切换：从感知团队负责人回到一线，在 2—3 周内补位项目协调和现场交付。迁移过来的既有重放、SIL、DIL 等验证方法，也有可复用的推理框架。15× 案例的关键不是修改模型，而是识别出瓶颈在 Driver 与环境栈。</div>
+    <div class="speaker-note">这页用低配平台案例解释性能工作的升级：单点热点只是手段，真正的问题是先定义不同工况的资源边界，再让研发与测试对齐监控口径，最后通过调度、静态化和数据链路优化做系统取舍。具体平台和版本不展开。</div>
   </section>
 
   <section class="slide" data-index="06">
+    <div class="eyebrow">STAGE 03 · 2025 H1 · ROBOT DELIVERY</div>
+    <h2>不是“学会机器人”后再交付</h2>
+    <p class="lead">先回到一线，用已经验证过的交付方法接住新领域问题</p>
+    <div class="role-shift" aria-label="从团队负责人到机器人一线交付">
+      <div class="shift-node"><b>ROLE</b><span>感知团队负责人</span></div>
+      <div class="shift-arrow">→</div>
+      <div class="shift-node"><b>RESET</b><span>回到机器人一线</span></div>
+      <div class="shift-arrow">→</div>
+      <div class="shift-node"><b>2—3 WEEKS</b><span>补齐知识并进入核心交付</span></div>
+    </div>
+    <div class="transfer-pipeline" aria-label="机器人集成交付三段式">
+      <article class="transfer-stage">
+        <time>01 · 专项评测</time>
+        <h3>先把问题拆开</h3>
+        <div class="stage-result">90+</div>
+        <p>测试条目覆盖 7 类任务，让模块能够独立量化</p>
+      </article>
+      <article class="transfer-stage">
+        <time>02 · 集成与性能</time>
+        <h3>再让系统稳定运行</h3>
+        <div class="stage-result">40%+</div>
+        <p>CPU P90 改善，同时补齐耗时、帧率与资源观测</p>
+      </article>
+      <article class="transfer-stage">
+        <time>03 · 压测与运营</time>
+        <h3>最后交给机制运行</h3>
+        <div class="stage-result">300+</div>
+        <p>全流程测试，自动出具报告并完成日常流程交接</p>
+      </article>
+    </div>
+    <div class="field-band">
+      <div class="field-result"><strong>3.5 → &lt;2 min</strong><span>单次作业 · V2—V4 零延期</span></div>
+      <div class="field-scope">算法</div>
+      <div class="field-scope">控制</div>
+      <div class="field-scope">现场环境</div>
+      <div class="field-scope">网络</div>
+    </div>
+    <div class="speaker-note">转岗不是无缝切换：从团队负责人回到一线，2—3 周内补位项目协调和现场交付。迁移的核心是三段式方法：专项评测解耦问题，集成与性能让系统稳定，压测与运营让流程可持续。现场空气质量和网络也可能成为阻塞，交付负责人解决的是完整系统问题。</div>
+  </section>
+
+  <section class="slide" data-index="07">
+    <div class="eyebrow">STAGE 03 · 2025 H2 · DATA / MODEL / EVAL</div>
+    <h2>让评测决定下一轮把资源投在哪里</h2>
+    <p class="lead">评测不是项目末尾的验收，而是数据、部署与模型迭代之间的控制回路</p>
+    <div class="decision-layout">
+      <div class="decision-flywheel" aria-label="数据与评测驱动研发闭环">
+        <article class="fly-step"><b>DATA</b><h3>生产数据</h3><p>统一环境，扩大批量数据供给</p></article>
+        <article class="fly-step"><b>DEPLOY</b><h3>稳定部署</h3><p>云端、仿真与板端共享可重复环境</p></article>
+        <article class="fly-step"><b>EVALUATE</b><h3>并行量化</h3><p>多轮、多模型横向比较</p></article>
+        <article class="fly-step"><b>DECIDE</b><h3>发现弱项</h3><p>决定下一轮数据、模型与工程投入</p></article>
+      </div>
+      <div class="decision-callout">
+        <b>OUTPUT</b>
+        <strong>不是排行榜<br>是资源决策</strong>
+      </div>
+    </div>
+    <div class="signal-grid">
+      <div class="signal"><strong>2×</strong><span>数据管线吞吐</span></div>
+      <div class="signal"><strong>15×</strong><span>定位到 Driver 与环境栈瓶颈，而非修改模型</span></div>
+      <div class="signal"><strong>N × M</strong><span>多轮、多模型并行评测</span></div>
+    </div>
+    <div class="speaker-note">15× 案例的关键不是模型优化，而是识别出 Driver 与环境栈才是瓶颈。评测顶层设计把规划、验证、准备、实施串起来，最终目的不是产出一个分数，而是让团队知道下一轮应该补什么数据、改什么模型、解决哪段工程瓶颈。</div>
+  </section>
+
+  <section class="slide" data-index="08">
     <div class="eyebrow">STAGE 04 · 2026 H1 → NOW</div>
     <h2>真正的升级，是把约束变成三层系统边界</h2>
     <p class="lead">不按项目数量罗列进度，而是回答每一层面对什么限制、作了什么判断、留下什么证据</p>
@@ -674,7 +831,7 @@ body.show-notes .speaker-note { display: block; }
     <div class="speaker-note">身体层展示短周期交付与最终解法之间的范围判断；大脑层展示开放决策与确定性动作的边界；基础设施层基于既有团队 Executor 扩展。本地仓库证据显示 Executor 始于 2023 年，2026 年 6—7 月完成机器人入口、CloudML、存储与可恢复 Workflow 的集中扩展。</div>
   </section>
 
-  <section class="slide" data-index="07">
+  <section class="slide" data-index="09">
     <div class="eyebrow">THE SECOND THROUGH-LINE · 2024—NOW</div>
     <h2>AI Coding 的进化，不是“模型更会写代码”</h2>
     <p class="lead">AI 承担的工程责任持续外扩：从给建议，到连接工具、驱动系统，再到自己读懂验收证据</p>
@@ -708,7 +865,7 @@ body.show-notes .speaker-note { display: block; }
     <div class="speaker-note">这条线从 2024 年的 LLM Code Review 开始，不是 2026 年突然出现的。每一次升级都来自上一阶段的瓶颈：Review 给建议但无法验证，Coding Agent 看代码但连不上系统，Agent 连上系统后又需要人类逐轮判定。RoboHarness 和 Executor 分别回答验收与规模化运行问题。</div>
   </section>
 
-  <section class="slide closing" data-index="08">
+  <section class="slide closing" data-index="10">
     <div>
       <div class="eyebrow">LET'S TALK · 讨论入口</div>
       <h1>我关心的始终不是<br>“做过多少项目”<br>而是<span style="color: var(--influence)">如何让复杂系统持续进化</span></h1>
@@ -727,7 +884,8 @@ body.show-notes .speaker-note { display: block; }
       <article class="discussion">
         <div class="num">03</div>
         <h3>个人流程如何变成团队能力</h3>
-        <p>用文档、验收、CLI、Skill 和 Workflow 降低关键人依赖</p>
+        <div class="proof-inline"><b>890+</b><span>文档</span><b>6 万+</b><span>阅读</span></div>
+        <p>角色变化后，已建立的流程仍持续运行</p>
       </article>
     </div>
     <div class="contact-line">
