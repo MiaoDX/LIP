@@ -641,11 +641,12 @@ body.show-notes .speaker-note { display: block; }
       </div>
       <div class="system-state after">
         <b>AFTER</b>
-        <strong class="system-number">100%</strong>
-        <span>2024 H2 量产感知 Crash 闭环率，流程推广到更多模块</span>
+        <strong class="system-number">-98%</strong>
+        <span>Crash 频率 · 所有节点零延期</span>
+        <span>7 个月拦截 455 次 · 处理 1 天→1 小时</span>
       </div>
     </div>
-    <div class="speaker-note">先讲为什么需要这套体系：模型驱动研发有黑盒特性，局部指标提升可能造成系统体验退化；高频变更又让人工检查无法扩展。重点不是列工具，而是展示 Change、SIL、自动路由和复盘如何把风险前移，并让流程逐渐脱离关键人。</div>
+    <div class="speaker-note">先讲为什么需要这套体系：模型驱动研发有黑盒特性，局部指标提升可能造成系统体验退化；高频变更又让人工检查无法扩展。Change、SIL、自动路由和复盘把风险前移，最终将百万公里 Crash 频率降低约 98%，处理时间从 1 天缩短到 1 小时，量产感知 Crash 闭环率达到 100%。对外不展开内部版本号和绝对值。</div>
   </section>
 
   <section class="slide" data-index="05">
@@ -684,9 +685,9 @@ body.show-notes .speaker-note { display: block; }
       <div class="stat" style="--stat: var(--influence)"><strong>8 个月</strong><span>持续系统优化</span></div>
       <div class="stat" style="--stat: var(--influence)"><strong>30+</strong><span>跨团队讨论</span></div>
       <div class="stat" style="--stat: var(--influence)"><strong>40+</strong><span>优化项</span></div>
-      <div class="stat" style="--stat: var(--influence)"><strong>系统目标</strong><span>研发、测试和量产对齐同一份资源事实</span></div>
+      <div class="stat" style="--stat: var(--influence)"><strong>P99 -50%</strong><span>一个关键模型链路由 400ms 降至 200ms</span></div>
     </div>
-    <div class="speaker-note">这页用低配平台案例解释性能工作的升级：单点热点只是手段，真正的问题是先定义不同工况的资源边界，再让研发与测试对齐监控口径，最后通过调度、静态化和数据链路优化做系统取舍。具体平台和版本不展开。</div>
+    <div class="speaker-note">这页用低配平台案例解释性能工作的升级：单点热点只是手段，真正的问题是先定义不同工况的资源边界，再让研发与测试对齐监控口径，最后通过调度、静态化和数据链路优化做系统取舍。另一个内存静态化案例将动态申请次数降低 50%、CPU 降低 40%。具体平台和版本不展开。</div>
   </section>
 
   <section class="slide" data-index="06">
@@ -710,24 +711,24 @@ body.show-notes .speaker-note { display: block; }
       <article class="transfer-stage">
         <time>02 · 集成与性能</time>
         <h3>再让系统稳定运行</h3>
-        <div class="stage-result">40%+</div>
-        <p>CPU P90 改善，同时补齐耗时、帧率与资源观测</p>
+        <div class="stage-result">&lt;70%</div>
+        <p>CPU 从打满无法测试到稳定运行，并补齐耗时、帧率与资源观测</p>
       </article>
       <article class="transfer-stage">
         <time>03 · 压测与运营</time>
         <h3>最后交给机制运行</h3>
-        <div class="stage-result">300+</div>
-        <p>全流程测试，自动出具报告并完成日常流程交接</p>
+        <div class="stage-result">300+ / 站</div>
+        <p>每个工站完成研发自测，自动出具报告并交由测试团队持续运营</p>
       </article>
     </div>
     <div class="field-band">
-      <div class="field-result"><strong>3.5 → &lt;2 min</strong><span>单次作业 · V2—V4 零延期</span></div>
+      <div class="field-result"><strong>3 个工站 · 持续运营</strong><span>单次 3.5→&lt;2 min · V2—V4 零延期</span></div>
       <div class="field-scope">算法</div>
       <div class="field-scope">控制</div>
       <div class="field-scope">现场环境</div>
       <div class="field-scope">网络</div>
     </div>
-    <div class="speaker-note">转岗不是无缝切换：从团队负责人回到一线，2—3 周内补位项目协调和现场交付。迁移的核心是三段式方法：专项评测解耦问题，集成与性能让系统稳定，压测与运营让流程可持续。现场空气质量和网络也可能成为阻塞，交付负责人解决的是完整系统问题。</div>
+    <div class="speaker-note">转岗不是无缝切换：从团队负责人回到一线，2—3 周内补位项目协调和现场交付。专项评测解耦问题，集成与性能让系统稳定，压测与运营让流程可持续。现场空气质量和网络也可能成为阻塞，交付负责人解决的是完整系统问题。三个工站持续运营后，项目获得团队年度项目奖，个人获得跨团队协作奖。</div>
   </section>
 
   <section class="slide" data-index="07">
@@ -740,7 +741,7 @@ body.show-notes .speaker-note { display: block; }
       <article class="evolution-step" style="--stage: var(--influence)"><time>EVALUATE</time><h3>并行量化</h3><p>多轮、多模型横向比较</p></article>
       <article class="evolution-step" style="--stage: var(--influence)"><time>DECIDE</time><h3>发现弱项</h3><p>决定下一轮数据、模型与工程投入</p></article>
     </div>
-    <div class="evolution-thesis"><b>输出不是排行榜</b>　而是下一轮数据、模型与工程的资源决策</div>
+    <div class="evolution-thesis"><b>输出不是排行榜</b>　而是下一轮数据、模型与工程的资源决策 · 沉淀 2 项专利申请</div>
     <div class="stat-strip two">
       <div class="stat" style="--stat: var(--platform)"><strong>2×</strong><span>数据管线吞吐</span></div>
       <div class="stat" style="--stat: var(--platform)"><strong>15×</strong><span>定位到 Driver 与环境栈瓶颈，而非修改模型</span></div>
@@ -806,8 +807,8 @@ body.show-notes .speaker-note { display: block; }
         <div class="evolution-limit"><b>NEXT BOUNDARY</b>从单次验收走向团队可复用的研发闭环</div>
       </article>
     </div>
-    <div class="evolution-thesis"><b>瓶颈持续迁移</b>　代码生成 → 上下文与工具 → 结果验证 → 研发系统规模化</div>
-    <div class="speaker-note">这条线从 2024 年的 LLM Code Review 开始，不是 2026 年突然出现的。每一次升级都来自上一阶段的瓶颈：Review 给建议但无法验证，Coding Agent 看代码但连不上系统，Agent 连上系统后又需要人类逐轮判定。RoboHarness 和 Executor 分别回答验收与规模化运行问题。</div>
+    <div class="evolution-thesis"><b>方法不止停留在个人项目</b>　2 场专题分享 · Demo Day · RoboHarness Hackathon 一等奖</div>
+    <div class="speaker-note">这条线从 2024 年的 LLM Code Review 开始，不是 2026 年突然出现的。每一次升级都来自上一阶段的瓶颈：Review 给建议但无法验证，Coding Agent 看代码但连不上系统，Agent 连上系统后又需要人类逐轮判定。RoboHarness 从抓取项目的 Visual Harness 抽象而来，并在 2026 年 3—6 月通过两场专题分享、Demo Day 和部门 Hackathon 向团队扩散。</div>
   </section>
 
   <section class="slide closing" data-index="10">
@@ -828,15 +829,15 @@ body.show-notes .speaker-note { display: block; }
       </article>
       <article class="discussion">
         <div class="num">03</div>
-        <h3>个人流程如何变成团队能力</h3>
-        <p><b>890+ 文档 · 6 万+ 阅读</b><br>角色变化后，已建立的流程仍持续运行</p>
+        <h3>人离开后，机制是否仍然运行</h3>
+        <p><b>890+ 文档 · 6 万+ 阅读 · 近一年 900+ 读者</b><br>发版、测试、Crash 与性能流程持续运营</p>
       </article>
     </div>
     <div class="contact-line">
       <div><a href="https://miaodx.com">miaodx.com</a> · <a href="https://github.com/MiaoDX">github.com/MiaoDX</a></div>
       <span>Engineering systems that can learn, ship, and scale</span>
     </div>
-    <div class="speaker-note">收束时邀请对方从三个具体问题进入讨论。不要再复述时间线，把话题交给听众最关心的跨域迁移、证据可信度或团队研发工作流。</div>
+    <div class="speaker-note">收束时邀请对方从三个具体问题进入讨论。组织影响不展开成员职级、绩效或个人晋升，只强调从头组建团队、培养成员，并让发版、测试、Crash 和性能机制在角色变化后继续运行。</div>
   </section>
 </main>
 
