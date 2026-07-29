@@ -261,6 +261,7 @@ body.show-notes .speaker-note { display: block; }
 .stat:last-child { border-right: 0; }
 .stat strong { display: block; color: var(--stat, var(--engineering)); font: 600 24px/1.1 var(--font-mono); }
 .stat span { display: block; margin-top: 6px; color: var(--text-dim); font-size: 11px; line-height: 1.45; }
+.stat-strip.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 /* Delivery governance */
 .pressure-rail {
@@ -297,11 +298,6 @@ body.show-notes .speaker-note { display: block; }
 .loop-step span { display: block; margin-top: 6px; color: var(--text-dim); font-size: 10px; line-height: 1.4; }
 .system-thesis { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line-soft); color: var(--text-soft); font-size: 12px; line-height: 1.55; }
 .system-thesis b { color: var(--text); }
-.system-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; border: 1px solid var(--line); }
-.system-proof { padding: 13px 16px; border-right: 1px solid var(--line); }
-.system-proof:last-child { border-right: 0; }
-.system-proof strong { display: block; color: var(--delivery); font: 600 20px/1.15 var(--font-mono); }
-.system-proof span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 11px; line-height: 1.45; }
 
 /* Resource governance */
 .resource-equation {
@@ -322,12 +318,6 @@ body.show-notes .speaker-note { display: block; }
 .method-lane b { display: block; color: var(--engineering); font: 600 11px/1.2 var(--font-mono); }
 .method-lane h3 { margin: 8px 0 10px; }
 .method-lane span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 11px; line-height: 1.45; }
-.effort-band { display: grid; grid-template-columns: repeat(3, .6fr) 1.6fr; margin-top: 16px; border: 1px solid var(--line); background: var(--surface); }
-.effort-item { padding: 13px 16px; border-right: 1px solid var(--line); }
-.effort-item strong { display: block; color: var(--influence); font: 600 19px/1.15 var(--font-mono); }
-.effort-item span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; }
-.effort-thesis { display: flex; align-items: center; padding: 13px 18px; color: var(--text-soft); font-size: 12px; line-height: 1.5; }
-.effort-thesis b { color: var(--text); }
 
 /* Robot transfer */
 .role-shift { display: grid; grid-template-columns: 1fr 52px 1fr 52px 1fr; align-items: center; margin-top: 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -349,24 +339,6 @@ body.show-notes .speaker-note { display: block; }
 .field-result strong { color: var(--platform); font: 600 18px/1.2 var(--font-mono); }
 .field-result span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; }
 .field-scope { display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--line); color: var(--text-soft); font-size: 11px; text-align: center; }
-
-/* Data and evaluation */
-.decision-layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(220px, .7fr); margin-top: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.decision-flywheel { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.fly-step { position: relative; min-width: 0; padding: 22px 23px 20px 0; }
-.fly-step + .fly-step { padding-left: 23px; border-left: 1px solid var(--line-soft); }
-.fly-step:not(:last-child)::after { content: '→'; position: absolute; right: 7px; top: 21px; color: var(--influence); font: 600 16px/1 var(--font-mono); }
-.fly-step b { color: var(--influence); font: 600 11px/1.2 var(--font-mono); }
-.fly-step h3 { margin: 10px 0 7px; font-size: 15px; }
-.fly-step p { margin: 0; font-size: 11px; line-height: 1.5; }
-.decision-callout { display: flex; flex-direction: column; justify-content: center; padding: 20px 22px; border-left: 1px solid var(--line); background: var(--surface-alt); }
-.decision-callout b { color: var(--influence); font: 600 10px/1.2 var(--font-mono); }
-.decision-callout strong { margin-top: 10px; font-family: var(--font-display); font-size: 21px; line-height: 1.45; }
-.signal-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; border: 1px solid var(--line); }
-.signal { padding: 13px 16px; border-right: 1px solid var(--line); }
-.signal:last-child { border-right: 0; }
-.signal strong { display: block; color: var(--platform); font: 600 20px/1.15 var(--font-mono); }
-.signal span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; line-height: 1.45; }
 
 /* 2026 decision matrix */
 .decision-matrix { margin-top: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -414,9 +386,6 @@ body.show-notes .speaker-note { display: block; }
 .discussion .num { color: var(--influence); font: 600 11px/1 var(--font-mono); }
 .discussion h3 { margin-top: 14px; font-size: 16px; }
 .discussion p { font-size: 12px; }
-.proof-inline { display: grid; grid-template-columns: auto 1fr auto 1fr; align-items: baseline; gap: 5px 8px; margin: 10px 0 7px; }
-.proof-inline b { color: var(--influence); font: 600 20px/1 var(--font-mono); }
-.proof-inline span { color: var(--text-dim); font-size: 10px; }
 .contact-line { display: flex; justify-content: space-between; align-items: flex-end; color: var(--text-dim); font: 500 11px/1.6 var(--font-mono); }
 .contact-line a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--influence); }
 
@@ -464,11 +433,10 @@ body.show-notes .speaker-note { display: block; }
   .stat-strip { grid-template-columns: 1fr 1fr; }
   .stat:nth-child(2) { border-right: 0; }
   .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .stat-strip.two .stat { border-bottom: 0; }
   .pressure-rail,
-  .system-proof-grid,
   .method-lanes,
-  .transfer-pipeline,
-  .signal-grid { grid-template-columns: 1fr; }
+  .transfer-pipeline { grid-template-columns: 1fr; }
   .pressure-signal,
   .pressure-signal + .pressure-signal { padding: 12px 0; border-left: 0; border-bottom: 1px solid var(--line-soft); }
   .pressure-signal:last-child { border-bottom: 0; }
@@ -478,18 +446,11 @@ body.show-notes .speaker-note { display: block; }
   .governance-loop { grid-template-columns: 1fr 1fr; gap: 14px 0; }
   .loop-step:nth-child(3) { padding-left: 0; border-left: 0; }
   .loop-step:not(:last-child)::after { content: none; }
-  .system-proof,
-  .signal { border-right: 0; border-bottom: 1px solid var(--line); }
-  .system-proof:last-child,
-  .signal:last-child { border-bottom: 0; }
   .resource-equation { grid-template-columns: 1fr 48px 1fr; }
   .resource-side b { font-size: 29px; }
   .method-lane,
   .method-lane + .method-lane { padding: 16px 0; border-left: 0; border-bottom: 1px solid var(--line); }
   .method-lane:last-child { border-bottom: 0; }
-  .effort-band { grid-template-columns: 1fr 1fr 1fr; }
-  .effort-item { padding: 12px 9px; }
-  .effort-thesis { grid-column: 1 / -1; border-top: 1px solid var(--line); }
   .role-shift { grid-template-columns: 1fr 30px 1fr; }
   .role-shift .shift-node:last-child { grid-column: 1 / -1; border-top: 1px solid var(--line); }
   .role-shift .shift-arrow:nth-child(4) { display: none; }
@@ -501,11 +462,6 @@ body.show-notes .speaker-note { display: block; }
   .field-result { grid-column: 1 / -1; }
   .field-scope { min-height: 42px; border-top: 1px solid var(--line); }
   .field-scope:nth-child(2n) { border-left: 0; }
-  .decision-layout { grid-template-columns: 1fr; }
-  .decision-flywheel { grid-template-columns: 1fr 1fr; }
-  .fly-step:nth-child(3) { padding-left: 0; border-left: 0; }
-  .fly-step:not(:last-child)::after { content: none; }
-  .decision-callout { border-top: 1px solid var(--line); border-left: 0; }
   .decision-head { display: none; }
   .decision-row { display: block; padding: 14px 0; }
   .decision-lane { padding: 0 0 10px; }
@@ -689,11 +645,6 @@ body.show-notes .speaker-note { display: block; }
         <span>2024 H2 量产感知 Crash 闭环率，流程推广到更多模块</span>
       </div>
     </div>
-    <div class="system-proof-grid">
-      <div class="system-proof"><strong>H1 · 95%+</strong><span>阶段性 Crash 问题解决率</span></div>
-      <div class="system-proof"><strong>研发分支</strong><span>风险在进入发版分支前暴露</span></div>
-      <div class="system-proof"><strong>持续运行</strong><span>流程不再依赖个人逐条推动</span></div>
-    </div>
     <div class="speaker-note">先讲为什么需要这套体系：模型驱动研发有黑盒特性，局部指标提升可能造成系统体验退化；高频变更又让人工检查无法扩展。重点不是列工具，而是展示 Change、SIL、自动路由和复盘如何把风险前移，并让流程逐渐脱离关键人。</div>
   </section>
 
@@ -729,11 +680,11 @@ body.show-notes .speaker-note { display: block; }
         <span>DAG 并行与主动丢帧</span>
       </article>
     </div>
-    <div class="effort-band">
-      <div class="effort-item"><strong>8 个月</strong><span>持续系统优化</span></div>
-      <div class="effort-item"><strong>30+</strong><span>跨团队讨论</span></div>
-      <div class="effort-item"><strong>40+</strong><span>优化项</span></div>
-      <div class="effort-thesis"><b>系统目标：</b>不是榨干单个节点，而是让研发、测试和量产对齐同一份资源事实</div>
+    <div class="stat-strip">
+      <div class="stat" style="--stat: var(--influence)"><strong>8 个月</strong><span>持续系统优化</span></div>
+      <div class="stat" style="--stat: var(--influence)"><strong>30+</strong><span>跨团队讨论</span></div>
+      <div class="stat" style="--stat: var(--influence)"><strong>40+</strong><span>优化项</span></div>
+      <div class="stat" style="--stat: var(--influence)"><strong>系统目标</strong><span>研发、测试和量产对齐同一份资源事实</span></div>
     </div>
     <div class="speaker-note">这页用低配平台案例解释性能工作的升级：单点热点只是手段，真正的问题是先定义不同工况的资源边界，再让研发与测试对齐监控口径，最后通过调度、静态化和数据链路优化做系统取舍。具体平台和版本不展开。</div>
   </section>
@@ -783,22 +734,16 @@ body.show-notes .speaker-note { display: block; }
     <div class="eyebrow">STAGE 03 · 2025 H2 · DATA / MODEL / EVAL</div>
     <h2>让评测决定下一轮把资源投在哪里</h2>
     <p class="lead">评测不是项目末尾的验收，而是数据、部署与模型迭代之间的控制回路</p>
-    <div class="decision-layout">
-      <div class="decision-flywheel" aria-label="数据与评测驱动研发闭环">
-        <article class="fly-step"><b>DATA</b><h3>生产数据</h3><p>统一环境，扩大批量数据供给</p></article>
-        <article class="fly-step"><b>DEPLOY</b><h3>稳定部署</h3><p>云端、仿真与板端共享可重复环境</p></article>
-        <article class="fly-step"><b>EVALUATE</b><h3>并行量化</h3><p>多轮、多模型横向比较</p></article>
-        <article class="fly-step"><b>DECIDE</b><h3>发现弱项</h3><p>决定下一轮数据、模型与工程投入</p></article>
-      </div>
-      <div class="decision-callout">
-        <b>OUTPUT</b>
-        <strong>不是排行榜<br>是资源决策</strong>
-      </div>
+    <div class="evolution-track" aria-label="数据与评测驱动研发闭环">
+      <article class="evolution-step" style="--stage: var(--influence)"><time>DATA</time><h3>生产数据</h3><p>统一环境，扩大批量数据供给</p></article>
+      <article class="evolution-step" style="--stage: var(--influence)"><time>DEPLOY</time><h3>稳定部署</h3><p>云端、仿真与板端共享可重复环境</p></article>
+      <article class="evolution-step" style="--stage: var(--influence)"><time>EVALUATE</time><h3>并行量化</h3><p>多轮、多模型横向比较</p></article>
+      <article class="evolution-step" style="--stage: var(--influence)"><time>DECIDE</time><h3>发现弱项</h3><p>决定下一轮数据、模型与工程投入</p></article>
     </div>
-    <div class="signal-grid">
-      <div class="signal"><strong>2×</strong><span>数据管线吞吐</span></div>
-      <div class="signal"><strong>15×</strong><span>定位到 Driver 与环境栈瓶颈，而非修改模型</span></div>
-      <div class="signal"><strong>N × M</strong><span>多轮、多模型并行评测</span></div>
+    <div class="evolution-thesis"><b>输出不是排行榜</b>　而是下一轮数据、模型与工程的资源决策</div>
+    <div class="stat-strip two">
+      <div class="stat" style="--stat: var(--platform)"><strong>2×</strong><span>数据管线吞吐</span></div>
+      <div class="stat" style="--stat: var(--platform)"><strong>15×</strong><span>定位到 Driver 与环境栈瓶颈，而非修改模型</span></div>
     </div>
     <div class="speaker-note">15× 案例的关键不是模型优化，而是识别出 Driver 与环境栈才是瓶颈。评测顶层设计把规划、验证、准备、实施串起来，最终目的不是产出一个分数，而是让团队知道下一轮应该补什么数据、改什么模型、解决哪段工程瓶颈。</div>
   </section>
@@ -884,8 +829,7 @@ body.show-notes .speaker-note { display: block; }
       <article class="discussion">
         <div class="num">03</div>
         <h3>个人流程如何变成团队能力</h3>
-        <div class="proof-inline"><b>890+</b><span>文档</span><b>6 万+</b><span>阅读</span></div>
-        <p>角色变化后，已建立的流程仍持续运行</p>
+        <p><b>890+ 文档 · 6 万+ 阅读</b><br>角色变化后，已建立的流程仍持续运行</p>
       </article>
     </div>
     <div class="contact-line">
