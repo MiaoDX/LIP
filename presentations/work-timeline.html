@@ -214,70 +214,23 @@ body.show-notes .speaker-note { display: block; }
 .stage-block strong { display: block; margin-top: 10px; font-size: 16px; }
 .stage-block span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 12px; line-height: 1.45; }
 
-/* Panorama */
-.panorama-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 16px; }
-.panorama-head h2 { margin-bottom: 0; }
-.track-filters {
-  display: inline-flex;
-  flex-wrap: wrap;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: var(--surface);
-}
-.track-filter {
-  padding: 7px 11px;
-  border: 0;
-  border-right: 1px solid var(--line);
-  background: transparent;
-  color: var(--text-dim);
-  font-size: 11px;
-  cursor: pointer;
-}
-.track-filter:last-child { border-right: 0; }
-.track-filter.active { background: var(--text); color: var(--bg); }
-.track-filter:focus-visible { outline: 2px solid var(--delivery); outline-offset: 2px; }
-.panorama-grid {
-  display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.period-column { min-width: 0; padding: 12px 7px 13px; border-right: 1px solid var(--line-soft); }
-.period-column:last-child { border-right: 0; }
-.period-label { margin-bottom: 11px; color: var(--text); font: 600 11px/1 var(--font-mono); }
-.milestone {
-  display: block;
-  width: 100%;
-  min-height: 50px;
-  margin: 0 0 7px;
-  padding: 8px 7px;
-  border: 1px solid color-mix(in srgb, var(--track) 46%, var(--line));
-  border-left: 3px solid var(--track);
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--track) 7%, var(--surface));
-  color: var(--text-soft);
-  text-align: left;
-  font-size: 10px;
-  line-height: 1.45;
-  cursor: pointer;
-}
-.milestone:hover,
-.milestone:focus-visible { border-color: var(--track); color: var(--text); outline: none; }
-.milestone[hidden] { display: none; }
-.event-inspector {
-  display: grid;
-  grid-template-columns: 140px 1fr auto;
-  gap: 18px;
-  align-items: center;
-  min-height: 74px;
-  margin-top: 14px;
-  padding: 13px 16px;
-  border-left: 4px solid var(--inspector, var(--engineering));
-  background: var(--surface-alt);
-}
-.inspector-period { color: var(--inspector, var(--engineering)); font: 600 13px/1.4 var(--font-mono); }
-.inspector-copy { color: var(--text-soft); font-size: 13px; line-height: 1.55; }
-.inspector-metric { color: var(--text); font: 600 13px/1.4 var(--font-mono); white-space: nowrap; }
+/* Capability matrix */
+.capability-matrix { margin-top: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.matrix-head,
+.capability-row { display: grid; grid-template-columns: 160px repeat(4, minmax(0, 1fr)); }
+.matrix-head { min-height: 38px; color: var(--text-dim); font: 600 11px/38px var(--font-mono); }
+.matrix-head span { padding: 0 16px; border-left: 1px solid var(--line-soft); }
+.matrix-head span:first-child { padding-left: 0; border-left: 0; }
+.capability-row { border-top: 1px solid var(--line-soft); }
+.capability-label { padding: 15px 18px 14px 0; }
+.capability-label b { display: block; color: var(--lane); font: 600 11px/1.2 var(--font-mono); }
+.capability-label strong { display: block; margin-top: 7px; font-size: 15px; line-height: 1.3; }
+.capability-cell { min-width: 0; min-height: 76px; padding: 14px 16px; border-left: 1px solid var(--line-soft); background: color-mix(in srgb, var(--lane) 3%, transparent); }
+.capability-cell small { display: none; color: var(--lane); font: 600 10px/1.2 var(--font-mono); }
+.capability-cell h3 { margin: 0 0 5px; font-size: 14px; line-height: 1.35; }
+.capability-cell p { margin: 0; color: var(--text-dim); font-size: 12px; line-height: 1.5; }
+.capability-cell.is-emerging { background: color-mix(in srgb, var(--lane) 7%, var(--surface)); }
+.matrix-thesis { margin-top: 14px; padding: 12px 15px; border-left: 4px solid var(--influence); background: var(--surface-alt); font-size: 13px; line-height: 1.5; }
 
 /* Stage layouts */
 .phase-grid {
@@ -321,10 +274,12 @@ body.show-notes .speaker-note { display: block; }
 .loop-step:not(:last-child)::after { content: '→'; position: absolute; right: 7px; top: 15px; color: var(--delivery); font: 600 16px/1 var(--font-mono); }
 .loop-step b { display: block; font: 600 11px/1.3 var(--font-mono); }
 .loop-step span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; line-height: 1.4; }
-.compact-timeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.compact-item { padding-top: 12px; border-top: 3px solid var(--delivery); }
-.compact-item time { color: var(--delivery); font: 600 11px/1 var(--font-mono); }
-.compact-item p { margin: 8px 0 0; font-size: 12px; line-height: 1.55; }
+.decision-cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.decision-case { padding-top: 12px; border-top: 3px solid var(--delivery); }
+.decision-case time { color: var(--delivery); font: 600 11px/1 var(--font-mono); }
+.decision-case h3 { margin: 9px 0 5px; font-size: 15px; line-height: 1.35; }
+.decision-case p { margin: 0; color: var(--text-soft); font-size: 12px; line-height: 1.5; }
+.decision-case .case-mechanism { display: block; margin-top: 8px; color: var(--text); font-size: 12px; font-weight: 600; }
 
 /* 2025 */
 .year-bridge {
@@ -353,82 +308,44 @@ body.show-notes .speaker-note { display: block; }
   text-align: center;
 }
 .bridge-mark b { margin-bottom: 6px; font-size: 24px; }
-.transfer-strip { display: flex; align-items: center; gap: 12px; margin-top: 16px; color: var(--text-dim); font-size: 12px; }
+.transfer-strip { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-dim); font-size: 13px; }
 .transfer-strip b { color: var(--text); }
 .transfer-arrow { color: var(--platform); font: 600 16px/1 var(--font-mono); }
 
-/* 2026 */
-.agent-layout { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 42px; align-items: stretch; margin-top: 18px; }
-.grasp-proof { display: flex; flex-direction: column; justify-content: space-between; padding: 25px; border: 1px solid var(--line); background: var(--surface); }
-.grasp-proof .metric { color: var(--delivery); font: 600 52px/1 var(--font-mono); }
-.grasp-proof .metric-label { margin-top: 8px; color: var(--text-soft); font-size: 13px; }
-.grasp-sequence { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 24px; border-top: 1px solid var(--line); }
-.grasp-sequence span { padding-top: 11px; color: var(--text-dim); font: 500 9px/1.3 var(--font-mono); }
-.grasp-sequence span::before { content: ''; display: block; width: 7px; height: 7px; margin: -15px 0 7px; border-radius: 50%; background: var(--delivery); }
-.agent-stack { display: grid; gap: 8px; }
-.stack-layer { display: grid; grid-template-columns: 120px 1fr; align-items: center; min-height: 62px; padding: 11px 15px; border-left: 4px solid var(--layer); background: color-mix(in srgb, var(--layer) 8%, var(--surface)); }
-.stack-layer b { color: var(--layer); font: 600 11px/1.3 var(--font-mono); }
-.stack-layer span { color: var(--text-soft); font-size: 12px; line-height: 1.5; }
-.share-line { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
-.share-line span { padding: 6px 9px; border: 1px solid var(--line); border-radius: 3px; color: var(--text-dim); font-size: 10px; }
+/* 2026 decision matrix */
+.decision-matrix { margin-top: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.decision-head,
+.decision-row { display: grid; grid-template-columns: 170px repeat(3, minmax(0, 1fr)); }
+.decision-head { min-height: 36px; color: var(--text-dim); font: 600 11px/36px var(--font-mono); }
+.decision-head span { padding: 0 16px; border-left: 1px solid var(--line-soft); }
+.decision-head span:first-child { padding-left: 0; border-left: 0; }
+.decision-row { border-top: 1px solid var(--line-soft); }
+.decision-lane { padding: 15px 16px 14px 0; }
+.decision-lane b { display: block; color: var(--lane); font: 600 11px/1.2 var(--font-mono); }
+.decision-lane strong { display: block; margin-top: 7px; font-size: 15px; line-height: 1.3; }
+.decision-lane small { display: block; margin-top: 5px; color: var(--text-dim); font: 500 10px/1.35 var(--font-mono); }
+.decision-cell { min-width: 0; min-height: 104px; padding: 14px 16px; border-left: 1px solid var(--line-soft); background: color-mix(in srgb, var(--lane) 3%, transparent); }
+.decision-cell .cell-label { display: none; color: var(--lane); font: 600 10px/1.2 var(--font-mono); }
+.decision-cell h3 { margin: 0 0 6px; font-size: 14px; line-height: 1.35; }
+.decision-cell p { margin: 0; color: var(--text-dim); font-size: 12px; line-height: 1.5; }
+.evidence-badge { display: inline-block; margin-bottom: 9px; padding: 4px 7px; border: 1px solid color-mix(in srgb, var(--lane) 55%, var(--line)); color: var(--lane); font: 600 10px/1.2 var(--font-mono); }
 
-/* 2026 zoom */
-.recent-zoom { margin-top: 12px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.zoom-head,
-.zoom-row { display: grid; grid-template-columns: 150px repeat(3, minmax(0, 1fr)); }
-.zoom-head { min-height: 34px; color: var(--text-dim); font: 600 10px/34px var(--font-mono); }
-.zoom-head span { padding: 0 15px; border-left: 1px solid var(--line-soft); }
-.zoom-head span:first-child { border-left: 0; }
-.zoom-row { border-top: 1px solid var(--line-soft); }
-.lane-label { padding: 14px 14px 12px 0; }
-.lane-label b { display: block; color: var(--lane); font: 600 11px/1.2 var(--font-mono); }
-.lane-label strong { display: block; margin-top: 7px; font-size: 13px; line-height: 1.3; }
-.lane-label small { display: block; margin-top: 4px; color: var(--text-dim); font: 500 9px/1.35 var(--font-mono); }
-.zoom-cell { min-width: 0; padding: 13px 15px 12px; border-left: 1px solid var(--line-soft); background: color-mix(in srgb, var(--lane) 3%, transparent); }
-.zoom-cell h3 { margin-bottom: 4px; color: var(--text); font-size: 13px; }
-.zoom-cell p { margin-bottom: 0; color: var(--text-dim); font-size: 10px; line-height: 1.5; }
-.zoom-proof-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 14px; border: 1px solid var(--line); background: var(--surface); }
-.zoom-proof { padding: 12px 14px; border-right: 1px solid var(--line); }
-.zoom-proof:last-child { border-right: 0; }
-.zoom-proof b { display: block; color: var(--proof); font: 600 15px/1.25 var(--font-mono); }
-.zoom-proof span { display: block; margin-top: 4px; color: var(--text-dim); font-size: 9px; line-height: 1.4; }
-
-/* Current system loop */
-.system-flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin-top: 22px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.system-node { position: relative; min-width: 0; min-height: 148px; padding: 18px 17px 16px; border-right: 1px solid var(--line-soft); }
-.system-node:last-child { border-right: 0; }
-.system-node:not(:last-child)::after { content: '→'; position: absolute; right: -10px; top: 62px; z-index: 2; width: 19px; height: 19px; background: var(--bg); color: var(--delivery); font: 600 17px/19px var(--font-mono); text-align: center; }
-.system-node .node-step { color: var(--node); font: 600 10px/1 var(--font-mono); }
-.system-node h3 { margin-top: 14px; font-size: 15px; }
-.system-node p { margin-bottom: 0; font-size: 10px; line-height: 1.55; }
-.system-node .owner { display: inline-block; margin-top: 10px; color: var(--node); font: 500 8px/1.3 var(--font-mono); }
-.system-boundaries { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }
-.system-boundary { padding: 0 24px 0 0; border-right: 1px solid var(--line); }
-.system-boundary + .system-boundary { padding-left: 24px; }
-.system-boundary:last-child { border-right: 0; }
-.system-boundary b { display: block; color: var(--boundary); font: 600 10px/1.2 var(--font-mono); }
-.system-boundary p { margin: 7px 0 0; font-size: 11px; line-height: 1.5; }
-.system-thesis { margin-top: 18px; padding: 12px 15px; border-left: 4px solid var(--influence); background: var(--surface-alt); color: var(--text); font-size: 13px; line-height: 1.5; }
-
-/* Capability system */
-.capability-system { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 20px; border: 1px solid var(--line); }
-.capability {
-  position: relative;
-  min-height: 180px;
-  padding: 20px;
-  border-right: 1px solid var(--line);
-  background: var(--surface);
-}
-.capability:last-child { border-right: 0; }
-.capability:not(:last-child)::after { content: '→'; position: absolute; z-index: 2; right: -10px; top: 75px; width: 19px; height: 19px; background: var(--bg); color: var(--delivery); font: 600 17px/19px var(--font-mono); text-align: center; }
-.capability .cap-num { color: var(--cap); font: 600 11px/1 var(--font-mono); }
-.capability h3 { margin-top: 17px; }
-.capability p { margin-bottom: 0; font-size: 12px; line-height: 1.55; }
-.metric-tape { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin-top: 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.metric-tape div { padding: 12px 10px; border-right: 1px solid var(--line-soft); }
-.metric-tape div:last-child { border-right: 0; }
-.metric-tape strong { display: block; color: var(--metric, var(--delivery)); font: 600 18px/1 var(--font-mono); }
-.metric-tape span { display: block; margin-top: 6px; color: var(--text-dim); font-size: 9px; line-height: 1.4; }
+/* Current system layers */
+.system-layers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 20px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.system-layer { min-width: 0; padding: 18px 20px 17px; border-right: 1px solid var(--line-soft); }
+.system-layer:first-child { padding-left: 0; }
+.system-layer:last-child { padding-right: 0; border-right: 0; }
+.layer-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.layer-heading b { color: var(--layer); font: 600 11px/1.3 var(--font-mono); }
+.layer-heading .evidence-badge { flex: none; margin: 0; }
+.system-layer h3 { margin: 12px 0 0; font-size: 18px; }
+.layer-steps { display: grid; grid-template-columns: 1fr 1fr; margin-top: 14px; border-top: 1px solid var(--line-soft); }
+.layer-step { min-width: 0; padding: 13px 14px 0 0; }
+.layer-step + .layer-step { padding-left: 14px; border-left: 1px solid var(--line-soft); }
+.layer-step small { display: block; color: var(--layer); font: 600 10px/1.2 var(--font-mono); }
+.layer-step strong { display: block; margin-top: 7px; font-size: 15px; line-height: 1.3; }
+.layer-step p { margin: 6px 0 0; color: var(--text-dim); font-size: 12px; line-height: 1.5; }
+.system-thesis { margin-top: 18px; padding: 13px 16px; border-left: 4px solid var(--influence); background: var(--surface-alt); color: var(--text); font-size: 14px; line-height: 1.5; }
 
 /* Closing */
 .closing { justify-content: space-between; padding-top: 92px; padding-bottom: 82px; }
@@ -450,7 +367,7 @@ body.show-notes .speaker-note { display: block; }
   .lead { margin-bottom: 15px; font-size: 17px; }
   .phase { padding-top: 15px; padding-bottom: 13px; }
   .phase li, .year-panel li { margin-bottom: 5px; }
-  .stat-strip, .metric-tape { margin-top: 12px; }
+  .stat-strip { margin-top: 12px; }
 }
 
 @media (max-width: 900px) {
@@ -472,16 +389,14 @@ body.show-notes .speaker-note { display: block; }
   .cover-meta { margin-top: 6px; }
   .stage-rail { grid-template-columns: 1fr 1fr; width: 100%; border-top: 0; }
   .stage-block { min-height: 110px; padding: 17px 14px 12px; border-top: 2px solid var(--line); }
-  .panorama-head { display: block; }
-  .track-filters { margin-top: 12px; }
-  .track-filter { padding: 7px 8px; font-size: 10px; }
-  .panorama-grid { display: block; border-bottom: 0; }
-  .period-column { display: grid; grid-template-columns: 62px 1fr; gap: 7px; padding: 10px 0; border-right: 0; border-bottom: 1px solid var(--line-soft); }
-  .period-label { grid-column: 1; grid-row: 1; margin: 8px 0 0; }
-  .milestone { grid-column: 2; min-height: auto; margin-bottom: 0; font-size: 11px; }
-  .event-inspector { grid-template-columns: 1fr; gap: 6px; }
-  .inspector-metric { white-space: normal; }
-  .phase-grid, .compact-timeline, .capability-system { grid-template-columns: 1fr; }
+  .matrix-head { display: none; }
+  .capability-row { display: block; padding: 14px 0; }
+  .capability-label { padding: 0 0 10px; }
+  .capability-cell { min-height: auto; padding: 11px 13px; border-top: 1px solid var(--line-soft); border-left: 3px solid var(--lane); }
+  .capability-cell small { display: block; margin-bottom: 6px; }
+  .capability-cell h3 { font-size: 15px; }
+  .capability-cell p { font-size: 13px; }
+  .phase-grid { grid-template-columns: 1fr; }
   .phase { padding: 18px 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .phase + .phase { padding-left: 0; }
   .phase:last-child { border-bottom: 0; }
@@ -491,34 +406,25 @@ body.show-notes .speaker-note { display: block; }
   .governance-loop { grid-template-columns: 1fr; }
   .loop-step { border-right: 0; border-bottom: 1px solid var(--line); }
   .loop-step:not(:last-child)::after { content: '↓'; top: auto; right: 14px; bottom: -10px; background: var(--surface); }
-  .compact-item { margin-top: 3px; }
+  .decision-cases { grid-template-columns: 1fr; gap: 14px; }
   .year-bridge { grid-template-columns: 1fr; }
   .year-panel, .year-panel:last-child { padding: 20px 0; }
   .bridge-mark { min-height: 70px; border: 1px solid var(--line); }
   .transfer-strip { align-items: flex-start; flex-wrap: wrap; }
-  .agent-layout { grid-template-columns: 1fr; gap: 16px; }
-  .stack-layer { grid-template-columns: 90px 1fr; }
-  .zoom-head { display: none; }
-  .zoom-row { grid-template-columns: 1fr; }
-  .lane-label { padding: 16px 0 10px; }
-  .zoom-cell { padding: 11px 13px; border-top: 1px solid var(--line-soft); border-left: 3px solid var(--lane); }
-  .zoom-proof-strip { grid-template-columns: 1fr; }
-  .zoom-proof { border-right: 0; border-bottom: 1px solid var(--line); }
-  .zoom-proof:last-child { border-bottom: 0; }
-  .system-flow { grid-template-columns: 1fr; }
-  .system-node { min-height: auto; padding: 17px 0; border-right: 0; border-bottom: 1px solid var(--line-soft); }
-  .system-node:last-child { border-bottom: 0; }
-  .system-node:not(:last-child)::after { content: '↓'; right: 17px; top: auto; bottom: -10px; }
-  .system-boundaries { grid-template-columns: 1fr; }
-  .system-boundary,
-  .system-boundary + .system-boundary { padding: 14px 0; border-right: 0; border-bottom: 1px solid var(--line); }
-  .system-boundary:last-child { border-bottom: 0; }
-  .capability { min-height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
-  .capability:last-child { border-bottom: 0; }
-  .capability:not(:last-child)::after { content: '↓'; right: 20px; top: auto; bottom: -10px; }
-  .metric-tape { grid-template-columns: 1fr 1fr 1fr; }
-  .metric-tape div:nth-child(3) { border-right: 0; }
-  .metric-tape div:nth-child(-n+3) { border-bottom: 1px solid var(--line-soft); }
+  .decision-head { display: none; }
+  .decision-row { display: block; padding: 14px 0; }
+  .decision-lane { padding: 0 0 10px; }
+  .decision-cell { min-height: auto; padding: 11px 13px; border-top: 1px solid var(--line-soft); border-left: 3px solid var(--lane); }
+  .decision-cell .cell-label { display: block; margin-bottom: 6px; }
+  .decision-cell h3 { font-size: 15px; }
+  .decision-cell p { font-size: 13px; }
+  .system-layers { grid-template-columns: 1fr; }
+  .system-layer,
+  .system-layer:first-child,
+  .system-layer:last-child { padding: 17px 0; border-right: 0; border-bottom: 1px solid var(--line-soft); }
+  .system-layer:last-child { border-bottom: 0; }
+  .layer-heading { align-items: center; }
+  .layer-step p { font-size: 12px; }
   .closing { gap: 34px; }
   .closing-grid { grid-template-columns: 1fr; }
   .discussion, .discussion + .discussion { padding: 18px 0; border-left: 0; border-bottom: 1px solid var(--line); }
@@ -578,26 +484,42 @@ body.show-notes .speaker-note { display: block; }
   </section>
 
   <section class="slide" data-index="02">
-    <div class="panorama-head">
-      <div>
-        <div class="eyebrow">THE PANORAMA · 点击节点查看细节</div>
-        <h2>从 2021.08 起，一条连续的能力曲线</h2>
+    <div class="eyebrow">THE THROUGH-LINES · 四条能力线</div>
+    <h2>变化的是场景，累积的是系统能力</h2>
+    <p class="lead">从自动驾驶到机器人与 Agent，同一套方法在不同复杂系统中持续升级</p>
+    <div class="capability-matrix" aria-label="2021至2026四条能力演进曲线">
+      <div class="matrix-head" aria-hidden="true"><span>CAPABILITY</span><span>2021.08—2022</span><span>2023—2024</span><span>2025</span><span>2026</span></div>
+      <div class="capability-row" style="--lane: var(--engineering)">
+        <div class="capability-label"><b>ENGINEERING</b><strong>工程系统</strong></div>
+        <div class="capability-cell"><small>2021.08—2022</small><h3>统一代码与平台</h3><p>one-repo · 固定发版 · 重放仿真</p></div>
+        <div class="capability-cell"><small>2023—2024</small><h3>从节点到系统治理</h3><p>链路时延 · GPU 调度 · 平台观测</p></div>
+        <div class="capability-cell"><small>2025</small><h3>迁入机器人交付</h3><p>工站 · 数据管线 · 模型部署</p></div>
+        <div class="capability-cell"><small>2026</small><h3>三层智能系统</h3><p>身体 · 大脑 · 研发基础设施</p></div>
       </div>
-      <div class="track-filters" role="group" aria-label="按主题筛选时间线">
-        <button class="track-filter active" type="button" data-filter="all" aria-pressed="true">全部</button>
-        <button class="track-filter" type="button" data-filter="engineering" aria-pressed="false">技术</button>
-        <button class="track-filter" type="button" data-filter="delivery" aria-pressed="false">交付</button>
-        <button class="track-filter" type="button" data-filter="platform" aria-pressed="false">平台</button>
-        <button class="track-filter" type="button" data-filter="influence" aria-pressed="false">影响</button>
+      <div class="capability-row" style="--lane: var(--platform)">
+        <div class="capability-label"><b>VERIFICATION</b><strong>验证体系</strong></div>
+        <div class="capability-cell"><small>2021.08—2022</small><h3>低成本暴露问题</h3><p>Record Replay · 发版报告</p></div>
+        <div class="capability-cell"><small>2023—2024</small><h3>测试左移与闭环</h3><p>SIL · DIL · Sanitizer · Crash Loop</p></div>
+        <div class="capability-cell"><small>2025</small><h3>进入机器人与模型</h3><p>Robot Test · VLN Eval · 云端批量</p></div>
+        <div class="capability-cell"><small>2026</small><h3>验收标准机器可读</h3><p>Metric · Visual Harness · Agent Eval</p></div>
+      </div>
+      <div class="capability-row" style="--lane: var(--delivery)">
+        <div class="capability-label"><b>ORGANIZATION</b><strong>组织放大</strong></div>
+        <div class="capability-cell"><small>2021.08—2022</small><h3>从个人支持到自助交付</h3><p>on-call · 培训 · 固定节奏</p></div>
+        <div class="capability-cell"><small>2023—2024</small><h3>让机制承接协作</h3><p>文档 · Workshop · 自动路由</p></div>
+        <div class="capability-cell"><small>2025</small><h3>跨领域重组小团队</h3><p>工站交付 · 评测核心组</p></div>
+        <div class="capability-cell"><small>2026</small><h3>把流程变成团队能力</h3><p>Skill · Workflow · 可交接验收</p></div>
+      </div>
+      <div class="capability-row" style="--lane: var(--influence)">
+        <div class="capability-label"><b>EMERGING LINE</b><strong>AI Coding</strong></div>
+        <div class="capability-cell"><small>2021.08—2022</small><h3>工程自动化先行</h3><p>CI · 静态检查 · 报告生成</p></div>
+        <div class="capability-cell is-emerging"><small>2023—2024</small><h3>LLM 进入工程流程</h3><p>LLM Code Review · 人工复核</p></div>
+        <div class="capability-cell is-emerging"><small>2025</small><h3>从个人工具进入团队</h3><p>平台接入 · 项目实践 · 方法输出</p></div>
+        <div class="capability-cell is-emerging"><small>2026</small><h3>从写代码到驱动系统</h3><p>RoboHarness · Agent SDK · Workflow</p></div>
       </div>
     </div>
-    <div class="panorama-grid" id="panorama" aria-label="2021至2026工作时间线"></div>
-    <div class="event-inspector" id="eventInspector" aria-live="polite">
-      <div class="inspector-period">READING GUIDE</div>
-      <div class="inspector-copy">先看阶段变化，再用主题筛选追踪同一能力如何跨领域复用</div>
-      <div class="inspector-metric">4 stages / 9 halves</div>
-    </div>
-    <div class="speaker-note">这页是讨论入口。现场可以先讲四阶段总览，也可以按“技术、交付、平台、影响”筛选，让听众追问自己感兴趣的线。</div>
+    <div class="matrix-thesis"><b>迁移的不是代码</b>　而是让复杂系统可观测、可验证、可交接的方法</div>
+    <div class="speaker-note">这页不再罗列九个半年的项目，而是展示四条能力线如何穿越领域。AI Coding 是后期出现的新线，但它复用了早期自动化、验收和工程治理的基础。</div>
   </section>
 
   <section class="slide" data-index="03">
@@ -653,18 +575,24 @@ body.show-notes .speaker-note { display: block; }
       <div class="loop-step"><b>PROFILING</b><span>耗时、时延与 GPU</span></div>
       <div class="loop-step"><b>CRASH LOOP</b><span>自动分发、复盘、闭环</span></div>
     </div>
-    <div class="compact-timeline">
-      <article class="compact-item">
-        <time>2023 H2</time>
-        <p>高低配性能治理，ASAN/UBSAN 进入 Daily SIL，Crash 统一分发与复盘</p>
+    <div class="decision-cases">
+      <article class="decision-case">
+        <time>2023 H2 · SHIFT LEFT</time>
+        <h3>问题进入发版后才集中暴露</h3>
+        <p>判断：不能继续依赖上车后排查</p>
+        <span class="case-mechanism">留下 Daily SIL · ASAN/UBSAN · Crash 复盘</span>
       </article>
-      <article class="compact-item">
-        <time>2024 H1</time>
-        <p>SOP 风险处置、内存静态化、LLM Code Review 与跨团队质量委员会</p>
+      <article class="decision-case">
+        <time>2024 H1 · RECOVER</time>
+        <h3>封版前两周才收到 CPU 性能风险</h3>
+        <p>判断：先恢复交付，再把资源风险量化</p>
+        <span class="case-mechanism">留下资源监控 · 压测 · 内存静态化</span>
       </article>
-      <article class="compact-item">
-        <time>2024 H2</time>
-        <p>用耗时优化、主动丢帧、多组测试与锁定配置恢复交付，同期完善长期治理</p>
+      <article class="decision-case">
+        <time>2024 H2 · SYSTEMIZE</time>
+        <h3>多任务进入共享资源后帧率失稳</h3>
+        <p>判断：局部优化不够，必须控制调度与干扰</p>
+        <span class="case-mechanism">留下 GPU 调度 · Daily Nsys · 自动路由</span>
       </article>
     </div>
     <div class="stat-strip">
@@ -721,56 +649,64 @@ body.show-notes .speaker-note { display: block; }
 
   <section class="slide" data-index="06">
     <div class="eyebrow">STAGE 04 · 2026 H1 → NOW</div>
-    <h2>半年内，把机器人智能补成三层系统</h2>
-    <p class="lead">不是同时做三个项目，而是并行补齐身体、大脑与研发基础设施</p>
-    <div class="recent-zoom" aria-label="2026 最近半年三泳道时间线">
-      <div class="zoom-head" aria-hidden="true"><span>TRACK</span><span>JAN—MAR</span><span>APR—MAY</span><span>JUN—JUL</span></div>
-      <div class="zoom-row" style="--lane: var(--delivery)">
-        <div class="lane-label"><b>BODY</b><strong>机器人身体</strong><small>gr00t-wholebodycontrol</small></div>
-        <div class="zoom-cell"><h3>先交付可控的抓取链路</h3><p>限定物体与范围 · 6D 位姿 · 轨迹验证 · 分阶段执行</p></div>
-        <div class="zoom-cell"><h3>从单机能力到任务化运行时</h3><p>G1 / Realman · GR00T WBC 集成 · 部署与证据接口</p></div>
-        <div class="zoom-cell"><h3>向多本体与可信验证推进</h3><p>G2 仿真契约 · FoundationPose · 仿真与硬件证明分层</p></div>
+    <h2>真正的升级，是把约束变成三层系统边界</h2>
+    <p class="lead">不按项目数量罗列进度，而是回答每一层面对什么限制、作了什么判断、留下什么证据</p>
+    <div class="decision-matrix" aria-label="2026 机器人智能三层决策矩阵">
+      <div class="decision-head" aria-hidden="true"><span>LAYER</span><span>CONSTRAINT</span><span>DECISION</span><span>EVIDENCE</span></div>
+      <div class="decision-row" style="--lane: var(--delivery)">
+        <div class="decision-lane"><b>BODY</b><strong>机器人身体</strong><small>gr00t-wholebodycontrol</small></div>
+        <div class="decision-cell"><b class="cell-label">CONSTRAINT</b><h3>无抓取积累，交付周期短</h3><p>目标物体与抓取范围有限，先要跑通家庭空间全链路</p></div>
+        <div class="decision-cell"><b class="cell-label">DECISION</b><h3>先选择确定性路线</h3><p>6D 位姿 · 运动规划 · 轨迹验证 · 分阶段执行</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">HARDWARE VERIFIED · SCOPED</span><h3>&gt;90% · 约 1.5 月</h3><p>G1 与 RealMan 两种本体，限定物体与范围</p></div>
       </div>
-      <div class="zoom-row" style="--lane: var(--platform)">
-        <div class="lane-label"><b>BRAIN</b><strong>机器人大脑</strong><small>roboclaws</small></div>
-        <div class="zoom-cell"><h3>先定义 Agent 与机器人的边界</h3><p>需要看到什么 · 可以调用什么 · 如何证明任务完成</p></div>
-        <div class="zoom-cell"><h3>从环境探索到 Skill + MCP</h3><p>多 Agent / VLM 原型 · 自主循环 · 能力工具化</p></div>
-        <div class="zoom-cell"><h3>进入家庭开放任务</h3><p>建图 · 清理 · 开放目标 · Operator Console · Eval</p></div>
+      <div class="decision-row" style="--lane: var(--platform)">
+        <div class="decision-lane"><b>BRAIN</b><strong>机器人大脑</strong><small>roboclaws</small></div>
+        <div class="decision-cell"><b class="cell-label">CONSTRAINT</b><h3>固定流程无法处理开放目标</h3><p>系统需要理解“我渴了”一类目标，同时守住机器人能力边界</p></div>
+        <div class="decision-cell"><b class="cell-label">DECISION</b><h3>把开放决策与受控能力分层</h3><p>MCP 提供稳定原语，Skill 组合能力，Agent SDK 负责理解与规划</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">SIM VERIFIED · ROBOT WIP</span><h3>3 类家庭任务面</h3><p>建图 · 开放目标 · 清理；仿真与 Digital Twin 已验证</p></div>
       </div>
-      <div class="zoom-row" style="--lane: var(--engineering)">
-        <div class="lane-label"><b>INFRA</b><strong>研发基础设施</strong><small>executor</small></div>
-        <div class="zoom-cell"><h3>从零散工具走向统一入口</h3><p>日志、数据、仿真与配置收进同一 CLI</p></div>
-        <div class="zoom-cell"><h3>让 Agent 能操作研发系统</h3><p>Skill 接入 · 研发协作 · 仿真报告与流水线</p></div>
-        <div class="zoom-cell"><h3>把流程变成可恢复工作流</h3><p>云端运行 · 批量仿真 / 重建 · 资源与结果回收</p></div>
+      <div class="decision-row" style="--lane: var(--engineering)">
+        <div class="decision-lane"><b>INFRA</b><strong>研发基础设施</strong><small>executor</small></div>
+        <div class="decision-cell"><b class="cell-label">CONSTRAINT</b><h3>研发横跨多个异步系统</h3><p>云端运行、存储、仿真、重建和结果回收难以靠对话记忆恢复</p></div>
+        <div class="decision-cell"><b class="cell-label">DECISION</b><h3>扩展既有团队平台</h3><p>为 Executor 补齐机器人入口，以 CLI + Skill + Workflow 让 Agent 操作研发系统</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">TEAM PLATFORM · 2026 EXTENDED</span><h3>可恢复、可收集证据</h3><p>机器人入口 · CloudML / Storage · 批量仿真 / 重建 · Workflow</p></div>
       </div>
     </div>
-    <div class="zoom-proof-strip" aria-label="最近半年代表性结果">
-      <div class="zoom-proof" style="--proof: var(--delivery)"><b>&gt;90% · 约 1.5 月</b><span>限定物体与范围的首版抓取结果</span></div>
-      <div class="zoom-proof" style="--proof: var(--platform)"><b>3 类家庭任务面</b><span>建图 · 开放目标 · 清理</span></div>
-      <div class="zoom-proof" style="--proof: var(--engineering)"><b>ROBOHARNESS · 一等奖</b><span>Metric + Visual Harness 建立 Agent 验收层</span></div>
-    </div>
-    <div class="speaker-note">这一页先讲一个范围判断：短周期交付不等于开放操作的最终解法，第一阶段刻意选择限定物体、可控链路跑通结果。随后身体层走向任务系统，大脑层处理开放目标，基础设施层把抓取项目的 Visual Harness 抽象成 RoboHarness，并以 Metric + Visual Harness 建立 Agent 验收层。G2 只代表仿真契约和验证推进，不代表已完成真机部署。</div>
+    <div class="speaker-note">身体层展示短周期交付与最终解法之间的范围判断；大脑层展示开放决策与确定性动作的边界；基础设施层基于既有团队 Executor 扩展。本地仓库证据显示 Executor 始于 2023 年，2026 年 6—7 月完成机器人入口、CloudML、存储与可恢复 Workflow 的集中扩展。</div>
   </section>
 
   <section class="slide" data-index="07">
-    <div class="eyebrow">THE CURRENT SYSTEM · 三个 REPO，一条闭环</div>
-    <h2>从自然语言目标，到可验证的机器人行动</h2>
-    <p class="lead">一个负责决策，一个负责行动，一个负责让研发过程规模化</p>
-    <div class="system-flow" aria-label="机器人智能端到端闭环">
-      <article class="system-node" style="--node: var(--influence)"><div class="node-step">01 / GOAL</div><h3>开放目标</h3><p>用户描述想完成的事情，而不是指定动作序列</p><span class="owner">USER → ROBOCLAWS</span></article>
-      <article class="system-node" style="--node: var(--platform)"><div class="node-step">02 / PLAN</div><h3>Agent 决策</h3><p>用 Skill 组织策略，通过 MCP 调用受控能力</p><span class="owner">ROBOCLAWS</span></article>
-      <article class="system-node" style="--node: var(--delivery)"><div class="node-step">03 / ACT</div><h3>任务化动作</h3><p>感知、6D 位姿、运动规划、抓取与放置</p><span class="owner">GR00T MANIPULATION</span></article>
-      <article class="system-node" style="--node: var(--delivery)"><div class="node-step">04 / WORLD</div><h3>环境执行</h3><p>仿真、Digital Twin 与机器人按证据等级分层</p><span class="owner">SIM → ROBOT</span></article>
-      <article class="system-node" style="--node: var(--platform)"><div class="node-step">05 / VERIFY</div><h3>结果验收</h3><p>Metric、Visual Harness 与 Eval 回答是否完成</p><span class="owner">ROBOCLAWS</span></article>
-      <article class="system-node" style="--node: var(--engineering)"><div class="node-step">06 / SCALE</div><h3>批量迭代</h3><p>运行、恢复、收集证据，再进入下一轮改进</p><span class="owner">EXECUTOR</span></article>
+    <div class="eyebrow">THE CURRENT SYSTEM · 三层能力，一条证据闭环</div>
+    <h2>从自然语言目标，到分层可验证的机器人行动</h2>
+    <p class="lead">开放决策、确定性动作和验收扩展各守边界，再用证据连成端到端闭环</p>
+    <div class="system-layers" aria-label="机器人智能三层能力闭环">
+      <article class="system-layer" style="--layer: var(--platform)">
+        <div class="layer-heading"><b>OPEN DECISION</b><span class="evidence-badge">SIM VERIFIED · ROBOT WIP</span></div>
+        <h3>RoboClaws</h3>
+        <div class="layer-steps">
+          <div class="layer-step"><small>01 / GOAL</small><strong>开放目标</strong><p>用户描述想完成的事，不指定动作序列</p></div>
+          <div class="layer-step"><small>02 / PLAN</small><strong>Agent 决策</strong><p>Skill 组织策略，MCP 暴露受控能力</p></div>
+        </div>
+      </article>
+      <article class="system-layer" style="--layer: var(--delivery)">
+        <div class="layer-heading"><b>DETERMINISTIC ACTION</b><span class="evidence-badge">HARDWARE VERIFIED · SCOPED</span></div>
+        <h3>GR00T Manipulation</h3>
+        <div class="layer-steps">
+          <div class="layer-step"><small>03 / ACT</small><strong>任务化动作</strong><p>感知、6D 位姿、规划、抓取与放置</p></div>
+          <div class="layer-step"><small>04 / WORLD</small><strong>分层执行</strong><p>仿真、Digital Twin 与真机分层验证</p></div>
+        </div>
+      </article>
+      <article class="system-layer" style="--layer: var(--engineering)">
+        <div class="layer-heading"><b>EVIDENCE & SCALE</b><span class="evidence-badge">TEAM PLATFORM · 2026 EXTENDED</span></div>
+        <h3>RoboHarness + Executor</h3>
+        <div class="layer-steps">
+          <div class="layer-step"><small>05 / VERIFY</small><strong>结果验收</strong><p>Metric、Visual Harness 与 Eval 判定是否完成</p></div>
+          <div class="layer-step"><small>06 / SCALE</small><strong>批量迭代</strong><p>Executor 运行、恢复并收集下一轮证据</p></div>
+        </div>
+      </article>
     </div>
-    <div class="system-boundaries">
-      <div class="system-boundary" style="--boundary: var(--platform)"><b>OPEN DECISION</b><p>Agent 可以面对开放目标，但只能在明确能力边界内行动</p></div>
-      <div class="system-boundary" style="--boundary: var(--delivery)"><b>DETERMINISTIC ACTION</b><p>机器人动作由任务、规划和控制契约承接，不让模型直接越过安全边界</p></div>
-      <div class="system-boundary" style="--boundary: var(--engineering)"><b>EVIDENCE & SCALE</b><p>每次执行留下可比较证据，并沉淀为团队可复用、可交接的工作流</p></div>
-    </div>
-    <div class="system-thesis"><b>AI Coding 的下一步</b>　从生成代码，到机器可验收，再到驱动研发系统 · RoboHarness 是贯穿 Verify / Scale 的验收方法层</div>
-    <div class="speaker-note">讲这一页时沿箭头走一遍：RoboClaws 管开放决策与结果验收，GR00T manipulation 管确定性动作，Executor 管批量研发闭环。RoboHarness 不是第四个运行时仓库，而是贯穿 Verify 与 Scale 的验收方法层。最重要的不是三个仓库，而是开放智能、确定性控制和证据体系之间的边界。</div>
+    <div class="system-thesis"><b>AI Coding 的下一步</b>　从生成代码，到机器可验收，再到驱动研发系统 · RoboHarness 贯穿 Verify，Executor 承接 Scale</div>
+    <div class="speaker-note">这里讲的是三个能力边界，不是三个人独立完成的项目。RoboClaws 管开放决策，GR00T Manipulation 管确定性动作，RoboHarness 与 Executor 分别承接验收和规模化运行。Executor 是 2023 年开始的多人团队平台，这里展示的是 2026 年面向机器人和 Agent 工作流的扩展。</div>
   </section>
 
   <section class="slide closing" data-index="08">
@@ -805,126 +741,6 @@ body.show-notes .speaker-note { display: block; }
 
 <script src="../assets/deck-runtime.js"></script>
 <script>
-const trackColors = {
-  engineering: 'var(--engineering)',
-  delivery: 'var(--delivery)',
-  platform: 'var(--platform)',
-  influence: 'var(--influence)',
-};
-
-const periods = [
-  {
-    label: '2021.08—22 H1',
-    events: [
-      { track: 'engineering', title: '多平台 one-repo', detail: '从 2021.08 起在迁移期维护双栈，并统一多平台、多车型感知代码', metric: '一套代码 / 多平台' },
-      { track: 'platform', title: '发版与重放仿真', detail: '建立固定发版、报告、对比视频和 record 重放机制', metric: '每周两次固定节奏' },
-    ],
-  },
-  {
-    label: '2022 H2',
-    events: [
-      { track: 'delivery', title: 'ORIN QNX 量产适配', detail: '完成量产平台适配并跑通关键驾驶任务', metric: '量产平台落地' },
-      { track: 'engineering', title: 'ComputeModule', detail: '推动感知工程重构并推广统一计算模块框架', metric: '框架化起点' },
-    ],
-  },
-  {
-    label: '2023 H1',
-    events: [
-      { track: 'engineering', title: '动态 Unit DAG', detail: '升级 ComputeModule，支撑高低配与行泊一体架构', metric: 'clang-tidy 95%' },
-      { track: 'influence', title: '跨团队工程协作', detail: '通过文档、培训和技术群降低协作门槛', metric: '技术群 160+' },
-    ],
-  },
-  {
-    label: '2023 H2',
-    events: [
-      { track: 'platform', title: 'Daily SIL 质量门', detail: '将运行时检查接入日常仿真，建立 Crash 分发与复盘', metric: '质量左移' },
-      { track: 'delivery', title: '高低配性能治理', detail: '系统优化绑核、部署、消息和时间戳语义', metric: '满足主动安全时延' },
-    ],
-  },
-  {
-    label: '2024 H1',
-    events: [
-      { track: 'delivery', title: 'SOP 性能攻坚', detail: '处理封版风险并完成关键模块时延优化', metric: 'P99 400→200ms' },
-      { track: 'platform', title: '内存静态化', detail: '把内存和 CPU 优化方案落到实际感知模块', metric: '内存 −50% / CPU −40%' },
-    ],
-  },
-  {
-    label: '2024 H2',
-    events: [
-      { track: 'engineering', title: 'GPU 单 Stream 调度', detail: '降低多模型任务相互干扰，支撑新平台交付', metric: '调度受控' },
-      { track: 'platform', title: 'DIL + Crash 自动路由', detail: '升级稳定压测平台并按模块自动分发问题', metric: 'Crash 闭环 100%' },
-    ],
-  },
-  {
-    label: '2025 H1',
-    events: [
-      { track: 'delivery', title: '机器人工站 V2—V4', detail: '完成连续版本交付和 300+ 组全流程测试', metric: '零延期 / 流程 −40%+' },
-      { track: 'platform', title: '测试体系 0→1', detail: '建立机器人测试流程、任务看板与性能报表', metric: 'CPU P90 <60%' },
-    ],
-  },
-  {
-    label: '2025 H2',
-    events: [
-      { track: 'platform', title: 'VLN 数据与评测', detail: '升级数据管线，建设自动指令生成和云端批量评测', metric: '数据 2× / workload 15×' },
-      { track: 'influence', title: '专利与 AI 课程', detail: '沉淀机器人数据方法并推动 AI 辅助编程', metric: '2 项专利' },
-    ],
-  },
-  {
-    label: '2026 H1→NOW',
-    events: [
-      { track: 'delivery', title: '机器人身体', detail: '把感知、6D 位姿、规划与控制组织成任务化抓取链路，并向多本体验证推进', metric: '首版 >90%' },
-      { track: 'platform', title: '机器人大脑', detail: '用 Skill、MCP、Agent View 与 Eval 支撑建图、开放目标和家庭清理', metric: '3 类任务面' },
-      { track: 'engineering', title: '研发基础设施', detail: '把云端运行、仿真、重建和结果回收变成 Agent 可调用的工作流', metric: 'CLI · Skill · Workflow' },
-      { track: 'influence', title: 'RoboHarness', detail: '把抓取项目中的 Visual Harness 抽象成 Metric + Visual Harness 验收层', metric: 'AI Hackathon 一等奖' },
-    ],
-  },
-];
-
-const panorama = document.querySelector('#panorama');
-const inspector = document.querySelector('#eventInspector');
-
-periods.forEach((period) => {
-  const column = document.createElement('div');
-  column.className = 'period-column';
-  const label = document.createElement('div');
-  label.className = 'period-label';
-  label.textContent = period.label;
-  column.appendChild(label);
-
-  period.events.forEach((event) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'milestone';
-    button.dataset.track = event.track;
-    button.style.setProperty('--track', trackColors[event.track]);
-    button.textContent = event.title;
-    button.addEventListener('click', () => {
-      inspector.style.setProperty('--inspector', trackColors[event.track]);
-      inspector.querySelector('.inspector-period').textContent = period.label;
-      inspector.querySelector('.inspector-copy').textContent = event.detail;
-      inspector.querySelector('.inspector-metric').textContent = event.metric;
-    });
-    column.appendChild(button);
-  });
-
-  panorama.appendChild(column);
-});
-
-document.querySelectorAll('.track-filter').forEach((filter) => {
-  filter.addEventListener('click', () => {
-    document.querySelectorAll('.track-filter').forEach((item) => {
-      item.classList.remove('active');
-      item.setAttribute('aria-pressed', 'false');
-    });
-    filter.classList.add('active');
-    filter.setAttribute('aria-pressed', 'true');
-    const selected = filter.dataset.filter;
-    document.querySelectorAll('.milestone').forEach((event) => {
-      event.hidden = selected !== 'all' && event.dataset.track !== selected;
-    });
-  });
-});
-
 window.createDeckRuntime({
   notesToggleSelector: '#notesToggle',
   styleToggleSelector: '#styleToggle',
