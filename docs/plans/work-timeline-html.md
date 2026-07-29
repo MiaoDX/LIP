@@ -14,7 +14,7 @@
 
 ## Goal
 
-Create a public, externally shareable HTML deck that explains the 2022-2026
+Create a public, externally shareable HTML deck that explains the 2021-2026
 progression from perception engineering through robotics and agent systems,
 with a focused zoom into the most recent half-year.
 
