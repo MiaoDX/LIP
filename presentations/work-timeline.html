@@ -333,12 +333,34 @@ body.show-notes .speaker-note { display: block; }
 .transfer-stage h3 { margin: 9px 0 7px; }
 .transfer-stage .stage-result { color: var(--text); font: 600 24px/1.15 var(--font-mono); }
 .transfer-stage p { margin: 7px 0 0; font-size: 11px; line-height: 1.5; }
-.field-band { display: grid; grid-template-columns: 1.35fr repeat(4, minmax(0, .65fr)); margin-top: 15px; border: 1px solid var(--line); }
-.field-result, .field-scope { padding: 12px 14px; }
-.field-result { background: color-mix(in srgb, var(--platform) 8%, var(--surface)); }
-.field-result strong { color: var(--platform); font: 600 18px/1.2 var(--font-mono); }
-.field-result span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; }
-.field-scope { display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--line); color: var(--text-soft); font-size: 11px; text-align: center; }
+.transfer-boundary {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  margin-top: 15px;
+  border: 1px solid var(--line);
+}
+.boundary-result,
+.boundary-lane { min-width: 0; padding: 12px 14px; }
+.boundary-result { background: color-mix(in srgb, var(--platform) 8%, var(--surface)); }
+.boundary-result strong { color: var(--platform); font: 600 18px/1.2 var(--font-mono); }
+.boundary-result span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 10px; }
+.boundary-lane { border-left: 1px solid var(--line); }
+.boundary-lane b { display: block; color: var(--delivery); font: 600 10px/1.2 var(--font-mono); }
+.boundary-lane.reuse b { color: var(--platform); }
+.boundary-lane span { display: block; margin-top: 6px; color: var(--text-soft); font-size: 11px; line-height: 1.45; }
+
+/* VLM evaluation loop */
+.eval-loop { margin-top: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.eval-loop svg { display: block; width: 100%; height: auto; max-height: 242px; color: var(--platform); }
+.eval-node { fill: color-mix(in srgb, var(--platform) 6%, var(--surface)); stroke: var(--line); stroke-width: 1; }
+.eval-node.accent { fill: color-mix(in srgb, var(--influence) 10%, var(--surface)); stroke: var(--influence); }
+.eval-arrow { fill: none; stroke: var(--platform); stroke-width: 2; }
+.eval-arrow-head { fill: var(--platform); }
+.eval-title { fill: var(--text); font: 600 15px/1 var(--font-body); }
+.eval-meta { fill: var(--text-dim); font: 500 11px/1 var(--font-mono); }
+.eval-step { fill: var(--platform); font: 600 10px/1 var(--font-mono); }
+.eval-return { fill: var(--platform); font: 600 11px/1 var(--font-mono); }
+.eval-loop-mobile { display: none; }
 
 /* 2026 decision matrix */
 .decision-matrix { margin-top: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -458,10 +480,16 @@ body.show-notes .speaker-note { display: block; }
   .transfer-stage + .transfer-stage { padding: 17px 0; border-left: 0; border-bottom: 1px solid var(--line); }
   .transfer-stage:last-child { border-bottom: 0; }
   .transfer-stage:not(:last-child)::after { content: '↓'; top: auto; right: 8px; bottom: -10px; padding: 0 4px; background: var(--bg); }
-  .field-band { grid-template-columns: 1fr 1fr; }
-  .field-result { grid-column: 1 / -1; }
-  .field-scope { min-height: 42px; border-top: 1px solid var(--line); }
-  .field-scope:nth-child(2n) { border-left: 0; }
+  .transfer-boundary { grid-template-columns: 1fr; }
+  .boundary-lane { border-top: 1px solid var(--line); border-left: 0; }
+  .eval-loop svg { display: none; }
+  .eval-loop-mobile { display: grid; }
+  .eval-mobile-step { position: relative; padding: 14px 12px; border-bottom: 1px solid var(--line-soft); }
+  .eval-mobile-step:last-child { border-bottom: 0; }
+  .eval-mobile-step:not(:last-child)::after { content: '↓'; position: absolute; right: 10px; bottom: -11px; z-index: 1; padding: 0 4px; background: var(--bg); color: var(--platform); font: 600 16px/1 var(--font-mono); }
+  .eval-mobile-step b { color: var(--platform); font: 600 10px/1.2 var(--font-mono); }
+  .eval-mobile-step strong { display: block; margin-top: 6px; font-size: 15px; }
+  .eval-mobile-step span { display: block; margin-top: 4px; color: var(--text-dim); font-size: 12px; }
   .decision-head { display: none; }
   .decision-row { display: block; padding: 14px 0; }
   .decision-lane { padding: 0 0 10px; }
@@ -522,7 +550,7 @@ body.show-notes .speaker-note { display: block; }
       </div>
       <div class="stage-block" style="--stage: var(--platform)">
         <div class="year">2025</div>
-        <strong>机器人产品化</strong>
+        <strong>回到机器人一线</strong>
         <span>工站 · 数据 · 模型 · 评测</span>
       </div>
       <div class="stage-block" style="--stage: var(--influence)">
@@ -620,9 +648,9 @@ body.show-notes .speaker-note { display: block; }
     <h2>让高频变更，仍然能够稳定交付</h2>
     <p class="lead">算法效果会波动，系统依赖会互相影响，真正的挑战是让快与稳同时成立</p>
     <div class="pressure-rail" aria-label="感知研发交付压力">
-      <div class="pressure-signal"><b>百人级</b><span>研发与上下游共同协作</span></div>
-      <div class="pressure-signal"><b>多模块</b><span>局部涨点不等于系统体验提升</span></div>
-      <div class="pressure-signal"><b>高频变更</b><span>每次合入都可能引入效果或稳定性回退</span></div>
+      <div class="pressure-signal"><b>A ↑ / B ↓</b><span>一个方案优化，另一个方案退化</span></div>
+      <div class="pressure-signal"><b>指标 ↑ / 体验 ↓</b><span>离线涨点，车端体验反而变差</span></div>
+      <div class="pressure-signal"><b>高频变更</b><span>人工检查无法覆盖百人级协作</span></div>
     </div>
     <div class="delivery-system" aria-label="从发版后救火到测试左移">
       <div class="system-state before">
@@ -692,14 +720,14 @@ body.show-notes .speaker-note { display: block; }
 
   <section class="slide" data-index="06">
     <div class="eyebrow">STAGE 03 · 2025 H1 · ROBOT DELIVERY</div>
-    <h2>不是“学会机器人”后再交付</h2>
-    <p class="lead">先回到一线，用已经验证过的交付方法接住新领域问题</p>
+    <h2>不是第一次做机器人，而是带着量产经验回来</h2>
+    <p class="lead">回到一线，复用工程方法，也承认新领域必须重新学习</p>
     <div class="role-shift" aria-label="从团队负责人到机器人一线交付">
-      <div class="shift-node"><b>ROLE</b><span>感知团队负责人</span></div>
+      <div class="shift-node"><b>2018 · ORIGIN</b><span>RoboMaster 算法</span></div>
       <div class="shift-arrow">→</div>
-      <div class="shift-node"><b>RESET</b><span>回到机器人一线</span></div>
+      <div class="shift-node"><b>2021—24 · SCALE</b><span>感知系统负责人</span></div>
       <div class="shift-arrow">→</div>
-      <div class="shift-node"><b>2—3 WEEKS</b><span>补齐知识并进入核心交付</span></div>
+      <div class="shift-node"><b>2025 · RETURN</b><span>2—3 周进入核心交付</span></div>
     </div>
     <div class="transfer-pipeline" aria-label="机器人集成交付三段式">
       <article class="transfer-stage">
@@ -711,42 +739,79 @@ body.show-notes .speaker-note { display: block; }
       <article class="transfer-stage">
         <time>02 · 集成与性能</time>
         <h3>再让系统稳定运行</h3>
-        <div class="stage-result">&lt;70%</div>
-        <p>CPU 从打满无法测试到稳定运行，并补齐耗时、帧率与资源观测</p>
+        <div class="stage-result">P90 &lt;60%</div>
+        <p>CPU 从打满无法测试到稳定运行，并补齐资源观测</p>
       </article>
       <article class="transfer-stage">
         <time>03 · 压测与运营</time>
         <h3>最后交给机制运行</h3>
-        <div class="stage-result">300+ / 站</div>
-        <p>每个工站完成研发自测，自动出具报告并交由测试团队持续运营</p>
+        <div class="stage-result">300+</div>
+        <p>累计全流程测试，自动出具报告并交由测试团队运营</p>
       </article>
     </div>
-    <div class="field-band">
-      <div class="field-result"><strong>3 个工站 · 持续运营</strong><span>单次 3.5→&lt;2 min · V2—V4 零延期</span></div>
-      <div class="field-scope">算法</div>
-      <div class="field-scope">控制</div>
-      <div class="field-scope">现场环境</div>
-      <div class="field-scope">网络</div>
+    <div class="transfer-boundary" aria-label="跨领域迁移边界">
+      <div class="boundary-result"><strong>3 个工站 · 持续运营</strong><span>3.5→&lt;2 min · V2—V4 零延期</span></div>
+      <div class="boundary-lane reuse"><b>REUSE</b><span>性能 · 测试 · 交付 · 协作</span></div>
+      <div class="boundary-lane"><b>RELEARN</b><span>操作 · 状态 · 现场 · 模型范式</span></div>
     </div>
-    <div class="speaker-note">转岗不是无缝切换：从团队负责人回到一线，2—3 周内补位项目协调和现场交付。专项评测解耦问题，集成与性能让系统稳定，压测与运营让流程可持续。现场空气质量和网络也可能成为阻塞，交付负责人解决的是完整系统问题。三个工站持续运营后，项目获得团队年度项目奖，个人获得跨团队协作奖。</div>
+    <div class="speaker-note">这是回归，不是第一次进入机器人：早期 RoboMaster 经历提供了起点，但真正可迁移的是量产阶段形成的性能、测试、交付与协作方法。操作策略、机器人状态、现场约束和模型范式仍需重学。2—3 周内补位项目协调和现场交付后，通过专项评测解耦问题，再把压测与运营交给机制持续运行。</div>
   </section>
 
   <section class="slide" data-index="07">
     <div class="eyebrow">STAGE 03 · 2025 H2 · DATA / MODEL / EVAL</div>
-    <h2>让评测决定下一轮把资源投在哪里</h2>
-    <p class="lead">评测不是项目末尾的验收，而是数据、部署与模型迭代之间的控制回路</p>
-    <div class="evolution-track" aria-label="数据与评测驱动研发闭环">
-      <article class="evolution-step" style="--stage: var(--influence)"><time>DATA</time><h3>生产数据</h3><p>统一环境，扩大批量数据供给</p></article>
-      <article class="evolution-step" style="--stage: var(--influence)"><time>DEPLOY</time><h3>稳定部署</h3><p>云端、仿真与板端共享可重复环境</p></article>
-      <article class="evolution-step" style="--stage: var(--influence)"><time>EVALUATE</time><h3>并行量化</h3><p>多轮、多模型横向比较</p></article>
-      <article class="evolution-step" style="--stage: var(--influence)"><time>DECIDE</time><h3>发现弱项</h3><p>决定下一轮数据、模型与工程投入</p></article>
+    <h2>让 VLM 参与评测，而不只是成为被评对象</h2>
+    <p class="lead">自动生成任务、批量执行、量化弱项，再把结果送回研发决策</p>
+    <div class="eval-loop" aria-label="VLM 驱动的数据与评测闭环">
+      <svg viewBox="0 0 1100 245" role="img" aria-labelledby="eval-loop-title eval-loop-desc">
+        <title id="eval-loop-title">VLM 驱动的自动评测闭环</title>
+        <desc id="eval-loop-desc">VLM 生成任务，云端和仿真批量执行，指标自动评分，团队据此作出资源决策，弱项再回流数据管线</desc>
+        <defs>
+          <marker id="eval-arrow-head" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path class="eval-arrow-head" d="M0,0 L8,4 L0,8 Z"></path>
+          </marker>
+        </defs>
+        <rect class="eval-node accent" x="20" y="28" width="230" height="96"></rect>
+        <text class="eval-step" x="42" y="53">01 · GENERATE</text>
+        <text class="eval-title" x="42" y="79">VLM 生成任务</text>
+        <text class="eval-meta" x="42" y="103">导航指令 · 弱场景</text>
+
+        <path class="eval-arrow" d="M250 76 H286" marker-end="url(#eval-arrow-head)"></path>
+
+        <rect class="eval-node" x="295" y="28" width="230" height="96"></rect>
+        <text class="eval-step" x="317" y="53">02 · RUN</text>
+        <text class="eval-title" x="317" y="79">云端 / 仿真批量执行</text>
+        <text class="eval-meta" x="317" y="103">多轮 · 多模型</text>
+
+        <path class="eval-arrow" d="M525 76 H561" marker-end="url(#eval-arrow-head)"></path>
+
+        <rect class="eval-node" x="570" y="28" width="230" height="96"></rect>
+        <text class="eval-step" x="592" y="53">03 · MEASURE</text>
+        <text class="eval-title" x="592" y="79">Metric 自动评分</text>
+        <text class="eval-meta" x="592" y="103">横向比较 · 人工质检</text>
+
+        <path class="eval-arrow" d="M800 76 H836" marker-end="url(#eval-arrow-head)"></path>
+
+        <rect class="eval-node" x="845" y="28" width="230" height="96"></rect>
+        <text class="eval-step" x="867" y="53">04 · DECIDE</text>
+        <text class="eval-title" x="867" y="79">决定下一轮投入</text>
+        <text class="eval-meta" x="867" y="103">补数据 · 改模型 · 解瓶颈</text>
+
+        <path class="eval-arrow" d="M960 124 V190 H135 V132" marker-end="url(#eval-arrow-head)"></path>
+        <text class="eval-return" x="475" y="215">WEAK CASES → 数据管线</text>
+      </svg>
+      <div class="eval-loop-mobile" aria-hidden="true">
+        <div class="eval-mobile-step"><b>01 · GENERATE</b><strong>VLM 生成任务</strong><span>导航指令 · 弱场景</span></div>
+        <div class="eval-mobile-step"><b>02 · RUN</b><strong>云端 / 仿真批量执行</strong><span>多轮 · 多模型</span></div>
+        <div class="eval-mobile-step"><b>03 · MEASURE</b><strong>Metric 自动评分</strong><span>横向比较 · 人工质检</span></div>
+        <div class="eval-mobile-step"><b>04 · DECIDE</b><strong>决定下一轮投入</strong><span>弱项回流数据管线</span></div>
+      </div>
     </div>
-    <div class="evolution-thesis"><b>输出不是排行榜</b>　而是下一轮数据、模型与工程的资源决策 · 沉淀 2 项专利申请</div>
+    <div class="evolution-thesis"><b>输出不是排行榜</b>　而是下一轮数据、模型与工程的资源决策 · 2 项专利申请</div>
     <div class="stat-strip two">
       <div class="stat" style="--stat: var(--platform)"><strong>2×</strong><span>数据管线吞吐</span></div>
       <div class="stat" style="--stat: var(--platform)"><strong>15×</strong><span>定位到 Driver 与环境栈瓶颈，而非修改模型</span></div>
     </div>
-    <div class="speaker-note">15× 案例的关键不是模型优化，而是识别出 Driver 与环境栈才是瓶颈。评测顶层设计把规划、验证、准备、实施串起来，最终目的不是产出一个分数，而是让团队知道下一轮应该补什么数据、改什么模型、解决哪段工程瓶颈。</div>
+    <div class="speaker-note">这一阶段用 smolagents 与 VLM 自动生成导航指令，再进入云端批量评测。VLM 不只是被评对象，也参与生产任务与发现弱项；人工负责质量门禁。15× 案例的关键同样不是改模型，而是识别出 Driver 与环境栈才是瓶颈。</div>
   </section>
 
   <section class="slide" data-index="08">
@@ -774,7 +839,7 @@ body.show-notes .speaker-note { display: block; }
         <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">TEAM PLATFORM · 2026 EXTENDED</span><h3>可恢复、可收集证据</h3><p>机器人入口 · CloudML / Storage · 批量仿真 / 重建 · Workflow</p></div>
       </div>
     </div>
-    <div class="speaker-note">身体层展示短周期交付与最终解法之间的范围判断；大脑层展示开放决策与确定性动作的边界；基础设施层基于既有团队 Executor 扩展。本地仓库证据显示 Executor 始于 2023 年，2026 年 6—7 月完成机器人入口、CloudML、存储与可恢复 Workflow 的集中扩展。</div>
+    <div class="speaker-note">身体层展示短周期交付与最终解法之间的范围判断；大脑层展示开放决策与确定性动作的边界；基础设施层基于既有团队 Executor 扩展。这里强调团队平台协作，不把 Executor 作为个人独立项目；对外只讲已核实的机器人入口与 Workflow 扩展。</div>
   </section>
 
   <section class="slide" data-index="09">
@@ -829,8 +894,8 @@ body.show-notes .speaker-note { display: block; }
       </article>
       <article class="discussion">
         <div class="num">03</div>
-        <h3>人离开后，机制是否仍然运行</h3>
-        <p><b>890+ 文档 · 6 万+ 阅读 · 近一年 900+ 读者</b><br>发版、测试、Crash 与性能流程持续运营</p>
+        <h3>让机制接替关键个人</h3>
+        <p><b class="mono">自助发版 → 自动路由 → Owner 交接</b><br>890+ 文档 · 6 万+ 阅读 · 流程持续运营</p>
       </article>
     </div>
     <div class="contact-line">
