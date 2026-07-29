@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>从感知工程到机器人智能 · 2021–2026</title>
+<title>五年，三个领域，同一个问题 · 2021–2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
@@ -208,6 +208,7 @@ body.show-notes .speaker-note { display: block; }
   max-width: 1200px;
   border-top: 2px solid var(--line);
 }
+.stage-rail.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .stage-block { position: relative; min-height: 104px; padding: 19px 22px 0 0; }
 .stage-block::before { content: ''; position: absolute; top: -6px; left: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--stage); }
 .stage-block .year { color: var(--stage); font: 600 11px/1 var(--font-mono); }
@@ -440,6 +441,7 @@ body.show-notes .speaker-note { display: block; }
   .cover { gap: 32px; }
   .cover-meta { margin-top: 6px; }
   .stage-rail { grid-template-columns: 1fr 1fr; width: 100%; border-top: 0; }
+  .stage-rail.three { grid-template-columns: 1fr; }
   .stage-block { min-height: 110px; padding: 17px 14px 12px; border-top: 2px solid var(--line); }
   .matrix-head { display: none; }
   .capability-row { display: block; padding: 14px 0; }
@@ -533,201 +535,117 @@ body.show-notes .speaker-note { display: block; }
   <section class="slide cover active" data-index="01">
     <div>
       <div class="eyebrow">WORK TIMELINE · 2021—2026</div>
-      <h1>从感知工程<br>到<span>机器人智能</span></h1>
-      <p class="lead">五年，沿着同一条主线持续推进：把复杂系统做成可交付、可验证、可复用的工程能力</p>
+      <h1>五年，三个领域<br><span>同一个问题</span></h1>
+      <p class="lead">如何把复杂系统从偶尔跑通，变成能够持续交付、持续验证、持续进化的工程能力</p>
       <div class="cover-meta">MiaoDX / Engineering · Robotics · Agent Systems</div>
     </div>
-    <div class="stage-rail" aria-label="四阶段工作演进">
+    <div class="stage-rail three" aria-label="三个领域的工作演进">
       <div class="stage-block" style="--stage: var(--engineering)">
-        <div class="year">2021.08—2023 H1</div>
-        <strong>工程基础设施</strong>
-        <span>多平台 · 框架 · 发版 · 仿真</span>
-      </div>
-      <div class="stage-block" style="--stage: var(--delivery)">
-        <div class="year">2023 H2—2024</div>
-        <strong>量产质量治理</strong>
-        <span>性能 · Crash · 测试 · 平台</span>
+        <div class="year">2021.08—2024</div>
+        <strong>自动驾驶</strong>
+        <span>工程底座 → 规模化治理 → 稳定交付</span>
       </div>
       <div class="stage-block" style="--stage: var(--platform)">
         <div class="year">2025</div>
-        <strong>回到机器人一线</strong>
-        <span>工站 · 数据 · 模型 · 评测</span>
+        <strong>机器人</strong>
+        <span>工站交付 → 数据评测 → 方法迁移</span>
       </div>
       <div class="stage-block" style="--stage: var(--influence)">
-        <div class="year">2026 H1 → NOW</div>
-        <strong>机器人智能系统</strong>
-        <span>身体 · 大脑 · 研发基础设施</span>
+        <div class="year">2026 → NOW</div>
+        <strong>AI Agent</strong>
+        <span>受控执行 → 机器验收 → 持续进化</span>
       </div>
     </div>
-    <div class="speaker-note">开场只讲一个判断：看似跨了自动驾驶、机器人、AI Coding 三个领域，底层一直在做同一件事——让复杂系统可交付、可度量、可复用。</div>
+    <div class="speaker-note">开场不罗列项目。先给出贯穿五年的问题：场景从自动驾驶变到机器人和 AI Agent，但工作始终围绕复杂系统如何稳定交付、持续验证和继续进化。</div>
   </section>
 
   <section class="slide" data-index="02">
-    <div class="eyebrow">THE THROUGH-LINES · 四条能力线</div>
-    <h2>变化的是场景，累积的是系统能力</h2>
-    <p class="lead">从自动驾驶到机器人与 Agent，同一套方法在不同复杂系统中持续升级</p>
-    <div class="capability-matrix" aria-label="2021至2026四条能力演进曲线">
-      <div class="matrix-head" aria-hidden="true"><span>CAPABILITY</span><span>2021.08—2022</span><span>2023—2024</span><span>2025</span><span>2026</span></div>
-      <div class="capability-row" style="--lane: var(--engineering)">
-        <div class="capability-label"><b>ENGINEERING</b><strong>工程系统</strong></div>
-        <div class="capability-cell"><small>2021.08—2022</small><h3>统一代码与平台</h3><p>one-repo · 固定发版 · 重放仿真</p></div>
-        <div class="capability-cell"><small>2023—2024</small><h3>从节点到系统治理</h3><p>链路时延 · GPU 调度 · 平台观测</p></div>
-        <div class="capability-cell"><small>2025</small><h3>迁入机器人交付</h3><p>工站 · 数据管线 · 模型部署</p></div>
-        <div class="capability-cell"><small>2026</small><h3>三层智能系统</h3><p>身体 · 大脑 · 研发基础设施</p></div>
-      </div>
-      <div class="capability-row" style="--lane: var(--platform)">
-        <div class="capability-label"><b>VERIFICATION</b><strong>验证体系</strong></div>
-        <div class="capability-cell"><small>2021.08—2022</small><h3>低成本暴露问题</h3><p>Record Replay · 发版报告</p></div>
-        <div class="capability-cell"><small>2023—2024</small><h3>测试左移与闭环</h3><p>SIL · DIL · Sanitizer · Crash Loop</p></div>
-        <div class="capability-cell"><small>2025</small><h3>进入机器人与模型</h3><p>Robot Test · VLN Eval · 云端批量</p></div>
-        <div class="capability-cell"><small>2026</small><h3>验收标准机器可读</h3><p>Metric · Visual Harness · Agent Eval</p></div>
-      </div>
-      <div class="capability-row" style="--lane: var(--delivery)">
-        <div class="capability-label"><b>ORGANIZATION</b><strong>组织放大</strong></div>
-        <div class="capability-cell"><small>2021.08—2022</small><h3>从个人支持到自助交付</h3><p>on-call · 培训 · 固定节奏</p></div>
-        <div class="capability-cell"><small>2023—2024</small><h3>让机制承接协作</h3><p>文档 · Workshop · 自动路由</p></div>
-        <div class="capability-cell"><small>2025</small><h3>跨领域重组小团队</h3><p>工站交付 · 评测核心组</p></div>
-        <div class="capability-cell"><small>2026</small><h3>把流程变成团队能力</h3><p>Skill · Workflow · 可交接验收</p></div>
-      </div>
-      <div class="capability-row" style="--lane: var(--influence)">
-        <div class="capability-label"><b>EMERGING LINE</b><strong>AI Coding</strong></div>
-        <div class="capability-cell"><small>2021.08—2022</small><h3>工程自动化先行</h3><p>CI · 静态检查 · 报告生成</p></div>
-        <div class="capability-cell is-emerging"><small>2023—2024</small><h3>LLM 进入工程流程</h3><p>LLM Code Review · 人工复核</p></div>
-        <div class="capability-cell is-emerging"><small>2025</small><h3>从个人工具进入团队</h3><p>平台接入 · 项目实践 · 方法输出</p></div>
-        <div class="capability-cell is-emerging"><small>2026</small><h3>从写代码到驱动系统</h3><p>RoboHarness · Agent SDK · Workflow</p></div>
-      </div>
+    <div class="eyebrow">ACT 01 · 2021.08—2023 H1 · ENGINEERING FOUNDATION</div>
+    <h2>从“每次重新来”到统一工程底座</h2>
+    <p class="lead">先解决交付依赖少数工程人员的问题，让更多算法团队可以共同开发、自助验证与稳定发版</p>
+    <div class="phase-grid">
+      <article class="phase">
+        <time>BEFORE · 关键个人</time>
+        <h3>每个平台都有一套上下文</h3>
+        <ul>
+          <li>双系统、多硬件、多车型并行演进</li>
+          <li>上车、发版与排障依赖少数 On-call</li>
+          <li>新成员需要反复口头学习隐性经验</li>
+        </ul>
+      </article>
+      <article class="phase">
+        <time>DECISION · 统一入口</time>
+        <h3>把重复工作沉淀进工程系统</h3>
+        <ul>
+          <li>双系统代码进入 one-repo</li>
+          <li>ComputeModule 统一模块组织与运行</li>
+          <li>固定发版节奏并自动生成报告</li>
+        </ul>
+      </article>
+      <article class="phase">
+        <time>SCALE · 团队自助</time>
+        <h3>让问题在上车前更早暴露</h3>
+        <ul>
+          <li>Record Replay 支撑低成本验证</li>
+          <li>CI、静态检查与性能分析进入流程</li>
+          <li>培训与文档降低协作和上手门槛</li>
+        </ul>
+      </article>
     </div>
-    <div class="matrix-thesis"><b>最重要的迁移不是代码</b>　而是让复杂系统可观测、可验证、可交接的方法</div>
-    <div class="speaker-note">这页不再罗列九个半年的项目，而是展示四条能力线如何穿越领域。代码和成熟组件也有复用，但真正穿越五年的是自动化、验收和工程治理方法。</div>
+    <div class="stat-strip two">
+      <div class="stat" style="--stat: var(--engineering)"><strong>1→N</strong><span>一套代码支持多平台、多车型</span></div>
+      <div class="stat" style="--stat: var(--influence)"><strong>1—2 天</strong><span>新成员开始为工程贡献代码</span></div>
+    </div>
+    <div class="speaker-note">这一阶段的主角不是某个框架，而是工作方式的改变：把上车、发版、仿真和培训中的隐性经验写进系统。协作群从 90+ 增长到 160+，clang-tidy 覆盖率达到 95%，这些数字作为问答证据，不挤占主画面。</div>
   </section>
 
   <section class="slide" data-index="03">
-    <div class="eyebrow">STAGE 01 · 2021.08—2023 H1</div>
-    <h2>先把感知研发变成可持续的工程系统</h2>
-    <p class="lead">从多平台移植切入，逐步补齐代码、框架、发版、仿真、性能工具和知识协作</p>
-    <div class="phase-grid">
-      <article class="phase">
-        <time>2022 H1</time>
-        <h3>统一多平台开发</h3>
-        <ul>
-          <li>覆盖多种计算平台与车型环境</li>
-          <li>推动双系统代码进入 one-repo</li>
-          <li>建立 on-call、重放仿真与固定发版节奏</li>
-        </ul>
+    <div class="eyebrow">ACT 01 · 2023 H2—2024 H2 · SCALE & GOVERNANCE</div>
+    <h2>当复杂度进入团队规模，必须用机制承接</h2>
+    <p class="lead">团队与模型规模上升后，局部修改开始影响整体，质量与性能必须进入同一套系统治理</p>
+    <div class="pressure-rail" aria-label="规模化研发中的三类压力">
+      <div class="pressure-signal"><b>A ↑ / B ↓</b><span>一个方案优化，另一个方案退化</span></div>
+      <div class="pressure-signal"><b>高频变更</b><span>人工检查无法覆盖百人级协作</span></div>
+      <div class="pressure-signal"><b>资源耦合</b><span>模型和任务开始争夺同一套算力</span></div>
+    </div>
+    <div class="method-lanes" aria-label="质量、性能和组织三类治理机制">
+      <article class="method-lane">
+        <b>01 · SHIFT LEFT</b>
+        <h3>让问题尽早暴露</h3>
+        <span>Change → Daily SIL → 运行时检查</span>
+        <span>自动路由 → Owner 闭环 → 规则沉淀</span>
       </article>
-      <article class="phase">
-        <time>2022 H2</time>
-        <h3>迈入量产平台</h3>
-        <ul>
-          <li>完成 ORIN QNX 量产适配</li>
-          <li>跑通关键驾驶任务并支撑阶段交付</li>
-          <li>推广 ComputeModule 和自动化性能分析</li>
-        </ul>
+      <article class="method-lane">
+        <b>02 · GOVERN RESOURCES</b>
+        <h3>从热点走向系统预算</h3>
+        <span>帧率、时延、CPU / GPU / 内存指标</span>
+        <span>观测、任务错峰、GPU 调度与静态化</span>
       </article>
-      <article class="phase">
-        <time>2023 H1</time>
-        <h3>框架与工具升级</h3>
-        <ul>
-          <li>ComputeModule 支持动态 Unit DAG</li>
-          <li>推进低配性能、YUV 输入与时延专项</li>
-          <li>与基础设施团队共建热点定位工具</li>
-        </ul>
+      <article class="method-lane">
+        <b>03 · SCALE</b>
+        <h3>让机制承接跨团队协作</h3>
+        <span>DIL 金标准与 Daily 自动报告</span>
+        <span>研发、测试、基础设施共同运营</span>
       </article>
     </div>
-    <div class="stat-strip">
-      <div class="stat" style="--stat: var(--engineering)"><strong>1→N</strong><span>一套代码支持多平台、多车型</span></div>
-      <div class="stat" style="--stat: var(--platform)"><strong>95%</strong><span>静态检查覆盖率</span></div>
-      <div class="stat" style="--stat: var(--influence)"><strong>1—2 天</strong><span>新成员开始贡献代码</span></div>
-      <div class="stat" style="--stat: var(--delivery)"><strong>90→160+</strong><span>跨团队技术协作群规模</span></div>
+    <div class="stat-strip two">
+      <div class="stat" style="--stat: var(--delivery)"><strong>-98%</strong><span>Crash 频率 · 问题处理从 1 天缩短到 1 小时</span></div>
+      <div class="stat" style="--stat: var(--engineering)"><strong>&lt;1/5 → ≈80%</strong><span>低配算力承载主要功能</span></div>
     </div>
-    <div class="speaker-note">这一阶段的成果不是一个单独功能，而是把团队每天依赖的工程底座逐步做出来。统一代码、固定发版、重放仿真和培训共同降低上手门槛，新成员 1—2 天就能开始贡献。</div>
+    <div class="evolution-thesis"><b>机制是否成立，不只看负责人在场时的结果</b>　相关流程被推广到更大研发范围，并在角色变化后继续运行</div>
+    <div class="speaker-note">这里把质量和性能合在一起讲，因为它们面对的是同一种规模问题：人工判断和单点优化都无法扩展。测试左移降低变化风险，资源治理保证功能密度，跨团队机制让结果可以持续。对外不展开内部版本号和 Crash 绝对值。</div>
   </section>
 
   <section class="slide" data-index="04">
-    <div class="eyebrow">STAGE 02 · 2023 H2—2024 H2</div>
-    <h2>让高频变更，仍然能够稳定交付</h2>
-    <p class="lead">算法效果会波动，系统依赖会互相影响，真正的挑战是让快与稳同时成立</p>
-    <div class="pressure-rail" aria-label="感知研发交付压力">
-      <div class="pressure-signal"><b>A ↑ / B ↓</b><span>一个方案优化，另一个方案退化</span></div>
-      <div class="pressure-signal"><b>指标 ↑ / 体验 ↓</b><span>离线涨点，车端体验反而变差</span></div>
-      <div class="pressure-signal"><b>高频变更</b><span>人工检查无法覆盖百人级协作</span></div>
-    </div>
-    <div class="delivery-system" aria-label="从发版后救火到测试左移">
-      <div class="system-state before">
-        <b>BEFORE</b>
-        <strong>问题进入发版后才集中暴露</strong>
-        <span>路测不可用 · Crash 易遗漏 · 研发与测试口径不一致</span>
-      </div>
-      <div class="system-core">
-        <div class="governance-loop">
-          <div class="loop-step"><b>CHANGE</b><span>合入与版本节奏</span></div>
-          <div class="loop-step"><b>DAILY SIL</b><span>回放与运行时检查</span></div>
-          <div class="loop-step"><b>AUTO ROUTE</b><span>按模块自动分发</span></div>
-          <div class="loop-step"><b>REVIEW</b><span>复盘并回到规则</span></div>
-        </div>
-        <p class="system-thesis"><b>测试左移</b>　尽可能在低成本环境中拦截问题，再把一次修复沉淀为长期规则</p>
-      </div>
-      <div class="system-state after">
-        <b>AFTER</b>
-        <strong class="system-number">-98%</strong>
-        <span>Crash 频率 · 所有节点零延期</span>
-        <span>7 个月拦截 455 次 · 处理 1 天→1 小时</span>
-      </div>
-    </div>
-    <div class="speaker-note">先讲为什么需要这套体系：模型驱动研发有黑盒特性，局部指标提升可能造成系统体验退化；高频变更又让人工检查无法扩展。Change、SIL、自动路由和复盘把风险前移，最终将百万公里 Crash 频率降低约 98%，处理时间从 1 天缩短到 1 小时，量产感知 Crash 闭环率达到 100%。对外不展开内部版本号和绝对值。</div>
-  </section>
-
-  <section class="slide" data-index="05">
-    <div class="eyebrow">STAGE 02 · PERFORMANCE GOVERNANCE</div>
-    <h2>性能优化不是找热点，而是治理资源</h2>
-    <p class="lead">同样的硬件，通过预算、观测与调度承载更多模型和功能</p>
-    <div class="resource-equation" aria-label="受限算力平台的功能交付">
-      <div class="resource-side"><b>&lt; 1/5</b><strong>高配算力</strong></div>
-      <div class="resource-arrow">→</div>
-      <div class="resource-side"><b>≈ 80%</b><strong>主要功能</strong></div>
-    </div>
-    <div class="method-lanes" aria-label="性能优化三步方法">
-      <article class="method-lane">
-        <b>01 · DEFINE</b>
-        <h3>定指标</h3>
-        <span>不同工况帧率</span>
-        <span>端到端时延约束</span>
-        <span>CPU / GPU / 内存预算</span>
-      </article>
-      <article class="method-lane">
-        <b>02 · OBSERVE</b>
-        <h3>搭监控</h3>
-        <span>Trace · Metrics · Perf · Nsys</span>
-        <span>DIL 性能金标准</span>
-        <span>Daily 自动报告</span>
-      </article>
-      <article class="method-lane">
-        <b>03 · CONTROL</b>
-        <h3>做优化</h3>
-        <span>任务错峰与 GPU 调度</span>
-        <span>内存静态化与数据格式</span>
-        <span>DAG 并行与主动丢帧</span>
-      </article>
-    </div>
-    <div class="stat-strip">
-      <div class="stat" style="--stat: var(--influence)"><strong>8 个月</strong><span>持续系统优化</span></div>
-      <div class="stat" style="--stat: var(--influence)"><strong>30+</strong><span>跨团队讨论</span></div>
-      <div class="stat" style="--stat: var(--influence)"><strong>40+</strong><span>优化项</span></div>
-      <div class="stat" style="--stat: var(--influence)"><strong>P99 -50%</strong><span>一个关键模型链路由 400ms 降至 200ms</span></div>
-    </div>
-    <div class="speaker-note">这页用低配平台案例解释性能工作的升级：单点热点只是手段，真正的问题是先定义不同工况的资源边界，再让研发与测试对齐监控口径，最后通过调度、静态化和数据链路优化做系统取舍。另一个内存静态化案例将动态申请次数降低 50%、CPU 降低 40%。具体平台和版本不展开。</div>
-  </section>
-
-  <section class="slide" data-index="06">
-    <div class="eyebrow">STAGE 03 · 2025 H1 · ROBOT DELIVERY</div>
-    <h2>不是第一次做机器人，而是带着量产经验回来</h2>
-    <p class="lead">回到一线，复用工程方法，也承认新领域必须重新学习</p>
-    <div class="role-shift" aria-label="从团队负责人到机器人一线交付">
-      <div class="shift-node"><b>2018 · ORIGIN</b><span>RoboMaster 算法</span></div>
+    <div class="eyebrow">ACT 02 · 2025 H1 · ROBOT DELIVERY</div>
+    <h2>换了领域，过去的方法还成立吗？</h2>
+    <p class="lead">真正能跨领域迁移的不是某个模块，而是性能、测试、交付和协作方法</p>
+    <div class="role-shift" aria-label="从自动驾驶规模化治理到机器人交付">
+      <div class="shift-node"><b>2021—24 · SCALE</b><span>自动驾驶量产治理</span></div>
       <div class="shift-arrow">→</div>
-      <div class="shift-node"><b>2021—24 · SCALE</b><span>感知系统负责人</span></div>
+      <div class="shift-node"><b>2025 · TRANSFER</b><span>离开熟悉领域重新学习</span></div>
       <div class="shift-arrow">→</div>
-      <div class="shift-node"><b>2025 · RETURN</b><span>2—3 周进入核心交付</span></div>
+      <div class="shift-node"><b>2—3 WEEKS</b><span>进入机器人核心交付</span></div>
     </div>
     <div class="transfer-pipeline" aria-label="机器人集成交付三段式">
       <article class="transfer-stage">
@@ -750,17 +668,24 @@ body.show-notes .speaker-note { display: block; }
       </article>
     </div>
     <div class="transfer-boundary" aria-label="跨领域迁移边界">
-      <div class="boundary-result"><strong>3 个工站 · 持续运营</strong><span>3.5→&lt;2 min · V2—V4 零延期</span></div>
+      <div class="boundary-result"><strong>团队 3 个工站 · 持续运营</strong><span>本人主导核心工站 V2—V4 · 单次流程 3.5→&lt;2 min</span></div>
       <div class="boundary-lane reuse"><b>REUSE</b><span>性能 · 测试 · 交付 · 协作</span></div>
       <div class="boundary-lane"><b>RELEARN</b><span>操作 · 状态 · 现场 · 模型范式</span></div>
     </div>
-    <div class="speaker-note">这是回归，不是第一次进入机器人：早期 RoboMaster 经历提供了起点，但真正可迁移的是量产阶段形成的性能、测试、交付与协作方法。操作策略、机器人状态、现场约束和模型范式仍需重学。2—3 周内补位项目协调和现场交付后，通过专项评测解耦问题，再把压测与运营交给机制持续运行。</div>
+    <div class="speaker-note">转岗不是把自动驾驶方案原样复制到机器人。可迁移的是问题拆解、资源观测、版本节奏和跨团队闭环；操作策略、机器人状态和模型范式仍需重学。现场还包括空气质量、Wi-Fi 和资源排期等非算法阻塞，说明集成交付必须对最终结果负责。</div>
   </section>
 
-  <section class="slide" data-index="07">
-    <div class="eyebrow">STAGE 03 · 2025 H2 · DATA / MODEL / EVAL</div>
-    <h2>让 VLM 参与评测，而不只是成为被评对象</h2>
-    <p class="lead">自动生成任务、批量执行、量化弱项，再把结果送回研发决策</p>
+  <section class="slide" data-index="05">
+    <div class="eyebrow">ACT 02 · 2025 H2 · DATA / MODEL / EVAL</div>
+    <h2>系统跑起来以后，下一步应该改什么？</h2>
+    <p class="lead">从完成项目走向数据与评测驱动研发，让结果帮助团队决定下一轮投入</p>
+    <div class="role-shift" aria-label="从评测规划到研发决策闭环">
+      <div class="shift-node"><b>2025.08 · PROPOSAL</b><span>提出数据与评测驱动研发</span></div>
+      <div class="shift-arrow">→</div>
+      <div class="shift-node"><b>2025 H2 · DELIVERY</b><span>自动生成与云端批量评测</span></div>
+      <div class="shift-arrow">→</div>
+      <div class="shift-node"><b>DECISION LOOP</b><span>补数据 · 改模型 · 解瓶颈</span></div>
+    </div>
     <div class="eval-loop" aria-label="VLM 驱动的数据与评测闭环">
       <svg viewBox="0 0 1100 245" role="img" aria-labelledby="eval-loop-title eval-loop-desc">
         <title id="eval-loop-title">VLM 驱动的自动评测闭环</title>
@@ -774,28 +699,21 @@ body.show-notes .speaker-note { display: block; }
         <text class="eval-step" x="42" y="53">01 · GENERATE</text>
         <text class="eval-title" x="42" y="79">VLM 生成任务</text>
         <text class="eval-meta" x="42" y="103">导航指令 · 弱场景</text>
-
         <path class="eval-arrow" d="M250 76 H286" marker-end="url(#eval-arrow-head)"></path>
-
         <rect class="eval-node" x="295" y="28" width="230" height="96"></rect>
         <text class="eval-step" x="317" y="53">02 · RUN</text>
         <text class="eval-title" x="317" y="79">云端 / 仿真批量执行</text>
         <text class="eval-meta" x="317" y="103">多轮 · 多模型</text>
-
         <path class="eval-arrow" d="M525 76 H561" marker-end="url(#eval-arrow-head)"></path>
-
         <rect class="eval-node" x="570" y="28" width="230" height="96"></rect>
         <text class="eval-step" x="592" y="53">03 · MEASURE</text>
         <text class="eval-title" x="592" y="79">Metric 自动评分</text>
         <text class="eval-meta" x="592" y="103">横向比较 · 人工质检</text>
-
         <path class="eval-arrow" d="M800 76 H836" marker-end="url(#eval-arrow-head)"></path>
-
         <rect class="eval-node" x="845" y="28" width="230" height="96"></rect>
         <text class="eval-step" x="867" y="53">04 · DECIDE</text>
         <text class="eval-title" x="867" y="79">决定下一轮投入</text>
         <text class="eval-meta" x="867" y="103">补数据 · 改模型 · 解瓶颈</text>
-
         <path class="eval-arrow" d="M960 124 V190 H135 V132" marker-end="url(#eval-arrow-head)"></path>
         <text class="eval-return" x="475" y="215">WEAK CASES → 数据管线</text>
       </svg>
@@ -806,103 +724,70 @@ body.show-notes .speaker-note { display: block; }
         <div class="eval-mobile-step"><b>04 · DECIDE</b><strong>决定下一轮投入</strong><span>弱项回流数据管线</span></div>
       </div>
     </div>
-    <div class="evolution-thesis"><b>输出不是排行榜</b>　而是下一轮数据、模型与工程的资源决策 · 2 项专利申请</div>
+    <div class="evolution-thesis"><b>输出不是排行榜</b>　而是下一轮数据、模型与工程的资源决策</div>
     <div class="stat-strip two">
       <div class="stat" style="--stat: var(--platform)"><strong>2×</strong><span>数据管线吞吐</span></div>
-      <div class="stat" style="--stat: var(--platform)"><strong>15×</strong><span>定位到 Driver 与环境栈瓶颈，而非修改模型</span></div>
+      <div class="stat" style="--stat: var(--platform)"><strong>15×</strong><span>识别 Driver 与环境栈瓶颈，而非修改模型</span></div>
     </div>
-    <div class="speaker-note">这一阶段用 smolagents 与 VLM 自动生成导航指令，再进入云端批量评测。VLM 不只是被评对象，也参与生产任务与发现弱项；人工负责质量门禁。15× 案例的关键同样不是改模型，而是识别出 Driver 与环境栈才是瓶颈。</div>
+    <div class="speaker-note">2025 年 8 月提出数据与评测驱动的研发方向，随后在 H2 落地自动任务生成、统一环境和云端批量评测。这一页的重点不是两个倍数，而是展示一个提前作出的判断如何在半年内变成交付，并形成两项专利申请。</div>
   </section>
 
-  <section class="slide" data-index="08">
-    <div class="eyebrow">STAGE 04 · 2026 H1 → NOW</div>
-    <h2>真正的升级，是把约束变成三层系统边界</h2>
-    <p class="lead">不按项目数量罗列进度，而是回答每一层面对什么限制、作了什么判断、留下什么证据</p>
-    <div class="decision-matrix" aria-label="2026 机器人智能三层决策矩阵">
-      <div class="decision-head" aria-hidden="true"><span>LAYER</span><span>CONSTRAINT</span><span>DECISION</span><span>EVIDENCE</span></div>
-      <div class="decision-row" style="--lane: var(--delivery)">
-        <div class="decision-lane"><b>BODY</b><strong>机器人身体</strong><small>gr00t-wholebodycontrol</small></div>
-        <div class="decision-cell"><b class="cell-label">CONSTRAINT</b><h3>无抓取积累，交付周期短</h3><p>目标物体与抓取范围有限，先要跑通家庭空间全链路</p></div>
-        <div class="decision-cell"><b class="cell-label">DECISION</b><h3>先选择确定性路线</h3><p>6D 位姿 · 运动规划 · 轨迹验证 · 分阶段执行</p></div>
-        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">HARDWARE VERIFIED · SCOPED</span><h3>&gt;90% · 约 1.5 月</h3><p>G1 与 RealMan 两种本体，限定物体与范围</p></div>
-      </div>
+  <section class="slide" data-index="06">
+    <div class="eyebrow">ACT 03 · 2026 → NOW · AGENT SYSTEMS</div>
+    <h2>当 Agent 开始执行，验收也必须进入系统</h2>
+    <p class="lead">AI 承担的责任从给建议扩展到理解目标、调用工具和驱动系统，能力边界与验收证据必须同步升级</p>
+    <div class="decision-matrix" aria-label="Agent 规划、执行与验证责任矩阵">
+      <div class="decision-head" aria-hidden="true"><span>RESPONSIBILITY</span><span>NEW CONSTRAINT</span><span>SYSTEM BOUNDARY</span><span>EVIDENCE</span></div>
       <div class="decision-row" style="--lane: var(--platform)">
-        <div class="decision-lane"><b>BRAIN</b><strong>机器人大脑</strong><small>roboclaws</small></div>
-        <div class="decision-cell"><b class="cell-label">CONSTRAINT</b><h3>固定流程无法处理开放目标</h3><p>系统需要理解“我渴了”一类目标，同时守住机器人能力边界</p></div>
-        <div class="decision-cell"><b class="cell-label">DECISION</b><h3>把开放决策与受控能力分层</h3><p>MCP 提供稳定原语，Skill 组合能力，Agent SDK 负责理解与规划</p></div>
-        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">SIM VERIFIED · ROBOT WIP</span><h3>3 类家庭任务面</h3><p>建图 · 开放目标 · 清理；仿真与 Digital Twin 已验证</p></div>
+        <div class="decision-lane"><b>PLAN</b><strong>理解与规划</strong><small>Agent SDK</small></div>
+        <div class="decision-cell"><b class="cell-label">NEW CONSTRAINT</b><h3>固定流程无法处理开放目标</h3><p>系统需要理解“我渴了”一类意图，同时守住机器人能力边界</p></div>
+        <div class="decision-cell"><b class="cell-label">SYSTEM BOUNDARY</b><h3>开放决策与受控能力分层</h3><p>Agent SDK 负责理解、规划、工具调用和流程控制</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">SIM VERIFIED</span><h3>3 类家庭任务面</h3><p>建图 · 开放目标 · 清理；仿真与 Digital Twin 验证</p></div>
+      </div>
+      <div class="decision-row" style="--lane: var(--delivery)">
+        <div class="decision-lane"><b>ACT</b><strong>受控执行</strong><small>MCP · Skill</small></div>
+        <div class="decision-cell"><b class="cell-label">NEW CONSTRAINT</b><h3>物理执行需要确定性边界</h3><p>开放目标最终必须落到可观察、可调试的机器人原语</p></div>
+        <div class="decision-cell"><b class="cell-label">SYSTEM BOUNDARY</b><h3>MCP 提供原语，Skill 组合能力</h3><p>导航、抓取和任务调度保持小规模、稳定、可复用</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">HARDWARE VERIFIED · SCOPED</span><h3>&gt;90% · 两种本体</h3><p>限定物体和范围，在 G1 与 RealMan 上验证</p></div>
       </div>
       <div class="decision-row" style="--lane: var(--engineering)">
-        <div class="decision-lane"><b>INFRA</b><strong>研发基础设施</strong><small>executor</small></div>
-        <div class="decision-cell"><b class="cell-label">CONSTRAINT</b><h3>研发横跨多个异步系统</h3><p>云端运行、存储、仿真、重建和结果回收难以靠对话记忆恢复</p></div>
-        <div class="decision-cell"><b class="cell-label">DECISION</b><h3>扩展既有团队平台</h3><p>为 Executor 补齐机器人入口，以 CLI + Skill + Workflow 让 Agent 操作研发系统</p></div>
-        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">TEAM PLATFORM · 2026 EXTENDED</span><h3>可恢复、可收集证据</h3><p>机器人入口 · CloudML / Storage · 批量仿真 / 重建 · Workflow</p></div>
+        <div class="decision-lane"><b>VERIFY</b><strong>验收与恢复</strong><small>RoboHarness · Executor</small></div>
+        <div class="decision-cell"><b class="cell-label">NEW CONSTRAINT</b><h3>能长程运行，不等于结果可靠</h3><p>人类逐轮判断会再次成为团队扩展的瓶颈</p></div>
+        <div class="decision-cell"><b class="cell-label">SYSTEM BOUNDARY</b><h3>把“什么叫做成”工程化</h3><p>Metric + Visual Evidence 验收，Workflow 恢复与批量运行</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">TEAM PLATFORM · EXTENDED</span><h3>可恢复、可收集证据</h3><p>RoboHarness 获部门 Hackathon 一等奖</p></div>
       </div>
     </div>
-    <div class="speaker-note">身体层展示短周期交付与最终解法之间的范围判断；大脑层展示开放决策与确定性动作的边界；基础设施层基于既有团队 Executor 扩展。这里强调团队平台协作，不把 Executor 作为个人独立项目；对外只讲已核实的机器人入口与 Workflow 扩展。</div>
+    <div class="evolution-thesis"><b>AI 工程责任的演进</b>　REVIEW → CONNECT → ACT → VERIFY</div>
+    <div class="speaker-note">这页合并身体、大脑、基础设施和 AI Coding 两条旧叙事，只回答一个问题：Agent 能执行以后，如何守住能力边界并判断结果。Executor 是既有团队平台，本人的工作是补齐机器人入口与 Workflow 扩展，不把它表达成个人独立项目。</div>
   </section>
 
-  <section class="slide" data-index="09">
-    <div class="eyebrow">THE SECOND THROUGH-LINE · 2024—NOW</div>
-    <h2>AI Coding 的进化，不是“模型更会写代码”</h2>
-    <p class="lead">AI 承担的工程责任持续外扩：从给建议，到连接工具、驱动系统，再到自己读懂验收证据</p>
-    <div class="evolution-track" aria-label="2024至2026 AI Coding 责任边界演进">
-      <article class="evolution-step" style="--stage: var(--engineering)">
-        <time>2024 H1 · REVIEW</time>
-        <h3>LLM 进入 Code Review</h3>
-        <p>Change 完成 SIL 后自动 Review，由人工复核和决策</p>
-        <div class="evolution-limit"><b>BOTTLENECK</b>能给建议，不能验证系统结果</div>
-      </article>
-      <article class="evolution-step" style="--stage: var(--platform)">
-        <time>2025 H2 · CONNECT</time>
-        <h3>从个人工具进入团队</h3>
-        <p>接入内部模型平台，开始用 Claude Code 处理数据、部署与评测工作</p>
-        <div class="evolution-limit"><b>BOTTLENECK</b>看得到代码，看不到外部研发系统</div>
-      </article>
-      <article class="evolution-step" style="--stage: var(--delivery)">
-        <time>2026 H1 · ACT</time>
-        <h3>Agent 开始驱动机器人研发</h3>
-        <p>调用仿真、云端与机器人工具，迭代抓取、WBC 和开放任务</p>
-        <div class="evolution-limit"><b>BOTTLENECK</b>能跑很久，但人还要逐轮判定好坏</div>
-      </article>
-      <article class="evolution-step" style="--stage: var(--influence)">
-        <time>NOW · VERIFY / SCALE</time>
-        <h3>把“什么叫做成”工程化</h3>
-        <p>RoboHarness 输出 Metric + Visual 证据，Executor 恢复任务并承接批量运行</p>
-        <div class="evolution-limit"><b>NEXT BOUNDARY</b>从单次验收走向团队可复用的研发闭环</div>
-      </article>
-    </div>
-    <div class="evolution-thesis"><b>方法不止停留在个人项目</b>　2 场专题分享 · Demo Day · RoboHarness Hackathon 一等奖</div>
-    <div class="speaker-note">这条线从 2024 年的 LLM Code Review 开始，不是 2026 年突然出现的。每一次升级都来自上一阶段的瓶颈：Review 给建议但无法验证，Coding Agent 看代码但连不上系统，Agent 连上系统后又需要人类逐轮判定。RoboHarness 从抓取项目的 Visual Harness 抽象而来，并在 2026 年 3—6 月通过两场专题分享、Demo Day 和部门 Hackathon 向团队扩散。</div>
-  </section>
-
-  <section class="slide closing" data-index="10">
+  <section class="slide closing" data-index="07">
     <div>
-      <div class="eyebrow">LET'S TALK · 讨论入口</div>
-      <h1>我关心的始终不是<br>“做过多少项目”<br>而是<span style="color: var(--influence)">如何让复杂系统持续进化</span></h1>
+      <div class="eyebrow">THE ANSWER · 技术管理主线</div>
+      <h1>变化的是场景<br>积累的是<span style="color: var(--influence)">解决复杂度的方式</span></h1>
     </div>
     <div class="closing-grid">
       <article class="discussion">
-        <div class="num">01</div>
-        <h3>复杂系统的能力如何跨域迁移</h3>
-        <p>区分可复用组件、工程方法和新领域必须重学的部分</p>
+        <div class="num">01 · AUTONOMOUS DRIVING</div>
+        <h3>让复杂系统稳定交付</h3>
+        <p>把个人经验变成工程底座，再让质量、性能和跨团队机制承接规模</p>
       </article>
       <article class="discussion">
-        <div class="num">02</div>
-        <h3>验收证据到什么程度才足够可信</h3>
-        <p>为回放、SIL / DIL、Digital Twin、仿真和真机建立证据等级</p>
+        <div class="num">02 · ROBOTICS</div>
+        <h3>让工程方法跨领域迁移</h3>
+        <p>区分可以复用的方法与必须重学的领域能力，对最终交付结果负责</p>
       </article>
       <article class="discussion">
-        <div class="num">03</div>
-        <h3>让机制接替关键个人</h3>
-        <p><b class="mono">自助发版 → 自动路由 → Owner 交接</b><br>890+ 文档 · 6 万+ 阅读 · 流程持续运营</p>
+        <div class="num">03 · AI AGENT</div>
+        <h3>让执行、验证与迭代闭环</h3>
+        <p>把能力边界和验收标准写进系统，让 Agent 在证据约束下持续进化</p>
       </article>
     </div>
     <div class="contact-line">
       <div><a href="https://miaodx.com">miaodx.com</a> · <a href="https://github.com/MiaoDX">github.com/MiaoDX</a></div>
-      <span>Engineering systems that can learn, ship, and scale</span>
+      <span>Build technical teams that can learn, ship, and scale</span>
     </div>
-    <div class="speaker-note">收束时邀请对方从三个具体问题进入讨论。组织影响不展开成员职级、绩效或个人晋升，只强调从头组建团队、培养成员，并让发版、测试、Crash 和性能机制在角色变化后继续运行。</div>
+    <div class="speaker-note">最后回到开场：自动驾驶让我学会让复杂系统稳定交付，机器人验证这些方法可以跨领域迁移，AI Agent 则推动执行、验证和迭代进入同一个闭环。希望继续承担站在技术、工程与组织交界处的团队管理角色，帮助团队持续解决更复杂的问题。</div>
   </section>
 </main>
 
