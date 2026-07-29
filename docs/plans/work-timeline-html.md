@@ -40,7 +40,7 @@ with a focused zoom into the most recent half-year.
 ## Slide Contract
 
 1. Cover and four-stage arc
-2. Full 2022 H1-2026 H1 panorama with interactive track filters
+2. Full 2021.08-2026 H1 panorama with interactive track filters
 3. 2022-2023 H1 engineering foundations
 4. 2023 H2-2024 H2 production quality and performance
 5. 2025 robotics delivery, data, model, and evaluation
@@ -60,7 +60,8 @@ with a focused zoom into the most recent half-year.
 
 - Exactly eight slides and no source content outside the public boundary
 - The first two slides communicate the full arc in under one minute
-- Every half-year from 2022 H1 through 2026 H1 appears in the panorama
+- The panorama starts with a 2021.08 origin marker and includes every half-year
+  from 2022 H1 through 2026 H1
 - Stage slides retain major responsibilities and measurable outcomes
 - Interactive filters work without breaking deck navigation
 - No text overlap or unreadable controls at 1440x900 and 390x844

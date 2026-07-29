@@ -477,8 +477,8 @@ body.show-notes .speaker-note { display: block; }
   .track-filter { padding: 7px 8px; font-size: 10px; }
   .panorama-grid { display: block; border-bottom: 0; }
   .period-column { display: grid; grid-template-columns: 62px 1fr; gap: 7px; padding: 10px 0; border-right: 0; border-bottom: 1px solid var(--line-soft); }
-  .period-label { grid-row: 1 / span 3; margin: 8px 0 0; }
-  .milestone { min-height: auto; margin-bottom: 0; font-size: 11px; }
+  .period-label { grid-column: 1; grid-row: 1; margin: 8px 0 0; }
+  .milestone { grid-column: 2; min-height: auto; margin-bottom: 0; font-size: 11px; }
   .event-inspector { grid-template-columns: 1fr; gap: 6px; }
   .inspector-metric { white-space: normal; }
   .phase-grid, .compact-timeline, .capability-system { grid-template-columns: 1fr; }
@@ -554,7 +554,7 @@ body.show-notes .speaker-note { display: block; }
     </div>
     <div class="stage-rail" aria-label="四阶段工作演进">
       <div class="stage-block" style="--stage: var(--engineering)">
-        <div class="year">2022 H1—2023 H1</div>
+        <div class="year">2021.08—2023 H1</div>
         <strong>工程基础设施</strong>
         <span>多平台 · 框架 · 发版 · 仿真</span>
       </div>
@@ -581,7 +581,7 @@ body.show-notes .speaker-note { display: block; }
     <div class="panorama-head">
       <div>
         <div class="eyebrow">THE PANORAMA · 点击节点查看细节</div>
-        <h2>九个半年，一条连续的能力曲线</h2>
+        <h2>从 2021.08 起，一条连续的能力曲线</h2>
       </div>
       <div class="track-filters" role="group" aria-label="按主题筛选时间线">
         <button class="track-filter active" type="button" data-filter="all" aria-pressed="true">全部</button>
@@ -591,7 +591,7 @@ body.show-notes .speaker-note { display: block; }
         <button class="track-filter" type="button" data-filter="influence" aria-pressed="false">影响</button>
       </div>
     </div>
-    <div class="panorama-grid" id="panorama" aria-label="2022至2026工作时间线"></div>
+    <div class="panorama-grid" id="panorama" aria-label="2021至2026工作时间线"></div>
     <div class="event-inspector" id="eventInspector" aria-live="polite">
       <div class="inspector-period">READING GUIDE</div>
       <div class="inspector-copy">先看阶段变化，再用主题筛选追踪同一能力如何跨领域复用</div>
@@ -601,7 +601,7 @@ body.show-notes .speaker-note { display: block; }
   </section>
 
   <section class="slide" data-index="03">
-    <div class="eyebrow">STAGE 01 · 2022 H1—2023 H1</div>
+    <div class="eyebrow">STAGE 01 · 2021.08—2023 H1</div>
     <h2>先把感知研发变成可持续的工程系统</h2>
     <p class="lead">从多平台移植切入，逐步补齐代码、框架、发版、仿真、性能工具和知识协作</p>
     <div class="phase-grid">
@@ -636,16 +636,16 @@ body.show-notes .speaker-note { display: block; }
     <div class="stat-strip">
       <div class="stat" style="--stat: var(--engineering)"><strong>1→N</strong><span>一套代码支持多平台、多车型</span></div>
       <div class="stat" style="--stat: var(--platform)"><strong>95%</strong><span>静态检查覆盖率</span></div>
-      <div class="stat" style="--stat: var(--influence)"><strong>3×</strong><span>首期跨团队工程培训</span></div>
+      <div class="stat" style="--stat: var(--influence)"><strong>1—2 天</strong><span>新成员开始贡献代码</span></div>
       <div class="stat" style="--stat: var(--delivery)"><strong>90→160+</strong><span>跨团队技术协作群规模</span></div>
     </div>
-    <div class="speaker-note">这一阶段的成果不是一个单独功能，而是把团队每天依赖的工程底座逐步做出来。数字重点讲 95% 静态检查覆盖和协作规模增长。</div>
+    <div class="speaker-note">这一阶段的成果不是一个单独功能，而是把团队每天依赖的工程底座逐步做出来。统一代码、固定发版、重放仿真和培训共同降低上手门槛，新成员 1—2 天就能开始贡献。</div>
   </section>
 
   <section class="slide" data-index="04">
     <div class="eyebrow">STAGE 02 · 2023 H2—2024 H2</div>
     <h2>从解决问题，升级为治理问题</h2>
-    <p class="lead">把性能、Crash、测试和复盘串成闭环，让量产质量从个人经验变成平台能力</p>
+    <p class="lead">既处理多模型并发失稳，也把性能、Crash、测试和复盘串成可持续治理闭环</p>
     <div class="governance-loop" aria-label="量产质量治理闭环">
       <div class="loop-step"><b>RELEASE</b><span>风险识别与版本节奏</span></div>
       <div class="loop-step"><b>DAILY SIL</b><span>运行时检查与拦截</span></div>
@@ -664,7 +664,7 @@ body.show-notes .speaker-note { display: block; }
       </article>
       <article class="compact-item">
         <time>2024 H2</time>
-        <p>GPU 单 Stream 调度、Daily Nsys、DIL 压测和自动 Crash 路由</p>
+        <p>用耗时优化、主动丢帧、多组测试与锁定配置恢复交付，同期完善长期治理</p>
       </article>
     </div>
     <div class="stat-strip">
@@ -673,7 +673,7 @@ body.show-notes .speaker-note { display: block; }
       <div class="stat" style="--stat: var(--engineering)"><strong>−40%</strong><span>红绿灯模块 CPU</span></div>
       <div class="stat" style="--stat: var(--influence)"><strong>100%</strong><span>量产感知 Crash 解决率</span></div>
     </div>
-    <div class="speaker-note">这一页强调“治理”的含义：不是亲自修完每个问题，而是让发现、分发、验证和复盘形成稳定闭环。指标只选最能说明系统效果的四个。</div>
+    <div class="speaker-note">先讲转折：新任务进入共享资源后，局部运行正常，但系统帧率失稳。直接恢复手段是耗时优化、主动丢帧、多组测试和锁定配置；同期再把调度、观测、压测、分发和复盘建设成长期治理能力。这里讲方法，不展开内部模型和版本。</div>
   </section>
 
   <section class="slide" data-index="05">
@@ -709,12 +709,14 @@ body.show-notes .speaker-note { display: block; }
       </article>
     </div>
     <div class="transfer-strip">
-      <b>迁移的不是代码，而是方法</b>
-      <span class="transfer-arrow">→</span><span>先可观测</span>
-      <span class="transfer-arrow">→</span><span>再标准化</span>
-      <span class="transfer-arrow">→</span><span>最后自动评测</span>
+      <b>同一条验收链持续升级</b>
+      <span class="transfer-arrow">→</span><span>Replay</span>
+      <span class="transfer-arrow">→</span><span>SIL / DIL</span>
+      <span class="transfer-arrow">→</span><span>Robot Test</span>
+      <span class="transfer-arrow">→</span><span>VLN Eval</span>
+      <span class="transfer-arrow">→</span><span>RoboHarness</span>
     </div>
-    <div class="speaker-note">转岗不是重新开始。自动驾驶阶段积累的性能、测试和闭环方法，被重新组合到机器人交付和 VLN 评测中。</div>
+    <div class="speaker-note">转岗不是重新开始。自动驾驶的重放、SIL 和 DIL，迁移为机器人专项测试与 VLN 自动评测，之后继续演进为 RoboHarness 的机器可读验收层。</div>
   </section>
 
   <section class="slide" data-index="06">
@@ -725,7 +727,7 @@ body.show-notes .speaker-note { display: block; }
       <div class="zoom-head" aria-hidden="true"><span>TRACK</span><span>JAN—MAR</span><span>APR—MAY</span><span>JUN—JUL</span></div>
       <div class="zoom-row" style="--lane: var(--delivery)">
         <div class="lane-label"><b>BODY</b><strong>机器人身体</strong><small>gr00t-wholebodycontrol</small></div>
-        <div class="zoom-cell"><h3>从算法组件到安全抓取链路</h3><p>碰撞感知 IK · 轨迹验证 · MotionGen · 分阶段执行</p></div>
+        <div class="zoom-cell"><h3>先交付可控的抓取链路</h3><p>限定物体与范围 · 6D 位姿 · 轨迹验证 · 分阶段执行</p></div>
         <div class="zoom-cell"><h3>从单机能力到任务化运行时</h3><p>G1 / Realman · GR00T WBC 集成 · 部署与证据接口</p></div>
         <div class="zoom-cell"><h3>向多本体与可信验证推进</h3><p>G2 仿真契约 · FoundationPose · 仿真与硬件证明分层</p></div>
       </div>
@@ -743,11 +745,11 @@ body.show-notes .speaker-note { display: block; }
       </div>
     </div>
     <div class="zoom-proof-strip" aria-label="最近半年代表性结果">
-      <div class="zoom-proof" style="--proof: var(--delivery)"><b>&gt;90% · 约 1.5 月</b><span>首版抓取链路阶段成果</span></div>
+      <div class="zoom-proof" style="--proof: var(--delivery)"><b>&gt;90% · 约 1.5 月</b><span>限定物体与范围的首版抓取结果</span></div>
       <div class="zoom-proof" style="--proof: var(--platform)"><b>3 类家庭任务面</b><span>建图 · 开放目标 · 清理</span></div>
-      <div class="zoom-proof" style="--proof: var(--engineering)"><b>CLI + SKILL + WORKFLOW</b><span>AI Coding 从写代码走向运行系统</span></div>
+      <div class="zoom-proof" style="--proof: var(--engineering)"><b>ROBOHARNESS · 一等奖</b><span>Metric + Visual Harness 建立 Agent 验收层</span></div>
     </div>
-    <div class="speaker-note">这一页是整个时间线的局部放大。身体层把抓取做成任务系统，大脑层把开放目标做成可审计执行，基础设施层把研发过程变成 Agent 可调用的工作流。G2 只代表仿真契约和验证推进，不代表已完成真机部署。</div>
+    <div class="speaker-note">这一页先讲一个范围判断：短周期交付不等于开放操作的最终解法，第一阶段刻意选择限定物体、可控链路跑通结果。随后身体层走向任务系统，大脑层处理开放目标，基础设施层把抓取项目的 Visual Harness 抽象成 RoboHarness，并以 Metric + Visual Harness 建立 Agent 验收层。G2 只代表仿真契约和验证推进，不代表已完成真机部署。</div>
   </section>
 
   <section class="slide" data-index="07">
@@ -759,16 +761,16 @@ body.show-notes .speaker-note { display: block; }
       <article class="system-node" style="--node: var(--platform)"><div class="node-step">02 / PLAN</div><h3>Agent 决策</h3><p>用 Skill 组织策略，通过 MCP 调用受控能力</p><span class="owner">ROBOCLAWS</span></article>
       <article class="system-node" style="--node: var(--delivery)"><div class="node-step">03 / ACT</div><h3>任务化动作</h3><p>感知、6D 位姿、运动规划、抓取与放置</p><span class="owner">GR00T MANIPULATION</span></article>
       <article class="system-node" style="--node: var(--delivery)"><div class="node-step">04 / WORLD</div><h3>环境执行</h3><p>仿真、Digital Twin 与机器人按证据等级分层</p><span class="owner">SIM → ROBOT</span></article>
-      <article class="system-node" style="--node: var(--platform)"><div class="node-step">05 / VERIFY</div><h3>结果验收</h3><p>Agent View、轨迹、报告与 Eval 回答是否完成</p><span class="owner">ROBOCLAWS</span></article>
+      <article class="system-node" style="--node: var(--platform)"><div class="node-step">05 / VERIFY</div><h3>结果验收</h3><p>Metric、Visual Harness 与 Eval 回答是否完成</p><span class="owner">ROBOCLAWS</span></article>
       <article class="system-node" style="--node: var(--engineering)"><div class="node-step">06 / SCALE</div><h3>批量迭代</h3><p>运行、恢复、收集证据，再进入下一轮改进</p><span class="owner">EXECUTOR</span></article>
     </div>
     <div class="system-boundaries">
       <div class="system-boundary" style="--boundary: var(--platform)"><b>OPEN DECISION</b><p>Agent 可以面对开放目标，但只能在明确能力边界内行动</p></div>
       <div class="system-boundary" style="--boundary: var(--delivery)"><b>DETERMINISTIC ACTION</b><p>机器人动作由任务、规划和控制契约承接，不让模型直接越过安全边界</p></div>
-      <div class="system-boundary" style="--boundary: var(--engineering)"><b>EVIDENCE & SCALE</b><p>每次执行留下可比较证据，再通过自动化工作流扩大实验规模</p></div>
+      <div class="system-boundary" style="--boundary: var(--engineering)"><b>EVIDENCE & SCALE</b><p>每次执行留下可比较证据，并沉淀为团队可复用、可交接的工作流</p></div>
     </div>
-    <div class="system-thesis"><b>AI Coding 的下一步</b>　不只是帮助写代码，而是开始驱动机器人研发系统本身</div>
-    <div class="speaker-note">讲这一页时沿箭头走一遍：RoboClaws 管开放决策，GR00T manipulation 管确定性动作，Executor 管批量研发闭环。最重要的不是三个仓库，而是开放智能、确定性控制和证据体系之间的边界。</div>
+    <div class="system-thesis"><b>AI Coding 的下一步</b>　从生成代码，到机器可验收，再到驱动研发系统 · RoboHarness 是贯穿 Verify / Scale 的验收方法层</div>
+    <div class="speaker-note">讲这一页时沿箭头走一遍：RoboClaws 管开放决策与结果验收，GR00T manipulation 管确定性动作，Executor 管批量研发闭环。RoboHarness 不是第四个运行时仓库，而是贯穿 Verify 与 Scale 的验收方法层。最重要的不是三个仓库，而是开放智能、确定性控制和证据体系之间的边界。</div>
   </section>
 
   <section class="slide closing" data-index="08">
@@ -790,7 +792,7 @@ body.show-notes .speaker-note { display: block; }
       <article class="discussion">
         <div class="num">03</div>
         <h3>个人流程如何变成团队能力</h3>
-        <p>用 CLI、Skill 和 Workflow 沉淀可复用研发系统</p>
+        <p>用文档、验收、CLI、Skill 和 Workflow 降低关键人依赖</p>
       </article>
     </div>
     <div class="contact-line">
@@ -812,9 +814,9 @@ const trackColors = {
 
 const periods = [
   {
-    label: '2022 H1',
+    label: '2021.08—22 H1',
     events: [
-      { track: 'engineering', title: '多平台 one-repo', detail: '统一多平台、多车型感知代码，降低并行维护成本', metric: '一套代码 / 多平台' },
+      { track: 'engineering', title: '多平台 one-repo', detail: '从 2021.08 起在迁移期维护双栈，并统一多平台、多车型感知代码', metric: '一套代码 / 多平台' },
       { track: 'platform', title: '发版与重放仿真', detail: '建立固定发版、报告、对比视频和 record 重放机制', metric: '每周两次固定节奏' },
     ],
   },
@@ -873,6 +875,7 @@ const periods = [
       { track: 'delivery', title: '机器人身体', detail: '把感知、6D 位姿、规划与控制组织成任务化抓取链路，并向多本体验证推进', metric: '首版 >90%' },
       { track: 'platform', title: '机器人大脑', detail: '用 Skill、MCP、Agent View 与 Eval 支撑建图、开放目标和家庭清理', metric: '3 类任务面' },
       { track: 'engineering', title: '研发基础设施', detail: '把云端运行、仿真、重建和结果回收变成 Agent 可调用的工作流', metric: 'CLI · Skill · Workflow' },
+      { track: 'influence', title: 'RoboHarness', detail: '把抓取项目中的 Visual Harness 抽象成 Metric + Visual Harness 验收层', metric: 'AI Hackathon 一等奖' },
     ],
   },
 ];
