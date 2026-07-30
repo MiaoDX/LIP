@@ -160,7 +160,7 @@ const switchLang = () => {
           </div>
 
           <!-- Content -->
-          <div class="te-prose" :class="{ 'has-drop-cap': dropCap }">
+          <div class="te-prose" :class="{ 'has-drop-cap': dropCap, 'is-outline-page': slug === 'whoami' }">
             <Content />
           </div>
 

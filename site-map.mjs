@@ -5,6 +5,7 @@ export const siteBase = '/LIP/'
 export const navByLocale = {
   root: [
     { text: '首页', link: '/' },
+    { text: 'Whoami', link: '/whoami' },
     { text: '月报', link: '/now/2026-04' },
     { text: 'AI Coding', link: '/ai-coding/' },
     { text: 'OpenClaw', link: '/openclaw/' },
@@ -40,6 +41,7 @@ export const sidebar = {
       text: '快速开始',
       items: [
         { text: '首页（总览）', link: '/' },
+        { text: 'Whoami', link: '/whoami' },
         { text: '2026 年 4 月月报', link: '/now/2026-04' },
         { text: '2026 年 3 月月报', link: '/now/2026-03' },
         { text: '路线图', link: '/ROADMAP' },
