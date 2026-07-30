@@ -6,7 +6,7 @@
 - Session scope: public-work-timeline
 - Parent plan: none
 - Child plans: none
-- Last updated: 2026-07-29
+- Last updated: 2026-07-30
 - Current slice: Completed
 - Next action: none
 - Blocked on: none
@@ -22,8 +22,8 @@ with a focused zoom into the most recent half-year.
 
 - One standalone source at `presentations/work-timeline.html`
 - No more than eight slides
-- Four reading levels: career arc, capability line, stage, and selected evidence
-- Career and thematic views generated from the same public-safe content
+- Four reading levels: career arc, causal map, stage, and selected evidence
+- Career and causal views generated from the same public-safe content
 - Desktop presentation and mobile reading layouts
 - Keyboard/click paging, notes, progress, counter, and theme switching through
   the existing deck runtime
@@ -41,9 +41,8 @@ with a focused zoom into the most recent half-year.
 
 ## Slide Contract
 
-1. Cover and four-stage arc
-2. Four capability lines across four stages: engineering, verification,
-   organization, and the emerging AI Coding line
+1. Cover and three-domain arc
+2. Four-stage causal map: new problem, system answer, and responsibility growth
 3. 2022-2023 H1 engineering foundations
 4. 2023 H2-2024 H2 production quality through three trigger, decision, and
    lasting-mechanism cases
@@ -66,8 +65,8 @@ with a focused zoom into the most recent half-year.
 
 - Exactly eight slides and no source content outside the public boundary
 - The first two slides communicate the full arc in under one minute
-- The capability matrix starts at 2021.08 and makes the four-stage progression
-  legible without interaction
+- The causal map starts at 2021.08 and makes the four-stage progression legible
+  without interaction
 - Stage slides retain major responsibilities and measurable outcomes
 - Slides 4 and 6 expose the decisions behind outcomes, not only chronology
 - Slides 6 and 7 distinguish scoped hardware proof, simulation proof, and team
@@ -88,11 +87,11 @@ with a focused zoom into the most recent half-year.
 ## Shipped Evidence
 
 - `presentations/work-timeline.html`: the single eight-slide public standalone
-  deck, including the four-line capability view and decision-led recent work
+  deck, including the four-stage causal map and decision-led recent work
 - `share/index.md`: public discovery link
 - Browser proof: all eight slides rendered at 1440x900 and 390x844 with no
-  horizontal overflow; the capability matrix and decision/system slides were
-  verified at mobile top and bottom
+  horizontal overflow; the causal map and decision/system slides were verified
+  at mobile top and bottom
 - Interaction proof: keyboard paging, notes, counters, and theme switching load
   without console errors
 - Repository proof: `npm run build:all` passed and copied the deck to

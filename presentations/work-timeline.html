@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>五年，三个领域，同一个问题 · 2021–2026</title>
+<title>五年，三个领域，同一件事 · 2021–2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
@@ -215,23 +215,26 @@ body.show-notes .speaker-note { display: block; }
 .stage-block strong { display: block; margin-top: 10px; font-size: 16px; }
 .stage-block span { display: block; margin-top: 5px; color: var(--text-dim); font-size: 12px; line-height: 1.45; }
 
-/* Capability matrix */
-.capability-matrix { margin-top: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.matrix-head,
-.capability-row { display: grid; grid-template-columns: 160px repeat(4, minmax(0, 1fr)); }
-.matrix-head { min-height: 38px; color: var(--text-dim); font: 600 11px/38px var(--font-mono); }
-.matrix-head span { padding: 0 16px; border-left: 1px solid var(--line-soft); }
-.matrix-head span:first-child { padding-left: 0; border-left: 0; }
-.capability-row { border-top: 1px solid var(--line-soft); }
-.capability-label { padding: 15px 18px 14px 0; }
-.capability-label b { display: block; color: var(--lane); font: 600 11px/1.2 var(--font-mono); }
-.capability-label strong { display: block; margin-top: 7px; font-size: 15px; line-height: 1.3; }
-.capability-cell { min-width: 0; min-height: 76px; padding: 14px 16px; border-left: 1px solid var(--line-soft); background: color-mix(in srgb, var(--lane) 3%, transparent); }
-.capability-cell small { display: none; color: var(--lane); font: 600 10px/1.2 var(--font-mono); }
-.capability-cell h3 { margin: 0 0 5px; font-size: 14px; line-height: 1.35; }
-.capability-cell p { margin: 0; color: var(--text-dim); font-size: 12px; line-height: 1.5; }
-.capability-cell.is-emerging { background: color-mix(in srgb, var(--lane) 7%, var(--surface)); }
-.matrix-thesis { margin-top: 14px; padding: 12px 15px; border-left: 4px solid var(--influence); background: var(--surface-alt); font-size: 13px; line-height: 1.5; }
+/* Story map */
+.story-map {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.story-stage { min-width: 0; padding: 20px 20px 18px 0; }
+.story-stage + .story-stage { padding-left: 20px; border-left: 1px solid var(--line); }
+.story-stage time { display: block; color: var(--stage); font: 600 11px/1.2 var(--font-mono); }
+.story-stage h3 { min-height: 46px; margin: 10px 0 12px; font-size: 17px; }
+.story-stage dl { margin: 0; }
+.story-stage dt { margin-top: 11px; color: var(--stage); font: 600 10px/1.2 var(--font-mono); }
+.story-stage dd { min-height: 45px; margin: 5px 0 0; color: var(--text-soft); font-size: 12px; line-height: 1.5; }
+.story-role { margin-top: 14px; padding-top: 11px; border-top: 1px solid var(--line-soft); }
+.story-role b { display: block; color: var(--text-dim); font: 600 10px/1.2 var(--font-mono); }
+.story-role span { display: block; margin-top: 5px; font-size: 12px; line-height: 1.4; }
+.story-thesis { margin-top: 16px; padding: 13px 16px; border-left: 4px solid var(--influence); background: var(--surface-alt); font-size: 14px; line-height: 1.5; }
+.story-thesis b { color: var(--text); }
 
 /* Stage layouts */
 .phase-grid {
@@ -403,7 +406,7 @@ body.show-notes .speaker-note { display: block; }
 /* Closing */
 .closing { justify-content: space-between; padding-top: 92px; padding-bottom: 82px; }
 .closing h1 { max-width: 1120px; font-size: 54px; }
-.closing-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 0; max-width: 1180px; border-top: 1px solid var(--line); }
+.closing-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; max-width: 1180px; border-top: 1px solid var(--line); }
 .discussion { padding: 20px 30px 0 0; }
 .discussion + .discussion { padding-left: 30px; border-left: 1px solid var(--line); }
 .discussion .num { color: var(--influence); font: 600 11px/1 var(--font-mono); }
@@ -424,18 +427,29 @@ body.show-notes .speaker-note { display: block; }
 }
 
 @media (max-width: 900px) {
+  body::after {
+    content: '';
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 110;
+    height: 52px;
+    border-top: 1px solid var(--line-soft);
+    background: var(--bg);
+  }
   .counter { right: 16px; bottom: 15px; }
   .notes-toggle { left: 14px; bottom: 10px; }
   .style-toggle { top: auto; right: auto; bottom: 10px; left: 100px; }
   .slide,
   .cover,
   .closing {
+    bottom: 52px;
     justify-content: flex-start;
-    padding: 58px 20px 72px;
+    padding: 58px 20px 28px;
   }
   .slide::after { right: 17px; top: 50px; font-size: 62px; }
   .eyebrow { margin-top: 7px; }
   h1, .cover h1, .closing h1 { font-size: 38px; line-height: 1.18; }
+  .closing h1 { font-size: 31px; }
   h2 { font-size: 28px; }
   .lead { font-size: 16px; line-height: 1.55; }
   .cover { gap: 32px; }
@@ -443,13 +457,15 @@ body.show-notes .speaker-note { display: block; }
   .stage-rail { grid-template-columns: 1fr 1fr; width: 100%; border-top: 0; }
   .stage-rail.three { grid-template-columns: 1fr; }
   .stage-block { min-height: 110px; padding: 17px 14px 12px; border-top: 2px solid var(--line); }
-  .matrix-head { display: none; }
-  .capability-row { display: block; padding: 14px 0; }
-  .capability-label { padding: 0 0 10px; }
-  .capability-cell { min-height: auto; padding: 11px 13px; border-top: 1px solid var(--line-soft); border-left: 3px solid var(--lane); }
-  .capability-cell small { display: block; margin-bottom: 6px; }
-  .capability-cell h3 { font-size: 15px; }
-  .capability-cell p { font-size: 13px; }
+  .story-map { grid-template-columns: 1fr; }
+  .story-stage,
+  .story-stage + .story-stage { padding: 17px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .story-stage:last-child { border-bottom: 0; }
+  .story-stage h3,
+  .story-stage dd { min-height: auto; }
+  .story-stage dl { display: grid; grid-template-columns: 86px 1fr; gap: 6px 10px; }
+  .story-stage dt { margin-top: 5px; }
+  .story-stage dd { margin-top: 3px; }
   .phase-grid { grid-template-columns: 1fr; }
   .phase { padding: 18px 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .phase + .phase { padding-left: 0; }
@@ -535,34 +551,68 @@ body.show-notes .speaker-note { display: block; }
   <section class="slide cover active" data-index="01">
     <div>
       <div class="eyebrow">WORK TIMELINE · 2021—2026</div>
-      <h1>五年，三个领域<br><span>同一个问题</span></h1>
-      <p class="lead">如何把复杂系统从偶尔跑通，变成能够持续交付、持续验证、持续进化的工程能力</p>
+      <h1>五年，三个领域<br><span>同一件事</span></h1>
+      <p class="lead">把复杂系统的不确定性，变成团队可以持续交付的确定性</p>
       <div class="cover-meta">MiaoDX / Engineering · Robotics · Agent Systems</div>
     </div>
     <div class="stage-rail three" aria-label="三个领域的工作演进">
       <div class="stage-block" style="--stage: var(--engineering)">
         <div class="year">2021.08—2024</div>
         <strong>自动驾驶</strong>
-        <span>工程底座 → 规模化治理 → 稳定交付</span>
+        <span>统一底座 → 规模化治理 → 稳定交付</span>
       </div>
       <div class="stage-block" style="--stage: var(--platform)">
         <div class="year">2025</div>
         <strong>机器人</strong>
-        <span>工站交付 → 数据评测 → 方法迁移</span>
+        <span>方法迁移 → 工站交付 → 评测闭环</span>
       </div>
       <div class="stage-block" style="--stage: var(--influence)">
         <div class="year">2026 → NOW</div>
         <strong>AI Agent</strong>
-        <span>受控执行 → 机器验收 → 持续进化</span>
+        <span>开放规划 → 受控执行 → 机器验收</span>
       </div>
     </div>
-    <div class="speaker-note">开场不罗列项目。先给出贯穿五年的问题：场景从自动驾驶变到机器人和 AI Agent，但工作始终围绕复杂系统如何稳定交付、持续验证和继续进化。</div>
+    <div class="speaker-note">开场不罗列项目。先给出贯穿五年的主线：场景从自动驾驶变到机器人和 AI Agent，但工作始终围绕如何把不确定性变成团队可以持续交付的确定性。</div>
   </section>
 
   <section class="slide" data-index="02">
+    <div class="eyebrow">THE MAP · 新问题推动系统升级</div>
+    <h2>每一阶段，都从上一阶段的边界开始</h2>
+    <p class="lead">不是五组独立项目，而是一套方法在更大规模、更陌生场景和更高自主性下持续升级</p>
+    <div class="story-map" aria-label="2021至2026四阶段问题、系统回答与角色演进">
+      <article class="story-stage" style="--stage: var(--engineering)">
+        <time>2021.08—2023 H1</time>
+        <h3>先摆脱重复交付与关键个人依赖</h3>
+        <dl><dt>NEW PROBLEM</dt><dd>多系统、多平台、多车型各有一套上下文</dd><dt>SYSTEM ANSWER</dt><dd>统一代码、框架、发版、仿真与知识入口</dd></dl>
+        <div class="story-role"><b>RESPONSIBILITY</b><span>工程平台建设与交付</span></div>
+      </article>
+      <article class="story-stage" style="--stage: var(--delivery)">
+        <time>2023 H2—2024</time>
+        <h3>底座承接协作，规模仍会放大风险</h3>
+        <dl><dt>NEW PROBLEM</dt><dd>高频变更、资源耦合和人工判断无法扩展</dd><dt>SYSTEM ANSWER</dt><dd>测试左移、资源治理与跨团队运营机制</dd></dl>
+        <div class="story-role"><b>RESPONSIBILITY</b><span>感知系统团队与量产治理</span></div>
+      </article>
+      <article class="story-stage" style="--stage: var(--platform)">
+        <time>2025</time>
+        <h3>机制在熟悉领域成立，能否跨域迁移</h3>
+        <dl><dt>NEW PROBLEM</dt><dd>机器人现场约束不同，跑通也不等于持续进步</dd><dt>SYSTEM ANSWER</dt><dd>先完成集成交付，再建立数据与评测闭环</dd></dl>
+        <div class="story-role"><b>RESPONSIBILITY</b><span>跨领域交付与评测方向</span></div>
+      </article>
+      <article class="story-stage" style="--stage: var(--influence)">
+        <time>2026 → NOW</time>
+        <h3>Agent 开始行动，谁来守边界和验收</h3>
+        <dl><dt>NEW PROBLEM</dt><dd>开放目标、物理执行和长程任务引入新风险</dd><dt>SYSTEM ANSWER</dt><dd>Plan / Act / Verify 分层，并让证据进入系统</dd></dl>
+        <div class="story-role"><b>RESPONSIBILITY</b><span>Agent 系统技术方向</span></div>
+      </article>
+    </div>
+    <div class="story-thesis"><b>贯穿五年的方法</b>　定边界 → 搭观测 → 做闭环 → 交给机制持续运行</div>
+    <div class="speaker-note">这页先把后续六页的因果关系讲完。底座解决重复工作，规模迫使治理升级，跨领域迁移检验方法，Agent 自主性提高后又要求能力边界和验收证据进入系统。角色也从工程平台建设扩展到团队治理、跨领域交付与 Agent 系统方向。</div>
+  </section>
+
+  <section class="slide" data-index="03">
     <div class="eyebrow">ACT 01 · 2021.08—2023 H1 · ENGINEERING FOUNDATION</div>
-    <h2>从“每次重新来”到统一工程底座</h2>
-    <p class="lead">先解决交付依赖少数工程人员的问题，让更多算法团队可以共同开发、自助验证与稳定发版</p>
+    <h2>先把重复交付写进工程底座</h2>
+    <p class="lead">让更多算法团队可以共同开发、自助验证与稳定发版，也为下一阶段的规模化治理建立入口</p>
     <div class="phase-grid">
       <article class="phase">
         <time>BEFORE · 关键个人</time>
@@ -599,10 +649,10 @@ body.show-notes .speaker-note { display: block; }
     <div class="speaker-note">这一阶段的主角不是某个框架，而是工作方式的改变：把上车、发版、仿真和培训中的隐性经验写进系统。协作群从 90+ 增长到 160+，clang-tidy 覆盖率达到 95%，这些数字作为问答证据，不挤占主画面。</div>
   </section>
 
-  <section class="slide" data-index="03">
+  <section class="slide" data-index="04">
     <div class="eyebrow">ACT 01 · 2023 H2—2024 H2 · SCALE & GOVERNANCE</div>
-    <h2>当复杂度进入团队规模，必须用机制承接</h2>
-    <p class="lead">团队与模型规模上升后，局部修改开始影响整体，质量与性能必须进入同一套系统治理</p>
+    <h2>底座承接了协作，规模必须由机制承接</h2>
+    <p class="lead">团队与模型规模上升后，人工判断和单点优化都无法扩展，质量与性能必须进入同一套系统治理</p>
     <div class="pressure-rail" aria-label="规模化研发中的三类压力">
       <div class="pressure-signal"><b>A ↑ / B ↓</b><span>一个方案优化，另一个方案退化</span></div>
       <div class="pressure-signal"><b>高频变更</b><span>人工检查无法覆盖百人级协作</span></div>
@@ -636,9 +686,9 @@ body.show-notes .speaker-note { display: block; }
     <div class="speaker-note">这里把质量和性能合在一起讲，因为它们面对的是同一种规模问题：人工判断和单点优化都无法扩展。测试左移降低变化风险，资源治理保证功能密度，跨团队机制让结果可以持续。对外不展开内部版本号和 Crash 绝对值。</div>
   </section>
 
-  <section class="slide" data-index="04">
+  <section class="slide" data-index="05">
     <div class="eyebrow">ACT 02 · 2025 H1 · ROBOT DELIVERY</div>
-    <h2>换了领域，过去的方法还成立吗？</h2>
+    <h2>机制在熟悉领域成立，换个领域还成立吗？</h2>
     <p class="lead">真正能跨领域迁移的不是某个模块，而是性能、测试、交付和协作方法</p>
     <div class="role-shift" aria-label="从自动驾驶规模化治理到机器人交付">
       <div class="shift-node"><b>2021—24 · SCALE</b><span>自动驾驶量产治理</span></div>
@@ -675,21 +725,21 @@ body.show-notes .speaker-note { display: block; }
     <div class="speaker-note">转岗不是把自动驾驶方案原样复制到机器人。可迁移的是问题拆解、资源观测、版本节奏和跨团队闭环；操作策略、机器人状态和模型范式仍需重学。现场还包括空气质量、Wi-Fi 和资源排期等非算法阻塞，说明集成交付必须对最终结果负责。</div>
   </section>
 
-  <section class="slide" data-index="05">
+  <section class="slide" data-index="06">
     <div class="eyebrow">ACT 02 · 2025 H2 · DATA / MODEL / EVAL</div>
-    <h2>系统跑起来以后，下一步应该改什么？</h2>
-    <p class="lead">从完成项目走向数据与评测驱动研发，让结果帮助团队决定下一轮投入</p>
+    <h2>交付跑通以后，团队如何决定下一轮投入？</h2>
+    <p class="lead">从完成项目走向数据与评测驱动研发，先打通任务生成、批量执行与量化比较的初版闭环</p>
     <div class="role-shift" aria-label="从评测规划到研发决策闭环">
       <div class="shift-node"><b>2025.08 · PROPOSAL</b><span>提出数据与评测驱动研发</span></div>
       <div class="shift-arrow">→</div>
       <div class="shift-node"><b>2025 H2 · DELIVERY</b><span>自动生成与云端批量评测</span></div>
       <div class="shift-arrow">→</div>
-      <div class="shift-node"><b>DECISION LOOP</b><span>补数据 · 改模型 · 解瓶颈</span></div>
+      <div class="shift-node"><b>INITIAL LOOP</b><span>补数据 · 改模型 · 解瓶颈</span></div>
     </div>
     <div class="eval-loop" aria-label="VLM 驱动的数据与评测闭环">
       <svg viewBox="0 0 1100 245" role="img" aria-labelledby="eval-loop-title eval-loop-desc">
         <title id="eval-loop-title">VLM 驱动的自动评测闭环</title>
-        <desc id="eval-loop-desc">VLM 生成任务，云端和仿真批量执行，指标自动评分，团队据此作出资源决策，弱项再回流数据管线</desc>
+        <desc id="eval-loop-desc">VLM 生成任务，云端和仿真批量执行，指标自动评分，团队据此辅助研发判断，弱项再回流数据管线</desc>
         <defs>
           <marker id="eval-arrow-head" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
             <path class="eval-arrow-head" d="M0,0 L8,4 L0,8 Z"></path>
@@ -712,7 +762,7 @@ body.show-notes .speaker-note { display: block; }
         <path class="eval-arrow" d="M800 76 H836" marker-end="url(#eval-arrow-head)"></path>
         <rect class="eval-node" x="845" y="28" width="230" height="96"></rect>
         <text class="eval-step" x="867" y="53">04 · DECIDE</text>
-        <text class="eval-title" x="867" y="79">决定下一轮投入</text>
+        <text class="eval-title" x="867" y="79">辅助下一轮判断</text>
         <text class="eval-meta" x="867" y="103">补数据 · 改模型 · 解瓶颈</text>
         <path class="eval-arrow" d="M960 124 V190 H135 V132" marker-end="url(#eval-arrow-head)"></path>
         <text class="eval-return" x="475" y="215">WEAK CASES → 数据管线</text>
@@ -721,18 +771,18 @@ body.show-notes .speaker-note { display: block; }
         <div class="eval-mobile-step"><b>01 · GENERATE</b><strong>VLM 生成任务</strong><span>导航指令 · 弱场景</span></div>
         <div class="eval-mobile-step"><b>02 · RUN</b><strong>云端 / 仿真批量执行</strong><span>多轮 · 多模型</span></div>
         <div class="eval-mobile-step"><b>03 · MEASURE</b><strong>Metric 自动评分</strong><span>横向比较 · 人工质检</span></div>
-        <div class="eval-mobile-step"><b>04 · DECIDE</b><strong>决定下一轮投入</strong><span>弱项回流数据管线</span></div>
+        <div class="eval-mobile-step"><b>04 · DECIDE</b><strong>辅助下一轮判断</strong><span>弱项回流数据管线</span></div>
       </div>
     </div>
-    <div class="evolution-thesis"><b>输出不是排行榜</b>　而是下一轮数据、模型与工程的资源决策</div>
+    <div class="evolution-thesis"><b>初版闭环的输出不是排行榜</b>　而是让下一轮数据、模型与工程投入有据可依</div>
     <div class="stat-strip two">
       <div class="stat" style="--stat: var(--platform)"><strong>2×</strong><span>数据管线吞吐</span></div>
       <div class="stat" style="--stat: var(--platform)"><strong>15×</strong><span>识别 Driver 与环境栈瓶颈，而非修改模型</span></div>
     </div>
-    <div class="speaker-note">2025 年 8 月提出数据与评测驱动的研发方向，随后在 H2 落地自动任务生成、统一环境和云端批量评测。这一页的重点不是两个倍数，而是展示一个提前作出的判断如何在半年内变成交付，并形成两项专利申请。</div>
+    <div class="speaker-note">2025 年 8 月提出数据与评测驱动的研发方向，随后在 H2 落地自动任务生成、统一环境和云端批量评测。这里准确表达为初版闭环，不把方向目标说成已经完全成熟的研发控制系统。两个倍数是数据与环境底座的能力证据，不等同于评测本身的最终效果。</div>
   </section>
 
-  <section class="slide" data-index="06">
+  <section class="slide" data-index="07">
     <div class="eyebrow">ACT 03 · 2026 → NOW · AGENT SYSTEMS</div>
     <h2>当 Agent 开始执行，验收也必须进入系统</h2>
     <p class="lead">AI 承担的责任从给建议扩展到理解目标、调用工具和驱动系统，能力边界与验收证据必须同步升级</p>
@@ -742,52 +792,57 @@ body.show-notes .speaker-note { display: block; }
         <div class="decision-lane"><b>PLAN</b><strong>理解与规划</strong><small>Agent SDK</small></div>
         <div class="decision-cell"><b class="cell-label">NEW CONSTRAINT</b><h3>固定流程无法处理开放目标</h3><p>系统需要理解“我渴了”一类意图，同时守住机器人能力边界</p></div>
         <div class="decision-cell"><b class="cell-label">SYSTEM BOUNDARY</b><h3>开放决策与受控能力分层</h3><p>Agent SDK 负责理解、规划、工具调用和流程控制</p></div>
-        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">SIM VERIFIED</span><h3>3 类家庭任务面</h3><p>建图 · 开放目标 · 清理；仿真与 Digital Twin 验证</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">SIM VERIFIED · ROBOT WIP</span><h3>3 类家庭任务面</h3><p>建图 · 开放目标 · 清理；仿真与 Digital Twin 验证</p></div>
       </div>
       <div class="decision-row" style="--lane: var(--delivery)">
         <div class="decision-lane"><b>ACT</b><strong>受控执行</strong><small>MCP · Skill</small></div>
         <div class="decision-cell"><b class="cell-label">NEW CONSTRAINT</b><h3>物理执行需要确定性边界</h3><p>开放目标最终必须落到可观察、可调试的机器人原语</p></div>
         <div class="decision-cell"><b class="cell-label">SYSTEM BOUNDARY</b><h3>MCP 提供原语，Skill 组合能力</h3><p>导航、抓取和任务调度保持小规模、稳定、可复用</p></div>
-        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">HARDWARE VERIFIED · SCOPED</span><h3>&gt;90% · 两种本体</h3><p>限定物体和范围，在 G1 与 RealMan 上验证</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">ROBOT PRIMITIVE · SCOPED</span><h3>抓取 &gt;90% · 两种本体</h3><p>限定物体和范围的底层能力证据，不代表 Agent 端到端真机成功率</p></div>
       </div>
       <div class="decision-row" style="--lane: var(--engineering)">
-        <div class="decision-lane"><b>VERIFY</b><strong>验收与恢复</strong><small>RoboHarness · Executor</small></div>
+        <div class="decision-lane"><b>VERIFY</b><strong>验收与恢复</strong><small>RoboHarness · Workflow</small></div>
         <div class="decision-cell"><b class="cell-label">NEW CONSTRAINT</b><h3>能长程运行，不等于结果可靠</h3><p>人类逐轮判断会再次成为团队扩展的瓶颈</p></div>
-        <div class="decision-cell"><b class="cell-label">SYSTEM BOUNDARY</b><h3>把“什么叫做成”工程化</h3><p>Metric + Visual Evidence 验收，Workflow 恢复与批量运行</p></div>
-        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">TEAM PLATFORM · EXTENDED</span><h3>可恢复、可收集证据</h3><p>RoboHarness 获部门 Hackathon 一等奖</p></div>
+        <div class="decision-cell"><b class="cell-label">SYSTEM BOUNDARY</b><h3>把“什么叫做成”工程化</h3><p>Metric + Visual Evidence 验收；既有 Executor 扩展机器人入口与 Workflow</p></div>
+        <div class="decision-cell"><b class="cell-label">EVIDENCE</b><span class="evidence-badge">TEAM PRACTICE · PLATFORM EXTENDED</span><h3>可恢复 · 可收集证据</h3><p>RoboHarness 获一等奖；Executor 为既有团队平台</p></div>
       </div>
     </div>
     <div class="evolution-thesis"><b>AI 工程责任的演进</b>　REVIEW → CONNECT → ACT → VERIFY</div>
-    <div class="speaker-note">这页合并身体、大脑、基础设施和 AI Coding 两条旧叙事，只回答一个问题：Agent 能执行以后，如何守住能力边界并判断结果。Executor 是既有团队平台，本人的工作是补齐机器人入口与 Workflow 扩展，不把它表达成个人独立项目。</div>
+    <div class="speaker-note">这页只回答一个问题：Agent 能执行以后，如何守住能力边界并判断结果。三类证据严格分开：RoboClaws 是仿真与 Digital Twin 验证、真机仍在推进；90%+ 是限定范围抓取原语的真机证据，不是 Agent 端到端成功率；Executor 是既有团队平台，本人的工作是补齐机器人入口与 Workflow 扩展。</div>
   </section>
 
-  <section class="slide closing" data-index="07">
+  <section class="slide closing" data-index="08">
     <div>
       <div class="eyebrow">THE ANSWER · 技术管理主线</div>
-      <h1>变化的是场景<br>积累的是<span style="color: var(--influence)">解决复杂度的方式</span></h1>
+      <h1>把复杂系统的不确定性<br>变成<span style="color: var(--influence)">可持续交付的确定性</span></h1>
     </div>
     <div class="closing-grid">
       <article class="discussion">
-        <div class="num">01 · AUTONOMOUS DRIVING</div>
-        <h3>让复杂系统稳定交付</h3>
-        <p>把个人经验变成工程底座，再让质量、性能和跨团队机制承接规模</p>
+        <div class="num">01 · DEFINE</div>
+        <h3>定义边界与验收</h3>
+        <p>先说清范围、资源预算与“什么叫做成”</p>
       </article>
       <article class="discussion">
-        <div class="num">02 · ROBOTICS</div>
-        <h3>让工程方法跨领域迁移</h3>
-        <p>区分可以复用的方法与必须重学的领域能力，对最终交付结果负责</p>
+        <div class="num">02 · OBSERVE</div>
+        <h3>建立观测与证据</h3>
+        <p>让指标、回放、仿真和真机证据回答问题在哪里</p>
       </article>
       <article class="discussion">
-        <div class="num">03 · AI AGENT</div>
-        <h3>让执行、验证与迭代闭环</h3>
-        <p>把能力边界和验收标准写进系统，让 Agent 在证据约束下持续进化</p>
+        <div class="num">03 · CLOSE LOOP</div>
+        <h3>把一次修复变成系统</h3>
+        <p>通过自动测试、路由、恢复与评测持续迭代</p>
+      </article>
+      <article class="discussion">
+        <div class="num">04 · SCALE</div>
+        <h3>交给机制持续运行</h3>
+        <p>从关键个人走向团队、平台与受证据约束的 Agent</p>
       </article>
     </div>
     <div class="contact-line">
       <div><a href="https://miaodx.com">miaodx.com</a> · <a href="https://github.com/MiaoDX">github.com/MiaoDX</a></div>
-      <span>Build technical teams that can learn, ship, and scale</span>
+      <span>NEXT · 在技术、工程与组织交界处，让团队和 Agent 承担更复杂的工作</span>
     </div>
-    <div class="speaker-note">最后回到开场：自动驾驶让我学会让复杂系统稳定交付，机器人验证这些方法可以跨领域迁移，AI Agent 则推动执行、验证和迭代进入同一个闭环。希望继续承担站在技术、工程与组织交界处的团队管理角色，帮助团队持续解决更复杂的问题。</div>
+    <div class="speaker-note">最后不再复述三个领域，而是回答开场的同一件事：先定义边界，再建立观测，把一次解决变成自动闭环，最后交给团队、平台或 Agent 持续运行。下一阶段希望继续站在技术、工程与组织交界处，让团队和 Agent 在证据约束下承担更复杂的工作。</div>
   </section>
 </main>
 
