@@ -180,7 +180,7 @@ body.show-notes .speaker-note { display: block; }
 .project-evidence div + div { padding-left: 10px; border-left: 1px solid var(--line-soft); }
 .project-evidence b { display: block; color: var(--project); font: 700 9px/1.2 var(--font-mono); }
 .project-evidence span { display: block; margin-top: 4px; color: var(--text-dim); font-size: 10px; line-height: 1.4; }
-.agent-foot { display: grid; grid-template-columns: 1fr 1fr; margin-top: 13px; border: 1px solid var(--line); }
+.agent-foot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 13px; border: 1px solid var(--line); }
 .agent-proof { padding: 11px 13px; }
 .agent-proof + .agent-proof { border-left: 1px solid var(--line); }
 .agent-proof b { color: var(--delivery); font: 700 10px/1.2 var(--font-mono); }
@@ -270,7 +270,7 @@ body.show-notes .speaker-note { display: block; }
     </div>
     <div class="stage-rail" aria-label="三个领域的工作演进">
       <div class="stage-block" data-go="2" style="--stage: var(--engineering)">
-        <div class="year">2021.08—2024</div><strong>自动驾驶</strong><span>团队建设 → 工程底座 → 规模化治理</span>
+        <div class="year">2021.08—2025 H1</div><strong>自动驾驶</strong><span>团队建设 → 工程底座 → 规模化治理</span>
       </div>
       <div class="stage-block" data-go="4" style="--stage: var(--platform)">
         <div class="year">2025</div><strong>机器人</strong><span>集成交付 → 数据生产 → 评测闭环</span>
@@ -293,7 +293,7 @@ body.show-notes .speaker-note { display: block; }
         <div class="story-role"><b>ROLE</b><span>感知系统团队负责人｜0→1 组建团队</span></div>
       </article>
       <article class="story-stage" data-go="3" style="--stage: var(--delivery)">
-        <time>2023 H2—2024 H2</time><h3>让规模不再放大质量与性能风险</h3>
+        <time>2023 H2—2025 H1</time><h3>让规模不再放大质量与性能风险</h3>
         <dl><dt>NEW PROBLEM</dt><dd>高频变更、资源耦合与人工判断无法扩展</dd><dt>SYSTEM ANSWER</dt><dd>测试左移、自动路由、资源治理与持续运营</dd></dl>
         <div class="story-role"><b>ROLE</b><span>感知系统团队负责人｜系统工程与交付收口</span></div>
       </article>
@@ -331,7 +331,7 @@ body.show-notes .speaker-note { display: block; }
   </section>
 
   <section class="slide" data-index="04">
-    <div class="eyebrow">ACT 01 · 2023 H2—2024 H2 · SCALE & GOVERNANCE</div>
+    <div class="eyebrow">ACT 01 · 2023 H2—2025 H1 · SCALE & GOVERNANCE</div>
     <h2>从 1 到 N：把质量和性能变成可运营机制</h2>
     <p class="lead">高频变更、百人级协作和资源耦合，不再依靠人工检查或单点救火</p>
     <div class="pressure-rail"><div class="pressure"><b>A ↑ / B ↓</b><span>局部指标提升，可能造成系统体验退化</span></div><div class="pressure"><b>高频变更</b><span>人工检查无法覆盖多模块持续合入</span></div><div class="pressure"><b>资源耦合</b><span>模型和任务竞争同一套 CPU / GPU / 内存</span></div></div>
@@ -351,7 +351,7 @@ body.show-notes .speaker-note { display: block; }
 
   <section class="slide" data-index="05">
     <div class="eyebrow">CASE 01 · 2025 H1 · FROM LAB TO DELIVERY</div>
-    <h2>从实验室到交付：在 2–3 周内接手系统集成</h2>
+    <h2>从实验室到交付：在 2–3 周内开始承担系统集成与性能交付</h2>
     <p class="lead">不等学会所有机器人知识再贡献；先用已经验证过的集成、性能和测试方法补上团队最需要的能力</p>
     <div class="role-shift"><div class="shift-node"><b>BEFORE</b><span>感知系统团队负责人</span></div><div class="shift-arrow">→</div><div class="shift-node"><b>RESET</b><span>转为机器人高级 IC</span></div><div class="shift-arrow">→</div><div class="shift-node"><b>2—3 WEEKS</b><span>开始承担整体集成与性能交付</span></div></div>
     <div class="scope-band">
@@ -409,9 +409,10 @@ body.show-notes .speaker-note { display: block; }
     <div class="agent-foot">
       <div class="agent-proof"><b>BODY PROOF · SCOPED</b><strong>限定范围抓取成功率 &gt;90% · G1 与 RealMan</strong><span>证明底层动作原语，不代表 RoboClaws 端到端 Agent 真机成功率</span></div>
       <div class="agent-proof"><b>TEAM SCALE · CO-BUILT</b><strong>Executor 为团队共建平台</strong><span>本人参与机器人入口与可恢复 Workflow 扩展，不将整个平台表述为个人项目</span></div>
+      <div class="agent-proof"><b>CURRENT EXTENSION · MY OWNERSHIP</b><strong>ICRA WBC + Genie Sim · 智元 G2</strong><span>基于 Executor 独立完成两组任务的模型复现、训练工程优化与任务适配，并完成真机验证</span></div>
     </div>
     <div class="public-links">PUBLIC-SAFE IMPLEMENTATIONS · <a href="https://github.com/MiaoDX/roboclaws">github.com/MiaoDX/roboclaws</a> · <a href="https://github.com/MiaoDX/roboharness">github.com/MiaoDX/roboharness</a></div>
-    <div class="speaker-note">RoboClaws 与 RoboHarness 都来自公司内部真实问题，由本人提出并主导实现；公开仓库是经过脱敏、抽象或重新实现的版本。当前角色是高级 IC，通过关键技术 ownership 和方向判断影响平级预研团队，而非正式管理 virtual team。</div>
+    <div class="speaker-note">RoboClaws 与 RoboHarness 都来自公司内部真实问题，由本人提出并主导实现；公开仓库是经过脱敏、抽象或重新实现的版本。当前角色是高级 IC，通过关键技术 ownership 和方向判断影响平级预研团队，而非正式管理 virtual team。近期还基于 Executor 独立完成 ICRA WBC Challenge 与 Genie Sim 两组任务的模型复现、训练工程优化、任务适配，并在智元 G2 真机完成验证。</div>
   </section>
 
   <section class="slide closing" data-index="08">
