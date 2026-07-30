@@ -285,7 +285,7 @@ body.show-notes .speaker-note { display: block; }
   <section class="slide" data-index="02">
     <div class="eyebrow">THE MAP · ROLE & SYSTEM EVOLUTION</div>
     <h2>同一套方法，在更大边界下持续升级</h2>
-    <p class="lead">从正式团队领导到高级 IC 的影响式领导；从人驱动交付，到 Agent 在证据约束下执行</p>
+    <p class="lead">责任范围从团队建设与规模化交付，扩展到机器人交付和 Agent 系统；执行方式也从人驱动逐步走向 Agent 在证据约束下运行</p>
     <div class="story-map" aria-label="四阶段问题、系统回答与角色演进">
       <article class="story-stage" data-go="2" style="--stage: var(--engineering)">
         <time>2021.08—2023 H1</time><h3>把分散的共性工作统一收口</h3>
@@ -300,12 +300,12 @@ body.show-notes .speaker-note { display: block; }
       <article class="story-stage" data-go="4" style="--stage: var(--platform)">
         <time>2025</time><h3>在团队从预研走向交付时快速补位</h3>
         <dl><dt>NEW PROBLEM</dt><dd>现场约束不同；跑通也不等于可持续迭代</dd><dt>SYSTEM ANSWER</dt><dd>整体集成与性能、数据生产与批量评测</dd></dl>
-        <div class="story-role"><b>ROLE</b><span>高级 IC｜技术 ownership 与平级协作</span></div>
+        <div class="story-role"><b>ROLE</b><span>机器人交付、数据与评测</span></div>
       </article>
       <article class="story-stage" data-go="6" style="--stage: var(--influence)">
         <time>2026 → NOW</time><h3>Agent 开始行动，执行与验收必须同时成立</h3>
         <dl><dt>NEW PROBLEM</dt><dd>开放目标、物理执行和长程研发引入新风险</dd><dt>SYSTEM ANSWER</dt><dd>RoboClaws 执行系统 + RoboHarness 验收系统</dd></dl>
-        <div class="story-role"><b>ROLE</b><span>高级 IC｜主导抓取、RoboClaws 与 RoboHarness</span></div>
+        <div class="story-role"><b>ROLE</b><span>主导抓取、RoboClaws 与 RoboHarness</span></div>
       </article>
     </div>
     <div class="story-thesis"><b>贯穿五年的方法</b>　DEFINE BOUNDARY → OBSERVE → CLOSE LOOP → SCALE</div>
@@ -315,9 +315,9 @@ body.show-notes .speaker-note { display: block; }
   <section class="slide" data-index="03">
     <div class="eyebrow">ACT 01 · 2021.08—2023 H1 · BUILD THE TEAM & SYSTEM</div>
     <h2>从 0 到 1：用小团队收口感知系统工程</h2>
-    <p class="lead">不是建立一个被动支持组，而是让多个算法团队共享一套可自动运行、可持续演进的工程系统</p>
+    <p class="lead">把多个算法团队反复处理的共性工程问题集中起来，做成大家共用的代码、工具和流程</p>
     <div class="three-grid">
-      <article class="panel" style="--panel: var(--delivery)"><div class="tag">CONTEXT</div><h3>共性问题分散在多个算法团队</h3><ul><li>板端集成、发版、迁移与排障依赖少数关键人员</li><li>大约每半年一次技术迁移，重复打开系统上下文</li><li>每个团队各自处理共性问题，成本高且难沉淀</li></ul></article>
+      <article class="panel" style="--panel: var(--delivery)"><div class="tag">CONTEXT</div><h3>共性问题分散在多个算法团队</h3><ul><li>板端集成、发版、迁移与排障依赖少数关键人员</li><li>大约每半年就有一次技术迁移，每次都要重新梳理代码、平台和交付链路</li><li>每个团队各自处理共性问题，成本高且难沉淀</li></ul></article>
       <article class="panel" style="--panel: var(--engineering)"><div class="tag">MY RESPONSIBILITY</div><h3>0→1 组建最多 9 人的感知系统团队</h3><ul><li>负责系统工程与交付收口，而非全部算法最终结果</li><li>承担招聘、培养、绩效与团队目标</li><li>每位成员拥有清晰的系统 ownership</li></ul></article>
       <article class="panel" style="--panel: var(--platform)"><div class="tag">SYSTEM ANSWER</div><h3>让同类问题尽量只出现一次</h3><ul><li>one-repo 与 ComputeModule 统一模块组织和运行</li><li>自动发版、回放验证、代码质量与性能工具</li><li>Crash 分析、规则沉淀与自助式知识入口</li></ul></article>
     </div>
@@ -326,7 +326,7 @@ body.show-notes .speaker-note { display: block; }
       <div class="stat" style="--stat: var(--influence)"><strong>1—2 天</strong><span>新成员通常提交首个有效代码修改</span></div>
       <div class="stat" style="--stat: var(--platform)"><strong>95%</strong><span>静态检查覆盖率，问题逐步沉淀为规则</span></div>
     </div>
-    <div class="thesis"><b>团队杠杆来自系统化，而不是持续加人或透支。</b> 清晰模块边界、自动化流程与完整 ownership 同时放大个人产出和团队成就感。</div>
+    <div class="thesis"><b>统一代码和自动化流程后，小团队也能同时支持多平台、多车型</b>；每位成员可以独立负责完整的系统模块</div>
     <div class="speaker-note">团队后来调整后，成员进入相关部门并成长为各自小组负责人。这个结果用于 Manager 讨论，不必在主画面继续展开。AI Coding 会进一步放大清晰模块边界，而不是让架构边界失去价值。</div>
   </section>
 
@@ -345,26 +345,26 @@ body.show-notes .speaker-note { display: block; }
       <div class="stat" style="--stat: var(--platform)"><strong>≈1 天 → &lt;1h</strong><span>平均 Crash 定位与责任人路由时间</span></div>
       <div class="stat" style="--stat: var(--engineering)"><strong>&lt;1/5 算力</strong><span>覆盖约 80% 功能模块；性能规格按平台分级</span></div>
     </div>
-    <div class="thesis"><b>机制是否成立，不只看负责人在场时的结果。</b> 相关流程被推广到更大研发范围，并在角色变化后继续运行。</div>
+    <div class="thesis"><b>这套流程后来推广到更大的研发范围</b>，我转到新的岗位后，团队仍在继续使用</div>
     <div class="speaker-note">“约 80%”按功能模块数量统计，不代表高低配体验完全等价。同一功能在低配平台可能使用更小模型或较低规格，例如检测距离略有下降。重点是资源、功能覆盖和体验之间的系统级取舍。</div>
   </section>
 
   <section class="slide" data-index="05">
     <div class="eyebrow">CASE 01 · 2025 H1 · FROM LAB TO DELIVERY</div>
     <h2>从实验室到交付：在 2–3 周内开始承担系统集成与性能交付</h2>
-    <p class="lead">不等学会所有机器人知识再贡献；先用已经验证过的集成、性能和测试方法补上团队最需要的能力</p>
+    <p class="lead">转到机器人团队后，不等学会所有领域知识再贡献；先从已经验证过的系统集成、性能和测试方法入手，2–3 周内开始承担交付任务</p>
     <div class="role-shift"><div class="shift-node"><b>BEFORE</b><span>感知系统团队负责人</span></div><div class="shift-arrow">→</div><div class="shift-node"><b>RESET</b><span>转为机器人高级 IC</span></div><div class="shift-arrow">→</div><div class="shift-node"><b>2—3 WEEKS</b><span>开始承担整体集成与性能交付</span></div></div>
     <div class="scope-band">
-      <div class="scope-card"><b>HORIZONTAL · SYSTEM</b><strong>横向负责 3 类机器人工作站</strong><span>整体集成、资源观测与性能治理，解决三类工站共用的系统问题</span></div>
-      <div class="scope-card"><b>VERTICAL · DELIVERY</b><strong>纵向端到端负责其中 1 类工站 V2—V4</strong><span>对完整流程效果、版本节奏和最终交付结果负责</span></div>
+      <div class="scope-card"><b>HORIZONTAL · SYSTEM</b><strong>横向负责机器人三组的工作站</strong><span>整体集成、资源观测与性能治理，解决三类工站共用的系统问题</span></div>
+      <div class="scope-card"><b>VERTICAL · DELIVERY</b><strong>纵向端到端负责螺柱工站</strong><span>对完整流程效果、版本节奏和最终交付结果负责</span></div>
     </div>
     <div class="delivery-pipeline">
       <article class="delivery-stage"><time>01 · 专项能力测试</time><h3>先把问题拆开</h3><div class="result">90+</div><p>三类工站汇总，覆盖定位、地图、导航等 7 类能力，以及不同地图、目标点和导航方式</p></article>
       <article class="delivery-stage"><time>02 · 整体集成与性能</time><h3>再让完整流程稳定运行</h3><div class="result">P90 &lt;60%</div><p>机器人全流程整机 CPU，从长时间打满、无法稳定测试，优化到可持续运行</p></article>
-      <article class="delivery-stage"><time>03 · 端到端运营</time><h3>最后交给机制运行</h3><div class="result">每类 300+</div><p>三类工站分别完成端到端集成测试；稳定后自动出报告并移交测试团队持续运营</p></article>
+      <article class="delivery-stage"><time>03 · 端到端运营</time><h3>稳定后移交测试团队</h3><div class="result">每类 300+</div><p>三类工站分别完成端到端集成测试；稳定后自动出报告并移交测试团队持续运营</p></article>
     </div>
-    <div class="result-band"><div class="result-main"><strong>平均单次端到端任务：3.5 min → &lt;2 min</strong><span>本人端到端负责的固定工站，连续完成 V2—V4 版本交付</span></div><div class="result-side"><b>TRANSFER PRINCIPLE</b><span>可迁移的是问题拆解、观测、性能与交付机制；机器人状态、操作范式与现场约束必须重新学习</span></div></div>
-    <div class="speaker-note">当时大团队正从实验室状态转向真实交付。你的价值不是“2—3 周学会机器人”，而是在团队阶段性需求中识别最适合补位的能力，并与已有领域专家协作完成交付。</div>
+    <div class="result-band"><div class="result-main"><strong>平均单次端到端任务：3.5 min → &lt;2 min</strong><span>我端到端负责的螺柱工站，连续完成 V2—V4 版本交付</span></div><div class="result-side"><b>WHAT CARRIED OVER</b><span>我沿用了问题拆解、性能观测和测试方法，同时重新学习机器人状态、操作方式和现场约束</span></div></div>
+    <div class="speaker-note">当时大团队正从实验室状态转向真实交付。我先从已有经验最匹配的系统集成、性能和测试入手，并与领域专家协作完成交付。</div>
   </section>
 
   <section class="slide" data-index="06">
@@ -382,7 +382,7 @@ body.show-notes .speaker-note { display: block; }
       <div class="stat" style="--stat: var(--platform)"><strong>百实例级</strong><span>从本地单实例扩展到云端批量数据生产与评测</span></div>
       <div class="stat" style="--stat: var(--influence)"><strong>DATA + EVAL</strong><span>先建立规模化基础，再用证据影响训练与模型迭代</span></div>
     </div>
-    <div class="eval-scope"><b>边界：</b>这不是已经完全成熟的自动训练控制系统，而是数据生产与批量评测的第一阶段闭环；训练由模型同事负责，评测结果进入他们的研发决策。</div>
+    <div class="eval-scope"><b>当前范围：</b>数据生产与批量评测；模型训练由模型同事负责，评测结果用于下一轮研发决策</div>
     <div class="speaker-note">特定 RL workload 在运行环境升级后曾提升约 15×。这个案例不作为主画面技术 headline；其价值是用 benchmark 证明瓶颈来自环境栈，拉齐算法、数据与外部云平台认知并推动升级落地。</div>
   </section>
 
@@ -408,11 +408,11 @@ body.show-notes .speaker-note { display: block; }
     </div>
     <div class="agent-foot">
       <div class="agent-proof"><b>BODY PROOF · SCOPED</b><strong>限定范围抓取成功率 &gt;90% · G1 与 RealMan</strong><span>证明底层动作原语，不代表 RoboClaws 端到端 Agent 真机成功率</span></div>
-      <div class="agent-proof"><b>TEAM SCALE · CO-BUILT</b><strong>Executor 为团队共建平台</strong><span>本人参与机器人入口与可恢复 Workflow 扩展，不将整个平台表述为个人项目</span></div>
+      <div class="agent-proof"><b>TEAM SCALE · EXECUTOR</b><strong>团队共建平台，接入公司云端计算资源</strong><span>本人参与机器人入口与可恢复 Workflow 扩展，为 autoresearch 提供统一执行入口；不将整个平台表述为个人项目</span></div>
       <div class="agent-proof"><b>CURRENT EXTENSION · MY OWNERSHIP</b><strong>ICRA WBC + Genie Sim · 智元 G2</strong><span>基于 Executor 独立完成两组任务的模型复现、训练工程优化与任务适配，并完成真机验证</span></div>
     </div>
     <div class="public-links">PUBLIC-SAFE IMPLEMENTATIONS · <a href="https://github.com/MiaoDX/roboclaws">github.com/MiaoDX/roboclaws</a> · <a href="https://github.com/MiaoDX/roboharness">github.com/MiaoDX/roboharness</a></div>
-    <div class="speaker-note">RoboClaws 与 RoboHarness 都来自公司内部真实问题，由本人提出并主导实现；公开仓库是经过脱敏、抽象或重新实现的版本。当前角色是高级 IC，通过关键技术 ownership 和方向判断影响平级预研团队，而非正式管理 virtual team。近期还基于 Executor 独立完成 ICRA WBC Challenge 与 Genie Sim 两组任务的模型复现、训练工程优化、任务适配，并在智元 G2 真机完成验证。</div>
+    <div class="speaker-note">RoboClaws 与 RoboHarness 都来自公司内部真实问题，由我提出并主导实现；公开仓库是经过脱敏、抽象或重新实现的版本。当前以高级 IC 身份，通过关键技术项目和方向判断推动平级预研团队协作，不承担正式管理职责。近期还基于 Executor 独立完成 ICRA WBC Challenge 与 Genie Sim 两组任务的模型复现、训练工程优化、任务适配，并在智元 G2 真机完成验证。</div>
   </section>
 
   <section class="slide closing" data-index="08">
