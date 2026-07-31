@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>面向具身智能：可交付、可验收的复杂系统 · 2021—2026</title>
+<title>面向具身智能：可交付、可验收的复杂系统 · 2019—2026</title>
 <style>
 :root {
   --bg: #f5f3ed;
@@ -87,6 +87,12 @@ body.show-notes .speaker-note { display: block; }
 .stage-block:hover strong { color: var(--stage); }
 
 /* map */
+.story-origin { display: grid; grid-template-columns: .7fr 1.45fr 1.25fr; margin-top: 14px; border: 1px solid var(--line); background: var(--surface); }
+.origin-mark, .origin-work, .origin-lesson { min-width: 0; padding: 12px 15px; }
+.origin-work, .origin-lesson { border-left: 1px solid var(--line); }
+.story-origin b { display: block; color: var(--delivery); font: 700 9px/1.2 var(--font-mono); }
+.story-origin strong { display: block; margin-top: 5px; font-size: 13px; line-height: 1.35; }
+.story-origin span { display: block; margin-top: 4px; color: var(--text-dim); font-size: 10.5px; line-height: 1.42; }
 .story-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .story-stage { min-width: 0; padding: 18px 18px 16px 0; cursor: pointer; }
 .story-stage + .story-stage { padding-left: 18px; border-left: 1px solid var(--line); }
@@ -221,8 +227,9 @@ body.show-notes .speaker-note { display: block; }
   .slide::after { right: 16px; top: 48px; font-size: 58px; }
   .progress, .counter, .top-actions { display: none; }
   h1, .closing h1 { font-size: 36px; } h2 { font-size: 27px; } .lead { font-size: 15px; }
-  .stage-rail, .story-map, .three-grid, .stat-strip, .pressure-rail, .method-lanes, .delivery-pipeline, .eval-loop, .closing-grid, .agent-projects, .agent-foot, .positioning { grid-template-columns: 1fr; }
+  .stage-rail, .story-origin, .story-map, .three-grid, .stat-strip, .pressure-rail, .method-lanes, .delivery-pipeline, .eval-loop, .closing-grid, .agent-projects, .agent-foot, .positioning { grid-template-columns: 1fr; }
   .stage-block { padding: 16px 12px 12px; border-top: 2px solid var(--line); }
+  .origin-work, .origin-lesson { border-left: 0; border-top: 1px solid var(--line); }
   .story-stage, .story-stage + .story-stage, .panel, .panel + .panel, .pressure, .pressure + .pressure, .method, .method + .method, .delivery-stage, .delivery-stage + .delivery-stage, .eval-step, .eval-step + .eval-step, .discussion, .discussion + .discussion { padding: 15px 0; border-left: 0; border-bottom: 1px solid var(--line-soft); }
   .story-stage:last-child, .panel:last-child, .pressure:last-child, .method:last-child, .delivery-stage:last-child, .eval-step:last-child, .discussion:last-child { border-bottom: 0; }
   .story-stage h3 { min-height: 0; }
@@ -263,14 +270,14 @@ body.show-notes .speaker-note { display: block; }
 <main class="deck" id="deck">
   <section class="slide cover active" data-index="01">
     <div>
-      <div class="eyebrow">WORK TIMELINE · 2021—2026 · ROBOTICS / EMBODIED AI</div>
+      <div class="eyebrow">WORK TIMELINE · 2019—2026 · ROBOTICS / EMBODIED AI</div>
       <h1>面向具身智能，建设<br><span>可交付、可验收</span>的复杂系统</h1>
-      <p class="lead">五年跨越自动驾驶、机器人与 Agent，持续把不确定的探索转化为团队可持续交付的系统能力</p>
+      <p class="lead">从供应商驻场完成第一次量产，到主机厂团队建设，再到机器人与 Agent，持续把不确定的探索转化为可持续交付的系统能力</p>
       <div class="cover-meta">MiaoDX · Technical Leadership / Systems / Robotics</div>
     </div>
     <div class="stage-rail" aria-label="三个领域的工作演进">
-      <div class="stage-block" data-go="2" style="--stage: var(--engineering)">
-        <div class="year">2021.08—2025 H1</div><strong>自动驾驶</strong><span>团队建设 → 工程底座 → 规模化治理</span>
+      <div class="stage-block" data-go="1" style="--stage: var(--engineering)">
+        <div class="year">2019—2025 H1</div><strong>自动驾驶</strong><span>首次量产 → 团队建设 → 规模化治理</span>
       </div>
       <div class="stage-block" data-go="4" style="--stage: var(--platform)">
         <div class="year">2025</div><strong>机器人</strong><span>集成交付 → 数据生产 → 评测闭环</span>
@@ -279,14 +286,19 @@ body.show-notes .speaker-note { display: block; }
         <div class="year">2026 → NOW</div><strong>机器人 Agent</strong><span>开放任务 → 受控执行 → 机器验收</span>
       </div>
     </div>
-    <div class="speaker-note">默认先用两分钟讲完整主线。后续每页都是可以独立展开的案例，邀请对方随时打断；如果某一段更贴合对方公司的阶段，就直接跳到那一页深入讨论。</div>
+    <div class="speaker-note">默认先用两分钟讲完整主线。DeepMotion 的第一次量产只承担方法起点，不展开成履历页；后续每页都是可以独立讨论的案例，如果某一段更贴合对方公司的阶段，就直接跳转深入。</div>
   </section>
 
   <section class="slide" data-index="02">
     <div class="eyebrow">THE MAP · ROLE & SYSTEM EVOLUTION</div>
     <h2>同一套方法，在更大边界下持续升级</h2>
-    <p class="lead">责任范围从团队建设与规模化交付，扩展到机器人交付和 Agent 系统；执行方式也从人驱动逐步走向 Agent 在证据约束下运行</p>
-    <div class="story-map" aria-label="四阶段问题、系统回答与角色演进">
+    <p class="lead">责任范围从供应商驻场交付、主机厂团队建设与规模化治理，扩展到机器人交付和 Agent 系统</p>
+    <div class="story-origin" aria-label="第一次量产经历">
+      <div class="origin-mark"><b>ORIGIN · 2019—2021</b><strong>第一次量产</strong><span>DeepMotion · 供应商算法工程师</span></div>
+      <div class="origin-work"><b>ONSITE DELIVERY</b><strong>在上汽合作项目驻场一年多</strong><span>作为供应商交付代表，推进算法方案交付、现场问题闭环、最小可用的数据闭环与端侧性能优化</span></div>
+      <div class="origin-lesson"><b>FIRST LESSON</b><strong>算法效果只是起点</strong><span>现场可运行、问题可闭环、客户可验收，才算真正交付</span></div>
+    </div>
+    <div class="story-map" aria-label="量产起点之后的四阶段问题、系统回答与角色演进">
       <article class="story-stage" data-go="2" style="--stage: var(--engineering)">
         <time>2021.08—2023 H1</time><h3>把分散的共性工作统一收口</h3>
         <dl><dt>NEW PROBLEM</dt><dd>多团队、多平台、多车型反复建立上下文</dd><dt>SYSTEM ANSWER</dt><dd>统一代码、框架、发版、回放与知识入口</dd></dl>
@@ -308,14 +320,14 @@ body.show-notes .speaker-note { display: block; }
         <div class="story-role"><b>ROLE</b><span>主导抓取、RoboClaws 与 RoboHarness</span></div>
       </article>
     </div>
-    <div class="story-thesis"><b>贯穿五年的方法</b>　DEFINE BOUNDARY → OBSERVE → CLOSE LOOP → SCALE</div>
-    <div class="speaker-note">这一页是整份 deck 的导航。自动驾驶证明团队建设与规模化交付能力；机器人交付和 Agent 系统是两个主讨论节点；数据与评测展示对具身智能研发规模化的判断。</div>
+    <div class="story-thesis"><b>贯穿七年多的方法</b>　DEFINE BOUNDARY → OBSERVE → CLOSE LOOP → SCALE</div>
+    <div class="speaker-note">这一页是整份 deck 的导航。DeepMotion 的驻场项目是第一次理解量产交付；进入小米后，责任从个人交付扩展到团队建设和规模化治理。机器人交付和 Agent 系统是两个主讨论节点，数据与评测展示对具身智能研发规模化的判断。</div>
   </section>
 
   <section class="slide" data-index="03">
     <div class="eyebrow">ACT 01 · 2021.08—2023 H1 · BUILD THE TEAM & SYSTEM</div>
     <h2>从 0 到 1：用小团队收口感知系统工程</h2>
-    <p class="lead">把多个算法团队反复处理的共性工程问题集中起来，做成大家共用的代码、工具和流程</p>
+    <p class="lead">有了供应商驻场量产的经验，进入主机厂后，把多个算法团队反复处理的共性问题做成大家共用的代码、工具和流程</p>
     <div class="three-grid">
       <article class="panel" style="--panel: var(--delivery)"><div class="tag">CONTEXT</div><h3>共性问题分散在多个算法团队</h3><ul><li>板端集成、发版、迁移与排障依赖少数关键人员</li><li>大约每半年就有一次技术迁移，每次都要重新梳理代码、平台和交付链路</li><li>每个团队各自处理共性问题，成本高且难沉淀</li></ul></article>
       <article class="panel" style="--panel: var(--engineering)"><div class="tag">MY RESPONSIBILITY</div><h3>0→1 组建最多 9 人的感知系统团队</h3><ul><li>负责系统工程与交付收口，而非全部算法最终结果</li><li>承担招聘、培养、绩效与团队目标</li><li>每位成员拥有清晰的系统 ownership</li></ul></article>

@@ -6,7 +6,7 @@
 - Session scope: public-work-timeline
 - Parent plan: none
 - Child plans: none
-- Last updated: 2026-07-30
+- Last updated: 2026-07-31
 - Current slice: Completed
 - Next action: none
 - Blocked on: none
@@ -14,9 +14,10 @@
 
 ## Goal
 
-Create a public, externally shareable HTML deck that explains the 2021-2026
-progression from perception engineering through robotics and agent systems,
-with a focused zoom into the most recent half-year.
+Create a public, externally shareable HTML deck that explains the 2019-2026
+progression from the first production-delivery experience through perception
+engineering, robotics, and agent systems, with a focused zoom into the most
+recent work.
 
 ## Scope
 
@@ -41,16 +42,14 @@ with a focused zoom into the most recent half-year.
 
 ## Slide Contract
 
-1. Cover and three-domain arc
-2. Four-stage causal map: new problem, system answer, and responsibility growth
-3. 2022-2023 H1 engineering foundations
-4. 2023 H2-2024 H2 production quality through three trigger, decision, and
-   lasting-mechanism cases
-5. 2025 robotics delivery, data, model, and evaluation
-6. 2026 H1-to-now decision matrix: constraint, decision, and evidence for robot
-   body, agent brain, and infrastructure
-7. Three current capability layers with explicit evidence levels: open
-   decision, deterministic action, and evidence at scale
+1. Cover and three-domain arc, beginning with the first production delivery
+2. 2019-2021 origin plus four-stage causal map: new problem, system answer, and
+   responsibility growth
+3. 2021.08-2023 H1 engineering foundations and team building
+4. 2023 H2-2025 H1 production quality, performance, and governance at scale
+5. 2025 H1 robotics integration, performance, testing, and delivery
+6. 2025 H2 data production and evaluation loop
+7. 2026-to-now robot Agent execution and machine-verifiable acceptance
 8. Discussion close: control boundaries, evidence levels, and reusable workflows
 
 ## Non-goals
@@ -65,8 +64,8 @@ with a focused zoom into the most recent half-year.
 
 - Exactly eight slides and no source content outside the public boundary
 - The first two slides communicate the full arc in under one minute
-- The causal map starts at 2021.08 and makes the four-stage progression legible
-  without interaction
+- The causal map establishes the 2019-2021 production-delivery origin, then
+  makes the four-stage progression from 2021.08 legible without interaction
 - Stage slides retain major responsibilities and measurable outcomes
 - Slides 4 and 6 expose the decisions behind outcomes, not only chronology
 - Slides 6 and 7 distinguish scoped hardware proof, simulation proof, and team
@@ -87,7 +86,8 @@ with a focused zoom into the most recent half-year.
 ## Shipped Evidence
 
 - `presentations/work-timeline.html`: the single eight-slide public standalone
-  deck, including the four-stage causal map and decision-led recent work
+  deck, including the first-production-delivery origin, four-stage causal map,
+  and decision-led recent work
 - `share/index.md`: public discovery link
 - Browser proof: all eight slides rendered at 1440x900 and 390x844 with no
   horizontal overflow; the causal map and decision/system slides were verified
