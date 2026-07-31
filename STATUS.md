@@ -12,6 +12,8 @@ Last reviewed: 2026-07-31
   `npm run build:all`.
 - Private company-specific interview preparation is stored in the optional
   `interviews/` submodule and excluded from public builds.
+- The homepage and Resume are maintained in the optional public
+  `sites/miaodx.com/` submodule and deploy independently from LIP.
 - The recent architecture cleanup campaign is marked done in
   `docs/status/active/refactor-architecture-cleanup-campaign.md`.
 - The V12 Northeast/grassland road-trip page is the current standalone route
@@ -21,6 +23,8 @@ Last reviewed: 2026-07-31
 
 - Install dependencies: `npm ci`
 - Initialize private interview materials when authorized: `git submodule update --init interviews`
+- Initialize the personal site: `git submodule update --init sites/miaodx.com`
+- Preview the personal site and Resume: `npm run site:dev`
 - Run the docs site locally: `npm run docs:dev`
 - Run the full local/CI gate: `npm run build:all`
 - Run script/type/publish-rule tests: `npm run test:scripts`
@@ -37,8 +41,8 @@ Last reviewed: 2026-07-31
 - Continue content quality work from `ROADMAP.md`, especially deduplication,
   draft promotion decisions, and talk/share material refinement.
 - Keep the road-trip share entry aligned with the current verified route deck.
-- Preserve the public/agent boundary: `docs/agents/`, `docs/plans/`, and
-  `docs/status/` should stay out of generated public site output.
+- Preserve the publication boundary: agent/process docs and `sites/` should
+  stay out of generated LIP output; the personal site deploys from its own repo.
 
 ## Known Blockers
 

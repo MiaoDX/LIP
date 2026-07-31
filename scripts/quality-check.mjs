@@ -13,7 +13,7 @@ import { checkScopedLinks } from './link-check.mjs'
 import { entries, exists, trackedFiles } from './file-utils.mjs'
 import { cleanLink, markdownLinks, routeToMarkdownFileCandidates, trimBase } from './markdown-route-utils.mjs'
 import { checkSourceOwnership, checkStandalone, isGeneratedSourcePath } from './publish-rules.mjs'
-import { operationalPublicOutputPaths, siteBase } from '../site-map.mjs'
+import { forbiddenPublicOutputPaths, siteBase } from '../site-map.mjs'
 
 const ROOT = process.cwd()
 const REPORT_FILE = join(ROOT, '.quality-report.md')
@@ -128,19 +128,19 @@ async function publishOutputGate(sourceErrors) {
   return { status: 'PASS', detail: 'standalone publish outputs match canonical sources' }
 }
 
-async function operationalOutputGate() {
+async function publicationBoundaryGate() {
   if (!(await exists(DIST_DIR))) {
     return { status: 'SKIP', detail: '.vitepress/dist does not exist; run npm run docs:build to verify public doc boundaries' }
   }
 
   const leaked = []
-  for (const path of operationalPublicOutputPaths) {
+  for (const path of forbiddenPublicOutputPaths) {
     if (await exists(join(DIST_DIR, path))) leaked.push(path)
   }
   if (leaked.length) {
-    return { status: 'FAIL', detail: `${leaked.join(', ')} should stay agent/process-only, not public site output` }
+    return { status: 'FAIL', detail: `${leaked.join(', ')} must not enter LIP public output` }
   }
-  return { status: 'PASS', detail: 'agent/process docs are excluded from public site output' }
+  return { status: 'PASS', detail: 'agent/process docs and external sites are excluded from LIP output' }
 }
 
 async function scopedLinkGate() {
@@ -195,7 +195,7 @@ async function main() {
   const sourceErrors = await checkSourceOwnership()
   const generatedOutputs = await trackedGeneratedOutputs()
   const publishGate = await publishOutputGate(sourceErrors)
-  const operationalGate = await operationalOutputGate()
+  const publicationGate = await publicationBoundaryGate()
   const linkGate = await scopedLinkGate()
 
   const gates = [
@@ -215,9 +215,9 @@ async function main() {
       detail: publishGate.detail,
     },
     {
-      name: 'Public operational doc boundary',
-      status: operationalGate.status,
-      detail: operationalGate.detail,
+      name: 'LIP publication boundary',
+      status: publicationGate.status,
+      detail: publicationGate.detail,
     },
     {
       name: 'Scoped local links',

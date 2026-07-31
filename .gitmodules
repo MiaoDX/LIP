@@ -1,3 +1,6 @@
 [submodule "interviews"]
 	path = interviews
 	url = ../interviews.git
+[submodule "miaodx.com"]
+	path = sites/miaodx.com
+	url = https://github.com/MiaoDX/MiaoDX.github.io.git

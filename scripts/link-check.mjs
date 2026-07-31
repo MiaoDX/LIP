@@ -26,7 +26,7 @@ import {
   indexCoverageRules,
   marpScanDirs,
   navByLocale,
-  operationalMarkdownSourceDirs,
+  nonPublicMarkdownSourceDirs,
   operationalMarkdownSourceFiles,
   scopedIndexLinkFiles,
   sidebar,
@@ -41,7 +41,7 @@ const PUBLIC_MARKDOWN_EXCLUDE_FILES = [
   ...operationalMarkdownSourceFiles,
 ]
 
-const PUBLIC_MARKDOWN_EXCLUDE_DIRS = operationalMarkdownSourceDirs.map((dir) => `${dir}/`)
+const PUBLIC_MARKDOWN_EXCLUDE_DIRS = nonPublicMarkdownSourceDirs.map((dir) => `${dir}/`)
 
 const GENERATED_ROUTES = [
   slidevGeneratedRoute,

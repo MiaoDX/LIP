@@ -57,10 +57,12 @@ try {
   assert.equal(result.exitCode, 1)
   assert.match(report, /\| 文章 \| 词数 \| 标题 \| 代码块 \| 清单 \| 评分 \| 等级 \|/)
   assert.match(report, /\| Built standalone publish output \| SKIP \|/)
-  assert.match(report, /\| Public operational doc boundary \| SKIP \|/)
+  assert.match(report, /\| LIP publication boundary \| SKIP \|/)
 
   await mkdir(join(distDir, 'docs', 'status', 'active'), { recursive: true })
   await writeFile(join(distDir, 'docs', 'status', 'active', 'capsule.html'), '<h1>private</h1>')
+  await mkdir(join(distDir, 'sites', 'miaodx.com'), { recursive: true })
+  await writeFile(join(distDir, 'sites', 'miaodx.com', 'index.html'), '<h1>personal site</h1>')
 
   try {
     await execFileAsync('node', ['scripts/quality-check.mjs'])
@@ -69,7 +71,7 @@ try {
   }
 
   const leakReport = await readFile(reportFile, 'utf8')
-  assert.match(leakReport, /\| Public operational doc boundary \| FAIL \| docs\/status should stay agent\/process-only, not public site output \|/)
+  assert.match(leakReport, /\| LIP publication boundary \| FAIL \| docs\/status, sites must not enter LIP public output \|/)
 } finally {
   await rm(distDir, { recursive: true, force: true })
   if (hidDist) await rename(hiddenDistDir, distDir)

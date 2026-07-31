@@ -205,15 +205,24 @@ export const operationalMarkdownSourceDirs = [
   'interviews',
 ]
 
-export const operationalMarkdownSrcExclude = [
-  ...operationalMarkdownSourceFiles,
-  ...operationalMarkdownSourceDirs.map((dir) => `${dir}/**/*.md`),
+export const externalSiteSourceDirs = [
+  'sites',
 ]
 
-export const operationalPublicOutputPaths = [
+export const nonPublicMarkdownSourceDirs = [
+  ...operationalMarkdownSourceDirs,
+  ...externalSiteSourceDirs,
+]
+
+export const nonPublicMarkdownSrcExclude = [
+  ...operationalMarkdownSourceFiles,
+  ...nonPublicMarkdownSourceDirs.map((dir) => `${dir}/**/*.md`),
+]
+
+export const forbiddenPublicOutputPaths = [
   'AGENTS.html',
   'CLAUDE.html',
-  ...operationalMarkdownSourceDirs,
+  ...nonPublicMarkdownSourceDirs,
 ]
 
 export const scopedIndexLinkFiles = [

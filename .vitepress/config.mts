@@ -3,7 +3,7 @@ import type { DefaultTheme } from 'vitepress'
 import {
   authorBio,
   navByLocale,
-  operationalMarkdownSrcExclude,
+  nonPublicMarkdownSrcExclude,
   sidebar,
   siteBase,
   siteDescription,
@@ -25,7 +25,7 @@ export default defineConfigWithTheme<ThemeConfig>({
   description: siteDescription,
   lang: 'zh-CN',
   base: siteBase,
-  srcExclude: operationalMarkdownSrcExclude,
+  srcExclude: nonPublicMarkdownSrcExclude,
   ignoreDeadLinks: true,
 
   locales: {

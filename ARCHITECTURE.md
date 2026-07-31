@@ -18,6 +18,9 @@ around publishing rules, not an application runtime.
 - Private interview preparation lives in the optional `interviews/` submodule.
   Its Markdown and local HTML are excluded from public output and are not
   required to build the site.
+- The public personal site lives in the optional `sites/miaodx.com/` submodule.
+  It owns the homepage and Resume at `miaodx.com`, deploys independently from
+  `MiaoDX/MiaoDX.github.io`, and is excluded from the LIP build.
 - Generated output lives in `.vitepress/dist/` and must not be edited directly.
 
 ## Configuration Owners
@@ -44,9 +47,10 @@ around publishing rules, not an application runtime.
 6. verify standalone publish output and source ownership;
 7. run the quality gate and refresh `.quality-report.md`.
 
-GitHub Pages deployment is defined in `.github/workflows/deploy.yml` and calls
-the same `npm run build:all` command before uploading `.vitepress/dist/`. CI
-does not initialize the private `interviews/` submodule.
+LIP GitHub Pages deployment is defined in `.github/workflows/deploy.yml` and
+calls the same `npm run build:all` command before uploading `.vitepress/dist/`.
+LIP CI initializes neither submodule. The personal site has its own Pages
+workflow inside `sites/miaodx.com/` and deploys when its `main` branch changes.
 
 ## Proof Boundaries
 
@@ -60,6 +64,8 @@ does not initialize the private `interviews/` submodule.
   after `.vitepress/dist` exists.
 - `interviews/` is a forbidden public output path, whether or not the private
   submodule is initialized locally.
+- `sites/` is a forbidden LIP output path. Initializing the personal-site
+  submodule must not change the LIP build or published artifact.
 - Standalone deck visual changes require browser checks at `1440x900` and
   `390x844`; see `docs/agents/standalone-decks.md`.
 

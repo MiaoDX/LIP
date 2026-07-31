@@ -16,12 +16,15 @@ Repo-level startup instructions for coding agents.
 - Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs`. Update that module instead of duplicating section lists in VitePress config or build scripts.
 - Standalone HTML publishing is owned by `scripts/publish-rules.mjs`, called from `.github/workflows/deploy.yml`. Do not edit `.vitepress/dist/` or other generated output directly.
 - `interviews/` is a private submodule and must never enter public build output. It is optional for public-site work and requires repository access to initialize.
+- `sites/miaodx.com/` is the public personal-site submodule. It owns `miaodx.com`, including the homepage and Resume, and deploys independently from `MiaoDX/MiaoDX.github.io`.
 
 ## Commands
 
 - Install dependencies: `npm ci`
 - Initialize private interview materials when authorized: `git submodule update --init interviews`
+- Initialize the public personal site: `git submodule update --init sites/miaodx.com`
 - Dev site: `npm run docs:dev`
+- Personal site and Resume preview: `npm run site:dev`
 - Full local/CI build and repo gates: `npm run build:all`
 - Publish rule test: `npm run test:publish-rules`
 - Script helper tests: `npm run test:scripts`
@@ -42,6 +45,13 @@ Repo-level startup instructions for coding agents.
 - Optional company HTML stays inside its company directory with local assets and is opened locally; it is not published by LIP.
 - Commit and push inside the submodule first, then commit the updated gitlink in LIP with a generic parent commit message.
 - Do not reorganize legacy interview records or copy submodule content into `share/`, `presentations/`, `public/`, or other public source directories without explicit approval.
+
+## Personal site
+
+- Homepage copy and layout live in `sites/miaodx.com/content.js` and `sites/miaodx.com/editorial.jsx`.
+- Resume content lives in `sites/miaodx.com/resume/resume-data.js`; both web and print layouts consume it.
+- The personal site is intentionally excluded from LIP builds. Preview it with `npm run site:dev` and verify its own GitHub Pages workflow separately.
+- Commit and push inside `sites/miaodx.com/` first, then commit the updated gitlink in LIP. Do not edit the old sibling checkout as a second source.
 
 ## Standalone deck rules
 

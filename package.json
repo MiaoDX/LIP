@@ -6,6 +6,7 @@
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
+    "site:dev": "python3 -m http.server 8001 --directory sites/miaodx.com",
     "slides:dev": "slidev slides/slides.md --open",
     "slides:build": "node scripts/build-slidev.mjs",
     "marp:build": "node scripts/build-slides.mjs",

@@ -40,6 +40,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 | [`templates/`](templates/README.md) | Standalone deck 起始模板 | 按模板 |
 | `public/` | VitePress passthrough 资源；`public/consult/` 是咨询页源 | 按需 |
 | `assets/` | 共享运行时与 standalone deck 支撑资产 | 按需 |
+| `sites/miaodx.com/` | 个人主页与 Resume 的独立部署 submodule，不进入 LIP 构建 | 按需 |
 
 ## 阅读推荐
 
@@ -73,7 +74,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 
 ## 相关
 
-- 个人博客：[miaodx.github.io](https://miaodx.github.io)
+- 个人主页：[miaodx.com](https://miaodx.com)，源码位于 `sites/miaodx.com/` submodule
 - 路线图：[ROADMAP.md](ROADMAP.md)
 
 ## 给 Agent 的说明
@@ -86,6 +87,7 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 - Agent 操作规则以 `AGENTS.md` 和 `docs/agents/` 为准，Claude-specific 例外见 `CLAUDE.md`
 - 人类当前态和架构说明以 `ARCHITECTURE.md`、`STATUS.md`、`docs/human/` 为准；不要把 agent runbook 当作公开项目真相
 - Agent/process 文档不会发布到 GitHub Pages；`npm run build:all` 会完成公开输出边界、关键本地链接和发布规则检查。已有构建输出时，可用 `npm run quality:check` 做聚焦复查
+- `sites/miaodx.com/` 独立发布 `miaodx.com`；在子模块内提交并推送后，再更新 LIP gitlink
 
 **share/ 目录规则**：
 
