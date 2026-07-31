@@ -78,6 +78,8 @@ body.show-notes .speaker-note { display: block; }
 .cover::before { content: ''; position: absolute; inset: 0; z-index: -2; background-image: linear-gradient(var(--line-soft) 1px, transparent 1px), linear-gradient(90deg, var(--line-soft) 1px, transparent 1px); background-size: 72px 72px; opacity: .34; }
 .cover h1 span { color: var(--delivery); }
 .cover-meta { color: var(--text-dim); font: 600 12px/1.7 var(--font-mono); }
+.cover-meta a, .contact-line a { border-bottom: 1px solid var(--line); }
+.cover-meta a:hover, .contact-line a:hover { border-color: currentColor; color: var(--delivery); }
 .stage-rail { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1240px; border-top: 2px solid var(--line); }
 .stage-block { position: relative; min-height: 98px; padding: 18px 24px 0 0; cursor: pointer; }
 .stage-block::before { content: ''; position: absolute; top: -6px; left: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--stage); }
@@ -273,7 +275,7 @@ body.show-notes .speaker-note { display: block; }
       <div class="eyebrow">WORK TIMELINE · 2019—2026 · ROBOTICS / EMBODIED AI</div>
       <h1>面向具身智能，建设<br><span>可交付、可验收</span>的复杂系统</h1>
       <p class="lead">从供应商驻场完成第一次量产，到主机厂团队建设，再到机器人与 Agent，持续把不确定的探索转化为可持续交付的系统能力</p>
-      <div class="cover-meta">MiaoDX · Technical Leadership / Systems / Robotics</div>
+      <div class="cover-meta">MiaoDX · Technical Leadership / Systems / Robotics · <a href="https://miaodx.com/resume/">完整简历</a></div>
     </div>
     <div class="stage-rail" aria-label="三个领域的工作演进">
       <div class="stage-block" data-go="1" style="--stage: var(--engineering)">
@@ -443,7 +445,7 @@ body.show-notes .speaker-note { display: block; }
         <div class="position-main"><b>LONG-TERM LINE</b><strong>在技术、工程与组织交界处，让团队和 Agent 承担更复杂的工作</strong><span>既做过正式团队建设，也能在没有汇报关系时通过技术 ownership 推动结果</span></div>
         <div class="position-side"><b>NEXT</b><strong>机器人与具身智能领域</strong><span>继续承担系统技术方向、团队建设与交付责任<br>ROLE FIT · Tech Lead / Team Lead / Staff IC</span></div>
       </div>
-      <div class="contact-line"><div><a href="https://miaodx.com">miaodx.com</a> · <a href="https://github.com/MiaoDX">github.com/MiaoDX</a></div><span>DISCUSS · Robot Delivery / Data & Eval / Agent Systems</span></div>
+      <div class="contact-line"><div><a href="https://miaodx.com/resume/">完整简历</a> · <a href="https://miaodx.com">miaodx.com</a> · <a href="https://github.com/MiaoDX">github.com/MiaoDX</a></div><span>DISCUSS · Robot Delivery / Data & Eval / Agent Systems</span></div>
     </div>
     <div class="speaker-note">最后不重复项目，而是回到四步方法。求职定位不是“Manager 或 Staff 都可以”，而是 hands-on technical leader：可以通过正式组织，也可以通过技术影响力，对复杂系统的交付结果负责。</div>
   </section>

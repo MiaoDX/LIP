@@ -372,7 +372,7 @@ h1 {
       <p class="intro-copy">面向具体团队、技术议题与合作场景整理的公开沟通材料。每份内容都可以独立打开，也可以复制直链分享。</p>
     </div>
     <aside class="intro-meta" aria-label="资料库摘要">
-      <strong>3</strong>
+      <strong>1</strong>
       <span>份公开材料 · 持续更新</span>
       <button class="share-library" id="share-library" type="button">复制目录链接</button>
     </aside>
@@ -381,7 +381,7 @@ h1 {
   <section class="library" aria-labelledby="library-title">
     <div class="library-head">
       <h2 id="library-title">全部材料</h2>
-      <p class="result-status" id="result-status" role="status" aria-live="polite">显示 3 份</p>
+      <p class="result-status" id="result-status" role="status" aria-live="polite">显示 1 份</p>
     </div>
 
     <div class="controls">
@@ -393,46 +393,12 @@ h1 {
         <span class="filter-label" id="filter-label">筛选主题</span>
         <div class="filters" role="group" aria-labelledby="filter-label">
           <button class="filter-button" type="button" data-filter="all" aria-pressed="true">全部</button>
-          <button class="filter-button" type="button" data-filter="evaluation" aria-pressed="false">模型评测</button>
-          <button class="filter-button" type="button" data-filter="engineering" aria-pressed="false">算法工程</button>
           <button class="filter-button" type="button" data-filter="pitch" aria-pressed="false">Agent 实践</button>
         </div>
       </div>
     </div>
 
     <div class="document-grid" id="document-grid">
-      <article class="document-card" data-category="evaluation" data-search="真实世界任务模型评测 model evaluation 多模态 具身 VLA 长程任务 中间状态 生命周期评测 语音 全双工 端侧 部署一致性 量化 芯片">
-        <figure class="document-media">
-          <img src="on-device-model-evaluation-assets/roboharness-g1-comparison-poster.png" alt="Unitree G1 在 Meshcat 和 MuJoCo 中的评测对比" loading="eager">
-        </figure>
-        <div class="document-body">
-          <div class="document-meta"><span class="document-kind">Model Evaluation Brief</span><time datetime="2026-07-21">2026-07-21</time></div>
-          <h3>真实世界任务的模型评测体系</h3>
-          <p class="document-description">从长程与真实世界任务出发，讨论具身 VLA 与 Agent 的中间状态度量、真机与仿真证据一致性、全生命周期评测流水线，以及端侧交付一致性与语音交互指标。</p>
-          <ul class="topics"><li>长程任务指标</li><li>具身 VLA 评测</li><li>生命周期评测</li><li>端侧与语音</li></ul>
-          <div class="document-actions">
-            <a class="open-link" href="on-device-model-evaluation.html">打开材料</a>
-            <button class="copy-link" type="button" data-url="https://miaodx.com/LIP/consult/on-device-model-evaluation.html" title="复制端侧模型评测材料直链"><span aria-hidden="true">&#10697;</span><span class="sr-only">复制端侧模型评测材料直链</span></button>
-          </div>
-        </div>
-      </article>
-
-      <article class="document-card" data-category="engineering" data-search="ai-native 算法工程化 数据与评测 vln 数据管线 云端批量评测 agent 研发闭环 端侧系统 roboharness roboclaws intuitive-flow agentic coding workflow 仿真 证据">
-        <figure class="document-media">
-          <img src="ai-native-algorithm-engineering-assets/preview.png" alt="AI-Native 工程：算法与数据评测页面预览" loading="lazy">
-        </figure>
-        <div class="document-body">
-          <div class="document-meta"><span class="document-kind">Engineering Brief</span><time datetime="2026-07-26">2026-07-26</time></div>
-          <h3>AI-Native 工程：算法 × 数据评测</h3>
-          <p class="document-description">以算法工程化和数据与评测为两条主线，呈现感知系统交付、VLN 数据管线、云端批量评测与 Agent 研发闭环。</p>
-          <ul class="topics"><li>算法工程化</li><li>数据与评测</li><li>VLN</li><li>Agent Loop</li></ul>
-          <div class="document-actions">
-            <a class="open-link" href="ai-native-algorithm-engineering.html">打开材料</a>
-            <button class="copy-link" type="button" data-url="https://miaodx.com/LIP/consult/ai-native-algorithm-engineering.html" title="复制 AI-Native 工程材料直链"><span aria-hidden="true">&#10697;</span><span class="sr-only">复制 AI-Native 工程材料直链</span></button>
-          </div>
-        </div>
-      </article>
-
       <article class="document-card" data-category="pitch" data-search="真格 token grant 一个人 多 agent multi claws openclaw 协作 系统 公开实践 pitch">
         <figure class="document-media">
           <img src="consult-index-assets/zhenfund-token-grant-cover.png" alt="真格 Token Grant 演示封面" loading="lazy">
@@ -459,7 +425,7 @@ h1 {
 
 <footer class="shell footer">
   <span>MiaoDX · Public Consult Materials</span>
-  <span id="copy-feedback" role="status" aria-live="polite">Updated 2026-07-26</span>
+  <span id="copy-feedback" role="status" aria-live="polite">Updated 2026-07-31</span>
 </footer>
 
 <script>
@@ -527,7 +493,7 @@ async function copyText(value, message) {
   }
 
   copyFeedback.textContent = message
-  window.setTimeout(() => { copyFeedback.textContent = 'Updated 2026-07-21' }, 2200)
+  window.setTimeout(() => { copyFeedback.textContent = 'Updated 2026-07-31' }, 2200)
 }
 
 document.getElementById('share-library').addEventListener('click', () => {
