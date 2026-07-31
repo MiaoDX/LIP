@@ -101,6 +101,7 @@ export const sidebar = {
       collapsed: true,
       items: [
         { text: '分享入口', link: '/share/' },
+        { text: 'Work Timeline 讲稿', link: '/share/work-timeline-script' },
         { text: '从 Ultrathink 到 Goal', link: '/share/ultrathink-to-goal/' },
         { text: 'AI Coding for Research', link: '/share/AICodingRaiseLab.html' },
         { text: 'Tailscale + Claude Code 配置实战', link: '/share/tailscale-claude-code-setup' },

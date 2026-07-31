@@ -15,6 +15,7 @@
 ## 演示文稿
 
 - [从量产交付到机器人智能：2019–2026 (HTML)](/share/work-timeline.html) — 2026-07，8 页公开工作 Timeline，从第一次量产展开到机器人身体、Agent 大脑与研发基础设施
+- [从量产交付到机器人智能：Work Timeline 讲稿](/share/work-timeline-script) — 2026-07，配套 8 页演示的完整口头讲稿
 - [从 Ultrathink 到 Goal：AI Coding 工程化的一年 (HTML)](/share/ultrathink-to-goal/) — 2026-05，汽车人 AI 进化论第 09 期，50 min lecture
 - [借助 Claude Code Routine 把想法快速完成 0 到 1 (HTML)](/share/meetup_260426.html) — 2026-04-26，Routines 四 Agent 协作实战 + docfit case，26 页 Slide
 - [AI Coding for Research — 从工具到工作流 (HTML)](/share/AICodingRaiseLab.html) — 2026-03-24，Raise Lab 分享，25页 Slide
