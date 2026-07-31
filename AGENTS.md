@@ -37,8 +37,8 @@ Repo-level startup instructions for coding agents.
 
 ## Private interview materials
 
-- Company-specific preparation lives in `interviews/miaodx/companies/<company-slug>/brief.md`.
-- Reusable private facts and speaking scripts live in `interviews/miaodx/common/`.
+- Company-specific preparation lives in `interviews/external_interviews/<company-slug>/brief.md`.
+- Reusable private facts and speaking scripts live in `interviews/external_interviews/_common/`.
 - Optional company HTML stays inside its company directory with local assets and is opened locally; it is not published by LIP.
 - Commit and push inside the submodule first, then commit the updated gitlink in LIP with a generic parent commit message.
 - Do not reorganize legacy interview records or copy submodule content into `share/`, `presentations/`, `public/`, or other public source directories without explicit approval.
