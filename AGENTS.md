@@ -15,10 +15,12 @@ Repo-level startup instructions for coding agents.
 - This is a VitePress/GitHub Pages docs repo for Learn In Public content, with standalone HTML decks and AI Coding project decks.
 - Site navigation, sidebar groups, and Marp scan directories live in `site-map.mjs`. Update that module instead of duplicating section lists in VitePress config or build scripts.
 - Standalone HTML publishing is owned by `scripts/publish-rules.mjs`, called from `.github/workflows/deploy.yml`. Do not edit `.vitepress/dist/` or other generated output directly.
+- `interviews/` is a private submodule and must never enter public build output. It is optional for public-site work and requires repository access to initialize.
 
 ## Commands
 
 - Install dependencies: `npm ci`
+- Initialize private interview materials when authorized: `git submodule update --init interviews`
 - Dev site: `npm run docs:dev`
 - Full local/CI build and repo gates: `npm run build:all`
 - Publish rule test: `npm run test:publish-rules`
@@ -32,6 +34,14 @@ Repo-level startup instructions for coding agents.
 - Domain docs: `docs/agents/domain.md`.
 - LSP/MCP status: `docs/agents/lsp-mcp.md`.
 - Standalone deck source, path, copy, template, punctuation, and visual verification rules: `docs/agents/standalone-decks.md`.
+
+## Private interview materials
+
+- Company-specific preparation lives in `interviews/miaodx/companies/<company-slug>/brief.md`.
+- Reusable private facts and speaking scripts live in `interviews/miaodx/common/`.
+- Optional company HTML stays inside its company directory with local assets and is opened locally; it is not published by LIP.
+- Commit and push inside the submodule first, then commit the updated gitlink in LIP with a generic parent commit message.
+- Do not reorganize legacy interview records or copy submodule content into `share/`, `presentations/`, `public/`, or other public source directories without explicit approval.
 
 ## Standalone deck rules
 

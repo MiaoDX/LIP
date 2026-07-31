@@ -1,6 +1,6 @@
 # LIP Status
 
-Last reviewed: 2026-07-14
+Last reviewed: 2026-07-31
 
 ## Current State
 
@@ -10,6 +10,8 @@ Last reviewed: 2026-07-14
   bestpractice analyses, share materials, and consult pages.
 - The public build and deployment path is centralized through
   `npm run build:all`.
+- Private company-specific interview preparation is stored in the optional
+  `interviews/` submodule and excluded from public builds.
 - The recent architecture cleanup campaign is marked done in
   `docs/status/active/refactor-architecture-cleanup-campaign.md`.
 - The V12 Northeast/grassland road-trip page is the current standalone route
@@ -18,6 +20,7 @@ Last reviewed: 2026-07-14
 ## Supported Commands
 
 - Install dependencies: `npm ci`
+- Initialize private interview materials when authorized: `git submodule update --init interviews`
 - Run the docs site locally: `npm run docs:dev`
 - Run the full local/CI gate: `npm run build:all`
 - Run script/type/publish-rule tests: `npm run test:scripts`

@@ -15,6 +15,9 @@ around publishing rules, not an application runtime.
 - Consult pages live in `public/consult/` and are public static output.
 - Agent/process docs live under `docs/agents/`, `docs/plans/`, and
   `docs/status/`; they are excluded from public site output.
+- Private interview preparation lives in the optional `interviews/` submodule.
+  Its Markdown and local HTML are excluded from public output and are not
+  required to build the site.
 - Generated output lives in `.vitepress/dist/` and must not be edited directly.
 
 ## Configuration Owners
@@ -42,7 +45,8 @@ around publishing rules, not an application runtime.
 7. run the quality gate and refresh `.quality-report.md`.
 
 GitHub Pages deployment is defined in `.github/workflows/deploy.yml` and calls
-the same `npm run build:all` command before uploading `.vitepress/dist/`.
+the same `npm run build:all` command before uploading `.vitepress/dist/`. CI
+does not initialize the private `interviews/` submodule.
 
 ## Proof Boundaries
 
@@ -54,6 +58,8 @@ the same `npm run build:all` command before uploading `.vitepress/dist/`.
   generated output consistency.
 - `npm run quality:check` checks publish boundaries and content quality metrics
   after `.vitepress/dist` exists.
+- `interviews/` is a forbidden public output path, whether or not the private
+  submodule is initialized locally.
 - Standalone deck visual changes require browser checks at `1440x900` and
   `390x844`; see `docs/agents/standalone-decks.md`.
 

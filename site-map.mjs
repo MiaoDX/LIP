@@ -202,6 +202,7 @@ export const operationalMarkdownSourceDirs = [
   'docs/agents',
   'docs/plans',
   'docs/status',
+  'interviews',
 ]
 
 export const operationalMarkdownSrcExclude = [
