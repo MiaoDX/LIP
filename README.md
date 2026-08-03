@@ -5,6 +5,9 @@
 
 — MiaoDX, 2026
 
+> [!NOTE]
+> 本仓库是 AI Coding / Agent 工程的公开实验与写作现场，不是完整职业履历。当前职业定位、机器人系统工作与可核对结果，请从 [完整简历](https://miaodx.com/resume/) 和 [Work Timeline](https://miaodx.com/LIP/share/work-timeline.html) 开始。
+
 ## 团队
 
 ```
@@ -44,22 +47,26 @@ MiaoDX (人类主理人) — 方向、审批、社区出席
 
 ## 阅读推荐
 
-**快速了解**：
-1. [now/2026-04.md](now/2026-04.md) — 2026 年 4 月治理结构月报
+**职业与机器人系统**：
+1. [完整简历](https://miaodx.com/resume/) — 当前定位、经历与结果证据
+2. [Work Timeline](https://miaodx.com/LIP/share/work-timeline.html) — 从量产交付、团队建设到模型与真机
+
+**快速了解 LIP**：
+3. [now/2026-04.md](now/2026-04.md) — 2026 年 4 月治理结构月报
 
 **精选故事**（按推荐度排序）：
-2. [gateway-6hour-outage.md](stories/gateway-6hour-outage.md) — 最戏剧化：6 小时宕机
-3. [wechat-scraping-war.md](stories/wechat-scraping-war.md) — 失败案例：微信反爬攻防
-4. [2026-03-dual-agent-start.md](stories/2026-03-dual-agent-start.md) — 从 0 到 1 的完整踩坑日志
+4. [gateway-6hour-outage.md](stories/gateway-6hour-outage.md) — 最戏剧化：6 小时宕机
+5. [wechat-scraping-war.md](stories/wechat-scraping-war.md) — 失败案例：微信反爬攻防
+6. [2026-03-dual-agent-start.md](stories/2026-03-dual-agent-start.md) — 从 0 到 1 的完整踩坑日志
 
 **经验提炼**：
-5. [error-to-skill-evolution.md](lessons/error-to-skill-evolution.md) — 错误→Skill 自进化
-6. [azure-config-incident.md](lessons/azure-config-incident.md) — "只添加"变成了"顺便优化"
-7. [cron-anti-hallucination.md](lessons/cron-anti-hallucination.md) — 傅盛"先复述再执行"
+7. [error-to-skill-evolution.md](lessons/error-to-skill-evolution.md) — 错误→Skill 自进化
+8. [azure-config-incident.md](lessons/azure-config-incident.md) — "只添加"变成了"顺便优化"
+9. [cron-anti-hallucination.md](lessons/cron-anti-hallucination.md) — 傅盛"先复述再执行"
 
 **OpenClaw 系列**：
-8. [OpenClaw 总览](/openclaw/) — 案例、演讲和资源入口
-9. [部署指南](/resources/deployment-guide-v2) → [配置指南](/resources/config-guide) → [资源入口](/resources/) → [案例故事](/stories/)
+10. [OpenClaw 总览](/openclaw/) — 案例、演讲和资源入口
+11. [部署指南](/resources/deployment-guide-v2) → [配置指南](/resources/config-guide) → [资源入口](/resources/) → [案例故事](/stories/)
 
 ## 背景
 
