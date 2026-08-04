@@ -30,6 +30,14 @@ Repo-level startup instructions for coding agents.
 - Script helper tests: `npm run test:scripts`
 - Source-layout gate: `npm run build:all` in a clean checkout; use `npm run quality:check` only as a focused rerun after `.vitepress/dist` has been built/copied. It updates `.quality-report.md`.
 
+## Branch and push policy
+
+- When the user authorizes a push and does not request a PR or review branch, finish the work on `main` and push it to `origin/main`. Do not leave completed work available only on `agent/*`, `claude/*`, or other topic branches.
+- Use a separate remote branch only when the user explicitly requests a PR/review flow, branch protection requires it, or the work is intentionally experimental or incomplete. State that reason at handoff.
+- If work starts in a non-`main` worktree, integrate it using the repository's linear-history rules, verify that `origin/main` contains the final tree, and clean up the temporary remote branch when it no longer preserves unique work.
+- For submodule changes, commit and push inside the submodule first, then commit and push the parent gitlink. Never let parent `main` reference a submodule commit that its remote cannot fetch.
+- Before pushing or fast-forwarding another worktree, inspect it for local commits and uncommitted changes. Do not overwrite a dirty worktree; use an isolated worktree and report the remaining local state.
+
 ## Agent runbooks
 
 - Issue tracker: `docs/agents/issue-tracker.md`; use `gh` from repo root for `MiaoDX/LIP`.
