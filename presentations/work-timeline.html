@@ -74,7 +74,7 @@ a{color:inherit;text-decoration:none} button{font:inherit;color:inherit}.deck{po
   <div class="speaker-note">这页证明跨领域迁移速度与一类任务的端到端责任，不把横向整机责任说成所有算法模块的最终责任。</div>
 </section>
 <section class="slide slide--dense" data-index="06">
-  <h2>把数据生产、模型评测与真机部署接成研发闭环</h2><p class="lead">本人负责数据生产、批量评测与真机部署；模型训练由模型团队负责</p>
+  <h2>把数据生产、模型评测与真机部署接成研发闭环</h2><p class="lead">团队并行探索模型结构、动作表示与数据配方；本人负责数据生产、批量评测与真机部署</p>
   <div class="arch-frame">
     <svg class="arch-svg arch-svg--desktop" viewBox="0 0 1180 410" role="img" aria-labelledby="data-loop-title data-loop-desc"><title id="data-loop-title">VLN 数据、评测与部署闭环</title><desc id="data-loop-desc">业务任务经过数据生产，由模型团队训练形成模型版本；本人负责批量评测、证据归因和真机部署，结果决定下一轮补数据、改模型或修复环境与基础设施。</desc><defs><marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="var(--dim)"/></marker><marker id="arrow-feedback" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="var(--influence)"/></marker></defs>
       <text x="22" y="19" class="role-label">INPUT &amp; UPSTREAM</text><text x="206" y="19" class="kicker">END-TO-END VIEW · 2025 H2</text><rect x="194" y="27" width="964" height="356" rx="4" class="boundary"/>
@@ -109,9 +109,9 @@ a{color:inherit;text-decoration:none} button{font:inherit;color:inherit}.deck{po
       <text x="30" y="742" class="role-label">OWNED = 实线高亮 · MODEL TEAM = 虚线</text>
     </svg>
   </div>
-  <div class="arch-caption"><span class="dataset-source"><b>SCENE &amp; DATA：</b>OmniGibson · Habitat · BEHAVIOR-1K · InteriorGS · 自建场景与 Digital Twin</span><span><b>实线高亮：</b>本人已验证的部署、数据生产与批量评测范围</span><span><b>虚线：</b>模型团队负责训练，本人通过接口与证据协同</span></div>
+  <div class="arch-caption"><span class="dataset-source"><b>MODEL &amp; DATA：</b>VLM 骨干 · waypoint 表示 · 单帧/多帧 · grounding · 多源仿真与 Digital Twin</span><span><b>实线高亮：</b>本人已验证的部署、数据生产与批量评测范围</span><span><b>虚线：</b>模型团队负责训练，本人通过接口与证据协同</span></div>
   <div class="stat-strip arch-stats"><div class="stat" style="--stat:var(--platform)"><strong>2×</strong><span>单实例数据生产吞吐</span></div><div class="stat" style="--stat:var(--platform)"><strong>百实例级</strong><span>云端批量数据生产与评测</span></div><div class="stat" style="--stat:var(--influence)"><strong>DATA + EVAL</strong><span>共同证据进入下一轮研发决策</span></div></div>
-  <div class="speaker-note">VLN 场景与数据来源包括 OmniGibson、Habitat、BEHAVIOR-1K、InteriorGS，以及自建场景与 Digital Twin；公开场景用于扩大覆盖，自建场景与 Digital Twin 补充更接近实际部署环境的验证。模型部署连接传感器输入、推理、机器人接口与运控；较大的模型在云端执行，较小的模型可以在机器人板端运行。数据生产链中的 VLM 标签、多模型复核与人工异常处理属于数据生成和质检，不是模型评测；模型评测链负责云端批量执行、多维证据和失败归因。团队共同支持颜色与相对方位指令；从部署视角讨论自回归 waypoint 的绝对坐标、增量坐标和距离-角度表示时，序列与运行成本仍取决于序列化、量化、tokenizer 和词表设计。部署、数据、评测与模型训练的 ownership 必须分开。</div>
+  <div class="speaker-note">团队尝试了不同 VLM 骨干与动作输出方案，并对绝对坐标、增量坐标、距离-角度等 waypoint 表示，以及单帧、多帧和 grounding 数据配方进行对照。VLN 场景与数据来源包括 OmniGibson、Habitat、BEHAVIOR-1K、InteriorGS，以及自建场景与 Digital Twin；公开场景用于扩大覆盖，自建场景与 Digital Twin 补充更接近实际部署环境的验证。随着数据生产扩展到云端百实例级，再结合指标、轨迹、视觉结果和失败案例做版本评测，方案逐步收敛，并在真机目标导航中取得可用效果。模型部署连接传感器输入、推理、机器人接口与运控；较大的模型在云端执行，较小的模型可以在机器人板端运行。数据生产链中的 VLM 标签、多模型复核与人工异常处理属于数据生成和质检，不是模型评测。团队共同支持颜色与相对方位指令；序列与运行成本仍取决于序列化、量化、tokenizer 和词表设计。部署、数据、评测与模型训练的 ownership 必须分开。</div>
 </section>
 <section class="slide slide--dense" data-index="07">
   <h2>把一次评测变成可持续运行的测试系统</h2><p class="lead">VLM 承担测试操作员，VLN 执行任务，Oracle 负责恢复；未知异常进入人工兜底</p>
