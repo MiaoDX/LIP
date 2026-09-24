@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="950" viewBox="0 0 1600 950" role="img" aria-labelledby="title desc">
+  <title id="title">具身智能技术演进河流 demo</title>
+  <desc id="desc">用时间和问题转折展示项目如何从单任务策略流向 VLA 和 WAM，并在下方补充数据、控制、仿真和运行时支流。项目卡可以跨越多个阶段和能力层。</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8f2e8"/><stop offset="1" stop-color="#e9e0d2"/></linearGradient>
+    <linearGradient id="river" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b36a20"/><stop offset=".48" stop-color="#167a74"/><stop offset="1" stop-color="#6656a8"/></linearGradient>
+    <style>
+      .sans{font-family:"IBM Plex Sans","Noto Sans SC",sans-serif}.serif{font-family:"Source Serif 4","Noto Serif SC",serif}.mono{font-family:"DM Mono","IBM Plex Mono",monospace}.ink{fill:#24353a}.muted{fill:#5b6c71}.dim{fill:#7e8d91}.gold{fill:#b36a20}.cyan{fill:#167a74}.purple{fill:#6656a8}.coral{fill:#b34e42}.card{fill:#fff;stroke:#bbc9c5}.grid{stroke:#d2dbd8;stroke-width:1}.small{font-size:14px}.label{font-size:16px;font-weight:600}
+    </style>
+  </defs>
+  <rect width="1600" height="950" fill="url(#paper)"/>
+  <rect x="42" y="36" width="1516" height="878" rx="20" fill="none" stroke="#c9d4d1"/>
+  <text x="84" y="94" class="mono gold" font-size="13" letter-spacing="3">VIEW D / EVOLUTION RIVER</text>
+  <text x="84" y="154" class="serif ink" font-size="54" font-weight="600">技术不是一条线，是几条河汇到动作</text>
+  <text x="84" y="194" class="sans muted" font-size="19">沿时间看问题如何改变；项目可以跨河道，不必固定在单一栏目</text>
+
+  <g class="mono dim" font-size="12"><text x="170" y="260">2012</text><text x="430" y="260">2018</text><text x="690" y="260">2021</text><text x="950" y="260">2023</text><text x="1210" y="260">2024</text><text x="1450" y="260">2026</text></g>
+  <g class="grid"><path d="M170 280V800M430 280V800M690 280V800M950 280V800M1210 280V800M1450 280V800"/></g>
+  <path d="M130 382 C420 360 590 440 810 410 S1190 330 1490 370" fill="none" stroke="url(#river)" stroke-width="34" opacity=".2"/>
+  <path d="M130 580 C390 610 560 540 780 590 S1180 650 1490 560" fill="none" stroke="url(#river)" stroke-width="34" opacity=".16"/>
+  <path d="M130 382 C420 360 590 440 810 410 S1190 330 1490 370" fill="none" stroke="url(#river)" stroke-width="3"/>
+  <path d="M130 580 C390 610 560 540 780 590 S1180 650 1490 560" fill="none" stroke="url(#river)" stroke-width="3"/>
+
+  <g class="sans muted small"><text x="88" y="372">控制 / 策略</text><text x="88" y="570">数据 / 世界</text></g>
+  <g class="mono dim" font-size="11"><text x="128" y="332">能否重复学习</text><text x="438" y="332">能否覆盖任务</text><text x="704" y="332">能否共享本体</text><text x="950" y="332">能否落到动作</text><text x="1206" y="332">能否开放评测</text><text x="1420" y="332">能否扩展到世界</text></g>
+
+  <a xlink:href="https://github.com/ARISE-Initiative/robomimic" target="_blank"><g transform="translate(245 342)"><rect width="180" height="64" rx="9" class="card"/><text x="14" y="27" class="sans ink label">robomimic</text><text x="14" y="47" class="mono dim" font-size="11">episode + BC</text></g></a>
+  <a xlink:href="https://diffusion-policy.cs.columbia.edu/" target="_blank"><g transform="translate(510 410)"><rect width="210" height="64" rx="9" class="card"/><text x="14" y="27" class="sans ink label">Diffusion Policy</text><text x="14" y="47" class="mono dim" font-size="11">action sequence</text></g></a>
+  <a xlink:href="https://robotics-transformer1.github.io/" target="_blank"><g transform="translate(705 350)"><rect width="150" height="64" rx="9" class="card"/><text x="14" y="27" class="sans ink label">RT-1</text><text x="14" y="47" class="mono dim" font-size="11">multi-task</text></g></a>
+  <a xlink:href="https://robotics-transformer-x.github.io/" target="_blank"><g transform="translate(820 520)"><rect width="210" height="64" rx="9" class="card"/><text x="14" y="27" class="sans ink label">Open X / RT-X</text><text x="14" y="47" class="mono dim" font-size="11">cross-embodiment</text></g></a>
+  <a xlink:href="https://deepmind.google/blog/rt-2-new-model-translates-vision-and-language-into-action/" target="_blank"><g transform="translate(968 364)"><rect width="155" height="64" rx="9" class="card"/><text x="14" y="27" class="sans ink label">RT-2</text><text x="14" y="47" class="mono dim" font-size="11">language action</text></g></a>
+  <a xlink:href="https://openvla.github.io/" target="_blank"><g transform="translate(1150 300)"><rect width="190" height="64" rx="9" class="card"/><text x="14" y="27" class="sans ink label">OpenVLA</text><text x="14" y="47" class="mono dim" font-size="11">open checkpoint</text></g></a>
+  <a xlink:href="https://github.com/Physical-Intelligence/openpi" target="_blank"><g transform="translate(1180 500)"><rect width="180" height="64" rx="9" class="card"/><text x="14" y="27" class="sans ink label">π0 / openpi</text><text x="14" y="47" class="mono dim" font-size="11">flow action</text></g></a>
+  <a xlink:href="https://github.com/OpenWAM-Official/OpenWAM" target="_blank"><g transform="translate(1390 420)"><rect width="160" height="64" rx="9" class="card"/><text x="14" y="27" class="sans ink label">OpenWAM</text><text x="14" y="47" class="mono dim" font-size="11">world action</text></g></a>
+
+  <!-- Tributaries: the same projects reappear where they provide an enabling layer -->
+  <rect x="84" y="690" width="1432" height="154" rx="12" fill="#fffaf1" stroke="#c9d4d1"/>
+  <text x="112" y="722" class="mono gold" font-size="12" letter-spacing="2">TRIBUTARIES / CAPABILITY DETAILS</text>
+  <g class="sans muted" font-size="12">
+    <text x="112" y="756">数据与基准</text><text x="112" y="786">控制与规划</text><text x="112" y="816">仿真与运行时</text>
+  </g>
+  <g class="mono" font-size="11">
+    <rect x="240" y="740" width="150" height="24" rx="12" fill="#dcefeb"/><text x="315" y="756" text-anchor="middle" class="cyan">LeRobot</text>
+    <rect x="420" y="740" width="190" height="24" rx="12" fill="#dcefeb"/><text x="515" y="756" text-anchor="middle" class="cyan">Open X / RT-X</text>
+    <rect x="640" y="740" width="120" height="24" rx="12" fill="#dcefeb"/><text x="700" y="756" text-anchor="middle" class="cyan">LIBERO</text>
+    <rect x="790" y="740" width="180" height="24" rx="12" fill="#dcefeb"/><text x="880" y="756" text-anchor="middle" class="cyan">RoboCasa / ManiSkill</text>
+    <rect x="1000" y="740" width="165" height="24" rx="12" fill="#dcefeb"/><text x="1082" y="756" text-anchor="middle" class="cyan">data lineage</text>
+
+    <rect x="240" y="770" width="150" height="24" rx="12" fill="#f4e4cf"/><text x="315" y="786" text-anchor="middle" class="gold">cuRobo</text>
+    <rect x="420" y="770" width="180" height="24" rx="12" fill="#f4e4cf"/><text x="510" y="786" text-anchor="middle" class="gold">MoveIt 2</text>
+    <rect x="630" y="770" width="160" height="24" rx="12" fill="#f4e4cf"/><text x="710" y="786" text-anchor="middle" class="gold">TinyMPC</text>
+    <rect x="820" y="770" width="180" height="24" rx="12" fill="#f4e4cf"/><text x="910" y="786" text-anchor="middle" class="gold">action horizon</text>
+    <rect x="1030" y="770" width="190" height="24" rx="12" fill="#f4e4cf"/><text x="1125" y="786" text-anchor="middle" class="gold">reachability</text>
+
+    <rect x="240" y="800" width="160" height="24" rx="12" fill="#e9e4f8"/><text x="320" y="816" text-anchor="middle" class="purple">MuJoCo</text>
+    <rect x="430" y="800" width="170" height="24" rx="12" fill="#e9e4f8"/><text x="515" y="816" text-anchor="middle" class="purple">Isaac Lab</text>
+    <rect x="630" y="800" width="170" height="24" rx="12" fill="#e9e4f8"/><text x="715" y="816" text-anchor="middle" class="purple">Isaac GR00T</text>
+    <rect x="830" y="800" width="175" height="24" rx="12" fill="#e9e4f8"/><text x="917" y="816" text-anchor="middle" class="purple">openpi runtime</text>
+    <rect x="1035" y="800" width="180" height="24" rx="12" fill="#e9e4f8"/><text x="1125" y="816" text-anchor="middle" class="purple">OpenWAM adapters</text>
+  </g>
+  <g class="mono dim" font-size="11"><text x="1260" y="754">颜色 = 能力支流</text><text x="1260" y="784">入口 = 点击项目卡</text><text x="1260" y="814">等级 = 回到证据台账核对</text></g>
+  <text x="84" y="884" class="mono dim" font-size="12">读法 · 主河流回答“为什么演进” · 支流回答“依赖哪些能力” · 节点链接回论文、仓库和证据台账</text>
+</svg>

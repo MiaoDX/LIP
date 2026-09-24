@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1800" height="1200" viewBox="0 0 1800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">具身智能技术地图 demo：领域全景与 VLA/WAM 演进</title>
+  <desc id="desc">一张静态 SVG 研究地图。上半区按技术分支展示机器人研究项目，下半区展示从单任务策略到世界动作模型的演进。节点链接到公开一手来源。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3eee4"/>
+      <stop offset="1" stop-color="#e9e0d1"/>
+    </linearGradient>
+    <linearGradient id="rail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b36a20"/>
+      <stop offset="0.52" stop-color="#167a74"/>
+      <stop offset="1" stop-color="#6656a8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#4e4337" flood-opacity=".14"/>
+    </filter>
+    <style>
+      .sans { font-family: "IBM Plex Sans", "Noto Sans SC", sans-serif; }
+      .serif { font-family: "Source Serif 4", "Noto Serif SC", serif; }
+      .mono { font-family: "DM Mono", "IBM Plex Mono", monospace; }
+      .ink { fill: #24353a; }
+      .muted { fill: #5b6c71; }
+      .dim { fill: #7e8d91; }
+      .gold { fill: #b36a20; }
+      .cyan { fill: #167a74; }
+      .purple { fill: #6656a8; }
+      .coral { fill: #b34e42; }
+      .panel { fill: #fffaf1; stroke: #cad5d2; stroke-width: 1; }
+      .node { fill: #ffffff; stroke: #aebfbd; stroke-width: 1; }
+      .node:hover { stroke: #b36a20; stroke-width: 2; }
+      .lane { stroke: #d7dfdc; stroke-width: 1; }
+      .solid { stroke: #b36a20; stroke-width: 2; fill: none; }
+      .shared { stroke: #167a74; stroke-width: 2; stroke-dasharray: 7 7; fill: none; }
+      .inferred { stroke: #6656a8; stroke-width: 2; stroke-dasharray: 2 7; fill: none; }
+      .tiny { font-size: 12px; }
+      .small { font-size: 14px; }
+      .body { font-size: 16px; }
+      .label { font-size: 15px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <rect width="1800" height="1200" fill="url(#bg)"/>
+  <rect x="48" y="42" width="1704" height="1116" rx="22" fill="none" stroke="#cbd5d2"/>
+
+  <text x="92" y="104" class="mono gold" font-size="14" letter-spacing="3">EMBODIED AI / RESEARCH MAP DEMO</text>
+  <text x="92" y="166" class="serif ink" font-size="58" font-weight="600">从领域全景到 VLA / WAM</text>
+  <text x="92" y="204" class="sans muted body">同一组节点的两种读法：能力分支，以及研究问题的演进</text>
+  <text x="1660" y="104" text-anchor="end" class="mono dim tiny">MARKDOWN → SVG · DRAFT</text>
+
+  <!-- View A -->
+  <rect x="78" y="246" width="1644" height="495" rx="14" class="panel"/>
+  <text x="110" y="288" class="mono gold small" letter-spacing="2">VIEW A / DOMAIN LANDSCAPE</text>
+  <text x="110" y="322" class="sans ink" font-size="23" font-weight="600">领域全景：哪些能力分支共同组成机器人系统</text>
+
+  <g class="sans muted tiny">
+    <text x="110" y="376">控制与规划</text>
+    <text x="110" y="426">操作策略</text>
+    <text x="110" y="476">数据与基准</text>
+    <text x="110" y="526">通用机器人模型</text>
+    <text x="110" y="576">语言与任务规划</text>
+    <text x="110" y="626">仿真与数据基础设施</text>
+    <text x="110" y="676">世界模型 / WAM</text>
+    <text x="110" y="726">系统与部署</text>
+  </g>
+  <g class="lane">
+    <path d="M250 370H1685M250 420H1685M250 470H1685M250 520H1685M250 570H1685M250 620H1685M250 670H1685M250 720H1685"/>
+  </g>
+
+  <!-- Landscape relationships: solid = explicit / shared = shared data or benchmark / inferred = this map's synthesis -->
+  <path d="M405 370 C470 390 520 410 590 420" class="solid"/>
+  <path d="M725 420 C790 440 810 462 880 470" class="shared"/>
+  <path d="M990 470 C1050 492 1090 505 1145 520" class="shared"/>
+  <path d="M1270 520 C1320 542 1340 557 1390 570" class="inferred"/>
+  <path d="M520 620 C650 580 760 540 880 520" class="shared"/>
+  <path d="M1070 670 C1150 630 1240 580 1390 570" class="inferred"/>
+  <path d="M1450 570 C1500 620 1500 675 1450 720" class="solid"/>
+
+  <!-- Landscape nodes -->
+  <a xlink:href="https://curobo.org/" target="_blank"><g transform="translate(300 345)"><rect width="170" height="42" rx="8" class="node"/><text x="14" y="26" class="sans ink label">cuRobo</text><text x="14" y="39" class="mono dim" font-size="9">PLANNING</text></g></a>
+  <a xlink:href="https://github.com/ARISE-Initiative/robomimic" target="_blank"><g transform="translate(520 395)"><rect width="190" height="42" rx="8" class="node"/><text x="14" y="26" class="sans ink label">robomimic</text><text x="14" y="39" class="mono dim" font-size="9">IMITATION</text></g></a>
+  <a xlink:href="https://robotics-transformer-x.github.io/" target="_blank"><g transform="translate(770 445)"><rect width="220" height="42" rx="8" class="node"/><text x="14" y="26" class="sans ink label">Open X / RT-X</text><text x="14" y="39" class="mono dim" font-size="9">DATA + BENCHMARK</text></g></a>
+  <a xlink:href="https://openvla.github.io/" target="_blank"><g transform="translate(1035 495)"><rect width="190" height="42" rx="8" class="node"/><text x="14" y="26" class="sans ink label">OpenVLA</text><text x="14" y="39" class="mono dim" font-size="9">OPEN VLA</text></g></a>
+  <a xlink:href="https://robotics-transformer1.github.io/" target="_blank"><g transform="translate(1270 545)"><rect width="170" height="42" rx="8" class="node"/><text x="14" y="26" class="sans ink label">RT-1 / RT-2</text><text x="14" y="39" class="mono dim" font-size="9">VLA</text></g></a>
+  <a xlink:href="https://github.com/google-deepmind/mujoco_playground" target="_blank"><g transform="translate(420 595)"><rect width="235" height="42" rx="8" class="node"/><text x="14" y="26" class="sans ink label">MuJoCo Playground</text><text x="14" y="39" class="mono dim" font-size="9">SIMULATION</text></g></a>
+  <a xlink:href="https://github.com/OpenWAM-Official/OpenWAM" target="_blank"><g transform="translate(850 645)"><rect width="220" height="42" rx="8" class="node"/><text x="14" y="26" class="sans ink label">OpenWAM</text><text x="14" y="39" class="mono dim" font-size="9">WORLD ACTION</text></g></a>
+  <a xlink:href="https://developer.nvidia.com/isaac/gr00t" target="_blank"><g transform="translate(1375 695)"><rect width="220" height="42" rx="8" class="node"/><text x="14" y="26" class="sans ink label">Isaac GR00T</text><text x="14" y="39" class="mono dim" font-size="9">RUNTIME</text></g></a>
+
+  <!-- View A legend -->
+  <g transform="translate(1220 265)" class="mono dim tiny">
+    <line x1="0" y1="7" x2="32" y2="7" class="solid"/><text x="42" y="11">明确承接</text>
+    <line x1="112" y1="7" x2="144" y2="7" class="shared"/><text x="154" y="11">共享数据 / benchmark</text>
+    <line x1="330" y1="7" x2="362" y2="7" class="inferred"/><text x="372" y="11">本文归纳</text>
+  </g>
+
+  <!-- View B -->
+  <rect x="78" y="775" width="1644" height="330" rx="14" class="panel"/>
+  <text x="110" y="817" class="mono cyan small" letter-spacing="2">VIEW B / VLA → WAM</text>
+  <text x="110" y="851" class="sans ink" font-size="23" font-weight="600">演进线：下一代方法在解决上一代留下的哪个接口问题</text>
+  <line x1="180" y1="963" x2="1620" y2="963" stroke="url(#rail)" stroke-width="3"/>
+  <g class="sans dim tiny">
+    <text x="180" y="904">固定任务</text><text x="470" y="904">多任务</text><text x="755" y="904">跨本体数据</text><text x="1040" y="904">语言进入动作</text><text x="1320" y="904">开放 VLA</text><text x="1530" y="904">WAM</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <a xlink:href="https://github.com/ARISE-Initiative/robomimic" target="_blank"><g transform="translate(125 932)"><rect width="170" height="64" rx="9" class="node"/><text x="14" y="27" class="sans ink label">robomimic</text><text x="14" y="47" class="mono dim tiny">episode + BC</text></g></a>
+    <a xlink:href="https://robotics-transformer1.github.io/" target="_blank"><g transform="translate(390 932)"><rect width="160" height="64" rx="9" class="node"/><text x="14" y="27" class="sans ink label">RT-1</text><text x="14" y="47" class="mono dim tiny">multi-task policy</text></g></a>
+    <a xlink:href="https://robotics-transformer-x.github.io/" target="_blank"><g transform="translate(650 932)"><rect width="205" height="64" rx="9" class="node"/><text x="14" y="27" class="sans ink label">Open X / RT-X</text><text x="14" y="47" class="mono dim tiny">cross-embodiment</text></g></a>
+    <a xlink:href="https://deepmind.google/blog/rt-2-new-model-translates-vision-and-language-into-action/" target="_blank"><g transform="translate(955 932)"><rect width="160" height="64" rx="9" class="node"/><text x="14" y="27" class="sans ink label">RT-2</text><text x="14" y="47" class="mono dim tiny">language → action</text></g></a>
+    <a xlink:href="https://openvla.github.io/" target="_blank"><g transform="translate(1210 932)"><rect width="180" height="64" rx="9" class="node"/><text x="14" y="27" class="sans ink label">OpenVLA / π0</text><text x="14" y="47" class="mono dim tiny">open checkpoints</text></g></a>
+    <a xlink:href="https://github.com/OpenWAM-Official/OpenWAM" target="_blank"><g transform="translate(1490 932)"><rect width="180" height="64" rx="9" class="node"/><text x="14" y="27" class="sans ink label">OpenWAM</text><text x="14" y="47" class="mono dim tiny">world action</text></g></a>
+  </g>
+
+  <g class="sans muted tiny">
+    <text x="125" y="1030">问题：如何重放和比较</text>
+    <text x="390" y="1030">问题：如何覆盖任务分布</text>
+    <text x="650" y="1030">问题：如何共享动作语义</text>
+    <text x="955" y="1030">问题：如何落到执行器</text>
+    <text x="1210" y="1030">问题：如何开放和评测</text>
+    <text x="1490" y="1030">问题：如何扩展到世界</text>
+  </g>
+
+  <text x="92" y="1140" class="mono dim tiny">DEMO SCOPE · 节点和关系仍需逐条回到 evidence ledger 核对 · 点击节点打开原始入口</text>
+</svg>

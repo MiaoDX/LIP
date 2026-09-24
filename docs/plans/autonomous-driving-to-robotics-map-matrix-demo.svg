@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">具身智能项目能力矩阵 demo</title>
+  <desc id="desc">项目与能力层的矩阵。一个项目可以同时覆盖数据、策略、仿真和运行时多个单元。</desc>
+  <defs>
+    <style>
+      .sans{font-family:"IBM Plex Sans","Noto Sans SC",sans-serif}.serif{font-family:"Source Serif 4","Noto Serif SC",serif}.mono{font-family:"DM Mono","IBM Plex Mono",monospace}
+      .ink{fill:#24353a}.muted{fill:#5b6c71}.dim{fill:#7e8d91}.line{stroke:#d3dcda;stroke-width:1}.panel{fill:#fffaf1;stroke:#c9d4d1}.card{fill:#fff;stroke:#b8c7c3}.data{fill:#167a74}.policy{fill:#6656a8}.sim{fill:#b36a20}.runtime{fill:#b34e42}.tiny{font-size:12px}.small{font-size:14px}.label{font-size:16px;font-weight:600}
+    </style>
+  </defs>
+  <rect width="1600" height="1000" fill="#f3eee4"/>
+  <rect x="40" y="36" width="1520" height="928" rx="20" fill="none" stroke="#c9d4d1"/>
+  <text x="84" y="94" class="mono" fill="#b36a20" font-size="13" letter-spacing="3">VIEW C / CAPABILITY MATRIX</text>
+  <text x="84" y="154" class="serif ink" font-size="54" font-weight="600">一个项目，不只属于一个栏目</text>
+  <text x="84" y="194" class="sans muted" font-size="19">把“项目”放在它实际覆盖的能力单元里，而不是强行归入单一技术分支</text>
+
+  <rect x="84" y="244" width="1432" height="596" rx="12" class="panel"/>
+  <text x="112" y="285" class="mono dim tiny">PROJECT / ARTIFACT</text>
+  <g class="sans muted small">
+    <text x="570" y="285" text-anchor="middle">数据 / 基准</text><text x="810" y="285" text-anchor="middle">策略 / 动作</text><text x="1050" y="285" text-anchor="middle">仿真 / 训练</text><text x="1290" y="285" text-anchor="middle">系统 / 运行时</text>
+  </g>
+  <g class="line"><path d="M430 304V814M670 244V814M910 244V814M1150 244V814M1390 244V814"/><path d="M84 304H1516M84 376H1516M84 448H1516M84 520H1516M84 592H1516M84 664H1516M84 736H1516M84 808H1516"/></g>
+  <g class="sans label ink">
+    <text x="112" y="349">LeRobot</text><text x="112" y="421">robomimic</text><text x="112" y="493">Open X / RT-X</text><text x="112" y="565">OpenVLA</text><text x="112" y="637">π0 / openpi</text><text x="112" y="709">Isaac Lab / GR00T</text><text x="112" y="781">OpenWAM</text>
+  </g>
+  <g class="mono dim tiny">
+    <text x="112" y="365">ecosystem</text><text x="112" y="437">baseline</text><text x="112" y="509">cross-embodiment</text><text x="112" y="581">open VLA</text><text x="112" y="653">flow policy</text><text x="112" y="725">platform</text><text x="112" y="797">world action</text>
+  </g>
+
+  <!-- Multiple cells per project are intentional -->
+  <g>
+    <rect x="516" y="326" width="108" height="28" rx="14" fill="#dcefeb"/><text x="570" y="345" text-anchor="middle" class="mono data tiny">DATASET</text>
+    <rect x="756" y="326" width="108" height="28" rx="14" fill="#e9e4f8"/><text x="810" y="345" text-anchor="middle" class="mono policy tiny">POLICY</text>
+    <rect x="996" y="326" width="108" height="28" rx="14" fill="#f5e7d3"/><text x="1050" y="345" text-anchor="middle" class="mono sim tiny">ENVHUB</text>
+    <rect x="1236" y="326" width="108" height="28" rx="14" fill="#f5dfdc"/><text x="1290" y="345" text-anchor="middle" class="mono runtime tiny">EVAL</text>
+
+    <rect x="516" y="398" width="108" height="28" rx="14" fill="#dcefeb"/><text x="570" y="417" text-anchor="middle" class="mono data tiny">DEMO DATA</text>
+    <rect x="756" y="398" width="108" height="28" rx="14" fill="#e9e4f8"/><text x="810" y="417" text-anchor="middle" class="mono policy tiny">BC / DIFF</text>
+    <rect x="996" y="398" width="108" height="28" rx="14" fill="#f5e7d3"/><text x="1050" y="417" text-anchor="middle" class="mono sim tiny">MUJOCO</text>
+
+    <rect x="516" y="470" width="108" height="28" rx="14" fill="#dcefeb"/><text x="570" y="489" text-anchor="middle" class="mono data tiny">CROSS ROBOT</text>
+    <rect x="756" y="470" width="108" height="28" rx="14" fill="#e9e4f8"/><text x="810" y="489" text-anchor="middle" class="mono policy tiny">RT-X</text>
+    <rect x="1236" y="470" width="108" height="28" rx="14" fill="#f5dfdc"/><text x="1290" y="489" text-anchor="middle" class="mono runtime tiny">BENCHMARK</text>
+
+    <rect x="516" y="542" width="108" height="28" rx="14" fill="#dcefeb"/><text x="570" y="561" text-anchor="middle" class="mono data tiny">LIBERO</text>
+    <rect x="756" y="542" width="108" height="28" rx="14" fill="#e9e4f8"/><text x="810" y="561" text-anchor="middle" class="mono policy tiny">VLA</text>
+    <rect x="996" y="542" width="108" height="28" rx="14" fill="#f5e7d3"/><text x="1050" y="561" text-anchor="middle" class="mono sim tiny">EVAL ENV</text>
+    <rect x="1236" y="542" width="108" height="28" rx="14" fill="#f5dfdc"/><text x="1290" y="561" text-anchor="middle" class="mono runtime tiny">CHECKPOINT</text>
+
+    <rect x="516" y="614" width="108" height="28" rx="14" fill="#dcefeb"/><text x="570" y="633" text-anchor="middle" class="mono data tiny">MIXED DATA</text>
+    <rect x="756" y="614" width="108" height="28" rx="14" fill="#e9e4f8"/><text x="810" y="633" text-anchor="middle" class="mono policy tiny">FLOW ACTION</text>
+    <rect x="1236" y="614" width="108" height="28" rx="14" fill="#f5dfdc"/><text x="1290" y="633" text-anchor="middle" class="mono runtime tiny">SCHEMA</text>
+
+    <rect x="756" y="686" width="108" height="28" rx="14" fill="#e9e4f8"/><text x="810" y="705" text-anchor="middle" class="mono policy tiny">RL / IL</text>
+    <rect x="996" y="686" width="108" height="28" rx="14" fill="#f5e7d3"/><text x="1050" y="705" text-anchor="middle" class="mono sim tiny">GPU SIM</text>
+    <rect x="1236" y="686" width="108" height="28" rx="14" fill="#f5dfdc"/><text x="1290" y="705" text-anchor="middle" class="mono runtime tiny">RUNTIME</text>
+
+    <rect x="516" y="758" width="108" height="28" rx="14" fill="#dcefeb"/><text x="570" y="777" text-anchor="middle" class="mono data tiny">WAM DATA</text>
+    <rect x="756" y="758" width="108" height="28" rx="14" fill="#e9e4f8"/><text x="810" y="777" text-anchor="middle" class="mono policy tiny">ACTION MODEL</text>
+    <rect x="996" y="758" width="108" height="28" rx="14" fill="#f5e7d3"/><text x="1050" y="777" text-anchor="middle" class="mono sim tiny">ADAPTERS</text>
+    <rect x="1236" y="758" width="108" height="28" rx="14" fill="#f5dfdc"/><text x="1290" y="777" text-anchor="middle" class="mono runtime tiny">DEPLOY</text>
+  </g>
+  <g class="mono dim tiny"><circle cx="113" cy="886" r="6" class="data"/><text x="128" y="890">数据 / benchmark</text><circle cx="310" cy="886" r="6" class="policy"/><text x="325" y="890">策略 / action</text><circle cx="493" cy="886" r="6" class="sim"/><text x="508" y="890">仿真 / 训练</text><circle cx="680" cy="886" r="6" class="runtime"/><text x="695" y="890">系统 / runtime</text></g>
+  <text x="84" y="936" class="mono dim tiny">DEMO QUESTION · 一个项目覆盖哪些能力单元？它的复现入口在哪一格？</text>
+</svg>

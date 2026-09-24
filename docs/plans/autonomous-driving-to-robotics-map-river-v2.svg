@@ -1,0 +1,355 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1880" viewBox="0 0 1920 1880" role="img" aria-labelledby="title desc" style="max-width:100%;height:auto;display:block">
+<title id="title">具身操作技术地图 · 示教、数据、策略与通用模型的交汇</title>
+<desc id="desc">七条浅色能力河道展示 ALOHA、ACT、Mobile ALOHA、UMI、DROID 和 VLA/WAM 的联系。横向表示问题展开，不是时间轴。同一项目仅保留一张主卡，以细线和圆点连接跨层贡献条。卡片只写已确认的发表或开源年份，核对日期统一在图脚。DYNA-1 / DYNA-2 标记为 Dyna 公司研究，仅作报告阅读，本轮未找到公开权重入口。实线表示明确继承或采用，虚线表示共享数据或配套接口，点线表示本文归纳。仿真、离线、真机与阅读标签只是入口候选，未声称已复现。世界动作模型 WAM 独立成行，展示研究问题、DYNA-1/2、OpenWAM 模型与仿真入口、另一个同名仓库的 CPU 契约。部署另列共用约束。图底部提供 ACT、Diffusion Policy、VLA 和 WAM 四种体验入口。</desc>
+<defs>
+<style>text{font-family:"Noto Sans CJK SC","Noto Sans SC","Microsoft YaHei",sans-serif;fill:#213b46} .muted{fill:#566e77}.tiny{font-size:14px}.body{font-size:17px}.title{font-size:22px;font-weight:700}.kicker{font-size:14px;letter-spacing:2px;font-weight:600}.edge{fill:none;stroke:#68818e;stroke-width:2.3}a:hover .card{stroke:#537489;stroke-width:2}a:focus .card{stroke:#537489;stroke-width:3}a:hover .contribution{fill:#dfeee7}a:focus .contribution{stroke:#537489;stroke-width:2}a:target .card{stroke:#138373;stroke-width:3}</style>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#68818e"/></marker>
+</defs>
+<rect width="1920" height="1880" fill="#fafcfb"/>
+<rect x="30" y="30" width="1860" height="1820" rx="24" fill="none" stroke="#dce5e7"/>
+<text x="66" y="77" font-size="14" style="fill:#138373" font-weight="700">ROBOT LEARNING / TECHNICAL MAP 02</text>
+<text x="66" y="139" font-size="43" font-weight="700">教会机器人做事，几条路线在这里交汇</text>
+<text x="66" y="179" font-size="20" class="muted">从示教与动作接口出发，看数据、策略、VLA 与 WAM 怎样连接；同一项目可以跨越多个能力层</text>
+<text x="66" y="222" font-size="15" class="muted">阅读主干</text>
+<rect x="264" y="200" width="290" height="63" rx="10" fill="#edf4f3" stroke="none"/>
+<text x="279" y="225" font-size="20" font-weight="700">示教</text>
+<text x="279" y="249" font-size="14" class="muted">怎样教</text>
+<path d="M560 232H581" fill="none" stroke="#68818e" stroke-width="2" opacity="1" stroke-dasharray="2 4" marker-end="url(#arrow)"/>
+<rect x="586" y="200" width="290" height="63" rx="10" fill="#edf4f3" stroke="none"/>
+<text x="601" y="225" font-size="20" font-weight="700">数据</text>
+<text x="601" y="249" font-size="14" class="muted">怎样留下经验</text>
+<path d="M882 232H903" fill="none" stroke="#68818e" stroke-width="2" opacity="1" stroke-dasharray="2 4" marker-end="url(#arrow)"/>
+<rect x="908" y="200" width="290" height="63" rx="10" fill="#edf4f3" stroke="none"/>
+<text x="923" y="225" font-size="20" font-weight="700">策略</text>
+<text x="923" y="249" font-size="14" class="muted">怎样生成动作</text>
+<path d="M1204 232H1225" fill="none" stroke="#68818e" stroke-width="2" opacity="1" stroke-dasharray="2 4" marker-end="url(#arrow)"/>
+<rect x="1230" y="200" width="290" height="63" rx="10" fill="#edf4f3" stroke="none"/>
+<text x="1245" y="225" font-size="20" font-weight="700">通用策略 / VLA</text>
+<text x="1245" y="249" font-size="14" class="muted">怎样跨任务适配</text>
+<path d="M1526 232H1547" fill="none" stroke="#68818e" stroke-width="2" opacity="1" stroke-dasharray="2 4" marker-end="url(#arrow)"/>
+<rect x="1552" y="200" width="290" height="63" rx="10" fill="#edf4f3" stroke="none"/>
+<text x="1567" y="225" font-size="20" font-weight="700">世界模型 / WAM</text>
+<text x="1567" y="249" font-size="14" class="muted">怎样利用未来预测</text>
+<text x="66" y="294" font-size="15" class="muted">横向是问题展开，非时间轴；年份仅记已确认的发表 / 开源时间 · 色带表示能力脉络，不表示项目继承</text>
+<text x="66" y="382" font-size="14" style="fill:#ad6532" font-weight="700">01</text>
+<text x="66" y="412" font-size="21" font-weight="700">本体 / 示教接口</text>
+<text x="66" y="440" font-size="15" class="muted">让演示可采集</text>
+<path d="M246 419 C510 374 689 444 899 411 S1450 384 1850 415" fill="none" stroke="#ad6532" stroke-width="65" opacity="0.075"/>
+<path d="M246 419 C510 374 689 444 899 411 S1450 384 1850 415" fill="none" stroke="#ad6532" stroke-width="2" opacity="0.3"/>
+<text x="66" y="548" font-size="14" style="fill:#138373" font-weight="700">02</text>
+<text x="66" y="578" font-size="21" font-weight="700">数据 / 动作契约</text>
+<text x="66" y="606" font-size="15" class="muted">让经验可迁移</text>
+<path d="M246 585 C510 540 689 610 899 577 S1450 550 1850 581" fill="none" stroke="#138373" stroke-width="65" opacity="0.075"/>
+<path d="M246 585 C510 540 689 610 899 577 S1450 550 1850 581" fill="none" stroke="#138373" stroke-width="2" opacity="0.3"/>
+<text x="66" y="714" font-size="14" style="fill:#4973b5" font-weight="700">03</text>
+<text x="66" y="744" font-size="21" font-weight="700">策略学习</text>
+<text x="66" y="772" font-size="15" class="muted">让动作可学习</text>
+<path d="M246 751 C510 706 689 776 899 743 S1450 716 1850 747" fill="none" stroke="#4973b5" stroke-width="65" opacity="0.075"/>
+<path d="M246 751 C510 706 689 776 899 743 S1450 716 1850 747" fill="none" stroke="#4973b5" stroke-width="2" opacity="0.3"/>
+<text x="66" y="880" font-size="14" style="fill:#a57c27" font-weight="700">04</text>
+<text x="66" y="910" font-size="21" font-weight="700">仿真 / 控制</text>
+<text x="66" y="938" font-size="15" class="muted">让执行可检验</text>
+<path d="M246 917 C510 872 689 942 899 909 S1450 882 1850 913" fill="none" stroke="#a57c27" stroke-width="65" opacity="0.075"/>
+<path d="M246 917 C510 872 689 942 899 909 S1450 882 1850 913" fill="none" stroke="#a57c27" stroke-width="2" opacity="0.3"/>
+<text x="66" y="1046" font-size="14" style="fill:#8261a7" font-weight="700">05</text>
+<text x="66" y="1076" font-size="21" font-weight="700">通用策略 / VLA</text>
+<text x="66" y="1104" font-size="15" class="muted">让任务可扩展</text>
+<path d="M246 1083 C510 1038 689 1108 899 1075 S1450 1048 1850 1079" fill="none" stroke="#8261a7" stroke-width="65" opacity="0.075"/>
+<path d="M246 1083 C510 1038 689 1108 899 1075 S1450 1048 1850 1079" fill="none" stroke="#8261a7" stroke-width="2" opacity="0.3"/>
+<text x="66" y="1212" font-size="14" style="fill:#467d8c" font-weight="700">06</text>
+<text x="66" y="1242" font-size="21" font-weight="700">世界动作 / WAM</text>
+<text x="66" y="1270" font-size="15" class="muted">未来建模怎样帮助动作</text>
+<path d="M246 1249 C510 1204 689 1274 899 1241 S1450 1214 1850 1245" fill="none" stroke="#467d8c" stroke-width="65" opacity="0.075"/>
+<path d="M246 1249 C510 1204 689 1274 899 1241 S1450 1214 1850 1245" fill="none" stroke="#467d8c" stroke-width="2" opacity="0.3"/>
+<path d="M584 401C620 401 625 383 654 383" fill="none" stroke="#68818e" stroke-width="2.3" opacity="1" marker-end="url(#arrow)"/>
+<text x="607" y="375" font-size="13" class="muted">E1</text>
+<path d="M555 465C653 465 649 515 649 586V648Q649 676 683 676H745V695" fill="none" stroke="#68818e" stroke-width="2.2" opacity="1" stroke-dasharray="8 5"/>
+<text x="654" y="657" font-size="13" class="muted">E3</text>
+<path d="M1198 709V681Q1198 658 1129 658H976Q959 658 959 639V622" fill="none" stroke="#68818e" stroke-width="2.3" opacity="1" marker-end="url(#arrow)"/>
+<text x="1120" y="649" font-size="13" class="muted">E2</text>
+<path d="M1822 579H1857V995Q1857 1019 1814 1019H1420V1030" fill="none" stroke="#68818e" stroke-width="2.2" opacity="1" stroke-dasharray="8 5"/>
+<text x="1655" y="1008" font-size="13" class="muted">E4 · OpenVLA 数据来源</text>
+<path d="M1419 764H1512V998H1386V1030" fill="none" stroke="#68818e" stroke-width="2" opacity="1" stroke-dasharray="2 5"/>
+<text x="1468" y="813" font-size="13" class="muted">E5</text>
+<!-- Same-project links: no direction or historical inheritance implied -->
+<g fill="none" stroke="#7a9f95" stroke-width="1.5" data-relation="same-project">
+<path d="M430 465C430 500 452 507 452 540"/><circle cx="430" cy="465" r="4" fill="#fafcfb"/>
+<path d="M1200 467C1200 508 945 504 945 540"/><circle cx="1200" cy="467" r="4" fill="#fafcfb"/>
+<path d="M1650 445C1650 505 1318 491 1318 540"/><circle cx="1650" cy="445" r="4" fill="#fafcfb"/>
+</g>
+<a id="project-aloha" href="https://tonyzhaozh.github.io/aloha/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-aloha"><title>evo-aloha · ALOHA · 双臂遥操作与示教采集 · 硬件 + episode；与 ACT 配套；候选入口，尚未复跑</title><g transform="translate(264 349)">
+<rect class="card" width="320" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#ad6532"/>
+<text x="16" y="23" font-size="13" style="fill:#ad6532" font-weight="600">2023 · 04</text>
+<rect x="230" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="235" y="23" font-size="12" class="muted">离线</text>
+<rect x="270" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="275" y="23" font-size="12" class="muted">真机</text>
+<text x="16" y="52" font-size="21" font-weight="700">ALOHA</text>
+<text x="16" y="77" font-size="16">双臂遥操作与示教采集</text>
+<text x="16" y="99" font-size="13" class="muted">硬件 + episode；与 ACT 配套</text>
+</g></a>
+<a href="https://mobile-aloha.github.io/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-mobile-aloha"><title>evo-mobile-aloha · Mobile ALOHA · 双臂 + 底盘的全身示教 · 桌面 → 移动；静态/移动数据共训；候选入口，尚未复跑</title><g transform="translate(654 326)">
+<rect class="card" width="350" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#ad6532"/>
+<text x="16" y="23" font-size="13" style="fill:#ad6532" font-weight="600">2024 · 01</text>
+<rect x="300" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="305" y="23" font-size="12" class="muted">真机</text>
+<text x="16" y="52" font-size="21" font-weight="700">Mobile ALOHA</text>
+<text x="16" y="77" font-size="16">双臂 + 底盘的全身示教</text>
+<text x="16" y="99" font-size="13" class="muted">桌面 → 移动；静态/移动数据共训</text>
+</g></a>
+<a id="project-umi" href="https://umi-gripper.github.io/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-umi"><title>evo-umi · UMI · 手持夹爪与视觉惯性 SLAM · 采集可脱离机器人；部署仍需硬件；候选入口，尚未复跑</title><g transform="translate(1080 351)">
+<rect class="card" width="325" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#ad6532"/>
+<text x="16" y="23" font-size="13" style="fill:#ad6532" font-weight="600">2024 · 02</text>
+<rect x="235" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="240" y="23" font-size="12" class="muted">离线</text>
+<rect x="275" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="280" y="23" font-size="12" class="muted">真机</text>
+<text x="16" y="52" font-size="21" font-weight="700">UMI</text>
+<text x="16" y="77" font-size="16">手持夹爪与视觉惯性 SLAM</text>
+<text x="16" y="99" font-size="13" class="muted">采集可脱离机器人；部署仍需硬件</text>
+</g></a>
+<a id="project-droid" href="https://droid-dataset.github.io/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-droid"><title>evo-droid · DROID · 共同采集平台 + 多场景数据集 · 原始 Franka 平台；非多本体集合；候选入口，尚未复跑</title><g transform="translate(1475 329)">
+<rect class="card" width="345" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#ad6532"/>
+<text x="16" y="23" font-size="13" style="fill:#ad6532" font-weight="600">2024 · 03</text>
+<rect x="255" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="260" y="23" font-size="12" class="muted">离线</text>
+<rect x="295" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="300" y="23" font-size="12" class="muted">真机</text>
+<text x="16" y="52" font-size="21" font-weight="700">DROID</text>
+<text x="16" y="77" font-size="16">共同采集平台 + 多场景数据集</text>
+<text x="16" y="99" font-size="13" class="muted">原始 Franka 平台；非多本体集合</text>
+</g></a>
+<a href="#project-aloha" data-role="contribution" data-node-id="evo-aloha evo-act" data-project-ref="project-aloha project-act"><title>ALOHA / ACT · 数据接口；同一项目的跨层贡献，点击回到主卡。HDF5：相机、关节动作、频率与边界；示教 → 训练 → 回放；配套贡献</title><g transform="translate(284 540)">
+<rect class="contribution" width="336" height="82" rx="8" fill="#edf6f2"/>
+<circle cx="14" cy="21" r="3.5" fill="#7a9f95"/>
+<text x="26" y="26" font-size="17" font-weight="600">ALOHA / ACT · 数据接口</text>
+<text x="14" y="49" font-size="15">HDF5：相机、关节动作、频率与边界</text>
+<text x="14" y="70" font-size="12" class="muted">示教 → 训练 → 回放；配套贡献</text>
+</g></a>
+<a href="#project-umi" data-role="contribution" data-node-id="evo-umi" data-project-ref="project-umi"><title>UMI · 动作接口；同一项目的跨层贡献，点击回到主卡。相对轨迹 + 推理时延匹配；跨平台须核对夹爪、相机与可达性</title><g transform="translate(710 540)">
+<rect class="contribution" width="370" height="82" rx="8" fill="#edf6f2"/>
+<circle cx="14" cy="21" r="3.5" fill="#7a9f95"/>
+<text x="26" y="26" font-size="17" font-weight="600">UMI · 动作接口</text>
+<text x="14" y="49" font-size="15">相对轨迹 + 推理时延匹配</text>
+<text x="14" y="70" font-size="12" class="muted">跨平台须核对夹爪、相机与可达性</text>
+</g></a>
+<a href="#project-droid" data-role="contribution" data-node-id="evo-droid" data-project-ref="project-droid"><title>DROID · 数据贡献；同一项目的跨层贡献，点击回到主卡。场景多样性、标定与数据混合；离线入口：100 条样例，约 2GB</title><g transform="translate(1150 540)">
+<rect class="contribution" width="340" height="82" rx="8" fill="#edf6f2"/>
+<circle cx="14" cy="21" r="3.5" fill="#7a9f95"/>
+<text x="26" y="26" font-size="17" font-weight="600">DROID · 数据贡献</text>
+<text x="14" y="49" font-size="15">场景多样性、标定与数据混合</text>
+<text x="14" y="70" font-size="12" class="muted">离线入口：100 条样例，约 2GB</text>
+</g></a>
+<a href="https://robotics-transformer-x.github.io/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-openx"><title>evo-openx · Open X / RT-X · 跨本体数据与模型 · 供 Octo / OpenVLA 使用；候选入口，尚未复跑</title><g transform="translate(1560 521)">
+<rect class="card" width="262" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#138373"/>
+<text x="16" y="23" font-size="13" style="fill:#138373" font-weight="600">2023</text>
+<rect x="212" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="217" y="23" font-size="12" class="muted">离线</text>
+<text x="16" y="52" font-size="21" font-weight="700">Open X / RT-X</text>
+<text x="16" y="77" font-size="16">跨本体数据与模型</text>
+<text x="16" y="99" font-size="13" class="muted">供 Octo / OpenVLA 使用</text>
+</g></a>
+<a href="https://github.com/ARISE-Initiative/robomimic" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-robomimic"><title>evo-robomimic · BC / robomimic · 从示教拟合动作的基线 · 数据质量、观测与闭环误差；候选入口，尚未复跑</title><g transform="translate(264 701)">
+<rect class="card" width="325" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#4973b5"/>
+<text x="16" y="23" font-size="13" style="fill:#4973b5" font-weight="600">经典 BC · robomimic 2021</text>
+<rect x="275" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="280" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">BC / robomimic</text>
+<text x="16" y="77" font-size="16">从示教拟合动作的基线</text>
+<text x="16" y="99" font-size="13" class="muted">数据质量、观测与闭环误差</text>
+</g></a>
+<a id="project-act" href="https://github.com/tonyzhaozh/act" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-act"><title>evo-act · ACT · 动作分块 + temporal ensembling · 原版 MuJoCo 双臂仿真；CUDA 策略；候选入口，尚未复跑</title><g transform="translate(690 695)">
+<rect class="card" width="330" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#4973b5"/>
+<text x="16" y="23" font-size="13" style="fill:#4973b5" font-weight="600">2023 · 04</text>
+<rect x="280" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="285" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">ACT</text>
+<text x="16" y="77" font-size="16">动作分块 + temporal ensembling</text>
+<text x="16" y="99" font-size="13" class="muted">原版 MuJoCo 双臂仿真；CUDA 策略</text>
+</g></a>
+<a href="https://diffusion-policy.cs.columbia.edu/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-diffusion"><title>evo-diffusion · Diffusion Policy · 用扩散过程生成动作序列 · 与 ACT 并列；UMI 采用此策略；候选入口，尚未复跑</title><g transform="translate(1090 709)">
+<rect class="card" width="329" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#4973b5"/>
+<text x="16" y="23" font-size="13" style="fill:#4973b5" font-weight="600">2023</text>
+<rect x="279" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="284" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">Diffusion Policy</text>
+<text x="16" y="77" font-size="16">用扩散过程生成动作序列</text>
+<text x="16" y="99" font-size="13" class="muted">与 ACT 并列；UMI 采用此策略</text>
+</g></a>
+<a href="https://github.com/huggingface/lerobot" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="tool-lerobot"><title>tool-lerobot · LeRobot · 数据、策略实现与评测 · ACT / diffusion / VLA 生态；候选入口，尚未复跑</title><g transform="translate(1550 690)">
+<rect class="card" width="270" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#4973b5"/>
+<text x="16" y="23" font-size="13" style="fill:#4973b5" font-weight="600">2024 起 · 工程入口</text>
+<rect x="220" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="225" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">LeRobot</text>
+<text x="16" y="77" font-size="16">数据、策略实现与评测</text>
+<text x="16" y="99" font-size="13" class="muted">ACT / diffusion / VLA 生态</text>
+</g></a>
+<a href="https://robosuite.ai/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-mujoco proj-robomimic-robosuite"><title>evo-mujoco proj-robomimic-robosuite · MuJoCo / robosuite · 可重置的操作与接触实验 · 先固定物理、相机、seed 与 reset；候选入口，尚未复跑</title><g transform="translate(284 869)">
+<rect class="card" width="325" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#a57c27"/>
+<text x="16" y="23" font-size="13" style="fill:#a57c27" font-weight="600">2012 / 2020</text>
+<rect x="275" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="280" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">MuJoCo / robosuite</text>
+<text x="16" y="77" font-size="16">可重置的操作与接触实验</text>
+<text x="16" y="99" font-size="13" class="muted">先固定物理、相机、seed 与 reset</text>
+</g></a>
+<a href="https://curobo.org/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="tool-ros-moveit tool-curobo"><title>tool-ros-moveit tool-curobo · MoveIt 2 / cuRobo · IK、碰撞检查与运动规划 · 解释可达性；与学习策略配合；候选入口，尚未复跑</title><g transform="translate(690 852)">
+<rect class="card" width="342" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#a57c27"/>
+<text x="16" y="23" font-size="13" style="fill:#a57c27" font-weight="600">持续演进 · 工具层</text>
+<rect x="292" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="297" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">MoveIt 2 / cuRobo</text>
+<text x="16" y="77" font-size="16">IK、碰撞检查与运动规划</text>
+<text x="16" y="99" font-size="13" class="muted">解释可达性；与学习策略配合</text>
+</g></a>
+<a href="https://developer.nvidia.com/isaac/lab" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-isaac proj-maniskill"><title>evo-isaac proj-maniskill · Isaac Lab / ManiSkill · 并行环境、数据与策略实验 · 硬件、任务与资产许可单独固定；候选入口，尚未复跑</title><g transform="translate(1110 866)">
+<rect class="card" width="360" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#a57c27"/>
+<text x="16" y="23" font-size="13" style="fill:#a57c27" font-weight="600">持续演进 · 仿真框架</text>
+<rect x="310" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="315" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">Isaac Lab / ManiSkill</text>
+<text x="16" y="77" font-size="16">并行环境、数据与策略实验</text>
+<text x="16" y="99" font-size="13" class="muted">硬件、任务与资产许可单独固定</text>
+</g></a>
+<a href="https://github.com/Lifelong-Robot-Learning/LIBERO" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="proj-lerobot-libero proj-robocasa"><title>proj-lerobot-libero proj-robocasa · LIBERO / RoboCasa · 任务套件与家庭场景 · 作为基准；不是策略模型；候选入口，尚未复跑</title><g transform="translate(1560 846)">
+<rect class="card" width="262" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#a57c27"/>
+<text x="16" y="23" font-size="13" style="fill:#a57c27" font-weight="600">2023 / 2024</text>
+<rect x="212" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="217" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">LIBERO / RoboCasa</text>
+<text x="16" y="77" font-size="16">任务套件与家庭场景</text>
+<text x="16" y="99" font-size="13" class="muted">作为基准；不是策略模型</text>
+</g></a>
+<a href="https://robotics-transformer1.github.io/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-rt1 evo-rt2"><title>evo-rt1 evo-rt2 · RT-1 / RT-2 · 多任务 → 视觉语言进入动作 · 公开研究；不等于开箱即跑权重；候选入口，尚未复跑</title><g transform="translate(264 1038)">
+<rect class="card" width="325" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#8261a7"/>
+<text x="16" y="23" font-size="13" style="fill:#8261a7" font-weight="600">2022 / 2023</text>
+<rect x="275" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="280" y="23" font-size="12" class="muted">阅读</text>
+<text x="16" y="52" font-size="21" font-weight="700">RT-1 / RT-2</text>
+<text x="16" y="77" font-size="16">多任务 → 视觉语言进入动作</text>
+<text x="16" y="99" font-size="13" class="muted">公开研究；不等于开箱即跑权重</text>
+</g></a>
+<a href="https://octo-models.github.io/" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="report-octo"><title>report-octo · Octo · 开放的通用机器人策略 · 任务条件、动作接口与微调；候选入口，尚未复跑</title><g transform="translate(690 1030)">
+<rect class="card" width="330" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#8261a7"/>
+<text x="16" y="23" font-size="13" style="fill:#8261a7" font-weight="600">2024</text>
+<rect x="280" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="285" y="23" font-size="12" class="muted">离线</text>
+<text x="16" y="52" font-size="21" font-weight="700">Octo</text>
+<text x="16" y="77" font-size="16">开放的通用机器人策略</text>
+<text x="16" y="99" font-size="13" class="muted">任务条件、动作接口与微调</text>
+</g></a>
+<a href="https://github.com/Physical-Intelligence/openpi" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-openvla evo-pi0"><title>evo-openvla evo-pi0 · OpenVLA / π0 · 开放 VLA / flow 连续动作模型 · 按具体 checkpoint 接仿真与本体；候选入口，尚未复跑</title><g transform="translate(1090 1030)">
+<rect class="card" width="380" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#8261a7"/>
+<text x="16" y="23" font-size="13" style="fill:#8261a7" font-weight="600">模型 2024 · openpi 开源 2025</text>
+<rect x="330" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="335" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">OpenVLA / π0</text>
+<text x="16" y="77" font-size="16">开放 VLA / flow 连续动作模型</text>
+<text x="16" y="99" font-size="13" class="muted">按具体 checkpoint 接仿真与本体</text>
+</g></a>
+<a href="https://github.com/starVLA/starVLA" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="evo-smolvla proj-starvla-libero"><title>evo-smolvla proj-starvla-libero · SmolVLA / StarVLA · 轻量模型 / 模块化框架 · LeRobot 或 LIBERO 入口；候选入口，尚未复跑</title><g transform="translate(1540 1040)">
+<rect class="card" width="280" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#8261a7"/>
+<text x="16" y="23" font-size="13" style="fill:#8261a7" font-weight="600">SmolVLA · 2025</text>
+<rect x="230" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="235" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">SmolVLA / StarVLA</text>
+<text x="16" y="77" font-size="16">轻量模型 / 模块化框架</text>
+<text x="16" y="99" font-size="13" class="muted">LeRobot 或 LIBERO 入口</text>
+</g></a>
+<path d="M246 1469C510 1424 689 1494 899 1461S1450 1434 1850 1465" fill="none" stroke="#467d8c" stroke-width="35" opacity=".055"/>
+<a href="https://www.figure.ai/news/helix" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="tool-openpi org-figure-helix"><title>tool-openpi org-figure-helix · openpi runtime / Helix · 频率、时延与高低层控制 · 执行约束贯穿所有路线；候选入口，尚未复跑</title><g transform="translate(284 1423)">
+<rect class="card" width="350" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#467d8c"/>
+<text x="16" y="23" font-size="13" style="fill:#467d8c" font-weight="600">2025 起 · 公开部署材料</text>
+<rect x="300" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="305" y="23" font-size="12" class="muted">阅读</text>
+<text x="16" y="52" font-size="21" font-weight="700">openpi runtime / Helix</text>
+<text x="16" y="77" font-size="16">频率、时延与高低层控制</text>
+<text x="16" y="99" font-size="13" class="muted">执行约束贯穿所有路线</text>
+</g></a>
+<a href="https://www.dyna.co/research" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="report-dyna"><title>report-dyna · DYNA-1 / DYNA-2 · 世界动作模型：视频 / 动作预训练 · 本轮未找到公开权重入口；仅作报告阅读；不与开放权重项目等同</title><g transform="translate(690 1201)">
+<rect class="card" width="329" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect x="0" y="16" width="4" height="84" rx="2" fill="#467d8c"/>
+<text x="16" y="23" font-size="13" style="fill:#467d8c" font-weight="600">Dyna · 公司研究</text>
+<rect x="279" y="8" width="34" height="21" rx="5" fill="#f0f5f6" stroke="none"/>
+<text x="284" y="23" font-size="12" class="muted">阅读</text>
+<text x="16" y="52" font-size="21" font-weight="700">DYNA-1 / DYNA-2</text>
+<text x="16" y="77" font-size="16">世界动作模型：视频 / 动作预训练</text>
+<text x="16" y="99" font-size="13" class="muted">本轮未找到公开权重入口</text>
+</g></a>
+<a href="https://github.com/OpenWAM-Official/OpenWAM" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="proj-openwam-official"><title>OpenWAM · OpenWAM-Official/OpenWAM · 视频模型训练与动作仿真评测 · GPU 路线；debug 不等于效果复现；候选入口，未复跑</title><g transform="translate(1090 1197)">
+<rect class="card" width="355" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect y="16" width="4" height="84" rx="2" fill="#467d8c"/>
+<text x="16" y="23" font-size="12" style="fill:#467d8c" font-weight="600">OpenWAM-Official/OpenWAM</text>
+<rect x="305" y="8" width="34" height="21" rx="5" fill="#f0f5f6"/><text x="310" y="23" font-size="12" class="muted">仿真</text>
+<text x="16" y="52" font-size="21" font-weight="700">OpenWAM</text>
+<text x="16" y="77" font-size="16">视频模型训练与动作仿真评测</text>
+<text x="16" y="99" font-size="13" class="muted">GPU 路线；debug 不等于效果复现</text>
+</g></a>
+<a href="https://github.com/OpenWAM/OpenWAM" target="_blank" rel="noopener noreferrer" data-role="project" data-node-id="proj-openwam-cpu"><title>CPU contract / adapters · OpenWAM/OpenWAM · 同名仓库：流程契约与仿真接口 · CPU fixture 只验证流程，不验证模型；候选入口，未复跑</title><g transform="translate(1500 1205)">
+<rect class="card" width="320" height="116" rx="13" fill="#fff" stroke="#cbdade"/>
+<rect y="16" width="4" height="84" rx="2" fill="#467d8c"/>
+<text x="16" y="23" font-size="12" style="fill:#467d8c" font-weight="600">OpenWAM/OpenWAM</text>
+<rect x="270" y="8" width="34" height="21" rx="5" fill="#f0f5f6"/><text x="275" y="23" font-size="12" class="muted">离线</text>
+<text x="16" y="52" font-size="21" font-weight="700">CPU contract / adapters</text>
+<text x="16" y="77" font-size="16">同名仓库：流程契约与仿真接口</text>
+<text x="16" y="99" font-size="13" class="muted">CPU fixture 只验证流程，不验证模型</text>
+</g></a>
+<g data-role="concept" transform="translate(264 1200)">
+<rect width="325" height="116" rx="12" fill="#e9f3f6"/>
+<text x="16" y="25" font-size="14" style="fill:#467d8c" font-weight="600">WORLD ACTION MODELS</text>
+<text x="16" y="54" font-size="22" font-weight="700">未来建模如何帮助动作？</text>
+<text x="16" y="79" font-size="16">视频 / 状态表征 + 动作学习</text>
+<text x="16" y="101" font-size="13" class="muted">建模目标与动作耦合方式因项目而异</text>
+</g>
+<!-- E6 is a conceptual comparison, not a lineage arrow -->
+<path d="M1280 1146V1169Q1280 1182 1297 1182H1840V1336" fill="none" stroke="#68818e" stroke-width="2" stroke-dasharray="2 5"/>
+<rect x="264" y="1336" width="1588" height="68" rx="10" fill="#edf3f7"/>
+<text x="282" y="1361" font-size="18" font-weight="700">VLA ↔ WAM · E6 / 问题对照</text>
+<text x="635" y="1361" font-size="16">VLA：视觉 / 语言怎样落到动作　　WAM：视频 / 未来状态建模怎样支持动作学习与选择</text>
+<text x="282" y="1387" font-size="14" class="muted">本文归纳：两者可以交叉；世界模型、视频生成和 WAM 不自动等同，也不表示 VLA 必然被替代</text>
+<text x="66" y="1432" font-size="14" style="fill:#467d8c" font-weight="700">07</text>
+<text x="66" y="1462" font-size="21" font-weight="700">系统 / 部署</text>
+<text x="66" y="1490" font-size="15" class="muted">所有策略的共同约束</text>
+
+<text x="710" y="1460" font-size="22" font-weight="700">从策略、VLA 到 WAM，都要经过执行闭环</text>
+<text x="710" y="1490" font-size="17" class="muted">动作表示、控制频率、推理时延与故障恢复，贯穿各条研究路线</text>
+<text x="710" y="1517" font-size="14" class="muted">共用工程约束；不把 openpi runtime / Helix 归为 WAM 模型</text>
+<g transform="translate(0 220)">
+<rect x="66" y="1340" width="1788" height="64" rx="12" fill="#f0f5f5" stroke="none"/>
+<path d="M86 1363H140" fill="none" stroke="#68818e" stroke-width="2.3" opacity="1" marker-end="url(#arrow)"/>
+<text x="152" y="1368" font-size="15">实线：明确继承 / 采用</text>
+<path d="M510 1363H564" fill="none" stroke="#68818e" stroke-width="2.2" opacity="1" stroke-dasharray="8 5"/>
+<text x="576" y="1368" font-size="15">虚线：共享数据 / 配套接口</text>
+<path d="M975 1363H1029" fill="none" stroke="#68818e" stroke-width="2" opacity="1" stroke-dasharray="2 5"/>
+<text x="1041" y="1368" font-size="15">点线：本文归纳</text>
+<path d="M1408 1363H1455" fill="none" stroke="#7a9f95" stroke-width="1.5"/><circle cx="1408" cy="1363" r="4" fill="#fafcfb" stroke="#7a9f95"/><text x="1469" y="1368" font-size="15">细线 + 圆点：同一项目的跨层贡献</text>
+<text x="86" y="1391" font-size="14" class="muted">标签 = 候选体验方式，不代表已复跑 · 主卡链接一手资料，浅色贡献条链接主卡 · 详细来源、E1–E6、硬件与许可见 Markdown 台账</text>
+<text x="66" y="1441" font-size="24" font-weight="700">没有真机，从哪条支流开始？</text>
+<g transform="translate(66 1458)"><rect width="432" height="84" rx="12" fill="#fff" stroke="#cfdddd"/><text x="16" y="27" font-size="19" font-weight="700">01  ACT · MuJoCo 双臂搬块</text><text x="16" y="51" font-size="16">生成示教 → 训练 → rollout</text><text x="16" y="72" font-size="13" class="muted">原版策略训练 / 评测需要 CUDA</text></g>
+<g transform="translate(514 1458)"><rect width="432" height="84" rx="12" fill="#fff" stroke="#cfdddd"/><text x="16" y="27" font-size="19" font-weight="700">02  Diffusion Policy</text><text x="16" y="51" font-size="16">理解另一种动作序列模型</text><text x="16" y="72" font-size="13" class="muted">同任务、同数据后再比较闭环效果</text></g>
+<g transform="translate(962 1458)"><rect width="432" height="84" rx="12" fill="#fff" stroke="#cfdddd"/><text x="16" y="27" font-size="19" font-weight="700">03  VLA · LIBERO</text><text x="16" y="51" font-size="16">LeRobot / OpenVLA 仿真入口</text><text x="16" y="72" font-size="13" class="muted">固定 checkpoint 与动作模式</text></g>
+<g transform="translate(1410 1458)"><rect width="444" height="84" rx="12" fill="#fff" stroke="#cfdddd"/><text x="16" y="27" font-size="19" font-weight="700">04  WAM · 分级体验</text><text x="16" y="51" font-size="16">CPU 契约 / GPU 模型与仿真实验</text><text x="16" y="72" font-size="13" class="muted">不同仓库分别验收；流程不等于效果</text></g>
+<text x="66" y="1573" font-size="16" class="muted">离线支线：UMI 示例 → SLAM / replay buffer；DROID 小样本 → 标定 / 动作 / 数据混合；CPU contract 只验证流程契约</text>
+<text x="66" y="1609" font-size="14" class="muted">范围：操作学习主线的第一版地图；导航、足式运动、灵巧手与触觉等保留扩展入口</text>
+<text x="1470" y="1609" font-size="14" class="muted">资料核对：2026-09-24 · LIP / v2</text>
+</g>
+</svg>
