@@ -1,21 +1,23 @@
 # LIP Status
 
-Last reviewed: 2026-07-31
+Last reviewed: 2026-09-25
 
 ## Current State
 
 - The repository is a VitePress/GitHub Pages source repo for MiaoDX Learn In
   Public content.
-- The main content tracks are AI Coding, OpenClaw, lessons, stories,
-  bestpractice analyses, share materials, and consult pages.
+- The main content track is AI Coding × robotics, plus bestpractice analyses,
+  share materials, and consult pages. The OpenClaw section (with stories,
+  lessons, resources, now) is a frozen 2026 H1 archive.
+- 2026-09-25 restructure removed discussions/, drafts/, proposals/, en/,
+  ROADMAP.md, and the Agent Radar share column; raw discussion now lives in
+  MiaoDX/scratch-pad.
 - The public build and deployment path is centralized through
   `npm run build:all`.
 - Private company-specific interview preparation is stored in the optional
   `interviews/` submodule and excluded from public builds.
 - The homepage and Resume are maintained in the optional public
   `sites/miaodx.com/` submodule and deploy independently from LIP.
-- The recent architecture cleanup campaign is marked done in
-  `docs/status/active/refactor-architecture-cleanup-campaign.md`.
 - The V12 Northeast/grassland road-trip page is the current standalone route
   deck and has passed desktop/mobile browser verification.
 
@@ -38,8 +40,8 @@ Last reviewed: 2026-07-31
   `scripts/publish-rules.mjs`.
 - Keep root docs short and route details to `ARCHITECTURE.md`,
   `docs/human/`, or `docs/agents/` by audience.
-- Continue content quality work from `ROADMAP.md`, especially deduplication,
-  draft promotion decisions, and talk/share material refinement.
+- Promote mature notes from scratch-pad into `ai-coding/`; consider a dedicated
+  robotics section once the autonomous-driving-to-robotics guide is publishable.
 - Keep the road-trip share entry aligned with the current verified route deck.
 - Preserve the publication boundary: agent/process docs and `sites/` should
   stay out of generated LIP output; the personal site deploys from its own repo.

@@ -4,7 +4,6 @@
 
 ## Agent Radar
 
-- [Agent Radar](/share/agent-radar/) — 面向 AI Agents、Coding Agents、Agent Infra 与 TOP AI Lab 实践的高信号日报归档，当前 checked-in 到 2026-05-26
 
 ## Weekly Robotics 摘要
 

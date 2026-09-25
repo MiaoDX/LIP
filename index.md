@@ -4,22 +4,22 @@ layout: home
 hero:
   name: 缪东旭 · MiaoDX · LIP
   text: Learn in Public
-  tagline: 把 AI Agent 团队从 0 到 1 的过程公开化<br>真实复盘、持续迭代、可复制落地
+  tagline: AI Coding Agent × 机器人的公开实践<br>真实复盘、持续迭代、可复制落地
   actions:
     - theme: brand
-      text: 先看 2026 年 4 月月报
-      link: /now/2026-04
-    - theme: alt
-      text: AI Coding 主线
+      text: AI Coding × 机器人
       link: /ai-coding/
     - theme: alt
-      text: OpenClaw 主线
-      link: /openclaw/
+      text: 分享与演讲
+      link: /share/
+    - theme: alt
+      text: Best Practice
+      link: /bestpractice/
 
 features:
-  - title: 🚀 目标导向
-    details: 围绕 3 个核心目标推进：社区声望、宣讲变现、个人网站增长
-    link: /ROADMAP
+  - title: 🤖 让 Agent 看见机器人
+    details: roboharness、roboclaws 等开源项目，把 Coding Agent 带进机器人仿真与评测
+    link: /ai-coding/
   - title: 📉 失败优先，真实复盘
     details: 不藏 Bug，不藏事故，每篇都讲清发生了什么、为何发生、如何修复
     link: /stories/gateway-6hour-outage
@@ -47,23 +47,22 @@ features:
 - 2016-2018：TJU
 - 2012-2016：xidian
 
-## 两大内容主线
+## 内容主线
 
-### [Part A — AI Coding](/ai-coding/)
+### [AI Coding × 机器人](/ai-coding/)
 
-- 记录 Claude Code Routines、Roboharness、Ultrathink/Goal 等 AI Coding 工程化实践
+- Claude Code Routines、Harness Engineering、Ultrathink/Goal 等 AI Coding 工程化实践
+- roboharness、roboclaws 等把 Coding Agent 带进机器人研发的开源项目
 - 重点看 prompt、routine、harness、验收证据和长期 Agent 工作流
 
-### [Part B — OpenClaw](/openclaw/)
+### [Best Practice](/bestpractice/)
 
-- 聚焦部署、配置、最佳实践、实战案例四条线
-- 目标是让个人或小团队低成本搭建可持续运行的 Agent 体系
-- 推荐入口：[`双 Agent 启动日志`](/stories/2026-03-dual-agent-start) → [`Gateway 宕机复盘`](/stories/gateway-6hour-outage)
+- TOP AI Lab 的 Agent 工程实践拆解
 
-### [规则 (Lessons)](/lessons/)
+### [归档 · OpenClaw 时期](/openclaw/)
 
-- 从事故和实践中提炼的可复用规则
-- 把 incident 沉淀成 rules，再沉淀成 skills
+- 2026 上半年用双 OpenClaw 实例运营的多 Agent 实验：部署、配置、事故复盘与经验规则
+- 已停止更新，保留为历史记录
 
 ## 如何阅读这两个站点
 
