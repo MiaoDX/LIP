@@ -10,7 +10,6 @@ Current root orientation:
   proof boundaries.
 - `STATUS.md`: current state, supported commands, maintenance focus, and known
   blockers.
-- `ROADMAP.md`: content roadmap and backlog.
 
 Maintenance contracts:
 

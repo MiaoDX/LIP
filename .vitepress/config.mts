@@ -35,14 +35,6 @@ export default defineConfigWithTheme<ThemeConfig>({
       themeConfig: {
         nav: navByLocale.root,
       }
-    },
-    en: {
-      label: 'English',
-      lang: 'en-US',
-      link: '/en/',
-      themeConfig: {
-        nav: navByLocale.en,
-      }
     }
   },
 

@@ -6,15 +6,16 @@ around publishing rules, not an application runtime.
 
 ## Source Surfaces
 
-- Markdown site content lives in `index.md`, `now/`, `stories/`, `lessons/`,
-  `openclaw/`, `ai-coding/`, `bestpractice/`, `resources/`, `share/`,
-  `proposals/`, and the mirrored English entrypoints under `en/`.
+- Markdown site content lives in `index.md`, `ai-coding/`, `bestpractice/`,
+  and `share/`. `openclaw/`, `stories/`, `lessons/`, `resources/`, and `now/`
+  are the frozen 2026 H1 OpenClaw archive; keep their URLs stable.
+- Raw discussions and drafts do not live here; they start in
+  `MiaoDX/scratch-pad` (`notes/`) and are promoted into LIP when publishable.
 - General standalone decks live in `presentations/`.
 - AI Coding project decks live in `ai-coding/<slug>/index.html` with local
   `images/`, `screenshots/`, or `assets/`.
 - Consult pages live in `public/consult/` and are public static output.
-- Agent/process docs live under `docs/agents/`, `docs/plans/`, and
-  `docs/status/`; they are excluded from public site output.
+- Agent/process docs live under `docs/agents/` and `docs/plans/`; they are excluded from public site output.
 - Private interview preparation lives in the optional `interviews/` submodule.
   Its Markdown and local HTML are excluded from public output and are not
   required to build the site.
